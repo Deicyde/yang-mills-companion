@@ -206,8 +206,11 @@ def proof_overlay(root, pdf, lean, pin, key_decls):
         if snippet:
             ext['proof_context'] = {k: e['proof_context'][k] for k in ('declaration', 'lines', 'conclusion')}
         location = {'declaration': e['decl'], 'module': e['file'][:-len('.lean')].replace('/', '.'), 'lines': [a, b]}
-        return {'type': 'lean', 'uri': lean['repository'], 'version': lean['version'], 'location': location,
-                'role': 'key', 'extensions': {NS: ext}}
+        out = {'type': 'lean', 'uri': lean['repository'], 'version': lean['version'], 'location': location}
+        if snippet:  # the ends of a checked absence name where it looked, not a key declaration
+            out['role'] = 'key'
+        out['extensions'] = {NS: ext}
+        return out
 
     def record(r, kind, title, extra=None):
         regs = regions['regions'][r['id']]
