@@ -7,19 +7,19 @@
  "taxonomy": "docs/taxonomy.md",
  "provenance": "machine: mapper and verifier agents per batch, a judge on disagreement, two skeptics per claimed finding; no person reviewed",
  "counts": {
-  "stronger": 21,
-  "exact": 64,
-  "definition-match": 63,
-  "parts": 57,
-  "definition-close": 27,
-  "close": 81,
-  "inlined": 14,
+  "stronger": 23,
+  "exact": 73,
+  "definition-match": 64,
+  "parts": 68,
+  "definition-close": 31,
+  "close": 84,
+  "inlined": 16,
   "not-formalized-not-needed": 5,
   "weaker": 15,
   "no-match": 16,
   "unclear": 6,
   "differs": 5,
-  "not yet judged": 84
+  "not yet judged": 52
  },
  "items": [
   {
@@ -19993,7 +19993,11 @@
    "confidence": "medium",
    "finding": {
     "claim": "no-match",
-    "confirmed": false
+    "confirmed": true,
+    "skeptic_notes": [
+     "[M] claims that the table is O(4)-covariant, that T satisfies the tensor law, and that T is centered, nonzero, real, symmetric and conserved with both shell laws. [L] has covariance (A14.answer gives `U.Oriented S`), the tensor law (`Tensorial X (averageStress X J)`), `Conserved` (symmetric, real, divergence only) and `StressLaws` for the average. YM.Bid.A15 concludes only `∃ J', Conserved V H.spin J' ∧ Tensorial X J' ∧ StressLaws S J' V.deriv X.lie`. Nothing states S_1(T_ab)=0 or T≠0 for the average. The only nonzero facts (`hn` in ignite, `w 3 ≠ 0` in canonical) are proved inside proofs for different tensors: ignite's whitened and re-centered `reCenter S (white T.hT U)`, where centering is imposed rather than proved, and canonical's `Tune.re` of the average. So two claims of [M] have no counterpart and the claim stands. It is not a typo, since [M]'s proof argues for both claims explicitly.",
+     "[M] asserts the averaged tensor T is centered (S_1(T_ab)=0), nonzero, real, symmetric, conserved, tensorial and obeys both shell laws. Bid.A15 (Bid/Angular.lean:109-112), proved by A15.answer, concludes only 'Conserved V H J' (symmetric, real, divergence) and 'Tensorial X J'' and 'StressLaws S J' ...'; neither Conserved (Euclid/Stress.lean:59) nor Crystal's hypotheses give a centering or nonzero conclusion for the average. Centering and nonzero-ness are real claims of the lemma with no counterpart, and they need an argument (translation shell law forces T nonzero) that A15 does not write."
+    ]
    },
    "relation": "noMatch",
    "verification": {
@@ -20003,10 +20007,21 @@
     "agreed": false,
     "judge": "no-match",
     "source": "judge",
-    "skeptics": [],
+    "skeptics": [
+     {
+      "refuted": false,
+      "status": "no-match",
+      "reason": "[M] claims that the table is O(4)-covariant, that T satisfies the tensor law, and that T is centered, nonzero, real, symmetric and conserved with both shell laws. [L] has covariance (A14.answer gives `U.Oriented S`), the tensor law (`Tensorial X (averageStress X J)`), `Conserved` (symmetric, real, divergence only) and `StressLaws` for the average. YM.Bid.A15 concludes only `∃ J', Conserved V H.spin J' ∧ Tensorial X J' ∧ StressLaws S J' V.deriv X.lie`. Nothing states S_1(T_ab)=0 or T≠0 for the average. The only nonzero facts (`hn` in ignite, `w 3 ≠ 0` in canonical) are proved inside proofs for different tensors: ignite's whitened and re-centered `reCenter S (white T.hT U)`, where centering is imposed rather than proved, and canonical's `Tune.re` of the average. So two claims of [M] have no counterpart and the claim stands. It is not a typo, since [M]'s proof argues for both claims explicitly."
+     },
+     {
+      "refuted": false,
+      "status": "no-match",
+      "reason": "[M] asserts the averaged tensor T is centered (S_1(T_ab)=0), nonzero, real, symmetric, conserved, tensorial and obeys both shell laws. Bid.A15 (Bid/Angular.lean:109-112), proved by A15.answer, concludes only 'Conserved V H J' (symmetric, real, divergence) and 'Tensorial X J'' and 'StressLaws S J' ...'; neither Conserved (Euclid/Stress.lean:59) nor Crystal's hypotheses give a centering or nonzero conclusion for the average. Centering and nonzero-ness are real claims of the lemma with no counterpart, and they need an argument (translation shell law forces T nonzero) that A15 does not write."
+     }
+    ],
     "claimed": "no-match",
-    "finding": "skeptics pending",
-    "complete": false
+    "finding": "confirmed",
+    "complete": true
    }
   },
   {
@@ -20695,145 +20710,617 @@
   },
   {
    "id": "Eq (17.10)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "close",
+   "lean": [
+    {
+     "decl": "YM.Outer.farther",
+     "role": "key",
+     "where": "YM/Next/ROTATIONS/Thaw.lean:69-93",
+     "note": "pointwise bound ||answer d b (tracks w d n f) p|| <= M*lambda^y*exp(-R*p_d) for p_d>=0 off the cove, for every y and R",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Outer.ice",
+     "role": "support",
+     "where": "YM/Next/ROTATIONS/Thaw.lean:97-115",
+     "note": "integrates the farther bound over the complement of the cove against the spectral measures, giving Budget y for every y",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "[M] defines a class of tests with a lambda^K prefactor, exp(-lambda^{-c_d}E) and Schwartz decay in each p_j, and says the scaled Fourier-Laplace tests lie in it; [L] never states the class and proves, for those concrete tests only, the bound off the cove with an arbitrary polynomial gain lambda^y, which is the form the class is used in (the integral over X_lambda).",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S17-2",
     "mapper": "differs",
-    "verifier": null,
-    "complete": false
+    "verifier": "close",
+    "agreed": false,
+    "judge": "close",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Lemma 17.3",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.Outer.line_cost",
+     "role": "key",
+     "where": "YM/Next/ROTATIONS/Tunnel.lean:215-239",
+     "note": "I_d(B;-3000): budget delta for d=l, -w_l+delta otherwise (widths 1+c_j), any delta>0, B mixed collinear",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Outer.point_cost",
+     "role": "key",
+     "where": "YM/Next/ROTATIONS/Tunnel.lean:51-96",
+     "note": "I_d(J_db;c_d)=O(lambda^delta) for the point word with both signs",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Outer.mass",
+     "role": "key",
+     "where": "YM/Next/ROTATIONS/Mass.lean:115-180",
+     "note": "diagonal estimate: integral of E W^4/(E+W)^4 times transverse profiles in the stress measure costs lambda^(delta+4a), a=-99",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Outer.normal",
+     "role": "key",
+     "where": "YM/Next/ROTATIONS/Vanishing.lean:51-66",
+     "note": "I_d(.;0) is O(lambda^(3K)) with K=300, i.e. O(lambda^900); private lemma, used in exterior_size for J_dd",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Outer.ice",
+     "role": "key",
+     "where": "YM/Next/ROTATIONS/Thaw.lean:97-114",
+     "note": "exterior integral over the complement of the cove is Budget y for every y, i.e. O(lambda^-M)",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Outer.moments",
+     "role": "key",
+     "where": "YM/Next/ROTATIONS/Moments.lean:178-213",
+     "note": "damped transverse moments finite with polynomial cost in the margin (eq H-all-moments, transverse part)",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Outer.cross_le",
+     "role": "key",
+     "where": "YM/Next/ROTATIONS/Cross.lean:152-189",
+     "note": "spectral Cauchy-Schwarz for the pairings (eq H-coordinate-CS)",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.OS.Semigroup.altitude",
+     "role": "key",
+     "where": "YM/Heat/Lift.lean:75-94",
+     "note": "mixed displaced heat matrix element is holomorphic on the open upper half plane and bounded",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Outer.exterior_size",
+     "role": "attributed",
+     "where": "YM/Next/ROTATIONS/Vanishing.lean:68-120",
+     "note": "assembles these estimates into a budget -101 for the exterior of the rotation proof with the chart widths -100,-150,-300",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Outer.chart",
+     "role": "support",
+     "where": "YM/Next/ROTATIONS/Vanishing.lean:12",
+     "note": "the exponents c_a=c_b=-100, c_l=-150, else -300",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Outer.placed_moment",
+     "role": "support",
+     "where": "YM/Next/ROTATIONS/Moments.lean:214",
+     "note": "damped moments of all orders (eq H-all-moments)",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Each estimate of the lemma has a Lean counterpart with lambda=e^n and Budget a meaning O(lambda^a); [L] states them for arbitrary profiles, widths and delta, with hypotheses on the words (Mixed, Own, Pressed) that encode 'projected collinear' and the sign pattern, and the diagonal estimate also under conservation of J. The 'delta=1' choices of [M] are instances.",
+   "confidence": "low",
+   "relation": "hasPart",
    "verification": {
     "batch": "S17-2",
     "mapper": "parts",
-    "verifier": null,
-    "complete": false
+    "verifier": "parts",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (17.11)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.Outer.BL_law",
+     "role": "key",
+     "where": "YM/Next/ROTATIONS/Constraints.lean:42-49",
+     "note": "Q_1 = p_d^2 Q_0 + D_1 with Q_1 the double sum of p_j p_k R_{kd,jd}",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Outer.CL_law",
+     "role": "key",
+     "where": "YM/Next/ROTATIONS/Constraints.lean:50-58",
+     "note": "Q_2 = p_d^2 Q_1 + D_2 with Q_2 the fourfold sum of R_{sk,rj}",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Outer.SelfB",
+     "role": "support",
+     "where": "YM/Next/ROTATIONS/Constraints.lean:28",
+     "note": "Q_0 = R_{dd,dd}",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Outer.BL",
+     "role": "support",
+     "where": "YM/Next/ROTATIONS/Constraints.lean:30-33",
+     "note": "defines Q_1",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Outer.CL",
+     "role": "support",
+     "where": "YM/Next/ROTATIONS/Constraints.lean:34-37",
+     "note": "defines Q_2",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Outer.Pmul",
+     "role": "support",
+     "where": "YM/Next/ROTATIONS/Constraints.lean:10",
+     "note": "multiplication by p_d^k acting on tests",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Q_0, Q_1, Q_2 are SelfB, BL, CL of the normalized portrait series R, and the two relations are BL_law and CL_law with the polynomial remainders DB, DC as D_1, D_2; [L] states them under the Portrait hypothesis (conserved symmetric stress tensor), which is the proof's setting.",
+   "step": "YM.Outer.BL_law and YM.Outer.CL_law (YM/Next/ROTATIONS/Constraints.lean:42-58)",
+   "confidence": "medium",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S17-2",
     "mapper": "exact",
-    "verifier": null,
-    "complete": false
+    "verifier": "exact",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Lemma 17.4",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.OS.Ground.same_atom",
+     "role": "key",
+     "where": "YM/Ground/Compress.lean:57-62",
+     "note": "independence of slab width",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.OS.Ground.at_any",
+     "role": "key",
+     "where": "YM/Ground/Compress.lean:71-88",
+     "note": "independence of placement",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.OS.Ground.adjunction",
+     "role": "key",
+     "where": "YM/Ground/Permute.lean:149-161",
+     "note": "the algebra generated by the compressions is commutative",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.OS.Ground.full",
+     "role": "key",
+     "where": "YM/Ground/Compress.lean:145",
+     "note": "the vacuum is cyclic",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.OS.Ground.attains",
+     "role": "key",
+     "where": "YM/Ground/Spectrum.lean:115-125",
+     "note": "the vacuum is separating",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Work.B12.answer",
+     "role": "key",
+     "where": "YM/Work/B12.lean:81-92",
+     "note": "separability: a dense sequence exists in the algebra, which is the hypothesis u of resolution",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.OS.Ground.resolution",
+     "role": "key",
+     "where": "YM/Ground/Spectrum.lean:127-140",
+     "note": "compact metric spectrum, full-support probability measure, character bijection, ground integral; takes the dense sequence u as input",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.OS.Spread.Resolution.barycenter",
+     "role": "key",
+     "where": "YM/Phase/Mixture.lean:113-117",
+     "note": "S(w) = integral of S^xi(w) d nu",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.OS.Spread.Resolution.Out",
+     "role": "support",
+     "where": "YM/Phase/Mixture.lean:78-87",
+     "note": "the properties of the spectral resolution",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.OS.Spread.Resolution.receives",
+     "role": "support",
+     "where": "YM/Phase/Mixture.lean:89-91",
+     "note": "S^xi(w) = xi(M(w))",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Each claim of the lemma has a declaration: width and placement independence, commutativity, cyclic and separating vacuum, separability (B12.answer, which supplies the dense sequence that resolution assumes), compact metric spectrum with full-support probability measure, and the mixture formula. [L] states them separately under hierarchy, steadiness and rotation hypotheses that [M] establishes earlier in the same proof.",
+   "confidence": "medium",
+   "relation": "hasPart",
    "verification": {
     "batch": "S17-2",
     "mapper": "missing-hypothesis",
-    "verifier": null,
-    "complete": false
+    "verifier": "parts",
+    "agreed": false,
+    "judge": "parts",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Eq (17.12)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.OS.Ground.arcs",
+     "role": "key",
+     "where": "YM/Ground/Moments.lean:138-148",
+     "note": "words eventually distinct and expectations converge to <Omega, M(q_1)...M(q_m) Omega> when consecutive time coordinates diverge (`line`)",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.OS.Ground.starU",
+     "role": "support",
+     "where": "YM/Ground/Moments.lean:23",
+     "note": "ordered product of the M^0(w_i)",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The hypothesis (z_{i+1}(j)-z_i(j))^4 -> infinity is `line q` and the limit is the product of compressions in the vacuum state; [L] works under the hierarchy and a steady chamber, the standing assumptions of [M].",
+   "step": "YM.OS.Ground.arcs (YM/Ground/Moments.lean:138-148)",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S17-2",
     "mapper": "exact",
-    "verifier": null,
-    "complete": false
+    "verifier": "exact",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (17.13)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YM.OS.Grid.flash",
+     "role": "key",
+     "where": "YM/Phase/Approx.lean:44-46",
+     "note": "tiny of the word shifted by t*j in cover units minus tiny of the time-mirrored word at mirrored positions, same shift",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.OS.Grid.tiny",
+     "role": "support",
+     "where": "YM/Phase/Approx.lean:41-42",
+     "note": "product of the cell observables of the word at grid level N,p",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "[M] defines f_{j,N,p,T} as the grid observable of the translated word minus that of the translated time-reflected word, with translation T j a_k (1,1,1,1); `flash` is this difference with the translation written as the cover offset t*j and the reflection acting on labels and positions. B04 uses flash but does not define it.",
+   "confidence": "medium",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S17-2",
     "mapper": "inlined",
-    "verifier": null,
-    "complete": false
+    "verifier": "definition-match",
+    "agreed": false,
+    "judge": "definition-match",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Lemma 17.5",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.Work.B07.answer",
+     "role": "key",
+     "where": "YM/Work/B07.lean:119-124",
+     "note": "phase tables satisfy Basic, RealSpin, translation invariance, smoothness, respect S and orientation (Garland)",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Work.B08.answer",
+     "role": "key",
+     "where": "YM/Work/B08.lean:206-209",
+     "note": "reflection positivity and smeared reflection positivity for every phase table",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Work.B09.answer",
+     "role": "key",
+     "where": "YM/Work/B09.lean:12-16",
+     "note": "inclusions, derivatives and stress laws transfer to every character",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Work.B10.answer",
+     "role": "key",
+     "where": "YM/Work/B10.lean:95-106",
+     "note": "caps (E7) from OneCap, smoothness, basic, inclusions, derivatives and respects",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Work.B11.answer",
+     "role": "key",
+     "where": "YM/Work/B11.lean:75-90",
+     "note": "OneCap holds for every phase table",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Extraction.Retain.lift_detect",
+     "role": "key",
+     "where": "YM/Phase/Picks.lean:128-158",
+     "note": "null spaces of the phase table equal those of S",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.OS.Spread.Resolution.Out",
+     "role": "support",
+     "where": "YM/Phase/Mixture.lean:78-87",
+     "note": "continuity of xi -> xi(M(w)) is the field `weak`",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.OS.Cluster.lifts",
+     "role": "key",
+     "where": "YM/Phase/Unique.lean:91-110",
+     "note": "for nu-almost every xi the chamber has unique heat ground (one-dimensional ground space)",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Org.Phase.Loom.cleanse",
+     "role": "attributed",
+     "where": "YM/Org/Phase.lean:60-76",
+     "note": "assembly of the selected phase from these pieces",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Bid.Garland",
+     "role": "support",
+     "where": "YM/Bid/Phase.lean:72-80",
+     "note": "bundles the table properties",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Org.Phase.Scripts",
+     "role": "support",
+     "where": "YM/Org/Phase.lean:25-33",
+     "note": "hierarchy, respects, orientation, inclusions, derivatives and stress laws per phase",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The claims (E1-E7 and inherited laws, equal null spaces, continuity in xi, one-dimensional ground space almost everywhere) are each stated by a separate Lean declaration; no single declaration bundles them, and several take hypotheses (Garland/Scripts structures, the assumed Stall.funds and Vendor fields) that [M] derives inside the proof.",
+   "confidence": "low",
+   "relation": "hasPart",
    "verification": {
     "batch": "S17-2",
     "mapper": "parts",
-    "verifier": null,
-    "complete": false
+    "verifier": "parts",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (17.14)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.Work.B05.answer",
+     "role": "key",
+     "where": "YM/Work/B05.lean:90-115",
+     "note": "M(w) = M(time-reflected w) for every distinct word (Phase.reflects), given the point-passage statement B04",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Org.Phase.reflects",
+     "role": "support",
+     "where": "YM/Org/Phase.lean:19-20",
+     "note": "the reflection identity as a definition",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Work.B06.answer",
+     "role": "key",
+     "where": "YM/Work/B06.lean:238-243",
+     "note": "M(w) = M(rotate w K) for every K in Ortho, given reflects, orientation and rotation laws",
+     "relation": "hasPart"
+    }
+   ],
+   "note": "The reflection identity and the O(4) identity are separate declarations, B05 and B06; B06 takes the reflection identity, steadiness and rotation laws as hypotheses, which [M] has at that point in the proof.",
+   "step": "YM.Work.B05.answer and YM.Work.B06.answer",
+   "confidence": "medium",
+   "relation": "hasPart",
    "verification": {
     "batch": "S17-2",
     "mapper": "parts",
-    "verifier": null,
-    "complete": false
+    "verifier": "parts",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (17.15)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "inlined",
+   "lean": [
+    {
+     "decl": "YM.Extraction.Retain.bit",
+     "role": "key",
+     "where": "YM/Phase/Detect.lean:22-58",
+     "note": "from vacuum power moments <Omega,((x*x)^n)Omega> <= t^(2n) and `Out.ground` it derives integral of |xi(x)|^(2n) d nu <= t^(2n), then |xi(x)| <= t for every xi",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Extraction.Retain.Funds",
+     "role": "support",
+     "where": "YM/Phase/Detect.lean:81-83",
+     "note": "the chessboard power bounds Tall for Delta_1 and Delta_2 with t = gap are an assumed hypothesis here",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Extraction.Retain.Tall",
+     "role": "support",
+     "where": "YM/Phase/Detect.lean:21",
+     "note": "<Omega,((x* x)^n) Omega> <= t^(2n)",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The moment inequality is the `hg` step of `bit` (with Tall P x t unfolded through Out.ground); the bound for the vacuum power moments, which [M] derives from the chessboard estimate in the same proof, is taken in [L] as the hypothesis `Funds`.",
+   "step": "YM.Extraction.Retain.bit (YM/Phase/Detect.lean:32-34)",
+   "confidence": "medium",
+   "relation": "relatedMatch",
    "verification": {
     "batch": "S17-2",
     "mapper": "inlined",
-    "verifier": null,
-    "complete": false
+    "verifier": "inlined",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Corollary 17.6",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.Work.B13.answer",
+     "role": "key",
+     "where": "YM/Work/B13.lean:91-105",
+     "note": "for every phase gives slab operators on the phase OS space acting on plants by the entering law, with norm at most ||A.place d w|| (step he, lines 94-99) and the cap bounds with the original constants",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Work.B02.answer",
+     "role": "key",
+     "where": "YM/Work/B02.lean:17-30",
+     "note": "for any spread with AllCopy, including the phase spread from B13, the slab laws hold with smooth matrix elements and the derivative identity on labels",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.OS.Spread.Laws",
+     "role": "support",
+     "where": "YM/OS/Slabs.lean:153-162",
+     "note": "regularity and the derivative identity as fields",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Bid.B13",
+     "role": "support",
+     "where": "YM/Bid/Phase.lean:111-113",
+     "note": "the statement: exists B : Spread Z with B.AllCopy",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Existence, boundedness, the entering identity that gives the composition law, and the norm bound by the mixed-space slab norm are in B13.answer (the norm inequality only inside its proof, not in Bid.B13), and the derivative identity is B02.answer applied to the phase spread. No single statement bundles them.",
+   "confidence": "low",
+   "relation": "hasPart",
    "verification": {
     "batch": "S17-2",
     "mapper": "close",
-    "verifier": null,
-    "complete": false
+    "verifier": "parts",
+    "agreed": false,
+    "judge": "parts",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Eq (17.16)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.DiffPlan.through_adjoint",
+     "role": "key",
+     "where": "YM/Euclid/Union.lean:90-94",
+     "note": "unionAdj (pin d v) = pin d (adj d a v): the star on the union space acts on the image of the inclusion by reflection plus conjugation",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Boundary.calibrate",
+     "role": "key",
+     "where": "YM/Fields/Star.lean:45-46",
+     "note": "the induced star map unionAdj satisfies starRead, for the time axis",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Boundary.starRead",
+     "role": "support",
+     "where": "YM/Fields/Star.lean:42-43",
+     "note": "J (pin d v) = pin d (adj h d timeAxis v), the predicate pinning a star map to the formula",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.DiffPlan.unionAdj",
+     "role": "support",
+     "where": "YM/Euclid/Union.lean:85-88",
+     "note": "the antilinear star on the union of the label spaces",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Table.adj",
+     "role": "support",
+     "where": "YM/Euclid/Null.lean:165-166",
+     "note": "reflection at an axis composed with conjugation",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "With a the time axis, the star of the inclusion of A is the inclusion of the time-reflected conjugate; through_adjoint proves it for the induced star unionAdj and calibrate restates it as starRead for the time axis, so both state the item.",
+   "confidence": "medium",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S17-2",
     "mapper": "exact",
-    "verifier": null,
-    "complete": false
+    "verifier": "exact",
+    "agreed": false,
+    "judge": "exact",
+    "source": "judge",
+    "complete": true
    }
   },
   {
@@ -20844,8 +21331,9 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S17-3",
-    "mapper": null,
-    "verifier": null,
+    "mapper": "weaker",
+    "verifier": "close",
+    "agreed": false,
     "complete": false
    }
   },
@@ -20857,8 +21345,9 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S17-3",
-    "mapper": null,
-    "verifier": null,
+    "mapper": "weaker",
+    "verifier": "parts",
+    "agreed": false,
     "complete": false
    }
   },
@@ -20870,8 +21359,9 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S17-3",
-    "mapper": null,
-    "verifier": null,
+    "mapper": "close",
+    "verifier": "parts",
+    "agreed": false,
     "complete": false
    }
   },
@@ -20883,35 +21373,128 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S17-3",
-    "mapper": null,
-    "verifier": null,
+    "mapper": "close",
+    "verifier": "exact",
+    "agreed": false,
     "complete": false
    }
   },
   {
    "id": "Lemma 17.10",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.EveryPhase.word_continuity",
+     "role": "key",
+     "where": "YM/EveryPhase/Barycenter.lean:48-",
+     "note": "xi -> W n v f is continuous for every label list and joint test.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.EveryPhase.barycenter",
+     "role": "key",
+     "where": "YM/EveryPhase/Barycenter.lean:75-",
+     "note": "Integral over phases of W n v f equals the final boundary distribution F.B.world.W n v f (the mixed boundary).",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.EveryPhase.Stress.force",
+     "role": "key",
+     "where": "YM/EveryPhase/Implement.lean:94-117",
+     "note": "Continued stress is symmetric, Hermitian, conserved, Lorentz tensor, and satisfies the charge law (commutator).",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.EveryPhase.Stress.Force",
+     "role": "key",
+     "where": "YM/EveryPhase/Implement.lean:81-92",
+     "note": "Fields orbital, symmetric, hermitian, conserve, commutator.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.EveryPhase.Stress.local_action",
+     "role": "key",
+     "where": "YM/EveryPhase/Charge.lean:143-",
+     "note": "The charge law under the support hypothesis.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.EveryPhase.Completed",
+     "role": "support",
+     "where": "YM/EveryPhase/Extension.lean:51-71",
+     "note": "Fields depends, at_boundary, continued_stress.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.EveryPhase.Almanac",
+     "role": "support",
+     "where": "YM/EveryPhase/Pack.lean:117-132",
+     "note": "Fields baseC, baseS, baseB, baseR: the theory at the selected point F.α.atPoint is the selected one.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Continuity in the phase, the phase average equal to the mixed boundary distribution, and the continued stress with its charge law each have a declaration, uniform over characters; the selection of the theory and continuation at xi_* is carried by the Almanac fields baseC-baseR.",
+   "confidence": "medium",
+   "relation": "hasPart",
    "verification": {
     "batch": "S17-3",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "parts",
+    "verifier": "parts",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (17.18)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-close",
+   "lean": [
+    {
+     "decl": "YM.Boundary.Small.matrix",
+     "role": "key",
+     "where": "YM/Fields/Tall.lean:49-52",
+     "note": "<Omega, bar_p(v_0) trainB ...>, the first factor and the product of propagator-times-insertion.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Boundary.Small.trainB",
+     "role": "key",
+     "where": "YM/Fields/Tall.lean:44-48",
+     "note": "Recursive product of rip (heat in Im, e^{i Re z H}, spatial translation) and slab insertion bar_p.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Boundary.Small.Defined",
+     "role": "key",
+     "where": "YM/Fields/Tall.lean:66-67",
+     "note": "F.F n z x v = B.matrix p n z x v whenever 4p < all height gaps (lit z p).",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Boundary.Small.rip",
+     "role": "support",
+     "where": "YM/Fields/Tall.lean:34-35",
+     "note": "The operator G_{xi,eps}.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Next.BOUNDARY.Compatible",
+     "role": "attributed",
+     "where": "YM/Next/BOUNDARY/Stage.lean:190-197",
+     "note": "Per-contour compatibility with a slab Spread via Rhythm.yields (Small.Defined); reveals field.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "[M] defines F_n^xi by the product formula with eps free subject to 4 eps < min Im gap, vacuum the OS vacuum, B_eps = B_{2eps}(a(eps e_4)). [L] does not define the contour function by the formula: Waves.F is data constrained to equal Small.matrix for every admissible width p (width 2p slab insertion at position 0 p, strict 4p < gaps, p < 1), so the formula holds in [L] as a characterization, with p for eps.",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S17-3",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-close",
+    "verifier": "definition-close",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
@@ -20922,35 +21505,86 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S17-3",
-    "mapper": null,
-    "verifier": null,
+    "mapper": "exact",
+    "verifier": "close",
+    "agreed": false,
     "complete": false
    }
   },
   {
    "id": "Eq (17.20)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.Boundary.Waves.meant",
+     "role": "key",
+     "where": "YM/Shift/Breath.lean:50-66",
+     "note": "psi v y f = pol v y f 1 m - integral_0^1 wind (Taylor with remainder along the ray rho = rate n, A = clock (rate n), moves k = A^k).",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Boundary.Waves.desired",
+     "role": "support",
+     "where": "YM/Shift/Breath.lean:27-28",
+     "note": "The right-hand side of (17.20).",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Boundary.Waves.right",
+     "role": "helper",
+     "where": "YM/Shift/Breath.lean:40-48",
+     "note": "Derivative of the Taylor polynomial in t.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Identity holds for y in the open ordered-height region under the Lines (integration by parts, d/dt psi = psi(.;A f)) and Along (continuity) hypotheses, which the contour supplies; coefficients (-t)^k/k! and the remainder match.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S17-3",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "exact",
+    "verifier": "exact",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (17.21)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "close",
+   "lean": [
+    {
+     "decl": "YM.Boundary.Waves.during",
+     "role": "key",
+     "where": "YM/Shift/Sol.lean:101-102",
+     "note": "Distn.fourier (W.W n v) f = F.psi v y (hat (lifts (dawn y) f)) for compactly supported f, y in the ordered-height region.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Work.C05.answer",
+     "role": "key",
+     "where": "YM/Work/C05.lean:205-230",
+     "note": "Proof of Bid.C05: Region, Breathes, Lines, Along, NonTangentialFree imply during.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Bid.C05",
+     "role": "key",
+     "where": "YM/Bid/Corners.lean:62-63",
+     "note": "Statement.",
+     "relation": "closeMatch"
+    }
+   ],
+   "note": "Same identity for compactly supported frequency tests: boundary Fourier transform equals the strict-height psi of the exponentially multiplied test (lifts = exp(<y,x>) f). [L] writes the Fourier convention with Distn.fourier, Probe.hat and lifts rather than [M]'s b-hat_+(-.) and e^{sum y_j p_j^4}; the sign and normalization conventions were not matched symbol by symbol.",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S17-3",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "close",
+    "verifier": "close",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
@@ -20961,8 +21595,9 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S17-3",
-    "mapper": null,
-    "verifier": null,
+    "mapper": "inlined",
+    "verifier": "close",
+    "agreed": false,
     "complete": false
    }
   },
@@ -20974,8 +21609,9 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S17-3",
-    "mapper": null,
-    "verifier": null,
+    "mapper": "inlined",
+    "verifier": "close",
+    "agreed": false,
     "complete": false
    }
   },
@@ -21473,223 +22109,844 @@
   },
   {
    "id": "Eq (18.6)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.Trace.Over.sizeQ'",
+     "role": "key",
+     "where": "YM/TraceExtension/Chart/Dray.lean:57-62",
+     "note": "norm bound ||beta_i K_i B_i^L|| <= c R_i (RQ = Pig = exp((loglog)^2/6))",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Trace.Over.transferX",
+     "role": "key",
+     "where": "YM/TraceExtension/Chart/Dray.lean:63-79",
+     "note": "mu_i(beta_i K_i B_i^L) -> -slope for functionals mu_i obeying PaymentR",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Trace.Slate.penumbra",
+     "role": "key",
+     "where": "YM/TraceExtension/Slate/Pony.lean:30-65",
+     "note": "same two claims for the fixed functional Lease on the level-5 space, before transport by s_i",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Trace.Over.beater",
+     "role": "key",
+     "where": "YM/TraceExtension/Chart/Token.lean:61-69",
+     "note": "K_i B_i^B -> div^Max B for each pillar label",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Trace.Over.mere",
+     "role": "key",
+     "where": "YM/TraceExtension/Chart/Token.lean:76-89",
+     "note": "taxA(P_i)*(mu_i(K_i B_i^B) - rho(bareVector)) -> 0, taxA = exp((loglog)^2/5) = E_i",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Trace.Over.PaymentR",
+     "role": "support",
+     "where": "YM/TraceExtension/Chart/Token.lean:70-75",
+     "note": "bounded functionals mu_i with lead-order closeness to rho_tr; supplied by Prosper.vote",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Trace.Terrace.Prosper",
+     "role": "key",
+     "where": "YM/TraceExtension/Terrace/Lease.lean:27-30",
+     "note": "line 2: scaled divergence maps s_i converge to the Maxwell divergence (alpha) and bounded functionals mu_i satisfy hat-beta*(mu_i(s_i y)-Lease y) -> 0 uniformly in y (vote)",
+     "from_verifier": true,
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Trace.Slate.rungs",
+     "role": "key",
+     "where": "YM/TraceExtension/Slate/Garnet.lean:62-70",
+     "note": "proves Prosper for the constructed sequence",
+     "from_verifier": true,
+     "relation": "hasPart"
+    }
+   ],
+   "note": "The norm bound, the slope limit for B=L, the convergence of K_iB_i^B and the E_i-rate each have a Lean lemma. The functionals lambda_i are not constructed in a lemma; they enter as mu_i in PaymentR (field vote of Prosper), and the rate lemma `mere` uses rho(bareVector(BornZ B)) for rho_tr(div_raw B).",
+   "confidence": "medium",
+   "relation": "hasPart",
    "verification": {
     "batch": "S18-2",
     "mapper": "parts",
-    "verifier": null,
-    "complete": false
+    "verifier": "parts",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (18.7)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.Trace.Shelves.nearing_h",
+     "role": "key",
+     "where": "YM/TraceExtension/Shelves/Pear.lean:66-73",
+     "note": "A_i B_i^B -> B (Phase4 = beta r^4 U^-1) as materialB",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Trace.Shelves.muteP",
+     "role": "key",
+     "where": "YM/TraceExtension/Shelves/Pear.lean:74-77",
+     "note": "b^p tr(A_i B_i^B) -> 0 for B not equal to D",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Trace.Terrace.gamut",
+     "role": "key",
+     "where": "YM/TraceExtension/Terrace/Dusk.lean:89-95",
+     "note": "beta_i / hatBeta -> 1",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Trace.Terrace.unveil",
+     "role": "key",
+     "where": "YM/TraceExtension/Terrace/Calendar.lean:37",
+     "note": "rescaled degree-4 maps Moment4 converge to Hill4 (A_i B_i^B -> B)",
+     "from_verifier": true,
+     "relation": "hasPart"
+    }
+   ],
+   "note": "Each of the three limits has a lemma; B=L,Xi,D are encoded as Bend labels (none, some false, some true), and the trace decay excludes the label of D as in [M].",
+   "confidence": "medium",
+   "relation": "hasPart",
    "verification": {
     "batch": "S18-2",
     "mapper": "parts",
-    "verifier": null,
-    "complete": false
+    "verifier": "parts",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Lemma 18.5",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.Trace.Over.sizeQ'",
+     "role": "key",
+     "where": "YM/TraceExtension/Chart/Dray.lean:57-62",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Trace.Over.transferX",
+     "role": "key",
+     "where": "YM/TraceExtension/Chart/Dray.lean:63-79",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Trace.Over.beater",
+     "role": "key",
+     "where": "YM/TraceExtension/Chart/Token.lean:61-69",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Trace.Over.mere",
+     "role": "key",
+     "where": "YM/TraceExtension/Chart/Token.lean:76-89",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Trace.Shelves.nearing_h",
+     "role": "key",
+     "where": "YM/TraceExtension/Shelves/Pear.lean:66-73",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Trace.Shelves.muteP",
+     "role": "key",
+     "where": "YM/TraceExtension/Shelves/Pear.lean:74-77",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Trace.Terrace.gamut",
+     "role": "key",
+     "where": "YM/TraceExtension/Terrace/Dusk.lean:89-95",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Trace.Slate.penumbra",
+     "role": "attributed",
+     "where": "YM/TraceExtension/Slate/Pony.lean:30-65",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Trace.Terrace.Prosper",
+     "role": "key",
+     "where": "YM/TraceExtension/Terrace/Lease.lean:27-30",
+     "from_verifier": true,
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Trace.Slate.rungs",
+     "role": "key",
+     "where": "YM/TraceExtension/Slate/Garnet.lean:62-70",
+     "from_verifier": true,
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Trace.Terrace.unveil",
+     "role": "key",
+     "where": "YM/TraceExtension/Terrace/Calendar.lean:37",
+     "from_verifier": true,
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Trace.Over.Store_l",
+     "role": "support",
+     "where": "YM/TraceExtension/Chart/Time.lean:63-70",
+     "note": "assembles the transferred statements into the Scribe record",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The lemma is the union of the claims of (18.6) and (18.7), each stated by the listed lemmas; the existence of uniformly bounded functionals lambda_i is carried by the hypothesis structure PaymentR/Prosper.vote rather than a separate lemma.",
+   "confidence": "medium",
+   "relation": "hasPart",
    "verification": {
     "batch": "S18-2",
     "mapper": "parts",
-    "verifier": null,
-    "complete": false
+    "verifier": "parts",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (18.8)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "inlined",
+   "lean": [
+    {
+     "decl": "YM.Trace.Margin.brass",
+     "role": "key",
+     "where": "YM/TraceExtension/Margin/Beans.lean:17-42",
+     "note": "identity hV splits the coefficient into transported, loop, stationary, marked and forced pieces, with bounds on each",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Trace.Slate.penumbra",
+     "role": "support",
+     "where": "YM/TraceExtension/Slate/Pony.lean:30-65",
+     "note": "calls brass and assembles its bounds into the distance to -slope; contains no decomposition of its own",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "[M]'s display splits the finite coefficient into a main term and four errors; brass proves a decomposition of the coefficient into a transported term, loop, stationary, marked and forced remainders, which is the nearest counterpart, while penumbra only uses its bounds. The pieces are not identical to [M]'s four epsilons and the Haar integration-by-parts form is not stated separately.",
+   "step": "YM.Trace.Margin.brass, YM/TraceExtension/Margin/Beans.lean:30-42",
+   "confidence": "low",
+   "relation": "relatedMatch",
    "verification": {
     "batch": "S18-2",
     "mapper": "inlined",
-    "verifier": null,
-    "complete": false
+    "verifier": "inlined",
+    "agreed": false,
+    "judge": "inlined",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Eq (18.9)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.Trace.Over.july",
+     "role": "key",
+     "where": "YM/TraceExtension/Chart/Nectar.lean:79-84",
+     "note": "ZoomValue J beta theta -> (4 d2) O, with 4 d2 = 4 forceR = -slope",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Trace.Over.blossoms",
+     "role": "support",
+     "where": "YM/TraceExtension/Chart/Stage.lean:82-95",
+     "note": "the trace-summed form of the same limit for the cloaked current",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Trace.Over.forceR",
+     "role": "support",
+     "where": "YM/TraceExtension/Chart/Laurel.lean:40-40",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Trace.Over.Store_l",
+     "role": "support",
+     "where": "YM/TraceExtension/Chart/Time.lean:63-70",
+     "note": "Scribe.goal field restates it",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "july states beta_i r_i^4 U_i(4)^-1 Theta -> (4 d2) O_{F^2} with d2 = -slope/4, which is -slope O_{F^2}.",
+   "confidence": "medium",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S18-2",
     "mapper": "exact",
-    "verifier": null,
-    "complete": false
+    "verifier": "exact",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Lemma 18.6",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "stronger",
+   "lean": [
+    {
+     "decl": "YM.TraceExtension.compact_limit",
+     "role": "key",
+     "where": "YM/TraceExtension/LogScaling.lean:151-157",
+     "note": "continuous compactly supported phi",
+     "relation": "broadMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.spectral_limit",
+     "role": "key",
+     "where": "YM/TraceExtension/LogScaling.lean:163-168",
+     "note": "Schwartz phi",
+     "relation": "broadMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.schwartz_limit",
+     "role": "support",
+     "where": "YM/TraceExtension/LogScaling.lean:159-162",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Lean proves the limit with constant A/(1536 pi) for any A >= 0 satisfying EuclideanAsymptotic F A and any TraceSpectrum, while [M] fixes the specific amplitude from TR; the conclusion is otherwise the same cone integral of m^2 phi.",
+   "confidence": "high",
+   "relation": "broadMatch",
    "verification": {
     "batch": "S18-2",
     "mapper": "exact",
-    "verifier": null,
-    "complete": false
+    "verifier": "stronger",
+    "agreed": false,
+    "judge": "stronger",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Lemma 18.7",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.TraceExtension.Wick.euclidean_excludes",
+     "role": "key",
+     "where": "YM/TraceExtension/Wick/Refute.lean:75-84",
+     "note": "not eventually equal on (0,delta) to a finite Wick profile (Collection), given the positive limit",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.Wick.polynomial_excludes",
+     "role": "attributed",
+     "where": "YM/TraceExtension/Wick/Refute.lean:86-105",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.Wick.Collection",
+     "role": "support",
+     "where": "YM/TraceExtension/Wick/Refute.lean:15",
+     "note": "finite Wick profile: list of (coefficient, Track)",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "With the positive trace law EuclideanAsymptotic F A, 0<A (the standing TR), failure of eventual equality on the right of 0 is the statement that every delta admits r<delta with G_Theta(r) differing from the profile.",
+   "confidence": "medium",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S18-2",
     "mapper": "exact",
-    "verifier": null,
-    "complete": false
+    "verifier": "exact",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Definition 18.8",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-close",
+   "lean": [
+    {
+     "decl": "YM.TraceExtension.Wick.Palette.pairing",
+     "role": "key",
+     "where": "YM/TraceExtension/Wick/Palette.lean:114-114",
+     "note": "sum over permutations Fin u.l equiv Fin v.l of coefficientPair times branch; empty type for unequal lengths gives 0",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.Wick.Palette.branch",
+     "role": "key",
+     "where": "YM/TraceExtension/Wick/Palette.lean:110-112",
+     "note": "sum over choices of a pair-list entry for each position",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.Wick.exhibit",
+     "role": "key",
+     "where": "YM/TraceExtension/Wick/Palette.lean:65-65",
+     "note": "integral of the product of v values times phi of the summed shell momenta",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.Wick.Hue.value",
+     "role": "key",
+     "where": "YM/TraceExtension/Wick/Palette.lean:55-55",
+     "note": "P(q_m(k))/(2 omega); division by zero gives 0",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.Wick.Hue.forward",
+     "role": "support",
+     "where": "YM/TraceExtension/Wick/Palette.lean:54-54",
+     "note": "q_m(k)",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.Wick.Palette",
+     "role": "support",
+     "where": "YM/TraceExtension/Wick/Palette.lean:104-107",
+     "note": "pair lists (span, rgb) and coefficients coefficientPair",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Palette.pairing, branch and exhibit reproduce the sum over permutations, over pair-list choices and the convolution integral, with unequal lengths giving 0 and zero denominator giving 0. Lean encodes P as complex-coefficient monomials in time and space momentum (Numer) and has no separate functional L_{m,P}, so the packaging differs although the value agrees.",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S18-2",
     "mapper": "definition-match",
-    "verifier": null,
-    "complete": false
+    "verifier": "definition-close",
+    "agreed": false,
+    "judge": "definition-close",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Lemma 18.9",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.TraceExtension.Wick.wick_excludes",
+     "role": "key",
+     "where": "YM/TraceExtension/Wick/Palette.lean:130-133",
+     "note": "Negation of equality of the Wightman pairing with P.wicks q w on product tests with compactly supported wave transform, under EuclideanAsymptotic F A and 0<A.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Integration.ManuscriptTraceTests.WickCountertests",
+     "role": "key",
+     "where": "YM/Integration/ManuscriptTraceTests.lean:27-32",
+     "note": "Manuscript-shaped existence form.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.Wick.polynomial_excludes",
+     "role": "support",
+     "where": "YM/TraceExtension/Wick/Refute.lean:86-90",
+     "note": "Same exclusion for a general Collection; wick_excludes reduces to it.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.Wick.Palette.wicks",
+     "role": "support",
+     "where": "YM/TraceExtension/Wick/Palette.lean:123-124",
+     "note": "Plays the role of W^pol(Q,Q';.).",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The Palette fixes the pairing data (mass shells, numerators, coefficients, empty words) that M's comparison data supplies, and the trace law EuclideanAsymptotic with 0<A is M's standing assumption; the packaging is encoding only.",
+   "confidence": "medium",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S18-3",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "exact",
+    "verifier": "close",
+    "agreed": false,
+    "judge": "exact",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Definition 18.10",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-close",
+   "lean": [
+    {
+     "decl": "YM.TraceExtension.Photons.Ambient",
+     "role": "key",
+     "where": "YM/TraceExtension/Fock/Space.lean:111",
+     "note": "Full direct sum L2 over sectors n and colour/spatial tags, with the sector measure photons n.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.Photons.photon",
+     "role": "key",
+     "where": "YM/TraceExtension/Fock/Space.lean:15-16",
+     "note": "d^3k/(2|k|), density zero at the origin.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.Photons.PhysicalWave",
+     "role": "key",
+     "where": "YM/TraceExtension/Fock/Identify.lean:14-19",
+     "note": "Symmetric and transverse in each slot.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.Photons.Comparison",
+     "role": "support",
+     "where": "YM/TraceExtension/Fock/Identify.lean:23-27",
+     "note": "Translations multiply by Probe.plane(forward x) b, the phase exp(i b . p_tot).",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.Photons.vacuum",
+     "role": "support",
+     "where": "YM/TraceExtension/Fock/Weyl.lean:121",
+     "note": "Sector-zero unit.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.Photons.polarization",
+     "role": "support",
+     "where": "YM/TraceExtension/Fock/Weyl.lean:15-17",
+     "note": "The projector delta_ab - k_a k_b/|k|^2.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "L packages F_n as the full sum of L2 spaces over tagged sectors (symmetric transverse waves are a predicate, PhysicalWave) instead of tensor powers of K_n. L's projector at k=0 is delta (0/0=0 in Lean), where M sets it to zero; the origin is a null set for the measure and no statement sees the difference.",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S18-3",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-close",
+    "verifier": "definition-close",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Definition 18.11",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-close",
+   "lean": [
+    {
+     "decl": "YM.TraceExtension.Photons.testPhoton",
+     "role": "key",
+     "where": "YM/TraceExtension/Fock/Weyl.lean:34-35",
+     "note": "v_h: |k| times the transverse projection of the plus Fourier transform at (k,|k|).",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.Photons.coherent",
+     "role": "key",
+     "where": "YM/TraceExtension/Fock/Weyl.lean:119",
+     "note": "exp(-qnorm/2) times the sector vectors; the sectors carry an extra factor I^k (def unweighted, Weyl.lean:111).",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.Photons.qnorm",
+     "role": "support",
+     "where": "YM/TraceExtension/Fock/Weyl.lean:78",
+     "note": "||v_h||^2.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.Photons.Comparison",
+     "role": "key",
+     "where": "YM/TraceExtension/Fock/Identify.lean:23-27",
+     "note": "Physical image, U Omega = Omega_0, translation covariance; linear isometry is the type of U.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.Photons.signal",
+     "role": "key",
+     "where": "YM/TraceExtension/Fock/Identify.lean:29",
+     "note": "psi_U(f) = U Phi_Theta(f) Omega.",
+     "relation": "closeMatch"
+    }
+   ],
+   "note": "L's coherent vector has the sector phase i^k in front of v_h^{tensor k}/sqrt(k!), which M's E(h) lacks. M's proof of Lemma 18.12 absorbs the same phase as a common sector unitary preserving comparisons. The other ingredients (v_h, normalization, comparison conditions, psi_U) agree.",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S18-3",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-close",
+    "verifier": "definition-close",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Lemma 18.12",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "stronger",
+   "lean": [
+    {
+     "decl": "YM.TraceExtension.Photons.regions_excludes",
+     "role": "key",
+     "where": "YM/TraceExtension/Fock/Regions.lean:36-38",
+     "note": "For r>0, EuclideanAsymptotic F A with 0<A and a Comparison, no bounded self-adjoint P fixing U H satisfies the equality for all f in open Q (closure in ball 0 r) and real h in open W spacelike-separated; P = id gives the ball version.",
+     "relation": "broadMatch"
+    },
+    {
+     "decl": "YM.Integration.ManuscriptTraceTests.InvariantCountertests",
+     "role": "key",
+     "where": "YM/Integration/ManuscriptTraceTests.lean:45-60",
+     "note": "Manuscript-shaped form including the ball and Q, W.",
+     "relation": "broadMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.Photons.excludes",
+     "role": "key",
+     "where": "YM/TraceExtension/Fock/Conclude.lean:47-49",
+     "note": "Same exclusion without the ball restriction (Nfl).",
+     "relation": "broadMatch"
+    },
+    {
+     "decl": "YM.Integration.ManuscriptTraceTests.MaxwellCountertests",
+     "role": "key",
+     "where": "YM/Integration/ManuscriptTraceTests.lean:34-43",
+     "note": "Unballed statement over every n and Comparison.",
+     "relation": "broadMatch"
+    }
+   ],
+   "note": "The ball version needs P = id in regions_excludes (one line), and L proves it for every bounded self-adjoint P fixing U H and with open Q, W, which is more than M prints. Standing assumption is the trace law (EuclideanAsymptotic, A>0). Coherent vectors carry the sector phase i^k, which M's proof absorbs into U.",
+   "confidence": "medium",
+   "relation": "broadMatch",
    "verification": {
     "batch": "S18-3",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "stronger",
+    "verifier": "stronger",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (18.10)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.TraceExtension.Photons.form_exists",
+     "role": "key",
+     "where": "YM/TraceExtension/Fock/Form.lean:27-42",
+     "note": "Existence of Form Y with signal f = readout f * val a.e., i.e. psi_U(f)_{k,s} = f^_+(p_tot) Y_{k,s}.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.TraceExtension.Photons.pieces",
+     "role": "key",
+     "where": "YM/TraceExtension/Fock/Weight.lean:64-67",
+     "note": "mu V equals the sum over sectors of the mass of |Y|^2 on {total momentum in V}, for every measurable V; the spectral-measure half.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.TraceExtension.Photons.Form",
+     "role": "support",
+     "where": "YM/TraceExtension/Fock/Form.lean:18-21",
+     "note": "Structure holding the amplitudes val and the means identity.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.Photons.parts",
+     "role": "helper",
+     "where": "YM/TraceExtension/Fock/Weight.lean:76-78",
+     "note": "pieces restricted to {time<=R}, the form used in the proof.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The amplitude factorization is the field means of Form, built in form_exists, and the pushforward identity is pieces; L's Y is M's Y up to the sector phase i^k.",
+   "step": "YM.TraceExtension.Photons.form_exists (Fock/Form.lean:27-42) and YM.TraceExtension.Photons.pieces (Fock/Weight.lean:64-67), used in saturate, Fock/Conclude.lean:32-44",
+   "confidence": "medium",
+   "relation": "hasPart",
    "verification": {
     "batch": "S18-3",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "parts",
+    "verifier": "inlined",
+    "agreed": false,
+    "judge": "parts",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Eq (18.11)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "close",
+   "lean": [
+    {
+     "decl": "YM.TraceExtension.Photons.local_position",
+     "role": "key",
+     "where": "YM/TraceExtension/Fock/VacuumLocal.lean:95-139",
+     "note": "For remote compactly supported probes g_i, paired_at (Y.wave) g = adjoint_at (Y.wave) g.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.Photons.paired_at",
+     "role": "support",
+     "where": "YM/TraceExtension/Fock/VacuumLocal.lean:85-86",
+     "note": "Left integral.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.Photons.adjoint_at",
+     "role": "support",
+     "where": "YM/TraceExtension/Fock/VacuumLocal.lean:87-88",
+     "note": "Right integral.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.Photons.Remote",
+     "role": "support",
+     "where": "YM/TraceExtension/Fock/VacuumLocal.lean:84",
+     "note": "Compact support inside the spacelike set.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Under the locality, comparison and trace-spectrum hypotheses, L states the equality of the two integrals for tests supported spacelike to zero, for the sector wave without the phase i^k that M folds into y.",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S18-3",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "close",
+    "verifier": "inlined",
+    "agreed": false,
+    "judge": "close",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Eq (18.12)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.TraceExtension.Photons.binds",
+     "role": "key",
+     "where": "YM/TraceExtension/Fock/Branches.lean:133-136",
+     "note": "A tempered q with paired_at = adjoint_at on remote tests has some k with signalPoly i q k = 0 for all slots i.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.Photons.signalPoly",
+     "role": "support",
+     "where": "YM/TraceExtension/Fock/Annihilate.lean:79-81",
+     "note": "Iterated factors zoom - eigenFee a, with eigenFee a = 2^a/2.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.Photons.dyadic_order",
+     "role": "helper",
+     "where": "YM/TraceExtension/Fock/Annihilate.lean:116-124",
+     "note": "Dyadic order used by binds.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The factors (zoom - 2^a/2) equal (D - 2^{a-1}), tempered-ness comes from Form.surface, and a scalar sector phase does not change the equation.",
+   "step": "YM.TraceExtension.Photons.binds (Fock/Branches.lean:133-136)",
+   "confidence": "medium",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S18-3",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "exact",
+    "verifier": "inlined",
+    "agreed": false,
+    "judge": "exact",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Eq (18.13)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.TraceExtension.Photons.burn",
+     "role": "key",
+     "where": "YM/TraceExtension/Fock/Conclude.lean:15-21",
+     "note": "Box mass of the sector wave on barrel (all |k_j| <= 2^j) is at most tally mu ((n+1) 2^j).",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.TraceExtension.Photons.consumes",
+     "role": "key",
+     "where": "YM/TraceExtension/Fock/Conclude.lean:22-28",
+     "note": "Evaporates: 2^{-8l} times the box mass tends to 0, from burn and log_high.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.TraceExtension.log_high",
+     "role": "helper",
+     "where": "YM/TraceExtension/Dyadic.lean:23-39",
+     "note": "2^{-8i} tally mu (B 2^i) tends to 0 from the trace law.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.Photons.Evaporates",
+     "role": "support",
+     "where": "YM/TraceExtension/Fock/Age.lean:65-68",
+     "note": "Growth gate recording the limit.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "L bounds the box mass over all slots at once (barrel), where M's M_y constrains slot j; burn gives the inequality and consumes the limit.",
+   "step": "YM.TraceExtension.Photons.burn and YM.TraceExtension.Photons.consumes (Fock/Conclude.lean:15-28)",
+   "confidence": "medium",
+   "relation": "hasPart",
    "verification": {
     "batch": "S18-3",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "parts",
+    "verifier": "inlined",
+    "agreed": false,
+    "judge": "parts",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Lemma 18.13",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.TraceExtension.Photons.smell",
+     "role": "key",
+     "where": "YM/TraceExtension/Fock/Occult.lean:12-24",
+     "note": "For a probability measure mu and maps P z that preserve inner products on physical waves and fix U H, no equality of the two mu-averages holds for all open Q, W (closure Q in ball 0 r, closures spacelike) and tests supported in them; proved from regions_excludes with P = id.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Integration.ManuscriptTraceTests.InvariantCountertests",
+     "role": "key",
+     "where": "YM/Integration/ManuscriptTraceTests.lean:45-60",
+     "note": "Positive form: exists Q, W, f, h with the two averages different.",
+     "relation": "exactMatch"
+    }
+   ],
+   "note": "Same hypotheses (probability space, nonlinear P_z preserving physical inner products and fixing U H, r>0, trace law as standing assumption) and conclusion; the non-integrable-is-zero convention is Lean's Bochner integral default. smell is stated as a negation of the all-tests equality.",
+   "confidence": "medium",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S18-3",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "exact",
+    "verifier": "exact",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
@@ -21700,7 +22957,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S19-1",
-    "mapper": null,
+    "mapper": "close",
     "verifier": null,
     "complete": false
    }
@@ -21713,7 +22970,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S19-1",
-    "mapper": null,
+    "mapper": "no-match",
     "verifier": null,
     "complete": false
    }
@@ -21726,7 +22983,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S19-1",
-    "mapper": null,
+    "mapper": "parts",
     "verifier": null,
     "complete": false
    }
@@ -21739,7 +22996,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S19-1",
-    "mapper": null,
+    "mapper": "inlined",
     "verifier": null,
     "complete": false
    }
@@ -21752,7 +23009,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S19-1",
-    "mapper": null,
+    "mapper": "close",
     "verifier": null,
     "complete": false
    }
@@ -21765,7 +23022,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S19-1",
-    "mapper": null,
+    "mapper": "parts",
     "verifier": null,
     "complete": false
    }
@@ -21778,7 +23035,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S19-1",
-    "mapper": null,
+    "mapper": "definition-close",
     "verifier": null,
     "complete": false
    }
@@ -21791,7 +23048,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S19-1",
-    "mapper": null,
+    "mapper": "definition-match",
     "verifier": null,
     "complete": false
    }
@@ -21804,7 +23061,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S19-1",
-    "mapper": null,
+    "mapper": "definition-match",
     "verifier": null,
     "complete": false
    }
@@ -21817,7 +23074,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S19-1",
-    "mapper": null,
+    "mapper": "parts",
     "verifier": null,
     "complete": false
    }
@@ -21830,7 +23087,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S19-1",
-    "mapper": null,
+    "mapper": "parts",
     "verifier": null,
     "complete": false
    }
