@@ -15,9 +15,9 @@
   "close": 94,
   "inlined": 18,
   "not-formalized-not-needed": 6,
-  "weaker": 18,
-  "no-match": 18,
-  "unclear": 6,
+  "weaker": 16,
+  "no-match": 17,
+  "unclear": 9,
   "differs": 5
  },
  "items": [
@@ -24126,59 +24126,80 @@
   },
   {
    "id": "Eq (19.11)",
-   "status": "weaker",
+   "status": "unclear",
    "lean": [
     {
      "decl": "YM.OPE.Orbits.coefficient_rate",
      "role": "key",
      "where": "YM/OPE/Orbits/Separated.lean:17-23",
-     "note": "final coefficients R.coef at most e^{(W-m)aT}",
-     "relation": "narrowMatch"
+     "note": "final coefficients R.coef at most e^{(W-m)aT}"
     },
     {
      "decl": "YM.OPE.Orbits.algebra_rate",
      "role": "key",
      "where": "YM/OPE/Orbits/Separated.lean:30-37",
-     "note": "final tested remainder algebraError (algebra norm, before state evaluation) at most e^{[Wa-(m+1)(a-b)+Vc]T}",
-     "relation": "narrowMatch"
+     "note": "final tested remainder algebraError (algebra norm, before state evaluation) at most e^{[Wa-(m+1)(a-b)+Vc]T}"
     },
     {
      "decl": "YM.OPE.group_coeff",
      "role": "key",
      "where": "YM/OPE/Schemes/Travel.lean:24-30",
-     "note": "same coefficient rate (sigma g - i)a in the Prescription formulation",
-     "relation": "narrowMatch"
+     "note": "same coefficient rate (sigma g - i)a in the Prescription formulation"
     },
     {
      "decl": "YM.OPE.group_remainder",
      "role": "key",
      "where": "YM/OPE/Schemes/Travel.lean:31-41",
-     "note": "same remainder rate in every viewer, Prescription formulation",
-     "relation": "narrowMatch"
+     "note": "same remainder rate in every viewer, Prescription formulation"
     },
     {
      "decl": "YM.OPE.Orbits.fresh_price",
      "role": "support",
      "where": "YM/OPE/Orbits/Gain.lean:21-31",
-     "note": "degree-m fresh vector rate, nearest to the raw coordinates",
-     "relation": "relatedMatch"
+     "note": "degree-m fresh vector rate, nearest to the raw coordinates"
+    },
+    {
+     "decl": "YM.OPE.available_cost",
+     "role": "key",
+     "where": "YM/OPE/Exchange/Arrangement.lean:65"
+    },
+    {
+     "decl": "YM.OPE.arrangement_cost",
+     "role": "key",
+     "where": "YM/OPE/Exchange/Arrangement.lean:68"
+    },
+    {
+     "decl": "YM.OPE.Prescription.ope",
+     "role": "support",
+     "where": "YM/OPE/Splitting/Detector.lean:80"
+    },
+    {
+     "decl": "YM.OPE.groundError",
+     "role": "support",
+     "where": "YM/OPE/Exchange/Arrangement.lean:26"
     }
    ],
-   "note": "[M] prints the bounds for the raw coordinates lambda^raw and the raw remainder R_D^raw built from the raw projection. [L] bounds only the final coefficients and the tested remainder with the same exponents, in two parallel formulations, and has no raw coordinate or raw remainder.",
+   "note": "Contested: one skeptic upholds the claimed weaker, the other refutes it: [M] prints lambda^raw_{i,kappa} <= e^{(W-i)alpha T} and ||R_D^raw|| <= e^{[W alpha-(D+1)(alpha-beta)+V upsilon]T}, with lambda^raw = sum_beta m_{(i,kappa)beta} S(w_o,B_{i,beta}) and R_D^raw the algebra difference against the raw-coefficient truncation.",
    "confidence": "medium",
    "finding": {
     "claim": "weaker",
-    "confirmed": false
+    "confirmed": false,
+    "refuted": true
    },
-   "relation": "narrowMatch",
+   "relation": null,
    "verification": {
     "batch": "S19-2",
     "mapper": "weaker",
     "verifier": "weaker",
     "agreed": false,
     "judge": "weaker",
-    "source": "judge",
+    "source": "judge+skeptics",
     "skeptics": [
+     {
+      "refuted": true,
+      "status": "parts",
+      "reason": "[M] prints lambda^raw_{i,kappa} <= e^{(W-i)alpha T} and ||R_D^raw|| <= e^{[W alpha-(D+1)(alpha-beta)+V upsilon]T}, with lambda^raw = sum_beta m_{(i,kappa)beta} S(w_o,B_{i,beta}) and R_D^raw the algebra difference against the raw-coefficient truncation. The claim that [L] has no raw coordinate or raw remainder is wrong: `Prescription.ope a x v o = sum_{p in (sheet a).support} (sheet a) p * reading S x v o p` (docstring: each needle 'reads the *raw product*') is exactly lambda^raw, and `groundError = viewing U (beside x y) (beside p q) - sum_{i in bands n} (P.ope i x p o) • viewing U (beside (sole o) y) (beside (sole (P.letter i)) q)` is R_D^raw in the unselected algebra. `available_cost` / `group_coeff` give `RateLE ... (P.ope i ...) (((sigma p) - i.fst)*s)` and `arrangement_cost` gives `RateLE ... groundError ... ((sigma p)*s-(n+1)*(s-u)+(sigma q)*v)` in norm, i.e. both raw bounds with the printed exponents; the Orbits lemmas cover the final-coefficient sentence that follows."
+     },
      {
       "refuted": false,
       "status": "weaker",
@@ -24186,30 +24207,53 @@
      }
     ],
     "claimed": "weaker",
-    "finding": "skeptics pending",
-    "complete": false
+    "finding": "unconfirmed",
+    "complete": true
    }
   },
   {
    "id": "Eq (19.12)",
-   "status": "no-match",
+   "status": "unclear",
    "lean": [
     {
      "decl": "YM.OPE.Orbits.balance_rate",
      "role": "support",
      "where": "YM/OPE/Orbits/Gain.lean:57-73",
-     "note": "bounds the final reader's tested difference whole - sum_j upon(fresh_j) at the rate W a-(m+1)(a-b)+V c; a different object from the averaged raw truncation error",
-     "relation": "relatedMatch"
+     "note": "bounds the final reader's tested difference whole - sum_j upon(fresh_j) at the rate W a-(m+1)(a-b)+V c; a different object from the averaged raw truncation error"
     },
     {
      "decl": "YM.OPE.Orbits.fresh_price",
      "role": "support",
      "where": "YM/OPE/Orbits/Gain.lean:21-31",
-     "note": "rate of the averaged fresh coefficient at the final level",
-     "relation": "relatedMatch"
+     "note": "rate of the averaged fresh coefficient at the final level"
+    },
+    {
+     "decl": "YM.OPE.Orbits.fresh_bridge",
+     "role": "key",
+     "where": "YM/OPE/Orbits/Fee.lean:45"
+    },
+    {
+     "decl": "YM.OPE.Orbits.bridge_averaged",
+     "role": "helper",
+     "where": "YM/OPE/Orbits/Fee.lean:38"
+    },
+    {
+     "decl": "YM.OPE.Orbits.Reader.fresh",
+     "role": "support",
+     "where": "YM/OPE/Orbits/Fresh.lean:15"
+    },
+    {
+     "decl": "YM.OPE.Orbits.Reader.cutTest",
+     "role": "support",
+     "where": "YM/OPE/Orbits/Cuts.lean:51"
+    },
+    {
+     "decl": "YM.OPE.Orbits.shadowOld",
+     "role": "support",
+     "where": "YM/OPE/Orbits/Quotes.lean:45"
     }
    ],
-   "note": "[M] bounds the Haar-averaged difference Q_j B_j w - Q_j L_{j,h} A_h at an auxiliary degree h >= j with exponent (W-h-1)alpha, using the raw truncation A_h. [L] has no raw truncation A_h, no maps L_{j,h} and no bound at general h; balance_rate bounds the final reader's difference only.",
+   "note": "Contested: one skeptic upholds the claimed no-match, the other refutes it: [M] prints Q_jB_jw - Q_jL_{j,h}A_h ≼ e^{(W-h-1)αT} for j ≤ h, where A_h = P_h^raw w_o is the raw truncation.",
    "searched": [
     "YM/OPE/Orbits/Average.lean, Cuts.lean, Gain.lean (averageV, balance_rate, fresh_price)",
     "grep shadowOld, raw, average in YM/OPE",
@@ -24218,17 +24262,23 @@
    "confidence": "medium",
    "finding": {
     "claim": "no-match",
-    "confirmed": false
+    "confirmed": false,
+    "refuted": true
    },
-   "relation": "noMatch",
+   "relation": null,
    "verification": {
     "batch": "S19-2",
     "mapper": "differs",
     "verifier": "no-match",
     "agreed": false,
     "judge": "no-match",
-    "source": "judge",
+    "source": "judge+skeptics",
     "skeptics": [
+     {
+      "refuted": true,
+      "status": "stronger",
+      "reason": "[M] prints Q_jB_jw - Q_jL_{j,h}A_h ≼ e^{(W-h-1)αT} for j ≤ h, where A_h = P_h^raw w_o is the raw truncation. [L]'s fresh_bridge (Fee.lean:45, with a section variable H described as an 'auxiliary physical match' whose 'Reader horizon and H needn't coincide') proves `RateLE φ A (fun i=> R.fresh n (x i) (o i) v - R.cutTest n H (Z i)) ((weight d-H-1)*a)`, where Z i = shadowOld R.port H (x i) (o i) v is the raw degree-H truncation at o, R.fresh n = knife n ∘ checkReal (the averaged Q_nB_n) and cutTest n H = knife n ∘ liftOne n H (that is, Q_nL_{n,H}). So [L] does have the raw truncation, the maps L_{j,h} and the bound at a general auxiliary degree. The claim considered only balance_rate and fresh_price, both of which use fresh_bridge. Status is stronger because fresh_bridge has no hypothesis n ≤ H."
+     },
      {
       "refuted": false,
       "status": "no-match",
@@ -24236,82 +24286,122 @@
      }
     ],
     "claimed": "no-match",
-    "finding": "skeptics pending",
-    "complete": false
+    "finding": "unconfirmed",
+    "complete": true
    }
   },
   {
    "id": "Lemma 19.9",
-   "status": "weaker",
+   "status": "unclear",
    "lean": [
     {
      "decl": "YM.OPE.Orbits.coefficient_rate",
      "role": "key",
      "where": "YM/OPE/Orbits/Separated.lean:17-23",
-     "note": "final coefficients: e^{(W-m)aT}",
-     "relation": "narrowMatch"
+     "note": "final coefficients: e^{(W-m)aT}"
     },
     {
      "decl": "YM.OPE.Orbits.algebra_rate",
      "role": "key",
      "where": "YM/OPE/Orbits/Separated.lean:30-37",
-     "note": "final tested remainder in the algebra before state evaluation",
-     "relation": "narrowMatch"
+     "note": "final tested remainder in the algebra before state evaluation"
     },
     {
      "decl": "YM.OPE.Orbits.all_rate",
      "role": "key",
      "where": "YM/OPE/Orbits/Separated.lean:27-28",
-     "note": "same rate after evaluation in every viewer",
-     "relation": "narrowMatch"
+     "note": "same rate after evaluation in every viewer"
     },
     {
      "decl": "YM.OPE.group_coeff",
      "role": "key",
      "where": "YM/OPE/Schemes/Travel.lean:24-30",
-     "note": "coefficient rate in the Prescription formulation",
-     "relation": "narrowMatch"
+     "note": "coefficient rate in the Prescription formulation"
     },
     {
      "decl": "YM.OPE.group_remainder",
      "role": "key",
      "where": "YM/OPE/Schemes/Travel.lean:31-41",
-     "note": "remainder rate in the Prescription formulation",
-     "relation": "narrowMatch"
+     "note": "remainder rate in the Prescription formulation"
     },
     {
      "decl": "YM.OPE.Orbits.balance_rate",
      "role": "support",
      "where": "YM/OPE/Orbits/Gain.lean:57-73",
-     "note": "closest to (19.12)",
-     "relation": "relatedMatch"
+     "note": "closest to (19.12)"
     },
     {
      "decl": "YM.OPE.Orbits.fresh_price",
      "role": "support",
      "where": "YM/OPE/Orbits/Gain.lean:21-31",
-     "note": "degree-m fresh vector, nearest to the raw coordinates",
-     "relation": "relatedMatch"
+     "note": "degree-m fresh vector, nearest to the raw coordinates"
+    },
+    {
+     "decl": "YM.OPE.arrangement_cost",
+     "role": "key",
+     "where": "YM/OPE/Exchange/Arrangement.lean:68"
+    },
+    {
+     "decl": "YM.OPE.Orbits.fresh_bridge",
+     "role": "key",
+     "where": "YM/OPE/Orbits/Fee.lean:45"
+    },
+    {
+     "decl": "YM.OPE.Orbits.bridge_averaged",
+     "role": "support",
+     "where": "YM/OPE/Orbits/Fee.lean:38"
+    },
+    {
+     "decl": "YM.OPE.Orbits.discrepancy_rate_old",
+     "role": "support",
+     "where": "YM/OPE/Orbits/Rent.lean:33"
+    },
+    {
+     "decl": "YM.OPE.groundError",
+     "role": "support",
+     "where": "YM/OPE/Exchange/Arrangement.lean:26"
+    },
+    {
+     "decl": "YM.OPE.available_cost",
+     "role": "support",
+     "where": "YM/OPE/Exchange/Arrangement.lean:65"
+    },
+    {
+     "decl": "YM.OPE.Orbits.shadowOld",
+     "role": "support",
+     "where": "YM/OPE/Orbits/Quotes.lean:45"
     }
    ],
-   "note": "[L] proves the last sentence of the lemma, the final coefficient and tested remainder rates under (G), in two formulations. The raw coordinate and raw remainder bounds (19.11) and the averaged error (19.12) have no counterpart, so the lemma's first display is not proved.",
+   "note": "Contested: one skeptic upholds the claimed weaker, the other refutes it: [M] prints raw-coordinate and raw-remainder rates (19.11), the averaged error Q_jB_jw-Q_jL_{j,h}A_h <= e^{(W-h-1)alpha T} (19.12), and the same bounds for the final coefficients and tested remainder.",
    "confidence": "medium",
    "finding": {
     "claim": "weaker",
-    "confirmed": false
+    "confirmed": false,
+    "refuted": true
    },
-   "relation": "narrowMatch",
+   "relation": null,
    "verification": {
     "batch": "S19-2",
     "mapper": "weaker",
     "verifier": "weaker",
     "agreed": false,
     "judge": "weaker",
-    "source": "judge",
-    "skeptics": [],
+    "source": "judge+skeptics",
+    "skeptics": [
+     {
+      "refuted": true,
+      "status": "parts",
+      "reason": "[M] prints raw-coordinate and raw-remainder rates (19.11), the averaged error Q_jB_jw-Q_jL_{j,h}A_h <= e^{(W-h-1)alpha T} (19.12), and the same bounds for the final coefficients and tested remainder. The claim that (19.11)-(19.12) lack counterparts fails: group_coeff (applied to the raw prescription P in available_cost) gives `RateLE ... (P.ope w (X i) g (o i)) ((sigma g - w.fst)*a)`, the raw coordinate bound; arrangement_cost bounds `groundError` = `viewing (x,y) - sum_i P.ope i x p o • viewing (o,y)`, i.e. R_D^raw in the algebra, at rate `sigma p*s-(n+1)(s-u)+sigma q*v`; fresh_bridge gives `R.fresh n w - R.cutTest n H (shadowOld H w)` (fresh = knife∘checkReal, shadowOld the raw projection) at rate `(weight d-H-1)*a`, which is (19.12) without even needing j<=h. With coefficient_rate/algebra_rate/all_rate for the final sentence, the lemma is covered in parts."
+     },
+     {
+      "refuted": false,
+      "status": "weaker",
+      "reason": "[M] prints raw coordinate and raw remainder bounds (19.11, lambda^raw and R_D^raw via P_h^raw, M^0) and the averaged error Q_jB_jw - Q_jL_{j,h}A_h (19.12), then says the final coefficients and tested remainder of Def. D33 obey the same bounds. [L] states only the last sentence: coefficient_rate gives RateLE of R.coef at ((weight d - m)*a) and algebra_rate/all_rate give the tested remainder at weight d*a-(D+1)(a-b)+weight e*c; none mentions raw projections, M^0 compressions or an averaged decoder error, and greps for such statements found none. The claim stands; the displays are not typos."
+     }
+    ],
     "claimed": "weaker",
-    "finding": "skeptics pending",
-    "complete": false
+    "finding": "unconfirmed",
+    "complete": true
    }
   },
   {
