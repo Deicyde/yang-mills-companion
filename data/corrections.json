@@ -1,0 +1,1389 @@
+{
+ "about": "Re-judgments after the independent review of session 4 (out/REVIEW.md), applied last by scripts/mapping/merge.py. kind: rejudged (status, links or finding changed) or reworded (note only). For confirmed findings: quote (printed in [M]), decls and readme (scripts/findings.py). skeptics: two new skeptic verdicts on a revised finding or a withdrawn one.",
+ "items": {
+  "Definition 6.12": {
+   "kind": "reworded",
+   "source": "review m11",
+   "note": "[M] only names two predicates on labels, ℓ^* = ℓ and invariance under the Lorentz action, and points to W1 and W2 for their consequences. [L] has no named predicates for them and imposes the general adjoint and covariance identities for all labels.",
+   "why": "[M] prints ℓ^*=ℓ (part1/06-phases.tex:95); the old note wrote [L]'s J ell = ell."
+  },
+  "Definition 6.3": {
+   "kind": "rejudged",
+   "source": "review M1",
+   "roles": {
+    "YM.Boundary.Fields": "support",
+    "YM.Boundary.Wightman": "support"
+   },
+   "why": "YM.Boundary.Fields fixes the labels to S.Union (Fields/System.lean:22-27): a specialization, not a statement of the whole definition, so it is no longer a key link."
+  },
+  "Eq (11.6)": {
+   "kind": "reworded",
+   "source": "review B2–B10, M5, m4–m9",
+   "why": "Confirmed: terrain_min (Next/STATIONARY/Spectral/RealGap.lean:484-491) concludes only the lower bound, and no declaration bounds the term above by x+μ² (grep for ')^9 ≤').",
+   "note": "For x ≥ 0 and μ > 0, the private `terrain_min` gives 2^{-10}(x+μ²) ≤ x + μ²(μ²/(x+μ²))⁹. The upper inequality ≤ x + μ² is elementary but stated nowhere in [L].",
+   "quote": "\\le x+\\mu^2\\,.",
+   "decls": [
+    "YM.Stationary.terrain_min"
+   ],
+   "readme": "the upper inequality x + μ²(μ²/(x+μ²))⁹ ≤ x + μ²; [L] states only the lower one (`YM.Stationary.terrain_min`)."
+  },
+  "Eq (13.21)": {
+   "kind": "reworded",
+   "source": "review B2–B10, M5, m4–m9",
+   "why": "Confirmed: `recloses` (YM/Next/SCHEDULE/Calling.lean:76-89) concludes `EBound … (C.allowance m)`, `KBound … (exp (-(B.price F).g j * (C.monitor (m+1))^2))` and `KBound … (C.forcedAllowance m)`, with allowance = hatCoupling^{11/5} and forcedAllowance = exp(−monitor^{1/5}) (YM/RG/History.lean:84-85); grep for 1024 finds no such bound. Review m9 accepted: the line now names the second 𝒦_m bound.",
+   "note": "From the stage budgets, `Deployment.recloses` proves ℰ_m ≤ `Calendar.allowance` m = ε_m^reg, 𝒦_m ≤ e^{−g_j (M^cut_{m+1})²} ≤ `Calendar.forcedAllowance` m = ε_m^for, and t_m²|Δ| ≤ H ⇒ |Δ| ≤ 1, and `DirectedRecipe.reload` carries these bounds into the retained output. No declaration bounds ℰ_m or 𝒦_m by a 1/1024 fraction of the allowances, which [M] prints.",
+   "quote": "\\mathcal E_m\\le\\epsilon_m^{\\rm reg}/1024,\\qquad\n\\mathcal K_m\\le\\epsilon_m^{\\rm for}/1024",
+   "decls": [
+    "YM.Next.Scheduling.Deployment.recloses",
+    "YM.Progress.DirectedRecipe.reload",
+    "YM.RG.Calendar.allowance",
+    "YM.RG.Calendar.forcedAllowance"
+   ],
+   "readme": "the factor 1/1024 in ℰ_m ≤ ε_m^reg/1024 and 𝒦_m ≤ ε_m^for/1024; [L]'s `Deployment.recloses` bounds ℰ_m by `Calendar.allowance` = ε_m^reg and 𝒦_m by `Calendar.forcedAllowance` = ε_m^for and by e^{−g_j (M^cut_{m+1})²}, with no factor 1/1024"
+  },
+  "Eq (13.29)": {
+   "kind": "reworded",
+   "source": "review B2–B10, M5, m4–m9",
+   "why": "Unchanged: greps for IsLinearMap/AffineMap/affine in UVExtension and FullVolume hit only linear column densities and pillows (Lacing/Chunk.lean:101, Lacing/Bridge.lean:69, Gale/Mare.lean:41) and lattice affine maps, none a kernel-degree extraction; the cutoff contraction is `Camp.mist` (Camp/Plum.lean:57), driven by `Seal.amounts`. The review confirms this item.",
+   "note": "[L]'s cutoff Cauchy argument takes its contraction from the assumed Lipschitz field `Seal.amounts` (‖H x − H y‖ ≤ R‖x − y‖ on `Grip`), giving the truncation bound soft^{k−m} in `Camp.mist` and cutoff compatibility in `Roads.Unum.commute`. No declaration states that a degree-a kernel-coefficient map is affine in its incoming kernel.",
+   "quote": "\\mathcal T_m^a(K+\\lambda(H-K))\n=\\mathcal T_m^a(K)+\\lambda(\\mathcal T_m^a(H)-\\mathcal T_m^a(K))",
+   "decls": [
+    "YM.UVExtension.Camp.mist",
+    "YM.UVExtension.Roads.Unum.commute"
+   ],
+   "readme": "affineness of the normalized kernel-coefficient map T_m^a in the incoming kernel; [L] compares cutoffs through the Lipschitz bound of `Camp.Seal`, with truncation error soft^{k−m} (`Camp.mist`), and has no kernel-coefficient map",
+   "add_links": [
+    {
+     "decl": "YM.UVExtension.Camp.mist",
+     "role": "support",
+     "where": "YM/UVExtension/Camp/Plum.lean:57"
+    },
+    {
+     "decl": "YM.UVExtension.Roads.Unum.commute",
+     "role": "support",
+     "where": "YM/UVExtension/Wren/Sand.lean:59"
+    }
+   ]
+  },
+  "Eq (13.30)": {
+   "kind": "rejudged",
+   "source": "review M2–M4 sweep",
+   "why": "Gain/Cannon.lean:59-64 (ran = p'.pitch − p.pitch, realm, jar, weightA := ‖(ran p p', jar Φ O p p')‖, a product of sup-normed pi types); Cannon.lean:66-70 (hope/highA: per-level max equals pose distance); Gain/Dance.lean:31 (pitch = toLambda hatBeta β = √(β/hatBeta)/normedWidth, Table/Atlas.lean:25); Gain/Resolve.lean:29-31 (bonusB = (trail 0).beta, local notation δ, track: u ≤ 2‖δ‖/brace 0). Review M4 verified at Cannon.lean:60-64.",
+   "status": "definition-close",
+   "note": "For two contests p, p' at one cutoff, `Contest.weightA` is the norm of the pair (`ran`, `jar`) of coordinate differences, the maximum over levels of max{|x'_m − x_m|, ‖A'_m − A_m‖}, with x_m = `pitch`, and δ is the local notation `bonusB p' − bonusB p` = β'_0 − β_0; the activity norm is that of [L]'s completed space `World`, and `Contest.track` proves 𝔡 ≤ 2|δ|/b_0.",
+   "add_links": [
+    {
+     "decl": "YM.PhysicalNext.Repeat.Muse.Contest.weightA",
+     "role": "key",
+     "where": "YM/FullVolume/Gain/Cannon.lean:64"
+    },
+    {
+     "decl": "YM.PhysicalNext.Repeat.Muse.Contest.bonusB",
+     "role": "key",
+     "where": "YM/FullVolume/Gain/Resolve.lean:29-30"
+    },
+    {
+     "decl": "YM.PhysicalNext.Repeat.Muse.Contest.pitch",
+     "role": "support",
+     "where": "YM/FullVolume/Gain/Dance.lean:31"
+    },
+    {
+     "decl": "YM.PhysicalNext.Repeat.Muse.Contest.track",
+     "role": "support",
+     "where": "YM/FullVolume/Gain/Resolve.lean:31-39"
+    }
+   ]
+  },
+  "Eq (13.31)": {
+   "kind": "reworded",
+   "source": "review B2–B10, M5, m4–m9",
+   "why": "Unchanged: `veil` (Camp/Poise.lean:17) is linear in b with no quadratic term; [L]'s coordinate is u + pulse·x (Camp/Motto.lean:48-49) with pulse = stretchB = β̂^{98/100} (Camp/Pin.lean:22, Lamppost/Grace.lean:14), and grep for sqrt/1/32 in Camp, Oriel, Crown, Spire, Dales finds no square-root coordinate. The review confirms this item.",
+   "note": "`Camp.Cart.play` gives [M]'s first two lines (top map `headA`, downward recursion `car`). [L]'s coupling coordinate is affine, β = slope + pulse·x with pulse = β̂^{98/100} (`Camp.speaks`), so `Camp.Cart.veil` is z_i = pulse_i⁻¹(b − ∑_{j<i} tally_j) on complex points, without [M]'s factor (2z_m)^{-1}, term χ_m u_m² or square-root coordinate β_m = β̂_m(χ_m x_m)².",
+   "quote": "u_m&=(2z_m)^{-1}\\left[b_m^{-1}\n\\left(\\mathfrak e-\\sum_{i<m}\\widehat{\\mathcal D}_{N,i}(u_{i+1},W_{i+1})\\right)-\\chi_m u_m^2\\right]",
+   "decls": [
+    "YM.UVExtension.Camp.Cart.veil",
+    "YM.UVExtension.Camp.Cart.play"
+   ],
+   "readme": "the third line, with factor (2z_m)^{-1} and term χ_m u_m² from β_m = β̂_m(χ_m x_m)²; [L]'s `Camp.Cart.veil` is z_i = pulse_i⁻¹(b − ∑_{j<i} tally_j), linear in the coupling coordinate, on complex points rather than series (the first two lines match `Camp.Cart.play`)",
+   "add_links": [
+    {
+     "decl": "YM.UVExtension.Camp.speaks",
+     "role": "support",
+     "where": "YM/UVExtension/Camp/Motto.lean:48"
+    },
+    {
+     "decl": "YM.UVExtension.Camp.pulse",
+     "role": "support",
+     "where": "YM/UVExtension/Camp/Pin.lean:22"
+    }
+   ]
+  },
+  "Eq (13.34)": {
+   "kind": "rejudged",
+   "source": "review M2–M4 sweep",
+   "why": "Gain/Cannon.lean:85-86 (strideB, with owed = β_i − β_{i+1} − α at Gain/Dance.lean:44); UVExtension/Camp/Poise.lean:29-31 (dwindle; the prefix-sum difference via sub_sub_sub_cancel_left at line 30).",
+   "note": "For two histories at a fixed cutoff, `Contest.strideB` states β'_i − β_i = δ − ∑_{k<i}(𝒟'_k − 𝒟_k), the finite recursion that [M] passes to the limit; the limit identity with δ = 0 is not stated and stays a step inside `Cart.dwindle`'s proof, in [L]'s linear coordinate.",
+   "add_links": [
+    {
+     "decl": "YM.PhysicalNext.Repeat.Muse.Contest.strideB",
+     "role": "support",
+     "where": "YM/FullVolume/Gain/Cannon.lean:85-86"
+    }
+   ]
+  },
+  "Eq (13.4)": {
+   "kind": "reworded",
+   "source": "review B2–B10, M5, m4–m9",
+   "why": "Review confirms (Eq (13.4) listed as sound). I re-read `Daisy.timing` (Daisy/Charm.lean:58-63, conclusion `Rate G L (-(1/2)) q ∧ Rate G L 0 p … Herd H Ξ A (|p x|) l`) and `Song.stanzaReady` (Song/Litho.lean:62-63, rates `sine p R.cubic (-β)`, `R.loop (-1)`); neither states a row, and greps for Jacobian/determinant remainders in the step found none.",
+   "note": "`Daisy.timing` gives each molecule an integrated majorant |p(x)| with p of rate 0 and a rate −1/2 factor q, absorbing all factor remainders at once, and `Song.stanzaReady` prices the cubic, quartic and loop path terms at rates −β and −1. No declaration states a row of the table, such as P_jβ'_u g³ for the stationary-action remainder or P_j(t_{m+1}+g)² for the Haar-Jacobian remainder.",
+   "quote": "\\text{stationary-action remainder}&P_j\\beta'_u g^3\\le P'_j\\mathfrak b^{-1/2}\\\\\n\\text{centered determinant remainder}&P_j(t_{m+1}+g)\\le P'_j\\mathfrak b^{-1/2}\\\\\n\\text{Gaussian-density and stationarity residuals}&P_j\\mathfrak b^{c_j^{\\rm res}}e^{-c_j^{\\rm tail}B}\\\\\n\\text{Haar-Jacobian remainder}&P_j(t_{m+1}+g)^2",
+   "decls": [
+    "YM.PhysicalNext.Repeat.Daisy.timing",
+    "YM.PhysicalNext.Repeat.Song.stanzaReady"
+   ],
+   "readme": "the row-by-row majorants, e.g. P_jβ'_u g³ for the stationary-action remainder, P_j(t_{m+1}+g) for the determinant remainder and P_j(t_{m+1}+g)² for the Haar-Jacobian remainder; [L] proves only the assembled molecule majorant with one rate −1/2 prefactor (`Daisy.timing`) and prices the cubic, quartic and loop path terms separately (`Song.stanzaReady`)"
+  },
+  "Eq (14.10)": {
+   "kind": "reworded",
+   "source": "review B2–B10, M5, m4–m9",
+   "why": "Unchanged. Incoming.lean:66-69, Allowance.lean:26,46-48, Stepped.lean:55-58 and Station.lean:44-45 (middle = k−height, width = middle−surplus) confirm; the same band hypothesis in Soft/Supra.lean:30-31 and Stepped.lean:143 also stops at middle, and no declaration states α^n𝒞^{h+v+2}ℰ^G ≤ 1.",
+   "note": "`Peak.Charge` packages `Ship.Allocated.charge` (ticket ≤ log(monitor_t)/(16n), [M]'s second requirement), `Perch.Tally` (growth, stop and force conditions with no Gaussian error ℰ_t^G, α_t or 𝒞_j power) and `Peak.Charge.assured`, the band β̂_u ∈ [β̂_t/2, β̂_t] only for `width` ≤ u ≤ `middle`, i.e. t−h_t−v_t ≤ u ≤ t−h_t. So [L] lacks the first requirement and asks the band on a shorter range, and neither set of conditions implies the other.",
+   "quote": "\\alpha_t^n\\mathcal C_j^{h_t(b)+v_t+2}\\mathcal E_t^{\\rm G}\\le1",
+   "decls": [
+    "YM.Next.Rank.Peak.Charge",
+    "YM.Next.Rank.Ship.Allocated.charge",
+    "YM.Next.Rank.Peak.Charge.assured",
+    "YM.Next.Rank.Perch.Tally"
+   ],
+   "readme": "α_t^n 𝒞_j^{h_t(b)+v_t+2} ℰ_t^G ≤ 1, and the band β̂_i ∈ [β̂_t/2, β̂_t] on all of k_t ≤ i ≤ t; [L]'s `Peak.Charge` has Q^cmp ≤ log ℳ_t/(16n) (`Ship.Allocated.charge`), the band only on [t−h_t−v_t, t−h_t] (`Peak.Charge.assured`), and the billing conditions `Perch.Tally` in place of the first requirement; neither implies the other.",
+   "add_links": [
+    {
+     "decl": "YM.Next.Rank.Station.middle",
+     "role": "support",
+     "where": "YM/Next/RANK/Station.lean:44"
+    },
+    {
+     "decl": "YM.Next.Rank.Station.width",
+     "role": "support",
+     "where": "YM/Next/RANK/Station.lean:45"
+    }
+   ]
+  },
+  "Eq (14.14)": {
+   "kind": "rejudged",
+   "source": "review B2–B10, M5, m4–m9",
+   "why": "The finding said the δ/b_* term is stated nowhere; it is written in the FullVolume route: Resolve.lean:33 `suffices hv:u ≤ r+8*glint*v` with r := ‖δ‖/(brace A.B.a 0) (line 32), δ = bonusB p'−bonusB p (line 30), glint = 1/128 (Amp/Shelf.lean:18, used `rfl` at line 33), proved at lines 35-39 via scaleV (Cannon.lean:90) and beauty (Cannon.lean:72). The review's confirmation (REVIEW.md:254) is rejected; its M4 already cites Contest.track.",
+   "note": "For two histories with endpoints `bonusB` differing by δ, the proof of `Contest.track` reduces to 𝒟 ≤ |δ|/brace 0 + 8·`glint`·𝒟 with 𝒟 = `weightA` and `glint` = 1/128, proves it from `Contest.scaleV` and `Contest.beauty`, and concludes 𝒟 ≤ 2|δ|/b_*; `Contest.one` draws the equal-endpoint consequence.",
+   "quote": "\\mathcal D\\le |\\delta|/b_*+8g_*\\mathcal D,\\qquad g_*=1/128.",
+   "decls": [
+    "YM.PhysicalNext.Repeat.Muse.Contest.track",
+    "YM.FullVolume.Amp.glint"
+   ],
+   "readme": "not a finding: 𝒟 ≤ |δ|/b_* + 8g_*𝒟 with g_* = 1/128 is the `suffices` step at Resolve.lean:33 in the proof of `Contest.track` (𝒟 = `weightA`, b_* = brace 0, g_* = `glint`), which concludes 𝒟 ≤ 2|δ|/b_*; equal endpoints give equal histories (`Contest.one`)",
+   "status": "inlined",
+   "add_links": [
+    {
+     "decl": "YM.PhysicalNext.Repeat.Muse.Contest.track",
+     "role": "key",
+     "where": "YM/FullVolume/Gain/Resolve.lean:31-39"
+    },
+    {
+     "decl": "YM.PhysicalNext.Repeat.Muse.Contest.one",
+     "role": "support",
+     "where": "YM/FullVolume/Gain/Resolve.lean:40-42"
+    },
+    {
+     "decl": "YM.PhysicalNext.Repeat.Muse.Contest.weightA",
+     "role": "support",
+     "where": "YM/FullVolume/Gain/Cannon.lean:64"
+    },
+    {
+     "decl": "YM.FullVolume.Amp.glint",
+     "role": "support",
+     "where": "YM/FullVolume/Amp/Shelf.lean:18"
+    }
+   ],
+   "skeptics": [
+    {
+     "refuted": false,
+     "status": "inlined",
+     "reason": "In `Contest.track`, Gain/Resolve.lean:30-33 sets δ = bonusB p′ − bonusB p and r := ‖δ‖/brace 0. 𝒟 = `weightA` (Cannon.lean:64), the maximum over coupling and activity coordinates. The proof then writes `suffices hv : u ≤ r+8*glint*v`, rewriting glint = 1/128. Lines 35-39 prove it from `scaleV` (Cannon.lean:90) and `beauty`, which matches 𝒟 ≤ |δ|/b_* + 8g_*𝒟 with g_* = 1/128."
+    },
+    {
+     "refuted": false,
+     "status": "inlined",
+     "reason": "[M] prints the display inside the proof of Lemma E1.3, recalling Lemma D-E1 (E-section.tex:196-200), with 𝒟 the maximum coordinate distance and δ the endpoint difference. In the proof of `Contest.track`, FullVolume/Gain/Resolve.lean:33 writes `suffices hv:u ≤ r+8*glint*v`, with r = ‖δ‖/brace 0, u = v = weightA (Cannon.lean:64, the max of the coupling and activity distances), δ = bonusB p′ − bonusB p and glint = 1/128 (Amp/Shelf.lean:18). That step is proved at Resolve.lean:35-39."
+    }
+   ]
+  },
+  "Eq (14.35)": {
+   "kind": "rejudged",
+   "source": "review M2–M4 sweep",
+   "why": "MergeProof/Biscuit.lean:52-55 (pudding statement, second conjunct); FullVolume/Dusk/Mauve.lean:38-41 (puddingR, over all Motion i); RELAY_DIFFERENCE/Estimate.lean:68 (gamma = 1/8), Rates.lean:40 (flight); FullVolume/Paid.lean:36-45 (hw: ‖terminal.symm v‖ ≤ 2*E i proved inside readyCoin).",
+   "status": "parts",
+   "note": "Given a `Cream` representation, `pudding` and `puddingR` state the first bound, rootTest(b − O v) ≤ `cider`·E·a_N^{1/8} (γ = 1/8), `puddingR` for every signed permutation and conjugation; the bound ‖Z^{-1}b‖_∞ ≤ 2E''' is a step inside the proofs of `readyCoin` and `served_dollarX`.",
+   "add_links": [
+    {
+     "decl": "YM.MergeProof.pudding",
+     "role": "key",
+     "where": "YM/MergeProof/Biscuit.lean:52-55"
+    },
+    {
+     "decl": "YM.MergeProof.puddingR",
+     "role": "key",
+     "where": "YM/FullVolume/Dusk/Mauve.lean:38-41"
+    }
+   ]
+  },
+  "Eq (14.36)": {
+   "kind": "reworded",
+   "source": "review B2–B10, M5, m4–m9",
+   "why": "Confirmed: Complex/Gaps.lean:170-210 (finite_lip) differentiates F x = total h b (W x) and uses Complex.norm_deriv_le_of_forall_mem_sphere_norm_le; greps for (1 - X^l), commutators, Commute.pow and pow_sub patterns in YM find no counterpart.",
+   "note": "[L] bounds the change of the cyclic trace when one insertion moves by m sites by interpolating the exponents analytically and applying the Cauchy derivative bound (`Holder.finite_lip`, which `Extraction.Difference.primitive` uses), so no declaration or proof step writes the commutator identity or the (1 − T^l) factorization.",
+   "quote": "=T^{n_1^{\\rm sl}}(T^lX-XT^l)T^{n_2^{\\rm sl}-l}",
+   "decls": [
+    "YM.Holder.finite_lip",
+    "YM.Extraction.Difference.primitive"
+   ],
+   "readme": "the operator identity T^{n₁+l}XT^{n₂−l} − T^{n₁}XT^{n₂} = T^{n₁}(T^lX − XT^l)T^{n₂−l} and its split into two (1 − T^l) terms; [L] bounds the displacement by another route, a Cauchy derivative estimate in the complex exponent (`Holder.finite_lip`, used by `Extraction.Difference.primitive`)",
+   "add_links": [
+    {
+     "decl": "YM.Extraction.Difference.primitive",
+     "role": "support",
+     "where": "YM/Extraction/Difference.lean:90"
+    }
+   ]
+  },
+  "Eq (14.45)": {
+   "kind": "reworded",
+   "source": "review B2–B10, M5, m4–m9",
+   "why": "Unchanged. Stepped.lean:46,56 (spouse, growth), Reign.lean:23-25 (boil, bill) and Stepped.lean:61-91 (short_step with a = 1/4, on_time) confirm; grep for 1/64 in Next/RANK and the comparison folders finds nothing, and the other spouse powers (Stepped.lean:136-176, Ratchet.lean:27) count middle−i steps inside covers, not h_t+v_t+2.",
+   "note": "`Perch.Tally.growth` states (α+1)^{more}·e^{-(3/4)log ℳ} ≤ e^{-(1/2)log ℳ}, i.e. (α+1)^{v_t} ≤ ℳ^{1/4} for the v_t = `more` steps, and `Perch.on_time` proves it eventually in β̂; the first h_t steps are handled inside `Perch.covers` without a step-count power. [L] has no bound over h_t+v_t+2 steps and no ℳ^{1/64}, and its fixed power ℳ^{1/4} neither implies nor follows from [M]'s.",
+   "quote": "\\mathcal C_j^{h_t(b)+v_t+2}\n \\le\\mathcal M^{(b+6)/j^2}B_t^{10/j^2}\n \\le\\mathcal M^{1/64}",
+   "decls": [
+    "YM.Next.Rank.Perch.Tally.growth",
+    "YM.Next.Rank.Perch.on_time"
+   ],
+   "readme": "𝒞_j^{h_t(b)+v_t+2} ≤ ℳ^{(b+6)/j²}B_t^{10/j²} ≤ ℳ^{1/64}, a bound over all h_t+v_t+2 steps; [L]'s `Perch.Tally.growth` bounds the growth over the v_t steps only, (α+1)^{v_t} ≤ ℳ^{1/4} (`Perch.on_time`); neither implies the other.",
+   "add_links": [
+    {
+     "decl": "YM.Next.Rank.Perch.Tally.growth",
+     "role": "key",
+     "where": "YM/Next/RANK/Stepped.lean:56"
+    }
+   ]
+  },
+  "Eq (14.52)": {
+   "kind": "rejudged",
+   "source": "review B2–B10, M5, m4–m9",
+   "why": "Review B3 is right that [L] forms 𝒥_h, and the display is in fact inlined: Sand.lean:75 has `32*(1+c)^2*coeffSize v.x ≤ 2*(1+c)*Q` (cone_cost.1 then cost_finest) and concludes bias (Sand.lean:40, ≤ Q/4); Dine.lean:59 instantiates L = Size.axis F i, Q = 1, and dials (Dine.lean:29) inverts the matrix. I reject B3's `weaker`: the 1/(16(1+S_h)) bound follows from the written chain by one division.",
+   "note": "`Accent.dine` applies `Accent.embrace` to each basis vector `Size.axis F i` with Q = 1. The proof of `embrace` chains `Work.G09.cone_cost` and `Work.G09.cost_finest` into 32(1+c)²·|L − index b|₁ ≤ 2(1+c)·Q and concludes `Embrace.bias`, |L − index b|₁ ≤ Q/4, so the display is a step of that proof, with 1/(16(1+S_h)) a one-line division not written separately.",
+   "quote": "|e_j-\\mathcal J_he_j|_1\\le\\frac1{16(1+S_h)}\\le\\frac14",
+   "decls": [
+    "YM.MergeProof.Accent.embrace",
+    "YM.MergeProof.Accent.Embrace.bias",
+    "YM.MergeProof.Accent.dine",
+    "YM.Work.G09.cone_cost",
+    "YM.Work.G09.cost_finest"
+   ],
+   "readme": "not a finding: the chain 32(1+S_h)²|e_j − 𝒥_h e_j|₁ ≤ R_h ≤ 2(1+S_h) is written inside the proof of `Accent.embrace` (from `Work.G09.cone_cost` and `Work.G09.cost_finest`), whose field `Embrace.bias` states |e_j − 𝒥_h e_j|₁ ≤ 1/4 when `Accent.dine` applies it to basis vectors with Q = 1; the middle bound 1/(16(1+S_h)) is the one-line division in between",
+   "status": "inlined",
+   "add_links": [
+    {
+     "decl": "YM.MergeProof.Accent.embrace",
+     "role": "key",
+     "where": "YM/MergeProof/South/Sand.lean:43-75"
+    },
+    {
+     "decl": "YM.MergeProof.Accent.Embrace.bias",
+     "role": "key",
+     "where": "YM/MergeProof/South/Sand.lean:40"
+    },
+    {
+     "decl": "YM.MergeProof.Accent.dine",
+     "role": "support",
+     "where": "YM/MergeProof/South/Dine.lean:53-59"
+    },
+    {
+     "decl": "YM.MergeProof.Accent.dials",
+     "role": "support",
+     "where": "YM/MergeProof/South/Dine.lean:29"
+    }
+   ],
+   "skeptics": [
+    {
+     "refuted": false,
+     "status": "inlined",
+     "reason": "`Work.G09.cone_cost` (Work/G09.lean:183-188) gives 32(1+C_i)²|voice_i|₁ ≤ cost_i, and `cost_finest` (G09.lean:210-213) gives cost ≤ 2(1+C)·w, so R_h = cost and S_h = columns. The proof of `Accent.embrace` writes `32*(1+c)^2*coeffSize v.x ≤ 2*(1+c)*Q` (MergeProof/South/Sand.lean:75) and concludes `bias` ≤ Q/4 (Sand.lean:40). `Accent.dine` sets L = Size.axis F i = e_j and Q = 1 (Dine.lean:59), and the 1/(16(1+S_h)) bound is the one-line division between them."
+    },
+    {
+     "refuted": false,
+     "status": "inlined",
+     "reason": "The last line of the proof of `Accent.embrace` (MergeProof/South/Sand.lean:75) writes `32*(1+c)^2*coeffSize v.x ≤ 2*(1+c)*Q`, chaining `cone_cost.1` (32(1+S)²|·| ≤ R) with `cost_finest` (R ≤ 2(1+S)Q). It then concludes `Embrace.bias` ≤ Q/4 (Sand.lean:40), with v.x = L − 𝒥 b. `dine` applies it with L = Size.axis F i and Q = 1 (Dine.lean:59), and 1/(16(1+S_h)) is one division from the written chain."
+    }
+   ]
+  },
+  "Eq (14.53)": {
+   "kind": "rejudged",
+   "source": "review B2–B10, M5, m4–m9",
+   "why": "The finding compared the bound only with the Push.GridApprox/Supplies route. The MergeProof.Accent route, which the mapping already links for Lemma 14.28, has it: dine (Dine.lean:53) concludes ≤ stockK C k d L*(stakes C J m/w) under ht, with stockK = 2*exp(columnLogs)*coeffSize L (Dine.lean:27). The proof of inTime sets w i := ζ d m/2/b i with b i = ‖alto‖*(4*(1+Q i)/gainChart T i m) (FinalG.lean:50) and applies dine at FinalG.lean:70. gainChart k i = exp((1/8)*(scale k − scale i)) (Bid/Loan.lean:130).",
+   "note": "`Accent.dine` gives rootTest(B − O(c)) ≤ `stockK`·(stakes/w), where `stockK` = 2e^{columnLogs h}|c|₁ and w satisfies w‖alto‖·4(1+C_{J_h})/`gainChart` h m ≤ ζ/2. The proof of `Accent.inTime` sets w = (ζ/2)·`gainChart`/(4(1+C_{J_h})‖alto‖), so the bound becomes C·e^{Σ log C_{J_{i+1}}}(1+C_{J_h})e^{−(s_h−s_m)/8}, as in [M].",
+   "quote": "\\le C_{k,m,d,c}\\,\n e^{\\sum_{i<h}\\log C_{J_{i+1}}}(1+C_{J_h})\n e^{-(s_h-s_m)/8}",
+   "decls": [
+    "YM.MergeProof.Accent.dine",
+    "YM.MergeProof.Accent.inTime",
+    "YM.MergeProof.Accent.stockK",
+    "YM.Bid.gainChart"
+   ],
+   "readme": "not a finding: `Accent.dine` bounds the root test of B − O(c) by `stockK`·`stakes`/w = 2e^{Σ_{i<h} log C_{J_{i+1}}}|c|₁·stakes/w under w‖alto‖·4(1+C_{J_h})/`gainChart` ≤ ζ/2, and the proof of `Accent.inTime` takes w at equality, which is the display with `gainChart` = e^{(s_h−s_m)/8}",
+   "status": "inlined",
+   "add_links": [
+    {
+     "decl": "YM.MergeProof.Accent.dine",
+     "role": "key",
+     "where": "YM/MergeProof/South/Dine.lean:53"
+    },
+    {
+     "decl": "YM.MergeProof.Accent.inTime",
+     "role": "key",
+     "where": "YM/MergeProof/South/FinalG.lean:48-70"
+    },
+    {
+     "decl": "YM.MergeProof.Accent.stockK",
+     "role": "support",
+     "where": "YM/MergeProof/South/Dine.lean:27"
+    },
+    {
+     "decl": "YM.Bid.gainChart",
+     "role": "support",
+     "where": "YM/Bid/Loan.lean:130"
+    },
+    {
+     "decl": "YM.Work.D01.columnLogs",
+     "role": "support",
+     "where": "YM/Work/D01.lean:22-23"
+    }
+   ],
+   "skeptics": [
+    {
+     "refuted": false,
+     "status": "inlined",
+     "reason": "`Accent.dine` (MergeProof/South/Dine.lean:53) bounds rootTest(B − O(L)) ≤ stockK·(stakes/w). Here stockK = 2·exp(columnLogs)·|L|₁ (Dine.lean:27), and columnLogs = Σ_{i<k} log C_{J_{i+1}} (Work/D01.lean:22-23). The proof of `Accent.inTime` sets w_i = (ζ/2)/(‖alto‖·4(1+C_{J_i})/gainChart i m) (FinalG.lean:50), with gainChart = e^{(s_i−s_m)/8} (Bid/Loan.lean:130), and applies `dine` at FinalG.lean:70. So every factor of the display has a counterpart, with C_{k,m,d,c} ↔ 2|c|₁·stakes·‖alto‖·4/ζ."
+    },
+    {
+     "refuted": false,
+     "status": "inlined",
+     "reason": "`Accent.dine` (MergeProof/South/Dine.lean:53) bounds rootTest(B − O(c)) by stockK·(stakes/w) under w‖alto‖·4(1+C_{J_k})/gainChart ≤ ζ/2, with stockK = 2e^{columnLogs}|c|₁ (Dine.lean:27) and columnLogs = Σ_{i<m} log C_{i+1} (Work/D01.lean:22). The proof of `inTime` (FinalG.lean:48-70) sets w_i = ζ/2/b_i and rewrites the bound in `hD` as a·v·flight(−γ) with γ = 1/8 (RELAY_DIFFERENCE/Estimate.lean:68). That is C·e^{Σ log C}(1+C_{J_h})e^{−(s_h−s_m)/8}, written in the proof."
+    }
+   ]
+  },
+  "Eq (14.55)": {
+   "kind": "rejudged",
+   "source": "review M2–M4 sweep",
+   "why": "Fields/Ivy.lean:13 (toll = e^{-scalar}•restore), :22 (mid = ∫toll.part/lack), :23 (reply : mid = Sever.stamp ...); Fields/Flight.lean:21 (stamp = ∫(P U).part/partition); Fields/Cement.lean:15-16 (coals, lack); Fields/Till.lean:52 (taps).",
+   "status": "close",
+   "note": "For a selected history, `Retreat.reply` states that the mode integrals of the vacuum-stripped density `toll` (e^{−scalar} times `restore`), normalized by `lack`, equal those of the full density normalized by the partition function (`Sever.stamp`); [L] states this cancellation for the integrated mode parts rather than as an identity of densities, with the healthy-indicator energies inside `restore`.",
+   "add_links": [
+    {
+     "decl": "YM.FullVolume.Sever.stamp",
+     "role": "support",
+     "where": "YM/FullVolume/Fields/Flight.lean:21"
+    },
+    {
+     "decl": "YM.FullVolume.Retreat.mid",
+     "role": "support",
+     "where": "YM/FullVolume/Fields/Ivy.lean:22"
+    }
+   ]
+  },
+  "Eq (14.58)": {
+   "kind": "rejudged",
+   "source": "review B2–B10, M5, m4–m9",
+   "why": "I accept review B8. `Gear.spends` (Sages.lean:66-70) runs Nat.le_induction upward from k on coefficient sequences; it is not the downward iteration. The 2^{1−(h−m)} term is in the private `Gear.shawls` (Sages.lean:22-32, bound 2*(1/2)^d'), which `Gear.voyages` (Sages.lean:33-39) uses. Status `differs` stands.",
+   "note": "The private `Gear.shawls` flows a constant reference d′ levels down through the same maps and bounds its distance to W i n by 2·(1/2)^{d′}, and `Gear.voyages` turns this into the Cauchy property, with the cross-cutoff discrepancy absorbed into `Ritzy.stories`. No declaration states a distance d_m between two cutoffs bounded by Σ 2^{−(i−m)}δ_i, and `Gear.spends` only carries Cauchy coefficients upward from the base level.",
+   "quote": "\\sum_{i=m}^{h-1}2^{-(i-m)}\\delta_i(N,N')",
+   "decls": [
+    "YM.MergeProof.Matric.Gear.shawls",
+    "YM.MergeProof.Matric.Gear.voyages",
+    "YM.MergeProof.Matric.Gear.spends"
+   ],
+   "readme": "the cross-cutoff bound d_m(N,N′) ≤ 2^{1−(h−m)} + Σ_{i=m}^{h−1} 2^{−(i−m)}δ_i(N,N′); [L] has only the term 2·(1/2)^{d′}, between W i n and a reference sequence flowed d′ levels down from a remote level (private `Gear.shawls`), with no δ_i, and gets the Cauchy property from it qualitatively (`Gear.voyages`).",
+   "add_links": [
+    {
+     "decl": "YM.MergeProof.Matric.Gear.shawls",
+     "role": "helper",
+     "where": "YM/FullVolume/Mark/Sages.lean:22-32"
+    },
+    {
+     "decl": "YM.MergeProof.Matric.Gear.voyages",
+     "role": "key",
+     "where": "YM/FullVolume/Mark/Sages.lean:33-39"
+    },
+    {
+     "decl": "YM.MergeProof.Matric.Ritzy.stories",
+     "role": "support",
+     "where": "YM/FullVolume/Mark/Nursery.lean:56-60"
+    }
+   ],
+   "skeptics": [
+    {
+     "refuted": false,
+     "status": "differs",
+     "reason": "The private `Gear.shawls` (FullVolume/Mark/Sages.lean:22-32) flows a reference sequence down d′ levels and shows only that W_i n is within 2·(1/2)^{d′} of it. `Gear.voyages` (Sages.lean:33-39) gets the Cauchy property qualitatively, and `Gear.spends` (Sages.lean:66-70) is upward transport. No discrepancy δ_i(N,N′) and no weighted sum Σ_{i=m}^{h−1}2^{−(i−m)}δ_i appear anywhere, so [L] proves a different estimate that plays the role of (14.58)."
+    },
+    {
+     "refuted": false,
+     "status": "differs",
+     "reason": "The private `Gear.shawls` (FullVolume/Mark/Sages.lean:22-32) flows a constant `W i 0` down d′ levels and bounds `Within (W i n) (V n) (2*(1/2)^d′)`. `Gear.voyages` (Sages.lean:33-39) turns that into `TwoFold`, and `Gear.spends` (Sages.lean:66-70) runs upward on coefficient sequences. Greps for a weighted sum Σ (1/2)^{i−m}δ_i over Finset.Ico found nothing, so the two-cutoff bound has no counterpart."
+    }
+   ]
+  },
+  "Eq (14.6)": {
+   "kind": "reworded",
+   "source": "review B2–B10, M5, m4–m9",
+   "why": "Unchanged. Kettle.lean:27-30 (creek) and :36-37 (Steam) read as described; greps for (1+B)^4 shapes (only Opacity/Tipping.lean:78, an unrelated coast bound) and for an η-type attachment threshold found no other statement of the display.",
+   "note": "With ζ_{d,i} = `fog` d β̂_i = β̂_i^{-(q_d+4)}, the third conjunct of `Legato.Bandage.creek` bounds e^{σ+2}·cameras_d·β̂^{q_d}ζ_{d,i} by `stub` β̂ = β̂^{-1/2}/4, with no factor (2B_i+1)⁴(1+B_i)⁴ and no η_i, while `Legato.Bandage.Steam` separately requires (2B+1)⁴(stain + Q·siteFactor(B)·stub) ≤ 3 with siteFactor(B) = e(2(16B+9))⁴. The allowance is split differently, so neither form implies [M]'s display.",
+   "quote": "2A_{j,d}(2B_i+1)^4(1+B_i)^4\n \\widehat\\beta_i^{q_d}\\zeta_{d,i}\\le\\eta_i/2",
+   "decls": [
+    "YM.PhysicalNext.Repeat.Legato.Bandage.creek",
+    "YM.PhysicalNext.Repeat.Legato.Bandage.Steam"
+   ],
+   "readme": "2A_{j,d}(2B_i+1)⁴(1+B_i)⁴β̂_i^{q_d}ζ_{d,i} ≤ η_i/2 with the attachment threshold η_i; [L]'s `Legato.Bandage.creek` bounds e^{σ+2}·cameras_d·β̂^{q_d}ζ_{d,i} by `stub` = β̂^{-1/2}/4 without the B-factor, and `Legato.Bandage.Steam` carries (2B+1)⁴(stain + Q·siteFactor(B)·stub) ≤ 3 separately; neither implies the other."
+  },
+  "Eq (14.61)": {
+   "kind": "rejudged",
+   "source": "review M2–M4 sweep",
+   "why": "FullVolume/Region.lean:58-61 (taylor statement: ‖f y − f x − stretch (P j x) (tag y − tag x)‖ ≤ B*dist²); Tuned.lean:108-114 (hq in from_previous is taylor's conclusion hp').",
+   "status": "close",
+   "note": "On a compact set away from coincidences, `FixedBounds.taylor` states ‖f(y) − f(x) − ∑_j (y−x)_j Δ_j f(x)‖ ≤ B|y−x|² for nearby lattice points, which at y = x + h_N e is the displayed bound with an unnamed constant B in place of ½B; `from_previous` applies it with constant B·k.",
+   "add_links": [
+    {
+     "decl": "YM.FullVolume.FixedBounds.taylor",
+     "role": "key",
+     "where": "YM/FullVolume/Region.lean:58-61"
+    },
+    {
+     "decl": "YM.FullVolume.from_previous",
+     "role": "support",
+     "where": "YM/FullVolume/Tuned.lean:72-125"
+    }
+   ]
+  },
+  "Eq (15.1)": {
+   "kind": "reworded",
+   "source": "review B2–B10, M5, m4–m9",
+   "why": "No change of substance. RawLimits (Lipschitz.lean:156-160) and VolumePoints (Limits.lean:64-66) are value-level on K ⊆ generic n. Cleaner.smooth (Input.lean:94) and Table.Smooth (Table.lean:88-89) give C^∞ on conf n only for T.",
+   "note": "`Extraction.RawLimits` gives S continuous on the generic set and, through `Extraction.Order.VolumePoints`, ‖P_p(x;v) − S(x;v)‖ < ε uniformly on compact K ⊆ generic n, with the P_p only continuous; `Org.Arrives.serves` then produces a table T, smooth on Conf_n and equal to S at generic points, with the same limits. No declaration states convergence of any derivative ∂_l f_{P(k),v}, nor convergence on compact subsets of Conf_n off the generic set.",
+   "quote": "\\partial_{\\boldsymbol l}f_{P(k),v}\\longrightarrow\n\\partial_{\\boldsymbol l}S_n(v;\\cdot)\n\\quad\\text{locally uniformly on }\\Conf{n}",
+   "decls": [
+    "YM.Extraction.RawLimits",
+    "YM.Extraction.Order.VolumePoints",
+    "YM.Org.Arrives.serves",
+    "YM.Org.Cleaner"
+   ],
+   "readme": "∂_l f_{P(k),v} → ∂_l S_n(v;·) locally uniformly on Conf_n; [L] has only convergence of values on compact subsets of the generic set (`Extraction.RawLimits`, `Extraction.Order.VolumePoints`), and C^∞ on Conf_n only for a replacement table T equal to S at generic points (`Org.Arrives.serves`, `Org.Cleaner`).",
+   "add_links": [
+    {
+     "decl": "YM.Table.Smooth",
+     "role": "support",
+     "where": "YM/Euclid/Table.lean:88-89"
+    },
+    {
+     "decl": "YM.Extraction.Order.Meshes",
+     "role": "support",
+     "where": "YM/Extraction/Limits.lean:57-62"
+    }
+   ]
+  },
+  "Eq (15.14)": {
+   "kind": "rejudged",
+   "source": "review M2–M4 sweep",
+   "why": "Bid/Drops.lean:70-71 (D05 := ... → OneCap S); Bid/Phase.lean:97-98 (OneCap: ∃ A C, ... ≤ C * r⁻¹ ^ A); Work/D05.lean:167-180 (refine ⟨4*D*n,(B*c⁻¹^D)^n,...⟩ and the calc).",
+   "status": "inlined",
+   "note": "[L]'s statement `YM.Work.D05.answer : YM.Bid.D05` concludes only `OneCap`, a bound C·r^{-A} with an unnamed exponent A; the explicit exponent 4Dn with constant (B c^{-D})^n, D the centered power of `image_power`, is chosen and proved inside the proof of `answer`.",
+   "add_links": [
+    {
+     "decl": "YM.Bid.OneCap",
+     "role": "support",
+     "where": "YM/Bid/Phase.lean:97-98"
+    }
+   ]
+  },
+  "Eq (15.15)": {
+   "kind": "rejudged",
+   "source": "review M2–M4 sweep",
+   "why": "Next/PHASE/Seats.lean:81-83 (room_for: ∃ k, m ≤ k ∧ (2n)·(2·(5·a k)) < a m ∧ c*(r/n)^4 ≤ a k); Seats.lean:128-136 (ha inside replicas).",
+   "status": "parts",
+   "note": "`room_for` states 20n·a_{k_w} < a_m and c(r/n)^4 ≤ a_{k_w}; the bound (B_*a_{k_w}^{-d_pow})^n ≤ (B_*c^{-d_pow})^n (n/r)^{4d_pow n} is the step `ha` inside the proof of `replicas`."
+  },
+  "Eq (15.3)": {
+   "kind": "reworded",
+   "source": "review B2–B10, M5, m4–m9",
+   "why": "No change. Bound (Integrate.lean:25-30) has only value fields. extendsBound (Lipschitz.lean:140-153) is pointwise, and grep for fderiv/iteratedFDeriv in YM/Extraction finds no derivative of P p.",
+   "note": "`Extraction.Bound.volume` bounds the lattice values on compact K ⊆ Conf_n, the private `Extraction.extendsBound` passes this to the volume tables at single generic points, and `Extraction.volume_oscillates` derives equicontinuity from `Extraction.TransferLip`. No declaration differentiates the volume kernels f_{p,v} or bounds their derivatives.",
+   "quote": "\\sup_{p\\ge p_0}\\sup_{x\\in K'}|\\partial_{\\boldsymbol l}f_{p,v}(x)|\n\\le B(v,\\boldsymbol l,r)",
+   "decls": [
+    "YM.Extraction.Bound",
+    "YM.Extraction.extendsBound",
+    "YM.Extraction.volume_oscillates"
+   ],
+   "readme": "sup_{p≥p₀} sup_{x∈K′} |∂_l f_{p,v}(x)| ≤ B(v,l,r) for l ≠ 0; [L] bounds only values: lattice values uniformly in p on compact subsets of Conf_n (`Extraction.Bound`) and the volume tables at single generic points (private `Extraction.extendsBound`), and takes equicontinuity from the Lipschitz input (`Extraction.volume_oscillates`).",
+   "add_links": [
+    {
+     "decl": "YM.Extraction.TransferLip",
+     "role": "support",
+     "where": "YM/Extraction/Lipschitz.lean:26-30"
+    }
+   ]
+  },
+  "Eq (16.16)": {
+   "kind": "rejudged",
+   "source": "review M2",
+   "status": "parts",
+   "note": "[L] states the outer bound ‖R_I‖ ≤ M_k^{-1/(16n)} (`Ship.rebate`, with `budget` = exp(−log monitor/(16M))); the bound e^{q_k−2q_k|I|} is a step inside its proof.",
+   "why": "rebate (Next/RANK/Allowance.lean:95-101) concludes rootTest ≤ budget only; the middle bound is not in any statement."
+  },
+  "Eq (16.17)": {
+   "kind": "rejudged",
+   "source": "review M2–M4 sweep",
+   "why": "Station.lean:111-115 (scales: a m/a j = wheel^(j-m)); Station.lean:101-104 (full, shift); East/Nitre.lean:22-24 (echo_scale concludes a(width)/a k ≤ bill (b+5) (clim k)); Nitre.lean:39-45 (middle bound (mag*M^2*M)*(M*M) inside the proof).",
+   "status": "parts",
+   "note": "Under `Allowed`, `Allowed.scales` gives a_{w_b(k)}/a_k = L^{k−w_b(k)} with k−w_b(k) = h_k(b)+v_k by `Allowed.full` and `Allowed.shift`, and `echo_scale` states the outer bound a_{w_b(k)}/a_k ≤ M_k^{b+5}; the middle bound L²M_k^{b+2}B_k^{10} is a step inside the proof of `echo_scale`.",
+   "add_links": [
+    {
+     "decl": "YM.Next.Rank.Station.Allowed.scales",
+     "role": "key",
+     "where": "YM/Next/RANK/Station.lean:111-115"
+    },
+    {
+     "decl": "YM.Next.Rank.Station.Allowed.full",
+     "role": "support",
+     "where": "YM/Next/RANK/Station.lean:101-102"
+    },
+    {
+     "decl": "YM.Next.Rank.Station.Allowed.shift",
+     "role": "support",
+     "where": "YM/Next/RANK/Station.lean:103-104"
+    }
+   ]
+  },
+  "Eq (16.19)": {
+   "kind": "rejudged",
+   "source": "review M3",
+   "status": "parts",
+   "note": "`Ribbons.quilled` states the rate of v_m, `Note C.S Z' (−D+M)` with M = (d+4+8)(1−t); the e_m bound is a step inside `pricey`'s proof.",
+   "add_links": [
+    {
+     "decl": "YM.MergeProof.Ribbons.quilled",
+     "role": "key",
+     "where": "YM/MergeProof/North/Welch.lean:35"
+    }
+   ],
+   "why": "quilled (MergeProof/North/Welch.lean:35) with M defined at line 27 states log v_m = [−D−(d+12)(t−1)+o(1)]s_m."
+  },
+  "Eq (17.4)": {
+   "kind": "reworded",
+   "source": "review B2–B10, M5, m4–m9",
+   "why": "No change. cross_le (Cross.lean:152-156) concludes the t-form only, and the module doc (Cross.lean:7) says 'A non-sharp constant in the quadratic estimate suffices'. Its callers (Cove.lean:18, Mode.lean:164) use the t-form.",
+   "note": "`Outer.cross_le` takes ‖f‖² ≤ ab with a, b ≥ 0 on p_i ≥ 0 and integrable, and concludes ‖cross V B A f‖ ≤ t∫a dν^B + (∫b dν^A)/t for every t > 0. Minimizing over t gives |∫f dν^{UV}|² ≤ 4∫a dν^U ∫b dν^V, rescaling a and b does not help since only their product is constrained, and no declaration states the sharp constant 1.",
+   "quote": "\\left|\\int f\\,d\\nu_d^{UV}\\right|^2\\le\\int g_1\\,d\\nu_d^U\\int g_2\\,d\\nu_d^V",
+   "decls": [
+    "YM.Outer.cross_le"
+   ],
+   "readme": "|∫ f dν_d^{UV}|² ≤ ∫ g₁ dν_d^U ∫ g₂ dν_d^V; [L]'s `Outer.cross_le` gives only ‖∫ f dν^{UV}‖ ≤ t∫a dν^U + (∫b dν^V)/t for every t > 0, whose optimum 2(∫a ∫b)^{1/2} is the squared bound with constant 4."
+  },
+  "Eq (19.14)": {
+   "kind": "reworded",
+   "source": "review m10",
+   "note": "[M] prints the ordered telescoping identity ∏X_i − ∏Y_i = Σ_i (∏_{h<i}Y_h)(X_i−Y_i)(∏_{h>i}X_h), valid without commutativity, inside a proof. [L] obtains the nested bound through `Fusion.tariff` and the `Composite` stacked expansion and writes no standalone identity.",
+   "why": "part2/J-section.tex:500-505 is an ordered identity; the old note said 'for commuting factors'."
+  },
+  "Eq (19.2)": {
+   "kind": "rejudged",
+   "source": "review B1",
+   "status": "close",
+   "note": "`roomCost` and `Bank` state the first two choices; `Lisle.gram` and `paper` (realized by `oyster`) state (1+2C_l)·ℓ_l^{-2/5} ≤ ℓ_l^{-3/8}, which is 1+2C_l ≤ ℓ_l^{1/40} since `Doors.rate L` = L^{-2/5} and `Bid.barunit L` = L^{-3/8}.",
+   "add_links": [
+    {
+     "decl": "YM.UVExtension.Mast.Lisle.gram",
+     "role": "key",
+     "where": "YM/UVExtension/Forest/Cave.lean:24"
+    },
+    {
+     "decl": "YM.PhysicalNext.Repeat.Legato.paper",
+     "role": "support",
+     "where": "YM/MergeProof/Apres.lean:20"
+    },
+    {
+     "decl": "YM.PhysicalNext.Repeat.Legato.oyster",
+     "role": "support",
+     "where": "YM/MergeProof/Apres.lean:21"
+    }
+   ],
+   "why": "Doors.rate L = L^(-2/5) (Extra/SOURCE_HISTORIES/Reserve.lean:30) and Bid.barunit L = (L^(1/8))⁻¹^3 (Bid/Loan.lean:34-35), so the hypothesis field Lisle.gram (UVExtension/Forest/Cave.lean:24) and the last conjunct of paper (MergeProof/Apres.lean:20) are exactly 1+2C ≤ L^(1/40); the skeptics read only Tones."
+  },
+  "Lemma 10.2": {
+   "kind": "reworded",
+   "source": "review B2–B10, M5, m4–m9",
+   "why": "Confirmed: Bid.G06 (Bid/Source.lean:58-60) and Learns (:72-74) conclude only ∃ T, T.Sound H ∧ pop T; box r is used only inside Work.G06.answer's proof, and the only stencil ⊆ box statements are fields or hypotheses (Next/RANK/Carried.lean:54).",
+   "note": "`sound` gives `localSection G d` gauge invariance, reality, hypercubic covariance, unit and the Taylor equality through order d, on a stencil that contains 0 and is stable under signed permutations. `localSection` is a `Classical.choose` from `Bid.Learns`, and no declaration states that its stencil is the box [-ρ_d,ρ_d]⁴ ∩ ℤ⁴.",
+   "quote": "a box stencil $\\Sigma_d=[-\\varrho_d,\\varrho_d]^4\\cap\\Z^4$",
+   "decls": [
+    "YM.Next.Foundations.localSection",
+    "YM.Next.Foundations.sound",
+    "YM.Bid.G06"
+   ],
+   "readme": "the stencil is the box [-ρ_d,ρ_d]⁴ ∩ ℤ⁴; [L]'s `localSection` is a choice from `Bid.Learns`, and `sound` gives only a stencil containing 0 and stable under signed permutations (the box appears only inside `Work.G06.answer`'s proof)."
+  },
+  "Lemma 11.10": {
+   "kind": "rejudged",
+   "source": "review B2–B10, M5, m4–m9",
+   "why": "The README line wrongly says momentum order two and analyticity are missing: tax_ray (Films/LeadingRay.lean:223) states Rays 2 of taxTone and star_analytic (:238) states analyticity. O(t³) is only `have hf : Rays 3 F` inside drift_tip (:812), and star_low (:254) needs the Ward hypothesis hX, supplied via alpha_night and stamp_here inside drift_tip (:797), so the status stays weaker.",
+   "note": "`tax_ray`, `star_analytic` and `star_low` state momentum order two, analyticity of c and b(0) = 0, and `drift_tip` concludes α_b(Y^con) = 0. The bound Y^con_ii(te₁) = O(t³) is only the step `hf : Rays 3 F` inside `drift_tip`'s proof.",
+   "quote": "Y^{\\rm con}_{ii}(te_1)=O(t^3)",
+   "decls": [
+    "YM.Stationary.drift_tip",
+    "YM.Stationary.tax_ray",
+    "YM.Stationary.star_analytic",
+    "YM.Stationary.star_low"
+   ],
+   "readme": "Y^con_ii(te₁) = O(t³); [L] states α_b = 0 (`drift_tip`), momentum order two (`tax_ray`), analyticity of c (`star_analytic`) and b(0) = 0 (`star_low`), and the O(t³) bound only as a step inside `drift_tip`'s proof.",
+   "add_links": [
+    {
+     "decl": "YM.Stationary.tax_ray",
+     "role": "key",
+     "where": "YM/Next/STATIONARY/Films/LeadingRay.lean:223"
+    },
+    {
+     "decl": "YM.Stationary.star_analytic",
+     "role": "key",
+     "where": "YM/Next/STATIONARY/Films/LeadingRay.lean:238"
+    },
+    {
+     "decl": "YM.Stationary.star_low",
+     "role": "support",
+     "where": "YM/Next/STATIONARY/Films/LeadingRay.lean:254-255"
+    },
+    {
+     "decl": "YM.Stationary.alpha_night",
+     "role": "support",
+     "where": "YM/Next/STATIONARY/Films/LeadingRay.lean:240-242"
+    }
+   ],
+   "skeptics": [
+    {
+     "refuted": false,
+     "status": "weaker",
+     "reason": "Upholds the narrowed claim: The claim lists 'b vanishing at zero without a Ward hypothesis' as missing, but [L] supplies the Ward hypothesis by declarations. `stamp_here` (Films/Contact.lean:624-626) states the Ward identity for carrierY under the section's stage data, `alpha_night` (LeadingRay.lean:240-242) carries it to the limit table, and `star_low` (LeadingRay.lean:254-255) then gives Rays 1, so b(0) = 0. `drift_tip` (LeadingRay.lean:797) chains these in one step. The status stays weaker only because Y^con_ii(te₁) = O(t³) is the internal `hf : Rays 3 F` inside `drift_tip` (LeadingRay.lean:812); `rite_axis` (:528) is about other pictures."
+    },
+    {
+     "refuted": false,
+     "status": "weaker",
+     "reason": "`tax_ray` (Next/STATIONARY/Films/LeadingRay.lean:223) states Rays 2, `star_analytic` (:238) states analyticity, and `star_low` (:254) gives Rays 1 of the b trace only under hypothesis hX. `drift_tip` (:789-792) concludes only alphaPay = 0. The Ward input (`alpha_night` with `stamp_here`, :797) and `hf : Rays 3 F` (:812) are steps of that proof, so O(t³) and b(0) = 0 without hypotheses are not stated as declarations."
+    }
+   ]
+  },
+  "Lemma 11.13": {
+   "kind": "rejudged",
+   "source": "review B2–B10, M5, m4–m9",
+   "why": "Status no-match → weaker, since the molecule majorant, warning bound and factorization are stated. Haar factorization is stated, against the current note and B10: Pond.marched (CONNECTED_ACTIVITY_JETS_E6/Threads.lean:44-46) factorizes ∫∏ over Measure.pi of probability measures. B10's 'seed suppression in its own normalization' is made precise: Invoices.vapors (Issue.lean:83-86) has exp((C·bill⁵ − credit)·shares) with credit = β(μ·fiery²) (Push/ABSOLUTE_SUMS/Grants.lean:48, Charge.lean:22), not the printed bound.",
+   "note": "`Daisy.Herd` gives the molecule majorant, `Invoices` (proved by `issue`) bounds warnings by E^r and packets by exp((C·bill⁵ − βμ·fiery²)·shares), and `Pond.marched` and `Tags.uses` factorize integrals over disjoint supports under product Haar and tag averages. No declaration states the seed bound ∏a_i ≤ e^{-κ'βt²|A|} or the value majorant P(x)(1+s_A)^d e^{-κ'βt²|A|}∏f_i for A_c ≠ ∅; `Sector.peel` bounds sector integrals relative to outgoing ones.",
+   "quote": "\\prod_{i\\ {\\rm seed}}a_i\\le e^{-\\kappa'_B\\beta t^2|A|}",
+   "decls": [
+    "YM.PhysicalNext.Repeat.Daisy.Herd",
+    "YM.ConnectedActivityE6.Target.Invoices",
+    "YM.AnalyticBridge.Sharp.Tags.uses",
+    "YM.ConnectedActivityE6.Pond.marched"
+   ],
+   "readme": "the seed-envelope bound ∏a_i ≤ e^{-κ'βt²|A|} and the value majorant with (1+s_A)^d e^{-κ'βt²|A|} for A_c ≠ ∅; [L] has the molecule majorant (`Daisy.Herd`), the warning bound E^r and a packet bound exp((C·bill⁵ − βμ·fiery²)·shares) (`Invoices`), and Haar and tag factorization (`Pond.marched`, `Tags.uses`).",
+   "status": "weaker",
+   "add_links": [
+    {
+     "decl": "YM.ConnectedActivityE6.Pond.marched",
+     "role": "key",
+     "where": "YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/Threads.lean:44-46"
+    },
+    {
+     "decl": "YM.ConnectedActivityE6.Pond.island",
+     "role": "support",
+     "where": "YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/Ford.lean:55-59"
+    },
+    {
+     "decl": "YM.ConnectedActivityE6.Target.issue",
+     "role": "support",
+     "where": "YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/Issue.lean:94-100"
+    }
+   ],
+   "skeptics": [
+    {
+     "refuted": false,
+     "status": "weaker",
+     "reason": "[M] prints ∏a_i ≤ e^{−κ′βt²|A|} and ∫g_A dν ≤ P(x)(1+s_A)^d e^{−κ′βt²|A|}∏f_i (B-section.tex:905-919). `Invoices.vapors` (E6/Issue.lean:72-86) bounds packets by exp((C·bill⁵ − β·μ·fiery²)·shares) (credit at Grants.lean:48, income at Charge.lean:22), with an extra growing factor and no κ′. `Sector.peel` (Next/FLUCTUATIONS/Sector.lean:229) gives only a relative bound prefactor·e^{−βκ·fiery²·shares}, and the molecule majorant `Herd.nil` (Daisy/Charm.lean:48) has no seed suppression, so neither bound is stated as printed."
+    },
+    {
+     "refuted": false,
+     "status": "weaker",
+     "reason": "`Invoices.vapors` (CONNECTED_ACTIVITY_JETS_E6/Issue.lean:78-88) bounds packets by `income 1 (C·bill⁵) gain shares` = exp((C·bill⁵ − β μ fiery²)·shares) (Push/ABSOLUTE_SUMS/Charge.lean:22, Grants.lean:48). No lemma absorbs C·bill⁵ into the fiery² credit: `bill_pays` (Delay.lean:120) compares with `hatWin`, which uses fineMonitor. So e^{−κ′βt²|A|} and the A_c ≠ ∅ value majorant are not stated. The warning bound E^r has an abstract E, charged through `Sales` against `goal` = β^{rate}, a normalization of ε_w^{2r} that the claim does not mention."
+    }
+   ]
+  },
+  "Lemma 11.6": {
+   "kind": "reworded",
+   "source": "review B2–B10, M5, m4–m9",
+   "why": "Confirmed: vanishing_box (Next/FREE_KERNELS/ZeroAlias.lean:30-40) concludes only the value 0; area = 0 there appears only inside its proof, and no Rays/order statement on massFilter exists (grep massFilter with Rays, iteratedDeriv, isBigO).",
+   "note": "`Bid.Scene` and `Free.pledges` give the stationary branch, the volume-independent coercivity, Dz(0) and the kernel bounds, and `Train.smooth_zero` gives the value one at zero. `Flight.vanishing_box` states only `massFilter P.patch (aliasAt 0 l) = 0` for l ≠ 0, with no order of vanishing.",
+   "quote": "vanishes to order at least $j$ at every nonzero alias",
+   "decls": [
+    "YM.Next.Free.Flight.vanishing_box",
+    "YM.Next.Free.Train.smooth_zero",
+    "YM.Bid.Scene"
+   ],
+   "readme": "the averaging symbol vanishes to order ≥ j at every nonzero alias; [L] states only that it vanishes there (`Flight.vanishing_box`)."
+  },
+  "Lemma 11.7": {
+   "kind": "rejudged",
+   "source": "review B2–B10, M5, m4–m9",
+   "why": "Status no-match → weaker: the four identities are stated (Joint/HaarJac.lean:63-64, Work/F05/Measure.lean:37-38, Joint/Regulator.lean:527, Joint/Completion.lean:384), so only some claims are missing. Review m4 rejected in part: J_ax(0)=1 is the one-step unfolding `toll F P 0 = 1` by `simp [toll,h.anchored]` (HaarJac.lean:113), not a hidden argument; its tested_diag point (Graphs.lean:29) is accepted.",
+   "note": "`treasury`, `toll_pos`, `carries` and `commandment` give J_ax = |det Ds| > 0, XR = I and det(R,I)² = 1, and J_ax(0) = 1 follows by unfolding `toll` with `LocalRatio.anchored`. T is only the definition `thermal`, no declaration evaluates a Gaussian integral to e^{-T(v)}, and Q(v) is positive only at v = 0 (`tested_diag`), with only det Q(v) > 0 near zero (`hessian_pos`).",
+   "quote": "The stationary Gaussian integral, including the inherited loop action and Haar density, has field-dependent factor $\\mathrm e^{-\\mathsf T(v)}$",
+   "decls": [
+    "YM.Stationary.treasury",
+    "YM.Work.F05.toll_pos",
+    "YM.Stationary.carries",
+    "YM.Stationary.commandment",
+    "YM.Work.F05.tested_diag",
+    "YM.Work.F05.hessian_pos",
+    "YM.Precision.thermal"
+   ],
+   "readme": "the field-dependent factor e^{-T(v)} of the stationary Gaussian integral, and positivity of Q(v) near zero; [L] has J_ax = |det Ds| (`treasury`), J_ax > 0 (`toll_pos`), XR = I (`carries`) and det(R,I)² = 1 (`commandment`), but positivity of Q only at v = 0 (`tested_diag`) and of det Q(v) near zero (`hessian_pos`).",
+   "status": "weaker",
+   "add_links": [
+    {
+     "decl": "YM.Work.F05.tested_diag",
+     "role": "support",
+     "where": "YM/Work/F05/Graphs.lean:29-35"
+    }
+   ],
+   "skeptics": [
+    {
+     "refuted": false,
+     "status": "weaker",
+     "reason": "[M] says the stationary Gaussian integral has field-dependent factor e^{−𝖳(v)} and that 𝖰(v) is positive near zero (B-section.tex:385-392). In [L], `treasury` (Joint/HaarJac.lean:63), `toll_pos` (Work/F05/Measure.lean:37), `carries` (Joint/Regulator.lean:527) and `commandment` (Joint/Completion.lean:384) give J_ax = |det Ds| > 0, X𝓡 = I and det(𝓡,𝓘)² = 1. But 𝖰 is positive definite only at v = 0 (`tested_diag`, Graphs.lean:29; `bend_det_pos`, Calculus.lean:79), near zero [L] has only det 𝖰(v) > 0 (`hessian_pos`, Graphs.lean:75), and `tribute` (HaarJac.lean:177) only unfolds 𝖳, so no declaration evaluates the integral to e^{−𝖳}."
+    },
+    {
+     "refuted": false,
+     "status": "weaker",
+     "reason": "`tested_diag` (Work/F05/Graphs.lean:29-35) gives positivity of the form at x = 0. `hessian_pos` (:75-79), via `bend_det_pos` (Calculus.lean:73-75), gives only det > 0 near 0, and PosDef appears only at 0 (Calculus.lean:79). `thermal_eq` (Push/LOOP_COEFFICIENT/Shell.lean:201-204) identifies T with loop + scalar but evaluates no stationary Gaussian integral to e^{−T(v)}."
+    }
+   ]
+  },
+  "Lemma 11.8": {
+   "kind": "rejudged",
+   "source": "review B2–B10, M5, m4–m9",
+   "why": "Status no-match → weaker, accepting B7 and the first skeptic: completion_choice (WilsonBulk/Spectral/Joint.lean:44-52) states the r=0 Freezer bound, thin_doubled (AuxReferences.lean:476) the P_μ³ trace bound, pebbles_frozen (Films/ThinTrace.lean:304) the P_μ bounds through two insertions (Film.spot/arch, Loops/Syntax.lean:191). B7's line is extended: it omits these and the missing μ²-scaled bounds; Freezer.back (UniformMatrix.lean:278) is used only on amFilm (ThinTrace.lean:38,306).",
+   "note": "`thin_doubled` bounds the flat P_μ³ in trace duality on the strip 1/128, `pebbles_frozen` bounds P_μ with up to two insertions under `Spotlight`, and `completion_choice` gives the r = 0 dual-to-primal strip bound on the inverse of the completed joint form. The Q_r algebra appears only in the generic `Freezer.back`, which [L] applies to P_μ and not to A_μ, so no declaration states the bounds on D^r(A_μ^{-1}) for r = 1, 2 or the μ²-scaled block bounds.",
+   "quote": "\\|D^r(A_\\mu^{-1})\\|_{\\rm dual\\to primal}\\le Q_r(C_j^{\\rm ins}),\\qquad\n\\|\\mu^2D^r(A_\\mu^{-1})\\|^{\\rm bl}\\le Q_r(C_j^{\\rm ins})",
+   "decls": [
+    "YM.WilsonBulk.completion_choice",
+    "YM.Stationary.thin_doubled",
+    "YM.Stationary.pebbles_frozen",
+    "YM.Stationary.Freezer.back"
+   ],
+   "readme": "the bounds on D^r(A_μ^{-1}) by Q_r(C^ins) for r = 1, 2 and the μ²-scaled block bounds; [L] states the trace bound on the flat P_μ³ (`thin_doubled`), bounds on P_μ through two insertions (`pebbles_frozen`) and only the r = 0 dual-to-primal bound on the joint inverse (`completion_choice`).",
+   "status": "weaker",
+   "add_links": [
+    {
+     "decl": "YM.WilsonBulk.completion_choice",
+     "role": "key",
+     "where": "YM/WilsonBulk/Spectral/Joint.lean:44-52"
+    },
+    {
+     "decl": "YM.Stationary.thin_doubled",
+     "role": "key",
+     "where": "YM/Next/STATIONARY/Spectral/AuxReferences.lean:476-478"
+    },
+    {
+     "decl": "YM.Stationary.pebbles_frozen",
+     "role": "key",
+     "where": "YM/Next/STATIONARY/Films/ThinTrace.lean:304-307"
+    },
+    {
+     "decl": "YM.Stationary.Freezer.back",
+     "role": "support",
+     "where": "YM/Next/STATIONARY/Loops/UniformMatrix.lean:278-279"
+    }
+   ],
+   "skeptics": [
+    {
+     "refuted": false,
+     "status": "weaker",
+     "reason": "`completion_choice` (WilsonBulk/Spectral/Joint.lean:44) gives only `Freezer`, the r = 0 dual→primal bound on the joint inverse. `Freezer.back` (Loops/UniformMatrix.lean:278) is applied only to amFilm, i.e. P_μ (`pebbles_frozen`, Films/ThinTrace.lean:304-306), and the inverse of legionF appears only in `Ticket`/`Play` (Films/Contact.lean:183,201) with no norm bound. So ‖D^r(A_μ^{−1})‖ ≤ Q_r(C^ins) for r = 1, 2 and the μ²-scaled block bounds are absent, while `thin_doubled` (AuxReferences.lean:476) covers only the P_μ³ trace."
+    },
+    {
+     "refuted": false,
+     "status": "weaker",
+     "reason": "`completion_choice` (WilsonBulk/Spectral/Joint.lean:44-52) concludes `Poster η` and `Freezer … η C`. `Freezer` (Loops/UniformMatrix.lean:270-272) is only invertibility and a `serial` bound on (K p)⁻¹, i.e. r = 0. Other Freezer instances (AuxReferences.lean:374-398, ComplexGap.lean:338) are also r = 0, and none states D^r(A_μ⁻¹) for r = 1, 2 or the μ²-scaled block bounds."
+    }
+   ]
+  },
+  "Lemma 11.9": {
+   "kind": "rejudged",
+   "source": "review B2–B10, M5, m4–m9",
+   "why": "Status no-match → weaker, accepting B2: greyson (Shape/Scaled.lean:363-364) concludes Drinkable i … (4-i) with Rays (Shape/Vertex.lean:343, Infrastructure/Jets.lean:28); setWest (VertexWeights.lean:357-360) gives Laureate (a+inch L·ℓ) with Laureate's plain/peak fields matching the definition of C_r (VertexWeights.lean:213-216); exchangeYield (Exchange.lean:407-411) gives (C'+3A'DA')/24. radiant (Joint/FourPoint.lean:202) has no axial Q^{-1}.",
+   "note": "`greyson` gives the differences intended − Wilson kernels of `Rays` orders 3, 2, 1, `setWest` gives `Laureate` bounds a + L^{-1}ℓ and b + L^{-1}r on the joint vertices with a, b independent of the path bounds, and `exchangeYield` bounds the stationary quartic by (C₄ + 3C₃²D)/24. For the pairing, `radiant` gives only ⟨Hu, v⟩ = ⟨Hu, N^{-1}Hv⟩ for N = H + LᵀL, with no axial restriction and no Q^{-1}.",
+   "quote": "Gauge-annihilating mixed functionals satisfy $b_1\\mathsf Gb_2=b_{1,\\rm ax}\\mathsf Q^{-1}b_{2,\\rm ax}$.",
+   "decls": [
+    "YM.Stationary.radiant",
+    "YM.Stationary.greyson",
+    "YM.Stationary.setWest",
+    "YM.Stationary.exchangeYield"
+   ],
+   "readme": "the identity b₁Gb₂ = b_{1,ax}Q^{-1}b_{2,ax}; [L] states the momentum orders (`greyson`), the C₃, C₄ bounds (`setWest`) and the D⁴S_stat bound with 1/4! normalization (`exchangeYield`), but only the abstract matrix identity `radiant` for the pairing.",
+   "status": "weaker",
+   "add_links": [
+    {
+     "decl": "YM.Stationary.greyson",
+     "role": "key",
+     "where": "YM/Next/STATIONARY/Shape/Scaled.lean:363-364"
+    },
+    {
+     "decl": "YM.Stationary.setWest",
+     "role": "key",
+     "where": "YM/Next/STATIONARY/Shape/VertexWeights.lean:357-360"
+    },
+    {
+     "decl": "YM.Stationary.exchangeYield",
+     "role": "key",
+     "where": "YM/Next/STATIONARY/Shape/Exchange.lean:407-411"
+    },
+    {
+     "decl": "YM.Stationary.pennies",
+     "role": "support",
+     "where": "YM/Next/STATIONARY/Shape/Exchange.lean:390-391"
+    }
+   ],
+   "skeptics": [
+    {
+     "refuted": false,
+     "status": "weaker",
+     "reason": "`greyson` (Shape/Scaled.lean:363), `setWest` (VertexWeights.lean:357) and `exchangeYield` (Exchange.lean:407, (C′+3A′DA′)/24) state the momentum orders, the C₃, C₄ bounds and the D⁴S_stat bound. For the pairing, `radiant` (Joint/FourPoint.lean:202) gives ⟨Hu,v⟩ = ⟨Hu,N^{−1}Hv⟩, and `triumph4` (FourPoint.lean:289), which the claim omits, uses it with the completed inverse commonM^{−1}. No declaration has the axial Hessian inverse in b₁𝖦b₂ = b_{1,ax}𝖰^{−1}b_{2,ax}."
+    },
+    {
+     "refuted": false,
+     "status": "weaker",
+     "reason": "`Stationary.radiant` (Next/STATIONARY/Joint/FourPoint.lean:202) states ⟨Hu, v⟩ = ⟨Hu, N⁻¹Hv⟩. It has no axial restriction and no Q⁻¹, and the other `radiant` declarations (Deck/Rove.lean, Glints.lean, etc.) are unrelated. `greyson`, `setWest` and `exchangeYield` state the momentum orders, the C₃, C₄ bounds and the quartic bound, as the claim says."
+    }
+   ]
+  },
+  "Lemma 12.3": {
+   "kind": "reworded",
+   "source": "review B2–B10, M5, m4–m9",
+   "why": "Confirmed. Review m5 accepted: geared (Next/STATIONARY/FullPlanned.lean:59-61) lets the stage widths τ ≤ σ be chosen and still bounds only at the stage width, so the new note drops geared; Installed.uses (UVNext/PRICED_KERNELS/Assembly.lean:88-90) needs σ ≤ i.width and narrower (SCHEDULE/Continuing.lean:37) needs b ≤ a.",
+   "note": "`Kin.Planned.cap` gives the row, loop and cubic/quartic weighted sums with summability for the chosen arrays, which carry no p or β index, for every N and m ≤ N at the stage width. `Installed.uses` and `Scheduling.narrower` pass only to widths σ ≤ the stage width, so no declaration states the bounds at a width w' > w^path.",
+   "quote": "The same bounds hold at $w_{J_m}^\\prime>w_{J_m}^{\\rm path}>0$ with $A_{J_m}^\\prime\\ge A_{J_m}^{\\rm path}>0$ replacing $A_{J_m}^{\\rm path}$, uniformly in $N$.",
+   "decls": [
+    "YM.Precision.Kin.Planned",
+    "YM.UVNext.PricedKernels.Installed",
+    "YM.Next.Scheduling.narrower"
+   ],
+   "readme": "the bounds at a larger width w' > w^path with A' ≥ A^path; [L] states them at the stage width (`Kin.Planned`) and moves only to smaller widths (`Installed`, `Scheduling.narrower`)."
+  },
+  "Lemma 13.17": {
+   "kind": "rejudged",
+   "source": "review B2–B10, M5, m4–m9",
+   "why": "Review B6 accepted in part: `Rebar` (Ray/Rebar.lean:20) is [M]'s stencil hypothesis (nodes in `sun` = [−1,1], Ray/Gain.lean:22), and `Rebar.recovery` (Ray/Anchor.lean:23) with a = R/2 gives `Scout` (R/2) with (1−1/2)⁻¹C = 2C, whence `fee (R/2) r` = 4e/(rR) (Amp/Head.lean:13) in `course`/`stage` (Amp/Blank.lean:42); but `recovery` and `Scout.ray` (Ray/Gain.lean:24) need 1 ≤ R/2, so the range 1 < R < 2 has no counterpart. Symmetry: grep in YM/FullVolume/Amp finds no permutation/symmetry lemma for `gardenL`.",
+   "note": "[M]'s stencil hypothesis is `Ray.Rebar` R; `Rebar.recovery` turns it into `Ray.Scout` (R/2) with constant 2C only when 1 ≤ R/2, and from `Amp.Often` at radius R/2 the maps `Amp.Often.gardenL` satisfy ‖T_k‖ ≤ `fee`^k·2C = 2C(4e/(rR))^k with the series `Amp.Often.party` and the completion `Amp.stage`. So [L] gives the lemma's bound only for R ≥ 2, not for 1 < R < 2, and states no symmetry of the T_k.",
+   "quote": "there are continuous symmetric multilinear maps $T_k:X^k\\to Y$",
+   "decls": [
+    "YM.FullVolume.Amp.Often.gardenL",
+    "YM.FullVolume.Amp.Often.course",
+    "YM.FullVolume.Amp.Often.party",
+    "YM.FullVolume.Amp.stage",
+    "YM.FullVolume.Ray.Rebar.recovery"
+   ],
+   "readme": "symmetry of the T_k, and the bound 2C(4e/(rR))^k for 1 < R < 2; [L]'s `Rebar.recovery` (needing 1 ≤ R/2) composed with `Amp.Often.gardenL`, `Amp.Often.course`, `Amp.Often.party` and `Amp.stage` gives the continuous multilinear T_k with ‖T_k‖ ≤ 2C(4e/(rR))^k, the series and the completion only for R ≥ 2, and no declaration states symmetry",
+   "add_links": [
+    {
+     "decl": "YM.FullVolume.Ray.Rebar",
+     "role": "support",
+     "where": "YM/FullVolume/Ray/Rebar.lean:20"
+    },
+    {
+     "decl": "YM.FullVolume.Ray.Scout",
+     "role": "support",
+     "where": "YM/FullVolume/Ray/Gain.lean:23"
+    }
+   ],
+   "skeptics": [
+    {
+     "refuted": false,
+     "status": "weaker",
+     "reason": "[M] assumes the stencil bound for every R > 1 (D-section.tex:759). In [L], `Scout` needs 1 ≤ R (Ray/Gain.lean:24), and `Rebar.recovery` (Ray/Anchor.lean:23) needs 1 ≤ a < p and gives (1−a/p)⁻¹C. So 2C at a = R/2 needs R ≥ 2, and only then does `fee (R/2) r` = 4e/(rR) (Amp/Head.lean:13, `course` :78) give 2C(4e/(rR))^k. `gardenL` is a polarization (Head.lean:15,77), but no Amp lemma states that it is symmetric."
+    },
+    {
+     "refuted": false,
+     "status": "weaker",
+     "reason": "`Rebar.recovery` (FullVolume/Ray/Anchor.lean:23) needs 1 ≤ a < p and gives `Scout a` with constant (1−a/p)⁻¹c. Only a = R/2 gives 2C and fee = 4e/(rR), and that requires R ≥ 2. For 1 < R < 2 the admissible a ≥ 1 gives a worse constant. `gardenL` (Amp/Head.lean:77) is built by mkContinuous with no symmetry lemma, so the claim stands."
+    }
+   ]
+  },
+  "Lemma 13.18": {
+   "kind": "reworded",
+   "source": "review B2–B10, M5, m4–m9",
+   "why": "Unchanged: `Dales.Order` (Dales/Rainbow.lean:64-67) and `Seal` (Camp/Lights.lean:19-22) give only Bumps, sup and Lipschitz bounds on `Grip` with rim = 1/131072 (Oriel/Gate.lean:26); no HasFPowerSeries/FormalMultilinearSeries statement in UVExtension concerns these maps (hits in Projection/Radial, Concert, Wick, Linden are other maps). The review confirms this item.",
+   "note": "For the actual Wilson top map, step maps and corrections, `Spire.Fitted.zesty` and `Oriel.conquest` give holomorphic extensions on `Grip`, the ball of radius `rim` = 2⁻¹⁷, with sup bound and Lipschitz constant `soft` = 2⁻²⁰ (`worth (i+1)` for the corrections); `Camp.levy` gives ∑_{i<m} worth(i+1) ≤ pulse_m·soft/4 and `Roads.Unum.commute` the cutoff compatibility. No declaration states a multilinear expansion on the ball of radius 1/4 or degree-k coefficient bounds g_*, ϱ_m, g_*.",
+   "quote": "have convergent real multilinear expansions on the ball of radius $1/4$. Their degree-$k$ coefficients, $k\\ge1$, have norms at most $g_*$, $\\varrho_m$ and $g_*$",
+   "decls": [
+    "YM.UVExtension.Spire.Fitted.zesty",
+    "YM.UVExtension.Oriel.conquest",
+    "YM.UVExtension.Camp.levy",
+    "YM.UVExtension.Roads.Unum.commute"
+   ],
+   "readme": "convergent multilinear expansions on the ball of radius 1/4 with degree-k coefficient norms ≤ g_*, ϱ_m, g_*; [L] has holomorphic extensions on the ball of radius 2⁻¹⁷ with sup and Lipschitz bound 2⁻²⁰ (corrections: `worth`) and no coefficient bounds (`Spire.Fitted.zesty`, `Oriel.conquest`), the sum bound in its own normalization (`Camp.levy`) and cutoff compatibility (`Roads.Unum.commute`)",
+   "add_links": [
+    {
+     "decl": "YM.UVExtension.Oriel.rim",
+     "role": "support",
+     "where": "YM/UVExtension/Oriel/Gate.lean:26"
+    },
+    {
+     "decl": "YM.UVExtension.Camp.soft",
+     "role": "support",
+     "where": "YM/UVExtension/Camp/Pin.lean:20"
+    }
+   ]
+  },
+  "Lemma 13.19": {
+   "kind": "rejudged",
+   "source": "review B2–B10, M5, m4–m9",
+   "why": "The finding (and the review, which confirmed it) looked only at the UVExtension.Camp route. FullVolume/Gain/Resolve.lean:31-33 (`track`) writes `suffices hv:u ≤ r+8*glint*v` with r = ‖δ‖/brace 0, u = v = weightA (Cannon.lean:64, max over |x'−x| and ‖A'−A‖), δ = bonusB p'−bonusB p = β'_0−β_0 and glint = 1/128 (Amp/Shelf.lean:18), and concludes u ≤ 2‖δ‖/brace 0; the series claims are Rally.danceN/danceD/payable on Box = (T→Beam ℝ)×Π Beam(A i) with Beam = ℓ¹ (Cot.lean:10) and lux = 1/16, and Winter.convergence (Glide/Vac.lean:46-50) covers convergent endpoint sequences of Contests, whose endpoints contain 𝔍 = ask[−1,1] with beamWidth = lux/4·brace 0 (Resolve.lean:71-85). `offers` (Vac.lean:65) needs Locrian R and Jams.Wild, construction records also assumed in Dusk/Real.lean; I did not trace them further.",
+   "note": "`Contest.track` proves 𝔡 ≤ 2|δ|/b_* for two histories (`weightA` the maximum coordinate distance, `bonusB` the endpoint, b_* = brace 0) by first proving 𝔡 ≤ |δ|/b_* + 8·`glint`·𝔡 with `glint` = 1/128. On the series space `Amp.Beam` = ℓ¹ and for ‖e‖ ≤ (1/16)/4·brace_i, `Rally.danceN`, `Rally.danceD` and `Rally.payable` give ball preservation at radius `lux` = 1/16, contraction by 1/2 and the unique fixed point of `Rally.danceB` (the series map with its quadratic term), `Rally.south` and `Contest.score` identify its evaluations with the real recursion on the interval `Contest.ask` = 𝔍, and `Campaign.Winter.convergence` (proved in `Campaign.offers`) gives fixed-level convergence of couplings and activity coordinates for every convergent endpoint sequence.",
+   "quote": "\\mathfrak d\\le |\\delta|/b_*+8g_*\\mathfrak d\\,.",
+   "decls": [
+    "YM.PhysicalNext.Repeat.Muse.Contest.track",
+    "YM.FullVolume.Amp.Rally.danceN",
+    "YM.FullVolume.Amp.Rally.danceD",
+    "YM.FullVolume.Amp.Rally.payable",
+    "YM.FullVolume.Amp.Rally.south",
+    "YM.PhysicalNext.Repeat.Muse.Contest.score",
+    "YM.PhysicalNext.Repeat.Legato.Campaign.Winter.convergence"
+   ],
+   "readme": "not a finding: the history comparison 𝔡 ≤ |δ|/b_* + 8g_*𝔡 is the `suffices` step in the proof of `Contest.track` (with `weightA` = 𝔡, b_* = brace 0, g_* = `glint` = 1/128), which states 𝔡 ≤ 2|δ|/b_*; the ball preservation, 1/2-contraction and unique fixed point of the series map on ℓ¹ power series (`Amp.Beam`) are `Rally.danceN`, `Rally.danceD`, `Rally.payable`, real evaluation is `Rally.south` (instantiated by `Contest.score`), and fixed-level convergence for convergent endpoints is `Campaign.Winter.convergence`",
+   "status": "parts",
+   "add_links": [
+    {
+     "decl": "YM.PhysicalNext.Repeat.Muse.Contest.track",
+     "role": "key",
+     "where": "YM/FullVolume/Gain/Resolve.lean:31-39"
+    },
+    {
+     "decl": "YM.PhysicalNext.Repeat.Muse.Contest.weightA",
+     "role": "support",
+     "where": "YM/FullVolume/Gain/Cannon.lean:64"
+    },
+    {
+     "decl": "YM.PhysicalNext.Repeat.Muse.Contest.scaleV",
+     "role": "helper",
+     "where": "YM/FullVolume/Gain/Cannon.lean:90-99"
+    },
+    {
+     "decl": "YM.FullVolume.Amp.Rally.danceB",
+     "role": "support",
+     "where": "YM/FullVolume/Amp/Shelf.lean:71"
+    },
+    {
+     "decl": "YM.FullVolume.Amp.Rally.danceN",
+     "role": "key",
+     "where": "YM/FullVolume/Amp/Shelf.lean:89"
+    },
+    {
+     "decl": "YM.FullVolume.Amp.Rally.danceD",
+     "role": "key",
+     "where": "YM/FullVolume/Amp/Sieve.lean:28-38"
+    },
+    {
+     "decl": "YM.FullVolume.Amp.Rally.payable",
+     "role": "key",
+     "where": "YM/FullVolume/Amp/Sieve.lean:41-47"
+    },
+    {
+     "decl": "YM.FullVolume.Amp.Rally.south",
+     "role": "key",
+     "where": "YM/FullVolume/Amp/Sieve.lean:75-79"
+    },
+    {
+     "decl": "YM.PhysicalNext.Repeat.Muse.Contest.vault",
+     "role": "support",
+     "where": "YM/FullVolume/Gain/Cannon.lean:41-58"
+    },
+    {
+     "decl": "YM.PhysicalNext.Repeat.Muse.Contest.score",
+     "role": "key",
+     "where": "YM/FullVolume/Gain/Resolve.lean:88-99"
+    },
+    {
+     "decl": "YM.PhysicalNext.Repeat.Muse.Contest.ask",
+     "role": "support",
+     "where": "YM/FullVolume/Gain/Resolve.lean:72"
+    },
+    {
+     "decl": "YM.FullVolume.Amp.Beam",
+     "role": "support",
+     "where": "YM/FullVolume/Amp/Cot.lean:10"
+    },
+    {
+     "decl": "YM.PhysicalNext.Repeat.Legato.Campaign.Winter.convergence",
+     "role": "key",
+     "where": "YM/FullVolume/Glide/Vac.lean:46-50"
+    },
+    {
+     "decl": "YM.PhysicalNext.Repeat.Legato.Campaign.offers",
+     "role": "support",
+     "where": "YM/FullVolume/Glide/Vac.lean:65"
+    }
+   ],
+   "skeptics": [
+    {
+     "refuted": false,
+     "status": "parts",
+     "reason": "Inside `Contest.track`, Gain/Resolve.lean:33 writes the history bound `suffices hv : u ≤ r+8*glint*v`, with r = ‖δ‖/brace 0 and glint = 1/128 (Amp/Shelf.lean:18), and proves it at :35-39. On ℓ¹ `Beam` (Amp/Cot.lean:10), instantiated by `vault` (Gain/Cannon.lean:41-58), with ‖b‖ ≤ lux/4·w and lux = λ_* = 1/16: `danceN` (Shelf.lean:89) preserves the ball, `danceD` (Amp/Sieve.lean:28) contracts by 1/2, `payable` (Sieve.lean:41) gives the unique fixed point, and `south` (Sieve.lean:75) with `score` (Resolve.lean:88-99) gives real evaluation. `Winter.convergence` (Glide/Vac.lean:46-50) covers convergent endpoint sequences. Its `offers` hypotheses Locrian/Jams.Wild are supplied by the construction (`Roll.meridian`, Roll/Meridian.lean:20; `Gables.vendee`, Gables/Vendee.lean:44; used at Fields/Filled.lean:50)."
+    },
+    {
+     "refuted": false,
+     "status": "parts",
+     "reason": "The first display is the `suffices` step at Resolve.lean:33 in the proof of `Contest.track`. `Rally.danceN` (Amp/Shelf.lean:89), `danceD` (Sieve.lean:28-38) and `payable` (Sieve.lean:41-47) give ball preservation at lux, 1/2-contraction and the unique fixed point under ‖b‖ ≤ lux/4·w_i, which [M]'s ‖𝔢‖ ≤ λ_*b_*/4 implies, and `Rally.south` (Sieve.lean:75-79) identifies the evaluations. `Winter.convergence` (Glide/Vac.lean:46-50) is a field supplied by `offers` from Locrian R and Jams.Wild, which the construction theorems provide (e.g. `operaShip17`, RG17/Witness.lean:94)."
+    }
+   ]
+  },
+  "Lemma 13.4": {
+   "kind": "rejudged",
+   "source": "review B2–B10, M5, m4–m9",
+   "why": "Status no-match→weaker: by the brief's definition (only some claims), since `Boulevard.lays` (Boulevard/Blue.lean:47-50) states the identity, absolute convergence and the β^{-7/16} and forced bounds. I accept B4 that a rooted bound is stated generically (`Copse.flights`, Copse/Wood.lean:41, hypotheses `Hit X B f (a+δ) γ`, `ballCost B*γ ≤ δ`), but reject linking it as `key`: it concerns an abstract family, and its only application, `Willow.heights` (Willow/Moss.lean:39-43), is in the UVExtension alternative construction (outline III-13.md), not in Section 13's step; no declaration in PhysicalNext.Repeat states the bound with a distinguished factor W₀.",
+   "note": "`Boulevard.lays` gives the connected identity, the regular budget with β^{-7/16} and the forced `Ac.Hit` bound, with no distinguished factor W₀. Under `Ac.Hit` at exponent a+δ and (2B+1)⁴γ ≤ δ, `Copse.flights` bounds the rooted sum of an abstract overlap gas by e^{(a+δ)·cover}, and `Willow.heights` applies it to a distinguished leaf in the alternative UV construction; neither states R(W₀) = max{R_reg, e^{r_jβ'_u t²}R_for} ≤ v₀e^{ηn₀} for this step's expansion.",
+   "quote": "For $W_0$ satisfying $(2B+1)^4\\sup_x\\sum_{a:x\\in Z_a}v_a\\le\\eta$, $\\mathcal R(W_0)\\le v_0e^{\\eta n_0}$.",
+   "decls": [
+    "YM.PhysicalNext.Repeat.Boulevard.lays",
+    "YM.UVExtension.Copse.flights",
+    "YM.UVExtension.Willow.heights"
+   ],
+   "readme": "the rooted bound R(W₀) ≤ v₀e^{ηn₀} under (2B+1)⁴ sup_x Σ_{a: x∈Z_a} v_a ≤ η for this step's connected expansion, with R(W₀) = max{R_reg(W₀), e^{r_jβ'_u t²_{m+1}} R_for(W₀)}; `Boulevard.lays` states the identity and the β^{-7/16} and forced bounds but has no extra factor W₀, and [L] states the rooted bound only for abstract overlap gases (`Copse.flights`) and, in the alternative construction of III.13, for one distinguished leaf (`Willow.heights`)",
+   "status": "weaker",
+   "add_links": [
+    {
+     "decl": "YM.UVExtension.Copse.flights",
+     "role": "support",
+     "where": "YM/UVExtension/Copse/Wood.lean:41"
+    },
+    {
+     "decl": "YM.UVExtension.Willow.heights",
+     "role": "support",
+     "where": "YM/UVExtension/Willow/Moss.lean:39"
+    }
+   ],
+   "skeptics": [
+    {
+     "refuted": false,
+     "status": "weaker",
+     "reason": "`Boulevard.lays` (Boulevard/Blue.lean:47-49) gives `Collection.Local`: the identity, absolute convergence, the β^{−7/16} budget and the forced bound via `Ac.Hit` with weight `Cash.armK` carrying e^{−mark} (CONNECTED_ACTIVITY_JETS_E6/Bulkhead.lean:41). The structure (VERIFIED_RESET_STEP/Trays.lean:35-40) has no field and no distinguished factor W₀, so it does not state R(W₀) = max{R_reg, e^{r_jβ′_u t²}R_for} ≤ v₀e^{ηn₀}. Rooted bounds exist only for abstract gases (`Copse.flights`, UVExtension/Copse/Wood.lean:41; Push/ABSOLUTE_SUMS/Reserves.lean:90) and in `Willow.heights`, and none concerns this step's expansion."
+    },
+    {
+     "refuted": false,
+     "status": "weaker",
+     "reason": "`Boulevard.lays` (Boulevard/Blue.lean:47-50) gives the local budget with β^{−7/16} and the identity, with no distinguished factor W₀. The PhysicalNext `Meadow.flights` (Meadow/Storeys.lean:47-49), used in Boulevard/Dawn.lean:46, bounds only `octaveNeed` and is not a rooted sum. Rooted bounds appear only for the abstract `Copse.flights` (UVExtension/Copse/Wood.lean:41) and its UVExtension use `Willow.heights` (Willow/Moss.lean:43)."
+    }
+   ]
+  },
+  "Lemma 13.5": {
+   "kind": "rejudged",
+   "source": "review B2–B10, M5, m4–m9",
+   "why": "I accept B9: D-section.tex:195 prints \"The identity T_i=P_i+R_i and the corresponding weighted comparisons hold on the entire input curve\", not continuity, so the line now names the weighted comparisons; the identity itself holds by definition of `glyph` (Brim/Found.lean:30) at each input. The coverNumber ≤ B restriction is at Brim/Level.lean:53-54, and Brim/*.lean contains no comparison between two inputs.",
+   "note": "`Brim.pressings` concludes `Brim.Houses` with principal budget (C'/L)·incomingE and remainder budget |e|·incomingE, e of rate −1/2, but the field `remains` gives the remainder's sup bound only where coverNumber B (plate i).support ≤ B. It holds at each input separately and states no weighted comparison between inputs on the curve.",
+   "quote": "\\mathcal E(R)\\le \\omega_{j,\\ell_m}^{\\rm inh}(\\refbeta_m)\\epsilon_{m+1}^{\\rm reg},\n\\end{equation*}\nwhere $V_j$ is fixed before the ratio and $\\omega_{j,\\ell}^{\\rm inh}$ has scale rate $-1/2$. The identity $T_i=P_i+R_i$ and the corresponding weighted comparisons hold on the entire input curve.",
+   "decls": [
+    "YM.PhysicalNext.Repeat.Brim.pressings",
+    "YM.PhysicalNext.Repeat.Brim.Houses"
+   ],
+   "readme": "the remainder bound E(R) ≤ ω^{inh}_{j,ℓ_m}ε^{reg}_{m+1} at all supports, and the weighted comparisons on the entire input curve; [L]'s `Brim.pressings` gives the principal bound (C'/L)ε^{reg} at all supports but the remainder's sup bound only where coverNumber ≤ B (`Brim.Houses`), at each input separately",
+   "skeptics": [
+    {
+     "refuted": false,
+     "status": "weaker",
+     "reason": "`Brim.Houses` (Brim/Level.lean:49-54) bounds the remainder `glyph` only where coverNumber of the support is ≤ B. `Brim.pressings` (Level.lean:61-65) concludes exactly `Houses`, with budgets (C′/L)·incomingE and |e|·incomingE, where e has rate −1/2. Its consumers (Beam/Life.lean:62, Beam/Rest.lean:27) route the large-cover terms around the split instead of bounding R there, and no Brim file compares two inputs. So 𝓔(R) ≤ ω^{inh}ε^{reg} at all supports and the weighted comparisons on the curve have no counterpart."
+    },
+    {
+     "refuted": false,
+     "status": "weaker",
+     "reason": "In `Brim.Houses` (Brim/Level.lean:49-54), `principal` gives sup bounds on every plate. `remains` gives the remainder's `supBounds` only under `coverNumber B.B (plate H i).support ≤ B.B`. `pressings` (Level.lean:61-66) concludes `Houses` at a single input s, and I found no comparison between two inputs on a curve."
+    }
+   ]
+  },
+  "Lemma 13.7": {
+   "kind": "reworded",
+   "source": "review B2–B10, M5, m4–m9",
+   "why": "Confirmed: `Offering.holds` (YM/AnalyticBridge/VERIFIED_RESET_STEP/Downstream.lean:77-81) has `∃ (τ : ℝ → ℝ)` with only pointwise `atlas`, and `Compared` (Comparison.lean:72-74) constrains only `X.read (a x)`; `Mallow.Spring.moves` (Mallow/Pediment.lean:58) gives continuity of the output curve with `(result x).v = vac (V' x) (τ x)`, not of τ.",
+   "note": "For every input curve on a closed interval, `Use.Offering` (proved by `Rain.glazing`) supplies one listing, sources and scalars τ with the identity (13.10), the bounds (13.11)–(13.12), regularity, equivariance and weighted continuity of the families (`Collection.Compared`). It quantifies over an arbitrary τ : ℝ → ℝ and no declaration states that τ_u (`stanzaFee`) is continuous, which [M] prints.",
+   "quote": "a continuous scalar $\\tau_u$",
+   "decls": [
+    "YM.AnalyticBridge.VerifiedReset.Use.Offering",
+    "YM.PhysicalNext.Repeat.Rain.glazing",
+    "YM.AnalyticBridge.VerifiedReset.Collection.Compared"
+   ],
+   "readme": "continuity of the scalar τ_u; [L]'s `Use.Offering` (proved by `Rain.glazing` with τ = `stanzaFee`) gives the identity, the bounds, the regularity, equivariance and weighted continuity of the families (`Collection.Compared`), but leaves τ an arbitrary function ℝ → ℝ"
+  },
+  "Lemma 14.1": {
+   "kind": "rejudged",
+   "source": "review B2–B10, M5, m4–m9",
+   "why": "The README says log ℓ_m → ∞ and log ℓ_m/s_m → 0 are not stated; both are: `Fits.mesh : S.schedule.Gentle` (RG/History.lean:98, Gentle = log block/scale → 0 at Lattice/Scale.lean:129), a field of every `Levels` (RG/History.lean:133) and proved for the construction in `Wait.engine` (Pane/Divisors.lean:100-108), and `Bridge.reach` (Planned/CALIBRATED_MIXED_HISTORY/Bridge.lean:29) gives block → ∞, from which log ℓ_m → ∞ is one step; this confirms review B5 and the skeptics. Review B5's line keeps log ℓ_m → ∞ as missing, which I reject; ϖ = o(s) has no counterpart (the only growth fact on `power` is monotonicity, Price/Intent.lean:33, RG/History.lean `deepPower`), and the windows in `Paid.run` (Price/Intent.lean:160) are symmetric abstract `B.window` intervals, so the finding stands as no-match.",
+   "note": "`Wait.engine`, `Fits.mesh`, `Bridge.reach` and `Stock.consumes` give the calendar, log ℓ_m/s_m → 0, ℓ_m → ∞ and (a_m/a_{k(m)})⁴q_{k(m)} = o(s_{k(m)}), and `Paid.run` with `Ship.honoured` gives the comparison windows of length h_t(b)+v_t. [L] states no bound ϖ_{J_i} = o(s_i): the stage power is constrained only by `power_ge` and monotonicity.",
+   "quote": "All requirements~\\ref{it:E-columns}--\\ref{it:E-birth} and~\\eqref{eq:E-marker-scales} can be met with",
+   "decls": [
+    "YM.RG.Supply.Wait.engine",
+    "YM.RG.Calendar.Fits.mesh",
+    "YM.Planned.CalibratedMixedHistory.Bridge.reach",
+    "YM.Stock.consumes",
+    "YM.RG.Supply.Paid.run",
+    "YM.Next.Rank.Ship.honoured"
+   ],
+   "readme": "that the requirements, among them ϖ_{J_i} = o(s_i), can be met; [L] has the calendar (`Wait.engine`), log ℓ_m/s_m → 0 (`Fits.mesh`), ℓ_m → ∞ (`Bridge.reach`), the o(s) bound on (a_m/a_{k(m)})⁴q_{k(m)} (`Stock.consumes`) and the comparison windows (`Paid.run`, `Ship.honoured`), but no bound ϖ_{J_i} = o(s_i).",
+   "add_links": [
+    {
+     "decl": "YM.RG.Calendar.Fits.mesh",
+     "role": "key",
+     "where": "YM/RG/History.lean:98"
+    },
+    {
+     "decl": "YM.Planned.CalibratedMixedHistory.Bridge.reach",
+     "role": "support",
+     "where": "YM/Planned/CALIBRATED_MIXED_HISTORY/Bridge.lean:29-40"
+    },
+    {
+     "decl": "YM.Stock.consumes",
+     "role": "support",
+     "where": "YM/Overlay/Schedule.lean:111-125"
+    },
+    {
+     "decl": "YM.Stock.Tabs",
+     "role": "support",
+     "where": "YM/Overlay/Prior.lean:15-18"
+    },
+    {
+     "decl": "YM.RG.Supply.Paid.run",
+     "role": "support",
+     "where": "YM/Price/Intent.lean:160-163"
+    }
+   ],
+   "skeptics": [
+    {
+     "refuted": false,
+     "status": "no-match",
+     "reason": "Upholds the narrowed claim: The claim says [L] has the comparison windows only abstractly, but Next/RANK/Station.lean:37-45 defines `bump`/`more` = ⌈log(P^b·P²)/log L⌉ and ⌈log(B¹⁰)/log L⌉ (that is, h_t(b) and v_t), with `width` = k − h_t(b) − v_t. `Allowed.plateau` (Station.lean:93-96) gives J_i = J_k on the window, `Ship.honoured` (Next/RANK/Voucher.lean:96) handles every finite exponent set D j, `held_at` (Next/RANK/Possible.lean:57) turns `Paid.run` into `Allowed`, and `sold` (Soft/Supra.lean:127) gives width → ∞, so the claim misdescribes [L]. The status stays no-match because ϖ_{J_i} = o(s_i) has no counterpart: `Stage.power` is constrained only by `power_ge` and `deepPower` monotonicity (RG/History.lean:55,105)."
+    },
+    {
+     "refuted": false,
+     "status": "no-match",
+     "reason": "[M] includes (14.marker-scales) in the lemma, and that equation prints ϖ_{J_i} = o(s_i) (E-section.tex:36-40), so it is a claim of the item. The only growth fact on `power` in [L] is monotonicity (`powers`, Price/Intent.lean:33, and the derived `deepPower`), with no little-o bound against the scale. The comparison windows of `Paid.run` are abstract, so no-match stands."
+    }
+   ]
+  },
+  "Lemma 15.1": {
+   "kind": "rejudged",
+   "source": "review B2–B10, M5, m4–m9",
+   "why": "The README line says both claims of Eq (15.1) are missing. But C^∞ on Conf_n is stated for the table T, which carries the same RawLimits as S: Org.Arrives.serves (Input.lean:101-109), Cleaner.smooth (Input.lean:94), RawLimits.ready (Lipschitz.lean:194-202). Only the derivative convergence (and convergence off the generic set) is missing.",
+   "note": "`Extraction.first_surface` and `Extraction.crops` give a refinement, a table S and volume tables with `Extraction.RawLimits` (value convergence on compact generic sets and the ordered smear limit), `Extraction.copy_down` gives persistence, and `Extraction.room` with `Extraction.no_wrap_hit` puts compact subsets of Conf_n eventually in NoHit. Smoothness on Conf_n holds only for the table T of `Org.Arrives.serves`, equal to S at generic points, and no declaration states convergence of any derivative ∂_l f_{P(k),v}.",
+   "quote": "\\partial_{\\boldsymbol l}f_{P(k),v}\\longrightarrow\n\\partial_{\\boldsymbol l}S_n(v;\\cdot)\n\\quad\\text{locally uniformly on }\\Conf{n}",
+   "decls": [
+    "YM.Extraction.first_surface",
+    "YM.Extraction.RawLimits",
+    "YM.Extraction.copy_down",
+    "YM.Org.Arrives.serves"
+   ],
+   "readme": "∂_l f_{P(k),v} → ∂_l S_n(v;·) locally uniformly on Conf_n; [L] has the extraction, value convergence on compact generic sets, the ordered convergence of smears and persistence under refinement (`Extraction.first_surface`, `Extraction.RawLimits`, `Extraction.copy_down`), and C^∞ only for a replacement table T equal to S at generic points (`Org.Arrives.serves`).",
+   "add_links": [
+    {
+     "decl": "YM.Extraction.room",
+     "role": "support",
+     "where": "YM/Extraction/Patch.lean:67-75"
+    },
+    {
+     "decl": "YM.Extraction.Order.Ordered",
+     "role": "support",
+     "where": "YM/Extraction/Limits.lean:32-35"
+    }
+   ],
+   "skeptics": [
+    {
+     "refuted": false,
+     "status": "weaker",
+     "reason": "`RawLimits` (Extraction/Lipschitz.lean:156-160) and `VolumePoints` (Extraction/Limits.lean:64-66) give only value convergence on compact K ⊆ generic n, i.e. coordinates distinct on every axis (Space/Configurations.lean:66), a set smaller than Conf_n. Neither Extraction/ nor `Org.Arrives.serves` (Org/Input.lean:101-109) states any fderiv or iteratedFDeriv convergence of the volume tables, so ∂_l f_{P(k),v} → ∂_l S_n is missing. C^∞ holds only for the replacement T (`Cleaner.smooth`, Input.lean:94), as the claim says."
+    },
+    {
+     "refuted": false,
+     "status": "weaker",
+     "reason": "`RawLimits` (Extraction/Lipschitz.lean:156-160) has only `regular` (ContinuousOn on generic sets), `mesh`, `volume` and `integral`. Smoothness is the field `Cleaner.smooth` of the replacement table T (Org/Input.lean:90-109), carried over through `RawLimits.ready` (Lipschitz.lean:194-202). No file in YM/Extraction or YM/Org uses fderiv or iteratedFDeriv, so the convergence ∂_l f_{P(k),v} → ∂_l S_n is not stated."
+    }
+   ]
+  },
+  "Lemma 16.11": {
+   "kind": "reworded",
+   "source": "review B2–B10, M5, m4–m9",
+   "why": "Finding unchanged, and I accept review m6 as an addition. StressFlux.Centers (Conserved.lean:52-54) is proved by exists_stress (Conserved.lean:93) and stress_weak (Weak.lean:240) for `material S w`, a kernel vector of a rank map, not for averageStress. A15.answer (A15.lean:187-192) concludes only Conserved ∧ Tensorial ∧ StressLaws.",
+   "note": "`Work.A14.answer` gives covariance of the table, and `Work.A15.tensorial_average`, `Work.A15.conserved_average` and `Work.A15.stressLaws_average` give the tensor law, reality, symmetry, conservation and both shell laws for the Haar average, which is all `Bid.A15` concludes. `StressFlux.Centers` (S_1(J_ab) = 0 and J ≠ 0) is proved by `StressFlux.exists_stress` and `StressFlux.stress_weak` only for a normalized stress `material S w` taken from the kernel of a rank map, not for the average of eq:G-average.",
+   "quote": "The tensor is centered, nonzero",
+   "decls": [
+    "YM.Work.A15.answer",
+    "YM.Bid.A15",
+    "YM.StressFlux.Centers",
+    "YM.StressFlux.exists_stress"
+   ],
+   "readme": "the averaged tensor T is centered and nonzero; [L]'s `Work.A15.answer` (`Bid.A15`) gives only Conserved, Tensorial and StressLaws for the average, and centering and nonvanishing (`StressFlux.Centers`) are proved only for a different stress chosen from a kernel (`StressFlux.exists_stress`, `StressFlux.stress_weak`).",
+   "add_links": [
+    {
+     "decl": "YM.Bid.A15",
+     "role": "key",
+     "where": "YM/Bid/Angular.lean:109-112"
+    },
+    {
+     "decl": "YM.StressFlux.Centers",
+     "role": "support",
+     "where": "YM/Push/STRESS_FLUX/Conserved.lean:52-54"
+    },
+    {
+     "decl": "YM.StressFlux.exists_stress",
+     "role": "support",
+     "where": "YM/Push/STRESS_FLUX/Conserved.lean:93-118"
+    },
+    {
+     "decl": "YM.StressFlux.stress_weak",
+     "role": "support",
+     "where": "YM/Push/STRESS_FLUX/Weak.lean:240-261"
+    }
+   ]
+  },
+  "Lemma 16.12": {
+   "kind": "reworded",
+   "source": "review B2–B10, M5, m4–m9",
+   "why": "Finding unchanged, and I accept review m8 (naming Bid.A04/Bid.A05). A04 (Angular.lean:51-53) quantifies ∀ d before Watches' ∃ D N m R (Angular.lean:45). A05 (Angular.lean:58-59) has the charge limit with (X.xi i)⁻¹ and κ, and Commission.lens (Twist.lean:33-34) picks U per d.",
+   "note": "`Bid.A04` and `Bid.A05` are `Bid.Watches` statements: for each d there are thresholds such that every scaling admitting a `Track` beyond them has the derivative limit and the charge limit with the factor (X.ξ_k)⁻¹. The normalized rotation limit for c⁻¹·Y appears only in `Org.Commission.lens` as ∀ d, ∃ U w, `Spin.Tilt`, with U chosen per d, and `Next.UVStress.focused` gives per-tuple tails of one stable scaling without either limit, so no declaration states both limits along one sequence for all d, a, K.",
+   "quote": "Along the single stable sequence of Proposition~\\ref{prop:SC}, for every fixed $d,a,K$,",
+   "decls": [
+    "YM.Bid.A04",
+    "YM.Bid.A05",
+    "YM.Org.Commission",
+    "YM.Spin.Tilt",
+    "YM.Next.UVStress.focused"
+   ],
+   "readme": "both operator-norm limits along the single stable sequence of Proposition SC, for every fixed d, a, K; [L] has the derivative limit and the unnormalized charge limit (X.ξ_k)⁻¹·transport → κ·L^Max only for scalings with a `Track` beyond thresholds depending on d (`Bid.A04`, `Bid.A05`), and the normalized rotation limit only for transports chosen separately for each d (`Org.Commission`, `Spin.Tilt`).",
+   "add_links": [
+    {
+     "decl": "YM.Bid.A05",
+     "role": "key",
+     "where": "YM/Bid/Angular.lean:55-59"
+    },
+    {
+     "decl": "YM.Bid.Watches",
+     "role": "support",
+     "where": "YM/Bid/Angular.lean:43-46"
+    },
+    {
+     "decl": "YM.Work.A05.answer",
+     "role": "key",
+     "where": "YM/Work/A05.lean:95"
+    }
+   ]
+  },
+  "Lemma 16.3": {
+   "kind": "rejudged",
+   "source": "review B2–B10, M5, m4–m9",
+   "why": "The README line misses the threshold. Org.erases (Input.lean:149-153) is `∃ n, ∀ d ≥ n`, and the value 4 appears only in the proof of erasing (`refine ⟨4,?_⟩`, AwayTeam.lean:49). So 'for every d ≥ 4' is also not stated.",
+   "note": "`Maxwell.Free.erasing` concludes `Org.erases`, which says there is some n such that for all d ≥ n a `Org.Winds` family with all Ward sums zero vanishes; the threshold 4 appears only in its proof. Selection of finitely many separating rows is `Work.A07.finite_rows`, a generic linear-algebra lemma used inside `Work.A07.transfer`, and it is never stated for B_d.",
+   "quote": "For every $d\\ge4$, finitely many sums",
+   "decls": [
+    "YM.Maxwell.Free.erasing",
+    "YM.Org.erases",
+    "YM.Work.A07.finite_rows"
+   ],
+   "readme": "for every d ≥ 4, finitely many sums separate B_d; [L]'s `Maxwell.Free.erasing` states only that all Ward sums separate B_d for d beyond an unspecified threshold (`Org.erases`: ∃ n, ∀ d ≥ n), and finite selection only for an abstract finite-dimensional family (`Work.A07.finite_rows`).",
+   "skeptics": [
+    {
+     "refuted": false,
+     "status": "weaker",
+     "reason": "`Org.erases` (Org/Input.lean:149-152) says only that there is some n such that, for every d ≥ n, a `Winds` family (Input.lean:141-146, matching B_d) with all Ward sums zero is zero. `Maxwell.Free.erasing` (Next/MAXWELL/AwayTeam.lean:48) concludes `erases`, and 4 appears only inside its proof (`refine ⟨4,?_⟩`, :49). Finite selection is the generic `Work.A07.finite_rows` (Work/A07.lean:27), used only inside `transfer` (:258), so 'for every d ≥ 4, finitely many sums separate B_d' is not stated."
+    },
+    {
+     "refuted": false,
+     "status": "weaker",
+     "reason": "`Org.erases` (Org/Input.lean:149-152) is ∃ n, ∀ d ≥ n, and the value 4 enters only in the proof of `Maxwell.Free.erasing` (`refine ⟨4,?_⟩`, Next/MAXWELL/AwayTeam.lean:48-49). The lemmas with explicit hd : 4 ≤ d (Born.lean:51, Racers.lean:32,57, Magnitude.lean:142) are ingredients and state no separation. No declaration picks finitely many separating sums for B_d."
+    }
+   ]
+  },
+  "Lemma 17.7": {
+   "kind": "reworded",
+   "source": "review B2–B10, M5, m4–m9",
+   "why": "No change. Surface.expect/kernel/wordsPositive (Star.lean:95-99) are defined on Sentence lists of (label, Test4) via Joint.materialize, and sees (System.lean:82-84) proves only that.",
+   "note": "`EveryPhase.all_characters` gives `EveryPhase.Completed`, whose `isTheory` field is `Boundary.Wightman.Realizes` (faithfulness, W1–W3, spectral condition), with joint boundary distributions W_n. Positivity is `Boundary.Fields.sees`, i.e. `Boundary.Surface.wordsPositive`: an NNKernel on Sentences evaluated through `Joint.materialize` of single-point tests, and no declaration extends it to general joint tests.",
+   "quote": "for every finite Schwartz test sequence~$F$ in the field-word algebra",
+   "decls": [
+    "YM.Boundary.Fields.sees",
+    "YM.Boundary.Surface.wordsPositive",
+    "YM.EveryPhase.Completed",
+    "YM.EveryPhase.all_characters"
+   ],
+   "readme": "W^ξ(F*F) ≥ 0 for every finite Schwartz test sequence F in the field-word algebra; [L] proves positivity only on Sentences, words whose letters each carry one test in Test4 (`Boundary.Fields.sees`, `Boundary.Surface.wordsPositive`), not for joint Schwartz tests.",
+   "add_links": [
+    {
+     "decl": "YM.Boundary.Surface.wordsPositive",
+     "role": "support",
+     "where": "YM/Fields/Star.lean:95-99"
+    }
+   ]
+  },
+  "Lemma 18.3": {
+   "kind": "rejudged",
+   "source": "review B2–B10, M5, m4–m9",
+   "why": "I accept review m7. travels_jet (Focus.lean:183-188) takes inputs v k i → x i, so the comparison is not limited to fixed inputs. I add that StarPath (Running.lean:18-21, comment 'not Stable.rise') has only Coherent (conjugation, signed) and units, not Stable.rises (Invert.lean:124), so 'stable scaling sequence' is not fully stated.",
+   "note": "`MergeProof.East.pays_sky` gives a subsequence and a scaling satisfying `MergeProof.East.StarPath` (Approaches, frames coherent with conjugation and signed permutations, units, vane levels → ∞), and `Trace.Over.gang` adds β_i → ∞ and log(1/r_i)/β_i → slope⁻¹ through `Trace.Over.Scribe`. `Next.UVStress.travels_jet` compares every fixed jet uniformly on compact subsets of Conf_n for inputs v_k → x at r_k y, but `StarPath` omits the inclusion law of `Next.UVStress.Stable`, and no declaration states the comparison at rounded points r_i x^{(i)}, a translation-shell flux limit along the scaling, or uniformity over phases.",
+   "quote": "\\sup_{x\\in K}\\left|S_{n_{\\rm ar}}(U_i(\\boldsymbol d)\\boldsymbol A^{(i)};r_ix^{(i)})-\\maxwellcorr_{n_{\\rm ar}}(\\boldsymbol A;x)\\right|\\to0",
+   "decls": [
+    "YM.MergeProof.East.pays_sky",
+    "YM.MergeProof.East.StarPath",
+    "YM.Trace.Over.gang",
+    "YM.Next.UVStress.travels_jet"
+   ],
+   "readme": "sup_{x∈K} |S(U_i(d)A^{(i)}; r_i x^{(i)}) − S^Max(A;x)| → 0 at the lattice-rounded points x^{(i)}, the translation-shell flux limit, the phase-uniform case n_ar = 2, and exact compatibility of the frames with inclusions; [L] has the subsequence, frames preserving conjugation, signed permutations and units, levels → ∞ and (18.1) (`MergeProof.East.pays_sky`, `MergeProof.East.StarPath`, `Trace.Over.gang`), and the jet comparison for convergent inputs only at the unrounded points r_k x (`Next.UVStress.travels_jet`).",
+   "add_links": [
+    {
+     "decl": "YM.Next.UVStress.travels_jet",
+     "role": "key",
+     "where": "YM/Next/UV_STRESS/Focus.lean:183-196"
+    },
+    {
+     "decl": "YM.Next.UVStress.Travels",
+     "role": "support",
+     "where": "YM/Next/UV_STRESS/Focus.lean:128-131"
+    },
+    {
+     "decl": "YM.Trace.Over.Scribe",
+     "role": "support",
+     "where": "YM/TraceExtension/Chart/Time.lean:52-56"
+    },
+    {
+     "decl": "YM.Next.UVStress.Stable",
+     "role": "support",
+     "where": "YM/Next/UV_STRESS/Invert.lean:121-125"
+    }
+   ],
+   "skeptics": [
+    {
+     "refuted": false,
+     "status": "no-match",
+     "reason": "`East.pays_sky` (TraceExtension/Prom/Zoom/Running.lean:25-26) gives the subsequence with `StarPath`. `StarPath` (Running.lean:19-23) has `Coherent` (conjugation and signed maps only, Next/UV_STRESS/Dimension.lean:20-22) and units, but not `Stable.rises` (Next/UV_STRESS/Invert.lean:124), so 'stable scaling sequence' is not fully stated. `travels_jet` (Next/UV_STRESS/Focus.lean:183-196) compares jets at the unrounded points r_k·y. Searches found no counterpart for the rounded points r_i x^{(i)}, the translation-shell flux limit (Shell.lean and Annulus.lean concern only the continuum S) or the phase-uniform n_ar = 2 case."
+    },
+    {
+     "refuted": false,
+     "status": "no-match",
+     "reason": "`StarPath` (TraceExtension/Prom/Zoom/Running.lean:19-23) has only Approaches, `Coherent` and units, no `rises` of `Next.UVStress.Stable` (Invert.lean:121-125). `Stations.equivalences` and `current_ready` (Foundation.lean:28-37) do give `Stable`, but for a scaling they build themselves, not a subsequence of a given null sequence. `travels_jet` (Focus.lean:183-188) compares jets of `tested r U` = disc(…)(r•x) (Station.lean:122) at unrounded points r_k y. I found no flux limit and no phase-uniform statement along the scaling, so no-match stands."
+    }
+   ]
+  }
+ }
+}

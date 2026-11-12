@@ -761,6 +761,16 @@
     "snippet": "def A05 : Prop := ∀ {G : Gauge} {C : Family G} {S : Table C.book} (H : S.Hierarchy) (V : DiffPlan S),\n    V.Inclusions S → V.Derivatives S → ∀ (R : MaxwellData C) (J : S.Stress) (d : ℕ)  (p : Climb.Parts S) (Y : Ward.SpinRows S),\n    Pre H V J p Y →\n    Watches J R.T H.spin R.hT.spin V (fun X => (ConLap X p d ((R.T.κ:ℝ) • R.T.W.deriv) (fun i => X.r i/X.xi i)) ∧\n      ∀ j : Spin.Ind, Tendsto (fun i => (X.xi i)⁻¹ • (Spin.transport Y (X.U i d) j)) atTop (𝓝 (R.T.κ • Spin.leaf R.T.K.lie d j)))"
    }
   },
+  "YM.Bid.A15": {
+   "YM/Bid/Angular.lean": {
+    "file": "YM/Bid/Angular.lean",
+    "kind": "def",
+    "line": 109,
+    "module": "YM.Bid.Angular",
+    "private": false,
+    "snippet": "def A15 : Prop := A10 → ∀ {G : Gauge} {L : Register G} {S : Table L} (H : S.Hierarchy) (V : DiffPlan S),\n    V.Inclusions S → V.Derivatives S → V.Orientation H.spin → ∀ (X : Rotation S), X.Laws V H.spin → X.Oriented S →\n    ∀ J p Y c, Crystal H V J p Y c → X.lie=c⁻¹ • Y → ∃ J' : Stress S, Conserved V H.spin J' ∧\n      Tensorial X J' ∧ StressLaws S J' V.deriv X.lie"
+   }
+  },
   "YM.Bid.B01": {
    "YM/Bid/Phase.lean": {
     "file": "YM/Bid/Phase.lean",
@@ -981,6 +991,16 @@
     "snippet": "structure ShellCom (V : DiffPlan S) (p : Climb.Parts S) (Y : Ward.SpinRows S) : Prop where\n  moves : ∀ d b v u, V.deriv d b (Y d v u) + (∑ c : Axis, (↑(v.val c b):ℂ) • p d c u) = Y (d+1) v (V.deriv d b u)\n  delta d b i u : V.deriv (d+1) b (p d i u) = p (d+1) i (V.deriv d b u)"
    }
   },
+  "YM.Bid.Watches": {
+   "YM/Bid/Angular.lean": {
+    "file": "YM/Bid/Angular.lean",
+    "kind": "structure",
+    "line": 43,
+    "module": "YM.Bid.Angular",
+    "private": false,
+    "snippet": "structure Watches (J : S.Stress) (T : Climb.Lighthouse L) (H : S.RealSpin) (a : (Bel L).RealSpin) (V : DiffPlan S)\n    (P : Scaling S→ Prop) : Prop where\n  ask : ∃ (D N m : ℕ) (R : ℝ), 1 ≤ R ∧ ∀ (X : Scaling S) (d : ℕ) (n k : ℕ) (B : ℝ),\n    D ≤ d → N ≤ n → m ≤ k → R ≤ B → Track X V T J H a n d k B → P X"
+   }
+  },
   "YM.Bid.barunit": {
    "YM/Bid/Loan.lean": {
     "file": "YM/Bid/Loan.lean",
@@ -1019,6 +1039,16 @@
     "module": "YM.Bid.Drops",
     "private": false,
     "snippet": "def dollar (F : Order) (x : Rowe C d) := ∀ ε : ℝ,0<ε → F.late fun N p =>\n    ‖(C.factory d N p).terminal.symm (x (N,p))‖ ≤ Real.exp (ε*C.S.scale N)"
+   }
+  },
+  "YM.Bid.gainChart": {
+   "YM/Bid/Loan.lean": {
+    "file": "YM/Bid/Loan.lean",
+    "kind": "def",
+    "line": 130,
+    "module": "YM.Bid.Loan",
+    "private": false,
+    "snippet": "def gainChart {G : Gauge} (H : History G) (k i : ℕ) := Real.exp (((1:ℝ)/8)*(H.S.scale k-H.S.scale i))"
    }
   },
   "YM.Bid.heighten": {
@@ -1259,6 +1289,16 @@
     "module": "YM.Boundary.Contour",
     "private": false,
     "snippet": "structure Surface (S : Table L) where\n  W (n : ℕ) : MultilinearMap ℂ (fun _ : Fin n => S.Union) (Distn (Points n))"
+   }
+  },
+  "YM.Boundary.Surface.wordsPositive": {
+   "YM/Fields/Star.lean": {
+    "file": "YM/Fields/Star.lean",
+    "kind": "def",
+    "line": 99,
+    "module": "YM.Fields.Star",
+    "private": false,
+    "snippet": "def wordsPositive := Analysis.NNKernel (W.kernel J)"
    }
   },
   "YM.Boundary.Symmetries": {
@@ -1771,6 +1811,26 @@
     "snippet": "def armK (Q : YM.ConnectedActivityE6.Target G P) (L : Side) (μ x : ℝ) (m j : ℕ) := ((( (2:ℝ)^m)⁻¹*\n      Real.exp (-Q.mark L μ x))*(Q.mergeScale L μ x j*(1-1/2)⁻¹))"
    }
   },
+  "YM.ConnectedActivityE6.Pond.island": {
+   "YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/Ford.lean": {
+    "file": "YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/Ford.lean",
+    "kind": "lemma",
+    "line": 55,
+    "module": "YM.AnalyticNext.CONNECTED_ACTIVITY_JETS_E6.Ford",
+    "private": false,
+    "snippet": "lemma island {A : Matrix ι ι ℝ} (h : A.PosSemidef) {κ : Type} (S : Finset κ) (Z : κ→ Finset ι)\n    (hx : ∀ i∈ S,∀ j∈S,i≠j→∀ a∈Z i,∀ b∈ Z j,A a b=0)\n    (f : κ → Body ι→ℝ) (hf : ∀ i∈S, Measurable (f i))\n    (hp : ∀ i∈S,confined (swim (Z i)) (f i)) :\n    (∫ u,∏ i∈S,f i u ∂sweep A)=∏ i∈S,∫ u,f i u ∂sweep A := by"
+   }
+  },
+  "YM.ConnectedActivityE6.Pond.marched": {
+   "YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/Threads.lean": {
+    "file": "YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/Threads.lean",
+    "kind": "lemma",
+    "line": 44,
+    "module": "YM.AnalyticNext.CONNECTED_ACTIVITY_JETS_E6.Threads",
+    "private": false,
+    "snippet": "lemma marched (h : (S:Set κ).PairwiseDisjoint Z) (f : κ → (ι→Ω) → ℝ) (hf : ∀ i∈S, Measurable (f i))\n    (hg : ∀ i∈S,∀ x y, (∀ j∈Z i,x j=y j) → f i x=f i y) :\n    (∫ u, ∏ i∈S,f i u ∂Measure.pi μ)= ∏ i∈S, ∫ u, f i u ∂Measure.pi μ := by"
+   }
+  },
   "YM.ConnectedActivityE6.Target.Invoices": {
    "YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/Issue.lean": {
     "file": "YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/Issue.lean",
@@ -1779,6 +1839,16 @@
     "module": "YM.AnalyticNext.CONNECTED_ACTIVITY_JETS_E6.Issue",
     "private": false,
     "snippet": "structure Invoices (W x μ : ℝ) (L : Side) (R : YM.ConnectedActivityE6.Target G P) (o : Order G W)\n    (C : ℝ) (T : Tube G S) (K : Rep G f) : Prop where\n  intake : Intake P T x K\n  data : GrantBodies W x μ L R o C T\n  acquired : (R.costs L μ K.beta x C).Buy S.patch.L R.halo (radiusB x)\n  vapors : ∃ (k : ℕ→ℝ) (y : LogIndex c f→ℝ) (E : ℝ),\n    let X := (fun _ : WarningAt c f=>E*topStorm S.patch)\n    0≤E ∧ Sales (radiusB x) R.relative R.ε (footprints T K R.halo (radiusB x))\n      (Sum.elim k (Sum.elim y X)) (Sum.elim (Raw.forcedExtra K) (Sum.elim (exCharge T K) (fun _=>0)))\n        (R.goal L x) ∧ ∀ (F : Forest S.ratio) (Y : Coat T F), Y.x=x → Y.width=o.K → Y.manifest →\n      (∀ i U, |Y.bag K o.a U i| ≤ k i) ∧ (∀ i z, |Y.farLog K o.a R.table z i| ≤ y i ∧\n        |Y.raiseAir K o.a R.table z i| ≤ y i) ∧\n      (∀ u l A, |Y.Pack K R.table l W o.a A u| ≤ Packets.income 1 (C*Delay.bill G L x^5)\n          (R.costs L μ K.beta x C).gain A.shares) ∧\n        ∀ v : Finset (WarningAt c f), Y.dice.real (Y.catastrophe o.ξ K.beta v) ≤ E^v.card ∧\n          ∀ l z, (∀ i∈v,Y.detect (Y.liftA K.beta z) W o.a K l i≠0) → z∈Y.catastrophe o.ξ K.beta v"
+   }
+  },
+  "YM.ConnectedActivityE6.Target.issue": {
+   "YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/Issue.lean": {
+    "file": "YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/Issue.lean",
+    "kind": "theorem",
+    "line": 94,
+    "module": "YM.AnalyticNext.CONNECTED_ACTIVITY_JETS_E6.Issue",
+    "private": false,
+    "snippet": "theorem issue :\n    ∃ n : ℕ,∀ L : Side,n ≤ L.val → ∀ᶠ W in atTop, 0<W ∧ ∃ μ : ℝ, 0<μ ∧ ∀ (D : Patch), D.Branches P.bind G →\n      ∃ (o : Order G W) (C : ℝ), 0 ≤ C ∧\n        ∀ᶠ x : ℝ in atTop, ∀ (c f : Side) (S : StepData c f) (T : Tube G S), S.patch=D → Works P L x S T →\n        GrantBodies W x μ L R o C T ∧\n        ∀ K : Rep G f, Intake P T x K → Stamp T → Invoices W x μ L R o C T K := by"
    }
   },
   "YM.Contacts.Devices.aperture": {
@@ -3321,6 +3391,16 @@
     "snippet": "structure Order where\n  mesh : Sequence\n  per : Sequence"
    }
   },
+  "YM.Extraction.Order.Meshes": {
+   "YM/Extraction/Limits.lean": {
+    "file": "YM/Extraction/Limits.lean",
+    "kind": "structure",
+    "line": 57,
+    "module": "YM.Extraction.Limits",
+    "private": false,
+    "snippet": "structure Meshes (P : ℕ → Table C.book) : Prop where\n  continuous {n : ℕ} (p : ℕ) (v : Fin n → C.book.Token) :\n    ContinuousOn (fun x => (P p).read x v) (Cyclic C.S p n)\n  onK (p n : ℕ) (K : Set (Points n)) (h : IsCompact K) (hk : K ⊆ Cyclic C.S p n) (v : Fin n → C.book.Token) :\n    ∀ ε : ℝ, 0 < ε → ∀ᶠ i : ℕ in atTop, ∀ r : Fin n → Cover, grid C (f.mesh i) r ∈ K →\n      ‖(C.numeric (f.mesh i) p v (fun j => wrap _ (r j))) - (P p).read (grid C (f.mesh i) r) v‖ < ε"
+   }
+  },
   "YM.Extraction.Order.Ordered": {
    "YM/Extraction/Limits.lean": {
     "file": "YM/Extraction/Limits.lean",
@@ -3481,6 +3561,16 @@
     "snippet": "theorem lift_detect (hi : a.Out) {v} (h : a.receives D v) (hD : D.Symmetric) (hp : D.respects S) : D.null d=S.null d := by"
    }
   },
+  "YM.Extraction.TransferLip": {
+   "YM/Extraction/Lipschitz.lean": {
+    "file": "YM/Extraction/Lipschitz.lean",
+    "kind": "structure",
+    "line": 26,
+    "module": "YM.Extraction.Lipschitz",
+    "private": false,
+    "snippet": "structure TransferLip : Prop where\n  grid (p n : ℕ) (K : Set (Points n)) (h : IsCompact K) (hu : K ⊆ Cyclic C.S p n) (v : Fin n → C.book.Token)\n      (ε : ℝ) (hε : 0 < ε) : ∃ δ : ℝ, 0 < δ ∧ ∀ᶠ i : ℕ in atTop, LocalLattice C K v ε δ (f.mesh i) p\n  expanding (n) (K : Set (Points n)) (h : IsCompact K) (hu : K ⊆ generic n) (v : Fin n → C.book.Token)\n      (ε : ℝ) (hε : 0 < ε) : ∃ δ : ℝ, 0 < δ ∧ f.late (LocalLattice C K v ε δ)"
+   }
+  },
   "YM.Extraction.Wcmain": {
    "YM/Extraction/Center.lean": {
     "file": "YM/Extraction/Center.lean",
@@ -3549,6 +3639,16 @@
     "module": "YM.Extraction.Patch",
     "private": false,
     "snippet": "theorem no_wrap_hit {p : ℕ} {x} (h : x ∈ Inside S p n) : x ∈ NoHit S p n ↔ x ∈ conf n := by"
+   }
+  },
+  "YM.Extraction.room": {
+   "YM/Extraction/Patch.lean": {
+    "file": "YM/Extraction/Patch.lean",
+    "kind": "theorem",
+    "line": 67,
+    "module": "YM.Extraction.Patch",
+    "private": false,
+    "snippet": "theorem room {K : Set (Points n)} (H : IsCompact K) : ∀ᶠ p : ℕ in atTop, K ⊆ Inside S p n := by"
    }
   },
   "YM.Extraction.suitable": {
@@ -3641,6 +3741,16 @@
     "snippet": "def seen (t : C.book.Token) (y : Site (C.side N p)) := C.O N p (d := t.1) t.2 y"
    }
   },
+  "YM.FullVolume.Amp.Beam": {
+   "YM/FullVolume/Amp/Cot.lean": {
+    "file": "YM/FullVolume/Amp/Cot.lean",
+    "kind": "abbrev",
+    "line": 10,
+    "module": "YM.FullVolume.Amp.Cot",
+    "private": false,
+    "snippet": "abbrev Beam (X:Type*) [NormedAddCommGroup X]: Type _:= lp (fun _ : ℕ=>X) 1"
+   }
+  },
   "YM.FullVolume.Amp.Often": {
    "YM/FullVolume/Amp/Drill.lean": {
     "file": "YM/FullVolume/Amp/Drill.lean",
@@ -3681,6 +3791,56 @@
     "snippet": "lemma party (z:X)(hz:‖z‖ ≤r) : HasSum (fun n=>L.gardenL n (fun _=>z)) (f (x+z)):= by simp_rw [seeds]; exact L.gift z hz"
    }
   },
+  "YM.FullVolume.Amp.Rally.danceB": {
+   "YM/FullVolume/Amp/Shelf.lean": {
+    "file": "YM/FullVolume/Amp/Shelf.lean",
+    "kind": "def",
+    "line": 71,
+    "module": "YM.FullVolume.Amp.Shelf",
+    "private": false,
+    "snippet": "def danceB (K:Rally n A) (b:Beam ℝ)(U:Box n A):Box n A:= ⟨fun i=>(K.feeB i)⁻¹ • ((K.w i)⁻¹ • (b-∑ k∈prior n i, K.moveB U k) - K.wt i • sprint (U.1 i)), runs K U⟩"
+   }
+  },
+  "YM.FullVolume.Amp.Rally.danceD": {
+   "YM/FullVolume/Amp/Sieve.lean": {
+    "file": "YM/FullVolume/Amp/Sieve.lean",
+    "kind": "lemma",
+    "line": 28,
+    "module": "YM.FullVolume.Amp.Sieve",
+    "private": false,
+    "snippet": "lemma danceD (b:Beam ℝ) : ‖K.danceB b U-K.danceB b V‖≤(1/2:ℝ)*‖U-V‖:=by"
+   }
+  },
+  "YM.FullVolume.Amp.Rally.danceN": {
+   "YM/FullVolume/Amp/Shelf.lean": {
+    "file": "YM/FullVolume/Amp/Shelf.lean",
+    "kind": "lemma",
+    "line": 89,
+    "module": "YM.FullVolume.Amp.Shelf",
+    "private": false,
+    "snippet": "lemma danceN : ‖K.danceB b U‖≤lux:= max_le ((pi_norm_le_iff_of_nonneg tintP.2.le).mpr (K.angleN hb h)) ((pi_norm_le_iff_of_nonneg tintP.2.le).mpr (K.runsN h))"
+   }
+  },
+  "YM.FullVolume.Amp.Rally.payable": {
+   "YM/FullVolume/Amp/Sieve.lean": {
+    "file": "YM/FullVolume/Amp/Sieve.lean",
+    "kind": "lemma",
+    "line": 41,
+    "module": "YM.FullVolume.Amp.Sieve",
+    "private": false,
+    "snippet": "lemma payable : ∃! U: Box n A, ‖U‖≤lux ∧ K.danceB b U=U:=by"
+   }
+  },
+  "YM.FullVolume.Amp.Rally.south": {
+   "YM/FullVolume/Amp/Sieve.lean": {
+    "file": "YM/FullVolume/Amp/Sieve.lean",
+    "kind": "lemma",
+    "line": 75,
+    "module": "YM.FullVolume.Amp.Sieve",
+    "private": false,
+    "snippet": "lemma south {t:ℝ}(v:sun)(he: t=read ℝ v b)(hp:Facing K p f t)(hu:K.danceB b U=U)(i:T): p i=read ℝ v (U.1 i)∧ f i=read (A i) v (U.2 i):=by"
+   }
+  },
   "YM.FullVolume.Amp.block": {
    "YM/FullVolume/Amp/Pin.lean": {
     "file": "YM/FullVolume/Amp/Pin.lean",
@@ -3699,6 +3859,16 @@
     "module": "YM.FullVolume.Amp.Pin",
     "private": false,
     "snippet": "lemma cons {i:I}(hi:i∉s): block (insert i s) u f x= block s u f (x+u i)-block s u f x:=by"
+   }
+  },
+  "YM.FullVolume.Amp.glint": {
+   "YM/FullVolume/Amp/Shelf.lean": {
+    "file": "YM/FullVolume/Amp/Shelf.lean",
+    "kind": "def",
+    "line": 18,
+    "module": "YM.FullVolume.Amp.Shelf",
+    "private": false,
+    "snippet": "def glint:ℝ:=1/128"
    }
   },
   "YM.FullVolume.Amp.spelled": {
@@ -3841,6 +4011,16 @@
     "snippet": "lemma recovery [CompleteSpace E] (h:Rebar p f c) {a:ℝ} (ha:1≤a) (hp:a<p) : Scout a f ((1-a/p)⁻¹*c):=by"
    }
   },
+  "YM.FullVolume.Ray.Scout": {
+   "YM/FullVolume/Ray/Gain.lean": {
+    "file": "YM/FullVolume/Ray/Gain.lean",
+    "kind": "structure",
+    "line": 23,
+    "module": "YM.FullVolume.Ray.Gain",
+    "private": false,
+    "snippet": "structure Scout (R : ℝ) (f : ℝ → E) (C : ℝ) : Prop where\n  ray : 1≤R\n  scored : ∃ b:ℕ→E, SumBudget (fun i=> ‖b i‖) C ∧∀ s∈sun, HasSum (fun i=>(s/R)^i • b i) (f s)"
+   }
+  },
   "YM.FullVolume.Ray.trace": {
    "YM/FullVolume/Ray/Rebar.lean": {
     "file": "YM/FullVolume/Ray/Rebar.lean",
@@ -3959,6 +4139,16 @@
     "module": "YM.FullVolume.Fields.Flight",
     "private": false,
     "snippet": "def refreeze (A: Levels G)(p k:ℕ)(x y:ℝ)(t:B.Mode)(s:V→ℝ):ℝ:= Real.exp (Fintype.card (Site (A.S.side k p))*Vac.treasury A k+Fintype.card V*(x+y+2*1)) / Poly.toll s t"
+   }
+  },
+  "YM.FullVolume.Sever.stamp": {
+   "YM/FullVolume/Fields/Flight.lean": {
+    "file": "YM/FullVolume/Fields/Flight.lean",
+    "kind": "def",
+    "line": 21,
+    "module": "YM.FullVolume.Fields.Flight",
+    "private": false,
+    "snippet": "def stamp (m:ℕ)(P:Config G (A.S.side m p)→ Poly B)(i:B.Mode) := (∫ U,(P U).part i∂prior G _)/(Wilson.partition G (A.S.side N p) (A.β N p N):ℂ)"
    }
   },
   "YM.FullVolume.Sluggish": {
@@ -5051,6 +5241,16 @@
     "snippet": "def shellSector (G : Gauge) (d : ℕ) : Submodule ℂ (WickPol G) := LinearMap.range (observable G d)"
    }
   },
+  "YM.MergeProof.Accent.Embrace.bias": {
+   "YM/MergeProof/South/Sand.lean": {
+    "file": "YM/MergeProof/South/Sand.lean",
+    "kind": "field",
+    "line": 40,
+    "module": "YM.MergeProof.South.Sand",
+    "private": false,
+    "snippet": "structure Embrace where\n  …\n    bias : ((C.labels.level d).coeffSize (L-(X.tone k).index b)) ≤ Q/4"
+   }
+  },
   "YM.MergeProof.Accent.cheap": {
    "YM/MergeProof/Baskets.lean": {
     "file": "YM/MergeProof/Baskets.lean",
@@ -5089,6 +5289,16 @@
     "module": "YM.MergeProof.South.Dine",
     "private": false,
     "snippet": "lemma dine (hV : Stock.Tabs.opens C.path.levels 1 J m)(hK : ℓ ≤ m)(hk : m≤k)(hw:0<w)(hc:GridApprox.room C.path.levels J k (lensScope C d))(ht:w*‖alto T m d‖*(4*(1+(T|>.levels.params k).columns)/gainChart T k m) ≤ ζ d m/2) : ∃ A:ℝ,0 ≤ A∧∀ N p,k<N → ∀ hf:J ≤ N,(∀ (v:C.label d), Interior ((center C.S p hf 0).chamber 0) (C.O N p v 0)) → ∃ B:Config G (C.side N p)→ℂ,(∀ U, ‖B U‖ ≤ A) ∧ Interior ((center C.S p hf 0).chamber 0) B∧(center C.S p hf 0).rootTest (C.beta N p) (B - C.O N p L 0) ≤ stockK C k d L * (stakes C J m/w):=by"
+   }
+  },
+  "YM.MergeProof.Accent.embrace": {
+   "YM/MergeProof/South/Sand.lean": {
+    "file": "YM/MergeProof/South/Sand.lean",
+    "kind": "lemma",
+    "line": 43,
+    "module": "YM.MergeProof.South.Sand",
+    "private": false,
+    "snippet": "lemma embrace (Q E:ℝ)(hK:C.ref d ≤ m)(hk:m ≤ k)(hN:k≤N)(hL: Sung Y! T N p C.params W ℓ X) (hp:∀ i:ℕ,C.ref d ≤ i→∀ hi:i<N, Carol Y! T N p i (D N p i hi) (X.tone (i+1)) (X.tone i) (ψ i)) (hQ:(F).coeffSize L ≤ Q) (hc:4*(1+(C.path.levels.params k).columns)*Q ≤ E) (hx:0<Q)(hw:0<w)(ht:w*‖alto T m d‖*(E/gainChart T k m) ≤ ζ d m/2) : ∃ Z g b, Embrace (φ:=φ) (ζ:=ζ) (D:=D) (ψ:=ψ) C N k m p d L X Q w Z g b hN:=by"
    }
   },
   "YM.MergeProof.Accent.expense": {
@@ -5179,6 +5389,16 @@
     "module": "YM.MergeProof.Strudel",
     "private": false,
     "snippet": "def stakes (m k:ℕ):=Real.exp ((C.S.a m/C.S.a k)^ (4:ℕ)*Vac.treasury C.path.levels k+5)"
+   }
+  },
+  "YM.MergeProof.Accent.stockK": {
+   "YM/MergeProof/South/Dine.lean": {
+    "file": "YM/MergeProof/South/Dine.lean",
+    "kind": "def",
+    "line": 27,
+    "module": "YM.MergeProof.South.Dine",
+    "private": false,
+    "snippet": "def stockK (k d:ℕ)(L:C.label d):= 2*Real.exp (Work.D01.columnLogs C.path.levels k)*(C.labels.level d).coeffSize L"
    }
   },
   "YM.MergeProof.Accent.tent": {
@@ -5391,6 +5611,16 @@
     "snippet": "structure Hearth (V:SectionData (C.labels.level d)) (ζ:ℕ→ℕ→ℝ)(E:ℕ→ℝ) (P:∀ N p:ℕ,C.label d≃ₗ[ℂ] C.label d) (U:∀ N p:ℕ,(C.labels.level d).Index→ C.label d): Prop where\n   stamped : ∀ᶠ N:ℕ in atTop, ∀ p:ℕ, (∀ i:C.label d,(P N p) i=decor F (U N p) i) ∧ (∀ i,(F).coeffSize ((P N p).symm i)  ≤  2*(F).coeffSize i) ∧ ∀ j,matter V N p (U N p) j ζ E -- define below\n   coined : ∀ f, Slow C f (fun i=> E i.1)"
    }
   },
+  "YM.MergeProof.Matric.Gear.shawls": {
+   "YM/FullVolume/Mark/Sages.lean": {
+    "file": "YM/FullVolume/Mark/Sages.lean",
+    "kind": "lemma",
+    "line": 22,
+    "module": "YM.FullVolume.Mark.Sages",
+    "private": true,
+    "snippet": "private lemma shawls (i:ℕ)(hi:k ≤ i)(d':ℕ) : ∃ V:ℕ→Gram F Y (D i) (p i),TwoFold V ∧ ∀ᶠ n in atTop, Within (W i n) (V n) (2 * (1/2:ℝ)^d'):=by"
+   }
+  },
   "YM.MergeProof.Matric.Gear.spends": {
    "YM/FullVolume/Mark/Sages.lean": {
     "file": "YM/FullVolume/Mark/Sages.lean",
@@ -5399,6 +5629,16 @@
     "module": "YM.FullVolume.Mark.Sages",
     "private": false,
     "snippet": "lemma spends {p':∀ m:ℕ,ℕ →F.Coeff}(ht:CauchySeq (p' k))(he:∀ i:ℕ,∀ h:k ≤ i ,∀ᶠ n in atTop,p' i n=(T i h n|>.leanings (W (i+1) n)) (p' (i+1) n))(v:ℕ)(hv:k≤v): CauchySeq (p' v):=by"
+   }
+  },
+  "YM.MergeProof.Matric.Gear.voyages": {
+   "YM/FullVolume/Mark/Sages.lean": {
+    "file": "YM/FullVolume/Mark/Sages.lean",
+    "kind": "lemma",
+    "line": 33,
+    "module": "YM.FullVolume.Mark.Sages",
+    "private": false,
+    "snippet": "lemma voyages (i:ℕ)(hi:k ≤ i ):TwoFold (W i):=by"
    }
   },
   "YM.MergeProof.Matric.Gram.bank0": {
@@ -5419,6 +5659,16 @@
     "module": "YM.FullVolume.Mark.Booths",
     "private": false,
     "snippet": "lemma revenue (hv: Q.Within U t): (Q.step P hx h hu hp hk).Within (U.step P hx h hu hp hk) (t/2):=by"
+   }
+  },
+  "YM.MergeProof.Matric.Ritzy.stories": {
+   "YM/FullVolume/Mark/Nursery.lean": {
+    "file": "YM/FullVolume/Mark/Nursery.lean",
+    "kind": "lemma",
+    "line": 61,
+    "module": "YM.FullVolume.Mark.Nursery",
+    "private": false,
+    "snippet": "lemma stories : TwoFold (fun i=> (Y' i).flow (L i)):=by"
    }
   },
   "YM.MergeProof.Matric.motor": {
@@ -5529,6 +5779,16 @@
     "module": "YM.MergeProof.North.Burrough",
     "private": false,
     "snippet": "lemma pricey (k:ℕ)(hK:C.ref D ≤ k)(he: -(1/32)< M) : ∀ᶠ i in atTop, (0<(Z') i ∧ march (fun _:Unit=>(c) i) η k i () ≤ δ i * (((Z') i)/(16*X i)))∧ 32*(1+(C.path.levels.params i).columns)* (c) i * ‖alto C.path k D‖*((e) i/gainChart C.path i k) ≤ fly C.path.levels D k/2:=by"
+   }
+  },
+  "YM.MergeProof.Ribbons.quilled": {
+   "YM/MergeProof/North/Welch.lean": {
+    "file": "YM/MergeProof/North/Welch.lean",
+    "kind": "lemma",
+    "line": 35,
+    "module": "YM.MergeProof.North.Welch",
+    "private": false,
+    "snippet": "lemma quilled : Note C.S Z' (-D + M) :=by"
    }
   },
   "YM.MergeProof.Ribbons.seeing": {
@@ -5679,6 +5939,16 @@
     "module": "YM.FullVolume.Paid",
     "private": false,
     "snippet": "lemma prepared_rows {F:Trial C} (hG:G.Simple)(hF:Fridge C u ζ)(hp : ∀ᶠ i in FullVolume.mesh, Continuous (F i.1 i.2 0)) (hv:Stencil F) (he:Tucked F d) : ∃ v:Rowe C d, Coin C v ∧ Owed (upper C v - F) (flight C (-(1/16))) := by"
+   }
+  },
+  "YM.MergeProof.pudding": {
+   "YM/MergeProof/Biscuit.lean": {
+    "file": "YM/MergeProof/Biscuit.lean",
+    "kind": "lemma",
+    "line": 52,
+    "module": "YM.MergeProof.Biscuit",
+    "private": false,
+    "snippet": "lemma pudding (hl:C.ref d ≤ N)(hc:Cream C N p d u ζ b Z Q t E) : ∃ v:C.label d,\n    32*(1+(C.path.levels.params N).columns)^2*(F).coeffSize (Z.x-(X).terminal.symm v) ≤ 2*(1+(C.path.levels.params N).columns)*Q ∧\n      ∀ m k:ℕ,C.ref d ≤ k→k<N → ∀ hm:Stock.Tabs.opens C.path.levels 1 m k, ∀ i:Motion, ∀ hn:m≤N,\n      (Cells.center C.S p hn 0).rootTest (C.beta N p) (Motion.dance i (b-C.O N p v 0)) ≤ cider C ζ d m k * E*flight C (-γ) (N,p):=by"
    }
   },
   "YM.MergeProof.puddingR": {
@@ -6511,6 +6781,16 @@
     "snippet": "structure Tally (L s : ℝ) (P : Era) (m : ℕ) : Prop where\n  growth : spouse s P (more L s) ≤ Perch.bill (-1/2) s\n  stops u (hu : u∈ Icc (s/2) s) : Shelf P.coast m s u\n  force u (hu : u∈ Icc (s/2) s) t (ht : t∈ Icc (s/2) s) : Perch.gas P.coast u ≤ Perch.bill (-3/4) s * w t"
    }
   },
+  "YM.Next.Rank.Perch.Tally.growth": {
+   "YM/Next/RANK/Stepped.lean": {
+    "file": "YM/Next/RANK/Stepped.lean",
+    "kind": "field",
+    "line": 56,
+    "module": "YM.Next.RANK.Stepped",
+    "private": false,
+    "snippet": "structure Tally where\n  …\n  growth : spouse s P (more L s) ≤ Perch.bill (-1/2) s"
+   }
+  },
   "YM.Next.Rank.Perch.covers": {
    "YM/Next/RANK/Stepped.lean": {
     "file": "YM/Next/RANK/Stepped.lean",
@@ -6759,6 +7039,36 @@
     "module": "YM.Next.RANK.Station",
     "private": false,
     "snippet": "lemma dilation : mag A b k * A.clock.monitor k ^ 2 ≤ A.S.a (middle A b k) / A.S.a k := by"
+   }
+  },
+  "YM.Next.Rank.Station.Allowed.full": {
+   "YM/Next/RANK/Station.lean": {
+    "file": "YM/Next/RANK/Station.lean",
+    "kind": "lemma",
+    "line": 101,
+    "module": "YM.Next.RANK.Station",
+    "private": false,
+    "snippet": "lemma full : k-middle A b k=height A b k := by"
+   }
+  },
+  "YM.Next.Rank.Station.Allowed.scales": {
+   "YM/Next/RANK/Station.lean": {
+    "file": "YM/Next/RANK/Station.lean",
+    "kind": "lemma",
+    "line": 111,
+    "module": "YM.Next.RANK.Station",
+    "private": false,
+    "snippet": "lemma scales (m j : ℕ) (he : width A b k ≤ m) (hr : m ≤ j) (hp : j≤k) : A.S.a m/A.S.a j=(wheel A k)^(j-m) := by"
+   }
+  },
+  "YM.Next.Rank.Station.Allowed.shift": {
+   "YM/Next/RANK/Station.lean": {
+    "file": "YM/Next/RANK/Station.lean",
+    "kind": "lemma",
+    "line": 103,
+    "module": "YM.Next.RANK.Station",
+    "private": false,
+    "snippet": "lemma shift : middle A b k-width A b k=surplus A k := by"
    }
   },
   "YM.Next.Rank.Station.Allowed.surplusage": {
@@ -7099,6 +7409,16 @@
     "module": "YM.Next.UV_STRESS.Invert",
     "private": false,
     "snippet": "theorem Stations.equivalences (H : S.Hierarchy) (h : F.Ordered C S) (a : (Bel C.book).Hierarchy)\n    (ht : Stations C F a.spin) (hW : W.Inclusions S) (hp : W.Orientation H.spin)\n    (hV : V.Inclusions (Bel C.book)) (hf : V.Orientation a.spin) (dim : DimAbove S) :\n    ∃ X : Scaling S, Approaches (path X) (isoPanel X) ∧ Stable H.spin a.spin W V X := by"
+   }
+  },
+  "YM.Next.UVStress.Travels": {
+   "YM/Next/UV_STRESS/Focus.lean": {
+    "file": "YM/Next/UV_STRESS/Focus.lean",
+    "kind": "def",
+    "line": 128,
+    "module": "YM.Next.UV_STRESS.Focus",
+    "private": false,
+    "snippet": "def Travels (n : ℕ) (X : Scaling S) (K : ℕ→Points n→ℂ) : Prop :=\n    ∃ (t : Caps n) (v : ℕ → Ribbon (Bel C.book) t) (x : Ribbon (Bel C.book) t),\n      (∀ i, Tendsto (fun k => v k i) atTop (𝓝 (x i))) ∧\n        K = fun k => tested (X.r k) (isoPanel X k) (hang t (v k)) - disc (hang t x)"
    }
   },
   "YM.Next.UVStress.Wheel.Spots": {
@@ -9781,6 +10101,26 @@
     "snippet": "lemma pinnacle : FixedBounds (P.V T W):=by"
    }
   },
+  "YM.PhysicalNext.Repeat.Legato.Campaign.Winter.convergence": {
+   "YM/FullVolume/Glide/Vac.lean": {
+    "file": "YM/FullVolume/Glide/Vac.lean",
+    "kind": "field",
+    "line": 46,
+    "module": "YM.FullVolume.Glide.Vac",
+    "private": false,
+    "snippet": "structure Winter where\n  …\n  convergence (p : ℕ) (Z : ∀ N, Contest N p T.L) (b : ℝ) :\n    Tendsto (fun i => (Z i).bonusB) atTop (𝓝 b) → ∀ m : ℕ, ∃ u v,\n      Tendsto (fun N => (Z N |>.trail m).beta) atTop (𝓝 u) ∧\n      Tendsto (fun N => Window.coats T.gains (halls T p N) (Z N) m) atTop (𝓝 v)"
+   }
+  },
+  "YM.PhysicalNext.Repeat.Legato.Campaign.offers": {
+   "YM/FullVolume/Glide/Vac.lean": {
+    "file": "YM/FullVolume/Glide/Vac.lean",
+    "kind": "lemma",
+    "line": 65,
+    "module": "YM.FullVolume.Glide.Vac",
+    "private": false,
+    "snippet": "lemma offers (hp : Locrian R) (he : Jams.Wild R.kit.shape R.alloy.delay) : Winter T := by"
+   }
+  },
   "YM.PhysicalNext.Repeat.Legato.Campaign.realUV": {
    "YM/FullVolume/Fields/Filled.lean": {
     "file": "YM/FullVolume/Fields/Filled.lean",
@@ -9851,6 +10191,26 @@
     "snippet": "theorem hearthstone (cost:ℕ→ℕ→ℝ)(d':ℕ→ℕ) (T:∀ d:ℕ,SectionData ((Labels.frames G).level d))(R:Push.Mark.Weave G)(hM:∀ d,Push.Mark.Portfolio (hol G) (T d) (R d))(hc:dusk A.delay cost)(hN:paper M.p cost T d') (hF: d' ≤ M.p.floorL)(H:(C! Xf).Makes) : Scrim (C! Xf) K (far a') (waybill a') (near a') (renal a') (fly a') (mutt a' Q) D ∧ Fridge (C! Xf) (far a') (fly a')∧ ∃ P b, Hearthside (C! Xf) T R P b (fly a') :=by"
    }
   },
+  "YM.PhysicalNext.Repeat.Legato.oyster": {
+   "YM/MergeProof/Apres.lean": {
+    "file": "YM/MergeProof/Apres.lean",
+    "kind": "lemma",
+    "line": 21,
+    "module": "YM.MergeProof.Apres",
+    "private": false,
+    "snippet": "lemma oyster : ∃ b:ℕ→ℕ→ℝ,∃ n:ℕ→ℕ,paper p b V n:=by"
+   }
+  },
+  "YM.PhysicalNext.Repeat.Legato.paper": {
+   "YM/MergeProof/Apres.lean": {
+    "file": "YM/MergeProof/Apres.lean",
+    "kind": "def",
+    "line": 20,
+    "module": "YM.MergeProof.Apres",
+    "private": false,
+    "snippet": "def paper (p:Sheet G)(b:ℕ→ℕ→ℝ)(V:∀ d:ℕ,SectionData ((Labels.frames G).level d)) (l:ℕ→ℕ):Prop:= ∀ d i:ℕ,d  ≤  i → ∀ L:Side,l i ≤ L.val → (2*(1+(p.profile i).columns)*sphere (p.profile i) ((V d).stencil ∪(localSection G d).stencil).card (b d i)  ≤  Bid.puffs L*sliver ((Labels.frames G).level d)) ∧ Bid.Credit (V d) (p.profile i).order (p.profile i).power (b d i) ∧ 0  ≤  b d i ∧ ∀ j:ℕ,j  ≤  i → (1+2*(p.profile j).columns)* Doors.rate L  ≤  Bid.barunit L"
+   }
+  },
   "YM.PhysicalNext.Repeat.Legato.step_cost": {
    "YM/MergeProof/Apres.lean": {
     "file": "YM/MergeProof/Apres.lean",
@@ -9889,6 +10249,106 @@
     "module": "YM.PhysicalNext.RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP.Meadow.Reframe",
     "private": false,
     "snippet": "def garnerAt (j:ℕ): ℝ := honor I p' x (pennant I j)"
+   }
+  },
+  "YM.PhysicalNext.Repeat.Muse.Contest.ask": {
+   "YM/FullVolume/Gain/Resolve.lean": {
+    "file": "YM/FullVolume/Gain/Resolve.lean",
+    "kind": "def",
+    "line": 72,
+    "module": "YM.FullVolume.Gain.Resolve",
+    "private": false,
+    "snippet": "def ask (a:Levels G)(w:ℝ):= a.clock.bar+w*beamWidth a"
+   }
+  },
+  "YM.PhysicalNext.Repeat.Muse.Contest.bonusB": {
+   "YM/FullVolume/Gain/Resolve.lean": {
+    "file": "YM/FullVolume/Gain/Resolve.lean",
+    "kind": "def",
+    "line": 29,
+    "module": "YM.FullVolume.Gain.Resolve",
+    "private": false,
+    "snippet": "def bonusB (p:Contest N n L):ℝ:= (p.trail 0).beta"
+   }
+  },
+  "YM.PhysicalNext.Repeat.Muse.Contest.one": {
+   "YM/FullVolume/Gain/Resolve.lean": {
+    "file": "YM/FullVolume/Gain/Resolve.lean",
+    "kind": "lemma",
+    "line": 40,
+    "module": "YM.FullVolume.Gain.Resolve",
+    "private": false,
+    "snippet": "lemma one (h:bonusB p'=bonusB p)(m:ℕ)(hm:m≤N): p'.trail m=p.trail m:=by"
+   }
+  },
+  "YM.PhysicalNext.Repeat.Muse.Contest.pitch": {
+   "YM/FullVolume/Gain/Dance.lean": {
+    "file": "YM/FullVolume/Gain/Dance.lean",
+    "kind": "def",
+    "line": 31,
+    "module": "YM.FullVolume.Gain.Dance",
+    "private": false,
+    "snippet": "def pitch (i:Fin (N+1)):= toLambda (A.B.a.clock.hatBeta i) (p.trail i).beta"
+   }
+  },
+  "YM.PhysicalNext.Repeat.Muse.Contest.scaleV": {
+   "YM/FullVolume/Gain/Cannon.lean": {
+    "file": "YM/FullVolume/Gain/Cannon.lean",
+    "kind": "lemma",
+    "line": 90,
+    "module": "YM.FullVolume.Gain.Cannon",
+    "private": false,
+    "snippet": "lemma scaleV (i:T): ‖ran p p' i‖ ≤ ‖δ‖/ (brace A.B.a i) +4*glint*weightA Φ O p p':=by"
+   }
+  },
+  "YM.PhysicalNext.Repeat.Muse.Contest.score": {
+   "YM/FullVolume/Gain/Resolve.lean": {
+    "file": "YM/FullVolume/Gain/Resolve.lean",
+    "kind": "lemma",
+    "line": 88,
+    "module": "YM.FullVolume.Gain.Resolve",
+    "private": false,
+    "snippet": "lemma score (hb:bonusB p=A.B.a.clock.bar):∃ U:Box N (rom O), ‖U‖ ≤ lux ∧ ∀ s:sun,∀ p':Contest N n L, bonusB p'=ask A.B.a s →∀ i, p'.pitch i= p.pitch i+Beam.read _ s (U.1 i) ∧ realm Φ O p' i= realm Φ O p i+Beam.read _ s (U.2 i):=by"
+   }
+  },
+  "YM.PhysicalNext.Repeat.Muse.Contest.strideB": {
+   "YM/FullVolume/Gain/Cannon.lean": {
+    "file": "YM/FullVolume/Gain/Cannon.lean",
+    "kind": "lemma",
+    "line": 85,
+    "module": "YM.FullVolume.Gain.Cannon",
+    "private": false,
+    "snippet": "lemma strideB (i:T): p'.beta i-p.beta i=(p'.trail 0).beta-(p.trail 0).beta-∑ k∈FullVolume.Amp.prior N i,(p'.owed k-p.owed k):=by"
+   }
+  },
+  "YM.PhysicalNext.Repeat.Muse.Contest.track": {
+   "YM/FullVolume/Gain/Resolve.lean": {
+    "file": "YM/FullVolume/Gain/Resolve.lean",
+    "kind": "lemma",
+    "line": 31,
+    "module": "YM.FullVolume.Gain.Resolve",
+    "private": false,
+    "snippet": "lemma track : u ≤ 2*‖δ‖/brace A.B.a 0:=by"
+   }
+  },
+  "YM.PhysicalNext.Repeat.Muse.Contest.vault": {
+   "YM/FullVolume/Gain/Cannon.lean": {
+    "file": "YM/FullVolume/Gain/Cannon.lean",
+    "kind": "def",
+    "line": 41,
+    "module": "YM.FullVolume.Gain.Cannon",
+    "private": false,
+    "snippet": "def vault : Rally N (rom O) where\n   initB := (shineTop Φ O p).choose\n   beams i:= (shinePoint Φ O p i).1.choose\n   w i:=brace A.B.a i\n   feeB i:=2*p.due i\n   wt i:=widthB A.B.a i\n   span i:=stow A.B.a v i\n   lum i:= (shinePoint Φ O p i).2.choose\n   wPos i:= braceP Φ i\n   fee₁ i:=by linarith [(dueP Φ p i).1]\n   wtP i:=by rw [Real.norm_of_nonneg (le_of_lt (spare Φ i ⟨p⟩).1)]; exact (spare Φ i ⟨p⟩).2.trans (by norm_num)\n   accounts i:=by\n      rw [show ∑ k∈ FullVolume.Amp.prior N i, stow A.B.a v k=∑ k∈Finset.range i,stow A.B.a v k from ?_]; exact Φ.largeG.radiusB i\n      apply Finset.sum_bij (fun k _=>k.val)\n      · simpa [FullVolume.Amp.prior] -- duplicate\n      · exact fun _ _ _ _=> Fin.ext\n      · intro k hk; have hp:= Finset.mem_range.mp hk; have hz:k<N:=lt_of_lt_of_le hp (headB i); exact ⟨⟨k,hz⟩,by simp [FullVolume.Amp.prior,hp],rfl⟩\n      exact fun _ _=>rfl"
+   }
+  },
+  "YM.PhysicalNext.Repeat.Muse.Contest.weightA": {
+   "YM/FullVolume/Gain/Cannon.lean": {
+    "file": "YM/FullVolume/Gain/Cannon.lean",
+    "kind": "def",
+    "line": 64,
+    "module": "YM.FullVolume.Gain.Cannon",
+    "private": false,
+    "snippet": "def weightA:= ‖(ran p p',jar Φ O p p')‖"
    }
   },
   "YM.PhysicalNext.Repeat.Muse.bootN": {
@@ -10429,6 +10889,16 @@
     "module": "YM.Planned.ATOM_REGULAR_ESTIMATE.Geometry",
     "private": false,
     "snippet": "def toll (r : ℕ) : ℕ := ((r+6)+(r+6)+1)^ (4:ℕ)"
+   }
+  },
+  "YM.Planned.CalibratedMixedHistory.Bridge.reach": {
+   "YM/Planned/CALIBRATED_MIXED_HISTORY/Bridge.lean": {
+    "file": "YM/Planned/CALIBRATED_MIXED_HISTORY/Bridge.lean",
+    "kind": "lemma",
+    "line": 29,
+    "module": "YM.Planned.CALIBRATED_MIXED_HISTORY.Bridge",
+    "private": false,
+    "snippet": "lemma reach (H : Levels G) : Tendsto (fun j => ((H.S.block j).val:ℝ)) atTop atTop := by"
    }
   },
   "YM.Precision.Bed.covered": {
@@ -11471,6 +11941,16 @@
     "snippet": "structure Fits : Prop where\n  mesh : S.schedule.Gentle\n  sameFactor m : S.factor (S.J (m+1)) = S.schedule.block m\n  monotoneL : Monotone (fun i => (S.factor i).val)\n  mono : Monotone S.J\n  stepSlow m : S.J (m+1) ≤ S.J m + 1\n  deep : Tendsto S.J atTop atTop\n  deepOrder : Monotone (fun m => (S.params m).order)\n  deepPower : Monotone (fun m => (S.params m).power)\n  deepExp : Monotone (fun m => (S.params m).supportExponent)\n  delayed m : 1 < S.hatBeta m\n  smallField m : S.threshold m ≤ 1\n  sizeT m p : 100 * (S.coverSize m + 1) ≤ (S.schedule.side m p).val\n  fitsPatch m p : 100 * ((S.op m p).patch.radius + 1) ≤ (S.schedule.side (m+1) p).val\n  thetaRange m : 0 < S.theta (S.J m) ∧ S.theta (S.J m) ≤ ((S.J m : ℕ) : ℝ)⁻¹\n  thetaMono : Antitone S.theta\n  /-- For pre-L constants in the recursion. -/\n  driftSmall m : (S.params (m+1)).drift / Real.log (S.schedule.block m).val ≤ ((S.J (m+1) : ℝ)^2)⁻¹\n  logCost m :\n    let p := S.params (m+1)\n    Real.log (1 + p.paths + p.width⁻¹ + p.columns + p.clip.relaxation + p.supportExponent) /\n      Real.log (S.schedule.block m).val ≤ ((S.J (m+1) : ℝ)^2)⁻¹"
    }
   },
+  "YM.RG.Calendar.Fits.mesh": {
+   "YM/RG/History.lean": {
+    "file": "YM/RG/History.lean",
+    "kind": "field",
+    "line": 98,
+    "module": "YM.RG.History",
+    "private": false,
+    "snippet": "structure Fits where\n  …\n  mesh : S.schedule.Gentle"
+   }
+  },
   "YM.RG.Calendar.allowance": {
    "YM/RG/History.lean": {
     "file": "YM/RG/History.lean",
@@ -12331,6 +12811,16 @@
     "snippet": "structure Paid {p : Sheet G} {w : Rolls p} {T : Protection w} {W : Delays T} {Y : Bar W}\n    (B : Wait Y) (a : Levels G) : Prop where\n  kernel : a.clock.kernel = p.kernel\n  bar : a.clock.bar=Y.value\n  stage : a.clock.stage=p.profile\n  firstZero : a.clock.J 0=p.first\n  firstOne : a.clock.J 1=p.first\n  lengths : a.clock.factor=w.L\n  theta : a.clock.theta=T.theta\n  pays m : W.betaEntry (a.clock.J (m+1)) ≤ a.clock.hatBeta m\n  paysHigher m : p.first < a.clock.J (m+1) → W.scaleEntry (a.clock.J (m+1)) Y.value ≤ a.S.scale m\n  periods i : B.minLength ≤ (a.S.period i).val\n  volume m i :\n    let j := a.clock.J (m+1)\n    W.shells j * (1+a.clock.coverSize m+a.clock.coverSize (m+1))^(W.growth j) ≤ (a.S.side m i).val\n  run (j : ℕ) : p.first ≤ j → ∃ k : ℕ,\n    B.readyHere j ≤ a.S.scale k ∧ B.window j (a.S.scale k) ≤ k ∧\n      ∀ i : ℕ, k-B.window j (a.S.scale k) ≤ i → i ≤ k+B.window j (a.S.scale k) → a.clock.J i=j"
    }
   },
+  "YM.RG.Supply.Paid.run": {
+   "YM/Price/Intent.lean": {
+    "file": "YM/Price/Intent.lean",
+    "kind": "field",
+    "line": 160,
+    "module": "YM.Price.Intent",
+    "private": false,
+    "snippet": "structure Paid where\n  …\n  run (j : ℕ) : p.first ≤ j → ∃ k : ℕ,\n    B.readyHere j ≤ a.S.scale k ∧ B.window j (a.S.scale k) ≤ k ∧\n      ∀ i : ℕ, k-B.window j (a.S.scale k) ≤ i → i ≤ k+B.window j (a.S.scale k) → a.clock.J i=j"
+   }
+  },
   "YM.RG.Supply.Rolls.eventually_large": {
    "YM/Price/Intent.lean": {
     "file": "YM/Price/Intent.lean",
@@ -13051,6 +13541,16 @@
     "snippet": "def Drinkable (k : ℕ) (m : ℕ→Side) (U : ∀ i,Link G (m i)→ℝ) (v : ℕ) (σ C : ℝ) := ∃ Q : Picture G k,\n    (∀ i,Recorded Q (U i) 0) ∧ ∀ i j,Firm σ C (Q i j) ∧ Rays v (Q i j ∘ axes)"
    }
   },
+  "YM.Stationary.Freezer.back": {
+   "YM/Next/STATIONARY/Loops/UniformMatrix.lean": {
+    "file": "YM/Next/STATIONARY/Loops/UniformMatrix.lean",
+    "kind": "lemma",
+    "line": 278,
+    "module": "YM.Next.STATIONARY.Loops.UniformMatrix",
+    "private": false,
+    "snippet": "lemma back (h : Charges X Y F σ A) (hp : Freezer X Y F.tab σ C) (hσ : 0<σ) :\n    Charges Y X F.back σ (C+C*A*C+(C*A*C*A+C*A*C*A+C*A)*C) := by"
+   }
+  },
   "YM.Stationary.HorizCalc": {
    "YM/Next/STATIONARY/Level/Transition.lean": {
     "file": "YM/Next/STATIONARY/Level/Transition.lean",
@@ -13139,6 +13639,16 @@
     "module": "YM.Next.STATIONARY.Films.LeadingRay",
     "private": false,
     "snippet": "def alphaPay (f : Picture G 1) := 2*(leapTip f (step (0:Axis)) 1 ![i,i]).re"
+   }
+  },
+  "YM.Stationary.alpha_night": {
+   "YM/Next/STATIONARY/Films/LeadingRay.lean": {
+    "file": "YM/Next/STATIONARY/Films/LeadingRay.lean",
+    "kind": "lemma",
+    "line": 240,
+    "module": "YM.Next.STATIONARY.Films.LeadingRay",
+    "private": false,
+    "snippet": "lemma alpha_night (hm : Tendsto (fun i=> (m i).val) atTop atTop) (j : Loc G 1)\n    (hs : ∀ i,∀ p : Site (m i),∀ q, rolls (mon p) q → ∀ x : Phase (Loc G 0), (∑ u : Loc G 1,(pageD G 0 (-q)*ᵥ x) u*shop (m i) (hatchTrace F (.inl u) (.inr j) q))=0) :\n    ∀ p : Momentum, star p=p → ∀ x : Phase (Loc G 0),(∑ u : Loc G 1,(pageD G 0 (-p)*ᵥ x) u*stock (hatchTrace F (.inl u) (.inr j) p))=0 := by"
    }
   },
   "YM.Stationary.assembly": {
@@ -13341,6 +13851,16 @@
     "snippet": "lemma orbit_gate (G : Gauge) (σ : ℝ) (hp : 0<σ) : ∃ η C : ℝ, 0 < η ∧ η≤σ ∧ 0 ≤ C ∧ ∀ m : ℕ → Side,\n    Tendsto (fun i => (m i).val) atTop atTop → ∀ (F : ∀ i, Link G (m i)→ℝ),\n      (∀ i, Pointwise (F i)) → (∀ i, Rays 3 (F i)) → ∀ A, 0 ≤ A → HasRecord F σ A 2 → HasRecord F σ A 3 →\n    ∃ X : ℕ → Atom G 3, ∃ V : ℕ → Atom G 4, AtomWall X η (A*C) ∧ AtomWall V η (A*C) ∧\n      ∀ i, Rays 5 (F i-turnSeries X-turnSeries V) := by"
    }
   },
+  "YM.Stationary.pebbles_frozen": {
+   "YM/Next/STATIONARY/Films/ThinTrace.lean": {
+    "file": "YM/Next/STATIONARY/Films/ThinTrace.lean",
+    "kind": "lemma",
+    "line": 304,
+    "module": "YM.Next.STATIONARY.Films.ThinTrace",
+    "private": false,
+    "snippet": "lemma pebbles_frozen (h : Spotlight P E σ C) (he : 0<σ) (hp : Amateur G P.L σ D) : Charges (Slab.basic _) (Slab.basic _) (pebFilm E) σ (mealPeb G P.J C D) := by"
+   }
+  },
   "YM.Stationary.pennies": {
    "YM/Next/STATIONARY/Shape/Exchange.lean": {
     "file": "YM/Next/STATIONARY/Shape/Exchange.lean",
@@ -13441,6 +13961,36 @@
     "snippet": "lemma setWest (G : Gauge) (w η Q Z D ε : ℝ) (hσ : 0<w) (hη : 0<η) (hw : η ≤ 1) (hz : 0≤Z) (hQ : 0≤Q)\n    (J : ℕ) (K : KernelChoices) : ∃ a b : ℝ, 0≤a ∧ 0≤b ∧ ∀ σ A, 0<σ → 0 ≤ A → ∃ σ' ℓ r:ℝ, 0 < σ' ∧ 0≤ℓ ∧ 0≤r ∧ ∀ (m n : ℕ→Side), Tendsto (fun i => (n i).val) atTop atTop → ∀ (p : Clip) (R : PathData G) (B : Bed) (Λ : ℝ), p.direct ≤ Z → R.Bounds p σ A Λ → Attached B R → B.metric.strip w Q → (∀ i, Floor B p i ε Q) → (∀ i, Bid.Sworn B (n i) G) →\n      ∀ (P : Patch), P.J=J → P.Branches K G → inch P.L*η ≤ σ' → ∀ (F : Armada m n P K) (t : ∀ i,(F.boot i).Choices) (Φ : Bridge G P), Cruise Φ 2 η D →\n    ∃ T : TextS 3 P G, ∃ U : TextS 4 P G, Pungent T η ∧ Pungent U η ∧ Laureate T Φ η (a+inch P.L*ℓ) ∧ Laureate U Φ η (b+inch P.L*r) ∧ ∀ i, Skimming (F.boot i) T (centR (F.boot i) (t i) p R) ∧ Skimming (F.boot i) U (centR (F.boot i) (t i) p R) := by"
    }
   },
+  "YM.Stationary.star_analytic": {
+   "YM/Next/STATIONARY/Films/LeadingRay.lean": {
+    "file": "YM/Next/STATIONARY/Films/LeadingRay.lean",
+    "kind": "lemma",
+    "line": 238,
+    "module": "YM.Next.STATIONARY.Films.LeadingRay",
+    "private": false,
+    "snippet": "lemma star_analytic (x y) (z : Track) : AnalyticAt ℝ (fun p : Track=> stock (hatchTrace F x y (axes p))) z := by obtain ⟨A,hA⟩ := trace_spot hp h x y; exact ((fireworks (hatchTrace F x y) hA (b:=σ/8) (by linarith) (by linarith))).analytic_real z"
+   }
+  },
+  "YM.Stationary.star_low": {
+   "YM/Next/STATIONARY/Films/LeadingRay.lean": {
+    "file": "YM/Next/STATIONARY/Films/LeadingRay.lean",
+    "kind": "lemma",
+    "line": 254,
+    "module": "YM.Next.STATIONARY.Films.LeadingRay",
+    "private": false,
+    "snippet": "lemma star_low (j : Loc G 1) (hX : ∀ p : Momentum, star p=p → ∀ x : Phase (Loc G 0),(∑ u : Loc G 1,(pageD G 0 (-p)*ᵥ x) u*stock (hatchTrace F (.inl u) (.inr j) p))=0) (i : Loc G 1) :\n    Rays 1 (fun p : Track=> stock (hatchTrace F (.inl i) (.inr j) (axes p))) := by"
+   }
+  },
+  "YM.Stationary.tax_ray": {
+   "YM/Next/STATIONARY/Films/LeadingRay.lean": {
+    "file": "YM/Next/STATIONARY/Films/LeadingRay.lean",
+    "kind": "lemma",
+    "line": 223,
+    "module": "YM.Next.STATIONARY.Films.LeadingRay",
+    "private": false,
+    "snippet": "lemma tax_ray (B : Bed) (h : B.metric.strip σ A) (hp : 0<σ) (x i : Loc G 1) : Rays 2 (fun k : Track => taxTone G B (axes k) x i) := by"
+   }
+  },
   "YM.Stationary.terrain_min": {
    "YM/Next/STATIONARY/Spectral/RealGap.lean": {
     "file": "YM/Next/STATIONARY/Spectral/RealGap.lean",
@@ -13449,6 +13999,16 @@
     "module": "YM.Next.STATIONARY.Spectral.RealGap",
     "private": true,
     "snippet": "private lemma terrain_min (x : ℝ) (h : 0≤x) (he : 0<μ) :\n    (1/(2^10):ℝ)*(x+μ^2) ≤ x+μ^2*(μ^2*(x+μ^2)⁻¹)^9 := by"
+   }
+  },
+  "YM.Stationary.thin_doubled": {
+   "YM/Next/STATIONARY/Spectral/AuxReferences.lean": {
+    "file": "YM/Next/STATIONARY/Spectral/AuxReferences.lean",
+    "kind": "lemma",
+    "line": 476,
+    "module": "YM.Next.STATIONARY.Spectral.AuxReferences",
+    "private": false,
+    "snippet": "lemma thin_doubled (L : Side) (hl : Odd L.val) (hp : p∈strip (1/128:ℝ)) :\n    bags (Slab.basic _) (Slab.basic _) p p (furnish L (fun q : Momentum => damp (inch L) q^3 • (1:CompM α α)) p)\n      ((Real.exp (1/128*4)*((Fintype.card α:ℝ)*(8*jointMoney)))*Real.exp (1/128*4)) := by"
    }
   },
   "YM.Stationary.throne_pays": {
@@ -13671,6 +14231,16 @@
     "snippet": "lemma est (hN : m≤ N) (h : C.Makes) (F : C.book.Token)\n    (L : Lane C.path (census (Site (C.side m p))) N p) (hh : L.Works r) (W u c d' b : ℝ)\n    (he : (L.sites r).Radial (fun _ => W) u c d' b) (hW : 0<W) (hq : ∀ i, L.load i=F.1)\n    (hx : ∀ i,L.uses i=(center C.S p hN 0).copy i (C.O N p F.2 0)) :\n    (center C.S p hN 0).rootTest (C.beta N p) (C.O N p (d:=F.1) F.2 0) ≤ Real.exp (expPrice C m r F.1 W u c d' b) := by"
    }
   },
+  "YM.StressFlux.Centers": {
+   "YM/Push/STRESS_FLUX/Conserved.lean": {
+    "file": "YM/Push/STRESS_FLUX/Conserved.lean",
+    "kind": "structure",
+    "line": 52,
+    "module": "YM.Push.STRESS_FLUX.Conserved",
+    "private": false,
+    "snippet": "structure Centers (J : S.Stress) : Prop where\n  center (x : Points 1) a b : oneStress S J x a b = 0\n  alive : J ≠ 0"
+   }
+  },
   "YM.StressFlux.clover": {
    "YM/Push/STRESS_FLUX/Clover.lean": {
     "file": "YM/Push/STRESS_FLUX/Clover.lean",
@@ -13679,6 +14249,16 @@
     "module": "YM.Push.STRESS_FLUX.Clover",
     "private": false,
     "snippet": "def clover (U : Links R G.El) (x : Four R) := stencil (plate U x)"
+   }
+  },
+  "YM.StressFlux.exists_stress": {
+   "YM/Push/STRESS_FLUX/Conserved.lean": {
+    "file": "YM/Push/STRESS_FLUX/Conserved.lean",
+    "kind": "theorem",
+    "line": 93,
+    "module": "YM.Push.STRESS_FLUX.Conserved",
+    "private": false,
+    "snippet": "theorem exists_stress (h : G.Simple) (H : S.Hierarchy) (hw : W.Orientation H.spin) {A : (Bel L).RealSpin}\n    (U4 : Spin.change S 4) (U5 : Spin.change S 5) (h4 : Spin.realH H.spin A U4) (h5 : Spin.realH H.spin A U5) :\n    ∃ w : Coeff, ‖w‖ = 1 ∧ nabla W (material S w) = 0 ∧ Centers (material S w) := by"
    }
   },
   "YM.StressFlux.pair": {
@@ -13699,6 +14279,16 @@
     "module": "YM.Push.STRESS_FLUX.Pairing",
     "private": false,
     "snippet": "lemma propagator {z : E4} (hz : z ≠ 0) (c d : G.ColorIndex) (a b i j : Axis) :\n    pairingC hz (fieldLeg G c a b) (fieldLeg G d i j) = if c=d then (bareCurl a b i j z : ℂ) else 0 := by"
+   }
+  },
+  "YM.StressFlux.stress_weak": {
+   "YM/Push/STRESS_FLUX/Weak.lean": {
+    "file": "YM/Push/STRESS_FLUX/Weak.lean",
+    "kind": "theorem",
+    "line": 240,
+    "module": "YM.Push.STRESS_FLUX.Weak",
+    "private": false,
+    "snippet": "theorem stress_weak (h : G.Simple) (A : S.Hierarchy) (hW : V.Orientation A.spin) (hV : V.Derivatives S)\n    (P : Lighthouse L) {τ : ℝ} (hn : τ≠0) (hJ : P.J=τ • material (Bel L) weyl) (hs : Nonstress A.spin V H P.W) :\n    ∃ w : Coeff, ‖w‖ = 1 ∧ nabla V (material S w)=0 ∧ Centers (material S w) ∧ ActLaw V P (material S w) A.spin H := by"
    }
   },
   "YM.Table.Basic": {
@@ -15371,6 +15961,16 @@
     "snippet": "lemma mist (m k:ℕ)(h:m≤k): Arrives (fun i=> drawerE S i m n (cup S n w m k h i)) ∧ ∀ i:ℕ,k≤ i → ‖drawerE S i m n (cup S n w m k h i)‖≤ Camp.soft ∧‖drawerE S i m n (cup S n w m k h i)-drawerE S i m n (rose S n w m i)‖≤ Camp.soft^(k-m):= by"
    }
   },
+  "YM.UVExtension.Camp.pulse": {
+   "YM/UVExtension/Camp/Pin.lean": {
+    "file": "YM/UVExtension/Camp/Pin.lean",
+    "kind": "def",
+    "line": 22,
+    "module": "YM.UVExtension.Camp.Pin",
+    "private": false,
+    "snippet": "def pulse (T:Levels G)(m:ℕ):= stretchB (T.clock.hatBeta m)"
+   }
+  },
   "YM.UVExtension.Camp.purchase": {
    "YM/UVExtension/Camp/Plum.lean": {
     "file": "YM/UVExtension/Camp/Plum.lean",
@@ -15381,6 +15981,26 @@
     "snippet": "lemma purchase (m k:ℕ)(h:m<k) (i:ℕ)(hh:k≤ i) (x:WordsI S (m+1) n) (he:‖drawerE S i (m+1) n (x i)‖≤ Camp.soft):\n    ‖drawerE S i m n (wood S (centers w S (m+1)) m n x i)‖≤ Camp.soft ∧ chestR S (centers w S (m+1)) m n x i ∧ ‖drawerE S i m n (wood S (centers w S (m+1)) m n x i)-drawerE S i m n (rose S n w m i)‖ ≤ Camp.soft*‖drawerE S i (m+1) n (x i)-drawerE S i (m+1) n (rose S n w (m+1) i)‖:= by"
    }
   },
+  "YM.UVExtension.Camp.soft": {
+   "YM/UVExtension/Camp/Pin.lean": {
+    "file": "YM/UVExtension/Camp/Pin.lean",
+    "kind": "abbrev",
+    "line": 20,
+    "module": "YM.UVExtension.Camp.Pin",
+    "private": false,
+    "snippet": "abbrev soft : ℝ:= Oriel.rim/8"
+   }
+  },
+  "YM.UVExtension.Camp.speaks": {
+   "YM/UVExtension/Camp/Motto.lean": {
+    "file": "YM/UVExtension/Camp/Motto.lean",
+    "kind": "lemma",
+    "line": 48,
+    "module": "YM.UVExtension.Camp.Motto",
+    "private": false,
+    "snippet": "lemma speaks (T:Levels G)(m:ℕ){u x:ℝ}(hu:InsideB (T.clock.hatBeta m) u)(hx: |x| ≤rim):\n     u+pulse T m*x ∈ band T m:=by"
+   }
+  },
   "YM.UVExtension.Camp.viva": {
    "YM/UVExtension/Camp/Veto.lean": {
     "file": "YM/UVExtension/Camp/Veto.lean",
@@ -15389,6 +16009,16 @@
     "module": "YM.UVExtension.Camp.Veto",
     "private": false,
     "snippet": "lemma viva {F:ℕ→ℂ→ Y} (r:ℝ)(hr:0<r)(M:ℝ)(he:∀ i,DifferentiableOn ℂ (F i) (ball 0 r) ∧ ∀ z∈ ball (0:ℂ) r, ‖F i z‖≤M)(ht:∀ x:ℝ,|x| < r → Arrives fun i=> F i x): SummitUV r F:= by"
+   }
+  },
+  "YM.UVExtension.Copse.flights": {
+   "YM/UVExtension/Copse/Wood.lean": {
+    "file": "YM/UVExtension/Copse/Wood.lean",
+    "kind": "lemma",
+    "line": 41,
+    "module": "YM.UVExtension.Copse.Wood",
+    "private": false,
+    "snippet": "lemma flights (j:ι): SumBudget (F j a) (worth m B (a+δ) (X j)):=by"
    }
   },
   "YM.UVExtension.Dales.born": {
@@ -15409,6 +16039,16 @@
     "module": "YM.UVExtension.Dales.Rainbow",
     "private": false,
     "snippet": "lemma shelves : (∃ F, Dales.Order (d:=d) (flowing R H d C) (Yard.rake Y) F) ∧∃ F,Dales.Order (d:=d) (marble R hG t H d he C) u F:=by"
+   }
+  },
+  "YM.UVExtension.Mast.Lisle.gram": {
+   "YM/UVExtension/Forest/Cave.lean": {
+    "file": "YM/UVExtension/Forest/Cave.lean",
+    "kind": "generated",
+    "line": 24,
+    "module": "YM.UVExtension.Forest.Cave",
+    "private": false,
+    "snippet": "gram d m : t d ≤ m → (1+2*(A.params m).columns)*Doors.rate (A.S.block m) ≤ Bid.barunit (A.S.block m)"
    }
   },
   "YM.UVExtension.Oasis.Spring": {
@@ -15459,6 +16099,16 @@
     "module": "YM.UVExtension.Oriel.Dial",
     "private": false,
     "snippet": "lemma conquest : ∃ F:X→Y, Bumps Grip F ∧ (∀ x∈Grip, ‖F x‖≤ M)∧(∀ x∈Grip,∀ y∈Grip, ‖F x-F y‖ ≤ M*‖x-y‖)∧∀ x, U x∈Grip → F (U x)=f x:=by"
+   }
+  },
+  "YM.UVExtension.Oriel.rim": {
+   "YM/UVExtension/Oriel/Gate.lean": {
+    "file": "YM/UVExtension/Oriel/Gate.lean",
+    "kind": "abbrev",
+    "line": 26,
+    "module": "YM.UVExtension.Oriel.Gate",
+    "private": false,
+    "snippet": "abbrev rim : ℝ :=1/131072"
    }
   },
   "YM.UVExtension.Reward.Ends": {
@@ -15639,6 +16289,16 @@
     "module": "YM.UVExtension.Upland.Summit",
     "private": false,
     "snippet": "lemma winding {h:G.Simple}(H:Einstein h C) (m p :ℕ): Arrives (Normal C m p) ∧ Arrives (fun N=> C.path.β N p m):= by"
+   }
+  },
+  "YM.UVExtension.Willow.heights": {
+   "YM/UVExtension/Willow/Moss.lean": {
+    "file": "YM/UVExtension/Willow/Moss.lean",
+    "kind": "lemma",
+    "line": 39,
+    "module": "YM.UVExtension.Willow.Moss",
+    "private": false,
+    "snippet": "lemma heights : SumBudget (fun p=> buoy (H:=H) p M N k l*Copse.worth k (radiusB x) (Q.exp-l) (H.unionP p)) (ceiling (H:=H) k M):=by"
    }
   },
   "YM.UVNext.CouplingReset.Prereset": {
@@ -15969,6 +16629,16 @@
     "module": "YM.Wilson.Law",
     "private": false,
     "snippet": "def prior (G : Gauge) (n : Side) : Measure (Config G n) := Measure.pi (fun _ => G.probHaar)"
+   }
+  },
+  "YM.WilsonBulk.completion_choice": {
+   "YM/WilsonBulk/Spectral/Joint.lean": {
+    "file": "YM/WilsonBulk/Spectral/Joint.lean",
+    "kind": "lemma",
+    "line": 44,
+    "module": "YM.WilsonBulk.Spectral.Joint",
+    "private": false,
+    "snippet": "lemma completion_choice (G : Gauge) (j : ℕ) (K : KernelChoices) (σ ε Ω : ℝ)\n    (hσ : 0<σ) (hε : 0<ε) (hΩ : 0≤ Ω) :\n    ∃ η C : ℝ, 0 < η ∧ η ≤ σ ∧ 0 ≤ C ∧\n      ∀ (P : Patch), P.J=j → P.Branches K G →\n        ∀ (B : Bed) (p : Clip) (D : ℝ), B.metric.strip (inch P.L * σ) Ω →\n          (∀ n, Floor B p n ε D) →\n            Poster η (forceK G P (regulatorF G P) K.penalty B) ∧\n            Freezer (slabW G P.L|>.dual) (slabW G P.L) (forceK G P (regulatorF G P) K.penalty B) η C := by"
    }
   },
   "YM.WilsonBulk.uniform_backing": {
@@ -16431,6 +17101,16 @@
     "snippet": "theorem answer : YM.Bid.C05 := by"
    }
   },
+  "YM.Work.D01.columnLogs": {
+   "YM/Work/D01.lean": {
+    "file": "YM/Work/D01.lean",
+    "kind": "def",
+    "line": 22,
+    "module": "YM.Work.D01",
+    "private": false,
+    "snippet": "def columnLogs (a : RG.Levels G) (m : ℕ) : ℝ :=\n  ∑ i ∈ Finset.range m, Real.log (a.params (i+1)).columns"
+   }
+  },
   "YM.Work.D02.answer": {
    "YM/Work/D02.lean": {
     "file": "YM/Work/D02.lean",
@@ -16559,6 +17239,16 @@
     "module": "YM.Work.F05.Graphs",
     "private": false,
     "snippet": "lemma hessian_pos (ha : 0 < a) (hQ : PriceGap B p W a) (hB : Critical B p W ρ) (r : S.Choices) :\n    ∀ᶠ x in 𝓝 0, 0 < (hessian B r p W x (ρ x)).det := by"
+   }
+  },
+  "YM.Work.F05.tested_diag": {
+   "YM/Work/F05/Graphs.lean": {
+    "file": "YM/Work/F05/Graphs.lean",
+    "kind": "lemma",
+    "line": 29,
+    "module": "YM.Work.F05.Graphs",
+    "private": false,
+    "snippet": "lemma tested_diag (ha : 0<a) (h : PriceGap B p W a) (r : S.Choices)\n    (y : AxisChart G B) (hy : y≠0) : 0 < bend (tested B r p W 0) 0 y y := by"
    }
   },
   "YM.Work.F05.toll_pos": {

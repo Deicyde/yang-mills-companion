@@ -9,6 +9,11 @@ A final status that is a finding (weaker, missing-hypothesis, differs, no-match)
 `confirmed` only when both skeptics ran and neither refuted it. When both refute it and
 propose non-finding statuses, the weaker of the two replaces it. When one refutes it, the status
 becomes `unclear` (contested). The finding is then `unconfirmed`.
+
+Last, data/corrections.json applies the re-judgments made after an independent review (session 5):
+per item a new status, note, links or roles. A finding it keeps or revises is `confirmed` only with two
+new skeptic verdicts that neither refutes; a finding whose item it re-judges as a non-finding is
+`withdrawn`.
 """
 import json, os, re
 
@@ -81,7 +86,46 @@ def relations(rec):
     rec['relation'] = KEY_REL.get(st)
 
 
+def correct(rec, ver, c):
+    """Apply one entry of data/corrections.json to a merged record."""
+    old = rec['status']
+    if 'status' in c:
+        rec['status'] = c['status']
+    if 'note' in c:
+        rec['note'] = c['note']
+    drop = set(c.get('drop_links', []))
+    rec['lean'] = [l for l in rec['lean'] if l['decl'] not in drop]
+    for l in rec['lean']:
+        if l['decl'] in c.get('roles', {}):
+            l['role'] = c['roles'][l['decl']]
+    have = {l['decl'] for l in rec['lean']}
+    for l in c.get('add_links', []):
+        if l['decl'] in have:
+            next(x for x in rec['lean'] if x['decl'] == l['decl'])['role'] = l['role']
+        else:
+            rec['lean'].append({k: l[k] for k in ('decl', 'role', 'where', 'note') if k in l})
+    ver['corrected'] = {'kind': c['kind'], 'from': old, 'source': c['source'], 'why': c['why']}
+    if 'skeptics' not in c and rec['status'] == old:
+        pass  # the verdict stands: only its note or links change
+    elif rec['status'] in FINDINGS:
+        sk = c.get('skeptics', [])
+        ok = len(sk) == 2 and not any(s.get('refuted') for s in sk)
+        rec['finding'] = {'claim': rec['status'], 'confirmed': ok}
+        if ok:
+            rec['finding']['skeptic_notes'] = [s['reason'] for s in sk]
+        ver['claimed'] = rec['status']
+        ver['finding'] = 'confirmed' if ok else 'unconfirmed'
+        ver['skeptics'] = [{'refuted': bool(s.get('refuted')), 'status': s.get('status'), 'reason': s.get('reason')}
+                           for s in sk] or ver.get('skeptics', [])
+    elif rec.get('finding'):
+        rec['finding'] = {'claim': rec['finding']['claim'], 'confirmed': False, 'withdrawn': True}
+        ver['finding'] = 'withdrawn'
+    if (rec.get('finding') or {}).get('confirmed') and 'quote' in c:
+        rec['finding']['quote'] = ' '.join(c['quote'].split())
+
+
 def main():
+    corrections = json.load(open(f'{REPO}/data/corrections.json'))['items']
     items = json.load(open(f'{REPO}/data/items.json'))['items']
     batches = json.load(open(f'{REPO}/data/batches.json'))['batches']
     batch_of = {i: b['id'] for b in batches for i in b['items']}
@@ -151,6 +195,8 @@ def main():
                                                  and l.get('role') in ('key', 'attributed', 'support', 'helper')]
                     ver['source'] += '+skeptics'
                     rec['finding']['refuted'] = True
+        if iid in corrections:
+            correct(rec, ver, corrections[iid])
         relations(rec)
         ver['complete'] = rec['status'] not in FINDINGS or ver.get('finding') in ('confirmed', 'unconfirmed')
         rec['verification'] = ver
