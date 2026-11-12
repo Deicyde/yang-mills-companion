@@ -8,13 +8,13 @@
  "provenance": "machine: a sonnet mapper and a sonnet verifier per batch, independently; an opus judge on disagreement and on one in five agreed noMatch records; two opus skeptics per claim that the text is wrong; no person reviewed",
  "counts": {
   "broadMatch": 1,
-  "closeMatch": 16,
-  "exactMatch": 51,
+  "closeMatch": 19,
+  "exactMatch": 58,
   "hasPart": 4,
   "narrowMatch": 1,
   "noMatch": 1,
   "relatedMatch": 1,
-  "unjudged": 280
+  "unjudged": 270
  },
  "records": [
   {
@@ -3807,14 +3807,61 @@
    "context": "statement",
    "enclosing": "Definition 6.1",
    "kind": "display",
-   "relation": null,
-   "class": "Unjudged",
+   "relation": "exactMatch",
+   "class": "1-to-1",
+   "ends": [
+    {
+     "decl": "YM.Table.gram",
+     "file": "YM/Euclid/Words.lean",
+     "lines": [
+      119,
+      119
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Euclid/Words.lean#L119-L119",
+     "snippet": "def gram (a : Axis) (w v : L.Word) := S.expect (reflect w a ++ v)",
+     "conclusion": "The OS form on words is `S.expect (reflect w a ++ v)`, the Schwinger value of the reflected adjoint of `w` followed by `v`.",
+     "proof_context": {
+      "declaration": "YM.Table.gram",
+      "lines": [
+       119,
+       119
+      ],
+      "conclusion": "The OS form on words is `S.expect (reflect w a ++ v)`, the Schwinger value of the reflected adjoint of `w` followed by `v`."
+     }
+    },
+    {
+     "decl": "YM.OS.Chamber",
+     "file": "YM/OS/Dynamics.lean",
+     "lines": [
+      60,
+      60
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OS/Dynamics.lean#L60-L60",
+     "snippet": "  atBirth t (v : Future L a) : GNS.plant (travel v t) = flow.E t (GNS.plant v)",
+     "conclusion": "`atBirth` makes the contraction semigroup act on classes by positive translation: `plant (travel v t) = flow.E t (plant v)`.",
+     "proof_context": {
+      "declaration": "YM.OS.Chamber",
+      "lines": [
+       57,
+       61
+      ],
+      "conclusion": "`atBirth` makes the contraction semigroup act on classes by positive translation: `plant (travel v t) = flow.E t (plant v)`."
+     }
+    }
+   ],
+   "note": null,
+   "confidence": "high",
    "verification": {
     "batch": "D06",
-    "steps": [],
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "steps": [
+     "mapper",
+     "verifier"
+    ],
+    "mapper": "exactMatch",
+    "verifier": "exactMatch",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
@@ -3826,9 +3873,14 @@
    "class": "Unjudged",
    "verification": {
     "batch": "D06",
-    "steps": [],
-    "mapper": null,
-    "verifier": null,
+    "steps": [
+     "mapper",
+     "verifier"
+    ],
+    "mapper": "exactMatch",
+    "verifier": "closeMatch",
+    "agreed": false,
+    "disagreement": "class 1-to-1 vs Faithful",
     "complete": false
    }
   },
@@ -3841,9 +3893,14 @@
    "class": "Unjudged",
    "verification": {
     "batch": "D06",
-    "steps": [],
-    "mapper": null,
-    "verifier": null,
+    "steps": [
+     "mapper",
+     "verifier"
+    ],
+    "mapper": "exactMatch",
+    "verifier": "closeMatch",
+    "agreed": false,
+    "disagreement": "class 1-to-1 vs Faithful",
     "complete": false
    }
   },
@@ -3852,14 +3909,61 @@
    "context": "text",
    "enclosing": null,
    "kind": "display",
-   "relation": null,
-   "class": "Unjudged",
+   "relation": "closeMatch",
+   "class": "Faithful",
+   "ends": [
+    {
+     "decl": "YM.OS.Spread.insertValue",
+     "file": "YM/Phase/Mixture.lean",
+     "lines": [
+      59,
+      60
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Phase/Mixture.lean#L59-L60",
+     "snippet": "lemma insertValue (w : L.Word) d (h : Slab timeAxis d w) :\n    inner ℂ V.omega0 ((P.slot w d h).val V.omega0) = S.expect w := by",
+     "conclusion": "For a slab word `w` the vacuum matrix element of the compression `slot w d h` is `S.expect w`.",
+     "proof_context": {
+      "declaration": "YM.OS.Spread.insertValue",
+      "lines": [
+       59,
+       63
+      ],
+      "conclusion": "For a slab word `w` the vacuum matrix element of the compression `slot w d h` is `S.expect w`."
+     }
+    },
+    {
+     "decl": "YM.OS.Spread.Resolution.Out",
+     "file": "YM/Phase/Mixture.lean",
+     "lines": [
+      86,
+      86
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Phase/Mixture.lean#L86-L86",
+     "snippet": "  ground (p : P.algebra) : (∫ x, R.character x p ∂R.μ) = inner ℂ V.omega0 (p.val V.omega0)",
+     "conclusion": "`ground` identifies the vacuum state `p ↦ inner omega0 (p omega0)` with the integral of the characters against the measure.",
+     "proof_context": {
+      "declaration": "YM.OS.Spread.Resolution.Out",
+      "lines": [
+       78,
+       86
+      ],
+      "conclusion": "`ground` identifies the vacuum state `p ↦ inner omega0 (p omega0)` with the integral of the characters against the measure."
+     }
+    }
+   ],
+   "note": "Lean states the second identity for slab words, the generators; reaching an arbitrary separated word by translation invariance is done inside the proof of `barycenter` (via `place_exists`), not as a separate lemma.",
+   "confidence": "medium",
    "verification": {
     "batch": "D06",
-    "steps": [],
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "steps": [
+     "mapper",
+     "verifier"
+    ],
+    "mapper": "closeMatch",
+    "verifier": "closeMatch",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
@@ -3871,9 +3975,14 @@
    "class": "Unjudged",
    "verification": {
     "batch": "D06",
-    "steps": [],
-    "mapper": null,
-    "verifier": null,
+    "steps": [
+     "mapper",
+     "verifier"
+    ],
+    "mapper": "closeMatch",
+    "verifier": "exactMatch",
+    "agreed": false,
+    "disagreement": "class Faithful vs 1-to-1",
     "complete": false
    }
   },
@@ -3882,14 +3991,61 @@
    "context": "statement",
    "enclosing": "Definition 6.5",
    "kind": "display",
-   "relation": null,
-   "class": "Unjudged",
+   "relation": "exactMatch",
+   "class": "1-to-1",
+   "ends": [
+    {
+     "decl": "YangMills.WightmanTheory.W0",
+     "file": "PublicTheory.lean",
+     "lines": [
+      271,
+      275
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/PublicTheory.lean#L271-L275",
+     "snippet": "  spectralRepresentation : ∀ state : H.carrier, ∀ momentum : Spacetime,\n    charFun (theory.energyMomentum.diagonal state) momentum =\n      inner ℂ state (theory.translations.operator momentum state)\n  positiveEnergy :\n    theory.energyMomentum.projection forwardConeᶜ = 0",
+     "conclusion": "`spectralRepresentation` gives `charFun` of the diagonal measure equal to `inner state (T momentum state)`, and `positiveEnergy` gives `projection forwardConeᶜ = 0`.",
+     "proof_context": {
+      "declaration": "YangMills.WightmanTheory.W0",
+      "lines": [
+       270,
+       278
+      ],
+      "conclusion": "`spectralRepresentation` gives `charFun` of the diagonal measure equal to `inner state (T momentum state)`, and `positiveEnergy` gives `projection forwardConeᶜ = 0`."
+     }
+    },
+    {
+     "decl": "YM.Spectral.Orbit.Spectrum",
+     "file": "YM/Spectral/Frequencies.lean",
+     "lines": [
+      67,
+      68
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Spectral/Frequencies.lean#L67-L68",
+     "snippet": "def Spectrum (P : PVM H X) : Prop := ∀ x : H, ∀ b : X,\n    charFun (P.diagonal x) b = inner ℂ x (T.translation b x)",
+     "conclusion": "The characteristic function of the diagonal measure of `P` at `b` is the matrix element `inner x (T.translation b x)`.",
+     "proof_context": {
+      "declaration": "YM.Spectral.Orbit.Spectrum",
+      "lines": [
+       67,
+       68
+      ],
+      "conclusion": "The characteristic function of the diagonal measure of `P` at `b` is the matrix element `inner x (T.translation b x)`."
+     }
+    }
+   ],
+   "note": null,
+   "confidence": "high",
    "verification": {
     "batch": "D06",
-    "steps": [],
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "steps": [
+     "mapper",
+     "verifier"
+    ],
+    "mapper": "exactMatch",
+    "verifier": "exactMatch",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
@@ -3897,14 +4053,61 @@
    "context": "statement",
    "enclosing": "Definition 6.6",
    "kind": "display",
-   "relation": null,
-   "class": "Unjudged",
+   "relation": "exactMatch",
+   "class": "1-to-1",
+   "ends": [
+    {
+     "decl": "YangMills.FieldSystem.DomainAxioms",
+     "file": "PublicTheory.lean",
+     "lines": [
+      130,
+      131
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/PublicTheory.lean#L130-L131",
+     "snippet": "  cyclicVacuum : fields.domain =\n    Submodule.span ℂ (Set.range fun word ↦ (fields.vector word).1)",
+     "conclusion": "`cyclicVacuum` says the domain is the span of `fields.vector word` over all words, the products of smeared fields applied to the vacuum.",
+     "proof_context": {
+      "declaration": "YangMills.FieldSystem.DomainAxioms",
+      "lines": [
+       127,
+       133
+      ],
+      "conclusion": "`cyclicVacuum` says the domain is the span of `fields.vector word` over all words, the products of smeared fields applied to the vacuum."
+     }
+    },
+    {
+     "decl": "YM.Boundary.Fields.Total",
+     "file": "YM/Fields/System.lean",
+     "lines": [
+      44,
+      44
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Fields/System.lean#L44-L44",
+     "snippet": "  cyclic : F.domain = Submodule.span ℂ (Set.range F.vector)",
+     "conclusion": "`cyclic` says the domain is the span of `F.vector` over all sentences.",
+     "proof_context": {
+      "declaration": "YM.Boundary.Fields.Total",
+      "lines": [
+       41,
+       45
+      ],
+      "conclusion": "`cyclic` says the domain is the span of `F.vector` over all sentences."
+     }
+    }
+   ],
+   "note": null,
+   "confidence": "high",
    "verification": {
     "batch": "D06",
-    "steps": [],
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "steps": [
+     "mapper",
+     "verifier"
+    ],
+    "mapper": "exactMatch",
+    "verifier": "exactMatch",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
@@ -3912,14 +4115,61 @@
    "context": "statement",
    "enclosing": "Definition 6.7",
    "kind": "display",
-   "relation": null,
-   "class": "Unjudged",
+   "relation": "exactMatch",
+   "class": "1-to-1",
+   "ends": [
+    {
+     "decl": "YangMills.WightmanTheory.W2",
+     "file": "PublicTheory.lean",
+     "lines": [
+      300,
+      307
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/PublicTheory.lean#L300-L307",
+     "snippet": "  fieldCovariance (g : theory.poincare.Symmetry)\n      (label : Labels.carrier) (test : TestFunction)\n      (state : theory.fields.domain) :\n    theory.poincare.onStates g (theory.fields.field label test state).1 =\n      (theory.fields.field (theory.poincare.onLabels g label)\n        (theory.poincare.onTests g test)\n        ⟨theory.poincare.onStates g state.1,\n          domainInvariant g state.2⟩).1",
+     "conclusion": "`fieldCovariance` says `onStates g (field label test state) = field (onLabels g label) (onTests g test) (onStates g state)`.",
+     "proof_context": {
+      "declaration": "YangMills.WightmanTheory.W2",
+      "lines": [
+       287,
+       307
+      ],
+      "conclusion": "`fieldCovariance` says `onStates g (field label test state) = field (onLabels g label) (onTests g test) (onStates g state)`."
+     }
+    },
+    {
+     "decl": "YM.Boundary.Symmetries",
+     "file": "YM/Fields/System.lean",
+     "lines": [
+      114,
+      115
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Fields/System.lean#L114-L115",
+     "snippet": "  covariance (p : Poincare) (x : S.Union) (f : Test4) (a : F.domain) : V.V p (F.field x f a).val =\n    (F.field (X.rail p.Λ x) (Joint.push p f) (⟨V.V p a.val, domain p a.property⟩ : F.domain)).val",
+     "conclusion": "The internal `covariance` field is the same identity with the label moved by the spin rail `X.rail p.Λ x` and the test by `Joint.push p f`.",
+     "proof_context": {
+      "declaration": "YM.Boundary.Symmetries",
+      "lines": [
+       111,
+       115
+      ],
+      "conclusion": "The internal `covariance` field is the same identity with the label moved by the spin rail `X.rail p.Λ x` and the test by `Joint.push p f`."
+     }
+    }
+   ],
+   "note": null,
+   "confidence": "high",
    "verification": {
     "batch": "D06",
-    "steps": [],
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "steps": [
+     "mapper",
+     "verifier"
+    ],
+    "mapper": "exactMatch",
+    "verifier": "exactMatch",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
@@ -3927,14 +4177,61 @@
    "context": "statement",
    "enclosing": "Definition 6.13",
    "kind": "display",
-   "relation": null,
-   "class": "Unjudged",
+   "relation": "closeMatch",
+   "class": "Faithful",
+   "ends": [
+    {
+     "decl": "YM.Boundary.Waves.Opens",
+     "file": "YM/Boundary/Contour.lean",
+     "lines": [
+      92,
+      93
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Boundary/Contour.lean#L92-L93",
+     "snippet": "  profile (n : ℕ) (v : Fin n → S.Union) (y : Heights n) (hy : y ∈ east n) (f : Joint n) :\n    Tendsto (fun ε => atSlopes P v y ε f) (𝓝[>] (0:ℝ)) (𝓝 (F.W n v f))",
+     "conclusion": "For ordered heights `y` and tests `f`, the integrals of `F` at times shifted by `ε·y` against `f` tend to the surface value `W n v f` as `ε` goes to 0+.",
+     "proof_context": {
+      "declaration": "YM.Boundary.Waves.Opens",
+      "lines": [
+       89,
+       93
+      ],
+      "conclusion": "For ordered heights `y` and tests `f`, the integrals of `F` at times shifted by `ε·y` against `f` tend to the surface value `W n v f` as `ε` goes to 0+."
+     }
+    },
+    {
+     "decl": "YM.Boundary.Fields.realizes",
+     "file": "YM/Fields/System.lean",
+     "lines": [
+      60,
+      60
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Fields/System.lean#L60-L60",
+     "snippet": "def realizes (W : Surface S) := ∀ b : Sentence S, inner ℂ F.vacuum (F.vector b)=W.expect b",
+     "conclusion": "The vacuum expectation `inner vacuum (F.vector b)` of every field word equals the surface value `W.expect b`.",
+     "proof_context": {
+      "declaration": "YM.Boundary.Fields.realizes",
+      "lines": [
+       60,
+       60
+      ],
+      "conclusion": "The vacuum expectation `inner vacuum (F.vector b)` of every field word equals the surface value `W.expect b`."
+     }
+    }
+   ],
+   "note": "Lean splits the display into the limit against the boundary distribution `W` and the identification of `W` with the vacuum expectation of field words, and requires the integrand to be integrable for every ordered height, where [M] gives a nonintegrable integrand the value zero.",
+   "confidence": "medium",
    "verification": {
     "batch": "D06",
-    "steps": [],
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "steps": [
+     "mapper",
+     "verifier"
+    ],
+    "mapper": "closeMatch",
+    "verifier": "closeMatch",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
@@ -3942,14 +4239,42 @@
    "context": "statement",
    "enclosing": "Definition 6.14",
    "kind": "display",
-   "relation": null,
-   "class": "Unjudged",
+   "relation": "closeMatch",
+   "class": "Faithful",
+   "ends": [
+    {
+     "decl": "YM.Boundary.Waves.Region",
+     "file": "YM/Boundary/Contour.lean",
+     "lines": [
+      76,
+      77
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Boundary/Contour.lean#L76-L77",
+     "snippet": "  roots (n : ℕ) (v : Fin n → S.Tag) (x : SpacePoints n) (y : Heights n) (hy : y ∈ east n) :\n    P.F n (fun i => ↑(y i)*I) x (fun i => S.pin (v i).1 (v i).2) = S.useAt T (place x y) v",
+     "conclusion": "`roots` says `F` at purely imaginary times `i y_i` with increasing `y` equals the table read `S.useAt T (place x y) v`.",
+     "proof_context": {
+      "declaration": "YM.Boundary.Waves.Region",
+      "lines": [
+       71,
+       77
+      ],
+      "conclusion": "`roots` says `F` at purely imaginary times `i y_i` with increasing `y` equals the table read `S.useAt T (place x y) v`."
+     }
+    }
+   ],
+   "note": "Lean states the equality on pinned tokens `S.pin (v i).1 (v i).2` only, for increasing heights `y ∈ east n`; holomorphy on the ordered domain is the neighbouring field `hol`.",
+   "confidence": "medium",
    "verification": {
     "batch": "D06",
-    "steps": [],
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "steps": [
+     "mapper",
+     "verifier"
+    ],
+    "mapper": "closeMatch",
+    "verifier": "closeMatch",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
@@ -3957,14 +4282,80 @@
    "context": "text",
    "enclosing": null,
    "kind": "display",
-   "relation": null,
-   "class": "Unjudged",
+   "relation": "exactMatch",
+   "class": "1-to-1",
+   "ends": [
+    {
+     "decl": "YM.Boundary.Action.Intervenes",
+     "file": "YM/Fields/Spectrum.lean",
+     "lines": [
+      103,
+      106
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Fields/Spectrum.lean#L103-L106",
+     "snippet": "structure Intervenes (W : X→L[ℂ] C.H) (v : X) : Prop where\n  scale (x : X) : ‖W x‖=‖x‖\n  across (p) : W.comp (P.orbit.translation p) = (C.flow.unit.translation p).comp W\n  start : W v=C.omega",
+     "conclusion": "`W` is an isometry (`scale`), intertwines translations (`across`) and sends the vacuum `v` to `C.omega` (`start`).",
+     "proof_context": {
+      "declaration": "YM.Boundary.Action.Intervenes",
+      "lines": [
+       103,
+       106
+      ],
+      "conclusion": "`W` is an isometry (`scale`), intertwines translations (`across`) and sends the vacuum `v` to `C.omega` (`start`)."
+     }
+    },
+    {
+     "decl": "YM.EveryPhase.Almanac",
+     "file": "YM/EveryPhase/Pack.lean",
+     "lines": [
+      127,
+      127
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Pack.lean#L127-L127",
+     "snippet": "  J (i : F.α.space.X) : (actors i).operators.H →L[ℂ] (chambers i).H",
+     "conclusion": "`J i` is the bounded map from the Hilbert space of the `i`th Wightman theory to that of its OS chamber.",
+     "proof_context": {
+      "declaration": "YM.EveryPhase.Almanac",
+      "lines": [
+       117,
+       132
+      ],
+      "conclusion": "`J i` is the bounded map from the Hilbert space of the `i`th Wightman theory to that of its OS chamber."
+     }
+    },
+    {
+     "decl": "YM.Next.BOUNDARY.Attachment.traces",
+     "file": "YM/Next/BOUNDARY/Core.lean",
+     "lines": [
+      164,
+      165
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/BOUNDARY/Core.lean#L164-L165",
+     "snippet": "theorem Attachment.traces (u : Attachment F V U) (w : B.concretized A) (b : Sentence S) :\n    Tendsto (B.heatCup b) till (𝓝 (U (F.operators.vector b))) := by",
+     "conclusion": "`U` sends each field-word vector to the limit of its heat-regularized OS vectors `B.heatCup b`.",
+     "proof_context": {
+      "declaration": "YM.Next.BOUNDARY.Attachment.traces",
+      "lines": [
+       164,
+       175
+      ],
+      "conclusion": "`U` sends each field-word vector to the limit of its heat-regularized OS vectors `B.heatCup b`."
+     }
+    }
+   ],
+   "note": null,
+   "confidence": "medium",
    "verification": {
     "batch": "D06",
-    "steps": [],
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "steps": [
+     "mapper",
+     "verifier"
+    ],
+    "mapper": "exactMatch",
+    "verifier": "exactMatch",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
@@ -3972,14 +4363,61 @@
    "context": "statement",
    "enclosing": "Theorem 6.15",
    "kind": "display",
-   "relation": null,
-   "class": "Unjudged",
+   "relation": "exactMatch",
+   "class": "1-to-1",
+   "ends": [
+    {
+     "decl": "YM.EveryPhase.Completed",
+     "file": "YM/EveryPhase/Extension.lean",
+     "lines": [
+      55,
+      56
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Extension.lean#L55-L56",
+     "snippet": "  mink (i) (x : (L.actors i).operators.H) : (L.actors i).momentum.region zeroE x=x ↔\n    ∃ z : ℂ, z • (L.actors i).operators.vacuum=x",
+     "conclusion": "`mink` says a vector lies in the zero-energy spectral subspace (`region zeroE`) exactly when it is a multiple of the vacuum.",
+     "proof_context": {
+      "declaration": "YM.EveryPhase.Completed",
+      "lines": [
+       51,
+       71
+      ],
+      "conclusion": "`mink` says a vector lies in the zero-energy spectral subspace (`region zeroE`) exactly when it is a multiple of the vacuum."
+     }
+    },
+    {
+     "decl": "YM.OS.Chamber.UniqueHeat",
+     "file": "YM/Phase/Mixture.lean",
+     "lines": [
+      35,
+      35
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Phase/Mixture.lean#L35-L35",
+     "snippet": "def UniqueHeat : Prop := ∀ v : C.D, ∃ z : ℂ, z • C.omega0=v",
+     "conclusion": "Every vector of the ground space `D` of the OS semigroup is a multiple of `omega0`.",
+     "proof_context": {
+      "declaration": "YM.OS.Chamber.UniqueHeat",
+      "lines": [
+       35,
+       35
+      ],
+      "conclusion": "Every vector of the ground space `D` of the OS semigroup is a multiple of `omega0`."
+     }
+    }
+   ],
+   "note": null,
+   "confidence": "medium",
    "verification": {
     "batch": "D06",
-    "steps": [],
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "steps": [
+     "mapper",
+     "verifier"
+    ],
+    "mapper": "exactMatch",
+    "verifier": "exactMatch",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
@@ -3987,14 +4425,61 @@
    "context": "text",
    "enclosing": null,
    "kind": "display",
-   "relation": null,
-   "class": "Unjudged",
+   "relation": "exactMatch",
+   "class": "1-to-1",
+   "ends": [
+    {
+     "decl": "YM.Boundary.starRead",
+     "file": "YM/Fields/Star.lean",
+     "lines": [
+      42,
+      43
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Fields/Star.lean#L42-L43",
+     "snippet": "def starRead (j : StarOp S) (h : S.RealSpin) : Prop := ∀ d v,\n    j (S.pin d v) = S.pin d (S.adj h d timeAxis v)",
+     "conclusion": "The star map `j` satisfies `j (S.pin d v) = S.pin d (S.adj h d timeAxis v)`, where `adj` is the time mirror composed with conjugation.",
+     "proof_context": {
+      "declaration": "YM.Boundary.starRead",
+      "lines": [
+       42,
+       43
+      ],
+      "conclusion": "The star map `j` satisfies `j (S.pin d v) = S.pin d (S.adj h d timeAxis v)`, where `adj` is the time mirror composed with conjugation."
+     }
+    },
+    {
+     "decl": "YM.Boundary.Wightman.Realizes",
+     "file": "YM/Fields/System.lean",
+     "lines": [
+      125,
+      125
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Fields/System.lean#L125-L125",
+     "snippet": "  induced : starRead R.J h",
+     "conclusion": "`induced` requires the Wightman theory's adjoint label map `R.J` to satisfy `starRead`.",
+     "proof_context": {
+      "declaration": "YM.Boundary.Wightman.Realizes",
+      "lines": [
+       124,
+       135
+      ],
+      "conclusion": "`induced` requires the Wightman theory's adjoint label map `R.J` to satisfy `starRead`."
+     }
+    }
+   ],
+   "note": null,
+   "confidence": "medium",
    "verification": {
     "batch": "D06",
-    "steps": [],
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "steps": [
+     "mapper",
+     "verifier"
+    ],
+    "mapper": "exactMatch",
+    "verifier": "exactMatch",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
