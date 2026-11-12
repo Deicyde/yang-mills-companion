@@ -214,7 +214,7 @@ def cmd_check(path):
     if 'batch' in d and os.path.exists(BATCHES):
         bs = json.load(open(BATCHES))['batches']
         want = next((x['items'] for x in bs if x['id'] == d['batch']), None)
-    if want is not None and 'judge' not in path:
+    if want is not None and d.get('agent') != 'judge' and 'judge' not in path:
         got = [i.get('id') for i in its]
         if sorted(got) != sorted(want):
             errs.append(f'items {got} != batch {want}')

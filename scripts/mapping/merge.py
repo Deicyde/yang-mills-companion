@@ -7,8 +7,8 @@ Per item, in order of precedence:
 - no verdict, when a step is missing.
 A final status that is a finding (weaker, missing-hypothesis, differs, no-match) is
 `confirmed` only when both skeptics ran and neither refuted it. When both refute it and
-propose the same status, that status replaces it; otherwise the status stays and the finding
-is `unconfirmed`.
+propose non-finding statuses, the weaker of the two replaces it. When one refutes it, the status
+becomes `unclear` (contested). The finding is then `unconfirmed`.
 """
 import json, os, re
 
@@ -17,6 +17,9 @@ S = f'{HOME}/scratch'
 REPO = f'{HOME}/repo'
 LEAN_PIN = open(f'{HOME}/out/LEAN_PIN').read().split()[0]
 FINDINGS = {'weaker', 'missing-hypothesis', 'differs', 'no-match'}
+# non-finding statuses from the least to the most a relation claims
+WEAKEST = ['not-formalized-not-needed', 'inlined', 'parts', 'definition-close', 'close',
+           'definition-match', 'exact', 'stronger']
 KEY_REL = {
     'exact': 'exactMatch', 'definition-match': 'exactMatch',
     'close': 'closeMatch', 'definition-close': 'closeMatch',
@@ -127,12 +130,24 @@ def main():
                 ver['finding'] = 'unconfirmed' if len(sk) == 2 else 'skeptics pending'
                 rec['finding'] = {'claim': rec['status'], 'confirmed': False}
                 ref = [s for s in sk if s.get('refuted')]
-                if len(sk) == 2 and len(ref) == 2 and ref[0].get('status') == ref[1].get('status') \
-                        and ref[0].get('status') not in (None, *FINDINGS):
-                    rec['status'] = ref[0]['status']
-                    if ref[0].get('lean'):
-                        rec['lean'] = ref[0]['lean']
-                    rec['note'] = ref[0].get('note') or rec['note']
+                if len(sk) == 2 and len(ref) == 2 and all(s.get('status') in WEAKEST for s in ref):
+                    # both refute: take the weaker of the two proposed statuses
+                    pick = min(ref, key=lambda s: WEAKEST.index(s['status']))
+                    rec['status'] = pick['status']
+                    if pick.get('lean'):
+                        rec['lean'] = [l for l in pick['lean'] if l.get('role') in ('key', 'attributed', 'support', 'helper')]
+                    sent = re.split(r'(?<=\.)\s+', (pick.get('reason') or '').strip())
+                    rec['note'] = ' '.join(sent[:2]) or rec['note']
+                    ver['source'] += '+skeptics'
+                elif len(sk) == 2 and len(ref) == 1:
+                    # contested: one skeptic refutes; claim neither the finding nor the refutation
+                    rec['status'] = 'unclear'
+                    sent = re.split(r'(?<=\.)\s+', (ref[0].get('reason') or '').strip())
+                    rec['note'] = ('Contested: one skeptic upholds the claimed ' + ver['claimed'] +
+                                   ', the other refutes it: ' + ' '.join(sent[:1]))
+                    rec['lean'] = rec['lean'] + [l for l in (ref[0].get('lean') or [])
+                                                 if l.get('decl') not in {x['decl'] for x in rec['lean']}
+                                                 and l.get('role') in ('key', 'attributed', 'support', 'helper')]
                     ver['source'] += '+skeptics'
                     rec['finding']['refuted'] = True
         relations(rec)
