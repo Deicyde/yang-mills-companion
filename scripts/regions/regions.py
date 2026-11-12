@@ -19,6 +19,10 @@ Adapted from the ternary Goldbach companion's regions.py.  Pipeline:
    the last word of its text outside math, and no proof; regions of two items overlap only where one
    item holds the other.  Where two boxes of items that do not nest overlap, both are cut at the
    midpoint of the overlap.
+4. Edges: a box's top or bottom edge that crosses ink on the committed PDF (rendered at 288 dpi,
+   `pdftoppm`) moves to the nearest blank pixel row within 8 points, outward on a tie.  Word boxes
+   are font boxes, so the padded edge can cut the line above, and a large operator can reach below
+   its word box.
 
 Usage: python3 -I regions.py <build dir> <committed PDF> <items json> <out regions json> <source commit>
 """
@@ -30,9 +34,12 @@ import os
 import re
 import subprocess
 import sys
+import tempfile
 
 SP_PER_BP = 65781.76
 PAD = 2.0
+DPI = 288
+SNAP = 8.0
 
 
 def bbox_words(pdf):
@@ -101,12 +108,51 @@ def crop_text(pdf, page, rect, size):
                            '-W', str(int(w + 1)), '-H', str(int(h + 1)), pdf, '-'], capture_output=True, text=True).stdout
 
 
+class Ink:
+    """Dark pixels of the committed PDF's pages, rendered on demand."""
+    def __init__(self, pdf):
+        self.pdf, self.pages, self.tmp = pdf, {}, tempfile.TemporaryDirectory()
+
+    def page(self, pg):
+        if pg not in self.pages:
+            stem = os.path.join(self.tmp.name, f'p{pg}')
+            subprocess.run(['pdftoppm', '-f', str(pg), '-l', str(pg), '-r', str(DPI), '-gray', '-singlefile',
+                            self.pdf, stem], check=True)
+            raw = open(stem + '.pgm', 'rb').read()
+            magic, dims, maxval, px = raw.split(b'\n', 3)
+            w, h = map(int, dims.split())
+            self.pages[pg] = (w, h, px)
+        return self.pages[pg]
+
+    def blank(self, pg, y, x0, x1):
+        """Is the pixel row at y points blank between x0 and x1 points?"""
+        w, h, px = self.page(pg)
+        k = DPI / 72
+        r = int(y * k)
+        if not 0 <= r < h:
+            return True
+        row = px[r * w + max(0, int(x0 * k)):r * w + min(w, int(x1 * k) + 1)]
+        return all(b >= 224 for b in row)
+
+    def snap(self, pg, y, x0, x1, outward):
+        """The nearest y' with a blank row, within SNAP points, preferring `outward` (+1 down, -1 up)."""
+        if self.blank(pg, y, x0, x1):
+            return y
+        step = 72 / DPI / 2
+        for n in range(1, int(SNAP / step) + 1):
+            for d in (outward, -outward):
+                if self.blank(pg, y + d * n * step, x0, x1):
+                    return y + d * n * step
+        return y
+
+
 def main():
     build, pdf, items_path, out_path, commit = sys.argv[1:6]
     items = json.load(open(items_path))['items']
     marks, enddisp, geo, afterdisp = read_aux(build)
     L = Layout(geo)
     pages = bbox_words(pdf)
+    ink = Ink(pdf)
 
     def inside(page, lo, hi):
         return [w for w in pages[page - 1][2] if lo < (w[2] + w[4]) / 2 < hi and L.left - 30 < w[1] and w[3] < L.right + 30]
@@ -215,6 +261,7 @@ def main():
             x0 = min([L.left] + [w[1] for w in ws]) - PAD
             x1 = max([L.right] + [w[3] for w in ws]) + PAD
             top, bot = max(0.0, y0 - PAD), min(H, y1 + PAD)
+            top, bot = ink.snap(pg, top, x0, x1, -1), ink.snap(pg, bot, x0, x1, 1)
             regs.append(dict(page=pg, rect=[round(x0 / W, 5), round(top / H, 5), round((x1 - x0) / W, 5),
                                             round((bot - top) / H, 5)]))
         regions[it['id']] = regs
