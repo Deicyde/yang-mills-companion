@@ -7,19 +7,19 @@
  "taxonomy": "docs/taxonomy.md",
  "provenance": "machine: mapper and verifier agents per batch, a judge on disagreement, two skeptics per claimed finding; no person reviewed",
  "counts": {
-  "stronger": 17,
-  "exact": 61,
-  "definition-match": 60,
-  "parts": 53,
-  "definition-close": 26,
-  "close": 76,
-  "inlined": 13,
+  "stronger": 21,
+  "exact": 64,
+  "definition-match": 63,
+  "parts": 57,
+  "definition-close": 27,
+  "close": 81,
+  "inlined": 14,
   "not-formalized-not-needed": 5,
-  "weaker": 13,
+  "weaker": 15,
   "no-match": 16,
   "unclear": 6,
   "differs": 5,
-  "not yet judged": 107
+  "not yet judged": 84
  },
  "items": [
   {
@@ -17431,33 +17431,64 @@
   },
   {
    "id": "Eq (15.9)",
-   "status": "no-match",
+   "status": "inlined",
    "lean": [
+    {
+     "decl": "YM.Next.Rank.Read.maxwell",
+     "role": "key",
+     "where": "YM/Next/RANK/Finite.lean:188-218",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Next.Rank.Read.retrieve",
+     "role": "helper",
+     "where": "YM/Next/RANK/Finite.lean:120-125",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Next.Rank.Read.full_cost",
+     "role": "support",
+     "where": "YM/Next/RANK/Finite.lean:242-251",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Next.Rank.Market.Purchases.samples",
+     "role": "support",
+     "where": "YM/Next/RANK/Bought.lean:112-123",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Next.Rank.Market.wake_pair",
+     "role": "support",
+     "where": "YM/Next/RANK/Bought.lean:54-60",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Push.Common.Prices",
+     "role": "support",
+     "where": "YM/Push/COMMON_WITNESSES/RowEstimates.lean:35-38",
+     "relation": "relatedMatch"
+    },
     {
      "decl": "YM.Cells.Columns.Trials.Valid",
      "role": "attributed",
      "where": "YM/Cells/Corrected.lean:98-118",
-     "note": "the rank mechanism of [L]: root-test bounds only for single and pair (cumulant) corrections of the free columns, extra <= 1",
      "relation": "relatedMatch"
     },
     {
      "decl": "YM.Next.Rank.Detect.measured",
      "role": "attributed",
-     "where": "YM/Next/RANK/Monitors.lean:71-90",
-     "note": "lower bound on dim F_d by eventual linear independence of the columns, different route",
-     "from_verifier": true,
+     "where": "YM/Next/RANK/Monitors.lean:71-87",
      "relation": "relatedMatch"
     },
     {
      "decl": "YM.Next.Rank.Detect.demanded",
      "role": "attributed",
-     "where": "YM/Next/RANK/Monitors.lean:121-132",
-     "note": "shortage from measured plus equation count",
-     "from_verifier": true,
+     "where": "YM/Next/RANK/Monitors.lean:121-131",
      "relation": "relatedMatch"
     }
    ],
-   "note": "[M] prints a bound of the full product expectation of the marked insertions I_h against the free matrix entry G^nu_I by gamma_nu times the sum over all proper subsets J of I. [L] has no such subset expansion. Its rank comparison goes through Cells.Columns.Trials.Valid (cheap field: bounds on subtract1 and subtract2 only, i.e. singletons and pairs) and Push.Corrected.Persist.shortage, with matrix convergence in Push/COMMON_WITNESSES/RankMatrix.lean. The closest declaration is Valid.",
+   "note": "[M] prints, inside the proof of Lemma 15.3, |<prod_{h in I} I_h> - G_I| <= gamma_nu sum_{J proper subset of I} |G_J|, obtained by rearranging (F-relative) and bounding each <R_J> by gamma_nu via chessboard. [L] has this subset expansion: Read.retrieve is the rearranged (F-relative), prod_{i in T} P_i = F.part T + sum_{s in T.powerset.erase T} F.part s * (cylinder D P).part (T \\ s), and the proof of Read.maxwell bounds moment - F.part s by `_ <= sum i in S, ||F.part (scene i)|| * eta` with S the proper subsets (Finite.lean:207), using the single-cell root bound on each nonempty cylinder part; the stated conclusion then enlarges this to Poly.price (fun _ => 1) F * eta, the sum over all subsets, which full_cost and Purchases.samples feed (eta = Z.gap k) to Purchases.converge and Detect.measured.",
    "step": "proof of Lemma 15.3 (rank inequality dim F_d >= q_d); closest [L] route is YM.Next.Rank.Beam.carries via YM.Cells.Columns.Trials.Valid",
    "searched": [
     "tool.py search for ssubset/subsetneq in Next/RANK, Push/CORRECTED_COLUMNS, Cells",
@@ -17471,17 +17502,28 @@
     "claim": "no-match",
     "confirmed": false
    },
-   "relation": "noMatch",
+   "relation": "relatedMatch",
    "verification": {
     "batch": "S15-2",
     "mapper": "no-match",
     "verifier": "no-match",
     "agreed": true,
-    "source": "mapper+verifier",
-    "skeptics": [],
+    "source": "mapper+verifier+skeptics",
+    "skeptics": [
+     {
+      "refuted": true,
+      "status": "inlined",
+      "reason": "[M] prints, inside the proof of Lemma 15.3, |<prod_{h in I} I_h> - G_I| <= gamma_nu sum_{J proper subset of I} |G_J|, obtained by rearranging (F-relative) and bounding each <R_J> by gamma_nu via chessboard. [L] has this subset expansion: Read.retrieve is the rearranged (F-relative), prod_{i in T} P_i = F.part T + sum_{s in T.powerset.erase T} F.part s * (cylinder D P).part (T \\ s), and the proof of Read.maxwell bounds moment - F.part s by `_ <= sum i in S, ||F.part (scene i)|| * eta` with S the proper subsets (Finite.lean:207), using the single-cell root bound on each nonempty cylinder part; the stated conclusion then enlarges this to Poly.price (fun _ => 1) F * eta, the sum over all subsets, which full_cost and Purchases.samples feed (eta = Z.gap k) to Purchases.converge and Detect.measured. The display is thus an intermediate step of the same lattice-to-matrix route, proved inside Read.maxwell's proof and weakened in its statement; the claim's reading that [L] has only singleton/pair bills through Valid misses the general cylinder/profile expansion (wake_one/wake_pair identify those bills with its singleton and pair parts)."
+     },
+     {
+      "refuted": true,
+      "status": "inlined",
+      "reason": "[M] bounds |<prod I_h> - G_I| by gamma_nu * sum over proper subsets J of I of |G_J|. In maxwell's proof, hv rewrites moment(prod P_i) - F.part s as sum over S = s.powerset.erase s of F.part(scene i) * moment(b(scene(s\\i))), and the first calc step (lines 206-211) bounds it by sum_{i in S} ||F.part(scene i)|| * eta using the nonempty-complement root test ht (the gamma_nu bound from F-chess). Only afterwards (212-218) is the sum enlarged to Poly.price, so the printed display is proved inside the proof, though the theorem statement is weaker; the claim searched only Valid/shortage and missed this."
+     }
+    ],
     "claimed": "no-match",
-    "finding": "skeptics pending",
-    "complete": false
+    "finding": "unconfirmed",
+    "complete": true
    }
   },
   {
@@ -18650,7 +18692,11 @@
    "confidence": "medium",
    "finding": {
     "claim": "weaker",
-    "confirmed": false
+    "confirmed": true,
+    "skeptic_notes": [
+     "[M] prints: for every d>=4, finitely many Ward sums sum_i S_n(u_1,..,Delta(K,L)u_i,..,u_n;x) separate B_d. [L]'s erasing (h : G.Simple) states `erases (hierarchy F).spin (scheme F)`, which unfolds to `∃ n, ∀ d ≥ n, ∀ T, Winds .. d T → (all row sums vanish) → T = 0`: the threshold 4 appears only inside the proof (`refine ⟨4,?_⟩`) and is lost in the statement, and the conclusion is separation by all sums, not by finitely many. Finite selection exists only generically (finite_rows, with finiteDimensional_internal) and is applied inside transfer, not stated for B_d; no declaration states the item with d>=4, so the finding stands (weaker range), and it is not a typo in [M].",
+     "[M] prints: for every d>=4, finitely many sums (16.x) separate B_d. [L]'s erasing has type `erases ...`, i.e. `∃ n, ∀ d ≥ n, ∀ T, Winds ... → (all row sums = 0) → T = 0`; n=4 appears only in the proof (`refine ⟨4,?_⟩`), not the statement, and the conclusion is separation by all sums, with no finite subfamily. Finiteness is only the generic finite_rows (used inside transfer, A07.lean:258) and no declaration states it for B_d, so the claim stands; not a typo in [M]."
+    ]
    },
    "relation": "narrowMatch",
    "verification": {
@@ -18660,10 +18706,21 @@
     "agreed": false,
     "judge": "weaker",
     "source": "judge",
-    "skeptics": [],
+    "skeptics": [
+     {
+      "refuted": false,
+      "status": "weaker",
+      "reason": "[M] prints: for every d>=4, finitely many Ward sums sum_i S_n(u_1,..,Delta(K,L)u_i,..,u_n;x) separate B_d. [L]'s erasing (h : G.Simple) states `erases (hierarchy F).spin (scheme F)`, which unfolds to `∃ n, ∀ d ≥ n, ∀ T, Winds .. d T → (all row sums vanish) → T = 0`: the threshold 4 appears only inside the proof (`refine ⟨4,?_⟩`) and is lost in the statement, and the conclusion is separation by all sums, not by finitely many. Finite selection exists only generically (finite_rows, with finiteDimensional_internal) and is applied inside transfer, not stated for B_d; no declaration states the item with d>=4, so the finding stands (weaker range), and it is not a typo in [M]."
+     },
+     {
+      "refuted": false,
+      "status": "weaker",
+      "reason": "[M] prints: for every d>=4, finitely many sums (16.x) separate B_d. [L]'s erasing has type `erases ...`, i.e. `∃ n, ∀ d ≥ n, ∀ T, Winds ... → (all row sums = 0) → T = 0`; n=4 appears only in the proof (`refine ⟨4,?_⟩`), not the statement, and the conclusion is separation by all sums, with no finite subfamily. Finiteness is only the generic finite_rows (used inside transfer, A07.lean:258) and no declaration states it for B_d, so the claim stands; not a typo in [M]."
+     }
+    ],
     "claimed": "weaker",
-    "finding": "skeptics pending",
-    "complete": false
+    "finding": "confirmed",
+    "complete": true
    }
   },
   {
@@ -19515,301 +19572,1125 @@
   },
   {
    "id": "Eq (16.25)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YM.Climb.localTurn",
+     "role": "key",
+     "where": "YM/Climb/Beams.lean:72-74",
+     "note": "angular sum for general raw charges p and Y",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Ward.angular",
+     "role": "support",
+     "where": "YM/Ward/Sum.lean:25-27",
+     "note": "same sum with p taken to be the differential plan",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The sum over legs of the Y_K-action on one leg plus (Kx_i)_b times the p_b-action on that leg is exactly localTurn, with M4.move K x_i b the b-th component of K x_i.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S16-4",
     "mapper": "definition-match",
-    "verifier": null,
-    "complete": false
+    "verifier": "definition-match",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (16.26)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.Outer.line_cost",
+     "role": "key",
+     "where": "YM/Next/ROTATIONS/Tunnel.lean:215-221",
+     "note": "first bound I_mu(B;-3000)=O(lambda^u); budget delta if mu=l, else -w_l+delta, with weights shifted by 1 so delta=1 gives u",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Outer.point_cost",
+     "role": "key",
+     "where": "YM/Next/ROTATIONS/Tunnel.lean:51-55",
+     "note": "second bound I_mu(J_{mu b};omega_mu)=O_delta(lambda^delta) for a point-like axis of a mixed cluster",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Outer.exterior_size",
+     "role": "support",
+     "where": "YM/Next/ROTATIONS/Vanishing.lean:68-111",
+     "note": "instantiates both with the profile exponents -100/-150/-300, q=-3000 and the odd/even parity data",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Outer.chart",
+     "role": "support",
+     "where": "YM/Next/ROTATIONS/Vanishing.lean:12",
+     "note": "the exponents omega_j",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Each of the two bounds is a general lemma in [L] (any weights w_j<=0, any q<0, any delta>0, abstract parity/mixing hypotheses) and exterior_size instantiates them at [M]'s exponents; together they give both claims of the display.",
+   "confidence": "medium",
+   "relation": "hasPart",
    "verification": {
     "batch": "S16-4",
     "mapper": "parts",
-    "verifier": null,
-    "complete": false
+    "verifier": "parts",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (16.27)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "stronger",
+   "lean": [
+    {
+     "decl": "YM.Outer.mass",
+     "role": "key",
+     "where": "YM/Next/ROTATIONS/Mass.lean:115-121",
+     "note": "budget delta+4a for the integral of coneWeight (p_i W^4/(p_i+W)^4 on p_i<=1, times the box profile) against nu",
+     "relation": "broadMatch"
+    },
+    {
+     "decl": "YM.Outer.coneWeight",
+     "role": "support",
+     "where": "YM/Next/ROTATIONS/Mass.lean:104-105",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "[L] takes any a<=0 and weights w_j<=a (W=exp(n a)) and any delta>0; [M] is the case a=-99 with w_j=1+omega_j, where the bound is O(lambda^delta W^4).",
+   "confidence": "high",
+   "relation": "broadMatch",
    "verification": {
     "batch": "S16-4",
     "mapper": "stronger",
-    "verifier": null,
-    "complete": false
+    "verifier": "stronger",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (16.28)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "stronger",
+   "lean": [
+    {
+     "decl": "YM.Outer.outer",
+     "role": "key",
+     "where": "YM/Next/ROTATIONS/Route.lean:113-121",
+     "note": "second conjunct is localTurn p Y K q x = 0 on a coordinate line",
+     "relation": "broadMatch"
+    },
+    {
+     "decl": "YM.Bid.Miles",
+     "role": "key",
+     "where": "YM/Bid/Town.lean:13-15",
+     "note": "same statement over the IR/UV data",
+     "relation": "broadMatch"
+    },
+    {
+     "decl": "YM.Outer.miles",
+     "role": "key",
+     "where": "YM/Next/ROTATIONS/Route.lean:123",
+     "relation": "broadMatch"
+    },
+    {
+     "decl": "YM.Climb.localTurn",
+     "role": "support",
+     "where": "YM/Climb/Beams.lean:72-74",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The display is the conclusion of Lemma 16.9; outer states it under Pre, derivative and orientation laws and also concludes LineSum, which [M] does not print.",
+   "step": "YM.Outer.outer (YM/Next/ROTATIONS/Route.lean:114-121), conclusion of Lemma 16.9",
+   "confidence": "high",
+   "relation": "broadMatch",
    "verification": {
     "batch": "S16-4",
     "mapper": "stronger",
-    "verifier": null,
-    "complete": false
+    "verifier": "exact",
+    "agreed": false,
+    "judge": "stronger",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Lemma 16.9",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "stronger",
+   "lean": [
+    {
+     "decl": "YM.Outer.outer",
+     "role": "key",
+     "where": "YM/Next/ROTATIONS/Route.lean:113-121",
+     "note": "concludes LineSum and the collinear vanishing of localTurn",
+     "relation": "broadMatch"
+    },
+    {
+     "decl": "YM.Bid.Miles",
+     "role": "key",
+     "where": "YM/Bid/Town.lean:13-15",
+     "relation": "broadMatch"
+    },
+    {
+     "decl": "YM.Outer.miles",
+     "role": "key",
+     "where": "YM/Next/ROTATIONS/Route.lean:123",
+     "relation": "broadMatch"
+    },
+    {
+     "decl": "YM.Climb.Pre",
+     "role": "support",
+     "where": "YM/Climb/Beams.lean:66-69",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Climb.localTurn",
+     "role": "support",
+     "where": "YM/Climb/Beams.lean:72-74",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Under [M]'s standing assumptions the hypotheses of outer match, and its conclusion is the lemma's vanishing statement conjoined with LineSum.",
+   "confidence": "high",
+   "relation": "broadMatch",
    "verification": {
     "batch": "S16-4",
     "mapper": "stronger",
-    "verifier": null,
-    "complete": false
+    "verifier": "exact",
+    "agreed": false,
+    "judge": "stronger",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Lemma 16.10",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.Org.Commission.picks",
+     "role": "key",
+     "where": "YM/Org/Twist.lean:45-52",
+     "note": "exists c, U, J with Tab (Crystal: c nonzero, p = c*deriv; Port of mill with generator c^-1 Y)",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Outer.commission",
+     "role": "key",
+     "where": "YM/Next/ROTATIONS.lean:126-131",
+     "note": "proves Commission for the IR/UV data",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Work.A14.answer",
+     "role": "key",
+     "where": "YM/Work/A14.lean:417-420",
+     "note": "Laws (continuity, group, signed extension, reality, units, inclusions, vector law) and Oriented",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Org.Commission",
+     "role": "support",
+     "where": "YM/Org/Twist.lean:29-43",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Org.mill",
+     "role": "support",
+     "where": "YM/Org/Twist.lean:17",
+     "note": "rotation action conjugated by U with generator c^-1 Y",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Spin.produces",
+     "role": "support",
+     "where": "YM/Spin/Lands.lean:26-47",
+     "note": "isomorphisms V_d with Port of morph",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The claims (c nonzero with p = c*deriv, Y = c*L, representation laws including the vector law, intertwining isomorphisms) are each in [L] but spread over Tab, the Commission fields and A14, so no one declaration states the lemma.",
+   "confidence": "medium",
+   "relation": "hasPart",
    "verification": {
     "batch": "S16-4",
     "mapper": "close",
-    "verifier": null,
-    "complete": false
+    "verifier": "parts",
+    "agreed": false,
+    "judge": "parts",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Eq (16.29)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.Bid.ShellCom",
+     "role": "key",
+     "where": "YM/Bid/Angular.lean:27-29",
+     "note": "moves: deriv_b Y_K + sum_c K_cb p_c = Y_K deriv_b; delta: deriv_b p_i = p_i deriv_b",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Bid.A02",
+     "role": "key",
+     "where": "YM/Bid/Angular.lean:31-32",
+     "note": "proposition that the shell commutators hold under Pre",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Work.A02.answer",
+     "role": "key",
+     "where": "YM/Work/A02.lean:272-307",
+     "note": "proof",
+     "relation": "exactMatch"
+    }
+   ],
+   "note": "Both commutator relations are the two fields of ShellCom, proved from the stress laws, derivative and inclusion laws.",
+   "step": "YM.Work.A02.answer (YM/Work/A02.lean:272-307), stated as YM.Bid.ShellCom",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S16-4",
     "mapper": "exact",
-    "verifier": null,
-    "complete": false
+    "verifier": "exact",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (16.30)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "close",
+   "lean": [
+    {
+     "decl": "YM.Bid.A05",
+     "role": "key",
+     "where": "YM/Bid/Angular.lean:55-59",
+     "note": "r/xi times transported p tends to kappa*deriv^free; xi^-1 transported Y tends to kappa*L^free",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Work.A05.answer",
+     "role": "key",
+     "where": "YM/Work/A05.lean:95",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Bid.ConLap",
+     "role": "support",
+     "where": "YM/Bid/Angular.lean:48-49",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Both limits are A05 with the fixed nonzero comparison constant kappa from the free data, which equals 1 only under a normalization [L] does not state; [L] proves them along every sufficiently good scaling rather than one fixed sequence.",
+   "step": "YM.Bid.A05 (YM/Bid/Angular.lean:55-59) used in YM.Bid.services (YM/Bid/Town.lean:124-157)",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S16-4",
     "mapper": "close",
-    "verifier": null,
-    "complete": false
+    "verifier": "stronger",
+    "agreed": false,
+    "judge": "close",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Eq (16.31)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YM.Work.A15.averageStress",
+     "role": "key",
+     "where": "YM/Work/A15.lean:86",
+     "note": "Haar probability average over Ortho of rotateStress",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Work.A15.rotateStress",
+     "role": "support",
+     "where": "YM/Work/A15/Tensor.lean:44-47",
+     "note": "sum_{ij} K_ai K_bj R_4(K)(J_ij)",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Work.A15.answer",
+     "role": "support",
+     "where": "YM/Work/A15.lean:187-192",
+     "note": "applies it to J0 = c^-1 J",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "T_ab is the Haar-probability integral over O(4) of sum h_ai h_bj R_4(h)(J_ij); [L] applies it to c^-1 J as in [M].",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S16-4",
     "mapper": "definition-match",
-    "verifier": null,
-    "complete": false
+    "verifier": "definition-match",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Lemma 16.11",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "no-match",
+   "lean": [
+    {
+     "decl": "YM.Work.A15.answer",
+     "role": "key",
+     "where": "YM/Work/A15.lean:187-192",
+     "note": "averaged c^-1 J is Conserved, Tensorial, with StressLaws",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Work.A15.tensorial_average",
+     "role": "key",
+     "where": "YM/Work/A15.lean:117",
+     "note": "R_4(h)T_ab = sum h_ia h_jb T_ij",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Work.A15.conserved_average",
+     "role": "key",
+     "where": "YM/Work/A15.lean:134",
+     "note": "symmetric, real, divergence-free",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Work.A15.stressLaws_average",
+     "role": "key",
+     "where": "YM/Work/A15.lean:157-185",
+     "note": "both normalized shell laws",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Work.A14.answer",
+     "role": "key",
+     "where": "YM/Work/A14.lean:417-420",
+     "note": "covariance of the table via Oriented",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Covariance of the table, the tensor law, reality, symmetry, conservation and the shell laws are in [L]; centering (S_1(T_ab)=0) and nonzero-ness of the averaged tensor are missing, and A15.answer is the closest declaration.",
+   "searched": [
+    "grep Centered/Centred/centering in Org, Climb, Euclid, Work/A15, Bid",
+    "grep nonzero / J != 0 for the averaged stress in Work/A1*, Climb",
+    "src/outline/units/VI-1.md limitations"
+   ],
+   "confidence": "medium",
+   "finding": {
+    "claim": "no-match",
+    "confirmed": false
+   },
+   "relation": "noMatch",
    "verification": {
     "batch": "S16-4",
     "mapper": "weaker",
-    "verifier": null,
+    "verifier": "no-match",
+    "agreed": false,
+    "judge": "no-match",
+    "source": "judge",
+    "skeptics": [],
+    "claimed": "no-match",
+    "finding": "skeptics pending",
     "complete": false
    }
   },
   {
    "id": "Lemma 16.12",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "weaker",
+   "lean": [
+    {
+     "decl": "YM.Bid.A04",
+     "role": "key",
+     "where": "YM/Bid/Angular.lean:51-53",
+     "note": "derivative limit r_k times transported deriv tends to deriv^free, for Track scalings",
+     "relation": "narrowMatch"
+    },
+    {
+     "decl": "YM.Work.A04.answer",
+     "role": "key",
+     "where": "YM/Work/A04.lean:163",
+     "relation": "narrowMatch"
+    },
+    {
+     "decl": "YM.Org.Commission",
+     "role": "key",
+     "where": "YM/Org/Twist.lean:29-43",
+     "note": "lens field gives Tilt per d, the rotation-generator limit",
+     "relation": "narrowMatch"
+    },
+    {
+     "decl": "YM.Spin.Tilt",
+     "role": "support",
+     "where": "YM/Spin/Sheets.lean:116-122",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Climb.ActLaw",
+     "role": "support",
+     "where": "YM/Climb/Beams.lean:50-51",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Next.UVStress.focused",
+     "role": "support",
+     "where": "YM/Next/UV_STRESS/Limit.lean:197-201",
+     "note": "one stable scaling X yields a tail scaling with Track per bound tuple",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Both operator-norm limits hold in [L], but the derivative limit is per Track scaling and the rotation limit is selected per d; [M]'s single stable sequence along which both hold for every d, a, K has no declaration.",
+   "confidence": "medium",
+   "finding": {
+    "claim": "weaker",
+    "confirmed": false
+   },
+   "relation": "narrowMatch",
    "verification": {
     "batch": "S16-4",
     "mapper": "weaker",
-    "verifier": null,
+    "verifier": "parts",
+    "agreed": false,
+    "judge": "weaker",
+    "source": "judge",
+    "skeptics": [],
+    "claimed": "weaker",
+    "finding": "skeptics pending",
     "complete": false
    }
   },
   {
    "id": "Eq (17.1)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.OS.Spread.adjoints",
+     "role": "key",
+     "where": "YM/OS/Slabs.lean:123-135",
+     "note": "place d u adjoint = place d (opposite a d u), where opposite = raised d (reflect u a); needs S.Homogeneous (translation invariance).",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.OS.Spread.concatenate",
+     "role": "key",
+     "where": "YM/OS/Slabs.lean:118-121",
+     "note": "place (d+e) (u ++ raised d v) = place d u composed with place e v.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.OS.Slab",
+     "role": "support",
+     "where": "YM/OS/Slabs.lean:19-19",
+     "note": "admissible slab words (positive times below width d).",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.OS.Spread",
+     "role": "support",
+     "where": "YM/OS/Slabs.lean:101-104",
+     "note": "the slab insertion operator family B_h(w) = place h w.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The two laws of the display are two declarations: the adjoint law (with theta as reflect and time shift by h e_4 as raised) and the product law (w tau_{h e_4} v as linked). Adjoints needs the translation-invariance (Homogeneous) that [M] has as a standing assumption.",
+   "step": "",
+   "confidence": "medium",
+   "relation": "hasPart",
    "verification": {
     "batch": "S17-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "parts",
+    "verifier": "parts",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (17.2)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.OS.Spread.Laws.positional",
+     "role": "key",
+     "where": "YM/OS/Slabs.lean:157-162",
+     "note": "Frechet derivative of x -> place d (realize v x) in a point direction equals place of the word with the label differentiated.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Work.B02.answer",
+     "role": "key",
+     "where": "YM/Work/B02.lean:17-30",
+     "note": "proves Spread.Laws (hence positional and norm smoothness) from AllCopy and the derivative plan.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.OS.Spread.Laws",
+     "role": "support",
+     "where": "YM/OS/Slabs.lean:153-164",
+     "note": "field positional: derivative of place d (realize v x) along point p, axis j equals place with label i replaced by its derivative label.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Derivative of the slab operator in operator norm in a point coordinate equals the operator of the word with that label replaced by its derivative; B02 supplies it under the derivative-plan hypotheses of [M]'s FC.",
+   "step": "",
+   "confidence": "medium",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S17-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "exact",
+    "verifier": "exact",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Lemma 17.1",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.Work.B01.answer",
+     "role": "key",
+     "where": "YM/Work/B01.lean:50-71",
+     "note": "for a chamber, given the hierarchy and Bench, a Spread (bounded operators place d w with reads on plants) satisfying AllCopy: for all D R, constants C, A with norm <= C^n (n/r)^(A n) on r-buffered words.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Bid.B01",
+     "role": "key",
+     "where": "YM/Bid/Phase.lean:29-30",
+     "note": "statement of the existence plus norm bound.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.OS.Spread.AllCopy",
+     "role": "support",
+     "where": "YM/OS/Slabs.lean:111-113",
+     "note": "the norm bound as a predicate.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.OS.Spread.adjoints",
+     "role": "key",
+     "where": "YM/OS/Slabs.lean:123-135",
+     "note": "adjoint law.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.OS.Spread.concatenate",
+     "role": "key",
+     "where": "YM/OS/Slabs.lean:118-121",
+     "note": "product law.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.OS.Spread.blank",
+     "role": "key",
+     "where": "YM/OS/Slabs.lean:115-116",
+     "note": "empty word gives E_h (flow.E d).",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Work.B02.answer",
+     "role": "key",
+     "where": "YM/Work/B02.lean:17-30",
+     "note": "operator-norm derivative law and smoothness.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.OS.Spread.Laws",
+     "role": "support",
+     "where": "YM/OS/Slabs.lean:153-162",
+     "note": "packages cap, regularity and the positional derivative law.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Existence with the bound C^n (n/r)^(Qn), the adjoint and product laws, the empty-word case and the derivative law are five separate declarations. B01 needs the Bench input and the hierarchy, which [M] takes from Lemma F.4 and its standing assumptions.",
+   "step": "",
+   "confidence": "medium",
+   "relation": "hasPart",
    "verification": {
     "batch": "S17-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "parts",
+    "verifier": "parts",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (17.3)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YM.Row.ν",
+     "role": "key",
+     "where": "YM/Axis/Word.lean:71-71",
+     "note": "coordinate measure of a word combination A on E4 (energy = p a).",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Row.weighted",
+     "role": "support",
+     "where": "YM/Axis/Word.lean:62-63",
+     "note": "undamping: transform a (-(2t)) of the spectral diagonal of root V A t, i.e. density e^{2tE}.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Row.root",
+     "role": "support",
+     "where": "YM/Axis/Word.lean:43-43",
+     "note": "the OS vector of A translated by t into positive times (v_{d,u}(U)).",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Row.issued",
+     "role": "support",
+     "where": "YM/Axis/Word.lean:73-76",
+     "note": "independence of the admissible u.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Row.band",
+     "role": "support",
+     "where": "YM/Axis/Word.lean:78-80",
+     "note": "damped measure equals the spectral diagonal of the translated vector.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Row.within",
+     "role": "support",
+     "where": "YM/Axis/Word.lean:89-111",
+     "note": "finiteness on E <= N.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "nu is the spectral measure of the translated word vector times e^{2uE}, with the PVM the joint (heat, transverse translation) measure; u-independence is proved in issued.",
+   "step": "",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S17-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-match",
+    "verifier": "definition-match",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (17.4)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "weaker",
+   "lean": [
+    {
+     "decl": "YM.Outer.cross_le",
+     "role": "key",
+     "where": "YM/Next/ROTATIONS/Cross.lean:152-189",
+     "note": "for |f|^2 <= a b on p_i >= 0 with a, b integrable: |cross f| <= t*int a dnu^B + (int b dnu^A)/t for every t>0.",
+     "relation": "narrowMatch"
+    },
+    {
+     "decl": "YM.Row.cross",
+     "role": "support",
+     "where": "YM/Axis/Matrix.lean:24-25",
+     "note": "polarized pairing int f dnu^{BA}.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Row.fits",
+     "role": "support",
+     "where": "YM/Axis/Matrix.lean:21-22",
+     "note": "integrability of f against the four combined measures.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "[M] prints |int f dnu^{UV}|^2 <= int g1 dnu^U int g2 dnu^V; [L] gives |cross f| <= t*alpha + beta/t, whose optimum over t is 2 sqrt(alpha beta), so the squared form holds only with constant 4 and the sharp constant is not proved.",
+   "searched": [
+    "cross_le and Row.cross in Cross.lean and Matrix.lean",
+    "pm_bounds in Cross.lean"
+   ],
+   "confidence": "medium",
+   "finding": {
+    "claim": "weaker",
+    "confirmed": false
+   },
+   "relation": "narrowMatch",
    "verification": {
     "batch": "S17-1",
-    "mapper": null,
-    "verifier": null,
+    "mapper": "weaker",
+    "verifier": "close",
+    "agreed": false,
+    "judge": "weaker",
+    "source": "judge",
+    "skeptics": [],
+    "claimed": "weaker",
+    "finding": "skeptics pending",
     "complete": false
    }
   },
   {
    "id": "Lemma 17.2",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.Outer.point_cost",
+     "role": "key",
+     "where": "YM/Next/ROTATIONS/Tunnel.lean:51-72",
+     "note": "for i in Q, both signs in Q (Mixed), A pressed with parity signs e on Q, w_j<=0, q<0, even nonnegative compactly supported profiles, delta>0: integral of cost = 1_{E<=1}/(E+lambda^q) times the transverse profiles at widths lambda^{w_j} against nu_i is Budget delta, i.e. <= C lambda^delta eventually (lambda = e^n).",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Outer.cost",
+     "role": "support",
+     "where": "YM/Next/ROTATIONS/Tunnel.lean:17-17",
+     "note": "the integrand low i s * crop (Q.erase i) f.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Outer.walk",
+     "role": "helper",
+     "where": "YM/Next/ROTATIONS/Walk.lean:159-170",
+     "note": "the sign walk and backward induction (Can) used in the proof.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Outer.Budget",
+     "role": "support",
+     "where": "YM/Next/ROTATIONS/Budget.lean:35-35",
+     "note": "eventual bound C * fuel a n = C lambda^a.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Pressed gives zero offsets in the Q coordinates, Own the signs epsilon_j, Mixed that both signs occur; Colors the even nonnegative compactly supported profiles, Budget the O(lambda^delta). The extra hypothesis w i <= 0 in [L] concerns an exponent the integrand never uses.",
+   "confidence": "medium",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S17-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "exact",
+    "verifier": "exact",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (17.5)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "close",
+   "lean": [
+    {
+     "decl": "YM.Outer.moments",
+     "role": "key",
+     "where": "YM/Next/ROTATIONS/Moments.lean:178-182",
+     "note": "for j != i, k: constants C, D, eta; for 0<r<=eta and KeepsMargin i A r u, integral of exp(-(2u)E)|p_j|^(2k) against nu is finite and <= C r^(-D).",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Outer.placed_moment",
+     "role": "support",
+     "where": "YM/Next/ROTATIONS/Moments.lean:214-215",
+     "note": "finiteness for every placement with positive lowering.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Outer.mom",
+     "role": "support",
+     "where": "YM/Next/ROTATIONS/Moments.lean:173-173",
+     "note": "the integrand exp(-t p_i)|p_j|^(2k).",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Outer.point_moment",
+     "role": "support",
+     "where": "YM/Next/ROTATIONS/Moments.lean:228-244",
+     "note": "the same bound for point-like words in the form C t^{-D}, t = 2u in (0,1].",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Same estimate; [L] restricts to margins 0<r<=eta<=1 and states it for transverse j different from the time axis, where [M] writes r>0 without a range.",
+   "step": "YM.Outer.moments, YM/Next/ROTATIONS/Moments.lean:178-196",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S17-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "close",
+    "verifier": "close",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (17.6)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "close",
+   "lean": [
+    {
+     "decl": "YM.Outer.placed_moment",
+     "role": "key",
+     "where": "YM/Next/ROTATIONS/Moments.lean:214-215",
+     "note": "exp(-(2u)E)|p_j|^(2k) integrable against nu for every k and every lowered u, j != i.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Outer.point_moment",
+     "role": "support",
+     "where": "YM/Next/ROTATIONS/Moments.lean:228-230",
+     "note": "same with the explicit polynomial price in 1/t.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Row.within",
+     "role": "support",
+     "where": "YM/Axis/Word.lean:89-90",
+     "note": "nu is finite on E<=N.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Row.band",
+     "role": "support",
+     "where": "YM/Axis/Word.lean:78-82",
+     "note": "e^{-2tE} nu is the finite diagonal spectral measure of root V A t.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "[L] states finiteness of the damped transverse moments |p_j|^(2k) only; the energy powers (1+E)^m in [M] follow by trading a smaller admissible u, a short step [L] does not write as its own lemma.",
+   "step": "YM.Outer.placed_moment, YM/Next/ROTATIONS/Moments.lean:214-226",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S17-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "close",
+    "verifier": "close",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (17.7)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-close",
+   "lean": [
+    {
+     "decl": "YM.Outer.Mlamp",
+     "role": "key",
+     "where": "YM/Next/ROTATIONS/Response.lean:55-55",
+     "note": "residual response defined as Re of the Laplace transform of Resid m s f = f - bake m s f.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Outer.lamp_lit",
+     "role": "key",
+     "where": "YM/Next/ROTATIONS/Response.lean:61-63",
+     "note": "Mlamp = 2E * int f_resid/(p^2+E^2) for E>0.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Outer.sunny",
+     "role": "key",
+     "where": "YM/Next/ROTATIONS/Response.lean:35-36",
+     "note": "int Resid f/(p^2+E^2) = int sun(v) positiveLap, the node-product integral with sigma = sun.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Outer.Nodes.kernel",
+     "role": "support",
+     "where": "YM/Next/ROTATIONS/Nodes.lean:86-86",
+     "note": "prod_{i<m} ((e a_i)^2-p^2)/((e a_i)^2+E^2), a_i = i+2.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Outer.positiveLap",
+     "role": "support",
+     "where": "YM/Next/ROTATIONS/Response.lean:15-15",
+     "note": "inner integral over p.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Outer.at_ground",
+     "role": "support",
+     "where": "YM/Next/ROTATIONS/Response.lean:59-60",
+     "note": "value at E = 0 is 2 pi f(0).",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "[L] defines the response through Laplace of the residual and proves the printed formula for E>0 by lamp_lit and sunny, with the integrals in the order v outside, p inside and the value at E=0 by continuity.",
+   "step": "YM.Outer.Mlamp with YM.Outer.lamp_lit and YM.Outer.sunny, YM/Next/ROTATIONS/Response.lean:35-63",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S17-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-close",
+    "verifier": "definition-close",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (17.8)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "stronger",
+   "lean": [
+    {
+     "decl": "YM.Outer.surface",
+     "role": "key",
+     "where": "YM/Next/ROTATIONS/Energy.lean:195-218",
+     "note": "for pressed A, j != i, k: exists D, for 2m >= D and f with Ends and Plus (no evenness), exists C with integral of Mlamp m s (f_w)(p_i)|p_j|^(2k) dnu <= C(w^-1+s^D) and integrable, for s>=1, w>0, Room.",
+     "relation": "broadMatch"
+    },
+    {
+     "decl": "YM.Outer.shelf",
+     "role": "helper",
+     "where": "YM/Next/ROTATIONS/Energy.lean:152-153",
+     "note": "pointwise bound C(w^-1+s^D)(1+E)^-D.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Outer.pay_moment",
+     "role": "helper",
+     "where": "YM/Next/ROTATIONS/Moments.lean:246-248",
+     "note": "polynomial-weight integrability feeding surface.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "surface states the printed bound with the same quantifiers and the Pressed and hierarchy hypotheses that [M] has as standing assumptions, but it does not require f to be even, which [M] assumes.",
+   "step": "YM.Outer.surface, YM/Next/ROTATIONS/Energy.lean:195-218",
+   "confidence": "medium",
+   "relation": "broadMatch",
    "verification": {
     "batch": "S17-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "exact",
+    "verifier": "stronger",
+    "agreed": false,
+    "judge": "stronger",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Eq (17.9)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "close",
+   "lean": [
+    {
+     "decl": "YM.Outer.alternate",
+     "role": "key",
+     "where": "YM/Next/ROTATIONS/Switch.lean:145-160",
+     "note": "pay_i(f_i-a; f) <= pay_i(f_i-a; f_j->d) + pay_j(f_j-d; f_i->a) for i != j in Q with opposite signs.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Outer.pay",
+     "role": "support",
+     "where": "YM/Next/ROTATIONS/Switch.lean:48-49",
+     "note": "Resp_i with the transverse product.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Outer.pay_nonneg",
+     "role": "helper",
+     "where": "YM/Next/ROTATIONS/Switch.lean:129-132",
+     "note": "nonnegativity of the discarded term (alternate takes it as hypothesis hW and uses pay_nonneg).",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Outer.opp",
+     "role": "helper",
+     "where": "YM/Next/ROTATIONS/Switch.lean:107-115",
+     "note": "signed identity Resp_i = -Resp_j for opposite signs.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The inequality is the same, but [L] adds integrability hypotheses (Allows, Runs for both heads) and takes nonnegativity of the j residual response on p_j >= 0 as a hypothesis, none of which [M] states at the display.",
+   "step": "YM.Outer.alternate, YM/Next/ROTATIONS/Switch.lean:145-160",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S17-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "exact",
+    "verifier": "close",
+    "agreed": false,
+    "judge": "close",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Eq (Hs)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "close",
+   "lean": [
+    {
+     "decl": "YM.Outer.Can",
+     "role": "key",
+     "where": "YM/Next/ROTATIONS/Walk.lean:41-47",
+     "note": "the induction claim as a predicate: exists a>0, for all d<=a, exponents w with -K<=w_j<=a, w_i<=d, w_j>=0 off the unvisited set U, Colors profiles, s>=1 with support in s*lambda^d: for all large m the pay integral of lamps is Budget delta.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Outer.affordable",
+     "role": "key",
+     "where": "YM/Next/ROTATIONS/Walk.lean:150-157",
+     "note": "Can holds for every Track (the backward induction along the walk).",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Outer.forwards",
+     "role": "helper",
+     "where": "YM/Next/ROTATIONS/Walk.lean:70-139",
+     "note": "induction step.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Outer.done",
+     "role": "helper",
+     "where": "YM/Next/ROTATIONS/Walk.lean:54-69",
+     "note": "terminal case.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Outer.pay_nonneg",
+     "role": "support",
+     "where": "YM/Next/ROTATIONS/Switch.lean:129-132",
+     "note": "the lower bound 0 <=.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Outer.lamp_sign",
+     "role": "support",
+     "where": "YM/Next/ROTATIONS/Response.lean:112-126",
+     "note": "nonnegativity of the residual response, the 0 <= part of (Hs).",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Can has the same quantifiers and the same bound C lambda^delta; the visited set V_s is encoded as the complement of U in Q, and the lower bound 0 <= is the separate pay_nonneg rather than part of Can.",
+   "step": "YM.Outer.Can, YM/Next/ROTATIONS/Walk.lean:41-47; proved by YM.Outer.affordable",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S17-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "close",
+    "verifier": "close",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
@@ -19820,7 +20701,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S17-2",
-    "mapper": null,
+    "mapper": "differs",
     "verifier": null,
     "complete": false
    }
@@ -19833,7 +20714,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S17-2",
-    "mapper": null,
+    "mapper": "parts",
     "verifier": null,
     "complete": false
    }
@@ -19846,7 +20727,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S17-2",
-    "mapper": null,
+    "mapper": "exact",
     "verifier": null,
     "complete": false
    }
@@ -19859,7 +20740,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S17-2",
-    "mapper": null,
+    "mapper": "missing-hypothesis",
     "verifier": null,
     "complete": false
    }
@@ -19872,7 +20753,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S17-2",
-    "mapper": null,
+    "mapper": "exact",
     "verifier": null,
     "complete": false
    }
@@ -19885,7 +20766,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S17-2",
-    "mapper": null,
+    "mapper": "inlined",
     "verifier": null,
     "complete": false
    }
@@ -19898,7 +20779,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S17-2",
-    "mapper": null,
+    "mapper": "parts",
     "verifier": null,
     "complete": false
    }
@@ -19911,7 +20792,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S17-2",
-    "mapper": null,
+    "mapper": "parts",
     "verifier": null,
     "complete": false
    }
@@ -19924,7 +20805,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S17-2",
-    "mapper": null,
+    "mapper": "inlined",
     "verifier": null,
     "complete": false
    }
@@ -19937,7 +20818,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S17-2",
-    "mapper": null,
+    "mapper": "close",
     "verifier": null,
     "complete": false
    }
@@ -19950,7 +20831,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S17-2",
-    "mapper": null,
+    "mapper": "exact",
     "verifier": null,
     "complete": false
    }
@@ -20598,7 +21479,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S18-2",
-    "mapper": null,
+    "mapper": "parts",
     "verifier": null,
     "complete": false
    }
@@ -20611,7 +21492,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S18-2",
-    "mapper": null,
+    "mapper": "parts",
     "verifier": null,
     "complete": false
    }
@@ -20624,7 +21505,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S18-2",
-    "mapper": null,
+    "mapper": "parts",
     "verifier": null,
     "complete": false
    }
@@ -20637,7 +21518,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S18-2",
-    "mapper": null,
+    "mapper": "inlined",
     "verifier": null,
     "complete": false
    }
@@ -20650,7 +21531,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S18-2",
-    "mapper": null,
+    "mapper": "exact",
     "verifier": null,
     "complete": false
    }
@@ -20663,7 +21544,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S18-2",
-    "mapper": null,
+    "mapper": "exact",
     "verifier": null,
     "complete": false
    }
@@ -20676,7 +21557,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S18-2",
-    "mapper": null,
+    "mapper": "exact",
     "verifier": null,
     "complete": false
    }
@@ -20689,7 +21570,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S18-2",
-    "mapper": null,
+    "mapper": "definition-match",
     "verifier": null,
     "complete": false
    }
