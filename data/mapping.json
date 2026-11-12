@@ -8,18 +8,18 @@
  "provenance": "machine: mapper and verifier agents per batch, a judge on disagreement, two skeptics per claimed finding; no person reviewed",
  "counts": {
   "stronger": 23,
-  "exact": 75,
-  "definition-match": 64,
-  "parts": 70,
-  "definition-close": 31,
-  "close": 86,
+  "exact": 77,
+  "definition-match": 69,
+  "parts": 73,
+  "definition-close": 32,
+  "close": 87,
   "inlined": 16,
-  "not-formalized-not-needed": 5,
+  "not-formalized-not-needed": 6,
   "weaker": 16,
   "no-match": 16,
   "unclear": 6,
   "differs": 5,
-  "not yet judged": 45
+  "not yet judged": 32
  },
  "items": [
   {
@@ -20359,7 +20359,11 @@
    "confidence": "medium",
    "finding": {
     "claim": "weaker",
-    "confirmed": false
+    "confirmed": true,
+    "skeptic_notes": [
+     "[M] prints the sharp spectral Cauchy-Schwarz |int f dnu^{UV}|^2 <= int g1 dnu^U * int g2 dnu^V for |f|^2 <= g1 g2. [L]'s YM.Outer.cross_le concludes only `‖cross V B A f‖ ≤ t*(∫ p,a p ∂ν V B)+(∫ p,b p ∂ν V A)/t` for every t>0 (hypotheses: fits, integrability of a,b, and 0<=a,b, ‖f‖^2<=a*b on p i>=0, which are weaker than or equal to [M]'s), whose infimum over t is 2 sqrt(alpha beta), i.e. the squared bound with constant 4; rescaling a,b cannot help since only the product is constrained. The factor is built in: the private density_bound is docstring'd 'Non-sharp (factor two)' and the module doc says 'A non-sharp constant in the quadratic estimate suffices'; no other declaration states the sharp form. [M]'s inequality is true mathematics, so this is a weaker constant in [L], not a typo.",
+     "[M] prints |int f dnu^{UV}|^2 <= int g1 dnu^U int g2 dnu^V if |f|^2 <= g1 g2. [L] cross_le (with cross = polarized integral of f, fits = integrability) concludes only ‖cross‖ <= t*(int a dnu B)+(int b dnu A)/t for every t>0, under ‖f‖^2 <= a*b on p i >= 0. Its proof (pm_bounds) bounds the density by 2g = t r_v + r_w/t, losing a factor 2 (the inner-product step gives g), so optimizing t yields 2 sqrt(alpha beta), i.e. the squared form with constant 4. No declaration states the sharp squared form (callers Cove.balanced and Mode use the t-form). [M] is mathematically correct, so this is a [L] weakness, not an [M] typo."
+    ]
    },
    "relation": "narrowMatch",
    "verification": {
@@ -20374,11 +20378,16 @@
       "refuted": false,
       "status": "weaker",
       "reason": "[M] prints the sharp spectral Cauchy-Schwarz |int f dnu^{UV}|^2 <= int g1 dnu^U * int g2 dnu^V for |f|^2 <= g1 g2. [L]'s YM.Outer.cross_le concludes only `‖cross V B A f‖ ≤ t*(∫ p,a p ∂ν V B)+(∫ p,b p ∂ν V A)/t` for every t>0 (hypotheses: fits, integrability of a,b, and 0<=a,b, ‖f‖^2<=a*b on p i>=0, which are weaker than or equal to [M]'s), whose infimum over t is 2 sqrt(alpha beta), i.e. the squared bound with constant 4; rescaling a,b cannot help since only the product is constrained. The factor is built in: the private density_bound is docstring'd 'Non-sharp (factor two)' and the module doc says 'A non-sharp constant in the quadratic estimate suffices'; no other declaration states the sharp form. [M]'s inequality is true mathematics, so this is a weaker constant in [L], not a typo."
+     },
+     {
+      "refuted": false,
+      "status": "weaker",
+      "reason": "[M] prints |int f dnu^{UV}|^2 <= int g1 dnu^U int g2 dnu^V if |f|^2 <= g1 g2. [L] cross_le (with cross = polarized integral of f, fits = integrability) concludes only ‖cross‖ <= t*(int a dnu B)+(int b dnu A)/t for every t>0, under ‖f‖^2 <= a*b on p i >= 0. Its proof (pm_bounds) bounds the density by 2g = t r_v + r_w/t, losing a factor 2 (the inner-product step gives g), so optimizing t yields 2 sqrt(alpha beta), i.e. the squared form with constant 4. No declaration states the sharp squared form (callers Cove.balanced and Mode use the t-form). [M] is mathematically correct, so this is a [L] weakness, not an [M] typo."
      }
     ],
     "claimed": "weaker",
-    "finding": "skeptics pending",
-    "complete": false
+    "finding": "confirmed",
+    "complete": true
    }
   },
   {
@@ -21381,7 +21390,11 @@
    "confidence": "medium",
    "finding": {
     "claim": "weaker",
-    "confirmed": false
+    "confirmed": true,
+    "skeptic_notes": [
+     "[M] prints W^xi(F^*F) >= 0 for every finite Schwartz test sequence F in the field-word algebra, whose elements carry joint Schwartz tests multiplied by tensor product. In [L], Completed.isTheory gives Wightman.Realizes (meets, adj), and Fields.sees yields only `W.wordsPositive J := Analysis.NNKernel (W.kernel J)` with `kernel b c := W.expect (Sentence.rev J b ++ c)`. Here `expect` evaluates W.W on `Joint.materialize` of the letters' individual Test4s, so positivity covers finite combinations of product-test sentences only. No declaration in [L] extends this to general Joint n tests by density and continuity, so the claim stands as weaker. It is not a typo: [M] says plainly that the algebra uses joint Schwartz tests.",
+     "[M] prints W^xi(F^*F) >= 0 for every finite Schwartz test sequence F in the field-word algebra (joint tests). [L] Completed/Realizes give faithfulness, W1-W3, spectral condition and W_n (Surface.W, continuity `depends`), but positivity is only `Fields.sees : W.wordsPositive J`, i.e. NNKernel of W.kernel on Sentence (lists of letters (x, f : Test4), one test per letter via Joint.materialize). No declaration states nonnegativity for joint tests; the nearest ingredient is Next/BOUNDARY/Heights.lean `limiting_pair`/`heated`, giving inner products of joint-test vectors equal to W(joinedTest), from which positivity would follow by an unwritten step, so the claim stands."
+    ]
    },
    "relation": "narrowMatch",
    "verification": {
@@ -21396,11 +21409,16 @@
       "refuted": false,
       "status": "weaker",
       "reason": "[M] prints W^xi(F^*F) >= 0 for every finite Schwartz test sequence F in the field-word algebra, whose elements carry joint Schwartz tests multiplied by tensor product. In [L], Completed.isTheory gives Wightman.Realizes (meets, adj), and Fields.sees yields only `W.wordsPositive J := Analysis.NNKernel (W.kernel J)` with `kernel b c := W.expect (Sentence.rev J b ++ c)`. Here `expect` evaluates W.W on `Joint.materialize` of the letters' individual Test4s, so positivity covers finite combinations of product-test sentences only. No declaration in [L] extends this to general Joint n tests by density and continuity, so the claim stands as weaker. It is not a typo: [M] says plainly that the algebra uses joint Schwartz tests."
+     },
+     {
+      "refuted": false,
+      "status": "weaker",
+      "reason": "[M] prints W^xi(F^*F) >= 0 for every finite Schwartz test sequence F in the field-word algebra (joint tests). [L] Completed/Realizes give faithfulness, W1-W3, spectral condition and W_n (Surface.W, continuity `depends`), but positivity is only `Fields.sees : W.wordsPositive J`, i.e. NNKernel of W.kernel on Sentence (lists of letters (x, f : Test4), one test per letter via Joint.materialize). No declaration states nonnegativity for joint tests; the nearest ingredient is Next/BOUNDARY/Heights.lean `limiting_pair`/`heated`, giving inner products of joint-test vectors equal to W(joinedTest), from which positivity would follow by an unwritten step, so the claim stands."
      }
     ],
     "claimed": "weaker",
-    "finding": "skeptics pending",
-    "complete": false
+    "finding": "confirmed",
+    "complete": true
    }
   },
   {
@@ -23216,7 +23234,8 @@
    "verification": {
     "batch": "S19-1",
     "mapper": "close",
-    "verifier": null,
+    "verifier": "exact",
+    "agreed": false,
     "complete": false
    }
   },
@@ -23229,7 +23248,8 @@
    "verification": {
     "batch": "S19-1",
     "mapper": "no-match",
-    "verifier": null,
+    "verifier": "weaker",
+    "agreed": false,
     "complete": false
    }
   },
@@ -23242,7 +23262,8 @@
    "verification": {
     "batch": "S19-1",
     "mapper": "parts",
-    "verifier": null,
+    "verifier": "weaker",
+    "agreed": false,
     "complete": false
    }
   },
@@ -23255,21 +23276,41 @@
    "verification": {
     "batch": "S19-1",
     "mapper": "inlined",
-    "verifier": null,
+    "verifier": "inlined",
+    "agreed": false,
     "complete": false
    }
   },
   {
    "id": "Eq (19.4)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "close",
+   "lean": [
+    {
+     "decl": "YM.OPE.Columns.limit_cap",
+     "role": "key",
+     "where": "YM/OPE/Columns/SectorCost.lean:46-65",
+     "note": "For labels converging to x with quota <= z eventually, exists y with project y in range of rise from degree e and ||x-y|| <= fare*z, fare = gel*(1+C)*(a_ref/a_k)^(d-(e+1)).",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.OPE.Columns.fare",
+     "role": "support",
+     "where": "YM/OPE/Columns/SectorCost.lean:26-27",
+     "note": "The constant times (a_ref/a_k)^(t-i) with e = i-1.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "For 1 <= i <= t (e = i-1) [L] bounds the distance in V_t from the limit to the preimage of the lower-degree image, not the quotient distance in F_t, with the constant C_{t,i}(m) written as fare and a_ref^(t-i) absorbed in it. The case i = 0 (F_{-1}=0) is not in limit_cap; it is whole_origin at finite cutoff.",
+   "step": "YM.OPE.Columns.limit_cap, YM/OPE/Columns/SectorCost.lean:46-65 (statement of Lemma 19.2)",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S19-1",
     "mapper": "close",
-    "verifier": null,
-    "complete": false
+    "verifier": "close",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
@@ -23281,60 +23322,314 @@
    "verification": {
     "batch": "S19-1",
     "mapper": "parts",
-    "verifier": null,
+    "verifier": "close",
+    "agreed": false,
     "complete": false
    }
   },
   {
    "id": "Definition 19.3",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-close",
+   "lean": [
+    {
+     "decl": "YM.OPE.shadow",
+     "role": "key",
+     "where": "YM/OPE/Exchange/Coherence.lean:25",
+     "note": "Sum over bands of P.ope i x p o times loaded i d: D_j applied to the probe correlations, i.e. P_j^raw.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.OPE.Prescription.ope",
+     "role": "support",
+     "where": "YM/OPE/Splitting/Detector.lean:80",
+     "note": "sum_beta m_{alpha beta} S(w, B_beta) via sheet weights, with reading = 0 when the configuration is not injective.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.OPE.Prescription.loaded",
+     "role": "support",
+     "where": "YM/OPE/Splitting/Basis.lean:49",
+     "note": "jmath_{deg alpha,j} u_alpha.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.OPE.Prescription.SignedOff",
+     "role": "support",
+     "where": "YM/OPE/Splitting/Basis.lean:59-61",
+     "note": "rebuilds: sum_i test_i(x) loaded_i = x, the identity D_j(S(A(0),B)) = A.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.OPE.Prescription.insertOne",
+     "role": "support",
+     "where": "YM/OPE/Splitting/Detector.lean:92",
+     "note": "ope of a single field at 0 equals test.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.OPE.Prescription.Coherent",
+     "role": "support",
+     "where": "YM/OPE/Splitting/Basis.lean:63",
+     "note": "SignedOff at every degree.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.OPE.Orbits.old_fixes",
+     "role": "support",
+     "where": "YM/OPE/Orbits/Average.lean:73-78",
+     "note": "shadow of a centered single field of degree <= m is its image.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "[L] has no standalone decoder D_j on arbitrary data y: the decoder is built into shadow with the weights m_{alpha beta} inside sheet, and the probe correlation is set to zero for non-separated configurations. The reconstruction D_j(S(A(0),B)) = A is the field rebuilds of SignedOff, read through insertOne.",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S19-1",
     "mapper": "definition-close",
-    "verifier": null,
-    "complete": false
+    "verifier": "definition-close",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Definition 19.4",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YM.OPE.Orbits.averageV",
+     "role": "key",
+     "where": "YM/OPE/Orbits/Average.lean:22",
+     "note": "A_j: Haar integral over O(4) of R(k) shadow(k^{-1} w), set to 0 outside orbitMargin, centre o handled by x - o.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.OPE.Orbits.checkReal",
+     "role": "key",
+     "where": "YM/OPE/Orbits/Real.lean:37-38",
+     "note": "B_j = (A + conj A conj)/2.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.OPE.Orbits.spinning",
+     "role": "support",
+     "where": "YM/OPE/Orbits/Spin.lean:33",
+     "note": "k acts on output and rotates the input.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.OPE.Orbits.orbitMargin",
+     "role": "support",
+     "where": "YM/OPE/Orbits/Spin.lean:38",
+     "note": "Every rotation of the word is separated from every probe of the bands.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.OPE.Orbits.haar",
+     "role": "support",
+     "where": "YM/OPE/Orbits/Spin.lean:24",
+     "note": "Haar probability measure on O(4).",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.OPE.Orbits.checkReal_transfer",
+     "role": "support",
+     "where": "YM/OPE/Orbits/Real.lean:77",
+     "note": "centering at o by translation tau_{-o}.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.OPE.shadow",
+     "role": "support",
+     "where": "YM/OPE/Exchange/Coherence.lean:25",
+     "note": "P_j^raw.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Same average with mass-one Haar measure, same separation domain and zero outside it, and the same real part with conjugation of input and output; the centre o is an argument of the readout rather than a translation of w.",
+   "confidence": "medium",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S19-1",
     "mapper": "definition-match",
-    "verifier": null,
-    "complete": false
+    "verifier": "definition-match",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Definition 19.5",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YM.OPE.Orbits.Reader.knife",
+     "role": "key",
+     "where": "YM/OPE/Orbits/Cuts.lean:49",
+     "note": "Q_m = id - sum_{i<m} rise_{i,m} Q_i L_{i,m}, Q_0 = 1.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.OPE.Orbits.Reader.liftOne",
+     "role": "key",
+     "where": "YM/OPE/Orbits/Cuts.lean:27-29",
+     "note": "L_{i,q} = B_i I_q (checkReal at a single field at 0).",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.OPE.Orbits.Reader.cutTest",
+     "role": "key",
+     "where": "YM/OPE/Orbits/Cuts.lean:51",
+     "note": "Q_m L_{m,q}.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.OPE.Orbits.Reader.stratum",
+     "role": "key",
+     "where": "YM/OPE/Orbits/Cuts.lean:83",
+     "note": "E_m = intersection of ker(Q_i L_{i,m}), i < m.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.OPE.Orbits.Reader.fresh",
+     "role": "key",
+     "where": "YM/OPE/Orbits/Fresh.lean:15",
+     "note": "Q_j B_j[prod A_i(x_i - o)].",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.OPE.Orbits.Reader.coef",
+     "role": "key",
+     "where": "YM/OPE/Orbits/System.lean:18-19",
+     "note": "c_{j,lambda} = coordinate of fresh in the basis of the stratum.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.OPE.Orbits.Reader.basis",
+     "role": "support",
+     "where": "YM/OPE/Orbits/Stars.lean:81",
+     "note": "Chosen complex basis of the stratum fixed by conjugation (channels = Fin n).",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.OPE.Orbits.Reader",
+     "role": "support",
+     "where": "YM/OPE/Orbits/Cuts.lean:17-24",
+     "note": "Bundles a coherent prescription, rotations and the continuum hierarchy.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.OPE.Orbits.Reader.channels",
+     "role": "support",
+     "where": "YM/OPE/Orbits/Stars.lean:79",
+     "note": "index set of the basis.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.OPE.Orbits.checkReal",
+     "role": "support",
+     "where": "YM/OPE/Orbits/Real.lean:37-39",
+     "note": "B_j.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The recursion, the intersection of kernels, the coordinate functionals of a real basis and the formula for c agree; the basis is a Classical.choice real basis over C of the stratum.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S19-1",
     "mapper": "definition-match",
-    "verifier": null,
-    "complete": false
+    "verifier": "definition-match",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Lemma 19.6",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.OPE.Orbits.Reader.knife_mem",
+     "role": "key",
+     "where": "YM/OPE/Orbits/Cuts.lean:86-100",
+     "note": "Q_j F_j is contained in E_j.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.OPE.Orbits.Reader.test_fixes",
+     "role": "key",
+     "where": "YM/OPE/Orbits/Fresh.lean:19-21",
+     "note": "Q_j = 1 on E_j.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.OPE.Orbits.Reader.reconstruct",
+     "role": "key",
+     "where": "YM/OPE/Orbits/Cuts.lean:66-69",
+     "note": "Sum identity giving F_j = jF_{j-1} + E_j.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.OPE.Orbits.Reader.basis",
+     "role": "key",
+     "where": "YM/OPE/Orbits/Stars.lean:81",
+     "note": "Basis of E_j over C of conjugation-fixed vectors (needle_real).",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.OPE.Orbits.Reader.bar_mem",
+     "role": "key",
+     "where": "YM/OPE/Orbits/Fresh.lean:55",
+     "note": "E_j is conjugation invariant.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.OPE.Orbits.Reader.turn_mem",
+     "role": "key",
+     "where": "YM/OPE/Orbits/Fresh.lean:54",
+     "note": "E_j is rotation invariant.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.OPE.Orbits.Reader.test_orthogonal",
+     "role": "helper",
+     "where": "YM/OPE/Orbits/Fresh.lean:22-25",
+     "note": "Used with test_fixes and cut_rise for the trivial intersection.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.OPE.Orbits.Reader.stratum",
+     "role": "support",
+     "where": "YM/OPE/Orbits/Cuts.lean:83",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.OPE.Orbits.Reader.kills_lower",
+     "role": "key",
+     "where": "YM/OPE/Orbits/Cuts.lean:70-82",
+     "note": "with cut_rise gives that the sum is direct.",
+     "from_verifier": true,
+     "relation": "hasPart"
+    }
+   ],
+   "note": "Sum, invariance and basis claims are declarations; the directness jF_{j-1} intersect E_j = 0 is not stated and follows from cut_rise, test_fixes and piece_mem by a short argument, and no declaration states jF_{j-1} = ker Q_j. The remarks that the degree-zero vector need not equal the unit and that coefficients precede spectators are not separate statements.",
+   "confidence": "medium",
+   "relation": "hasPart",
    "verification": {
     "batch": "S19-1",
     "mapper": "parts",
-    "verifier": null,
-    "complete": false
+    "verifier": "parts",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
@@ -23346,7 +23641,8 @@
    "verification": {
     "batch": "S19-1",
     "mapper": "parts",
-    "verifier": null,
+    "verifier": "exact",
+    "agreed": false,
     "complete": false
    }
   },
@@ -23508,28 +23804,106 @@
   },
   {
    "id": "Lemma 19.11",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.OPE.Orbits.estimates_weighted",
+     "role": "key",
+     "where": "YM/OPE/Orbits/Profile.lean:98-108",
+     "note": "Eventually in r: for every measure, integrable weight with L1 norm <= B and a.e.-measurable geometry in FitsOn a.e. on the support, JointEstimate holds for every a.e.-measurable phase map and for the mixed state.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.OPE.Orbits.JointEstimate",
+     "role": "support",
+     "where": "YM/OPE/Orbits/Profile.lean:53-57",
+     "note": "Packages integrability of the weighted full, truncated and remainder expressions, raw minus cut equals remainder, and the bound B*r^(D+1-weight-eps).",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.OPE.Orbits.FitsOn",
+     "role": "support",
+     "where": "YM/OPE/Orbits/Profile.lean:17",
+     "note": "Admissible separated geometry (within room, spectators clear).",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The threshold precedes the measure, weight bound and maps, the bound is B*r^(D+1-weight-eps), and integrability of the full and truncated expressions and the mixed-state case are all conclusions of estimates_weighted. The Lean statement is in terms of Loc (positions, origin, spectators) and phase maps into the spectrum.",
+   "confidence": "medium",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S19-3",
     "mapper": "exact",
-    "verifier": null,
-    "complete": false
+    "verifier": "exact",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Definition 19.12",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YM.OPE.Nesting.Accept",
+     "role": "key",
+     "where": "YM/OPE/Nesting/Quantified.lean:15-18",
+     "note": "Tapered r 1 s (positive scales, root <= r, each <= parent), Relative M eta s z (descendant within M*scale, different child subtrees eta*scale apart), current s = r (root scale equals r).",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.OPE.Nesting.Tree.Tapered",
+     "role": "key",
+     "where": "YM/OPE/Nesting/Geometry.lean:21-23",
+     "note": "Scale monotonicity along the tree.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.OPE.Nesting.Tree.Relative",
+     "role": "key",
+     "where": "YM/OPE/Nesting/Grove.lean:99-103",
+     "note": "Geometric closeness and separation conditions.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.OPE.Nesting.Tree.toll",
+     "role": "key",
+     "where": "YM/OPE/Nesting/Actual.lean:18-19",
+     "note": "Q_{eps,q}: root-scale power times product of ratios^(-W_v-eps) over non-root internal vertices.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.OPE.Nesting.Tree.nestPrice",
+     "role": "key",
+     "where": "YM/OPE/Nesting/Weights.lean:102-103",
+     "note": "e_D: sum over non-root internals of ratio^(D_v+1).",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.OPE.Nesting.Tree.headSum",
+     "role": "support",
+     "where": "YM/OPE/Nesting/Weights.lean:23",
+     "note": "W_v, degree below a vertex.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.OPE.Nesting.Tree.ratios",
+     "role": "support",
+     "where": "YM/OPE/Nesting/Weights.lean:28",
+     "note": "q_v = scale / parent scale.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The tree is a finite rooted Tree with an inner root; the conditions on scales, geometry, W_v, q_v, Q and e_D correspond one to one to Accept, toll and nestPrice, with q (here m) a real parameter in toll.",
+   "confidence": "medium",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S19-3",
     "mapper": "definition-match",
-    "verifier": null,
-    "complete": false
+    "verifier": "definition-match",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
@@ -23541,60 +23915,222 @@
    "verification": {
     "batch": "S19-3",
     "mapper": "definition-close",
-    "verifier": null,
+    "verifier": "definition-match",
+    "agreed": false,
     "complete": false
    }
   },
   {
    "id": "Lemma 19.14",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.OPE.Nesting.Uniform",
+     "role": "key",
+     "where": "YM/OPE/Nesting/Endpoint.lean:17-18",
+     "note": "Field direct: eventually in r, for all Accept geometries, |output| <= toll and |output - chord| <= bothToll (toll*nestPrice).",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.OPE.Nesting.Limits.coe_power",
+     "role": "key",
+     "where": "YM/OPE/Nesting/Quantified.lean:43-45",
+     "note": "The same two bounds, proved.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.OPE.Nesting.Kernel.output_smooth",
+     "role": "key",
+     "where": "YM/OPE/Nesting/Kernels.lean:89",
+     "note": "Direct coefficient is C-infinity at geometries with orbitMargin.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.OPE.Nesting.Kernel.chord_smooth",
+     "role": "key",
+     "where": "YM/OPE/Nesting/Kernels.lean:78",
+     "note": "Iterated coefficient is C-infinity on the aperture.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.OPE.Nesting.Kernel.stencil",
+     "role": "support",
+     "where": "YM/OPE/Nesting/Kernels.lean:56",
+     "note": "The aperture is open.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.OPE.Nesting.uniform",
+     "role": "key",
+     "where": "YM/OPE/Nesting/Endpoint.lean:31-36",
+     "note": "proves Uniform for any Services",
+     "from_verifier": true,
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.OPE.Nesting.Kernel.chord_still",
+     "role": "key",
+     "where": "YM/OPE/Nesting/Kernels.lean:71-71",
+     "note": "smoothness of each branch term of the iterated coefficient on the aperture; the sum is a one-line step",
+     "from_verifier": true,
+     "relation": "hasPart"
+    }
+   ],
+   "note": "The two bounds are Uniform.direct and coe_power, for the threshold r_0 over all accepted geometries. Smoothness in a neighborhood is a separate claim: output_smooth and chord_smooth give it at points of the aperture and orbitMargin region, and coe_power places the geometries there with the aperture open.",
+   "confidence": "medium",
+   "relation": "hasPart",
    "verification": {
     "batch": "S19-3",
     "mapper": "parts",
-    "verifier": null,
-    "complete": false
+    "verifier": "parts",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (19.14)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "not-formalized-not-needed",
+   "lean": [
+    {
+     "decl": "YM.OPE.Nesting.Uniform",
+     "role": "attributed",
+     "where": "YM/OPE/Nesting/Endpoint.lean:17-18",
+     "note": "The lemma whose proof uses the identity in [M]; in [L] the direct field states the bound that follows.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.OPE.Nesting.Fusion.tariff",
+     "role": "attributed",
+     "where": "YM/OPE/Nesting/Fusion.lean:97-104",
+     "note": "triangular-order telescoping of replacements in the Lean proof; no product-difference identity is stated",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "A product telescoping identity for commuting factors in the proof of Lemma 19.14. [L] obtains the nested bound through Fusion.tariff and the Composite stacked expansion and writes no standalone identity.",
+   "step": "YM.OPE.Nesting.Uniform (field direct), YM/OPE/Nesting/Endpoint.lean:17-18; proved by YM.OPE.Nesting.Limits.coe_power, YM/OPE/Nesting/Quantified.lean:43-52",
+   "searched": [
+    "grep prod_sub, telescop, sub_prod, prod_telescope in YM/OPE, YM/Contacts, YM/MultipleContact",
+    "grep for Finset.Iio / range product splits in YM/OPE/Nesting",
+    "seeds YM.Next.Phase.point_bound, travel_price, cutoff_bound, seats, YM.SharpGram.outletFirst, YM.OPE.early_rate (different statements)",
+    "src/outline/units/VII-4.md"
+   ],
+   "confidence": "medium",
+   "relation": "noMatch",
    "verification": {
     "batch": "S19-3",
     "mapper": "not-formalized-not-needed",
-    "verifier": null,
-    "complete": false
+    "verifier": "not-formalized-not-needed",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Lemma 19.15",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.OPE.Nesting.Uniform",
+     "role": "key",
+     "where": "YM/OPE/Nesting/Endpoint.lean:20-21",
+     "note": "Field tested: with spectators y buffered by delta, the algebra-valued remainder normData and every pipe (character or mixed viewer) are bounded by toll at m+1.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.OPE.Nesting.Limits.tested_power",
+     "role": "key",
+     "where": "YM/OPE/Nesting/Quantified.lean:54-56",
+     "note": "The same bound, proved.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.OPE.Nesting.Buffer",
+     "role": "support",
+     "where": "YM/OPE/Nesting/Quantified.lean:14",
+     "note": "Admissible spectator configuration.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.OPE.Nesting.uniform",
+     "role": "key",
+     "where": "YM/OPE/Nesting/Endpoint.lean:31-36",
+     "note": "proves it",
+     "from_verifier": true,
+     "relation": "exactMatch"
+    }
+   ],
+   "note": "The remainder bound Q_{eps,m+1} holds eventually in r for every accepted geometry, buffered spectators and every viewer, and in the unevaluated algebra norm (normData). Viewers cover the characters and the mixed state.",
+   "confidence": "medium",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S19-3",
     "mapper": "exact",
-    "verifier": null,
-    "complete": false
+    "verifier": "exact",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Lemma 19.16",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.OPE.Nesting.coefficient_joint",
+     "role": "key",
+     "where": "YM/OPE/Nesting/Integration.lean:73-75",
+     "note": "Weighted direct and iterated coefficients are integrable with bounds B*toll and B*bothToll (CoefIntegral).",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.OPE.Nesting.all_weighted",
+     "role": "key",
+     "where": "YM/OPE/Nesting/Profiles.lean:47-50",
+     "note": "Weighted tested estimate with bound B*toll at m+1, for every a.e.-measurable phase map and for the mixed state.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.OPE.Nesting.Uniform",
+     "role": "key",
+     "where": "YM/OPE/Nesting/Endpoint.lean:22-25",
+     "note": "Fields joint and jointLaw repackage both.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.OPE.Nesting.CoefIntegral",
+     "role": "support",
+     "where": "YM/OPE/Nesting/Integration.lean:66-71",
+     "note": "Integrability and the two integral bounds.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.OPE.Orbits.JointEstimate",
+     "role": "support",
+     "where": "YM/OPE/Orbits/Profile.lean:53-57",
+     "note": "Integrability and bound for the tested integrals.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.OPE.Nesting.uniform",
+     "role": "key",
+     "where": "YM/OPE/Nesting/Endpoint.lean:31-36",
+     "note": "proves them",
+     "from_verifier": true,
+     "relation": "hasPart"
+    }
+   ],
+   "note": "The thresholds precede the measure, weight and maps in both declarations, and the three bounds B*Q, B*Q*e_D and B*Q_{m+1} are the CoefIntegral fields ask and dual and the JointEstimate bound. The coefficient part takes the nested scales as Tapered r 1 s and the geometry a.e. in Accept.",
+   "confidence": "medium",
+   "relation": "hasPart",
    "verification": {
     "batch": "S19-3",
     "mapper": "parts",
-    "verifier": null,
-    "complete": false
+    "verifier": "parts",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
@@ -23606,34 +24142,86 @@
    "verification": {
     "batch": "S19-3",
     "mapper": "definition-close",
-    "verifier": null,
+    "verifier": "definition-match",
+    "agreed": false,
     "complete": false
    }
   },
   {
    "id": "Definition 19.18",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YM.Contacts.Devices.originProjection",
+     "role": "key",
+     "where": "YM/Contacts/Coherent.lean:28-32",
+     "note": "P_0 = B 0; P_{q+1} = rise(P_q) + B_{q+1} - rise(P_q(insertField 0 (B_{q+1}))).",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Contacts.Devices.project",
+     "role": "key",
+     "where": "YM/Contacts/Coherent.lean:82",
+     "note": "P_{<=q}^ct(o) = originProjection composed with the translation by -o.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Contacts.Devices.project_id",
+     "role": "key",
+     "where": "YM/Contacts/Coherent.lean:91",
+     "note": "P_{<=q}(o)[A(o)] = A.",
+     "relation": "exactMatch"
+    }
+   ],
+   "note": "The recursion, with j_q the rise map and I_{q+1} insertField at the origin, is the one in originProjection, centering is the translation shift, and the reproduction property is project_id.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S19-3",
     "mapper": "definition-match",
-    "verifier": null,
-    "complete": false
+    "verifier": "definition-match",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Definition 19.19",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YM.Contacts.Devices.row",
+     "role": "key",
+     "where": "YM/Contacts/Coherent.lean:84-85",
+     "note": "P_{=q}(o) = top q composed with B_q composed with translation; top 0 = id and top (n+1) = id - rise composed with down n, with down d = originProjection d after insertField 0 (d+1).",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Contacts.Devices.clearance",
+     "role": "key",
+     "where": "YM/Contacts/Coherent.lean:137-139",
+     "note": "delta_q^pres = min over d <= q of aperture d.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.MultipleContact.Splitting.top",
+     "role": "support",
+     "where": "YM/MultipleContact/Fields.lean:110-112",
+     "note": "1 - rise composed with down",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The exact-degree component unfolds to (1 - j P_{q-1} I_q) B_q (top applied to base) and the degree-zero case to B_0, and the clearance is the running minimum of the apertures.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S19-3",
     "mapper": "definition-match",
-    "verifier": null,
-    "complete": false
+    "verifier": "definition-match",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
@@ -23644,7 +24232,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S19-4",
-    "mapper": null,
+    "mapper": "parts",
     "verifier": null,
     "complete": false
    }
@@ -23657,7 +24245,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S19-4",
-    "mapper": null,
+    "mapper": "parts",
     "verifier": null,
     "complete": false
    }
@@ -23670,7 +24258,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S19-4",
-    "mapper": null,
+    "mapper": "definition-close",
     "verifier": null,
     "complete": false
    }
@@ -23683,7 +24271,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S19-4",
-    "mapper": null,
+    "mapper": "definition-close",
     "verifier": null,
     "complete": false
    }
@@ -23696,7 +24284,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S19-4",
-    "mapper": null,
+    "mapper": "definition-close",
     "verifier": null,
     "complete": false
    }
@@ -23709,7 +24297,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S19-4",
-    "mapper": null,
+    "mapper": "parts",
     "verifier": null,
     "complete": false
    }
@@ -23722,7 +24310,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S19-4",
-    "mapper": null,
+    "mapper": "close",
     "verifier": null,
     "complete": false
    }
@@ -23735,7 +24323,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S19-4",
-    "mapper": null,
+    "mapper": "inlined",
     "verifier": null,
     "complete": false
    }
@@ -23748,7 +24336,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S19-4",
-    "mapper": null,
+    "mapper": "close",
     "verifier": null,
     "complete": false
    }
@@ -23761,7 +24349,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S19-4",
-    "mapper": null,
+    "mapper": "close",
     "verifier": null,
     "complete": false
    }
@@ -23774,7 +24362,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S19-4",
-    "mapper": null,
+    "mapper": "close",
     "verifier": null,
     "complete": false
    }
@@ -23787,7 +24375,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S19-4",
-    "mapper": null,
+    "mapper": "stronger",
     "verifier": null,
     "complete": false
    }
