@@ -46,6 +46,15 @@ changes since 2013) are dropped.
 | `no-match` | The item asserts mathematics and [L] holds no counterpart, alone or in parts, after a real search; also when only some of the item's claims are in [L] (say which are missing). | **yes** |
 | `unclear` | You could not decide. Say what blocks the decision. | — |
 
+Conventions (fixed after the pilot):
+- `exact` / `definition-match` when hypotheses and conclusion agree once [L]'s nicknames,
+  structures and definitions are unfolded and [M]'s standing assumptions are applied. `close` /
+  `definition-close` only when a difference in content remains that a reader should know; name it.
+- `stronger` whenever [L] is more general in a mathematical way (a weaker hypothesis, a more
+  general type, a larger range), even mildly.
+- A display inside a statement maps to the declaration that states that part of the statement.
+- A finding names exactly what [M] prints that [L] lacks, and the declaration that comes closest.
+
 Before claiming a finding, look for what would refute it: the hypothesis supplied by a
 structure field, a section `variable`, a definition's body, or [M]'s standing assumptions; the
 stronger claim proved under another name; a constant fixed elsewhere. [M] fixes conventions at the

@@ -4,9 +4,9 @@
   compare.py <batch>...   prints one line per item: AGREE or DISAGREE with the reason,
                           and writes scratch/compare/<batch>.json
 
-Two outputs agree on an item when they give the same status and the same set of key
-declarations. For `no-match` and `not-formalized-not-needed`, which have no key declarations,
-the status alone decides.
+Two outputs agree on an item when they give the same status and their key declarations
+overlap (or both have none). For `no-match` and `not-formalized-not-needed`, which have no key
+declarations, the status alone decides.
 """
 import json, os, sys
 
@@ -40,7 +40,8 @@ def compare(b):
         why = []
         if a['status'] != c['status']:
             why.append(f"status {a['status']} vs {c['status']}")
-        if keys(a) != keys(c):
+        ka, kc = set(keys(a)), set(keys(c))
+        if (ka or kc) and not (ka & kc):
             why.append(f'keys {keys(a)} vs {keys(c)}')
         res[i] = {'agree': not why, 'why': '; '.join(why),
                   'mapper': {'status': a['status'], 'keys': keys(a)},
