@@ -1,0 +1,23 @@
+name: check
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  overlay:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Generated overlay files, config, bundle and annotations
+        working-directory: manuscript
+        run: python3 pdf-overlay/tools/check_generated.py
+      - name: Literature Links scan of the annotations
+        working-directory: manuscript
+        run: PYTHONPATH=pdf-overlay/tools python3 -m literature_links scan annotations
