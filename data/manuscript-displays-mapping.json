@@ -8,13 +8,13 @@
  "provenance": "machine: a sonnet mapper and a sonnet verifier per batch, independently; an opus judge on disagreement and on one in five agreed noMatch records; two opus skeptics per claim that the text is wrong; no person reviewed",
  "counts": {
   "broadMatch": 17,
-  "closeMatch": 44,
-  "exactMatch": 196,
-  "hasPart": 10,
-  "narrowMatch": 7,
+  "closeMatch": 53,
+  "exactMatch": 203,
+  "hasPart": 12,
+  "narrowMatch": 13,
   "noMatch": 1,
   "relatedMatch": 8,
-  "unjudged": 72
+  "unjudged": 48
  },
  "records": [
   {
@@ -4792,19 +4792,84 @@
    "context": "text",
    "enclosing": null,
    "kind": "display",
-   "relation": null,
-   "class": "Unjudged",
+   "relation": "exactMatch",
+   "class": "1-to-1",
+   "ends": [
+    {
+     "decl": "YM.Nonperturbative.Headline.TraceExclusions",
+     "file": "YM/Nonperturbative/HeadlineSpec.lean",
+     "lines": [
+      87,
+      91
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Nonperturbative/HeadlineSpec.lean#L87-L91",
+     "snippet": "  identified (f : Test4) :\n    F.action.operators.field (pinned F) f =\n      F.action.operators.field (S.pin 4 (stressTrace F.sector.energy)) f -\n        (euclideanVEV S (selected F) (stressTrace F.sector.energy) * ∫ x, f x) •\n          LinearMap.id (R := ℂ)",
+     "conclusion": "Field `identified`: the field of the pinned centered trace smeared with `f` equals the field of `stressTrace` minus `euclideanVEV * (integral of f)` times `LinearMap.id`.",
+     "proof_context": {
+      "declaration": "YM.Nonperturbative.Headline.TraceExclusions",
+      "lines": [
+       84,
+       120
+      ],
+      "conclusion": "Field `identified`: the field of the pinned centered trace smeared with `f` equals the field of `stressTrace` minus `euclideanVEV * (integral of f)` times `LinearMap.id`."
+     }
+    },
+    {
+     "decl": "YM.TraceExtension.pinCentered",
+     "file": "YM/TraceExtension/Sundial/Grand.lean",
+     "lines": [
+      19,
+      20
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Sundial/Grand.lean#L19-L20",
+     "snippet": "lemma pinCentered : pinned F= ∑ i:Axis,(metric i:ℂ) • energyM F i i - euclideanVEV S (selected F) (stressTrace F.sector.energy) • S.pin 4 (S.unit 4):=by\n   rw [← pin_fromM]; unfold pinned center theta centerIn;rw [map_sub,map_smul]",
+     "conclusion": "The label `pinned F` is the pinned sum over the axes of `energyM` minus the selected-phase vacuum value times the pinned unit.",
+     "proof_context": {
+      "declaration": "YM.TraceExtension.pinCentered",
+      "lines": [
+       19,
+       20
+      ],
+      "conclusion": "The label `pinned F` is the pinned sum over the axes of `energyM` minus the selected-phase vacuum value times the pinned unit."
+     }
+    },
+    {
+     "decl": "YM.TraceExtension.Identity.op_unit",
+     "file": "YM/TraceExtension/Link/Identity.lean",
+     "lines": [
+      134,
+      135
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Link/Identity.lean#L134-L135",
+     "snippet": "lemma op_unit (v:Test4)(d:ℕ) :\n    F.action.operators.field (S.pin d (S.unit d)) v= (∫ x,v x) • (LinearMap.id (R:=ℂ)):=by",
+     "conclusion": "The field of the pinned unit label smeared with `v` is `(integral of v)` times `LinearMap.id`.",
+     "proof_context": {
+      "declaration": "YM.TraceExtension.Identity.op_unit",
+      "lines": [
+       134,
+       157
+      ],
+      "conclusion": "The field of the pinned unit label smeared with `v` is `(integral of v)` times `LinearMap.id`."
+     }
+    }
+   ],
+   "note": null,
+   "confidence": "medium",
    "verification": {
     "batch": "D07",
     "steps": [
      "mapper",
-     "verifier"
+     "verifier",
+     "judge"
     ],
     "mapper": "hasPart",
     "verifier": "exactMatch",
     "agreed": false,
     "disagreement": "class Partial vs 1-to-1",
-    "complete": false
+    "judge": "exactMatch",
+    "ruling": "verifier",
+    "source": "judge",
+    "complete": true
    }
   },
   {
@@ -5806,19 +5871,198 @@
    "context": "text",
    "enclosing": null,
    "kind": "display",
-   "relation": null,
-   "class": "Unjudged",
+   "relation": "exactMatch",
+   "class": "1-to-1",
+   "ends": [
+    {
+     "decl": "YM.RG.Calendar.hatBeta",
+     "file": "YM/RG/History.lean",
+     "lines": [
+      79,
+      79
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/RG/History.lean#L79-L79",
+     "snippet": "def hatBeta (m : ℕ) : ℝ := S.bar + G.slopeConstant * S.schedule.scale m",
+     "conclusion": "`hatBeta m = bar + slopeConstant * schedule.scale m`, the reference coupling.",
+     "proof_context": {
+      "declaration": "YM.RG.Calendar.hatBeta",
+      "lines": [
+       79,
+       79
+      ],
+      "conclusion": "`hatBeta m = bar + slopeConstant * schedule.scale m`, the reference coupling."
+     }
+    },
+    {
+     "decl": "YM.RG.Calendar.Fits",
+     "file": "YM/RG/History.lean",
+     "lines": [
+      107,
+      107
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/RG/History.lean#L107-L107",
+     "snippet": "  delayed m : 1 < S.hatBeta m",
+     "conclusion": "Field `delayed`: `1 < hatBeta m` for every m.",
+     "proof_context": {
+      "declaration": "YM.RG.Calendar.Fits",
+      "lines": [
+       97,
+       118
+      ],
+      "conclusion": "Field `delayed`: `1 < hatBeta m` for every m."
+     }
+    },
+    {
+     "decl": "YM.RG.Calendar.monitor",
+     "file": "YM/RG/History.lean",
+     "lines": [
+      81,
+      81
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/RG/History.lean#L81-L81",
+     "snippet": "def monitor (m) := Real.exp ((Real.log (Real.log (S.hatBeta m)))^2)",
+     "conclusion": "`monitor m = exp ((log (log (hatBeta m)))^2)`, the cutoff size.",
+     "proof_context": {
+      "declaration": "YM.RG.Calendar.monitor",
+      "lines": [
+       81,
+       81
+      ],
+      "conclusion": "`monitor m = exp ((log (log (hatBeta m)))^2)`, the cutoff size."
+     }
+    },
+    {
+     "decl": "YM.RG.Calendar.threshold",
+     "file": "YM/RG/History.lean",
+     "lines": [
+      83,
+      83
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/RG/History.lean#L83-L83",
+     "snippet": "def threshold (m) := S.hatCoupling m * S.monitor m",
+     "conclusion": "`threshold m = hatCoupling m * monitor m` with `hatCoupling m = (sqrt (hatBeta m))^-1`, that is t_m.",
+     "proof_context": {
+      "declaration": "YM.RG.Calendar.threshold",
+      "lines": [
+       83,
+       83
+      ],
+      "conclusion": "`threshold m = hatCoupling m * monitor m` with `hatCoupling m = (sqrt (hatBeta m))^-1`, that is t_m."
+     }
+    },
+    {
+     "decl": "YM.RG.Calendar.coverSize",
+     "file": "YM/RG/History.lean",
+     "lines": [
+      82,
+      82
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/RG/History.lean#L82-L82",
+     "snippet": "def coverSize (m) := Nat.ceil ((Real.log (S.hatBeta m))^2)",
+     "conclusion": "`coverSize m = ceil ((log (hatBeta m))^2)`, that is B_m.",
+     "proof_context": {
+      "declaration": "YM.RG.Calendar.coverSize",
+      "lines": [
+       82,
+       82
+      ],
+      "conclusion": "`coverSize m = ceil ((log (hatBeta m))^2)`, that is B_m."
+     }
+    },
+    {
+     "decl": "YM.RG.Calendar.allowance",
+     "file": "YM/RG/History.lean",
+     "lines": [
+      84,
+      84
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/RG/History.lean#L84-L84",
+     "snippet": "def allowance (m) := S.hatCoupling m ^ ((11 : ℝ)/5)",
+     "conclusion": "`allowance m = hatCoupling m ^ (11/5)`, that is hatBeta^(-11/10).",
+     "proof_context": {
+      "declaration": "YM.RG.Calendar.allowance",
+      "lines": [
+       84,
+       84
+      ],
+      "conclusion": "`allowance m = hatCoupling m ^ (11/5)`, that is hatBeta^(-11/10)."
+     }
+    },
+    {
+     "decl": "YM.RG.Calendar.forcedAllowance",
+     "file": "YM/RG/History.lean",
+     "lines": [
+      85,
+      85
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/RG/History.lean#L85-L85",
+     "snippet": "def forcedAllowance (m) := Real.exp (- ((S.monitor m) ^ ((1 : ℝ)/5)))",
+     "conclusion": "`forcedAllowance m = exp (-(monitor m)^(1/5))`.",
+     "proof_context": {
+      "declaration": "YM.RG.Calendar.forcedAllowance",
+      "lines": [
+       85,
+       85
+      ],
+      "conclusion": "`forcedAllowance m = exp (-(monitor m)^(1/5))`."
+     }
+    },
+    {
+     "decl": "YM.RG.Calendar.loopCap",
+     "file": "YM/RG/History.lean",
+     "lines": [
+      86,
+      86
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/RG/History.lean#L86-L86",
+     "snippet": "def loopCap (m) := 2 * (S.monitor m) ^ (S.theta (S.J m))",
+     "conclusion": "`loopCap m = 2 * (monitor m)^(theta (J m))`.",
+     "proof_context": {
+      "declaration": "YM.RG.Calendar.loopCap",
+      "lines": [
+       86,
+       86
+      ],
+      "conclusion": "`loopCap m = 2 * (monitor m)^(theta (J m))`."
+     }
+    },
+    {
+     "decl": "YM.RG.Shoot.band",
+     "file": "YM/Shoot/Criteria.lean",
+     "lines": [
+      63,
+      63
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Shoot/Criteria.lean#L63-L63",
+     "snippet": "def band (a : Levels G) (m : ℕ) := Icc (a.clock.hatBeta m / 2) (2*a.clock.hatBeta m)",
+     "conclusion": "`band a m = Icc (hatBeta m / 2) (2 * hatBeta m)`.",
+     "proof_context": {
+      "declaration": "YM.RG.Shoot.band",
+      "lines": [
+       63,
+       63
+      ],
+      "conclusion": "`band a m = Icc (hatBeta m / 2) (2 * hatBeta m)`."
+     }
+    }
+   ],
+   "note": null,
+   "confidence": "medium",
    "verification": {
     "batch": "D07",
     "steps": [
      "mapper",
-     "verifier"
+     "verifier",
+     "judge"
     ],
     "mapper": "hasPart",
     "verifier": "exactMatch",
     "agreed": false,
     "disagreement": "class Partial vs 1-to-1",
-    "complete": false
+    "judge": "exactMatch",
+    "ruling": "verifier",
+    "source": "judge",
+    "complete": true
    }
   },
   {
@@ -7130,19 +7374,103 @@
    "context": "text",
    "enclosing": null,
    "kind": "display",
-   "relation": null,
-   "class": "Unjudged",
+   "relation": "closeMatch",
+   "class": "Faithful",
+   "ends": [
+    {
+     "decl": "YM.Precision.Inputs",
+     "file": "YM/PREC/TreeMatch.lean",
+     "lines": [
+      76,
+      79
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PREC/TreeMatch.lean#L76-L79",
+     "snippet": "structure Inputs (S : StepData c f) (W : Matrix (Body 1 f) (Body 1 c) ℝ) (H : Matrix (Body 2 f) (Body 2 f) ℝ)\n    (H' : Matrix (Body 2 c) (Body 2 c) ℝ) : Prop where\n  primal : K H*W=(mean S).transpose*K H'\n  dual : mean S*W=1-S.kernel.penalty⁻¹ • K H'",
+     "conclusion": "`primal` is the matrix identity `K H * W = (mean S)ᵀ * K H'`, i.e. K_f W_0 = M_m^* K_c, the middle equality of the chain.",
+     "proof_context": {
+      "declaration": "YM.Precision.Inputs",
+      "lines": [
+       76,
+       79
+      ],
+      "conclusion": "`primal` is the matrix identity `K H * W = (mean S)ᵀ * K H'`, i.e. K_f W_0 = M_m^* K_c, the middle equality of the chain."
+     }
+    },
+    {
+     "decl": "YM.Precision.K",
+     "file": "YM/PREC/TreeMatch.lean",
+     "lines": [
+      68,
+      69
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PREC/TreeMatch.lean#L68-L69",
+     "snippet": "def K {n : Side} (H : Matrix (Body 2 n) (Body 2 n) ℝ) : Matrix (Body 1 n) (Body 1 n) ℝ :=\n    (d 1 n).transpose*H*d 1 n",
+     "conclusion": "`K H = (d 1)ᵀ H d 1` turns the pairings <d_1 M a, H_c d_1 v> and <d_1 a, H_f d_1 W_0 v> into <a, M^* K_c v> and <a, K_f W_0 v>.",
+     "proof_context": {
+      "declaration": "YM.Precision.K",
+      "lines": [
+       68,
+       69
+      ],
+      "conclusion": "`K H = (d 1)ᵀ H d 1` turns the pairings <d_1 M a, H_c d_1 v> and <d_1 a, H_f d_1 W_0 v> into <a, M^* K_c v> and <a, K_f W_0 v>."
+     }
+    },
+    {
+     "decl": "YM.Precision.K_orthogonal",
+     "file": "YM/PREC/TreeMatch.lean",
+     "lines": [
+      73,
+      74
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PREC/TreeMatch.lean#L73-L74",
+     "snippet": "lemma K_orthogonal : (d 0 c).transpose*K H'=0 := by\n  rw [K,← Matrix.mul_assoc,← Matrix.mul_assoc, ← Matrix.transpose_mul, d_d_vac]; simp",
+     "conclusion": "`(d 0 c)ᵀ * K H' = 0`, so replacing Q_m by M_m in Q_m^* K_c changes nothing (the difference takes gradient values).",
+     "proof_context": {
+      "declaration": "YM.Precision.K_orthogonal",
+      "lines": [
+       73,
+       74
+      ],
+      "conclusion": "`(d 0 c)ᵀ * K H' = 0`, so replacing Q_m by M_m in Q_m^* K_c changes nothing (the difference takes gradient values)."
+     }
+    },
+    {
+     "decl": "YM.Next.Free.Flight.tangent",
+     "file": "YM/Next/FREE_KERNELS/Primal.lean",
+     "lines": [
+      63,
+      67
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/Primal.lean#L63-L67",
+     "snippet": "lemma tangent :\n    let k := K.penalty; let W := pulse k P.wing; let W' := pulse k P.land; let S := visit P K hc\n    let V := duo k P; let A := installed (P.visitRatio hc) V.A0; let T := installed (P.visitRatio hc) V.T\n    Inputs S A ((record W).acts f) ((record W').acts c) ∧\n      T.transpose * d 1 f = d 1 c * mean S ∧ T*((record W').acts c)*d 1 c=(record W).acts f*d 1 f*A := by",
+     "conclusion": "Supplies `Inputs` (primal and dual identities) for the actual free interpolation and transfer.",
+     "proof_context": {
+      "declaration": "YM.Next.Free.Flight.tangent",
+      "lines": [
+       63,
+       118
+      ],
+      "conclusion": "Supplies `Inputs` (primal and dual identities) for the actual free interpolation and transfer."
+     }
+    }
+   ],
+   "note": "[L] has the chain as the matrix identity K_f W_0 = M_m^T K_c (`Inputs.primal`), with `K`'s definition giving the pairing forms and `K_orthogonal` letting M_m replace Q_m^*; the chain is not written as one sequence of inner products.",
+   "confidence": "medium",
    "verification": {
     "batch": "D11-1",
     "steps": [
      "mapper",
-     "verifier"
+     "verifier",
+     "judge"
     ],
     "mapper": "hasPart",
     "verifier": "closeMatch",
     "agreed": false,
     "disagreement": "class Partial vs Faithful",
-    "complete": false
+    "judge": "closeMatch",
+    "ruling": "verifier",
+    "source": "judge",
+    "complete": true
    }
   },
   {
@@ -7150,19 +7478,84 @@
    "context": "statement",
    "enclosing": "Lemma 11.5",
    "kind": "display",
-   "relation": null,
-   "class": "Unjudged",
+   "relation": "narrowMatch",
+   "class": "Deviates",
+   "ends": [
+    {
+     "decl": "YM.Precision.action",
+     "file": "YM/PREC/TreeMatch.lean",
+     "lines": [
+      93,
+      96
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PREC/TreeMatch.lean#L93-L96",
+     "snippet": "lemma action (i : Inputs S W H H') :\n    let T:=extracted S F W\n    let P:=1-probe S*T\n    T.transpose*K H*T+S.kernel.penalty • (P.transpose*P)=K H' := by",
+     "conclusion": "Under `Inputs`, with T the tree representative `extracted S F W` of the interpolation and P = 1 - probe*T, `T^T K(H) T + penalty * P^T P = K(H')`.",
+     "proof_context": {
+      "declaration": "YM.Precision.action",
+      "lines": [
+       93,
+       103
+      ],
+      "conclusion": "Under `Inputs`, with T the tree representative `extracted S F W` of the interpolation and P = 1 - probe*T, `T^T K(H) T + penalty * P^T P = K(H')`."
+     }
+    },
+    {
+     "decl": "YM.Precision.Floor",
+     "file": "YM/PREC/Stacks.lean",
+     "lines": [
+      61,
+      68
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PREC/Stacks.lean#L61-L68",
+     "snippet": "structure Floor (M : Bed) (p : Clip) (n : Side) (η A : ℝ) : Prop where\n  diagonalInv : M.diagonal.acts n * M.dual_diag.acts n=1\n  inverse : M.metric.acts n * M.inverse.acts n=1\n  roots : (M.full p n).transpose*M.full p n=M.metric.acts n\n  starts : M.metric.read 0=1\n  same : M.metric.acts n*d 1 n=M.diagonal.acts n*d 1 n\n  symmetric : (M.metric.acts n).transpose=M.metric.acts n ∧ (M.diagonal.acts n).transpose=M.diagonal.acts n\n  uniform : Numeric (M.metric.acts n) η A ∧ Numeric (M.diagonal.acts n) η A",
+     "conclusion": "`starts` gives metric read 0 = 1, `roots` gives `full^T full = metric` with `full` stacking sqrt(c_dir) I over the roots (H = c_dir I + rho^T rho), and `uniform` gives eta I <= H <= A I.",
+     "proof_context": {
+      "declaration": "YM.Precision.Floor",
+      "lines": [
+       61,
+       68
+      ],
+      "conclusion": "`starts` gives metric read 0 = 1, `roots` gives `full^T full = metric` with `full` stacking sqrt(c_dir) I over the roots (H = c_dir I + rho^T rho), and `uniform` gives eta I <= H <= A I."
+     }
+    },
+    {
+     "decl": "YM.Next.Free.bid_bed",
+     "file": "YM/Next/FREE_KERNELS/Ground.lean",
+     "lines": [
+      69,
+      73
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/Ground.lean#L69-L73",
+     "snippet": "lemma bid_bed (k l : ℝ) (hk : 0<k) (hl : 0≤l) (hj : 4≤j) :\n    ∃ γ σ v C : ℝ, 0<γ ∧ 0<σ ∧ 0<v ∧ 0<C ∧\n      ∀ (A : RG.Clip), A.direct ≤ γ → ∀ R : Train j, ∃ M : Bed, Defined k l R M ∧\n        M.covered σ C ∧ (∀ n, Floor M A n v C) ∧ (∀ n G, Bid.Sworn M n G) ∧\n        (R=Train.top j → ∀ n,M.diagonal.acts n=1) := by",
+     "conclusion": "For every clip with `direct <= gamma` and every history `R` there is a `Bed` with `Floor M A n v C` for all n.",
+     "proof_context": {
+      "declaration": "YM.Next.Free.bid_bed",
+      "lines": [
+       69,
+       120
+      ],
+      "conclusion": "For every clip with `direct <= gamma` and every history `R` there is a `Bed` with `Floor M A n v C` for all n."
+     }
+    }
+   ],
+   "note": "The energy identity is proved for the tree representative of W_0 under the normal equations, and the lower bound is an abstract eta in `Floor`; [M]'s explicit H >= 2 gamma I is stronger than what [L] states.",
+   "confidence": "medium",
    "verification": {
     "batch": "D11-1",
     "steps": [
      "mapper",
-     "verifier"
+     "verifier",
+     "judge"
     ],
     "mapper": "closeMatch",
     "verifier": "narrowMatch",
     "agreed": false,
     "disagreement": "class Faithful vs Deviates",
-    "complete": false
+    "judge": "narrowMatch",
+    "ruling": "verifier",
+    "source": "judge",
+    "complete": true
    }
   },
   {
@@ -7981,19 +8374,84 @@
    "context": "text",
    "enclosing": null,
    "kind": "display",
-   "relation": null,
-   "class": "Unjudged",
+   "relation": "narrowMatch",
+   "class": "Deviates",
+   "ends": [
+    {
+     "decl": "YM.Stationary.Freezer.back",
+     "file": "YM/Next/STATIONARY/Loops/UniformMatrix.lean",
+     "lines": [
+      278,
+      279
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Loops/UniformMatrix.lean#L278-L279",
+     "snippet": "lemma back (h : Charges X Y F σ A) (hp : Freezer X Y F.tab σ C) (hσ : 0<σ) :\n    Charges Y X F.back σ (C+C*A*C+(C*A*C*A+C*A*C*A+C*A)*C) := by",
+     "conclusion": "From an inverse bound `C` and a bound `A` on the first and second insertions, the inverse `F.back` has insertion bounds `C + C*A*C + (C*A*C*A + C*A*C*A + C*A)*C`, i.e. the orders 0, 1, 2 given by C, C^2 A, 2 C^3 A^2 + C^2 A.",
+     "proof_context": {
+      "declaration": "YM.Stationary.Freezer.back",
+      "lines": [
+       278,
+       291
+      ],
+      "conclusion": "From an inverse bound `C` and a bound `A` on the first and second insertions, the inverse `F.back` has insertion bounds `C + C*A*C + (C*A*C*A + C*A*C*A + C*A)*C`, i.e. the orders 0, 1, 2 given by C, C^2 A, 2 C^3 A^2 + C^2 A."
+     }
+    },
+    {
+     "decl": "YM.Stationary.inverseBill",
+     "file": "YM/Next/STATIONARY/OneLoop/Weights.lean",
+     "lines": [
+      92,
+      93
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/OneLoop/Weights.lean#L92-L93",
+     "snippet": "def inverseBill (A B : ℝ) :=\n    (B + A*B^2)+(2*A^2*B^3+B^2*A)",
+     "conclusion": "`inverseBill A B = (B + A*B^2) + (2*A^2*B^3 + B^2*A)`, the sum Q_0 + Q_1 + Q_2 with M_1 = M_2 = A.",
+     "proof_context": {
+      "declaration": "YM.Stationary.inverseBill",
+      "lines": [
+       92,
+       93
+      ],
+      "conclusion": "`inverseBill A B = (B + A*B^2) + (2*A^2*B^3 + B^2*A)`, the sum Q_0 + Q_1 + Q_2 with M_1 = M_2 = A."
+     }
+    },
+    {
+     "decl": "YM.Stationary.Jam.rebounds",
+     "file": "YM/Next/STATIONARY/OneLoop/Weights.lean",
+     "lines": [
+      125,
+      125
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/OneLoop/Weights.lean#L125-L125",
+     "snippet": "lemma rebounds {X : ReelF α α} (h : Jam r X (A*a)) (he : IsUnit (X 0).det) (hv : vflux (X 0)⁻¹≤ C/a) (ha : 0<a) (hr : 0≤r) : Jam r (fun x=> (X x)⁻¹) ((inverseBill A C)/a) := by",
+     "conclusion": "A `Jam` bound `A*a` on the derivatives up to order two of `X`, with `vflux (X 0)^-1 <= C/a`, gives a `Jam` bound `inverseBill A C / a` for `X^-1`.",
+     "proof_context": {
+      "declaration": "YM.Stationary.Jam.rebounds",
+      "lines": [
+       125,
+       151
+      ],
+      "conclusion": "A `Jam` bound `A*a` on the derivatives up to order two of `X`, with `vflux (X 0)^-1 <= C/a`, gives a `Jam` bound `inverseBill A C / a` for `X^-1`."
+     }
+    }
+   ],
+   "note": "[L] uses a single constant A for both M_1 and M_2, so Q_0, Q_1, Q_2 appear only in the special case M_1 = M_2 and summed in one bound (`inverseBill`); [M]'s polynomials with separate M_1, M_2 are more general.",
+   "confidence": "medium",
    "verification": {
     "batch": "D11-2",
     "steps": [
      "mapper",
-     "verifier"
+     "verifier",
+     "judge"
     ],
     "mapper": "narrowMatch",
     "verifier": "closeMatch",
     "agreed": false,
     "disagreement": "class Deviates vs Faithful",
-    "complete": false
+    "judge": "narrowMatch",
+    "ruling": "mapper",
+    "source": "judge",
+    "complete": true
    }
   },
   {
@@ -8121,19 +8579,122 @@
    "context": "text",
    "enclosing": null,
    "kind": "display",
-   "relation": null,
-   "class": "Unjudged",
+   "relation": "exactMatch",
+   "class": "1-to-1",
+   "ends": [
+    {
+     "decl": "YM.Stationary.merit",
+     "file": "YM/Next/STATIONARY/Joint/Chart.lean",
+     "lines": [
+      372,
+      373
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Joint/Chart.lean#L372-L373",
+     "snippet": "def merit (p : Clip) (R : PathData G) (x : Point G c f) : ℝ :=\n    muster S t p R (input _ _ x.1) (enroll S t (Stationary.extend x.2))",
+     "conclusion": "`merit p R x` is `muster` at the coarse field `input x.1` and the rooted joint field `enroll (extend x.2)`, the joint action S(v,u,theta).",
+     "proof_context": {
+      "declaration": "YM.Stationary.merit",
+      "lines": [
+       372,
+       373
+      ],
+      "conclusion": "`merit p R x` is `muster` at the coarse field `input x.1` and the rooted joint field `enroll (extend x.2)`, the joint action S(v,u,theta)."
+     }
+    },
+    {
+     "decl": "YM.Stationary.muster",
+     "file": "YM/Next/STATIONARY/Joint/Chart.lean",
+     "lines": [
+      338,
+      338
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Joint/Chart.lean#L338-L338",
+     "snippet": "def muster (p : Clip) (R : PathData G) (V : Config G c) (U : Joint G c f) : ℝ := mainTerm p R U.1 + tickets S V (ribbon S t U)",
+     "conclusion": "`muster = mainTerm p R U.1 + tickets S V (ribbon S t U)`, the fine action plus the block penalty.",
+     "proof_context": {
+      "declaration": "YM.Stationary.muster",
+      "lines": [
+       338,
+       338
+      ],
+      "conclusion": "`muster = mainTerm p R U.1 + tickets S V (ribbon S t U)`, the fine action plus the block penalty."
+     }
+    },
+    {
+     "decl": "YM.Stationary.tickets",
+     "file": "YM/Next/STATIONARY/Joint/Chart.lean",
+     "lines": [
+      337,
+      337
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Joint/Chart.lean#L337-L337",
+     "snippet": "def tickets (V Z : Config G c) : ℝ := S.kernel.penalty * ∑ e, G.price (V e * (Z e)⁻¹)",
+     "conclusion": "`tickets V Z = penalty * sum_e price (V e * (Z e)^-1)`, the penalty times the sum of Wilson terms of V_e Z_e^-1.",
+     "proof_context": {
+      "declaration": "YM.Stationary.tickets",
+      "lines": [
+       337,
+       337
+      ],
+      "conclusion": "`tickets V Z = penalty * sum_e price (V e * (Z e)^-1)`, the penalty times the sum of Wilson terms of V_e Z_e^-1."
+     }
+    },
+    {
+     "decl": "YM.Stationary.ribbon",
+     "file": "YM/Next/STATIONARY/Joint/Chart.lean",
+     "lines": [
+      335,
+      335
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Joint/Chart.lean#L335-L335",
+     "snippet": "def ribbon (U : Joint G c f) : Config G c := Lattice.gauge U.2 (S.prediction U.1 t)",
+     "conclusion": "`ribbon U = gauge U.2 (prediction U.1 t)` is the predictor transformed by the coarse frame, Q^pred(e^u)^{h_fr}.",
+     "proof_context": {
+      "declaration": "YM.Stationary.ribbon",
+      "lines": [
+       335,
+       335
+      ],
+      "conclusion": "`ribbon U = gauge U.2 (prediction U.1 t)` is the predictor transformed by the coarse frame, Q^pred(e^u)^{h_fr}."
+     }
+    },
+    {
+     "decl": "YM.Stationary.enroll",
+     "file": "YM/Next/STATIONARY/Joint/Chart.lean",
+     "lines": [
+      367,
+      367
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Joint/Chart.lean#L367-L367",
+     "snippet": "def enroll (U : Joint G c f) : Joint G c f := (U.1,U.2 * (bears S t U.1)⁻¹) -- to rooted",
+     "conclusion": "`enroll U = (U.1, U.2 * (bears S t U.1)^-1)` gives the frame exp(theta) c(e^u)^-1.",
+     "proof_context": {
+      "declaration": "YM.Stationary.enroll",
+      "lines": [
+       367,
+       367
+      ],
+      "conclusion": "`enroll U = (U.1, U.2 * (bears S t U.1)^-1)` gives the frame exp(theta) c(e^u)^-1."
+     }
+    }
+   ],
+   "note": null,
+   "confidence": "medium",
    "verification": {
     "batch": "D11-2",
     "steps": [
      "mapper",
-     "verifier"
+     "verifier",
+     "judge"
     ],
     "mapper": "exactMatch",
     "verifier": "hasPart",
     "agreed": false,
     "disagreement": "class 1-to-1 vs Partial",
-    "complete": false
+    "judge": "exactMatch",
+    "ruling": "mapper",
+    "source": "judge",
+    "complete": true
    }
   },
   {
@@ -8427,19 +8988,46 @@
    "context": "text",
    "enclosing": null,
    "kind": "display",
-   "relation": null,
-   "class": "Unjudged",
+   "relation": "exactMatch",
+   "class": "1-to-1",
+   "ends": [
+    {
+     "decl": "YM.Craft.Replaces",
+     "file": "YM/Bid/Craft.lean",
+     "lines": [
+      56,
+      58
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Bid/Craft.lean#L56-L58",
+     "snippet": "  mf : installed g T.mf=H.full p f*H.inverse.acts f*installed g S.T*(H'.full p' c).transpose\n  mn : T.mn.acts c=(Real.sqrt k)⁻¹ • ((d 1 c).transpose*(H'.full p' c).transpose)\n  image : T.o.acts c=stack (1-bond H' p' c) (A.acts c * d 2 c * H'.inverse.acts c * (H'.full p' c).transpose)",
+     "conclusion": "`mf` is H.full * H.inverse * T * (H'.full)^T, `mn` is (sqrt k)^-1 (d_1^T (H'.full)^T), and `image` stacks `1 - bond H' p' c` over `A * d_2 * H'.inverse * (H'.full)^T`, i.e. M_f, M_n and N.",
+     "proof_context": {
+      "declaration": "YM.Craft.Replaces",
+      "lines": [
+       53,
+       58
+      ],
+      "conclusion": "`mf` is H.full * H.inverse * T * (H'.full)^T, `mn` is (sqrt k)^-1 (d_1^T (H'.full)^T), and `image` stacks `1 - bond H' p' c` over `A * d_2 * H'.inverse * (H'.full)^T`, i.e. M_f, M_n and N."
+     }
+    }
+   ],
+   "note": null,
+   "confidence": "medium",
    "verification": {
     "batch": "D11-2",
     "steps": [
      "mapper",
-     "verifier"
+     "verifier",
+     "judge"
     ],
     "mapper": "exactMatch",
     "verifier": "relatedMatch",
     "agreed": false,
     "disagreement": "class 1-to-1 vs Deviates",
-    "complete": false
+    "judge": "exactMatch",
+    "ruling": "mapper",
+    "source": "judge",
+    "complete": true
    }
   },
   {
@@ -8981,19 +9569,65 @@
    "context": "text",
    "enclosing": null,
    "kind": "display",
-   "relation": null,
-   "class": "Unjudged",
+   "relation": "exactMatch",
+   "class": "1-to-1",
+   "ends": [
+    {
+     "decl": "YM.Next.SectorChange.panels",
+     "file": "YM/SectorNext/GAUSSIAN_SECTOR_CHANGE/Chosen.lean",
+     "lines": [
+      41,
+      42
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/SectorNext/GAUSSIAN_SECTOR_CHANGE/Chosen.lean#L41-L42",
+     "snippet": "def panels (A : Stores S) (F : Forest S.ratio) (i : In x A F (G:=G)) :=\n  {j : In x A F (G:=G) | meeting S x i.1.val.val j.1.val.val}",
+     "conclusion": "`panels` collects the coordinates `j` with `meeting S x i j`, meaning every projected endpoint of `i` lies within `radiusB x / 20` of every projected endpoint of `j`: the maximum-distance window Omega^sec.",
+     "proof_context": {
+      "declaration": "YM.Next.SectorChange.panels",
+      "lines": [
+       41,
+       42
+      ],
+      "conclusion": "`panels` collects the coordinates `j` with `meeting S x i j`, meaning every projected endpoint of `i` lies within `radiusB x / 20` of every projected endpoint of `j`: the maximum-distance window Omega^sec."
+     }
+    },
+    {
+     "decl": "YM.ConnectedActivityE6.Coat.frames",
+     "file": "YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/Windows.lean",
+     "lines": [
+      71,
+      80
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/Windows.lean#L71-L80",
+     "snippet": "def frames (G : Gauge) (S : StepData c f) (B : ℕ) : Window (along (G:=G) S) B where\n  take j := univ.filter (fun i => ∃ x∈ends S i.1, ∃ y∈ends S j.1, separation x y ≤ B)\n  here i := mem_filter.mpr ⟨mem_univ _, _, center_end _,_, center_end _,by simp⟩\n  low i j hij := mem_filter.mpr ⟨mem_univ _,_, center_end _,_, center_end _,hij⟩\n  high i j hij := by\n    obtain ⟨x,hx,y,hy,he⟩ := (mem_filter.mp hij).2\n    have hp : separation (atEdge S i.1) x ≤ 1 := by rw [separation_comm]; exact stride _ hx\n    have hk : separation y (atEdge S j.1) ≤ 1 := stride _ hy\n    exact (separation_triangle (atEdge S i.1) x (atEdge S j.1)).trans ((add_le_add hp\n      ((separation_triangle x y _).trans (add_le_add he hk))).trans (by omega))",
+     "conclusion": "`frames G S B` has `take j` equal to the `i` with some endpoint of `i` within `B` of some endpoint of `j`: the minimum-distance window Omega^loc when `B = radiusB x`.",
+     "proof_context": {
+      "declaration": "YM.ConnectedActivityE6.Coat.frames",
+      "lines": [
+       71,
+       80
+      ],
+      "conclusion": "`frames G S B` has `take j` equal to the `i` with some endpoint of `i` within `B` of some endpoint of `j`: the minimum-distance window Omega^loc when `B = radiusB x`."
+     }
+    }
+   ],
+   "note": null,
+   "confidence": "medium",
    "verification": {
     "batch": "D11-3",
     "steps": [
      "mapper",
-     "verifier"
+     "verifier",
+     "judge"
     ],
     "mapper": "hasPart",
     "verifier": "exactMatch",
     "agreed": false,
     "disagreement": "class Partial vs 1-to-1",
-    "complete": false
+    "judge": "exactMatch",
+    "ruling": "verifier",
+    "source": "judge",
+    "complete": true
    }
   },
   {
@@ -9001,19 +9635,65 @@
    "context": "statement",
    "enclosing": "Lemma 11.12",
    "kind": "display",
-   "relation": null,
-   "class": "Unjudged",
+   "relation": "closeMatch",
+   "class": "Faithful",
+   "ends": [
+    {
+     "decl": "YM.AnalyticBridge.Covariance.fromTeller",
+     "file": "YM/AnalyticBridge/SECTOR_COVARIANCE_JETS/Sky.lean",
+     "lines": [
+      62,
+      77
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/SECTOR_COVARIANCE_JETS/Sky.lean#L62-L77",
+     "snippet": "theorem fromTeller (P : Patch) (G : Gauge) (p : Teller G) (hB : P.Branches p.bind G) (k : ℕ) :\n    ∃ C r σ b η g : ℝ, 0<C ∧ 0<r ∧ 0<σ ∧ 0<b ∧ 0<η ∧ 0<g ∧ ∀ᶠ x : ℝ in atTop,\n      Sky G p P x C r k σ b η g := by\n  obtain ⟨C,r,d,η,hc,hr,hd,hη,h⟩ := trusting P G p hB k\n  obtain ⟨M,σ,b,g,hm,hC,hs,hu,hb,hg,H⟩ := aperture P G hd hc hη k\n  refine ⟨M,r,σ,b,η,g,hm,hr,hs,hb,hη,hg,?_⟩\n  filter_upwards [h,H] with x hx hz\n  obtain ⟨hp,hE⟩ := hz\n  refine ⟨hp,?_,?_⟩ <;> intro c f S T hS hT hv V t A F hA B hU\n  · obtain ⟨h1,h2,h3,h4,h5,h6⟩ := hx S T hS hT hv V t A F hA B hU\n    intro g H; exact ⟨reducePay h1 hu hC le_rfl, reducePay h2 hu hC le_rfl,h3,h4,fun z =>\n      (h5 z).trans (mul_le_mul_of_nonneg_right hC (sumSq_nn z)),h6⟩\n  obtain ⟨-,h1,h2,-,-,-⟩ := hx S T hS hT hv V t A F hA B hU\n  apply hE (front A F) (pilot T A F t x V) (panels A F) B _ ?_ h1 h2 (boards A F G hp)\n  · intro y hy; rw [← hS]; exact (terraced S G A F x _ hy).1\n  intro B; rw [pilot_eq]; unfold Matrix.IsSymm; rw [transpose_mul,transpose_transpose]",
+     "conclusion": "`fromTeller` gives, for large x, `Sky`: `Installed` for the actual window covariance, with `Gapped`, `PosDef`, jets of A, its inverse, Gamma and their principal compressions, and the discrepancies at rate `rate (-b) (radiusB x)`.",
+     "proof_context": {
+      "declaration": "YM.AnalyticBridge.Covariance.fromTeller",
+      "lines": [
+       62,
+       77
+      ],
+      "conclusion": "`fromTeller` gives, for large x, `Sky`: `Installed` for the actual window covariance, with `Gapped`, `PosDef`, jets of A, its inverse, Gamma and their principal compressions, and the discrepancies at rate `rate (-b) (radiusB x)`."
+     }
+    },
+    {
+     "decl": "YM.AnalyticBridge.SectorAffine.Offset.prices",
+     "file": "YM/AnalyticBridge/SECTOR_AFFINE_JETS/Center.lean",
+     "lines": [
+      115,
+      151
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/SECTOR_AFFINE_JETS/Center.lean#L115-L151",
+     "snippet": "theorem prices (G : Gauge) (P : Patch) (Pt : Teller G) (B : ℝ) (hB : 0<B) (q : Chi) (n : ℕ) (hP : P.Branches Pt.bind G) :\n    ∃ r d d' v M N η l : ℝ, 0<r ∧ 0<d ∧ 0<d' ∧ 0<v ∧ 0<M ∧ 0<N ∧ 0<η ∧ 0<l ∧\n    ∀ᶠ x : ℝ in atTop, 120 ≤ radiusB x ∧ ∀ {c f : Side} (S : StepData c f) (T : Tube G S), S.patch=P →\n    100*(1+radiusB x) ≤ c.val → Pt.Funds S T → ∀ (A : Stores S) (F : Forest S.ratio) (V : Config G c),\n    V∈eligible A G x → ∀ k : S.Choices,\n      (∀ z : PriceCoords G c, ‖z‖≤r → Estimate n d' v η l N A F T x V k z) ∧\n        Shift n x d v (B*fiery G x S.patch.L) M T F A V k q := by\n  obtain ⟨d,M,hd,hM,H⟩ := f0_cost G P Pt q hB hP n\n  obtain ⟨r,d',v,η,l,N,hr,hd',hv,hη,hl,hN,h'⟩ := estimates G P Pt hP n\n  let Q := 2^n*(M*N)\n  let A := 2^n*(Q*N)\n  let W := 2^n*(A*N)\n  let L := max (max M A) (max W Q)\n  have h₁ : M ≤ L := (le_max_left M A).trans (le_max_left ..)\n  have h₂ : A ≤ L := (le_max_right ..).trans (le_max_left ..)\n  have h₃ : W ≤ L := (le_max_left W Q).trans (le_max_right ..)\n  have h₄ : Q ≤ L := (le_max_right ..).trans (le_max_right ..)\n  let s := min d (d'/(n+1:ℕ)); have hs : 0<s := lt_min hd (by positivity)\n  have he : s+n*s ≤ d' := by\n    have he := mul_le_mul_of_nonneg_right (show s≤_ from min_le_right d (d'/(n+1:ℕ)))\n      (show 0 ≤ ((n+1:ℕ):ℝ) by positivity)\n    rw [div_mul_cancel₀ d' (by positivity)] at he\n    push_cast at he; linarith only [he]\n  refine ⟨r,s,d',v,L,N,η,l,hr,hs,hd',hv,hM.trans_le h₁,hN,hη,hl,?_⟩\n  filter_upwards [H,h',monitors G P.L] with x hx hp hh\n  refine ⟨hp.1,?_⟩\n  intro c f S T hT hF hP F F' V hV k\n  have ht : 0 ≤ fiery G x S.patch.L := temp_nonneg _\n  have h := hp.2 S T hT hF hP F F' V hV k\n  obtain ⟨hy,hL⟩ := hx S T hT hP hF F' F V hV k\n  refine ⟨h,⟨hy,(fun Y => Parcel.mono (hL Y) (min_le_left ..) (mul_le_mul_of_nonneg_right h₁ ht)),?_⟩⟩\n  intro Y t p\n  obtain ⟨ha,hb,hc⟩ := deliver hN hM hs.le ((le_add_of_nonneg_right (show 0≤n*s by positivity)).trans he)\n    (show n*s ≤ d' by linarith only [hs,he]) hh.1.le hh.2.1 hη (h 0 (by simpa using hr.le)).toKernelJets\n      ((hL Y).mono (min_le_left ..) le_rfl)\n  exact ⟨ha.mono le_rfl (mul_le_mul_of_nonneg_right h₄ ht),hb.mono le_rfl (mul_le_mul_of_nonneg_right h₂ ht),\n    hc.mono le_rfl (mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_right h₃ ht) (Real.exp_pos _).le)⟩",
+     "conclusion": "`prices` gives the jets of the source and of the mean, bounded by `M*t`, and of the offset residual, bounded by `M*t*exp(-v*radiusB x)`.",
+     "proof_context": {
+      "declaration": "YM.AnalyticBridge.SectorAffine.Offset.prices",
+      "lines": [
+       115,
+       151
+      ],
+      "conclusion": "`prices` gives the jets of the source and of the mean, bounded by `M*t`, and of the offset residual, bounded by `M*t*exp(-v*radiusB x)`."
+     }
+    }
+   ],
+   "note": "[L] packages the weights upsilon and constants into `RatesPaid`/`Parcel`, takes jets along chart directions and holds for large x; its residual bound carries an extra factor t and no g^{-1}.",
+   "confidence": "medium",
    "verification": {
     "batch": "D11-3",
     "steps": [
      "mapper",
-     "verifier"
+     "verifier",
+     "judge"
     ],
     "mapper": "hasPart",
     "verifier": "closeMatch",
     "agreed": false,
     "disagreement": "class Partial vs Faithful",
-    "complete": false
+    "judge": "closeMatch",
+    "ruling": "verifier",
+    "source": "judge",
+    "complete": true
    }
   },
   {
@@ -9021,19 +9701,84 @@
    "context": "text",
    "enclosing": null,
    "kind": "display",
-   "relation": null,
-   "class": "Unjudged",
+   "relation": "closeMatch",
+   "class": "Faithful",
+   "ends": [
+    {
+     "decl": "YM.ConnectedActivityE6.Contract.sealed",
+     "file": "YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/Eligibility.lean",
+     "lines": [
+      24,
+      25
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/Eligibility.lean#L24-L25",
+     "snippet": "def sealed (R : Rep G f) (l : Finset ℕ) := (l:Set ℕ).Pairwise\n      (fun i j => Disjoint (R.activities.forced i).support (R.activities.forced j).support)",
+     "conclusion": "`sealed R l` says the supports of distinct forced activities in `l` are pairwise disjoint.",
+     "proof_context": {
+      "declaration": "YM.ConnectedActivityE6.Contract.sealed",
+      "lines": [
+       24,
+       25
+      ],
+      "conclusion": "`sealed R l` says the supports of distinct forced activities in `l` are pairwise disjoint."
+     }
+    },
+    {
+     "decl": "YM.ConnectedActivityE6.Contract.incidence",
+     "file": "YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/Eligibility.lean",
+     "lines": [
+      66,
+      67
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/Eligibility.lean#L66-L67",
+     "snippet": "def incidence (R : Rep G f) (l : Finset ℕ) (A : Stores S) :=\n    ∀ i∈l,∀ p∈(R.activities.forced i).inventory, ∃ j∈A.costs,p∈RG.touched j",
+     "conclusion": "`incidence R l A` says every inventory point of a forced activity in `l` is touched by some `j` in `A.costs`.",
+     "proof_context": {
+      "declaration": "YM.ConnectedActivityE6.Contract.incidence",
+      "lines": [
+       66,
+       67
+      ],
+      "conclusion": "`incidence R l A` says every inventory point of a forced activity in `l` is touched by some `j` in `A.costs`."
+     }
+    },
+    {
+     "decl": "YM.ConnectedActivityE6.Matter.claimed",
+     "file": "YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/Matter.lean",
+     "lines": [
+      35,
+      36
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/Matter.lean#L35-L36",
+     "snippet": "def claimed (X : Coat T F) (R : Rep G f) (l : ℕ) (p : Molecule S) := troupe T R l X.B p ∧\n    RG.flags (Pressure.temp X.x) X.V∩ground R T l X.B p=(roster p).flags",
+     "conclusion": "`claimed` asks `troupe` and `flags V ∩ ground p = (roster p).flags`.",
+     "proof_context": {
+      "declaration": "YM.ConnectedActivityE6.Matter.claimed",
+      "lines": [
+       35,
+       36
+      ],
+      "conclusion": "`claimed` asks `troupe` and `flags V ∩ ground p = (roster p).flags`."
+     }
+    }
+   ],
+   "note": "The first two conditions agree; for the third, [L] (`claimed`) asks the flags of V inside the enlarged `ground` to equal the roster's flags instead of [M]'s empty intersection of flags with the supports.",
+   "confidence": "medium",
    "verification": {
     "batch": "D11-3",
     "steps": [
      "mapper",
-     "verifier"
+     "verifier",
+     "judge"
     ],
     "mapper": "hasPart",
     "verifier": "closeMatch",
     "agreed": false,
     "disagreement": "class Partial vs Faithful",
-    "complete": false
+    "judge": "closeMatch",
+    "ruling": "verifier",
+    "source": "judge",
+    "complete": true
    }
   },
   {
@@ -9150,19 +9895,65 @@
    "context": "text",
    "enclosing": null,
    "kind": "display",
-   "relation": null,
-   "class": "Unjudged",
+   "relation": "closeMatch",
+   "class": "Faithful",
+   "ends": [
+    {
+     "decl": "YM.ConnectedActivityE6.Cash.opt",
+     "file": "YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/Weaving.lean",
+     "lines": [
+      23,
+      23
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/Weaving.lean#L23-L23",
+     "snippet": "def opt (i : Alphabet c f) := rates H.v H.w (H.alarms * topStorm S.patch) i",
+     "conclusion": "`opt` assigns forced activities the rate `v`, log letters `w`, and every warning the weight `alarms * topStorm`.",
+     "proof_context": {
+      "declaration": "YM.ConnectedActivityE6.Cash.opt",
+      "lines": [
+       23,
+       23
+      ],
+      "conclusion": "`opt` assigns forced activities the rate `v`, log letters `w`, and every warning the weight `alarms * topStorm`."
+     }
+    },
+    {
+     "decl": "YM.ConnectedActivityE6.Cash.text",
+     "file": "YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/Weaving.lean",
+     "lines": [
+      25,
+      26
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/Weaving.lean#L25-L26",
+     "snippet": "def text (i : Head S) :=\n    Mixed.costs S R.halo (radiusB x) (steamP S (R.costs L μ I.beta x C)) H.opt i",
+     "conclusion": "`text` is the cost of each molecule letter under `opt`, whose product bounds the molecule integral.",
+     "proof_context": {
+      "declaration": "YM.ConnectedActivityE6.Cash.text",
+      "lines": [
+       25,
+       26
+      ],
+      "conclusion": "`text` is the cost of each molecule letter under `opt`, whose product bounds the molecule integral."
+     }
+    }
+   ],
+   "note": "[L] gives nonwarning letters the abstract bounds `v`, `w`; its warning weight is `alarms * topStorm` with `alarms` the base of the probability bound `alarms^card`, where [M] fixes M_w eps_w with eps_w an explicit coupling power.",
+   "confidence": "medium",
    "verification": {
     "batch": "D11-3",
     "steps": [
      "mapper",
-     "verifier"
+     "verifier",
+     "judge"
     ],
     "mapper": "relatedMatch",
     "verifier": "closeMatch",
     "agreed": false,
     "disagreement": "class Deviates vs Faithful",
-    "complete": false
+    "judge": "closeMatch",
+    "ruling": "verifier",
+    "source": "judge",
+    "complete": true
    }
   },
   {
@@ -9392,19 +10183,46 @@
    "context": "statement",
    "enclosing": "Lemma 11.13",
    "kind": "display",
-   "relation": null,
-   "class": "Unjudged",
+   "relation": "closeMatch",
+   "class": "Faithful",
+   "ends": [
+    {
+     "decl": "YM.PhysicalNext.Repeat.Daisy.Herd",
+     "file": "YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Daisy/Charm.lean",
+     "lines": [
+      50,
+      55
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Daisy/Charm.lean#L50-L55",
+     "snippet": "  nil (M:Leaf R) : ∀ (E:Type)[NormedAddCommGroup E][NormedSpace ℝ E][FiniteDimensional ℝ E] (F : Forest S.ratio) (X : Coat T F)\n    (U:E→ Config G c) (y:E) (p:Molecule S), X.χ=χ → X.manifest → X.x=x → X.width=o.K → Healthy (Pressure.temp X.x) (H.unionP p) X.V →\n    troupe T R Q.halo (radiusB x) p → Ac.Spark H.supportP p → M.turn.badge S∈p → Mode U y j v → U y=X.V →\n    let m:=(F.order G).prod X.dice\n    ∃ f, Integrable f m ∧ (∫ y,f y ∂m) ≤ B*(jewelDebt M Q L x *persona M H q Ξ.flair 0 l 0 p) ∧\n      ∀ z, Brush j (f z) 1 (fun t=> M.carat (edgesM S (H.unionP p) (radiusB x)) X (U t) A Q.table p W o.a Q.halo z) y",
+     "conclusion": "For molecules containing a distinguished leaf, `Herd.nil` gives an integrable majorant `f` of the derivative jets with `∫ f ≤ B*(jewelDebt * persona ...)`, where `B` is of rate zero and `persona` carries the weights and `(1+shapeW p)^i`.",
+     "proof_context": {
+      "declaration": "YM.PhysicalNext.Repeat.Daisy.Herd",
+      "lines": [
+       48,
+       55
+      ],
+      "conclusion": "For molecules containing a distinguished leaf, `Herd.nil` gives an integrable majorant `f` of the derivative jets with `∫ f ≤ B*(jewelDebt * persona ...)`, where `B` is of rate zero and `persona` carries the weights and `(1+shapeW p)^i`."
+     }
+    }
+   ],
+   "note": "The right side is [L]'s abstract weight product (`persona`, `jewelDebt`) with a rate-zero factor `B` for P(x) and the size factor `(1+shapeW p)^i`; the molecule must contain a leaf and `Healthy`, `troupe`, `Spark` are assumed.",
+   "confidence": "medium",
    "verification": {
     "batch": "D11-3",
     "steps": [
      "mapper",
-     "verifier"
+     "verifier",
+     "judge"
     ],
     "mapper": "closeMatch",
     "verifier": "hasPart",
     "agreed": false,
     "disagreement": "class Faithful vs Partial",
-    "complete": false
+    "judge": "closeMatch",
+    "ruling": "mapper",
+    "source": "judge",
+    "complete": true
    }
   },
   {
@@ -11507,19 +12325,84 @@
    "context": "text",
    "enclosing": null,
    "kind": "display",
-   "relation": null,
-   "class": "Unjudged",
+   "relation": "closeMatch",
+   "class": "Faithful",
+   "ends": [
+    {
+     "decl": "YM.PhysicalNext.Repeat.Brim.announced",
+     "file": "YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Brim/Idyll.lean",
+     "lines": [
+      38,
+      38
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Brim/Idyll.lean#L38-L38",
+     "snippet": "def announced (i : ℕ) (V : Config G c) := likely fun p: Greenbelt.Reserve S=> likely fun y:S.Choices=> aria H D q' κ ε i (Greenbelt.allot p) y V",
+     "conclusion": "`announced` averages over the frames `Greenbelt.Reserve` and tags `S.Choices` the principal Gaussian integral `aria` of the incoming activity `E i`.",
+     "proof_context": {
+      "declaration": "YM.PhysicalNext.Repeat.Brim.announced",
+      "lines": [
+       38,
+       38
+      ],
+      "conclusion": "`announced` averages over the frames `Greenbelt.Reserve` and tags `S.Choices` the principal Gaussian integral `aria` of the incoming activity `E i`."
+     }
+    },
+    {
+     "decl": "YM.PhysicalNext.Repeat.Brim.aria",
+     "file": "YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Brim/Idyll.lean",
+     "lines": [
+      37,
+      37
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Brim/Idyll.lean#L37-L37",
+     "snippet": "def aria (i : ℕ) (F : Forest S.ratio) (y : S.Choices) := (mapcase H i F).principal T (gStep R.beta) q' ε y (R.activities.E i) (Baffle.magic D R.p R.beta κ)",
+     "conclusion": "`aria` is the `principal` of the local substitution (Gaussian integral with protector, then `repair` as the extension) applied to `R.activities.E i`.",
+     "proof_context": {
+      "declaration": "YM.PhysicalNext.Repeat.Brim.aria",
+      "lines": [
+       37,
+       37
+      ],
+      "conclusion": "`aria` is the `principal` of the local substitution (Gaussian integral with protector, then `repair` as the extension) applied to `R.activities.E i`."
+     }
+    },
+    {
+     "decl": "YM.PhysicalNext.Repeat.Brim.glyph",
+     "file": "YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Brim/Found.lean",
+     "lines": [
+      30,
+      30
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Brim/Found.lean#L30-L30",
+     "snippet": "def glyph (i : ℕ) (V : Config G c) := stream H χ V (icon H i)+announced H D q' κ ε i V",
+     "conclusion": "`glyph` is the single-address cluster term `stream ... (icon H i)` plus `announced`, the remainder-side function of `Houses`.",
+     "proof_context": {
+      "declaration": "YM.PhysicalNext.Repeat.Brim.glyph",
+      "lines": [
+       30,
+       30
+      ],
+      "conclusion": "`glyph` is the single-address cluster term `stream ... (icon H i)` plus `announced`, the remainder-side function of `Houses`."
+     }
+    }
+   ],
+   "note": "P_i is `announced`, an average over frames and tags of `aria`, the `principal` part (protected Gaussian integral followed by `repair` as Ext) of E_i; R_i = T_i - P_i appears as `glyph` under the sign convention of `stream`.",
+   "confidence": "medium",
    "verification": {
     "batch": "D13-1",
     "steps": [
      "mapper",
-     "verifier"
+     "verifier",
+     "judge"
     ],
     "mapper": "closeMatch",
     "verifier": "hasPart",
     "agreed": false,
     "disagreement": "class Faithful vs Partial",
-    "complete": false
+    "judge": "closeMatch",
+    "ruling": "mapper",
+    "source": "judge",
+    "complete": true
    }
   },
   {
@@ -12163,19 +13046,65 @@
    "context": "statement",
    "enclosing": "Lemma 13.12",
    "kind": "display",
-   "relation": null,
-   "class": "Unjudged",
+   "relation": "narrowMatch",
+   "class": "Deviates",
+   "ends": [
+    {
+     "decl": "YM.AnalyticBridge.VerifiedReset.Return.splits_zero",
+     "file": "YM/AnalyticBridge/VERIFIED_RESET_STEP/Payment.lean",
+     "lines": [
+      87,
+      89
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/VERIFIED_RESET_STEP/Payment.lean#L87-L89",
+     "snippet": "lemma splits_zero {x : ℝ} (h : x∈l) (hp : 0 < target Q x 1) : let R := B.kin.path N m; let c := (B.a.params m).clip\n    let r := B.a.budget m; let d := branch X R c r (a x) (B.kin.alpha N m); let _v := UVNext.CouplingReset.scalar (target Q) x\n    ∀ U, (trunk R c r (shelves X R r) d (predictor B N Q x + Averaging.delta (X.read (a x))) 0).eval U * Real.exp (∑' i, d.logarithm i U) = target Q x U / target Q x 1 := by",
+     "conclusion": "For x in the coupling set with `0 < target Q x 1` and Δ = `Averaging.delta`, `(trunk ... (predictor + delta) 0).eval U * exp(∑' logarithm U) = target Q x U / target Q x 1` for every U.",
+     "proof_context": {
+      "declaration": "YM.AnalyticBridge.VerifiedReset.Return.splits_zero",
+      "lines": [
+       87,
+       95
+      ],
+      "conclusion": "For x in the coupling set with `0 < target Q x 1` and Δ = `Averaging.delta`, `(trunk ... (predictor + delta) 0).eval U * exp(∑' logarithm U) = target Q x U / target Q x 1` for every U."
+     }
+    },
+    {
+     "decl": "YM.AnalyticBridge.VerifiedReset.Return.settled",
+     "file": "YM/AnalyticBridge/VERIFIED_RESET_STEP/Payment.lean",
+     "lines": [
+      78,
+      79
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/VERIFIED_RESET_STEP/Payment.lean#L78-L79",
+     "snippet": "lemma settled {x : ℝ} (h : x∈l) : let A := board B N (ledger B N m p X a); let Δ := Averaging.delta (X.read (a x)); let v := vac (a x) (τ x)\n    (A.trial (predictor B N Q) x Δ v).eval = target Q x ∧ UVNext.CouplingReset.scalar (target Q) x = v := by",
+     "conclusion": "The trial representation with the reset correction evaluates to `target Q x`, the block map H_u of the input density.",
+     "proof_context": {
+      "declaration": "YM.AnalyticBridge.VerifiedReset.Return.settled",
+      "lines": [
+       78,
+       86
+      ],
+      "conclusion": "The trial representation with the reset correction evaluates to `target Q x`, the block map H_u of the input density."
+     }
+    }
+   ],
+   "note": "`splits_zero` proves the identity under the hypothesis `0 < target Q x 1`, which [M] obtains earlier from absolute convergence, so [L]'s statement is weaker by that hypothesis.",
+   "confidence": "medium",
    "verification": {
     "batch": "D13-2",
     "steps": [
      "mapper",
-     "verifier"
+     "verifier",
+     "judge"
     ],
     "mapper": "closeMatch",
     "verifier": "narrowMatch",
     "agreed": false,
     "disagreement": "class Faithful vs Deviates",
-    "complete": false
+    "judge": "narrowMatch",
+    "ruling": "verifier",
+    "source": "judge",
+    "complete": true
    }
   },
   {
@@ -12545,19 +13474,65 @@
    "context": "text",
    "enclosing": null,
    "kind": "display",
-   "relation": null,
-   "class": "Unjudged",
+   "relation": "closeMatch",
+   "class": "Faithful",
+   "ends": [
+    {
+     "decl": "YM.FullVolume.Ray.Rebar",
+     "file": "YM/FullVolume/Ray/Rebar.lean",
+     "lines": [
+      20,
+      23
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Ray/Rebar.lean#L20-L23",
+     "snippet": "structure Rebar (p:ℝ)(f:ℝ→E)(c:ℝ):Prop where\n  ray : 1≤p\n  nonneg:0≤c\n  beam (w:Rung)(v:ℝ): (∀ i:ℕ, ‖trace w (fun x=>(x/p)^i)‖ ≤ v) → ‖trace w f‖ ≤ v*c",
+     "conclusion": "`Rebar p f c` with 1 ≤ p and 0 ≤ c: for every finite stencil `w`, if `‖trace w (x/p)^i‖ ≤ v` for all i then `‖trace w f‖ ≤ v*c`, i.e. the stencil sum of the line f is at most c times the stencil quantity at radius p.",
+     "proof_context": {
+      "declaration": "YM.FullVolume.Ray.Rebar",
+      "lines": [
+       20,
+       23
+      ],
+      "conclusion": "`Rebar p f c` with 1 ≤ p and 0 ≤ c: for every finite stencil `w`, if `‖trace w (x/p)^i‖ ≤ v` for all i then `‖trace w f‖ ≤ v*c`, i.e. the stencil sum of the line f is at most c times the stencil quantity at radius p."
+     }
+    },
+    {
+     "decl": "YM.FullVolume.Amp.Often",
+     "file": "YM/FullVolume/Amp/Drill.lean",
+     "lines": [
+      10,
+      12
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Amp/Drill.lean#L10-L12",
+     "snippet": "structure Often (p:ℝ) (f:X→Y)(x:X)(r c:ℝ):Prop where\n   width:0<r\n   lens:∀ᶠ x' in 𝓝 x,∀ y, ‖y‖≤ r → Scout p (fun t:ℝ=> f (x'+t • y)) c",
+     "conclusion": "`Often p f x r c`: 0 < r and, for all centres x' near x and every ‖y‖ ≤ r, the line `t ↦ f(x'+t•y)` satisfies the stencil-recovered `Scout p ... c`.",
+     "proof_context": {
+      "declaration": "YM.FullVolume.Amp.Often",
+      "lines": [
+       10,
+       12
+      ],
+      "conclusion": "`Often p f x r c`: 0 < r and, for all centres x' near x and every ‖y‖ ≤ r, the line `t ↦ f(x'+t•y)` satisfies the stencil-recovered `Scout p ... c`."
+     }
+    }
+   ],
+   "note": "`Rebar` is the stencil inequality for one line, with p = 1 allowed; the uniformity over centres x' and directions w is in `Often`, stated in the series form `Scout` rather than as the stencil inequality.",
+   "confidence": "medium",
    "verification": {
     "batch": "D13-2",
     "steps": [
      "mapper",
-     "verifier"
+     "verifier",
+     "judge"
     ],
     "mapper": "hasPart",
     "verifier": "closeMatch",
     "agreed": false,
     "disagreement": "class Partial vs Faithful",
-    "complete": false
+    "judge": "closeMatch",
+    "ruling": "verifier",
+    "source": "judge",
+    "complete": true
    }
   },
   {
@@ -12963,19 +13938,84 @@
    "context": "text",
    "enclosing": null,
    "kind": "display",
-   "relation": null,
-   "class": "Unjudged",
+   "relation": "hasPart",
+   "class": "Partial",
+   "ends": [
+    {
+     "decl": "YM.Lattice.separation",
+     "file": "YM/Lattice/Site.lean",
+     "lines": [
+      81,
+      81
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Lattice/Site.lean#L81-L81",
+     "snippet": "def separation (x y : Site n) := pdist (x-y)",
+     "conclusion": "`separation x y` is the torus max-distance of two sites, `pdist (x-y)`, with `pdist` the sup over axes of the minimal-absolute lift (`lift`), which equals the minimum over lattice translates of the sup norm.",
+     "proof_context": {
+      "declaration": "YM.Lattice.separation",
+      "lines": [
+       81,
+       81
+      ],
+      "conclusion": "`separation x y` is the torus max-distance of two sites, `pdist (x-y)`, with `pdist` the sup over axes of the minimal-absolute lift (`lift`), which equals the minimum over lattice translates of the sup norm."
+     }
+    },
+    {
+     "decl": "YM.Lattice.pdist",
+     "file": "YM/Lattice/Site.lean",
+     "lines": [
+      78,
+      78
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Lattice/Site.lean#L78-L78",
+     "snippet": "def pdist (x : Site n) := Finset.univ.sup fun i : Axis => (lift x i).natAbs",
+     "conclusion": "`pdist` takes the coordinatewise minimal-absolute lift in `ZMod n` and then the sup of absolute values, the inner `min_z |.|_infty`.",
+     "proof_context": {
+      "declaration": "YM.Lattice.pdist",
+      "lines": [
+       78,
+       78
+      ],
+      "conclusion": "`pdist` takes the coordinatewise minimal-absolute lift in `ZMod n` and then the sup of absolute values, the inner `min_z |.|_infty`."
+     }
+    },
+    {
+     "decl": "YM.Extraction.Gaps.gridSeparation",
+     "file": "YM/Extraction/Gaps.lean",
+     "lines": [
+      151,
+      152
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extraction/Gaps.lean#L151-L152",
+     "snippet": "lemma gridSeparation {p N : ℕ} {u : Fin n → Cover} (x : Fin n → Site (S.side N p)) (h : x = wrap _ ∘ u) {r : ℝ}\n    (he : someFine S p r (tag (S.a N) u)) : ∀ i j, i≠j → r ≤ S.a N * separation (x j) (x i) := by",
+     "conclusion": "A lower bound `r <= S.a N * separation (x j) (x i)` for every pair `i != j` is the physical-unit, all-pairs use of the separation.",
+     "proof_context": {
+      "declaration": "YM.Extraction.Gaps.gridSeparation",
+      "lines": [
+       151,
+       158
+      ],
+      "conclusion": "A lower bound `r <= S.a N * separation (x j) (x i)` for every pair `i != j` is the physical-unit, all-pairs use of the separation."
+     }
+    }
+   ],
+   "note": "`separation` is the pairwise torus max-distance in lattice units, the inner minimum over z; the minimum over pairs i != j, the factor a_N and the value +infinity for one slot are not a named quantity in [L].",
+   "confidence": "medium",
    "verification": {
     "batch": "D14-1",
     "steps": [
      "mapper",
-     "verifier"
+     "verifier",
+     "judge"
     ],
     "mapper": "hasPart",
     "verifier": "closeMatch",
     "agreed": false,
     "disagreement": "class Partial vs Faithful",
-    "complete": false
+    "judge": "hasPart",
+    "ruling": "mapper",
+    "source": "judge",
+    "complete": true
    }
   },
   {
@@ -13023,19 +14063,103 @@
    "context": "statement",
    "enclosing": "Lemma 14.1",
    "kind": "display",
-   "relation": null,
-   "class": "Unjudged",
+   "relation": "exactMatch",
+   "class": "1-to-1",
+   "ends": [
+    {
+     "decl": "YM.Schedule",
+     "file": "YM/Lattice/Scale.lean",
+     "lines": [
+      30,
+      33
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Lattice/Scale.lean#L30-L33",
+     "snippet": "  block_odd : ∀ m, Odd (block m).val\n  block_large : ∀ m, 3 ≤ (block m).val\n  period : ℕ → Side\n  period_four : ∀ p, 4 ∣ (period p).val",
+     "conclusion": "A `Schedule` has block ratios `block_odd` and `block_large` (ℓ_m ≥ 3 odd) and periods with `period_four` (4 ∣ L_p).",
+     "proof_context": {
+      "declaration": "YM.Schedule",
+      "lines": [
+       28,
+       34
+      ],
+      "conclusion": "A `Schedule` has block ratios `block_odd` and `block_large` (ℓ_m ≥ 3 odd) and periods with `period_four` (4 ∣ L_p)."
+     }
+    },
+    {
+     "decl": "YM.Schedule.Gentle",
+     "file": "YM/Lattice/Scale.lean",
+     "lines": [
+      129,
+      130
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Lattice/Scale.lean#L129-L130",
+     "snippet": "def Gentle : Prop :=\n  Tendsto (fun m => Real.log (S.block m).val / S.scale m) atTop (𝓝 0)",
+     "conclusion": "`Gentle`: log (block m) / scale m → 0, i.e. log ℓ_m / s_m → 0.",
+     "proof_context": {
+      "declaration": "YM.Schedule.Gentle",
+      "lines": [
+       129,
+       130
+      ],
+      "conclusion": "`Gentle`: log (block m) / scale m → 0, i.e. log ℓ_m / s_m → 0."
+     }
+    },
+    {
+     "decl": "YM.Planned.CalibratedMixedHistory.Bridge.reach",
+     "file": "YM/Planned/CALIBRATED_MIXED_HISTORY/Bridge.lean",
+     "lines": [
+      29,
+      29
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Planned/CALIBRATED_MIXED_HISTORY/Bridge.lean#L29-L29",
+     "snippet": "lemma reach (H : Levels G) : Tendsto (fun j => ((H.S.block j).val:ℝ)) atTop atTop := by",
+     "conclusion": "The block sizes `(H.S.block j)` tend to infinity along a levels system, equivalent to log ℓ_m → ∞.",
+     "proof_context": {
+      "declaration": "YM.Planned.CalibratedMixedHistory.Bridge.reach",
+      "lines": [
+       29,
+       48
+      ],
+      "conclusion": "The block sizes `(H.S.block j)` tend to infinity along a levels system, equivalent to log ℓ_m → ∞."
+     }
+    },
+    {
+     "decl": "YM.Stock.Tabs.pay",
+     "file": "YM/Overlay/Prior.lean",
+     "lines": [
+      85,
+      88
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Overlay/Prior.lean#L85-L88",
+     "snippet": "lemma pay (h : Tabs a) (hs : 1≤s) (e : ℝ) (he : 0<e) :\n    ∀ᶠ m : ℕ in atTop,\n      let p := chosen a s h m\n      (a.S.a m / a.S.a p)^4* Vac.fiat G (a.params p) (a.clock.hatBeta p) ≤ e * a.S.scale p := by",
+     "conclusion": "With `p = chosen a s h m` the first level opening against m, eventually `(a_m/a_p)^4 * fiat(params p, hatBeta p) ≤ e * scale p`, which is (a_m/a_k(m))^4 q_k(m) = o(s_k(m)).",
+     "proof_context": {
+      "declaration": "YM.Stock.Tabs.pay",
+      "lines": [
+       85,
+       115
+      ],
+      "conclusion": "With `p = chosen a s h m` the first level opening against m, eventually `(a_m/a_p)^4 * fiat(params p, hatBeta p) ≤ e * scale p`, which is (a_m/a_k(m))^4 q_k(m) = o(s_k(m))."
+     }
+    }
+   ],
+   "note": null,
+   "confidence": "medium",
    "verification": {
     "batch": "D14-1",
     "steps": [
      "mapper",
-     "verifier"
+     "verifier",
+     "judge"
     ],
     "mapper": "hasPart",
     "verifier": "exactMatch",
     "agreed": false,
     "disagreement": "class Partial vs 1-to-1",
-    "complete": false
+    "judge": "exactMatch",
+    "ruling": "verifier",
+    "source": "judge",
+    "complete": true
    }
   },
   {
@@ -13918,19 +15042,79 @@
    "context": "statement",
    "enclosing": "Lemma 14.16",
    "kind": "display",
-   "relation": null,
-   "class": "Unjudged",
+   "relation": "exactMatch",
+   "class": "1-to-1",
+   "ends": [
+    {
+     "decl": "YM.MergeProof.bindP",
+     "file": "YM/MergeProof/Chaletbin.lean",
+     "lines": [
+      23,
+      23
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Chaletbin.lean#L23-L23",
+     "snippet": "def bindP (C : Family G) (R : Weave G) (d N p : ℕ) (V:C.label d≃ₗ[ℂ] C.label d): Label G d≃ₗ[ℂ] C.label d:= (Mark.embedTo C R d N p).trans (Astar C d N p V)",
+     "conclusion": "`bindP C R d N p V` is `embedTo` followed by `Astar V`, i.e. the map from polynomial labels to the degree-d coefficient space built as terminal coordinate, then the coefficient change `V`, then the scale `tied`, then the section coordinates of `R d`.",
+     "notation": [
+      {
+       "math": "B_{d,N,p}",
+       "lean": "bindP C R d N p (P d (N,p))"
+      },
+      {
+       "math": "P_{N,p}",
+       "lean": "V (the label equivalence P d (N,p))"
+      },
+      {
+       "math": "Z_{N,p,d}",
+       "lean": "(C.factory d N p).terminal"
+      }
+     ],
+     "proof_context": {
+      "declaration": "YM.MergeProof.bindP",
+      "lines": [
+       23,
+       23
+      ],
+      "conclusion": "`bindP C R d N p V` is `embedTo` followed by `Astar V`, i.e. the map from polynomial labels to the degree-d coefficient space built as terminal coordinate, then the coefficient change `V`, then the scale `tied`, then the section coordinates of `R d`."
+     }
+    },
+    {
+     "decl": "YM.Push.Mark.embedTo",
+     "file": "YM/Push/RELAY_MARK/Cutoff.lean",
+     "lines": [
+      46,
+      47
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/RELAY_MARK/Cutoff.lean#L46-L47",
+     "snippet": "def embedTo (C : Family G) (R : Weave G) (d N p : ℕ) : Label G d≃ₗ[ℂ]C.label d :=\n    (((R d).trans ((C.labels.level d).coords)).trans (tied C d N)).trans (C.factory d N p).terminal",
+     "conclusion": "`embedTo` composes the radial section map `R d`, the label coordinates, the scaling `tied` and the terminal coordinate, which supplies the `factorscale` and `R_d` factors of B.",
+     "proof_context": {
+      "declaration": "YM.Push.Mark.embedTo",
+      "lines": [
+       46,
+       47
+      ],
+      "conclusion": "`embedTo` composes the radial section map `R d`, the label coordinates, the scaling `tied` and the terminal coordinate, which supplies the `factorscale` and `R_d` factors of B."
+     }
+    }
+   ],
+   "note": null,
+   "confidence": "medium",
    "verification": {
     "batch": "D14-2",
     "steps": [
      "mapper",
-     "verifier"
+     "verifier",
+     "judge"
     ],
     "mapper": "exactMatch",
     "verifier": "hasPart",
     "agreed": false,
     "disagreement": "class 1-to-1 vs Partial",
-    "complete": false
+    "judge": "exactMatch",
+    "ruling": "mapper",
+    "source": "judge",
+    "complete": true
    }
   },
   {
@@ -13958,19 +15142,46 @@
    "context": "statement",
    "enclosing": "Lemma 14.17",
    "kind": "display",
-   "relation": null,
-   "class": "Unjudged",
+   "relation": "narrowMatch",
+   "class": "Deviates",
+   "ends": [
+    {
+     "decl": "YM.Extraction.Difference.stepTotal",
+     "file": "YM/Extraction/Equicontinuity.lean",
+     "lines": [
+      66,
+      72
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extraction/Equicontinuity.lean#L66-L72",
+     "snippet": "lemma stepTotal {m : ℕ} (H : C.Makes) (v : Fin (m+1)→C.book.Token) {A r : ℝ} (ha : 0 ≤ A)\n    (hr : 0<r) (K : Set (Points (m+1))) (p N D : ℕ) (hd : D≤N) (h : Permit v A D N p)\n    (he : ∀ x∈K, allFine C.S p (4*r) x) (hv : C.S.a D < r)\n    (k : Fin (m+1)) (i : Axis) (l : ℕ) (u : positions (m+1))\n    (hq : tag (C.S.a N) u ∈ K) (hb : dist (tag (C.S.a N) (advance u k i l)) (tag (C.S.a N) u) ≤ r) :\n    dist (lifted C N p v (advance u k i l)) (lifted C N p v u) ≤\n      (A^(m+1)/r)*dist (tag (C.S.a N) (advance u k i l)) (tag (C.S.a N) u) := by",
+     "conclusion": "From an all-fine (separation 4r) start with `a D < r` and a `Permit` root bound A, a positive one-coordinate move by `l` grid steps of metric size at most r changes `lifted C N p v` by at most `A^(m+1)/r` times the displacement.",
+     "proof_context": {
+      "declaration": "YM.Extraction.Difference.stepTotal",
+      "lines": [
+       66,
+       103
+      ],
+      "conclusion": "From an all-fine (separation 4r) start with `a D < r` and a `Permit` root bound A, a positive one-coordinate move by `l` grid steps of metric size at most r changes `lifted C N p v` by at most `A^(m+1)/r` times the displacement."
+     }
+    }
+   ],
+   "note": "[L] (`stepTotal`) moves only in the positive direction and needs every point of K to be 4r-separated; [M] also moves negatively with the separation assumed only at x, which [L] covers only when the endpoint is also separated.",
+   "confidence": "medium",
    "verification": {
     "batch": "D14-2",
     "steps": [
      "mapper",
-     "verifier"
+     "verifier",
+     "judge"
     ],
     "mapper": "narrowMatch",
     "verifier": "closeMatch",
     "agreed": false,
     "disagreement": "class Deviates vs Faithful",
-    "complete": false
+    "judge": "narrowMatch",
+    "ruling": "mapper",
+    "source": "judge",
+    "complete": true
    }
   },
   {
@@ -16143,19 +17354,65 @@
    "context": "statement",
    "enclosing": "Lemma 16.12",
    "kind": "display",
-   "relation": null,
-   "class": "Unjudged",
+   "relation": "closeMatch",
+   "class": "Faithful",
+   "ends": [
+    {
+     "decl": "YM.Next.UVStress.bend_limit",
+     "file": "YM/Next/UV_STRESS/Focus.lean",
+     "lines": [
+      67,
+      69
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/UV_STRESS/Focus.lean#L67-L69",
+     "snippet": "lemma bend_limit (H : S.Hierarchy) (h : W.Derivatives S) (L : (Bel C.book).Hierarchy) (hp : V.Derivatives (Bel C.book))\n    (X : Scaling S) (d : ℕ) (a : Axis) (ht : Approaches (path X) (isoPanel X)) :\n    Tendsto (fun k => tiltScale X W k d a) atTop (𝓝 (leaves V.deriv d a)) := by",
+     "conclusion": "`bend_limit` says `tiltScale X W k d a`, which is `X.r k •` the carry of the derivative, tends to `leaves V.deriv d a` for scalings with `Approaches`.",
+     "proof_context": {
+      "declaration": "YM.Next.UVStress.bend_limit",
+      "lines": [
+       67,
+       92
+      ],
+      "conclusion": "`bend_limit` says `tiltScale X W k d a`, which is `X.r k •` the carry of the derivative, tends to `leaves V.deriv d a` for scalings with `Approaches`."
+     }
+    },
+    {
+     "decl": "YM.Bid.A05",
+     "file": "YM/Bid/Angular.lean",
+     "lines": [
+      58,
+      59
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Bid/Angular.lean#L58-L59",
+     "snippet": "    Watches J R.T H.spin R.hT.spin V (fun X => (ConLap X p d ((R.T.κ:ℝ) • R.T.W.deriv) (fun i => X.r i/X.xi i)) ∧\n      ∀ j : Spin.Ind, Tendsto (fun i => (X.xi i)⁻¹ • (Spin.transport Y (X.U i d) j)) atTop (𝓝 (R.T.κ • Spin.leaf R.T.K.lie d j)))",
+     "conclusion": "Under `Track` beyond thresholds, `(X.xi i)⁻¹ • Spin.transport Y (X.U i d) j` tends to `κ • Spin.leaf R.T.K.lie d j` for every generator j.",
+     "proof_context": {
+      "declaration": "YM.Bid.A05",
+      "lines": [
+       55,
+       59
+      ],
+      "conclusion": "Under `Track` beyond thresholds, `(X.xi i)⁻¹ • Spin.transport Y (X.U i d) j` tends to `κ • Spin.leaf R.T.K.lie d j` for every generator j."
+     }
+    }
+   ],
+   "note": "The derivative limit is `bend_limit`; the rotation limit is for the transported Y_K divided by xi_k with the constant kappa instead of L_d(K), and holds for any scaling with `Track` beyond thresholds rather than along one stable sequence.",
+   "confidence": "medium",
    "verification": {
     "batch": "D15",
     "steps": [
      "mapper",
-     "verifier"
+     "verifier",
+     "judge"
     ],
     "mapper": "hasPart",
     "verifier": "closeMatch",
     "agreed": false,
     "disagreement": "class Partial vs Faithful",
-    "complete": false
+    "judge": "closeMatch",
+    "ruling": "verifier",
+    "source": "judge",
+    "complete": true
    }
   },
   {
@@ -16477,19 +17734,65 @@
    "context": "statement",
    "enclosing": "Lemma 17.3",
    "kind": "display",
-   "relation": null,
-   "class": "Unjudged",
+   "relation": "narrowMatch",
+   "class": "Deviates",
+   "ends": [
+    {
+     "decl": "YM.Outer.normal",
+     "file": "YM/Next/ROTATIONS/Vanishing.lean",
+     "lines": [
+      51,
+      52
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Vanishing.lean#L51-L52",
+     "snippet": "private lemma normal (w : Axis→ℝ) (d : Axis) (V : ∀ i, Chamber S i) (A : Weight L) (K : ℝ) (hw : ∀ i, -K≤1+w i) :\n    Budget (K*3) (fun n => integral (ν (V d) A) (due w d 0 n)) := by",
+     "conclusion": "For any weight `A` and widths with `-K ≤ 1 + w i`, `∫ due w d 0 n dν (V d) A` is `Budget (K*3)`, which is `O(λ^900)` for `K = 300`.",
+     "proof_context": {
+      "declaration": "YM.Outer.normal",
+      "lines": [
+       51,
+       66
+      ],
+      "conclusion": "For any weight `A` and widths with `-K ≤ 1 + w i`, `∫ due w d 0 n dν (V d) A` is `Budget (K*3)`, which is `O(λ^900)` for `K = 300`."
+     }
+    },
+    {
+     "decl": "YM.Outer.ice",
+     "file": "YM/Next/ROTATIONS/Thaw.lean",
+     "lines": [
+      97,
+      99
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Thaw.lean#L97-L99",
+     "snippet": "theorem ice (w : Axis→ℝ) (d : Axis) (V : Chamber S d) (H : S.Hierarchy) (B A : Weight L) (f : Panels)\n    (h : ∀ p : ℝ,hat (f d) p≠0 → 1≤|p|) (K : ℝ) (hw : ∀ i, -K ≤ w i) (hd : w d<0) (b : ℂ) (hb : ‖b‖=1)\n    (y : ℝ) : Budget y (fun n => cross V B A ((cove w d n )ᶜ.indicator (answer d b (tracks w d n f)))) := by",
+     "conclusion": "For the concrete tests `answer d b (tracks w d n f)`, the cross pairing over the complement of `cove w d n` is `Budget y` for every `y`, i.e. `O_M(λ^{-M})`.",
+     "proof_context": {
+      "declaration": "YM.Outer.ice",
+      "lines": [
+       97,
+       115
+      ],
+      "conclusion": "For the concrete tests `answer d b (tracks w d n f)`, the cross pairing over the complement of `cove w d n` is `Budget y` for every `y`, i.e. `O_M(λ^{-M})`."
+     }
+    }
+   ],
+   "note": "The first estimate is `normal` with K = 300; the second is proved only for the concrete scaled Fourier-Laplace tests `tracks`, not for the class Psi_lambda of tests with the lambda^K prefactor bound that [M] states, so [M] claims more.",
+   "confidence": "medium",
    "verification": {
     "batch": "D17",
     "steps": [
      "mapper",
-     "verifier"
+     "verifier",
+     "judge"
     ],
     "mapper": "closeMatch",
     "verifier": "narrowMatch",
     "agreed": false,
     "disagreement": "class Faithful vs Deviates",
-    "complete": false
+    "judge": "narrowMatch",
+    "ruling": "verifier",
+    "source": "judge",
+    "complete": true
    }
   },
   {
@@ -16560,19 +17863,46 @@
    "context": "statement",
    "enclosing": "Lemma 17.5",
    "kind": "display",
-   "relation": null,
-   "class": "Unjudged",
+   "relation": "narrowMatch",
+   "class": "Deviates",
+   "ends": [
+    {
+     "decl": "YM.Extraction.Retain.lift_detect",
+     "file": "YM/Phase/Picks.lean",
+     "lines": [
+      128,
+      128
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Phase/Picks.lean#L128-L128",
+     "snippet": "theorem lift_detect (hi : a.Out) {v} (h : a.receives D v) (hD : D.Symmetric) (hp : D.respects S) : D.null d=S.null d := by",
+     "conclusion": "`lift_detect` proves `D.null d = S.null d` for a symmetric table `D` that receives a character of `a`, given `D.respects S`, the detect hypothesis `Funds` and the trial data.",
+     "proof_context": {
+      "declaration": "YM.Extraction.Retain.lift_detect",
+      "lines": [
+       128,
+       158
+      ],
+      "conclusion": "`lift_detect` proves `D.null d = S.null d` for a symmetric table `D` that receives a character of `a`, given `D.respects S`, the detect hypothesis `Funds` and the trial data."
+     }
+    }
+   ],
+   "note": "`lift_detect` assumes `D.respects S` (one inclusion), the funds hypothesis and `a.Out`, and proves equality of null spaces from them; [M] states the equality outright.",
+   "confidence": "medium",
    "verification": {
     "batch": "D17",
     "steps": [
      "mapper",
-     "verifier"
+     "verifier",
+     "judge"
     ],
     "mapper": "closeMatch",
     "verifier": "narrowMatch",
     "agreed": false,
     "disagreement": "class Faithful vs Deviates",
-    "complete": false
+    "judge": "narrowMatch",
+    "ruling": "verifier",
+    "source": "judge",
+    "complete": true
    }
   },
   {
@@ -17157,19 +18487,65 @@
    "context": "statement",
    "enclosing": "Lemma 18.3",
    "kind": "display",
-   "relation": null,
-   "class": "Unjudged",
+   "relation": "hasPart",
+   "class": "Partial",
+   "ends": [
+    {
+     "decl": "YM.Next.UVStress.travels_jet",
+     "file": "YM/Next/UV_STRESS/Focus.lean",
+     "lines": [
+      183,
+      189
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/UV_STRESS/Focus.lean#L183-L189",
+     "snippet": "lemma travels_jet (H : S.Hierarchy) (h : W.Derivatives S) (L : (Bel C.book).Hierarchy) (hp : V.Derivatives (Bel C.book))\n    (X : Scaling S) (ht : Approaches (path X) (isoPanel X)) (v : ℕ → Ribbon (Bel C.book) t) (x : Ribbon (Bel C.book) t)\n    (hv : ∀ i, Tendsto (fun k => v k i) atTop (𝓝 (x i)))\n    (j : ℕ) (s : Set (Points n)) (hs : IsCompact s) (hu : s ⊆ conf n) (ε : ℝ) (he : 0<ε) :\n    ∀ᶠ k in atTop, ∀ y∈s,\n      ‖iteratedFDeriv ℝ j (tested (X.r k) (isoPanel X k) (hang t (v k))) y - iteratedFDeriv ℝ j (disc (hang t x)) y‖ ≤ ε := by\n  filter_upwards [(closed_path H h L hp X ht n).jets (show Travels n X _ from ⟨t,v,x,hv,rfl⟩) s hs hu j he] with k hk y hy",
+     "conclusion": "For a scaling `X` satisfying `Approaches`, tags `v_k → x` and a compact `s ⊆ conf n`, every fixed jet of the rescaled correlation at `r_k y` is eventually within `ε` of the Maxwell one, uniformly on `s`.",
+     "proof_context": {
+      "declaration": "YM.Next.UVStress.travels_jet",
+      "lines": [
+       183,
+       196
+      ],
+      "conclusion": "For a scaling `X` satisfying `Approaches`, tags `v_k → x` and a compact `s ⊆ conf n`, every fixed jet of the rescaled correlation at `r_k y` is eventually within `ε` of the Maxwell one, uniformly on `s`."
+     }
+    },
+    {
+     "decl": "YM.Next.UVStress.comparison_jets",
+     "file": "YM/Next/UV_STRESS/Focus.lean",
+     "lines": [
+      208,
+      212
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/UV_STRESS/Focus.lean#L208-L212",
+     "snippet": "lemma comparison_jets (H : S.Hierarchy) (h : W.Derivatives S) (L : (Bel C.book).Hierarchy) (hp : V.Derivatives (Bel C.book))\n    (X : Scaling S) (ht : Approaches (path X) (isoPanel X)) (N d m : ℕ) (R : ℝ) (hr : 0<R) : X.jets N d m R := by\n  intro n _ j _ v hv ε he\n  exact travels_jet H h L hp X ht (t:=fun i => (v i).1) (fun _ i => (v i).2) (fun i => (v i).2)\n    (fun _ => tendsto_const_nhds) j _ (window_closed ..) (fun _ h => spaced_conf (inv_pos.mpr hr) h.1) ε he",
+     "conclusion": "From `Approaches`, `X.jets N d m R` holds: the jet comparison is uniform on the window of `Conf_n`.",
+     "proof_context": {
+      "declaration": "YM.Next.UVStress.comparison_jets",
+      "lines": [
+       208,
+       212
+      ],
+      "conclusion": "From `Approaches`, `X.jets N d m R` holds: the jet comparison is uniform on the window of `Conf_n`."
+     }
+    }
+   ],
+   "note": "[L] states the uniform comparison for the rescaled continuum correlation at r_k y of a compact set, assuming `Approaches`; the convergence of lattice correlations at the rounded points r_i x^(i) is not stated.",
+   "confidence": "medium",
    "verification": {
     "batch": "D18",
     "steps": [
      "mapper",
-     "verifier"
+     "verifier",
+     "judge"
     ],
     "mapper": "hasPart",
     "verifier": "closeMatch",
     "agreed": false,
     "disagreement": "class Partial vs Faithful",
-    "complete": false
+    "judge": "hasPart",
+    "ruling": "mapper",
+    "source": "judge",
+    "complete": true
    }
   },
   {
@@ -19471,19 +20847,84 @@
    "context": "text",
    "enclosing": null,
    "kind": "display",
-   "relation": null,
-   "class": "Unjudged",
+   "relation": "closeMatch",
+   "class": "Faithful",
+   "ends": [
+    {
+     "decl": "YM.MergeProof.Accent.Towed",
+     "file": "YM/MergeProof/Accent.lean",
+     "lines": [
+      29,
+      29
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Accent.lean#L29-L29",
+     "snippet": "def Towed (w:V→ℝ)(S:I→Support n)(F:I→Y→Poly B)(b:ℕ)(e u:ℝ):Prop:=∃ a:I→ℝ,Summable a∧Hit S b a e u ∧ ∀ i,Loci w (F i) (a i)",
+     "conclusion": "`Towed w S F b e u` says there are summable masses `a i` with `Hit S b a e u` and `Loci w (F i) (a i)`, a weighted majorant bound with exponential cover factor `exp(e*cover)`.",
+     "proof_context": {
+      "declaration": "YM.MergeProof.Accent.Towed",
+      "lines": [
+       29,
+       29
+      ],
+      "conclusion": "`Towed w S F b e u` says there are summable masses `a i` with `Hit S b a e u` and `Loci w (F i) (a i)`, a weighted majorant bound with exponential cover factor `exp(e*cover)`."
+     }
+    },
+    {
+     "decl": "YM.Ac.Hit",
+     "file": "YM/Ac/Tree.lean",
+     "lines": [
+      12,
+      13
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Ac/Tree.lean#L12-L13",
+     "snippet": "def Hit (f : ι → ℝ) (a γ : ℝ) := ∀ x : Site n,\n    SumBudget (fun i => if x∈X i then f i * Real.exp (a*coverNumber M (X i)) else 0) γ",
+     "conclusion": "`Hit X M f a gamma` bounds, at every site x, the sum of `f i * exp(a * coverNumber M (X i))` over the supports containing x by gamma.",
+     "proof_context": {
+      "declaration": "YM.Ac.Hit",
+      "lines": [
+       12,
+       15
+      ],
+      "conclusion": "`Hit X M f a gamma` bounds, at every site x, the sum of `f i * exp(a * coverNumber M (X i))` over the supports containing x by gamma."
+     }
+    },
+    {
+     "decl": "YM.MergeProof.Accent.Loci",
+     "file": "YM/MergeProof/Accent.lean",
+     "lines": [
+      28,
+      28
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Accent.lean#L28-L28",
+     "snippet": "def Loci (w:V→ℝ)(F:Y→Poly B)(a:ℝ):Prop:=∃ v : Sheet B, 0 ≤ v ∧ (∀ U i, ‖(F U).part i‖ ≤ v i) ∧ wordsPrice w v≤a",
+     "conclusion": "`Loci w F a` gives a sup-majorant v of the coefficients with `wordsPrice w v <= a`, the marker-weighted sum of the coefficient bounds.",
+     "proof_context": {
+      "declaration": "YM.MergeProof.Accent.Loci",
+      "lines": [
+       28,
+       28
+      ],
+      "conclusion": "`Loci w F a` gives a sup-majorant v of the coefficients with `wordsPrice w v <= a`, the marker-weighted sum of the coefficient bounds."
+     }
+    }
+   ],
+   "note": "[L] packages the sum as the bound predicate `Towed`: the per-anchor-site sum `Hit` of e^{a cover} times masses a_i, each a_i bounding the marker-weighted price `Loci` of the coefficient majorant, and the total is not a named quantity.",
+   "confidence": "medium",
    "verification": {
     "batch": "D19-1",
     "steps": [
      "mapper",
-     "verifier"
+     "verifier",
+     "judge"
     ],
     "mapper": "closeMatch",
     "verifier": "relatedMatch",
     "agreed": false,
     "disagreement": "class Faithful vs Deviates",
-    "complete": false
+    "judge": "closeMatch",
+    "ruling": "mapper",
+    "source": "judge",
+    "complete": true
    }
   },
   {
