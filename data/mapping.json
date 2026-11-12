@@ -7,16 +7,17 @@
  "taxonomy": "docs/taxonomy.md",
  "provenance": "machine: mapper and verifier agents per batch, a judge on disagreement, two skeptics per claimed finding; no person reviewed",
  "counts": {
-  "stronger": 3,
-  "exact": 13,
-  "definition-match": 18,
-  "parts": 5,
-  "definition-close": 4,
-  "close": 8,
+  "stronger": 5,
+  "exact": 24,
+  "definition-match": 43,
+  "parts": 14,
+  "definition-close": 11,
+  "close": 16,
   "inlined": 1,
-  "not yet judged": 402,
-  "no-match": 3,
-  "weaker": 1
+  "not-formalized-not-needed": 3,
+  "weaker": 2,
+  "not yet judged": 336,
+  "no-match": 3
  },
  "items": [
   {
@@ -1726,58 +1727,263 @@
   },
   {
    "id": "Eq (3.15)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.UVExtension.Upland.Arc.exists_trial",
+     "role": "key",
+     "where": "YM/UVExtension/Upland/Plinth.lean:71-75",
+     "note": "Last conjunct: for real |b|<radius every bare coupling beta with Trial N n b beta satisfies betaK S N n N b = beta.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.UVExtension.Oasis.Spring.here",
+     "role": "key",
+     "where": "YM/UVExtension/Oasis/Flora.lean:46",
+     "note": "The same identification as a field of Spring, phrased with Success (equivalent to Trial by Birch.genuine).",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.UVExtension.Upland.Arc.betaK",
+     "role": "support",
+     "where": "YM/UVExtension/Upland/Plinth.lean:46",
+     "note": "The holomorphic coupling function in the offset coordinate b.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.UVExtension.Upland.Arc.radius",
+     "role": "support",
+     "where": "YM/UVExtension/Upland/Plinth.lean:45",
+     "note": "flatTime of the levels, independent of N and p.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "With b_{N,p}(z) := betaK(w_tun z) and w_tun < radius, as Proposition 3.7 sets up, exists_trial gives b_{N,p}(s) = beta_{N,p}(s) for every real s in (-1,1). The equality has no further difference once the s-reparametrization of Proposition 3.7 is applied.",
+   "confidence": "medium",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S03-3",
     "mapper": "no-match",
     "verifier": "exact",
     "agreed": false,
-    "complete": false
+    "judge": "exact",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Proposition 3.7",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "close",
+   "lean": [
+    {
+     "decl": "YM.UVExtension.Upland.Arc.exists_trial",
+     "role": "key",
+     "where": "YM/UVExtension/Upland/Plinth.lean:71-75",
+     "note": "For |b|<radius: a unique bare coupling with Trial N n b, the real trajectory reaches bar+b at level zero, and betaK equals that coupling.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.UVExtension.Upland.Arc.finiteCut",
+     "role": "key",
+     "where": "YM/UVExtension/Upland/Plinth.lean:55-58",
+     "note": "betaK S m n N is analytic on ball 0 radius (m=N is the bare coupling).",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.UVExtension.Oasis.Spring",
+     "role": "key",
+     "where": "YM/UVExtension/Oasis/Flora.lean:41-49",
+     "note": "Packages here (uniqueness, endpoint, identification) and has_fin (analyticity) for the family.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.UVExtension.Upland.paid",
+     "role": "support",
+     "where": "YM/UVExtension/Upland/Summit.lean:50-54",
+     "note": "Trial N p 0 (C.beta N p): with uniqueness this is beta_{N,p}(0) = beta_{N,p}.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.UVExtension.Upland.Arc",
+     "role": "support",
+     "where": "YM/UVExtension/Upland/Plinth.lean:33-38",
+     "note": "Hypothesis package; atPeak identifies the selected history with the trial at b=0.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.UVExtension.Spire.Uses.Trial",
+     "role": "support",
+     "where": "YM/UVExtension/Spire/Spark.lean:54",
+     "note": "A Shot trajectory of the fitted recursion with top coupling beta and level-zero coupling bar+b.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.UVExtension.Camp.flat_pos",
+     "role": "support",
+     "where": "YM/UVExtension/Camp/Motto.lean:18",
+     "note": "0 < flatTime, so the disk is nondegenerate.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "[L] states unique existence, the level-zero endpoint, analyticity on |b|<flatTime and the real identification in the offset coordinate b on an open disk whose radius depends only on the levels; [M]'s s in [-1,1] and |z|<1 follow by b = w_tun s with any w_tun < flatTime. The difference a reader should know is this parametrization by b with an open disk, under the Arc/Spring packages that the constructed family satisfies.",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S03-3",
     "mapper": "no-match",
     "verifier": "close",
     "agreed": false,
-    "complete": false
+    "judge": "close",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Proposition 3.8",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "close",
+   "lean": [
+    {
+     "decl": "YM.UVExtension.Upland.winding",
+     "role": "key",
+     "where": "YM/UVExtension/Upland/Summit.lean:56-61",
+     "note": "For every m,p, Normal C m p and N -> C.path.beta N p m converge along the full sequence (Arrives = exists limit, Tendsto atTop).",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.UVExtension.Upland.Normal",
+     "role": "support",
+     "where": "YM/UVExtension/Upland/Summit.lean:48",
+     "note": "The activity coordinates: tuning readings of (E,K) at level m and cutoff N; the vacuum scalar is excluded.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.UVExtension.Arrives",
+     "role": "support",
+     "where": "YM/UVExtension/Limits.lean:11-12",
+     "note": "Convergence predicate.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.PhysicalNext.Repeat.Legato.Einstein",
+     "role": "support",
+     "where": "YM/UVExtension/Upland/Noel.lean:24",
+     "note": "Hypothesis on the family: it is built from an Arc trajectory package.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.UVExtension.Upland.treetops",
+     "role": "attributed",
+     "where": "YM/UVExtension/Upland/Summit.lean:64-66",
+     "note": "Exhibits a family with Einstein and the convergences for all m,n.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "[L] proves full-sequence convergence of the couplings beta_{N,p,m} and of the (E,K) readings, without the vacuum scalar, for a family satisfying Einstein. The coordinate space is Tabernacle.Readings (normalized chime norms) rather than [M]'s named weighted coordinate spaces of Lemma D-E1.",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S03-3",
     "mapper": "no-match",
     "verifier": "close",
     "agreed": false,
-    "complete": false
+    "judge": "close",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Definition 3.9",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YM.Labels.radial",
+     "role": "key",
+     "where": "YM/Labels/Jet.lean:22-37",
+     "note": "Symmetric degree-(j+1) coefficients with sum_i z_i A_i(z) = 0.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Labels.Jet",
+     "role": "key",
+     "where": "YM/Labels/Polynomial.lean:28",
+     "note": "The space J of radial jets.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Labels.Pol",
+     "role": "key",
+     "where": "YM/Labels/Polynomial.lean:29",
+     "note": "C[J] as complex polynomials in real coordinates.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Labels.bidegree",
+     "role": "key",
+     "where": "YM/Labels/Polynomial.lean:53",
+     "note": "Bidegree (k+2,1) per coordinate.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Labels.limited",
+     "role": "key",
+     "where": "YM/Labels/Polynomial.lean:60-61",
+     "note": "Weight at most d.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Labels.invariantSpace",
+     "role": "key",
+     "where": "YM/Labels/Polynomial.lean:103-108",
+     "note": "Ad(G)-invariance.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Labels.Label",
+     "role": "key",
+     "where": "YM/Labels/Polynomial.lean:112",
+     "note": "V_d = limited d meet invariantSpace.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Labels.Frame",
+     "role": "support",
+     "where": "YM/Labels/Basis.lean:50-57",
+     "note": "Fixed bihomogeneous real basis starting with the unit.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Labels.Frame.Coeff",
+     "role": "support",
+     "where": "YM/Labels/Reference.lean:18",
+     "note": "Coefficients Fin n -> C with Mathlib's sup norm, as the file header states.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Labels.realBar",
+     "role": "support",
+     "where": "YM/Labels/Action.lean:131",
+     "note": "Conjugation.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Labels.Frame.act",
+     "role": "support",
+     "where": "YM/Labels/Reference.lean:83-84",
+     "note": "Orthogonal action; the hypercubic action is its restriction to signed permutations.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Label G d with a Frame is V_d with the same radial condition, weights, bidegrees, invariance, bihomogeneous basis and conjugation. The coefficient space Frame.Coeff carries the sup norm, and the l1 coeffSize is only an auxiliary size used in estimates, so the mapper's norm difference does not hold.",
+   "confidence": "medium",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S03-3",
     "mapper": "definition-close",
     "verifier": "definition-match",
     "agreed": false,
-    "complete": false
+    "judge": "definition-match",
+    "source": "judge",
+    "complete": true
    }
   },
   {
@@ -2133,808 +2339,3781 @@
   },
   {
    "id": "Proposition 4.1",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.FullVolume.FixedBounds",
+     "role": "key",
+     "where": "YM/FullVolume/Discrete.lean:50-52",
+     "note": "Field `bounds`: for every n, labels v, list l of (slot, axis) pairs and r>0, some B>=0 and eventually in N, for all p and all lattice tuples x with r <= a_N * torus separation, the norm of gKernel (the l-fold unit forward difference of the lifted lattice moment) is at most B.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.FullVolume.Final.Jewel",
+     "role": "support",
+     "where": "YM/FullVolume/Finale/Program.lean:133-152",
+     "note": "Field `deployed : FixedBounds R.family` asserts the bound for the constructed Wilson family; proved in `july`.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.FullVolume.Final.july",
+     "role": "support",
+     "where": "YM/FullVolume/Finale/Program.lean:154-165",
+     "note": "Public endpoint producing a run whose family satisfies Jewel, hence FixedBounds.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.FullVolume.Final.Jewel.deployed",
+     "role": "key",
+     "where": "YM/FullVolume/Finale/Program.lean:147",
+     "note": "States FixedBounds for the constructed family R.family.",
+     "from_verifier": true,
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.FullVolume.gKernel",
+     "role": "support",
+     "where": "YM/FullVolume/Discrete.lean:20-21",
+     "note": "The product of forward differences a_N^{-1}(tau-1) applied to the lifted lattice moment.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.FullVolume.spaceout",
+     "role": "support",
+     "where": "YM/FullVolume/Cohort.lean:37",
+     "note": "Torus separation at least r: r <= a_N times the lattice torus sup-distance for all distinct slots.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.PhysicalNext.Repeat.Legato.Campaign.Face.pinnacle",
+     "role": "helper",
+     "where": "YM/FullVolume/Dusk/Court.lean:43-53",
+     "note": "Proves FixedBounds for the family of a campaign face.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Both state a bound on every difference Delta_l of the lattice moment, uniform in p, eventually in N, at torus separation at least r; the Lean difference operator `deltas` applies a_N^-1(tau-1) per entry and the separation is the sup-norm torus separation. The family is the fixed one of the construction.",
+   "confidence": "medium",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S04-1",
     "mapper": "exact",
-    "verifier": null,
-    "complete": false
+    "verifier": "exact",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Theorem 4.2",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "stronger",
+   "lean": [
+    {
+     "decl": "YM.FullVolume.PositionsUV",
+     "role": "key",
+     "where": "YM/FullVolume/Profiles.lean:25-38",
+     "note": "For all p, n, v: a function f smooth on NoHit with the smeared lattice sums converging to the integral of t*f for every suitable (separated, p-admissible) test, and for every list l of Reach differences, Cluster-type local uniform convergence, integrability and convergence of the smeared difference sums to the integral of t times the iterated derivative of f.",
+     "relation": "broadMatch"
+    },
+    {
+     "decl": "YM.FullVolume.Final.Jewel",
+     "role": "support",
+     "where": "YM/FullVolume/Finale/Program.lean:133-152",
+     "note": "Field `fullMesh : PositionsUV R.family Sequence.full` states it for the full mesh sequence of the constructed family.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.FullVolume.Final.july",
+     "role": "support",
+     "where": "YM/FullVolume/Finale/Program.lean:154-165",
+     "note": "Proves Jewel for some run and family.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.FullVolume.Reach",
+     "role": "support",
+     "where": "YM/FullVolume/Strings.lean:16-20",
+     "note": "One-axis centered/forward interval difference; back=0, fore=1 is the forward difference of [M].",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.FullVolume.squall",
+     "role": "support",
+     "where": "YM/FullVolume/Strings.lean:36-38",
+     "note": "Composition of the Reach differences applied to the lifted lattice moment.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.FullVolume.sumOn",
+     "role": "support",
+     "where": "YM/FullVolume/Smears.lean:22-23",
+     "note": "a_N^{4n} times the sum over fundamental-cell lattice tuples against the test.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.FullVolume.derive",
+     "role": "support",
+     "where": "YM/FullVolume/Wish.lean:17-19",
+     "note": "Iterated positional derivative d/dx_i^a of the limit function.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Extraction.NoHit",
+     "role": "support",
+     "where": "YM/Extraction/Patch.lean:25-26",
+     "note": "Positions pairwise different modulo L_p Z^4.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.FullVolume.positioned",
+     "role": "attributed",
+     "where": "YM/FullVolume/Profiles.lean:42-50",
+     "note": "Proves PositionsUV from FixedBounds and point Cauchy.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.FullVolume.Final.Jewel.fullMesh",
+     "role": "attributed",
+     "where": "YM/FullVolume/Finale/Program.lean:148",
+     "note": "States PositionsUV for the constructed family along the full mesh sequence.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Lean covers every difference list built from `Reach` intervals (back/fore steps), of which [M]'s forward unit differences are the case back=0, fore=1, and adds locally uniform convergence and integrability; the limit f is the same for all l and smooth on NoHit as in [M]. PositionsUV is a predicate on the family, discharged by `Jewel.fullMesh`.",
+   "confidence": "medium",
+   "relation": "broadMatch",
    "verification": {
     "batch": "S04-1",
     "mapper": "stronger",
-    "verifier": null,
-    "complete": false
+    "verifier": "stronger",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Definition 4.3",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YM.Extraction.Order.Ordered",
+     "role": "key",
+     "where": "YM/Extraction/Limits.lean:32-36",
+     "note": "For every arity, labels and test, `limits` of the smeared lattice sums along the order f toward the integral of t against the table S.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Extraction.Order.limits",
+     "role": "support",
+     "where": "YM/Extraction/Orders.lean:61-64",
+     "note": "Eventually admissible at per k; at admissible p the mesh limit v p exists; v(per k) tends to the target.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Extraction.Order.smears",
+     "role": "support",
+     "where": "YM/Extraction/Limits.lean:26-27",
+     "note": "a_N^(4n) times the sum over the torus lattice of test times lattice moment.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Extraction.suitable",
+     "role": "support",
+     "where": "YM/Extraction/Patch.lean:31",
+     "note": "p-admissibility: tsupport inside the open cube of radius S.radius p.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YangMills.WilsonFamily.Converges",
+     "role": "key",
+     "where": "PublicWilson.lean:83-90",
+     "note": "For every n, tokens, separated test: eventually suitable at volumeOrder k, a row of fixed-volume mesh limits at every suitable p, and the rows along volumeOrder converge to the integral against the table.",
+     "from_verifier": true,
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YangMills.WilsonFamily.smear",
+     "role": "support",
+     "where": "PublicWilson.lean:75-77",
+     "note": "The smeared lattice moment a_N^{4n} sum f(y-hat) M(v;y).",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YangMills.fromWilson",
+     "role": "support",
+     "where": "WilsonBridge.lean:62-69",
+     "note": "Ordered along (full mesh, s) implies Converges along s.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "With the order f = (full mesh, P) the structure unfolds to [M]'s conditions: the test is eventually P(k)-admissible, the limits C_p^UV exist at admissible p, and C_{P(k)}^UV tends to the integral of f K_n. [L] allows a subsequence as mesh, and [M]'s case is the full mesh.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S04-1",
     "mapper": "definition-match",
-    "verifier": null,
-    "complete": false
+    "verifier": "definition-match",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Definition 4.4",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YM.Table.Basic",
+     "role": "key",
+     "where": "YM/Euclid/Table.lean:71-78",
+     "note": "E1: symmetry under simultaneous permutation (Symmetric), empty correlation is 1 (trivial), insertion of the unit label deletes the slot (unital).",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Table.RealSpin",
+     "role": "key",
+     "where": "YM/Euclid/Table.lean:80-84",
+     "note": "E2: invariance under the signed-permutation group acting on points and labels (mirror) and conjugation compatibility (real).",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Table.Homogeneous",
+     "role": "key",
+     "where": "YM/Euclid/Table.lean:86",
+     "note": "E3: translation invariance on Conf_n.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Table.Symmetric",
+     "role": "support",
+     "where": "YM/Euclid/Table.lean:71-73",
+     "note": "Permutation symmetry on Conf.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Register.one",
+     "role": "support",
+     "where": "YM/Euclid/Register.lean:90",
+     "note": "The unit token u_d, scalar space(d)^d times the unit coefficient.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The three Lean predicates unfold to E1, E2 (hypercubic group = Signed) and E3 on Conf_n, with the same unit-slot deletion and conjugation rule.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S04-1",
     "mapper": "definition-match",
-    "verifier": null,
-    "complete": false
+    "verifier": "definition-match",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Definition 4.5",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YM.Table.RP",
+     "role": "key",
+     "where": "YM/Euclid/Words.lean:123-124",
+     "note": "E4: for every axis, finitely many positive-side distinct words and complex coefficients, the sum of conj(c_i) c_j gram(w_i,w_j) is nonnegative, where gram reflects the first word (reverse, conjugate, mirror act on points and labels).",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Table.RPSmear",
+     "role": "key",
+     "where": "YM/Euclid/Words.lean:136-138",
+     "note": "E5: every mixed smeared pairing over PastTest is integrable, and the same positivity holds for the integrated pairings.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Table.PastTest",
+     "role": "support",
+     "where": "YM/Euclid/Words.lean:127-130",
+     "note": "Joint test with support in conf and strictly positive in the chosen axis.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Word.reflect",
+     "role": "support",
+     "where": "YM/Euclid/Words.lean:64",
+     "note": "Reverses the word, conjugates labels and applies the mirror in H_4 to positions and labels.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Word.Positive",
+     "role": "support",
+     "where": "YM/Euclid/Words.lean:58",
+     "note": "Distinct positions, all with positive a-th coordinate.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The Lean star (reverse, conjugate labels, reflect points and act through the mirror) and positivity statement match E4; integrability of the mixed pairings is Lean's `Integrable`, which is absolute integrability, as in E5.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S04-1",
     "mapper": "definition-match",
-    "verifier": null,
-    "complete": false
+    "verifier": "definition-match",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Definition 4.6",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YM.Table.Smooth",
+     "role": "key",
+     "where": "YM/Euclid/Table.lean:88-89",
+     "note": "E6: each value function is C-infinity on conf n.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Table.Capped",
+     "role": "key",
+     "where": "YM/Euclid/Table.lean:97-99",
+     "note": "E7: for every n, degrees, labels and derivative order j there are A in N and C>=0 with the j-th Frechet derivative bounded by C r^-A for 0<r<=1 and sup-norm separation at least r.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.spaced",
+     "role": "support",
+     "where": "YM/Space/Configurations.lean:70",
+     "note": "Sup-norm separation at least r for distinct slots.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Smooth is E6 and Capped is E7 with the constants depending on n, degrees, labels and the derivative order, and `spaced` is vacuous for n<=1 like the +infinity convention.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S04-1",
     "mapper": "definition-match",
-    "verifier": null,
-    "complete": false
+    "verifier": "definition-match",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Theorem 4.7",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "stronger",
+   "lean": [
+    {
+     "decl": "YM.Nonperturbative.continuum",
+     "role": "key",
+     "where": "YM/Nonperturbative/Continuum.lean:52-66",
+     "note": "For the Wilson family fixed before any order (fundedRun) and every order p there are q, a table S and a Final on p.refine q with (full mesh, per of p.refine q) Ordered, together with the reconstruction, OPE and contact data.",
+     "relation": "broadMatch"
+    },
+    {
+     "decl": "YM.Spec.Seed",
+     "role": "support",
+     "where": "YM/Spec/Closed.lean:20-26",
+     "note": "Field `kernel : S.Hierarchy` gives E1-E7 for the table in a Final; `ordered` gives the convergence.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Table.Hierarchy",
+     "role": "support",
+     "where": "YM/Euclid/Words.lean:141-148",
+     "note": "Bundle of E1-E7.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Extraction.Order.Ordered",
+     "role": "support",
+     "where": "YM/Extraction/Limits.lean:32-36",
+     "note": "Definition 4.3's convergence.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Integration.ManuscriptTraceTests.exists_wilson_final",
+     "role": "attributed",
+     "where": "YM/Integration/ManuscriptTraceTests.lean:94-103",
+     "note": "Same existence for an arbitrary order p with Final on p.refine q, but without the full-mesh Ordered conjunct.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YangMills.constructed",
+     "role": "key",
+     "where": "Construction.lean:15-40",
+     "note": "Public form: the hierarchy has Properties.wilson, i.e. WilsonFamily.Converges along (p.refine q).per, with the same Final and Ordered statement.",
+     "from_verifier": true,
+     "relation": "broadMatch"
+    },
+    {
+     "decl": "YM.Spec.Final",
+     "role": "support",
+     "where": "YM/Spec/Closed.lean:64-72",
+     "note": "Its room : Seed carries ordered and kernel : S.Hierarchy.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Extraction.crops",
+     "role": "attributed",
+     "where": "YM/Extraction/Held.lean:136-137",
+     "note": "Raw limits extraction from the chessboard bounds.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Extraction.Order.assembles",
+     "role": "attributed",
+     "where": "YM/Extraction/Harvest.lean:62-66",
+     "note": "Assembles S.Hierarchy from Ordered, point limits, smoothness and the capped bound.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The Lean order p carries a mesh and a period sequence, and p.per composed with q.per plays P = p o q; the conclusion adds Final, reconstruction, OPE and contact data to the convergence and E1-E7, and needs G.Simple and a penalty b>0 that [M] takes as standing assumptions.",
+   "confidence": "medium",
+   "relation": "broadMatch",
    "verification": {
     "batch": "S04-1",
     "mapper": "stronger",
-    "verifier": null,
-    "complete": false
+    "verifier": "stronger",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Remark 4.8",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "not-formalized-not-needed",
+   "lean": [
+    {
+     "decl": "YM.Extraction.Order.determined",
+     "role": "support",
+     "where": "YM/Extraction/Limits.lean:47-50",
+     "note": "The smooth table is determined by the order, which is consistent with dependence on p and q.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The remark says the table may depend on p and q and asserts no theorem, since a possibility of dependence has no Lean statement to prove.",
+   "searched": [
+    "grep -rn 'independent of the extraction' and uniqueness of S in YM/Extraction",
+    "Order.unique and Order.determined in Extraction/Orders.lean and Limits.lean",
+    "outline unit IV-1 and key statements K-IV.1.*"
+   ],
+   "confidence": "medium",
+   "relation": "noMatch",
    "verification": {
     "batch": "S04-1",
     "mapper": "not-formalized-not-needed",
-    "verifier": null,
-    "complete": false
+    "verifier": "not-formalized-not-needed",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Definition 4.9",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YM.Table.null",
+     "role": "key",
+     "where": "YM/Euclid/Null.lean:34",
+     "note": "Kernel of replies: labels c with S(c(x0), v(x)) = 0 for every n, spectator word and separated (x0,x); `criterion` gives the pointwise form.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Table.Field",
+     "role": "key",
+     "where": "YM/Euclid/Null.lean:74",
+     "note": "F_d = L.Ref d quotient by null d, carrying the quotient of the coefficient sup norm.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Table.conj",
+     "role": "key",
+     "where": "YM/Euclid/Null.lean:142-144",
+     "note": "Conjugation on F_d, defined under RealSpin.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Table.mirror",
+     "role": "key",
+     "where": "YM/Euclid/Null.lean:138-140",
+     "note": "The H_4 action h[c]=[hc] on F_d, defined under RealSpin.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Table.spectra",
+     "role": "key",
+     "where": "YM/Euclid/Null.lean:93",
+     "note": "iota_d on the quotient: the response to all spectators.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Table.observations",
+     "role": "key",
+     "where": "YM/Euclid/Union.lean:23",
+     "note": "Span of the images of all iota_d, the space L.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Table.criterion",
+     "role": "support",
+     "where": "YM/Euclid/Null.lean:36-37",
+     "note": "Equates null d with the vanishing condition printed in [M].",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Table.replies",
+     "role": "support",
+     "where": "YM/Euclid/Null.lean:31-32",
+     "note": "iota_d before passing to the quotient.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Null space, quotient, conjugation, H_4 action, response map and span unfold to [M]'s objects, with conj and mirror defined under RealSpin, which [M] derives from E2; [M] leaves the quotient norm to be chosen conjugation-invariant and [L] takes the canonical quotient of the coefficient sup norm, which is such a choice.",
+   "confidence": "medium",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S04-1",
     "mapper": "definition-close",
-    "verifier": null,
-    "complete": false
+    "verifier": "definition-match",
+    "agreed": false,
+    "judge": "definition-match",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Definition 4.10",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-close",
+   "lean": [
+    {
+     "decl": "YM.Maxwell.Green",
+     "role": "support",
+     "where": "YM/Maxwell/PotentialKernel.lean:22",
+     "note": "Potential kernel 1/(4 pi^2 |x|^2), equal to Gamma.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Labels.localFields",
+     "role": "support",
+     "where": "YM/Labels/Polynomial.lean:109",
+     "note": "Ad(G)-invariant polynomial labels of weight at most d in curvature jets.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Maxwell.equationIdeal",
+     "role": "support",
+     "where": "YM/Maxwell/Equation.lean:72",
+     "note": "Kernel of substituting on-shell jets, which imposes antisymmetry, Bianchi and the field equation.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Maxwell.shellSector",
+     "role": "key",
+     "where": "YM/Euclid/Comparator.lean:64",
+     "note": "Wick polynomials obtained from labels by the on-shell substitution.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Maxwell.residual",
+     "role": "key",
+     "where": "YM/Euclid/Comparator.lean:84-85",
+     "note": "Further null space of the separated Wick correlations.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Maxwell.freeTable",
+     "role": "key",
+     "where": "YM/Euclid/Comparator.lean:23-24",
+     "note": "The free Wick correlations (separated Wick correlations of the comparison space).",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Maxwell.addresses",
+     "role": "support",
+     "where": "YM/Euclid/Comparator.lean:128-131",
+     "note": "Identifies the field quotient of the free table with shellSector modulo residual.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Maxwell.Wick.correlation",
+     "role": "key",
+     "where": "YM/Maxwell/Wick.lean:145-147",
+     "note": "Separated Wick correlation S^Max, a sum over matchings of the two-point kernels of curvature-jet coordinates.",
+     "from_verifier": true,
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Maxwell.onShell",
+     "role": "support",
+     "where": "YM/Maxwell/Shell.lean:18-24",
+     "note": "Curvature jets that are antisymmetric, satisfy the Bianchi identities and the Maxwell equation.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Maxwell.Free.no_residual",
+     "role": "support",
+     "where": "YM/Next/MAXWELL/Caps.lean:90",
+     "note": "No further null: Field of freeTable equals shellSector.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The covariance 1/(4 pi^2|x|^2), colour-diagonal and axis-diagonal, matches, and the on-shell substitution imposes the relations [M] names; [L]'s comparison space is shellSector modulo `residual`, which also quotients by any further correlation-null, whereas [M] divides only by the listed relations.",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S04-1",
     "mapper": "definition-close",
-    "verifier": null,
-    "complete": false
+    "verifier": "definition-close",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Proposition 4.11",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.DiffPlan.Inclusions",
+     "role": "key",
+     "where": "YM/Euclid/Differential.lean:58-60",
+     "note": "iota_e(rise B) = iota_d(B) against all spectators: the inclusion identity.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.DiffPlan.Derivatives",
+     "role": "key",
+     "where": "YM/Euclid/Differential.lean:61-64",
+     "note": "iota_{d+1}(deriv d a B) is the x_0^a gradient of iota_d(B): the derivative identity.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Maxwell.Ranks",
+     "role": "key",
+     "where": "YM/Euclid/Comparator.lean:135-139",
+     "note": "Complex linear equivalence of each F_d with the free table's Field d, compatible with conjugation and H_4: the dimension equality up to the identification with M_d^Max.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Maxwell.addresses",
+     "role": "support",
+     "where": "YM/Euclid/Comparator.lean:128-131",
+     "note": "Free Field d equivalent to shellSector modulo residual.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Maxwell.Free.no_residual",
+     "role": "support",
+     "where": "YM/Next/MAXWELL/Caps.lean:90",
+     "note": "residual is trivial, so the free Field d is the Maxwell space shellSector.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.DiffPlan",
+     "role": "support",
+     "where": "YM/Euclid/Differential.lean:20-22",
+     "note": "The complex linear maps rise and deriv on the quotient fields.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Spec.Locals",
+     "role": "support",
+     "where": "YM/Spec/Closed.lean:34-43",
+     "note": "Bundles Inclusions, Derivatives and Ranks for an Algebra on a table; supplied for the final table by Final.phase.transport.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Spec.Final",
+     "role": "support",
+     "where": "YM/Spec/Closed.lean:64-72",
+     "note": "Provides Locals for the table of the main theorem.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Inclusions, Derivatives and Ranks each state one of the three displayed claims, and Locals only bundles them for a given Algebra without stating the identification of F_d with M_d^Max, which needs addresses and no_residual. The table is that of Theorem 4.7 through Final.phase.transport.",
+   "confidence": "medium",
+   "relation": "hasPart",
    "verification": {
     "batch": "S04-1",
     "mapper": "close",
-    "verifier": null,
-    "complete": false
+    "verifier": "parts",
+    "agreed": false,
+    "judge": "parts",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Definition 5.1",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-close",
+   "lean": [
+    {
+     "decl": "YM.Climb.Scaling",
+     "role": "key",
+     "where": "YM/Climb/Cells.lean:24-31",
+     "note": "r_k>0, r_k->0 and U k d : Spin.change S d (complex linear isomorphisms comparator field d -> S.Field d).",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Next.UVStress.Stable",
+     "role": "key",
+     "where": "YM/Next/UV_STRESS/Invert.lean:121-126",
+     "note": "Eventual (per degree) compatibility with conjugation and signed permutations, inclusions and units.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Spin.change",
+     "role": "support",
+     "where": "YM/Spin/Sheets.lean:44",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Spin.realH",
+     "role": "support",
+     "where": "YM/Spin/Sheets.lean:50-52",
+     "note": "U intertwines mirror (signed permutations, the hypercubic group) and conj.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Next.UVStress.tested",
+     "role": "support",
+     "where": "YM/Next/UV_STRESS/Station.lean:122",
+     "note": "Comparison insertion is U k d u at r_k x with no extra r_k^d factor.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Same data and same stability clauses (conj, hypercubic via signed permutations, units, inclusions, eventually for each d<=e). Differences: Scaling also carries a positive sequence xi, requires r strictly decreasing, and Stable is stated for each fixed d<=e instead of d<=e<=D (equivalent).",
+   "confidence": "high",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S05-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-close",
+    "verifier": "definition-close",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Proposition 5.2",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "close",
+   "lean": [
+    {
+     "decl": "YM.Next.UVStress.Stations.equivalences",
+     "role": "key",
+     "where": "YM/Next/UV_STRESS/Invert.lean:132-",
+     "note": "Exists X : Scaling S with Approaches (path X) (isoPanel X) and Stable.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Next.UVStress.Approaches",
+     "role": "support",
+     "where": "YM/Next/UV_STRESS/Rates.lean:52-53",
+     "note": "For every n and every list of Maxwell tags, tested - disc v is Fades.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Next.UVStress.Fades",
+     "role": "support",
+     "where": "YM/Next/UV_STRESS/Weak.lean:24-28",
+     "note": "Convergence to 0 against tests supported in compacta of Conf, bounded by M; this is the tested form [M] shows equivalent to L^1_loc.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Next.UVStress.Stable",
+     "role": "support",
+     "where": "YM/Next/UV_STRESS/Invert.lean:121-126",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Climb.Scaling",
+     "role": "support",
+     "where": "YM/Climb/Cells.lean:24-31",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.MergeProof.Acme.readyA",
+     "role": "attributed",
+     "where": "YM/MergeProof/Emanate.lean:15-",
+     "note": "Same X with Approaches and Stable, bundled with the nonzero current.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The conclusion is the same: one scaling with all-arity, all-degree comparison to the free correlators, stable. [L] states the convergence as vanishing against bounded compactly supported tests (equivalent to L^1_loc by the argument [M] gives after the proposition, not itself a declaration). The hypotheses are packaged inputs: Stations (weak estimates at finite stations), DimAbove, hierarchies and Ordered, not the section's standing assumptions directly.",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S05-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "close",
+    "verifier": "close",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Definition 5.3",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YM.Table.shellGrad",
+     "role": "key",
+     "where": "YM/Euclid/Stress.lean:79-82",
+     "note": "P_b^J.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Table.shellSpin",
+     "role": "key",
+     "where": "YM/Euclid/Stress.lean:84-87",
+     "note": "Y_K^J with (K(y-x0))_b given by M4.move g.val (y - x 0) b.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Table.Window",
+     "role": "support",
+     "where": "YM/Euclid/Stress.lean:72-73",
+     "note": "chi smooth, compact support, equal to 1 near x 0, spectators outside tsupport.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Table.Conserved",
+     "role": "support",
+     "where": "YM/Euclid/Stress.lean:59-62",
+     "note": "Symmetric, real, divergence-free J; the shell definitions themselves do not use it.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Both integrals agree term by term: minus the sum over a of the integral of d_a chi times the table at (y, x0 field, spectators), with the cut-off conditions packaged in Window. [L]'s definitions take any J : S.Stress, so [M]'s symmetric and divergence-free assumptions are not built in.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S05-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-match",
+    "verifier": "definition-match",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Theorem 5.4",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.Org.Commission.picks",
+     "role": "key",
+     "where": "YM/Org/Twist.lean:45-53",
+     "note": "From Commission and the inclusion and derivative laws, produces c, U, J with Tab, whose locality field Spec.Locals gives Conserved, Tensorial and StressLaws for J with V.deriv and the lie of the rotation action mill W I c U.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Outer.commission",
+     "role": "key",
+     "where": "YM/Next/ROTATIONS.lean:126-131",
+     "note": "Proves the Commission hypothesis of picks from the UV data, through Bid.station and the Work answers including A15.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Work.A15.answer",
+     "role": "helper",
+     "where": "YM/Work/A15.lean:187-192",
+     "note": "Divides the current by c and Haar-averages it over O(4), the averaging step of [M]'s proof; it discharges the retune field of Commission.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Org.Commission.retune",
+     "role": "support",
+     "where": "YM/Org/Twist.lean:38-41",
+     "note": "A field of the hypothesis structure Commission, not a proved statement.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Org.Tab",
+     "role": "support",
+     "where": "YM/Org/Twist.lean:19-23",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Spec.Locals",
+     "role": "support",
+     "where": "YM/Spec/Closed.lean:34-43",
+     "note": "Fields derivatives, spots, conserved, spin and charges.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Table.StressLaws",
+     "role": "support",
+     "where": "YM/Euclid/Stress.lean:90-97",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Table.Conserved",
+     "role": "support",
+     "where": "YM/Euclid/Stress.lean:59-62",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Table.Tensorial",
+     "role": "support",
+     "where": "YM/Euclid/Stress.lean:64-66",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Table.Rotation.Laws",
+     "role": "support",
+     "where": "YM/Euclid/Stress.lean:31-42",
+     "note": "The infinitesimal field makes lie the t-derivative of act along one-parameter subgroups, as [M]'s L_d.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.DiffPlan.Derivatives",
+     "role": "support",
+     "where": "YM/Euclid/Differential.lean:61-64",
+     "note": "Inserting V.deriv d a B equals the x0-gradient of the correlator, turning the translation law into [M]'s derivative.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Locals bundles the derivative and rotation laws with the stress: Derivatives identifies the inserted V.deriv field with the x0-derivative and Laws.infinitesimal identifies lie with d/dt R_d(e^{tK}), so the conserved, real, symmetric, tensorial J with both shell laws for every window is [M]'s statement. Commission.retune is only a hypothesis field, so the proved statement is picks with Commission supplied by Outer.commission.",
+   "confidence": "medium",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S05-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "close",
+    "verifier": "exact",
+    "agreed": false,
+    "judge": "exact",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Proposition 5.5",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "close",
+   "lean": [
+    {
+     "decl": "YM.Pert.mixed_leading",
+     "role": "key",
+     "where": "YM/Pert/Lifted.lean:87-",
+     "note": "Eventually in k, for all x in compact K inside Conf, the j-th derivative of z -> disc(scaledPhysical) (r_k z) is within eps of that of the free mixed correlator.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Pert.scaledPhysical",
+     "role": "support",
+     "where": "YM/Pert/Lifted.lean:81-83",
+     "note": "Stress slots get r_k^4 J a_i b_i, other slots U k d u.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Pert.mixedTag",
+     "role": "support",
+     "where": "YM/Pert/Lifted.lean:77-79",
+     "note": "Free side: stress slots get kappa^-1 M.T.J, others the Maxwell tag.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Org.Tab",
+     "role": "support",
+     "where": "YM/Org/Twist.lean:19-23",
+     "note": "Carries the fixed normalized tensor J and its laws.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Pert.kappa_eq",
+     "role": "support",
+     "where": "YM/Pert/Lifted.lean:66-",
+     "note": "kappa = -1 when M.T is the free scheme and torch.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Pert.fromBaseline",
+     "role": "attributed",
+     "where": "YM/Pert/Construction.lean:34-",
+     "note": "Supplies the refined X, Tab and J for the free MaxwellData.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Pert.Supplier",
+     "role": "support",
+     "where": "YM/Pert/Weak.lean:22-31",
+     "note": "Hypothesis bundle fixing the scaling X with Approaches, Stable and the meter limit to the Maxwell stress.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The statement is the same: for every free list, stress-slot set, derivative order and compact set in Conf, the rescaled correlator's derivatives converge uniformly to the free ones with A_k = r_k^4 J on stress slots and U k d u elsewhere. Differences: the refined sequence, J and the free stress are abstract data (Supplier, Tab, M.T.J with kappa^-1 normalization), identified with the Maxwell stress only in fromBaseline and kappa_eq.",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S05-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "close",
+    "verifier": "close",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Definition 6.1",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-close",
+   "lean": [
+    {
+     "decl": "YM.OS.Chamber",
+     "role": "key",
+     "where": "YM/OS/Dynamics.lean:57-61",
+     "note": "OS Hilbert space GNS (completion modulo null space) with the time-axis contraction semigroup E_t and spatial unitaries, bundled as structure fields.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.OS.Semigroup",
+     "role": "support",
+     "where": "YM/OS/Flow.lean:94-106",
+     "note": "E t is a strongly continuous self-adjoint contraction semigroup; E t [v] = [tau_t v] is the chamber field atBirth.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.OS.Schwinger",
+     "role": "support",
+     "where": "YM/OS/Schwinger.lean:80",
+     "note": "Gram kernel S(refl w* v) on positive-time words.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.OS.Chamber.omega",
+     "role": "key",
+     "where": "YM/Phase/Mixture.lean:29",
+     "note": "empty-word vector",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.OS.Chamber.D",
+     "role": "key",
+     "where": "YM/Phase/Mixture.lean:27",
+     "note": "ground space ker H = fixed space of the semigroup",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.OS.Spread",
+     "role": "key",
+     "where": "YM/OS/Slabs.lean:101-104",
+     "note": "bounded extension B_h(w) of A_w, as place d w with the reads identity",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.OS.Spread.atom",
+     "role": "key",
+     "where": "YM/Phase/Mixture.lean:46",
+     "note": "M^0(w) = projection onto ground space of place d w restricted to it",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.OS.Ground.M",
+     "role": "key",
+     "where": "YM/Ground/Compress.lean:89-91",
+     "note": "M(w) for separated w, defined through a chosen slab shift (place_exists); M^0(w) of [M].",
+     "from_verifier": true,
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.OS.Chamber.omega0",
+     "role": "support",
+     "where": "YM/Phase/Mixture.lean:32-34",
+     "note": "Empty-word vector Omega^OS in the ground space.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.OS.Semigroup.ground",
+     "role": "support",
+     "where": "YM/OS/Core.lean:14",
+     "note": "Fixed space of all E_t, equal to ker H for E_t=e^{-tH}.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Table.gram",
+     "role": "support",
+     "where": "YM/Euclid/Words.lean:119",
+     "note": "The form S(s^refl w* v) via reflect w a ++ v.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.OS.Slab",
+     "role": "support",
+     "where": "YM/OS/Slabs.lean:19",
+     "note": "Words with times in (0,d).",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "[L] packages the OS space, semigroup, empty-word vector and compressed slab operator as Chamber, Spread and Spread.atom, with the semigroup identities as fields rather than derived from E4/E7 as [M] states. Chamber covers an arbitrary axis, not only e_a for a fixed a, and the 'P^0_a' projection is realized as orthogonal projection onto the ground space.",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S06-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-close",
+    "verifier": "definition-close",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Theorem 6.2",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.OS.Ground.resolution",
+     "role": "key",
+     "where": "YM/Ground/Spectrum.lean:127-140",
+     "note": "existence of a compact metric character space with a probability measure of full support (Out), characters continuous, integral of character equals vacuum matrix element.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.OS.Spread.Resolution.Out",
+     "role": "support",
+     "where": "YM/Phase/Mixture.lean:78-86",
+     "note": "normalized, support (IsOpenPosMeasure), bijective character map, continuity.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.OS.Spread.Resolution.receives",
+     "role": "key",
+     "where": "YM/Phase/Mixture.lean:89-91",
+     "note": "S^xi(w) = xi(M^0(w)) for separated words.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.OS.Spread.Resolution.barycenter",
+     "role": "key",
+     "where": "YM/Phase/Mixture.lean:113-117",
+     "note": "S(w) = integral of S^xi(w) d nu.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.OS.Selection.Certificate",
+     "role": "key",
+     "where": "YM/Phase/Mixture.lean:136-151",
+     "note": "per-phase hierarchy, null-space equality, inclusions, derivative and stress-tensor identities, O(4) orientation.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Org.Phase.Loom.cleanse",
+     "role": "attributed",
+     "where": "YM/Org/Phase.lean:60-76",
+     "note": "assembles Selection with Certificate from the hypotheses of the section.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Spec.Materializes",
+     "role": "support",
+     "where": "YM/Spec/Closed.lean:45-47",
+     "note": "Pairs the field algebra laws on S with the Certificate.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Extraction.Retain.lift_detect",
+     "role": "helper",
+     "where": "YM/Phase/Picks.lean:128-158",
+     "note": "Null spaces of the phase table equal those of S.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Existence and full support, the two displayed identities, null-space equality and the covariance/stress identities for each phase are separate fields and lemmas, together stating the item; continuity of xi -> S^xi(w) follows from Out.values/weak with receives. E1-E7 for each phase is the Hierarchy field of the certificate, with FC and ST in calculus/flux; the item as one statement is not a single declaration.",
+   "confidence": "medium",
+   "relation": "hasPart",
    "verification": {
     "batch": "S06-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "parts",
+    "verifier": "parts",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Definition 6.3",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YangMills.FieldSystem",
+     "role": "key",
+     "where": "PublicTheory.lean:105-109",
+     "note": "Domain, vacuum in domain, fields bilinear in label and test into the domain.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YangMills.TranslationAction",
+     "role": "key",
+     "where": "PublicTheory.lean:169-177",
+     "note": "Strongly continuous unitary translations T(z).",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YangMills.EnergyMomentumMeasure",
+     "role": "key",
+     "where": "PublicTheory.lean:180-200",
+     "note": "PVM with finite diagonal measures.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YangMills.WightmanTheory",
+     "role": "key",
+     "where": "PublicTheory.lean:255-262",
+     "note": "Bundles fields, antilinear adjointLabel, translations, PVM and the Poincare action.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Boundary.Fields",
+     "role": "key",
+     "where": "YM/Fields/System.lean:22-27",
+     "note": "Internal field system with labels S.Union.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Boundary.Wightman",
+     "role": "key",
+     "where": "YM/Fields/System.lean:117-122",
+     "note": "Internal bundle adding star J, Poincare action and momentum PVM.",
+     "relation": "exactMatch"
+    }
+   ],
+   "note": "Both formulations carry the complex Hilbert space, label space, domain with vacuum, bilinear fields, antilinear label map, unitary translations and PVM with finite diagonal measures; only the public one lists T(z) separately as [M] does.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S06-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-close",
+    "verifier": "definition-match",
+    "agreed": false,
+    "judge": "definition-match",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Definition 6.4",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YangMills.PoincareAction",
+     "role": "key",
+     "where": "PublicTheory.lean:219-246",
+     "note": "Unitary strongly continuous onStates, linear label bijections, coordinates homeomorphism, test pullback f(Lambda^-1(x-z)).",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YangMills.ProperLorentz",
+     "role": "key",
+     "where": "PublicTheory.lean:209-212",
+     "note": "Determinant one, preserves Minkowski square and forward cone.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YangMills.PoincareCoordinates",
+     "role": "key",
+     "where": "PublicTheory.lean:215",
+     "note": "SO+(1,3) x R^4.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YangMills.WightmanTheory.translationCompatibility",
+     "role": "key",
+     "where": "PublicTheory.lean:261-262",
+     "note": "U(kappa^-1(1,z)) = T(z).",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Mink.Poincare",
+     "role": "key",
+     "where": "YM/Mink/Poincare.lean:32-34",
+     "note": "Internal concrete group.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Boundary.Action",
+     "role": "key",
+     "where": "YM/Fields/System.lean:92-97",
+     "note": "Internal strongly continuous unitary representation.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Boundary.Spins",
+     "role": "key",
+     "where": "YM/Fields/Star.lean:22-24",
+     "note": "Internal label action through the Lorentz part.",
+     "relation": "exactMatch"
+    }
+   ],
+   "note": "The public structure gives group law, topology, unitary strongly continuous representation, translation compatibility, label bijections and the test pullback as in [M]; the internal version fixes the concrete group and lets labels see only the Lorentz part, a specialization.",
+   "confidence": "medium",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S06-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-close",
+    "verifier": "definition-match",
+    "agreed": false,
+    "judge": "definition-match",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Definition 6.5",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YangMills.WightmanTheory.W0",
+     "role": "key",
+     "where": "PublicTheory.lean:270-278",
+     "note": "Spectral representation, positive energy, unique vacuum.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Boundary.Wightman.Realizes",
+     "role": "key",
+     "where": "YM/Fields/System.lean:124-136",
+     "note": "Fields spectral, forward and unique are the W0 clauses; other fields cover W1-W3.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Spectral.Orbit.Spectrum",
+     "role": "key",
+     "where": "YM/Spectral/Frequencies.lean:67-68",
+     "note": "charFun of the diagonal measure equals the matrix element of T(b).",
+     "relation": "exactMatch"
+    }
+   ],
+   "note": "Fourier identity with Euclidean pairing, E on the complement of the closed forward cone equal to zero, and fixed vectors in C Omega agree in both formulations.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S06-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-match",
+    "verifier": "exact",
+    "agreed": false,
+    "judge": "definition-match",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Definition 6.6",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YangMills.WightmanTheory.W1",
+     "role": "key",
+     "where": "PublicTheory.lean:282-284",
+     "note": "Domain axioms and adjoint axiom.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YangMills.FieldSystem.DomainAxioms",
+     "role": "key",
+     "where": "PublicTheory.lean:127-133",
+     "note": "Norm one, density, cyclic word span, continuity.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YangMills.FieldSystem.AdjointAxiom",
+     "role": "key",
+     "where": "PublicTheory.lean:136-141",
+     "note": "Adjoint identity with adjoint label and conjugate test.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Boundary.Fields.Total",
+     "role": "key",
+     "where": "YM/Fields/System.lean:41-45",
+     "note": "Internal norm, density, cyclicity, continuity.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Boundary.Fields.sharpPair",
+     "role": "key",
+     "where": "YM/Fields/System.lean:47-48",
+     "note": "Internal adjoint identity.",
+     "relation": "exactMatch"
+    }
+   ],
+   "note": "Both formulations state the same five conditions, with words including the empty word and the adjoint identity on domain vectors.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S06-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-match",
+    "verifier": "exact",
+    "agreed": false,
+    "judge": "definition-match",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Definition 6.7",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YangMills.WightmanTheory.W2",
+     "role": "key",
+     "where": "PublicTheory.lean:287-307",
+     "note": "Six requirements of [M]'s W2.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Boundary.Symmetries",
+     "role": "key",
+     "where": "YM/Fields/System.lean:111-115",
+     "note": "Internal domain, vacuum and covariance clauses.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Boundary.Spins.Descends",
+     "role": "support",
+     "where": "YM/Fields/Star.lean:26-30",
+     "note": "Internal label identity and representation law.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The public formulation agrees with [M] clause by clause; the internal one has translations acting trivially on labels, which the public one does not assume.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S06-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-close",
+    "verifier": "exact",
+    "agreed": false,
+    "judge": "definition-match",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Definition 6.8",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YangMills.WightmanTheory.W3",
+     "role": "key",
+     "where": "PublicTheory.lean:310-311",
+     "note": "Locality field.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YangMills.FieldSystem.LocalCommutativity",
+     "role": "key",
+     "where": "PublicTheory.lean:149-156",
+     "note": "Composition equality on domain vectors for spacelike separated tests.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YangMills.FieldSystem.SpacelikeSeparated",
+     "role": "support",
+     "where": "PublicTheory.lean:145-146",
+     "note": "Negative Minkowski square for support differences.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Boundary.Fields.commutes",
+     "role": "key",
+     "where": "YM/Fields/System.lean:88-89",
+     "note": "Internal locality.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Boundary.Fields.causal",
+     "role": "support",
+     "where": "YM/Fields/System.lean:86",
+     "note": "Internal spacelike support separation.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Equality of the two compositions on every domain vector is the vanishing commutator of [M].",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S06-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-match",
+    "verifier": "exact",
+    "agreed": false,
+    "judge": "definition-match",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Definition 6.9",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-close",
+   "lean": [
+    {
+     "decl": "YM.Boundary.Wightman.Realizes",
+     "role": "key",
+     "where": "YM/Fields/System.lean:124-135",
+     "note": "bundles W0 (spectral, forward, unique), W1 (total, adj), W2 (covariance), W3 (localPairs)",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Nonperturbative.Headline.WightmanAxioms",
+     "role": "attributed",
+     "where": "YM/Nonperturbative/HeadlineSpec.lean:52-71",
+     "note": "same axioms in a second packaging, plus strong continuity and positivity",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Boundary.Wightman",
+     "role": "support",
+     "where": "YM/Fields/System.lean:117-123",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Boundary.Fields.Total",
+     "role": "support",
+     "where": "YM/Fields/System.lean:41-45",
+     "note": "unit vacuum, density, cyclic domain, continuity in f",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Boundary.Fields.commutes",
+     "role": "support",
+     "where": "YM/Fields/System.lean:88-89",
+     "note": "W3 locality with tsupport and spacelike separation",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Boundary.Symmetries",
+     "role": "support",
+     "where": "YM/Fields/System.lean:111-115",
+     "note": "W2 domain invariance, vacuum invariance, covariance",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Boundary.Action",
+     "role": "support",
+     "where": "YM/Fields/System.lean:92-97",
+     "note": "strongly continuous unitary Poincare representation",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Realizes contains each of W0-W3 for the labels S.Union, star J and Poincare action V. It also requires that the vacuum moments equal a given Euclidean-side surface W (meets), induced star and spin descent (induced, letters), and faithfulness, which M states separately in Definition 6.10.",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S06-2",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-close",
+    "verifier": "definition-close",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Definition 6.10",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YM.Boundary.Fields.notLost",
+     "role": "key",
+     "where": "YM/Fields/System.lean:57-58",
+     "note": "every nonzero label p has some test f with field p f nonzero",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Boundary.Wightman.Realizes",
+     "role": "support",
+     "where": "YM/Fields/System.lean:131",
+     "note": "faithful field",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "notLost is the same condition on the label space S.Union; it is also the faithful field of Wightman.Realizes.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S06-2",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-match",
+    "verifier": "definition-match",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Definition 6.11",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YM.EveryPhase.member",
+     "role": "key",
+     "where": "YM/EveryPhase/Extension.lean:19-22",
+     "note": "for all labels, tests and word-domain vectors u,v: u lies in the domain of the Hilbert adjoint and <T* u, B v> = <u, B (field v)>, with B a bounded operator",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.EveryPhase.weaklyCentral",
+     "role": "support",
+     "where": "YM/EveryPhase/Irreducible.lean:93-96",
+     "note": "equivalent form using the star J and bar f in place of the adjoint, shown equivalent by precise",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.EveryPhase.precise",
+     "role": "support",
+     "where": "YM/EveryPhase/Irreducible.lean:194-196",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "member quantifies over every label and test and uses the unbounded adjoint of the densely defined field operator on the word domain, with B bounded (Hilbert.Op). This is the printed condition.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S06-2",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-match",
+    "verifier": "definition-match",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Definition 6.12",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "not-formalized-not-needed",
+   "lean": [
+    {
+     "decl": "YM.Boundary.Fields.sharpPair",
+     "role": "support",
+     "where": "YM/Fields/System.lean:47-48",
+     "note": "adjoint identity with a general star J, which is where the Hermitian condition would enter",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Boundary.Symmetries",
+     "role": "support",
+     "where": "YM/Fields/System.lean:111-115",
+     "note": "covariance with the spin action X.rail, which is where the scalar condition would enter",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "M only names two predicates on labels, J ell = ell and invariance under the Lorentz action, and points to W1 and W2 for their consequences. Lean has no named predicates for them and imposes the general adjoint and covariance identities for all labels.",
+   "searched": [
+    "tool.py search scalar|hermit|selfAdj|invariantLabel|fixedLabel",
+    "tool.py keys Hermitian|scalar label|self-adjoint label",
+    "grep starRead, StarOp, J x = x in YM/Fields",
+    "YM.EveryPhase.Stress.Force.hermitian, which concerns the stress tensor, not labels"
+   ],
+   "confidence": "medium",
+   "relation": "noMatch",
    "verification": {
     "batch": "S06-2",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "not-formalized-not-needed",
+    "verifier": "not-formalized-not-needed",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Definition 6.13",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-close",
+   "lean": [
+    {
+     "decl": "YM.Boundary.Waves.Opens",
+     "role": "key",
+     "where": "YM/Boundary/Contour.lean:89-93",
+     "note": "for ordered real heights y and tests f, the integrals of F(shift p (eps*y)) f converge as eps goes to 0+ to the surface W n v f",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Boundary.Wightman.Realizes",
+     "role": "support",
+     "where": "YM/Fields/System.lean:124-135",
+     "note": "meets identifies the vacuum word expectations with the surface W",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Boundary.Fields.realizes",
+     "role": "support",
+     "where": "YM/Fields/System.lean:60",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Boundary.Contour.From",
+     "role": "support",
+     "where": "YM/Boundary/Contour.lean:119-121",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Boundary.Waves",
+     "role": "support",
+     "where": "YM/Boundary/Contour.lean:57-58",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Boundary.Surface",
+     "role": "support",
+     "where": "YM/Boundary/Contour.lean:54-55",
+     "note": "boundary distributions W",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Lean states the limit against the boundary distribution W and adds that the integrand is integrable for every ordered height, where M gives nonintegrable integrands the value zero. The identification of W with the vacuum expectation of field words is a separate clause (meets), and labels are S.Union rather than the images iota(A_i).",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S06-2",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-close",
+    "verifier": "definition-close",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Definition 6.14",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-close",
+   "lean": [
+    {
+     "decl": "YM.Boundary.Waves.Region",
+     "role": "key",
+     "where": "YM/Boundary/Contour.lean:71-77",
+     "note": "hol: holomorphic in z on strict n at fixed spatial points; roots: F at times i*y_i equals the Euclidean table read for increasing y",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Boundary.Waves",
+     "role": "support",
+     "where": "YM/Boundary/Contour.lean:57-58",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Boundary.Contour.From",
+     "role": "support",
+     "where": "YM/Boundary/Contour.lean:119-121",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "strict n is the set of times with strictly increasing imaginary parts, the same domain as Z_n, and the agreement at imaginary times is the same. Region also requires joint continuity in times and spatial points, and states the agreement on pinned tokens of S.",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S06-2",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-close",
+    "verifier": "definition-close",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Theorem 6.15",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "close",
+   "lean": [
+    {
+     "decl": "YM.EveryPhase.all_characters",
+     "role": "key",
+     "where": "YM/EveryPhase/Extension.lean:75-80",
+     "note": "there is an Almanac with Completed: per character a faithful Realizes Wightman theory, surjective J, UniqueHeat, zero-energy space C Omega, scalar weak commutant",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.EveryPhase.Completed",
+     "role": "key",
+     "where": "YM/EveryPhase/Extension.lean:51-73",
+     "note": "isTheory, into_onto, euclid, mink and commutant clauses",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.EveryPhase.Almanac",
+     "role": "support",
+     "where": "YM/EveryPhase/Pack.lean:117-132",
+     "note": "contours i (the F_n and boundary values) with cards i and J i with links i",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Next.BOUNDARY.Compatible",
+     "role": "support",
+     "where": "YM/Next/BOUNDARY/Stage.lean:190-198",
+     "note": "fromPhase gives Contour.From, the continuation (D15) and boundary condition (D14f)",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Next.BOUNDARY.Attachment",
+     "role": "support",
+     "where": "YM/Next/BOUNDARY/Core.lean:156-161",
+     "note": "acts : Intervenes, so J is isometric, sends the vacuum to the OS vacuum and intertwines all translations",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Boundary.Action.Intervenes",
+     "role": "support",
+     "where": "YM/Fields/Spectrum.lean:103-106",
+     "note": "scale, across (translation intertwining), start (vacuum)",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Next.BOUNDARY.Attachment.projections",
+     "role": "helper",
+     "where": "YM/Next/BOUNDARY/Core.lean:207-225",
+     "note": "J intertwines every Borel spectral projection of the momentum PVM with that of the OS flow",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.EveryPhase.bHeat",
+     "role": "support",
+     "where": "YM/EveryPhase/Projection.lean:94-95",
+     "note": "[L]'s e^{-sH}, defined as J* E_s J",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.EveryPhase.bHeat_pair",
+     "role": "helper",
+     "where": "YM/EveryPhase/Projection.lean:97-100",
+     "note": "bHeat has the Boltzmann quadratic form against the momentum measure, identifying it with e^{-sH}",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.OS.Chamber.UniqueHeat",
+     "role": "support",
+     "where": "YM/Phase/Mixture.lean:35",
+     "note": "ker H_4^OS = C Omega^OS",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Every clause is in [L] through all_characters, with J unitary from Attachment.acts.scale and into_onto; the heat identity J e^{-sH} = e^{-sH_4} J is not stated as such, since [L] encodes e^{-sH} as bHeat = J* E_s J (identified via bHeat_pair and Attachment.projections), from which the identity is immediate for unitary J.",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S06-2",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "no-match",
+    "verifier": "close",
+    "agreed": false,
+    "judge": "close",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Definition 7.1",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YM.TraceExtension.center",
+     "role": "key",
+     "where": "YM/TraceExtension/WilsonTrace.lean:48",
+     "note": "Theta = theta (selected F) F.sector.energy, i.e. stressTrace minus its selected-phase one-point value times the unit.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.euclidean",
+     "role": "key",
+     "where": "YM/TraceExtension/WilsonTrace.lean:53",
+     "note": "G_Theta(r): two-point function of the centered trace in the selected phase at the time-axis pair opposed r.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YangMills.Hierarchy.traceTwo",
+     "role": "key",
+     "where": "ChallengeSpec.lean:149-150",
+     "note": "Public-spec form of G_Theta: correlation of centeredTrace at timePair r in the selected character.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Trace.Verse.award",
+     "role": "key",
+     "where": "YM/TraceExtension/Verse/Day.lean:41",
+     "note": "A_G; defined as 12*(d2^2/b0^2)*lieDim/pi^4 and proved equal to 3*dim/pi^4 in YangMills.award_eq.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.stressTrace",
+     "role": "support",
+     "where": "YM/TraceExtension/Centered.lean:17",
+     "note": "tau = sum_a J_aa.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.euclideanVEV",
+     "role": "support",
+     "where": "YM/TraceExtension/Centered.lean:34",
+     "note": "e_tr as the one-point value at the origin; vev_coordinates shows position independence.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.centerIn",
+     "role": "support",
+     "where": "YM/TraceExtension/Centered.lean:63",
+     "note": "v - VEV * unit.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.opposed",
+     "role": "support",
+     "where": "YM/TraceExtension/WilsonTrace.lean:51",
+     "note": "The point pair at -r e_4/2, r e_4/2.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YangMills.award_eq",
+     "role": "support",
+     "where": "TraceBridge.lean:24-34",
+     "note": "award = 3 dim g / pi^4 (private theorem).",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.theta",
+     "role": "key",
+     "where": "YM/TraceExtension/Centered.lean:64-64",
+     "note": "Theta = centerIn of the stress trace.",
+     "from_verifier": true,
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.vev_coordinates",
+     "role": "support",
+     "where": "YM/TraceExtension/Centered.lean:35-36",
+     "note": "position independence of the one-point value.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.pinned",
+     "role": "support",
+     "where": "YM/TraceExtension/WilsonTrace.lean:49-49",
+     "note": "the label of Theta as a field in the pinned table.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Theta is the stress trace minus its selected-phase vacuum value times the unit, and G_Theta is its two-point function at -r e_4/2, r e_4/2, as in [M]. [L] writes the amplitude as award G (d2, b0 form) and proves it equals 3 dim G / pi^4.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S07-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-match",
+    "verifier": "definition-match",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Theorem 7.2",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.TraceExtension.nonzero_strength",
+     "role": "key",
+     "where": "YM/TraceExtension/Sundial/Grand.lean:23-27",
+     "note": "Theta nonzero (pinned F != 0) from the r^8 log^2 limit with A>0.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.TraceExtension.trace_real",
+     "role": "key",
+     "where": "YM/TraceExtension/Centered.lean:69-71",
+     "note": "Theta is real (fixed by the real structure).",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.TraceExtension.trace_turn",
+     "role": "key",
+     "where": "YM/TraceExtension/Centered.lean:73-74",
+     "note": "Theta is invariant under the orthogonal group O(4).",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.TraceExtension.self_adjoint",
+     "role": "key",
+     "where": "YM/TraceExtension/WilsonTrace.lean:56-57",
+     "note": "The label is fixed by the adjoint J, i.e. Hermitian.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.TraceExtension.pinned_scalar",
+     "role": "key",
+     "where": "YM/TraceExtension/WilsonTrace.lean:61-63",
+     "note": "The label is fixed by every Lorentz transformation.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.TraceExtension.pinned_centered",
+     "role": "key",
+     "where": "YM/TraceExtension/WilsonTrace.lean:65-67",
+     "note": "Vacuum expectation of Phi(iota_4 Theta, f) vanishes for every test f.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Trace.Verse.outside",
+     "role": "key",
+     "where": "YM/TraceExtension/Verse/Cape.lean:77-88",
+     "note": "Short-distance limit r^8 log^2(1/r) G_Theta(r) -> award G over 0<r, from the Gallery property.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Integration.ManuscriptTraceTests.Tests",
+     "role": "attributed",
+     "where": "YM/Integration/ManuscriptTraceTests.lean:62-76",
+     "note": "Packages centered, shortDistance (EuclideanAsymptotic F award) and positive on one Final; exists_wilson_final supplies it for the constructed family.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Nonperturbative.Headline.TraceExclusions",
+     "role": "attributed",
+     "where": "YM/Nonperturbative/HeadlineSpec.lean:84-96",
+     "note": "Headline form of centered, shortDistance and positive.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.EuclideanAsymptotic",
+     "role": "support",
+     "where": "YM/TraceExtension/LogScaling.lean:74-75",
+     "note": "The limit statement over the right neighbourhood of 0.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Nonperturbative.existence",
+     "role": "support",
+     "where": "YM/Nonperturbative/Headlines.lean:19-40",
+     "note": "supplies TraceExclusions for the constructed final record.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "No single declaration states all of TR: reality, O(4) invariance, hermiticity, Lorentz scalarity, the vanishing vacuum expectation and the nonzero conclusion are separate lemmas, and the limit is `outside` (under Gallery) or the shortDistance and positive fields of the packaged structures. Nonzeroness is proved from the limit with A>0.",
+   "confidence": "medium",
+   "relation": "hasPart",
    "verification": {
     "batch": "S07-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "parts",
+    "verifier": "parts",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Definition 7.3",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YangMills.Hierarchy.Mode",
+     "role": "key",
+     "where": "ChallengeSpec.lean:152-158",
+     "note": "Mass m_sh>=0, spatial order j_h, time order k_E, continuous numerator h_mom homogeneous of degree j_h.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YangMills.Hierarchy.Mode.kernel",
+     "role": "key",
+     "where": "ChallengeSpec.lean:159-161",
+     "note": "K_{m,k,h}(r) integrand 1/(2E) E^k h(p) exp(-rE).",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YangMills.Hierarchy.wickProfile",
+     "role": "key",
+     "where": "ChallengeSpec.lean:165-167",
+     "note": "Finite list of complex-coefficient products of the mode integrals over Space; empty products are 1.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.Wick.Mode",
+     "role": "key",
+     "where": "YM/TraceExtension/Wick/PolynomialField.lean:23-30",
+     "note": "mass >= 0, k_E, continuous homogeneous h of integer degree j.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.Wick.Mode.kernel",
+     "role": "key",
+     "where": "YM/TraceExtension/Wick/PolynomialField.lean:34-35",
+     "note": "integrand of K: omega^k h/(2 omega) e^{-r omega}.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.Wick.Track",
+     "role": "key",
+     "where": "YM/TraceExtension/Wick/PolynomialField.lean:90-92",
+     "note": "finite list of modes; n = 0 is the empty product.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.Wick.Track.euclidean",
+     "role": "key",
+     "where": "YM/TraceExtension/Wick/PolynomialField.lean:105-105",
+     "note": "product of the K integrals.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.Wick.Collection",
+     "role": "key",
+     "where": "YM/TraceExtension/Wick/Refute.lean:15-15",
+     "note": "finite list of (complex coefficient, track).",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.Wick.atPoint",
+     "role": "key",
+     "where": "YM/TraceExtension/Wick/Refute.lean:16-16",
+     "note": "the finite Wick profile sum c_i prod K.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YangMills.Hierarchy.Track",
+     "role": "support",
+     "where": "ChallengeSpec.lean:162-164",
+     "note": "Finite list of modes.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Both the public YangMills.Hierarchy and internal YM.TraceExtension.Wick formulations define the mass-shell kernel with nonnegative mass, natural orders, continuous degree-j homogeneous numerator, and the finite complex-weighted sum of products of kernel integrals with empty product one. Only the value on r<=0 is extra in Lean, which [M] does not need.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S07-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-match",
+    "verifier": "definition-match",
+    "agreed": false,
+    "judge": "definition-match",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Proposition 7.4",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YangMills.Hierarchy.TraceTest",
+     "role": "key",
+     "where": "ChallengeSpec.lean:168-176",
+     "note": "Field `excludes`: no finite wickProfile equals traceTwo eventually on the right of 0.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YangMills.publicTrace",
+     "role": "key",
+     "where": "TraceBridge.lean:35-47",
+     "note": "Derives TraceTest, including excludes, from the headline TraceExclusions.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.Wick.euclidean_excludes",
+     "role": "key",
+     "where": "YM/TraceExtension/Wick/Refute.lean:75-82",
+     "note": "Uses only the limit r^8 log^2(1/r) G -> A with A>0, as [M] says.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.Wick.atPoint",
+     "role": "support",
+     "where": "YM/TraceExtension/Wick/Refute.lean:16",
+     "note": "Internal wick profile.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YangMills.Hierarchy.wickProfile",
+     "role": "support",
+     "where": "ChallengeSpec.lean:165-167",
+     "note": "Profile class of Definition 7.3.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.TraceExtension.EuclideanAsymptotic",
+     "role": "support",
+     "where": "YM/TraceExtension/LogScaling.lean:74-76",
+     "note": "the Theorem 7.2 limit used as hypothesis.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Nonperturbative.Headline.TraceExclusions",
+     "role": "support",
+     "where": "YM/Nonperturbative/HeadlineSpec.lean:84-96",
+     "note": "shortDistance and positive supply the hypothesis for the constructed record.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "'For every delta there is r<delta with G(r) != W(r)' is the negation of eventual equality on (0,infinity) near 0, which is `excludes`. The internal lemma needs the limit and A>0 of Theorem 7.2, which [M] uses as an earlier theorem about the same G.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S07-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "exact",
+    "verifier": "exact",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Definition 7.5",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-close",
+   "lean": [
+    {
+     "decl": "YM.Nonperturbative.Headline.SeparatedOPE",
+     "role": "key",
+     "where": "YM/Nonperturbative/HeadlineSpec.lean:24-47",
+     "note": "Field `remainder` writes R_D inline: whole(x,a;y,b) minus the sum over j<=D and channels of coef * whole(o, actor; y, b).",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YangMills.Hierarchy.OperatorProductExpansion",
+     "role": "key",
+     "where": "ChallengeSpec.lean:70-82",
+     "note": "Public-spec remainder expression, same inline form.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YangMills.Hierarchy.Within",
+     "role": "key",
+     "where": "ChallengeSpec.lean:65-66",
+     "note": "(r,M,eta)-cluster.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YangMills.Hierarchy.Clear",
+     "role": "key",
+     "where": "ChallengeSpec.lean:67-68",
+     "note": "delta_sp-clear spectators.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YangMills.Hierarchy.weight",
+     "role": "key",
+     "where": "ChallengeSpec.lean:63-64",
+     "note": "|A|_deg as the sum of the degrees.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YangMills.Hierarchy.grouped",
+     "role": "key",
+     "where": "ChallengeSpec.lean:58-62",
+     "note": "Fixed enumeration of the union of insertion and spectator slots (equivFin of I sum J).",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.OPE.WithinRoom",
+     "role": "support",
+     "where": "YM/OPE/Exchange/Regime.lean:24-26",
+     "note": "Internal cluster condition.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.OPE.ClearOf",
+     "role": "support",
+     "where": "YM/OPE/Exchange/Regime.lean:28-30",
+     "note": "Internal clearance condition.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Cluster, clearance, degree and slot-enumeration conventions agree. R_D has no standalone definition in [L]; it is the expression inside the `remainder` fields of the two OPE statements, with the coefficients as fields of the Reader or hierarchy.",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S07-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-close",
+    "verifier": "definition-match",
+    "agreed": false,
+    "judge": "definition-close",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Theorem 7.6",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.Nonperturbative.Headline.SeparatedOPE",
+     "role": "key",
+     "where": "YM/Nonperturbative/HeadlineSpec.lean:24-47",
+     "note": "Field `coefficient` gives the r^(j-|A|-eps) bound; field `remainder` gives the r^(D+1-|A|-eps) bound for all viewers (phases and mixture).",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YangMills.Hierarchy.OperatorProductExpansion",
+     "role": "key",
+     "where": "ChallengeSpec.lean:70-82",
+     "note": "Public-spec statement with fields `coefficients` and `remainder`.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.OPE.Orbits.Foundation",
+     "role": "attributed",
+     "where": "YM/OPE/Orbits/Kernel.lean:62-64",
+     "note": "Earlier stage statement of the same two estimates.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.OPE.WithinRoom",
+     "role": "support",
+     "where": "YM/OPE/Exchange/Regime.lean:24-26",
+     "note": "cluster condition.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.OPE.ClearOf",
+     "role": "support",
+     "where": "YM/OPE/Exchange/Regime.lean:28-30",
+     "note": "spectator clearance.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Nonperturbative.existence",
+     "role": "support",
+     "where": "YM/Nonperturbative/Headlines.lean:19-40",
+     "note": "proves SeparatedOPE for the constructed final record and reader.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Both bounds hold eventually as r goes to 0 on the right, for every cluster (M>=0, eta>0) and, for the remainder, delta_sp-clear spectators, every D and every state, with coefficients independent of spectators; 'some r_0' is `forall eventually in nhdsWithin 0 (Ioi 0)`. [L] takes the channel set and coefficients from a Reader/hierarchy fixed beforehand, as [M] fixes them once.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S07-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "exact",
+    "verifier": "exact",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Theorem 7.7",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "close",
+   "lean": [
+    {
+     "decl": "YangMills.contactDistribution",
+     "role": "key",
+     "where": "ContactBridge.lean:14-52",
+     "note": "For MultipleLight F M, every state s (phase or mixture), arity k and label list v there is a continuous linear D on test functions with D f = integral of f * S.useAt whenever tsupport f lies in the separated configurations.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YangMills.Hierarchy.Contacts",
+     "role": "key",
+     "where": "ContactSpec.lean:12-16",
+     "note": "Public-spec form of the same existence claim.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Contacts.Solstice.MultipleLight",
+     "role": "support",
+     "where": "YM/Contacts/Solstice/Result.lean:52-63",
+     "note": "The contact devices (sharing the Reader's prescription and rotations) and the services hypothesis; its `distribution` field is the local contact estimate.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Contacts.Solstice.celestial",
+     "role": "attributed",
+     "where": "YM/Contacts/Solstice/Result.lean:78-85",
+     "note": "Existence of devices satisfying MultipleLight.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Nonperturbative.Headline.WilsonExistence",
+     "role": "support",
+     "where": "YM/Nonperturbative/HeadlineSpec.lean:143-155",
+     "note": "conjuncts M.basis = Q.port and MultipleLight F M tie the devices to the reader's prescription.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "[L] proves the existence of a distribution D equal to the correlation integral on separated tests, for devices satisfying MultipleLight; [M] says the explicit subtraction construction of Section J gives it, which [L] states only through those devices and does not state as a property of D.",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S07-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "close",
+    "verifier": "close",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Definition 8.1",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YangMills.Hierarchy",
+     "role": "key",
+     "where": "ChallengeSpec.lean:24-45",
+     "note": "Fields H, labels, theory (relativistic data), Field d with its normed-space instances, toLabel (iota_d), project (pi_quo), Character with metric/Borel/compact instances, phaseMeasure, selected, correlation (S_n^zeta, zeta : Option Character with none = mix), continuation (F_n), Channel/actor/coefficient, centeredTrace : Field 4.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YangMills.WightmanTheory",
+     "role": "support",
+     "where": "PublicTheory.lean:255-262",
+     "note": "The relativistic data of Definitions 14a-14b.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YangMills.HilbertSpace",
+     "role": "support",
+     "where": "PublicTheory.lean:79-83",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YangMills.FieldLabels",
+     "role": "support",
+     "where": "PublicTheory.lean:96-100",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Spec.Final",
+     "role": "attributed",
+     "where": "YM/Spec/Closed.lean:64-73",
+     "note": "Internal specification that the public Hierarchy is extracted from (via YangMills.hierarchy); not the statement of Q0.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YangMills.FieldSystem",
+     "role": "support",
+     "where": "PublicTheory.lean:105-111",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YangMills.PoincareAction",
+     "role": "support",
+     "where": "PublicTheory.lean:219-251",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Every datum of Q0 is a field of the structure with the same type: finite-dimensional complex normed F_d, linear maps to the labels, projection from tokens to the sigma type, compact metric Borel phase space with a measure and a selected point, tables indexed by Option Character, continuation, finite channel sets, coefficients over finite index types and a degree-4 element. No axioms are imposed here, as in [M].",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S08-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-match",
+    "verifier": "definition-match",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Definition 8.2",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YangMills.WilsonRegularity",
+     "role": "key",
+     "where": "ChallengeSpec.lean:12-22",
+     "note": "running (b_*), continuous, invariant (gauge transformations), localSupport (finite stencil read through links with both ends in the stencil).",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YangMills.WilsonFamily",
+     "role": "support",
+     "where": "PublicWilson.lean:35-48",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YangMills.WilsonFamily.mesh",
+     "role": "support",
+     "where": "PublicWilson.lean:50",
+     "note": "a_N = 1/denominator N, so log(1/a_N) is Real.log (mesh N)⁻¹.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The four clauses agree: positive b_* with the epsilon/N_0 condition uniform in p, continuity, gauge invariance under site-wise transformations, and a finite stencil per token for all N, p, sites with only links inside the translated stencil read.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S08-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-match",
+    "verifier": "definition-match",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Definition 8.3",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YangMills.WightmanTheory.Axioms",
+     "role": "key",
+     "where": "PublicTheory.lean:315-319",
+     "note": "W0 to W3 as separate fields.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YangMills.Hierarchy.Reconstructed",
+     "role": "support",
+     "where": "ChallengeSpec.lean:117-143",
+     "note": "Its field axioms : T.theory.Axioms states Q2 for the hierarchy.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YangMills.WightmanTheory.W0",
+     "role": "support",
+     "where": "PublicTheory.lean:270-280",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YangMills.WightmanTheory.W1",
+     "role": "support",
+     "where": "PublicTheory.lean:282-285",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YangMills.WightmanTheory.W2",
+     "role": "support",
+     "where": "PublicTheory.lean:287-308",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YangMills.WightmanTheory.W3",
+     "role": "support",
+     "where": "PublicTheory.lean:310-311",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Q2 says the relativistic data satisfy W0-W3; Lean's Axioms structure is that conjunction on WightmanTheory, imposed on T.theory in Hierarchy.Reconstructed.axioms. W0-W3 match Definitions W0-W3 in form (spectral relation and forward-cone support, unique vacuum, word domain, tempered, adjoint, covariance, locality at spacelike supports).",
+   "confidence": "medium",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S08-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-match",
+    "verifier": "definition-match",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Definition 8.4",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YangMills.Hierarchy.Reconstructed",
+     "role": "key",
+     "where": "ChallengeSpec.lean:117-143",
+     "note": "Q3 clauses: faithful, injective, acts, covers, represents, normalized, fullSupport, permutation, smooth, characterContinuity, mixture.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YangMills.FieldSystem.Faithful",
+     "role": "support",
+     "where": "PublicTheory.lean:159-162",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YangMills.WilsonFamily.separated",
+     "role": "support",
+     "where": "PublicWilson.lean:54-69",
+     "note": "Conf_n as the open set of injective configurations.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Faithful labels, injective iota_d, covering images, surjective pi_quo, one acting field, probability measure of full support (IsOpenPosMeasure), permutation symmetry and smoothness on separated configurations for every zeta (Option Character), continuity in the phase and the mixture integral all appear with the same quantifiers. The structure also holds the Q2 and Q4 clauses, treated at Definitions 8.3 and 8.5.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S08-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-match",
+    "verifier": "definition-match",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Definition 8.5",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YangMills.Hierarchy.Reconstructed",
+     "role": "key",
+     "where": "ChallengeSpec.lean:117-143",
+     "note": "analytic and root state the ordered-time continuation (Definition 15); boundary states Definition 14f.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YangMills.Hierarchy.orderedTube",
+     "role": "support",
+     "where": "ChallengeSpec.lean:95-96",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YangMills.Hierarchy.complexShift",
+     "role": "support",
+     "where": "ChallengeSpec.lean:99-103",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YangMills.Hierarchy.imaginaryTimes",
+     "role": "support",
+     "where": "ChallengeSpec.lean:105-107",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YangMills.Hierarchy.tensorTest",
+     "role": "support",
+     "where": "ChallengeSpec.lean:113-115",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "analytic: holomorphic on the strictly ordered imaginary-part tube at each real spatial configuration; root: equals the selected-phase table at (it_i) for t_1<...<t_n; boundary: the r to 0 limit of the integral against tensor test functions equals the vacuum expectation of the smeared fields at the iota_d-images, with the heights strictly increasing. The selected phase is T.selected and the relativistic datum is T.theory, as [M] reads Q4.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S08-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-match",
+    "verifier": "definition-match",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Definition 8.6",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YangMills.Hierarchy.OperatorProductExpansion",
+     "role": "key",
+     "where": "ChallengeSpec.lean:70-81",
+     "note": "coefficients: bound r^(j - weight - eps) on clusters; remainder: Definition 18 remainder bounded by r^(D+1 - weight - eps) for clear spectators and every s : Option Character.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YangMills.Hierarchy.grouped",
+     "role": "support",
+     "where": "ChallengeSpec.lean:58-61",
+     "note": "Concatenated correlation under a fixed enumeration of the cluster and spectator slots.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YangMills.Hierarchy.Within",
+     "role": "support",
+     "where": "ChallengeSpec.lean:65-66",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YangMills.Hierarchy.Clear",
+     "role": "support",
+     "where": "ChallengeSpec.lean:67-68",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YangMills.Hierarchy.weight",
+     "role": "support",
+     "where": "ChallengeSpec.lean:63",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The two inequalities of Theorem OP are fields, with eventually-in-r thresholds that depend only on the listed data (the remainder threshold is chosen after I, J, A, B, M, eta, delta_sp, eps, D and before positions, centre, spectators and state index). Coefficients take only the cluster fields, positions and centre, so they are spectator independent by type.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S08-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-match",
+    "verifier": "definition-match",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Definition 8.7",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YangMills.Hierarchy.TraceTest",
+     "role": "key",
+     "where": "ChallengeSpec.lean:168-175",
+     "note": "centered, amplitudePositive, shortDistance, excludes.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YangMills.Hierarchy.traceTwo",
+     "role": "support",
+     "where": "ChallengeSpec.lean:149",
+     "note": "S_2^{xi_*}(Theta,Theta;-re_4/2,re_4/2) via timePair.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YangMills.Hierarchy.timePair",
+     "role": "support",
+     "where": "ChallengeSpec.lean:146-147",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YangMills.Hierarchy.wickProfile",
+     "role": "support",
+     "where": "ChallengeSpec.lean:165-167",
+     "note": "Finite Wick profiles of Definition 17.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YangMills.Hierarchy.Mode",
+     "role": "support",
+     "where": "ChallengeSpec.lean:152-158",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YangMills.Hierarchy.Track",
+     "role": "support",
+     "where": "ChallengeSpec.lean:162-164",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Vacuum centering, the limit r^8 log^2(1/r) times the two-point function tending to 3 dim(g)/pi^4 with that amplitude positive, and non-equality with every finite Wick profile on every interval (0,delta) (stated as not eventually equal as r goes to 0 from above) agree. Mode.kernel is the kernel K of Definition 17 with its homogeneity and continuity conditions.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S08-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-match",
+    "verifier": "definition-match",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Theorem A",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YangMills.JointExistence",
+     "role": "key",
+     "where": "ChallengeSpec.lean:186-189",
+     "note": "The statement: for every simple gauge group a family with WilsonRegularity and, for every strictly increasing p, a q and a Hierarchy with Properties (p ∘ q).",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YangMills.jointExistence",
+     "role": "key",
+     "where": "Solution.lean:4-10",
+     "note": "Proof of JointExistence (Challenge.lean:5 holds the sorry placeholder with the same statement).",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YangMills.Hierarchy.Properties",
+     "role": "support",
+     "where": "ChallengeSpec.lean:177-181",
+     "note": "wilson (Converges along the order to S^mix ∘ pi_quo), reconstruction (Q2-Q4), ope (Q5), nonfree (Q6).",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YangMills.GaugeGroup",
+     "role": "support",
+     "where": "PublicTheory.lean:25-37",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YangMills.GaugeGroup.IsSimple",
+     "role": "support",
+     "where": "PublicTheory.lean:39-49",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YangMills.WilsonFamily.Converges",
+     "role": "support",
+     "where": "PublicWilson.lean:85-91",
+     "note": "Definition 9, ordered convergence.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YangMills.su2Theory",
+     "role": "attributed",
+     "where": "ConcreteSU2.lean:15-18",
+     "note": "SU(2) instance only.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YangMills.constructed",
+     "role": "attributed",
+     "where": "Construction.lean:15-40",
+     "note": "Stronger internal theorem from which jointExistence is derived.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The quantifier order (family before the sequence p, then q and one hierarchy) and the content (regularity, Properties = convergence of S^mix ∘ pi_quo plus Q2-Q6) are the same. Simple compact matrix gauge groups with nonabelian simple real Lie algebra correspond to GaugeGroup with IsSimple.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S08-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "exact",
+    "verifier": "exact",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Remark 8.8",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YangMills.Hierarchy.Reconstructed",
+     "role": "key",
+     "where": "ChallengeSpec.lean:117-143",
+     "note": "Q3 clauses: acts (a nonzero smeared field), faithful and covers.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YangMills.publicReconstruction",
+     "role": "key",
+     "where": "HierarchyBridge.lean:79-125",
+     "note": "Proves acts for the construction with the unit field S.unit 0 (lines 85-88).",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Trace.Target.Result",
+     "role": "key",
+     "where": "YM/TraceExtension/Endpoint.lean:99-125",
+     "note": "Field nonzero : pinned F ≠ 0 (Theta ≠ 0 of Theorem TR) and centered (zero vacuum expectation).",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Trace.Target.main",
+     "role": "key",
+     "where": "YM/TraceExtension/Endpoint.lean:155-161",
+     "note": "Proves Result, hence Theta ≠ 0, for every Final of the construction.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YangMills.Hierarchy.TraceTest",
+     "role": "key",
+     "where": "ChallengeSpec.lean:168-175",
+     "note": "Vacuum centering, the positive limit 3 dim g/pi^4 and exclusion of every finite Wick profile near 0.",
+     "relation": "hasPart"
+    }
+   ],
+   "note": "Nonzero smeared field, its unit-field witness, Theta ≠ 0 with zero vacuum expectation, the positive limit and the Wick-profile exclusion are each stated or proved in [L]. The equivalence with L ≠ 0 and the non-scalar conclusion are one-line deductions from faithful, covers, nonzero and centered, with no declaration of their own.",
+   "confidence": "medium",
+   "relation": "hasPart",
    "verification": {
     "batch": "S08-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "parts",
+    "verifier": "no-match",
+    "agreed": false,
+    "judge": "parts",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Theorem B",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YangMills.constructed",
+     "role": "key",
+     "where": "Construction.lean:15-40",
+     "note": "Family with penalty b, Makes and WilsonRegularity (some positive slope); for every extraction order a refinement, table, Final and hierarchy with Properties, ordered convergence, PositionsUV, reconstruction and Wightman axioms per phase, OPE, trace exclusions and contacts.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Pert.Asymptotics.zeroUp_bound",
+     "role": "key",
+     "where": "YM/Pert/Asymptotics/RawAxis.lean:15-30",
+     "note": "From C.Makes, beta/log(1/a) is within eps of 2*b0 = 11 casimir/(24 pi^2) eventually, uniformly in p: the slope value B prints.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.FullVolume.PositionsUV",
+     "role": "key",
+     "where": "YM/FullVolume/Profiles.lean:25-36",
+     "note": "Clause (i), a conjunct of constructed.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YangMills.Hierarchy.Properties",
+     "role": "support",
+     "where": "ChallengeSpec.lean:177-181",
+     "note": "Clauses (ii)-(v) on the public hierarchy: convergence, reconstruction, OPE, trace test.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Nonperturbative.Headline.Reconstruction",
+     "role": "support",
+     "where": "YM/Nonperturbative/HeadlineSpec.lean:73-82",
+     "note": "Clause (iii): phase average and Wightman axioms per character.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Nonperturbative.Headline.TraceExclusions",
+     "role": "support",
+     "where": "YM/Nonperturbative/HeadlineSpec.lean:84-96",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YangMills.regular",
+     "role": "helper",
+     "where": "HierarchyBridge.lean:16-25",
+     "note": "Proves WilsonRegularity with slope 2*b0 via zeroUp_bound.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YangMills.hierarchy",
+     "role": "support",
+     "where": "HierarchyBridge.lean:27-42",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YangMills.wilsonFamily",
+     "role": "support",
+     "where": "WilsonBridge.lean:21-30",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "constructed states every clause of B except the slope value: its WilsonRegularity asserts only some positive slope, and the value 11 casimir/(24 pi^2) follows from its conjunct C.Makes only through zeroUp_bound. Hence no single declaration states B, and constructed with zeroUp_bound and PositionsUV state it together.",
+   "confidence": "medium",
+   "relation": "hasPart",
    "verification": {
     "batch": "S08-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "parts",
+    "verifier": "stronger",
+    "agreed": false,
+    "judge": "parts",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Remark 8.9",
-   "status": null,
-   "relation": null,
+   "status": "not-formalized-not-needed",
    "lean": [],
-   "note": "Not yet judged",
+   "note": "A pointer to Part II lemmas (endpoint tuning, moving-point convergence, low-energy bounds, spectral results, Fock and polynomial countertests, integrated and nested estimates) that asserts no new mathematics of its own; those lemmas are mapped under their own items.",
+   "searched": [
+    "tool.py batch S08-1 seeds for Remark 8.9 (YM.OPE.Nesting.uniform, YM.OPE.single, YM.Contacts.Layers.signed_placements, YM.MergeProof.compose, YM.FullVolume.positioned, YM.Spec.Seed, YM.Nonperturbative.continuum_with_position_tests)",
+    "outline unit VIII.1 attributions",
+    "Headline.NestedOPE and constructed conjuncts (OPE nesting, position tests)"
+   ],
+   "confidence": "high",
+   "relation": "noMatch",
    "verification": {
     "batch": "S08-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "not-formalized-not-needed",
+    "verifier": "not-formalized-not-needed",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (10.1)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.Source.Hol.links",
+     "role": "key",
+     "where": "YM/Source/Local.lean:62",
+     "note": "U(h,j)(x,a) as the time-one value of the flow, for the link l=(x,a).",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Source.Hol.solves",
+     "role": "key",
+     "where": "YM/Source/Local.lean:57",
+     "note": "the flow solves u(0)=1, u'=u*A.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Source.partConnection",
+     "role": "key",
+     "where": "YM/Source/Local.lean:34-35",
+     "note": "the coefficient h*A_a^{<=d}(h(x+t e_a)), A^{<=d}=potential d J.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Source.SolvesLink",
+     "role": "support",
+     "where": "YM/Source/Local.lean:39-40",
+     "note": "the ODE u(0)=1, u'=u*A with u valued in G.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Source.SolvesLink.unique",
+     "role": "support",
+     "where": "YM/Source/Local.lean:42-52",
+     "note": "uniqueness of the solution.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Source.potential",
+     "role": "support",
+     "where": "YM/Source/Local.lean:31-32",
+     "note": "sum over j+2<=d (range (d-1)) of the homogeneous radial potentials.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Source.Hol.exists_ode",
+     "role": "support",
+     "where": "YM/Source/ODE.lean:162-168",
+     "note": "existence of the solution family in G.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Source.Hol",
+     "role": "key",
+     "where": "YM/Source/Local.lean:55-58",
+     "note": "Field solves states u(0)=1 and u' = u * coefficient.",
+     "from_verifier": true,
+     "relation": "exactMatch"
+    }
+   ],
+   "note": "[L] takes any family of solutions in G of u(0)=1, u'=u*h*A^{<=d}(h(x+t e_a)) on cover links (unique by SolvesLink.unique, exists by exists_ode) and sets U to its time-one value; this is [M]'s definition.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S10-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "exact",
+    "verifier": "exact",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (10.2)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.Source.Drops.scales",
+     "role": "key",
+     "where": "YM/Source/Drops.lean:59-68",
+     "note": "links d p v = links d (expand d (trunk d (scaleJet p v))) 1, i.e. U(h,j)=U(1,sc_h j) with the jet truncated to weight <=d.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Source.scaleJet",
+     "role": "support",
+     "where": "YM/Source/Local.lean:82",
+     "note": "sc_h j=(h^{j+2} A_j)_j.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Source.Hol.flat",
+     "role": "key",
+     "where": "YM/Source/Local.lean:64-70",
+     "note": "U(0,j)=1.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Next.Foundations.test_scaled",
+     "role": "support",
+     "where": "YM/Next/FOUNDATIONS/Readout.lean:41-44",
+     "note": "the same dilation identity for the placed test links on the torus.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The dilation identity and the identity U(0,j)=1 are two separate declarations, which together state the display. Drops.scales states the right side with the jet truncated to weight at most d, matching U's use of A^{<=d}.",
+   "confidence": "high",
+   "relation": "hasPart",
    "verification": {
     "batch": "S10-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "parts",
+    "verifier": "parts",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Definition 10.1",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YM.Source.SectionData",
+     "role": "key",
+     "where": "YM/Source/Local.lean:103-105",
+     "note": "a finite stencil and a C-linear map from coefficient vectors to polynomials in link entries on it.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Source.Formula",
+     "role": "support",
+     "where": "YM/Source/Local.lean:99",
+     "note": "MvPolynomial over entry variables, finite sum with natural exponents.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Source.Index",
+     "role": "support",
+     "where": "YM/Source/Local.lean:93",
+     "note": "variables: used edges x Fin repDim x Fin repDim x Bool (entry or conjugate).",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Source.UsedEdges",
+     "role": "support",
+     "where": "YM/Source/Local.lean:92",
+     "note": "positive links with both endpoints in the stencil.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Source.entry",
+     "role": "support",
+     "where": "YM/Source/Local.lean:95-97",
+     "note": "U_e(alpha,delta) or its conjugate.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Source.SectionData.evaluate",
+     "role": "support",
+     "where": "YM/Source/Local.lean:110",
+     "note": "evaluation of the polynomial at the entries of U.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "[L] packages the section as a stencil with a linear map c -> polynomial in entries and conjugate entries of the positive links inside the stencil, with matrix indices up to the representation dimension (n_G); this is [M]'s form. Properties such as unit, reality and covariance are in Sound, not in the definition, as in [M].",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S10-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-match",
+    "verifier": "definition-match",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (10.3)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.Source.Projects",
+     "role": "key",
+     "where": "YM/Source/Local.lean:85-89",
+     "note": "for all jets J, h -> F(links d J h) and h -> read (scaleJet J h) p are C^d at 0 with equal iterated derivatives of order k<=d.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Source.SectionData.Sound",
+     "role": "key",
+     "where": "YM/Source/Local.lean:140-147",
+     "note": "field `projects` asserts Projects for the label of every coefficient vector c.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Source.scaleJet",
+     "role": "support",
+     "where": "YM/Source/Local.lean:82",
+     "note": "sc_h.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Source.Hol.links",
+     "role": "support",
+     "where": "YM/Source/Local.lean:62",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Projects with F = evaluate c states the equality of the q-th h-derivatives at 0, 0<=q<=d, of the section on the test links and of the label on sc_h j; [L] additionally records that both sides are C^d at 0 and takes arbitrary jets J, of which only weight <=d enters.",
+   "step": "YM.Next.Foundations.sound (the projects field of Sound), the lemma that states it is Lemma 10.2",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S10-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "exact",
+    "verifier": "exact",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Lemma 10.2",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "weaker",
+   "lean": [
+    {
+     "decl": "YM.Next.Foundations.sound",
+     "role": "key",
+     "where": "YM/Next/FOUNDATIONS/Primary.lean:103-104",
+     "note": "the fixed section localSection G d is Sound for every d.",
+     "relation": "narrowMatch"
+    },
+    {
+     "decl": "YM.Next.Foundations.localSection",
+     "role": "key",
+     "where": "YM/Next/FOUNDATIONS/Primary.lean:101",
+     "note": "the fixed section at each d, chosen by Classical.choose from learns, so its stencil is not known to be the G06 box.",
+     "relation": "narrowMatch"
+    },
+    {
+     "decl": "YM.Next.Foundations.learns",
+     "role": "key",
+     "where": "YM/Next/FOUNDATIONS/Primary.lean:98-99",
+     "note": "existence of Sound, pop sections with cost bounds for every d.",
+     "relation": "narrowMatch"
+    },
+    {
+     "decl": "YM.Integrated.source_sections",
+     "role": "key",
+     "where": "YM/Integrated.lean:216-219",
+     "note": "the same existence for every holonomy family and frames.",
+     "relation": "narrowMatch"
+    },
+    {
+     "decl": "YM.Bid.Learns",
+     "role": "support",
+     "where": "YM/Bid/Source.lean:72-74",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Source.SectionData.Sound",
+     "role": "support",
+     "where": "YM/Source/Local.lean:140-147",
+     "note": "stencil contains 0 and is signed-permutation stable; gauge invariance, unit, covariance, reality, Projects.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Source.Projects",
+     "role": "support",
+     "where": "YM/Source/Local.lean:85-89",
+     "note": "the Taylor condition: derivatives of order k <= d at h=0 agree with read (scaleJet J h).",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Bid.G06",
+     "role": "support",
+     "where": "YM/Bid/Source.lean:58-60",
+     "note": "returns only Sound and pop, not the stencil shape.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Work.G06.answer",
+     "role": "helper",
+     "where": "YM/Work/G06.lean:43-60",
+     "note": "the construction uses stencil box r, but only inside the proof.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Sound gives gauge invariance, reality, hypercubic covariance, unit and the Taylor equality up to order d, on a finite stencil containing 0 and stable under signed permutations. [M] also prints that the stencil is the box [-rho_d,rho_d]^4 cap Z^4; no declaration statement proves this, and the fixed localSection is a Classical.choose whose stencil is not provably a box, so the conclusion is weaker.",
+   "confidence": "high",
+   "finding": {
+    "claim": "weaker",
+    "confirmed": true,
+    "skeptic_notes": [
+     "[M] asserts that for every d a box stencil [-rho_d,rho_d]^4 cap Z^4 and sections can be chosen that are gauge invariant, real, hypercubic covariant, unit-normalized and Taylor-matched to order d. [L]'s Sound gives `anchored : 0 ∈ C.stencil`, `stable (s) : C.stencil.image s.act = C.stencil`, gaugeInvariant, unit, Hpart, ordinary_real and Projects (iteratedDeriv k f 0 = iteratedDeriv k g 0 for k ≤ d), but no stated declaration gives `stencil = box r`: Bid.G06 and Bid.Learns only conclude `∃ T : SectionData F, T.Sound H ∧ pop T`, and localSection is a choose from Learns. The box appears only inside the proof of Work.G06.answer (`⟨box r, ...⟩`) and is lost in G06's statement, so the claim stands; it is a missing conclusion, not a typo.",
+     "[M] prints that for every d a box stencil Sigma_d=[-rho_d,rho_d]^4 cap Z^4 and sections can be chosen gauge invariant, real, hypercubic covariant, unit-normalized and Taylor-matching to order d. [L]'s `sound` gives `(localSection G d).Sound (hol G)`, whose fields are `anchored : 0 ∈ C.stencil`, `stable (s : Signed) : C.stencil.image s.act = C.stencil`, gaugeInvariant, unit, Hpart, ordinary_real and `projects` (Taylor equality for k ≤ d), with `localSection` a `choose` from `Bid.Learns`, whose existential and `Bid.G06`'s conclusion `∃ T, T.Sound H ∧ pop T` say nothing about the stencil being a box. `Work.G06.answer` does build its section on `box r` (`⟨box r, E.toLinearMap.comp Q⟩`), but only inside its proof; it is lost through `G06` and `teaching`'s `choose`, and no declaration states that a `localSection` stencil equals or lies in a `box` (`Next/RANK/Carried.lean:54` and `Next/UV_STRESS/Range.lean:71` only assume containment as a field or predicate). The claim stands: the box shape is the missing part of the conclusion. It is deliberate in [M], matching the proof's construction, so it is not a typo."
+    ]
+   },
+   "relation": "narrowMatch",
    "verification": {
     "batch": "S10-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "weaker",
+    "verifier": "close",
+    "agreed": false,
+    "judge": "weaker",
+    "source": "judge",
+    "skeptics": [
+     {
+      "refuted": false,
+      "status": "weaker",
+      "reason": "[M] asserts that for every d a box stencil [-rho_d,rho_d]^4 cap Z^4 and sections can be chosen that are gauge invariant, real, hypercubic covariant, unit-normalized and Taylor-matched to order d. [L]'s Sound gives `anchored : 0 ∈ C.stencil`, `stable (s) : C.stencil.image s.act = C.stencil`, gaugeInvariant, unit, Hpart, ordinary_real and Projects (iteratedDeriv k f 0 = iteratedDeriv k g 0 for k ≤ d), but no stated declaration gives `stencil = box r`: Bid.G06 and Bid.Learns only conclude `∃ T : SectionData F, T.Sound H ∧ pop T`, and localSection is a choose from Learns. The box appears only inside the proof of Work.G06.answer (`⟨box r, ...⟩`) and is lost in G06's statement, so the claim stands; it is a missing conclusion, not a typo."
+     },
+     {
+      "refuted": false,
+      "status": "weaker",
+      "reason": "[M] prints that for every d a box stencil Sigma_d=[-rho_d,rho_d]^4 cap Z^4 and sections can be chosen gauge invariant, real, hypercubic covariant, unit-normalized and Taylor-matching to order d. [L]'s `sound` gives `(localSection G d).Sound (hol G)`, whose fields are `anchored : 0 ∈ C.stencil`, `stable (s : Signed) : C.stencil.image s.act = C.stencil`, gaugeInvariant, unit, Hpart, ordinary_real and `projects` (Taylor equality for k ≤ d), with `localSection` a `choose` from `Bid.Learns`, whose existential and `Bid.G06`'s conclusion `∃ T, T.Sound H ∧ pop T` say nothing about the stencil being a box. `Work.G06.answer` does build its section on `box r` (`⟨box r, E.toLinearMap.comp Q⟩`), but only inside its proof; it is lost through `G06` and `teaching`'s `choose`, and no declaration states that a `localSection` stencil equals or lies in a `box` (`Next/RANK/Carried.lean:54` and `Next/UV_STRESS/Range.lean:71` only assume containment as a field or predicate). The claim stands: the box shape is the missing part of the conclusion. It is deliberate in [M], matching the proof's construction, so it is not a typo."
+     }
+    ],
+    "claimed": "weaker",
+    "finding": "confirmed",
+    "complete": true
    }
   },
   {
    "id": "Eq (10.4)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.Work.G06.averaged",
+     "role": "key",
+     "where": "YM/Work/G06/Average.lean:109",
+     "note": "share * sum over signed permutations s of term c s, share=1/|Signed|.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Work.G06.term",
+     "role": "key",
+     "where": "YM/Work/G06/Average.lean:89-90",
+     "note": "beforeTurn (s^{-1} c) composed with pull s 0, i.e. Psi_{rho^{-1}c}(rho^* U).",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Work.G06.beforeTurn",
+     "role": "support",
+     "where": "YM/Work/G06/Average.lean:70",
+     "note": "Psi_c = sum_i c_i P_i evaluated on the slot values.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Work.G06.answer",
+     "role": "key",
+     "where": "YM/Work/G06.lean:43-60",
+     "note": "local `he` shows the final section's evaluate equals averaged.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Work.G06.share",
+     "role": "support",
+     "where": "YM/Work/G06/Average.lean:101",
+     "note": "1/|signed permutations|.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "[L] defines the section as the average over the signed permutations (hypercubic group) of the pulled-back unaveraged sections at the rotated coefficient vector, exactly as printed; the unaveraged Psi is built from slot polynomials (Cumuli) rather than named curvature measurements.",
+   "step": "YM.Work.G06.answer, the equality `he` at YM/Work/G06.lean:43-60 (definition at YM/Work/G06/Average.lean:109)",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S10-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "exact",
+    "verifier": "exact",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (10.5)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "close",
+   "lean": [
+    {
+     "decl": "YM.Next.Foundations.priced",
+     "role": "key",
+     "where": "YM/Next/FOUNDATIONS/Primary.lean:133-142",
+     "note": "For d,k,P <= D the fixed section column i is regular and sup-bounded by price(D)*t^(factor count) on every torus, anchor, healthy configuration and direction list.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Bid.Credit",
+     "role": "support",
+     "where": "YM/Bid/Source.lean:63-66",
+     "note": "The statement of priced is read through Credit: Regular plus supBounds with bound w*threshold^(grade.2).",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.RG.BudgetPoint.supBounds",
+     "role": "support",
+     "where": "YM/RG/Masks.lean:164-166",
+     "note": "Healthy on the footprint, ordered left derivatives of length <= order in directions with dirBound.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.RG.BudgetPoint",
+     "role": "support",
+     "where": "YM/RG/Masks.lean:125-136",
+     "note": "Threshold t in (0,1], power >= 2, order >= 6; dirBound is the permitted-direction condition.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Next.Foundations.localSection",
+     "role": "support",
+     "where": "YM/Next/FOUNDATIONS/Primary.lean:101",
+     "note": "The fixed primary sections.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Both bound the ordered left derivatives of column b_{d,i} by a constant times t^{k_i}, uniformly in torus side and anchor, under healthiness on the stencil and the direction bound t(1+dist)^varpi. [L] also asserts regularity, and restricts the range to order >= 6 and power >= 2 (covered for smaller k, varpi by monotone constants), so neither direction of strength holds.",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S10-2",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "close",
+    "verifier": "close",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (10.6)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.Next.Foundations.full_value_bound",
+     "role": "key",
+     "where": "YM/Next/FOUNDATIONS/Primary.lean:147-163",
+     "note": "One constant c >= 1 bounds every column value, on the infinite cover and for every placed configuration, with no health condition.",
+     "relation": "exactMatch"
+    }
+   ],
+   "note": "There is a single constant bounding the norm of every basis column at every placement and arbitrary configuration, matching the sup over i,y,U.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S10-2",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "exact",
+    "verifier": "exact",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Lemma 10.3",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.Bid.pop",
+     "role": "support",
+     "where": "YM/Bid/Source.lean:55-56",
+     "note": "Definition read through valuation: each column is a polynomial in slot (curvature) measurements with every monomial of degree >= grade.2.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Next.Foundations.valuation",
+     "role": "key",
+     "where": "YM/Next/FOUNDATIONS/Primary.lean:106-107",
+     "note": "Each basis column of the fixed section is a polynomial in transported curvature slots with at least k_i factors per monomial (first sentence).",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Next.Foundations.priced",
+     "role": "key",
+     "where": "YM/Next/FOUNDATIONS/Primary.lean:133-142",
+     "note": "The small-field derivative bound (10.5).",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Next.Foundations.full_value_bound",
+     "role": "key",
+     "where": "YM/Next/FOUNDATIONS/Primary.lean:147-163",
+     "note": "The global bound (10.6).",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Bid.Credit",
+     "role": "support",
+     "where": "YM/Bid/Source.lean:63-66",
+     "note": "Read through by priced.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The three claims of the lemma (polynomial structure with factor lower bound, bound (10.5), bound (10.6)) are each stated by one declaration for the fixed sections; (10.5) has the order >= 6, power >= 2 range and an added regularity conclusion.",
+   "confidence": "medium",
+   "relation": "hasPart",
    "verification": {
     "batch": "S10-2",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "parts",
+    "verifier": "parts",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (10.7)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.Wilson.law_gauge",
+     "role": "key",
+     "where": "YM/Wilson/Symmetry.lean:97-99",
+     "note": "Site gauge transformations preserve the Wilson law for every real beta and side n >= 1; this gives the integral identity for U^gamma for every measurable F.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Wilson.law_pull",
+     "role": "key",
+     "where": "YM/Wilson/Symmetry.lean:93-95",
+     "note": "Signed-permutation pull-back about any site preserves the law.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Wilson.law_translate",
+     "role": "key",
+     "where": "YM/Wilson/Symmetry.lean:101-104",
+     "note": "Translations preserve the law; with law_pull they cover the affine isometries rho x + b.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Wilson.moment_pull",
+     "role": "key",
+     "where": "YM/Wilson/Symmetry.lean:106-111",
+     "note": "Integral form: moment of F composed with pull equals moment of F, for integrable F.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Wilson.moment",
+     "role": "support",
+     "where": "YM/Wilson/Law.lean:99",
+     "note": "Normalized expectation under the law.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "[L] proves measure preservation of the Wilson law under gauge transformations and affine hypercubic isometries (Side = positive integers, beta real), which gives both equalities for bounded measurable F; only the pull case is also stated as an integral identity (moment_pull), the gauge case as law_gauge.",
+   "confidence": "medium",
+   "relation": "hasPart",
    "verification": {
     "batch": "S10-2",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "parts",
+    "verifier": "parts",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (10.8)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "close",
+   "lean": [
+    {
+     "decl": "YM.Push.Mark.radius_uniform",
+     "role": "key",
+     "where": "YM/FullVolume/Silent.lean:25-45",
+     "note": "Given Portfolio H X (R d), one r and m make MicroAt hold for X.evaluate(coords(R d x)) for every x in the equation ideal; private, repeated in YM/Push/RELAY_MARK/Cutoff.lean:103.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Push.Mark.Portfolio.rank",
+     "role": "key",
+     "where": "YM/Push/RELAY_MARK/Portfolio.lean:58",
+     "note": "Micro for each p in the equation ideal, with r and M depending on p; the hypothesis radius_uniform consumes.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Push.Mark.MicroAt",
+     "role": "support",
+     "where": "YM/Push/RELAY_MARK/Micro.lean:29-31",
+     "note": "For side >= M, every site, beta != 0 and every spectator local on Outer r o with an Envelope, the moment of f(expandAt o U)*S(U) vanishes.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Push.Mark.Micro",
+     "role": "support",
+     "where": "YM/Push/RELAY_MARK/Micro.lean:33",
+     "note": "Continuity plus some r, M with MicroAt.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Maxwell.equationIdeal",
+     "role": "support",
+     "where": "YM/Maxwell/Equation.lean:72",
+     "note": "Counterpart of I_d.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Push.Mark.Portfolio.build",
+     "role": "support",
+     "where": "YM/Push/RELAY_MARK/Portfolio.lean:101-105",
+     "note": "Supplies the section and regrading satisfying Portfolio.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Portfolio.rank gives the zero-moment identity with the same ranges of side, beta, placement and spectator but r, M chosen per p; the order [M] prints (r_d, M_d before p) is stated only by the private radius_uniform, conditional on a Portfolio, which Portfolio.build supplies.",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S10-2",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "close",
+    "verifier": "close",
+    "agreed": false,
+    "judge": "close",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Lemma 10.4",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.Push.Mark.weaveBuild",
+     "role": "key",
+     "where": "YM/Push/RELAY_MARK/Portfolio.lean:60-97",
+     "note": "For every Imprint h and frame, a section T with Portfolio H T (twist h.toCampaign): Sound (gauge invariant, real, hypercubic covariant, unit, Taylor via projects), pop, Credit for all k,P, the regrading commuting with signed permutations and conjugation, and Micro on the equation ideal.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Push.Mark.Portfolio.build",
+     "role": "key",
+     "where": "YM/Push/RELAY_MARK/Portfolio.lean:101-105",
+     "note": "Unconditional existence of the section and a linear automorphism with Portfolio, with the regrading left abstract.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Push.Mark.unsym",
+     "role": "key",
+     "where": "YM/Push/RELAY_MARK/Linear.lean:155",
+     "note": "A Campaign exists for every H and d.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Push.Mark.impression",
+     "role": "key",
+     "where": "YM/Push/RELAY_MARK/HGroup.lean:106",
+     "note": "Turns a Campaign into an Imprint, the hypothesis of weaveBuild.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Push.Mark.regrade_tri",
+     "role": "key",
+     "where": "YM/Push/RELAY_MARK/Automorphism.lean:43-50",
+     "note": "regrade F - id sends rise a into above a, with stamp the lexicographic order of (k,w): twist is a regrading in [M]'s sense.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Push.Mark.twist_unit",
+     "role": "key",
+     "where": "YM/Push/RELAY_MARK/Automorphism.lean:110",
+     "note": "twist fixes the unit label.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Extra.Multi.BasisCost.exists_price",
+     "role": "key",
+     "where": "YM/Extra/MULTISOURCE_BOUNDS/Columns.lean:58-63",
+     "note": "Global bound (10.6) for every SectionData: one C >= 1 bounds every placed column on every side, site and configuration.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Push.Local.full_cost",
+     "role": "key",
+     "where": "YM/Push/LOCAL_SPLITTING/Initial.lean:20-25",
+     "note": "Cover-configuration form of the global bound for every SectionData.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Push.Mark.radius_uniform",
+     "role": "key",
+     "where": "YM/FullVolume/Silent.lean:25-45",
+     "note": "Private: r, M uniform over the equation ideal for any Portfolio section.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Push.Mark.twist",
+     "role": "support",
+     "where": "YM/Push/RELAY_MARK/Automorphism.lean:72-73",
+     "note": "The regrading as the bijective linear equivalence built from regrade F.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Push.Mark.Portfolio",
+     "role": "support",
+     "where": "YM/Push/RELAY_MARK/Portfolio.lean:51-58",
+     "note": "Bundles the conclusions.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Source.SectionData.Sound",
+     "role": "support",
+     "where": "YM/Source/Local.lean:140-147",
+     "note": "Soundness fields.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Portfolio.build hides the regrading, but weaveBuild with unsym and impression gives a section whose regrading is twist, which regrade_tri and twist_unit show is triangular in the (k,w) lexicographic order and fixes 1; the global bound holds for every SectionData (exists_price, full_cost), and uniform r, M is the private radius_uniform. The box shape of the stencil is not exported (the private columns lemma builds box c), which is a packaging difference only.",
+   "confidence": "medium",
+   "relation": "hasPart",
    "verification": {
     "batch": "S10-2",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "no-match",
+    "verifier": "weaker",
+    "agreed": false,
+    "judge": "parts",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Eq (10.9)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.Push.Mark.field_deriv",
+     "role": "key",
+     "where": "YM/Push/RELAY_MARK/Wilson.lean:232-237",
+     "note": "For side n >= 2, the derivative at 0 of the Wilson energy along left multiplication of link e by exp(tA) is inner A (field U e).",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Push.Mark.field",
+     "role": "support",
+     "where": "YM/Push/RELAY_MARK/Wilson.lean:132",
+     "note": "E_e as a sum of fluxes over plaquette axis pairs, with the sign swap for the opposite order.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Push.Mark.stem",
+     "role": "support",
+     "where": "YM/Push/RELAY_MARK/Wilson.lean:125-126",
+     "note": "Forward curvature minus the adjoint-transported backward curvature.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Push.Mark.turnLink",
+     "role": "support",
+     "where": "YM/Push/RELAY_MARK/Wilson.lean:73-74",
+     "note": "Left multiplication of one link by exp(tA), the left derivative direction.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Wilson.energy",
+     "role": "support",
+     "where": "YM/Wilson/Law.lean:29",
+     "note": "Wilson energy as a sum over faces.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "For torus side at least two, the left derivative of the Wilson energy at link e in direction A equals the inner product of A with the one-link field; [L] sums over unordered axis pairs with sign where [M] sums over ordered b != a.",
+   "step": "YM.Push.Mark.field_deriv (YM/Push/RELAY_MARK/Wilson.lean:232-237)",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S10-2",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "exact",
+    "verifier": "exact",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {

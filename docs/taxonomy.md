@@ -52,6 +52,9 @@ Conventions (fixed after the pilot):
   `definition-close` only when a difference in content remains that a reader should know; name it.
 - `stronger` whenever [L] is more general in a mathematical way (a weaker hypothesis, a more
   general type, a larger range), even mildly.
+- [L] often states a result twice: an internal form (`YM.*`) and a public form (`YangMills.*`,
+  in `PublicTheory.lean`, `ChallengeSpec.lean` and similar). Where both state the item, list both
+  as `key`.
 - A display inside a statement maps to the declaration that states that part of the statement.
 - A finding names exactly what [M] prints that [L] lacks, and the declaration that comes closest.
 
