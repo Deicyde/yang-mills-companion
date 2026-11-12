@@ -2,7 +2,9 @@
 """Merge the steps campaign's mapper, verifier, judge and skeptic files into the overlay's data.
 
 A record's verdict is the judge's where the judge ruled on it, else the mapper's when mapper and
-verifier agree (scompare.py); a record still without one is Unjudged (relation null).  Each Lean end
+verifier agree (scompare.py); a record still without one is Unjudged (relation null).  The lead's
+rulings from the sample check (scratch/steps2/lead/sample.json) override the relation and note last;
+an opus re-check of closeMatch records whose notes name another route (lead/closecheck.json) next.  Each Lean end
 gets its file, its snippet (exactly its lines, from the pinned source; none for noMatch) and its
 `proof_context` (the enclosing declaration's full range and the end's conclusion).  A claim that
 the text is wrong is kept under `text_error` with its skeptics' verdicts; only a claim both
@@ -63,6 +65,11 @@ def main(work):
     steps = json.load(open(f'{work}/repo/data/manuscript-steps.json'))['steps']
     disp = json.load(open(f'{work}/repo/data/manuscript-displays.json'))['displays']
     meta = {r['id']: r for r in steps + disp}
+    lp = f'{S}/lead/sample.json'
+    lead = json.load(open(lp))['records'] if os.path.exists(lp) else {}
+    # the opus re-check of closeMatch records whose notes name another route (prompted by the sample)
+    cp = f'{S}/lead/closecheck.json'
+    review = json.load(open(cp))['records'] if os.path.exists(cp) else {}
     final = {}
     stats = collections.Counter()
     for B in batches:
@@ -89,6 +96,14 @@ def main(work):
             elif c and c['agreed']:
                 pick, ver['source'] = m, 'mapper+verifier'
             ver['complete'] = pick is not None
+            if pick and rid in lead:
+                ver['lead_sample'] = {'was': pick.get('relation'), 'ruling': lead[rid]['relation']}
+                pick = dict(pick, relation=lead[rid]['relation'], note=lead[rid]['note'])
+                ver['source'] += '+lead'
+            elif pick and rid in review and pick.get('relation') == 'closeMatch':
+                ver['close_review'] = {'was': 'closeMatch', 'ruling': review[rid]['relation']}
+                pick = dict(pick, relation=review[rid]['relation'], note=review[rid]['note'])
+                ver['source'] += '+review'
             rel = pick and pick.get('relation')
             rec = {'id': rid}
             mt = meta[rid]
