@@ -7,19 +7,18 @@
  "taxonomy": "docs/taxonomy.md",
  "provenance": "machine: mapper and verifier agents per batch, a judge on disagreement, two skeptics per claimed finding; no person reviewed",
  "counts": {
-  "stronger": 23,
-  "exact": 77,
-  "definition-match": 69,
-  "parts": 73,
-  "definition-close": 32,
-  "close": 87,
-  "inlined": 16,
+  "stronger": 27,
+  "exact": 80,
+  "definition-match": 72,
+  "parts": 80,
+  "definition-close": 34,
+  "close": 94,
+  "inlined": 18,
   "not-formalized-not-needed": 6,
-  "weaker": 16,
-  "no-match": 16,
+  "weaker": 18,
+  "no-match": 18,
   "unclear": 6,
-  "differs": 5,
-  "not yet judged": 32
+  "differs": 5
  },
  "items": [
   {
@@ -12970,7 +12969,11 @@
    "confidence": "medium",
    "finding": {
     "claim": "no-match",
-    "confirmed": false
+    "confirmed": true,
+    "skeptic_notes": [
+     "[M] prints, for two admitted histories with coarse endpoints differing by delta, D <= |delta|/b_* + 8 g_* D with g_* = 1/128 (restating Lemma D-E1). [L]'s history map `veil b z = (pulse i)^-1 (b - sum_{j<i} tally z j)` is only contracted at one fixed endpoint: `dwindle (b) : ||veil b z - veil b v|| <= soft*||z-v||` with soft = Oriel.rim/8 = 1/1048576, and `unique` identifies the fixed point for that b; no Camp lemma compares veil or picked at two endpoints b, b', and the |delta|/b_* term and the constant 8g_* = 1/16 occur nowhere. The two-endpoint bound follows from veil's affine dependence on b in a short argument [L] does not write, so only the delta = 0 consequence (uniqueness) has a counterpart; this is a different packaging in [M], not a typo.",
+     "[M] prints D <= |delta|/b_* + 8 g_* D with g_*=1/128 for two admitted histories with endpoints differing by delta. [L] has dwindle (veil b z - veil b v norm <= soft*norm(z-v), same b) and unique (fixed point of veil at one b); veil is (pulse_i)^-1 (b - sum tally), so the b-b' term is derivable but no declaration states a two-endpoint bound, and the Lipschitz-in-b step needs an argument [L] does not write. Only the equal-endpoint consequence (contraction, uniqueness) is present; not a typo in [M]."
+    ]
    },
    "relation": "noMatch",
    "verification": {
@@ -12980,10 +12983,21 @@
     "agreed": false,
     "judge": "no-match",
     "source": "judge",
-    "skeptics": [],
+    "skeptics": [
+     {
+      "refuted": false,
+      "status": "no-match",
+      "reason": "[M] prints, for two admitted histories with coarse endpoints differing by delta, D <= |delta|/b_* + 8 g_* D with g_* = 1/128 (restating Lemma D-E1). [L]'s history map `veil b z = (pulse i)^-1 (b - sum_{j<i} tally z j)` is only contracted at one fixed endpoint: `dwindle (b) : ||veil b z - veil b v|| <= soft*||z-v||` with soft = Oriel.rim/8 = 1/1048576, and `unique` identifies the fixed point for that b; no Camp lemma compares veil or picked at two endpoints b, b', and the |delta|/b_* term and the constant 8g_* = 1/16 occur nowhere. The two-endpoint bound follows from veil's affine dependence on b in a short argument [L] does not write, so only the delta = 0 consequence (uniqueness) has a counterpart; this is a different packaging in [M], not a typo."
+     },
+     {
+      "refuted": false,
+      "status": "no-match",
+      "reason": "[M] prints D <= |delta|/b_* + 8 g_* D with g_*=1/128 for two admitted histories with endpoints differing by delta. [L] has dwindle (veil b z - veil b v norm <= soft*norm(z-v), same b) and unique (fixed point of veil at one b); veil is (pulse_i)^-1 (b - sum tally), so the b-b' term is derivable but no declaration states a two-endpoint bound, and the Lipschitz-in-b step needs an argument [L] does not write. Only the equal-endpoint consequence (contraction, uniqueness) is present; not a typo in [M]."
+     }
+    ],
     "claimed": "no-match",
-    "finding": "skeptics pending",
-    "complete": false
+    "finding": "confirmed",
+    "complete": true
    }
   },
   {
@@ -23227,58 +23241,202 @@
   },
   {
    "id": "Eq (19.1)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "close",
+   "lean": [
+    {
+     "decl": "YM.Bid.direction",
+     "role": "key",
+     "where": "YM/Bid/Loan.lean:65-69",
+     "note": "Exists invertible B with norms <= K_{J_{i+1}}, commuting with core (the constant-coordinate killer), such that mu(u-B(vowel v)) <= barunit*(mu(core v)+t) and r <= K mu(core(vowel v)) + barunit*t.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Bid.barunit",
+     "role": "support",
+     "where": "YM/Bid/Loan.lean:35",
+     "note": "(L^(1/8))^(-3) = L^(-3/8), the epsilon_i.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Bid.puffs",
+     "role": "support",
+     "where": "YM/Bid/Loan.lean:34",
+     "note": "L^(1/8).",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Both bounds agree with epsilon_i = ell_i^(-3/8) and the diagonal rescaling vowel, but [L] only asserts the existence of some invertible B commuting with core, so [M]'s leading map M_i, its fixing of the unit and its preservation of the nonconstant subspace are not stated (commutation with core gives only part of it).",
+   "step": "YM.Bid.direction, YM/Bid/Loan.lean:65-69",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S19-1",
     "mapper": "close",
     "verifier": "exact",
     "agreed": false,
-    "complete": false
+    "judge": "close",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Eq (19.2)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "no-match",
+   "lean": [
+    {
+     "decl": "YM.Bid.roomCost",
+     "role": "key",
+     "where": "YM/Bid/Loan.lean:36-39",
+     "note": "64*K_{J_i+1}^2 <= columns_i: the first inequality.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Bid.Bank",
+     "role": "key",
+     "where": "YM/Bid/Loan.lean:43-46",
+     "note": "100000*K_{J_{i+1}+1}^6*(1+columns_{i+1})^2 <= ell_i^(1/8): the second inequality.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Extra.Histories.Relay.Tones",
+     "role": "support",
+     "where": "YM/MergeProof/Accord.lean:22-24",
+     "note": "Only assumes (1+2*columns_i)*eta <= barunit with eta a free rate.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The first two inequalities are roomCost and Bank, but 1+2C_l <= ell_l^(1/40) is stated nowhere: [L] has only the hypothesis (1+2*columns)*eta <= barunit for abstract eta, which gives no 1/40 power. A claim of the item is missing, so the status is no-match rather than weaker.",
+   "searched": [
+    "grep for 1/40 and /40 over all of lean/YM (only unrelated hits in Wilson_STARTUP/Clock.lean small epsilon)",
+    "grep (1+2* over lean/YM",
+    "Bid/Loan.lean roomCost, Bank, buffer, terms",
+    "MergeProof/Accord.lean Tones"
+   ],
+   "confidence": "medium",
+   "finding": {
+    "claim": "no-match",
+    "confirmed": true,
+    "skeptic_notes": [
+     "[M] prints three choices: 64K^2 <= C_l, 10^5 K^6 (1+C_{l+1})^2 <= ell_l^{1/8}, and 1+2C_l <= ell_l^{1/40}; the first two are roomCost and Bank (puffs L = L^(1/8)), produced by Bid.buffer. For the third, [L] never fixes 1+2C <= L^(1/40): Tones.tuned only assumes `(1+2*columns)*η ≤ barunit` for abstract η, and the closest concrete production, Doors.pre_tilt/afford, gives Buys.tiny `rate L*(1+columns_{m+1})*orbitCost ≤ barunit L` with rate = L^(-2/5), barunit = L^(-3/8), i.e. (1+C_{m+1})*orbitCost <= L^(1/40), which is a different constant/index and does not imply 1+2C_l <= ell_l^{1/40} (orbitCost is only >= 1). One clause of the item has no counterpart, so no-match stands; it is not a typo, since the exponent 1/40 = 2/5 - 3/8 is correct and the gap is the missing clause.",
+     "[M] prints three inequalities: 64K_{J_l+1}^2<=C_l, 10^5 K^6(1+C_{l+1})^2<=ell_l^{1/8}, and 1+2C_l<=ell_l^{1/40}. roomCost and Bank (with puffs L = L^(1/8)) state the first two. The third has no counterpart: Tones only assumes '(1+2*columns)*eta <= barunit (block i)' for an abstract eta, and its proof uses this directly, never a 1/40 power of ell, so the claim stands. This is not a typo in [M], since [M] uses it later as (1+2C_i)eta_i<=epsilon_i with eta_i=ell_i^{-2/5}."
+    ]
+   },
+   "relation": "noMatch",
    "verification": {
     "batch": "S19-1",
     "mapper": "no-match",
     "verifier": "weaker",
     "agreed": false,
-    "complete": false
+    "judge": "no-match",
+    "source": "judge",
+    "skeptics": [
+     {
+      "refuted": false,
+      "status": "no-match",
+      "reason": "[M] prints three choices: 64K^2 <= C_l, 10^5 K^6 (1+C_{l+1})^2 <= ell_l^{1/8}, and 1+2C_l <= ell_l^{1/40}; the first two are roomCost and Bank (puffs L = L^(1/8)), produced by Bid.buffer. For the third, [L] never fixes 1+2C <= L^(1/40): Tones.tuned only assumes `(1+2*columns)*η ≤ barunit` for abstract η, and the closest concrete production, Doors.pre_tilt/afford, gives Buys.tiny `rate L*(1+columns_{m+1})*orbitCost ≤ barunit L` with rate = L^(-2/5), barunit = L^(-3/8), i.e. (1+C_{m+1})*orbitCost <= L^(1/40), which is a different constant/index and does not imply 1+2C_l <= ell_l^{1/40} (orbitCost is only >= 1). One clause of the item has no counterpart, so no-match stands; it is not a typo, since the exponent 1/40 = 2/5 - 3/8 is correct and the gap is the missing clause."
+     },
+     {
+      "refuted": false,
+      "status": "no-match",
+      "reason": "[M] prints three inequalities: 64K_{J_l+1}^2<=C_l, 10^5 K^6(1+C_{l+1})^2<=ell_l^{1/8}, and 1+2C_l<=ell_l^{1/40}. roomCost and Bank (with puffs L = L^(1/8)) state the first two. The third has no counterpart: Tones only assumes '(1+2*columns)*eta <= barunit (block i)' for an abstract eta, and its proof uses this directly, never a 1/40 power of ell, so the claim stands. This is not a typo in [M], since [M] uses it later as (1+2C_i)eta_i<=epsilon_i with eta_i=ell_i^{-2/5}."
+     }
+    ],
+    "claimed": "no-match",
+    "finding": "confirmed",
+    "complete": true
    }
   },
   {
    "id": "Lemma 19.1",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.Extra.Histories.Relay.antilles",
+     "role": "key",
+     "where": "YM/MergeProof/Antilles.lean:43-75",
+     "note": "Part (a) and the first bound of (b): existence of the continuation on [l,m] from a start X with x_l=0, per-step estimates, density identity and r_m via Woke.spread, plus gainChart*(cost+mu(x)) <= 4(1+C_m)w; hypotheses (Sung music, Tones, Carol) are supplied at the call sites.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Bid.G09",
+     "role": "key",
+     "where": "YM/Bid/Loan.lean:134-137",
+     "note": "Statement: gainChart_{o,i}(cost_i+mu(x_i)) <= 4(1+C_o)w for a Woke family, the first bound of (b).",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Work.G09.answer",
+     "role": "key",
+     "where": "YM/Work/G09.lean:224-233",
+     "note": "Proof of G09.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Work.G09.cost_finest",
+     "role": "key",
+     "where": "YM/Work/G09.lean:210-222",
+     "note": "cost_o <= 2(1+C_o)w: the bound r_m <= 2(1+C_m) q_fin.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Bid.Duet.Woke",
+     "role": "support",
+     "where": "YM/Bid/Loan.lean:115-128",
+     "note": "Hypothesis structure: funds (direction per step), transfers (density identity), pairing (x_l=0), spread (r_m <= w+C_m(w+mu(x_m))).",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Work.G09.cone_cost",
+     "role": "helper",
+     "where": "YM/Work/G09.lean:183-208",
+     "note": "Cone and discount between levels.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Part (a) is antilles (conclusion Woke with pairing, funds, transfers and spread) and part (b) is G09 for the first bound and cost_finest for r_m <= 2(1+C_m)q_fin, with q_fin read as w. antilles carries extra hypotheses (Sung music, Tones with abstract eta, Carol) that [M] derives inside its proof and [L] discharges at the call sites, and [L] uses affine Duet/Solo families and gainChart = exp((s_m-s_l)/8) for the (a_m/a_l)^(1/8) discount.",
+   "confidence": "medium",
+   "relation": "hasPart",
    "verification": {
     "batch": "S19-1",
     "mapper": "parts",
     "verifier": "weaker",
     "agreed": false,
-    "complete": false
+    "judge": "parts",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Eq (19.3)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.Work.G09.sizes_of_direction",
+     "role": "key",
+     "where": "YM/MergeProof/Puffs.lean:49-70",
+     "note": "From direction: Y <= K(mu(u)+e(Y+t)) and r <= K Y + e t with Y = mu(vowel v), K = K_{J_{i+1}}, e = barunit, plus 0 <= t; private lemma, duplicated at YM/Work/G09.lean:57-80.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Bid.direction",
+     "role": "support",
+     "where": "YM/Bid/Loan.lean:65-69",
+     "note": "Hypothesis of the lemma, the one-step estimate (19.1).",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "sizes_of_direction proves exactly the two displayed inequalities from direction, as a standalone lemma and not inside cone_step; cone_step uses direction through its own different argument and states other conclusions.",
+   "step": "YM.Work.G09.sizes_of_direction, YM/MergeProof/Puffs.lean:49-70, used in YM.Work.G09.cone_cost",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S19-1",
     "mapper": "inlined",
     "verifier": "inlined",
     "agreed": false,
-    "complete": false
+    "judge": "exact",
+    "source": "judge",
+    "complete": true
    }
   },
   {
@@ -23315,16 +23473,55 @@
   },
   {
    "id": "Lemma 19.2",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.OPE.Columns.limit_cap",
+     "role": "key",
+     "where": "YM/OPE/Columns/SectorCost.lean:46-65",
+     "note": "Case 1 <= i <= t (e = i-1 < d): labels converging to x with quota <= z eventually give y with project y in range of rise and ||x-y|| <= fare*z.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.OPE.Columns.whole_origin",
+     "role": "key",
+     "where": "YM/OPE/Columns/SectorCost.lean:67-89",
+     "note": "Case i = 0 (F_{-1}=0): ||x|| <= juice*(a_ref/a_k)^d*quota at finite cutoff; the limit passage is not written.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.OPE.Columns.fare_rate",
+     "role": "key",
+     "where": "YM/OPE/Columns/SectorCost.lean:136-143",
+     "note": "The constant fare has a rate along the cutoff (subpower up to the a_m power).",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.OPE.Columns.fare",
+     "role": "support",
+     "where": "YM/OPE/Columns/SectorCost.lean:26-27",
+     "note": "Constant gel*(1+C)*(a_ref/a_k)^(d-(e+1)), depending only on k, d, e.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.OPE.Columns.quotient_issue",
+     "role": "helper",
+     "where": "YM/OPE/Columns/Plane.lean:154-166",
+     "note": "Finite-level quotient step.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The case i >= 1 is limit_cap, bounding the label-space norm to the preimage of the lower-degree image rather than the distance in F_t, and the case i = 0 is only whole_origin at finite cutoff with the limit step left to a one-line argument. The constant's independence of refinement and labels is carried by fare depending only on k, d, e, and its subpower growth by fare_rate.",
+   "confidence": "medium",
+   "relation": "hasPart",
    "verification": {
     "batch": "S19-1",
     "mapper": "parts",
     "verifier": "close",
     "agreed": false,
-    "complete": false
+    "judge": "parts",
+    "source": "judge",
+    "complete": true
    }
   },
   {
@@ -23634,172 +23831,559 @@
   },
   {
    "id": "Eq (19.5)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.OPE.Orbits.Reader.kills_lower",
+     "role": "key",
+     "where": "YM/OPE/Orbits/Cuts.lean:70-79",
+     "note": "cutTest m q = 0 for q < m, i.e. Q_j L_{j,q} = 0.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.OPE.Orbits.Reader.reconstruct",
+     "role": "key",
+     "where": "YM/OPE/Orbits/Cuts.lean:66-69",
+     "note": "Sum over i <= m of rise_{i,m} cutTest i q z = rise_{q,m} z, i.e. sum jmath_{i,j} Q_i L_{i,q} = jmath_{q,j}.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.OPE.Orbits.Reader.cutTest",
+     "role": "support",
+     "where": "YM/OPE/Orbits/Cuts.lean:51",
+     "note": "Q_i L_{i,q}.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The display has two identities and each is its own declaration, kills_lower for the first and reconstruct for the second, with no single declaration stating both.",
+   "step": "YM.OPE.Orbits.Reader.kills_lower and YM.OPE.Orbits.Reader.reconstruct, YM/OPE/Orbits/Cuts.lean:66-79 (state the display; used in Lemma 19.6)",
+   "confidence": "high",
+   "relation": "hasPart",
    "verification": {
     "batch": "S19-1",
     "mapper": "parts",
     "verifier": "exact",
     "agreed": false,
-    "complete": false
+    "judge": "parts",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Eq (19.6)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "close",
+   "lean": [
+    {
+     "decl": "YM.OPE.terminalAfford",
+     "role": "key",
+     "where": "YM/OPE/Prices/Circuit.lean:40-51",
+     "note": "proves, eventually along the heights, both inequalities: march(b) <= delta_m*(x/(16 X_m)) and 32(1+columns)*w*||alto||*(e/gainChart) <= tau/2",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.MergeProof.Ribbons.ManyCopies.joins",
+     "role": "key",
+     "where": "YM/OPE/Sweep/Camp.lean:54-94",
+     "note": "hypotheses hL and hp are the two conditions, with w=b (terminal weight), A=omega-dependent scale, e=E_m",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.MergeProof.Ribbons.seeing",
+     "role": "support",
+     "where": "YM/MergeProof/North/Welch.lean:45-46",
+     "note": "Bounds the transported weight by w*(a_i/a_k)^(d+1)*(mu_i/mu_k), the step used for the first line.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.OPE.key_cost",
+     "role": "support",
+     "where": "YM/OPE/Prices/Circuit.lean:35-38",
+     "note": "Rate of E_m = terminalCost.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Both conditions of the terminal weight appear as the hypotheses hL, hp of joins, and terminalAfford shows they hold eventually. The first uses the transported weight `march` in place of varpi(a_m/a_k*)^{t+1} z_{t,m}/z_{t,k*}, and the second uses ||alto|| and 1/gainChart in place of a_{k*}^{-t} and (a_m/a_{k*})^{1/8}, so the conditions are packaged abstractly.",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S19-2",
     "mapper": "close",
-    "verifier": null,
-    "complete": false
+    "verifier": "close",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Lemma 19.7",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.MergeProof.Ribbons.ManyCopies.Ballet",
+     "role": "key",
+     "where": "YM/OPE/Sweep/Ballet.lean:35-76",
+     "note": "degree-t local extraction: a Coefficient with Format, remBound and coeffSize each at most a_{m+1}^d*(x_m*4/z), i.e. q_m",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.MergeProof.Ribbons.ManyCopies.joins",
+     "role": "key",
+     "where": "YM/OPE/Sweep/Camp.lean:54-94",
+     "note": "under the two weight conditions hL, hp (and hA defining e), the matched field has quota at most 2e and interior root at most 2*stakes/b",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.OPE.funding",
+     "role": "support",
+     "where": "YM/OPE/Prices/Circuit.lean:64-87",
+     "note": "instantiates joins with the chosen terminal weight and produces PriceAt at the rates; it does not state the extraction claim",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.MergeProof.Accent.stakes",
+     "role": "support",
+     "where": "YM/MergeProof/Strudel.lean:21-21",
+     "note": "the root cost constant S_k",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Stock.Tabs.opens",
+     "role": "support",
+     "where": "YM/Overlay/Prior.lean:23-23",
+     "note": "the condition defining k*",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The extraction sentence is Ballet and the matched-field coefficient and root bounds under the weight conditions are joins; funding only instantiates them for one chosen weight and lacks the extraction claim. The level k* and the lateness assumptions enter as hypotheses of joins.",
+   "confidence": "medium",
+   "relation": "hasPart",
    "verification": {
     "batch": "S19-2",
     "mapper": "parts",
-    "verifier": null,
-    "complete": false
+    "verifier": "close",
+    "agreed": false,
+    "judge": "parts",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Eq (19.7)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "close",
+   "lean": [
+    {
+     "decl": "YM.Stock.Tabs",
+     "role": "key",
+     "where": "YM/Overlay/Prior.lean:15-18",
+     "note": "grows: coverSize_{i+1}^2 <= 2 coverSize_i^2; cheap: (block_i*coverSize_i^2)^4 * fiat_{i+1} <= eps*scale_{i+1} eventually for every eps",
+     "relation": "closeMatch"
+    }
+   ],
+   "note": "Both entry conditions are the two fields of Tabs, with the o(s_{l+1}) written as an eventual eps-bound. [M]'s Phi_l = max(1, v_l) is any bound on the normalization cost, whereas [L] uses the explicit upper bound Vac.fiat of the treasury.",
+   "step": "YM.MergeProof.Ribbons.ManyCopies.joins: used as the hypothesis YM.Stock.Tabs.opens in Lemma 19.7 (YM/OPE/Sweep/Camp.lean:54-94)",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S19-2",
     "mapper": "close",
-    "verifier": null,
-    "complete": false
+    "verifier": "exact",
+    "agreed": false,
+    "judge": "close",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Lemma 19.8",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "close",
+   "lean": [
+    {
+     "decl": "YM.OPE.for_plot",
+     "role": "key",
+     "where": "YM/OPE/Eye/Extract.lean:25-32",
+     "note": "rates p ~ Z'-t*c for the label, A <= Z'-(t+1/16)(c-b) for the difference, and Survival of the configuration eventually",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.OPE.funding",
+     "role": "support",
+     "where": "YM/OPE/Prices/Circuit.lean:64-87",
+     "note": "produces the rates and PriceAt (label, interior difference, root test) at each cutoff",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.OPE.Survival",
+     "role": "support",
+     "where": "YM/OPE/Eye/Remit.lean:42-44",
+     "note": "the label is a limit along a refinement of the cutoff filter, with the quota and difference bounds holding eventually",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Rates Z=W theta_+ + 4 n_cl(theta_+-theta) and the exponents Z-t theta and Z-(t+1/16)(theta-theta_-) agree with [L] (tax/Z'). [L] packages the label as a limit along a refinement of the ordered cutoff tail with quota bound, and the interior and uniformity claims sit inside PriceAt and Survival, so the form of the output differs from [M]'s sequence of labels.",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S19-2",
     "mapper": "close",
-    "verifier": null,
-    "complete": false
+    "verifier": "close",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (19.8)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "close",
+   "lean": [
+    {
+     "decl": "YM.MergeProof.Ribbons.Fibers.Salt.attends",
+     "role": "key",
+     "where": "YM/OPE/Grouping/Shift.lean:25-39",
+     "note": "coverNumber M (kiln (X i) (Q i)) <= coverNumber M (X i) + k*card(Q i): moving markers to their representatives costs k per marker",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.MergeProof.Ribbons.Salt.attends",
+     "role": "key",
+     "where": "YM/MergeProof/North/Wings.lean:17-18",
+     "note": "Same bound for the Name-indexed version.",
+     "from_verifier": true,
+     "relation": "closeMatch"
+    }
+   ],
+   "note": "Same bound with h=k, the representatives being the foci of the fusion; [L] states it with the hypotheses that each moved marker pair is covered by at most k balls and that markers lie in X.",
+   "step": "YM.MergeProof.Ribbons.Fibers.Salt.attends, YM/OPE/Grouping/Shift.lean:25-39",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S19-2",
     "mapper": "close",
-    "verifier": null,
-    "complete": false
+    "verifier": "close",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (19.9)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.MergeProof.Ribbons.ManyCopies.inductionLive",
+     "role": "key",
+     "where": "YM/OPE/Sweep/Induct.lean:93-117",
+     "note": "with g=|J| groups remaining at level i, compensation A H i j |J| a (prod W) <= prod X",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.MergeProof.Ribbons.ManyCopies.compensation",
+     "role": "support",
+     "where": "YM/OPE/Sweep/Induct.lean:39-39",
+     "note": "(a_j/a_i)^{4H}*(alpha/8)^{H(H-s)}*w, the displayed expression with H=n_cl, s=g",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The compensation definition is the displayed lower bound term for term (H=n_cl, s=g, i=l, alpha=alpha_j), and inductionLive proves that the product of weights at the regrouped level is at least it.",
+   "step": "YM.MergeProof.Ribbons.ManyCopies.inductionLive, YM/OPE/Sweep/Induct.lean:93-117",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S19-2",
     "mapper": "exact",
-    "verifier": null,
-    "complete": false
+    "verifier": "close",
+    "agreed": false,
+    "judge": "exact",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Eq (19.10)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "inlined",
+   "lean": [
+    {
+     "decl": "YM.OPE.funding",
+     "role": "key",
+     "where": "YM/OPE/Prices/Circuit.lean:64-87",
+     "note": "defines z i := exp(X' * T i) with X' = (t+1/16)(a-b) - Z', the terminal weight, then feeds it to terminalAfford and joins",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The terminal weight is chosen inside the proof of funding as exp of ((t+1/16)(a-b)-Z') times T, with heights b<a for theta_-<theta, matching varpi.",
+   "step": "YM.OPE.funding, YM/OPE/Prices/Circuit.lean:64-87 (the `let z i` and `X'` notation)",
+   "confidence": "high",
+   "relation": "relatedMatch",
    "verification": {
     "batch": "S19-2",
     "mapper": "inlined",
-    "verifier": null,
-    "complete": false
+    "verifier": "inlined",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (19.11)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "weaker",
+   "lean": [
+    {
+     "decl": "YM.OPE.Orbits.coefficient_rate",
+     "role": "key",
+     "where": "YM/OPE/Orbits/Separated.lean:17-23",
+     "note": "final coefficients R.coef at most e^{(W-m)aT}",
+     "relation": "narrowMatch"
+    },
+    {
+     "decl": "YM.OPE.Orbits.algebra_rate",
+     "role": "key",
+     "where": "YM/OPE/Orbits/Separated.lean:30-37",
+     "note": "final tested remainder algebraError (algebra norm, before state evaluation) at most e^{[Wa-(m+1)(a-b)+Vc]T}",
+     "relation": "narrowMatch"
+    },
+    {
+     "decl": "YM.OPE.group_coeff",
+     "role": "key",
+     "where": "YM/OPE/Schemes/Travel.lean:24-30",
+     "note": "same coefficient rate (sigma g - i)a in the Prescription formulation",
+     "relation": "narrowMatch"
+    },
+    {
+     "decl": "YM.OPE.group_remainder",
+     "role": "key",
+     "where": "YM/OPE/Schemes/Travel.lean:31-41",
+     "note": "same remainder rate in every viewer, Prescription formulation",
+     "relation": "narrowMatch"
+    },
+    {
+     "decl": "YM.OPE.Orbits.fresh_price",
+     "role": "support",
+     "where": "YM/OPE/Orbits/Gain.lean:21-31",
+     "note": "degree-m fresh vector rate, nearest to the raw coordinates",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "[M] prints the bounds for the raw coordinates lambda^raw and the raw remainder R_D^raw built from the raw projection. [L] bounds only the final coefficients and the tested remainder with the same exponents, in two parallel formulations, and has no raw coordinate or raw remainder.",
+   "confidence": "medium",
+   "finding": {
+    "claim": "weaker",
+    "confirmed": false
+   },
+   "relation": "narrowMatch",
    "verification": {
     "batch": "S19-2",
     "mapper": "weaker",
-    "verifier": null,
+    "verifier": "weaker",
+    "agreed": false,
+    "judge": "weaker",
+    "source": "judge",
+    "skeptics": [
+     {
+      "refuted": false,
+      "status": "weaker",
+      "reason": "[M] (eq:J-raw-rates) bounds lambda^raw_{i,kappa} by e^{(W-i)alpha T} and R_D^raw = M^0(w prod B_l) - M^0(A_D(o) prod B_l), built from P_h^raw; the next sentence adds that the final coefficients and tested remainder of Def D33 obey the same bounds. [L] states RateLE for R.coef m j (x i) v (o i) with rate (weight d - m)*a, and for algebraError / observe-minus-R.truncated with rate weight d*a-(m+1)(a-b)+weight e*c; these are the final/tested objects, and grep of lean/YM/OPE finds no raw projection or raw coordinate/remainder. So [L] proves only the sentence about final quantities, not the displayed raw bounds; not a typo since [M] deliberately distinguishes the two."
+     }
+    ],
+    "claimed": "weaker",
+    "finding": "skeptics pending",
     "complete": false
    }
   },
   {
    "id": "Eq (19.12)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "no-match",
+   "lean": [
+    {
+     "decl": "YM.OPE.Orbits.balance_rate",
+     "role": "support",
+     "where": "YM/OPE/Orbits/Gain.lean:57-73",
+     "note": "bounds the final reader's tested difference whole - sum_j upon(fresh_j) at the rate W a-(m+1)(a-b)+V c; a different object from the averaged raw truncation error",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.OPE.Orbits.fresh_price",
+     "role": "support",
+     "where": "YM/OPE/Orbits/Gain.lean:21-31",
+     "note": "rate of the averaged fresh coefficient at the final level",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "[M] bounds the Haar-averaged difference Q_j B_j w - Q_j L_{j,h} A_h at an auxiliary degree h >= j with exponent (W-h-1)alpha, using the raw truncation A_h. [L] has no raw truncation A_h, no maps L_{j,h} and no bound at general h; balance_rate bounds the final reader's difference only.",
+   "searched": [
+    "YM/OPE/Orbits/Average.lean, Cuts.lean, Gain.lean (averageV, balance_rate, fresh_price)",
+    "grep shadowOld, raw, average in YM/OPE",
+    "names Orbits.* and key statements VII.4"
+   ],
+   "confidence": "medium",
+   "finding": {
+    "claim": "no-match",
+    "confirmed": false
+   },
+   "relation": "noMatch",
    "verification": {
     "batch": "S19-2",
     "mapper": "differs",
-    "verifier": null,
+    "verifier": "no-match",
+    "agreed": false,
+    "judge": "no-match",
+    "source": "judge",
+    "skeptics": [
+     {
+      "refuted": false,
+      "status": "no-match",
+      "reason": "[M] prints Q_jB_jw - Q_jL_{j,h}A_h <= e^{(W-h-1)alpha T} for every j<=h, with A_h the raw projection P_h^raw w_o. [L]'s balance_rate bounds only the reader's tested balance (whole minus sum of upon of fresh outputs) at rate weight d*a-(m+1)(a-b)+weight e*c, a single level m with no raw truncation A_h and no maps L_{j,h}; fresh_price bounds fresh outputs only. Reading it as the case h=m would need constructing A_h and L_{j,h}, which [L] does not do."
+     }
+    ],
+    "claimed": "no-match",
+    "finding": "skeptics pending",
     "complete": false
    }
   },
   {
    "id": "Lemma 19.9",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "weaker",
+   "lean": [
+    {
+     "decl": "YM.OPE.Orbits.coefficient_rate",
+     "role": "key",
+     "where": "YM/OPE/Orbits/Separated.lean:17-23",
+     "note": "final coefficients: e^{(W-m)aT}",
+     "relation": "narrowMatch"
+    },
+    {
+     "decl": "YM.OPE.Orbits.algebra_rate",
+     "role": "key",
+     "where": "YM/OPE/Orbits/Separated.lean:30-37",
+     "note": "final tested remainder in the algebra before state evaluation",
+     "relation": "narrowMatch"
+    },
+    {
+     "decl": "YM.OPE.Orbits.all_rate",
+     "role": "key",
+     "where": "YM/OPE/Orbits/Separated.lean:27-28",
+     "note": "same rate after evaluation in every viewer",
+     "relation": "narrowMatch"
+    },
+    {
+     "decl": "YM.OPE.group_coeff",
+     "role": "key",
+     "where": "YM/OPE/Schemes/Travel.lean:24-30",
+     "note": "coefficient rate in the Prescription formulation",
+     "relation": "narrowMatch"
+    },
+    {
+     "decl": "YM.OPE.group_remainder",
+     "role": "key",
+     "where": "YM/OPE/Schemes/Travel.lean:31-41",
+     "note": "remainder rate in the Prescription formulation",
+     "relation": "narrowMatch"
+    },
+    {
+     "decl": "YM.OPE.Orbits.balance_rate",
+     "role": "support",
+     "where": "YM/OPE/Orbits/Gain.lean:57-73",
+     "note": "closest to (19.12)",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.OPE.Orbits.fresh_price",
+     "role": "support",
+     "where": "YM/OPE/Orbits/Gain.lean:21-31",
+     "note": "degree-m fresh vector, nearest to the raw coordinates",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "[L] proves the last sentence of the lemma, the final coefficient and tested remainder rates under (G), in two formulations. The raw coordinate and raw remainder bounds (19.11) and the averaged error (19.12) have no counterpart, so the lemma's first display is not proved.",
+   "confidence": "medium",
+   "finding": {
+    "claim": "weaker",
+    "confirmed": false
+   },
+   "relation": "narrowMatch",
    "verification": {
     "batch": "S19-2",
     "mapper": "weaker",
-    "verifier": null,
+    "verifier": "weaker",
+    "agreed": false,
+    "judge": "weaker",
+    "source": "judge",
+    "skeptics": [],
+    "claimed": "weaker",
+    "finding": "skeptics pending",
     "complete": false
    }
   },
   {
    "id": "Eq (19.13)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "inlined",
+   "lean": [
+    {
+     "decl": "YM.OPE.Cards.carrying",
+     "role": "key",
+     "where": "YM/OPE/Cards/Pressure.lean:98-110",
+     "note": "the limit of the translated-copy moments is bounded by c^{2m} inside the proof (via deck_limit and the hypothesis hF), giving the sup-norm bound by character evaluation",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "[L] has no standalone statement of the integral over phases against nu; the moment bound for the limit of translated copies is a step inside the proof of carrying, which then concludes the norm bound.",
+   "step": "YM.OPE.Cards.carrying, YM/OPE/Cards/Pressure.lean:98-110",
+   "confidence": "low",
+   "relation": "relatedMatch",
    "verification": {
     "batch": "S19-2",
     "mapper": "close",
-    "verifier": null,
-    "complete": false
+    "verifier": "inlined",
+    "agreed": false,
+    "judge": "inlined",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Lemma 19.10",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "stronger",
+   "lean": [
+    {
+     "decl": "YM.OPE.Orbits.coefficient_separated",
+     "role": "key",
+     "where": "YM/OPE/Orbits/Separated.lean:64-69",
+     "note": "eventually as r->0+, ||coef|| <= r^(m - weight d - eps) on all WithinRoom configurations",
+     "relation": "broadMatch"
+    },
+    {
+     "decl": "YM.OPE.Orbits.quantitative_separated",
+     "role": "key",
+     "where": "YM/OPE/Orbits/Separated.lean:71-85",
+     "note": "eventually, algebraError and formula in every viewer are <= r^(D+1-weight d-eps) for WithinRoom and ClearOf configurations, and the point lists are injective",
+     "relation": "broadMatch"
+    },
+    {
+     "decl": "YM.OPE.Orbits.Foundation",
+     "role": "support",
+     "where": "YM/OPE/Orbits/Kernel.lean:62-65",
+     "note": "structure repackaging the same two statements for a fixed Reader",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.OPE.Orbits.produce",
+     "role": "support",
+     "where": "YM/OPE/Orbits/Kernel.lean:67-69",
+     "note": "derives Foundation from the two lemmas",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Both statements give the two thresholds with exponents j-|A|_deg-eps and D+1-|A|_deg-eps, the algebra bound before state evaluation, and the viewer bound. [L] also concludes injectivity of the point lists and assumes Services, which stands for the data of the separated-operator definition.",
+   "confidence": "medium",
+   "relation": "broadMatch",
    "verification": {
     "batch": "S19-2",
     "mapper": "stronger",
-    "verifier": null,
-    "complete": false
+    "verifier": "exact",
+    "agreed": false,
+    "judge": "stronger",
+    "source": "judge",
+    "complete": true
    }
   },
   {
@@ -23908,16 +24492,41 @@
   },
   {
    "id": "Definition 19.13",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YM.OPE.Nesting.Kernel.chord",
+     "role": "key",
+     "where": "YM/OPE/Nesting/Kernels.lean:36",
+     "note": "iterated coefficient at a fixed root output, via Composite.stacked",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.OPE.Nesting.Kernel.output",
+     "role": "key",
+     "where": "YM/OPE/Nesting/Kernels.lean:35",
+     "note": "direct coefficient: R.coef at the leaf profile and root anchor",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.OPE.Nesting.Composite.stacked",
+     "role": "support",
+     "where": "YM/OPE/Nesting/Composite.lean:115",
+     "note": "sum over branches of products of child coefficients times the node factor; nShot gives leaves value 1",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Leaves have coefficient one (nShot bud = 1), each internal vertex sums over child channels up to its truncation multiplying child coefficients, and the root output is fixed; the direct coefficient is R.coef at leaves and root anchor, so nothing differs in content.",
+   "confidence": "medium",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S19-3",
     "mapper": "definition-close",
     "verifier": "definition-match",
     "agreed": false,
-    "complete": false
+    "judge": "definition-match",
+    "source": "judge",
+    "complete": true
    }
   },
   {
@@ -24135,16 +24744,48 @@
   },
   {
    "id": "Definition 19.17",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YM.Contacts.Devices.base",
+     "role": "key",
+     "where": "YM/Contacts/Tomography.lean:188-191",
+     "note": "real and orthogonally averaged detector (reality symmetrization of complexMean)",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Contacts.Devices.direct",
+     "role": "key",
+     "where": "YM/Contacts/Tomography.lean:110-112",
+     "note": "clips with keep on the closed ball of radius aperture, reads against the probes, decodes",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Contacts.Devices.complexMean",
+     "role": "support",
+     "where": "YM/Contacts/Tomography.lean:170-173",
+     "note": "Haar average over rotations of the clipped detector",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Contacts.Devices.aperture",
+     "role": "support",
+     "where": "YM/Contacts/Tomography.lean:93-94",
+     "note": "a_q^ct with probe points at distance at least 2*aperture (aperture_clears)",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The clip keep acts on monomials on the closed ball of radius a_q^ct, probes lie at distance at least 2a_q^ct (aperture_clears), then the rotation average and reality symmetrization give base, linear in the expression; the chosen-radius field is the encoding of [M]'s choice step.",
+   "confidence": "medium",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S19-3",
     "mapper": "definition-close",
     "verifier": "definition-match",
     "agreed": false,
-    "complete": false
+    "judge": "definition-match",
+    "source": "judge",
+    "complete": true
    }
   },
   {
@@ -24226,158 +24867,606 @@
   },
   {
    "id": "Lemma 19.20",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.Contacts.Transport.real_basis",
+     "role": "key",
+     "where": "YM/Contacts/Transport/Register.lean:52-63",
+     "note": "real basis of every stratum, unit in degree 0 (SystemBasis)",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Contacts.Transport.SystemBasis",
+     "role": "support",
+     "where": "YM/Contacts/Transport/Register.lean:47-51",
+     "note": "basis of M.splitting.stratum n over C of conjugation-fixed vectors, with unit_row in degree 0",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Contacts.Devices.project_moves",
+     "role": "key",
+     "where": "YM/Contacts/Coherent.lean:103",
+     "note": "translation covariance of the projection",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Contacts.Devices.project_spin",
+     "role": "key",
+     "where": "YM/Contacts/Coherent.lean:98",
+     "note": "rotation covariance",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Contacts.Devices.project_real",
+     "role": "key",
+     "where": "YM/Contacts/Coherent.lean:101",
+     "note": "conjugation covariance",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Contacts.Devices.row_moves",
+     "role": "key",
+     "where": "YM/Contacts/Coherent.lean:115",
+     "note": "same for the exact-degree rows",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Contacts.Devices.row_spin",
+     "role": "key",
+     "where": "YM/Contacts/Coherent.lean:105",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Contacts.Devices.row_real",
+     "role": "key",
+     "where": "YM/Contacts/Coherent.lean:110",
+     "relation": "hasPart"
+    }
+   ],
+   "note": "The covariance clause is stated by the project/row lemmas for translations, rotations (Ortho, O(4)) and conjugation; the real-basis clause by real_basis. Each claim has its own declaration, no single one states both.",
+   "confidence": "medium",
+   "relation": "hasPart",
    "verification": {
     "batch": "S19-4",
     "mapper": "parts",
-    "verifier": null,
-    "complete": false
+    "verifier": "parts",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (19.15)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.Contacts.Devices.origin_id",
+     "role": "key",
+     "where": "YM/Contacts/Coherent.lean:35",
+     "note": "P_q I_q = 1",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Contacts.Devices.origin_cascade",
+     "role": "key",
+     "where": "YM/Contacts/Coherent.lean:68",
+     "note": "T_q P_{q+1} = P_q (T_q = splitting.down)",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Contacts.Devices.select_grade",
+     "role": "key",
+     "where": "YM/Contacts/Coherent.lean:86",
+     "note": "graded rows of the projection",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Contacts.Devices.replace_sum",
+     "role": "key",
+     "where": "YM/Contacts/Coherent.lean:124",
+     "note": "P_{<=q} = sum of rows (insertRow)",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.MultipleContact.Splitting.left",
+     "role": "key",
+     "where": "YM/MultipleContact/Fields.lean:19",
+     "note": "T_q j_q = 1, with T_q = down",
+     "from_verifier": true,
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Contacts.Devices.splitting",
+     "role": "support",
+     "where": "YM/Contacts/Coherent.lean:48-50",
+     "note": "down d is originProjection d composed with insertion, i.e. T_d",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The four identities appear as separate lemmas with T_q realized as the splitting's down map and j_{d,q} as the rise; T_q j_q = 1 has no named lemma and is a definitional step of the splitting.",
+   "step": "YM.Contacts.Transport.real_basis, Lemma 19.20 (YM/Contacts/Transport/Register.lean:47-63)",
+   "confidence": "low",
+   "relation": "hasPart",
    "verification": {
     "batch": "S19-4",
     "mapper": "parts",
-    "verifier": null,
-    "complete": false
+    "verifier": "parts",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (19.16)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-close",
+   "lean": [
+    {
+     "decl": "YM.Contacts.Normal.taylor",
+     "role": "key",
+     "where": "YM/Contacts/Normal/Subtractions.lean:68",
+     "note": "window times jet",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Contacts.Normal.jet",
+     "role": "support",
+     "where": "YM/Contacts/Normal/Subtractions.lean:66",
+     "note": "sum of pieces 0..m",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Contacts.Normal.window",
+     "role": "support",
+     "where": "YM/Contacts/Normal/Subtractions.lean:65",
+     "note": "radial cutoff of the normal component at scale s",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Contacts.Normal.piece_formula",
+     "role": "support",
+     "where": "YM/Contacts/Normal/Subtractions.lean:60-61",
+     "note": "piece i is D^i f(x - proj x)[proj x,...]/i!",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The Taylor jet about x - x_h^perp matches term by term, but [L] takes an abstract cutoff profile `cutoff s` and scale s where [M] fixes chi (1 on the unit ball, 0 outside radius 2) and s = s_*.",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S19-4",
     "mapper": "definition-close",
-    "verifier": null,
-    "complete": false
+    "verifier": "definition-match",
+    "agreed": false,
+    "judge": "definition-close",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Eq (19.17)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YM.Contacts.Normal.System.cumulant",
+     "role": "key",
+     "where": "YM/Contacts/Score/Formula.lean:48-51",
+     "note": "C_h^ct",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Contacts.Normal.System.punctured",
+     "role": "key",
+     "where": "YM/Contacts/Score/Formula.lean:52",
+     "note": "Pi_h^punct",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Contacts.Normal.System.full",
+     "role": "key",
+     "where": "YM/Contacts/Score/Formula.lean:53",
+     "note": "Pi_h^full",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Contacts.Normal.System.subtractAt",
+     "role": "key",
+     "where": "YM/Contacts/Score/Formula.lean:43",
+     "note": "minus sum over w < depth of R_{h,w} times Taylor of order depth-1-w",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Contacts.Normal.System.full_formula",
+     "role": "support",
+     "where": "YM/Contacts/Score/Formula.lean:60",
+     "note": "full = punctured + cumulant",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Lean's cumulant is elementary for singletons and subtractAt of the punctured partition sum otherwise, with depth = degree + 1 - 4(|g|-1) in truncated subtraction equal to L_h, so the recursion is the same.",
+   "confidence": "medium",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S19-4",
     "mapper": "definition-close",
-    "verifier": null,
-    "complete": false
+    "verifier": "definition-match",
+    "agreed": false,
+    "judge": "definition-match",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Eq (19.18)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-close",
+   "lean": [
+    {
+     "decl": "YM.Contacts.Layers.Precision",
+     "role": "key",
+     "where": "YM/Contacts/Layers/Ahead.lean:51",
+     "note": "the bound against every exterior sum at height one",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Contacts.Layers.Funds",
+     "role": "support",
+     "where": "YM/Contacts/Layers/Ahead.lean:92-94",
+     "note": "class A_s(c) that uses Precision for every q",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The display is the precision bound on U - g against exterior sums, which Precision states over an abstract filter and rate sequence, while Funds only packages it into A_s(c).",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S19-4",
     "mapper": "definition-close",
-    "verifier": null,
-    "complete": false
+    "verifier": "definition-close",
+    "agreed": false,
+    "judge": "definition-close",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Lemma 19.21",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.Contacts.Layers.Funds.outputs",
+     "role": "key",
+     "where": "YM/Contacts/Layers/Signed.lean:47-56",
+     "note": "row bound: degree-w contact row has rate c - w s",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Contacts.Layers.Funds.drop",
+     "role": "key",
+     "where": "YM/Contacts/Layers/Signed.lean:61-72",
+     "note": "residual e - statedProject lies in Funds at u with cost c - (w+1)(s-u)",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Contacts.Layers.Funds.coarsen",
+     "role": "key",
+     "where": "YM/Contacts/Layers/Signed.lean:73-74",
+     "note": "coarsening from s to u without subtracting keeps cost c",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Contacts.Layers.Funds.times",
+     "role": "key",
+     "where": "YM/Contacts/Layers/Ahead.lean:107",
+     "note": "separated products add costs",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Contacts.Layers.Funds.plus",
+     "role": "key",
+     "where": "YM/Contacts/Layers/Ahead.lean:104",
+     "note": "sums, with Funds.mono for the maximum",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Contacts.Layers.Funds.mono",
+     "role": "key",
+     "where": "YM/Contacts/Layers/Ahead.lean:98",
+     "relation": "hasPart"
+    }
+   ],
+   "note": "Each of the four claims has its own lemma. [L] states them along a filter with a fixed rate sequence and requires the probe clearance (Fits M phi w x A) as the hypothesis of 'clear degree w'.",
+   "confidence": "medium",
+   "relation": "hasPart",
    "verification": {
     "batch": "S19-4",
     "mapper": "parts",
-    "verifier": null,
-    "complete": false
+    "verifier": "parts",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Lemma 19.22",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "close",
+   "lean": [
+    {
+     "decl": "YM.Contacts.Solstice.global_charge",
+     "role": "key",
+     "where": "YM/Contacts/Solstice/Venue.lean:62-65",
+     "note": "the full subtracted kernel integrates against test functions of bounded jet, giving a continuous functional (Charge.record)",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Contacts.Solstice.MultipleLight",
+     "role": "key",
+     "where": "YM/Contacts/Solstice/Result.lean:52-63",
+     "note": "field `distribution`",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Contacts.Solstice.provided",
+     "role": "key",
+     "where": "YM/Contacts/Solstice/Result.lean:65-69",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Contacts.Solstice.puncture_eq",
+     "role": "key",
+     "where": "YM/Contacts/Solstice/Puncture.lean:47-52",
+     "note": "on tests supported away from the diagonal the full expression equals the punctured one",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Contacts.Solstice.full_loose",
+     "role": "support",
+     "where": "YM/Contacts/Solstice/Puncture.lean:29-32",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Contacts.Solstice.celestial",
+     "role": "attributed",
+     "where": "YM/Contacts/Solstice/Result.lean:78-80",
+     "note": "existence of devices for which MultipleLight holds",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Contacts.Solstice.majorKernel",
+     "role": "support",
+     "where": "YM/Contacts/Solstice/Venue.lean:59",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Contacts.Solstice.MultipleLight.distribution",
+     "role": "key",
+     "where": "YM/Contacts/Solstice/Result.lean:62-63",
+     "note": "the subtracted kernel defines a Charge, i.e. a bounded-order distribution on every compact set, for every state and field list, on slices",
+     "from_verifier": true,
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Contacts.Normal.System.refines",
+     "role": "key",
+     "where": "YM/Contacts/Score/Formula.lean:92-99",
+     "note": "on tests supported where the partition blocks are separated, the full expression equals the product of the block expressions",
+     "from_verifier": true,
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Contacts.Solstice.Charge",
+     "role": "support",
+     "where": "YM/Contacts/Solstice/Venue.lean:30-32",
+     "note": "Charge: absolute-integral bound by a jet of order n",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "[L] proves continuity and the order bound for the contact kernel on slices of any normal group g with offset o and any B, s with 2s <= B <= clearance, and agreement with the punctured expression away from the diagonal; [M] states the full-arity case with s_* = B_*/4 and identifies the restriction with S_n^zeta. The identification of the punctured kernel with S_n on Conf is by definition of the punctured expression in [L], not a separate statement.",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S19-4",
     "mapper": "close",
-    "verifier": null,
-    "complete": false
+    "verifier": "close",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (19.19)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.Contacts.Normal.System.full_split",
+     "role": "key",
+     "where": "YM/Contacts/Score/InPatch.lean:45-46",
+     "note": "full = sum over arms of reshaped punctured times mask, none arm unprojected, some w arm deviation",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Contacts.Normal.System.branches",
+     "role": "support",
+     "where": "YM/Contacts/Score/InPatch.lean:34-44",
+     "note": "X + subtractAt X as the arm sum",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "full_split states the standalone identity: the none arm carries id minus the weighed sum and each w arm carries the reader times (1 - taylor), as in [M]'s two groups.",
+   "confidence": "medium",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S19-4",
     "mapper": "inlined",
-    "verifier": null,
-    "complete": false
+    "verifier": "exact",
+    "agreed": false,
+    "judge": "exact",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Eq (19.20)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "close",
+   "lean": [
+    {
+     "decl": "YM.Contacts.Harvest.Route.seat",
+     "role": "key",
+     "where": "YM/Contacts/Harvest/Estimate.lean:80-84",
+     "note": "physical size bound with tail factor",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Contacts.Harvest.Route.spent",
+     "role": "key",
+     "where": "YM/Contacts/Harvest/ReadingToll.lean:62-81",
+     "note": "cost of a projected or residual arm in rate form",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Contacts.Layers.Funds.outputs",
+     "role": "support",
+     "where": "YM/Contacts/Layers/Signed.lean:47-56",
+     "note": "row rate c - w s",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Contacts.Layers.Funds.drop",
+     "role": "support",
+     "where": "YM/Contacts/Layers/Signed.lean:61-72",
+     "note": "residual cost c - (w+1)(s-u)",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The display turns the layer rates into physical size bounds with loss rho_min^{-tau}; [L] carries these as rate forms (outputs, drop) and as the converted power-bag bounds with exponent loss and tail factor (spent, seat), not as the two displayed formulas.",
+   "confidence": "low",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S19-4",
     "mapper": "close",
-    "verifier": null,
-    "complete": false
+    "verifier": "close",
+    "agreed": false,
+    "judge": "close",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Eq (19.21)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "stronger",
+   "lean": [
+    {
+     "decl": "YM.Contacts.Normal.compact_deviation",
+     "role": "key",
+     "where": "YM/Contacts/Normal/ShellTest.lean:43-65",
+     "note": "jet bound X*c*vanishFactor m a for (1 - taylor) on a compact set",
+     "relation": "broadMatch"
+    },
+    {
+     "decl": "YM.Contacts.Normal.vanishFactor",
+     "role": "support",
+     "where": "YM/Contacts/Normal/ShellTest.lean:20",
+     "note": "a^(m+1) for a <= 1, a^m otherwise",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Same C^l bound with a^(k+1) or a^k from the C^(l+k+1) norm, but [L] holds for an arbitrary frame, an independent cutoff scale and any compact piece of the shell.",
+   "confidence": "medium",
+   "relation": "broadMatch",
    "verification": {
     "batch": "S19-4",
     "mapper": "close",
-    "verifier": null,
-    "complete": false
+    "verifier": "stronger",
+    "agreed": false,
+    "judge": "stronger",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Eq (19.22)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "stronger",
+   "lean": [
+    {
+     "decl": "YM.Contacts.Solstice.glues_total",
+     "role": "key",
+     "where": "YM/Contacts/Solstice/Skies.lean:59-79",
+     "note": "absolute-integral bound by a jet of order (2+W)|g| on compact supports",
+     "relation": "broadMatch"
+    },
+    {
+     "decl": "YM.Contacts.Solstice.global_charge",
+     "role": "key",
+     "where": "YM/Contacts/Solstice/Venue.lean:62-65",
+     "note": "the same bound as a Charge",
+     "relation": "broadMatch"
+    },
+    {
+     "decl": "YM.Contacts.Solstice.totalTestOrder",
+     "role": "support",
+     "where": "YM/Contacts/Solstice/Skies.lean:48",
+     "note": "(2+W)|g|",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "[L] bounds the absolute integral of the subtracted kernel for any collision group g and slice, and [M] prints the case g = all n points.",
+   "confidence": "medium",
+   "relation": "broadMatch",
    "verification": {
     "batch": "S19-4",
     "mapper": "close",
-    "verifier": null,
-    "complete": false
+    "verifier": "stronger",
+    "agreed": false,
+    "judge": "stronger",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Lemma 19.23",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "stronger",
+   "lean": [
+    {
+     "decl": "YM.Contacts.Solstice.MultipleLight.distribution",
+     "role": "key",
+     "where": "YM/Contacts/Solstice/Result.lean:62-63",
+     "note": "Charge of order totalTestOrder on every compact set",
+     "relation": "broadMatch"
+    },
+    {
+     "decl": "YM.Contacts.Solstice.global_charge",
+     "role": "key",
+     "where": "YM/Contacts/Solstice/Venue.lean:62-65",
+     "note": "explicit order (2+W)|g|",
+     "relation": "broadMatch"
+    },
+    {
+     "decl": "YM.Contacts.Solstice.glues_total",
+     "role": "support",
+     "where": "YM/Contacts/Solstice/Skies.lean:59-79",
+     "note": "absolute-integral bound",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Contacts.Solstice.Charge",
+     "role": "support",
+     "where": "YM/Contacts/Solstice/Venue.lean:30-32",
+     "note": "bound by a jet on compact supports",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "[L] gives a charge of explicit order (2+W)|g| on every compact set for any group g and slice, which includes [M]'s q_K = (2+W)n for the full arity.",
+   "confidence": "medium",
+   "relation": "broadMatch",
    "verification": {
     "batch": "S19-4",
     "mapper": "stronger",
-    "verifier": null,
-    "complete": false
+    "verifier": "stronger",
+    "agreed": false,
+    "judge": "stronger",
+    "source": "judge",
+    "complete": true
    }
   }
  ]
