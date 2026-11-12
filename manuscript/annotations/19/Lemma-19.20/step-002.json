@@ -1,0 +1,317 @@
+{
+  "id": "Lemma 19.20 step 2",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 234,
+        "rect": [
+          0.11962,
+          0.31491,
+          0.76357,
+          0.09139
+        ]
+      },
+      "title": "Lemma 19.20 step 2: Text, p. 234",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 19.20 step 2"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Devices.origin_cascade",
+        "module": "YM.Contacts.Coherent",
+        "lines": [
+          68,
+          69
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Devices.origin_cascade"
+          },
+          "snippet": {
+            "text": "lemma origin_cascade (d : ℕ) (e : Expression P) : M.splitting.down d (M.originProjection (d+1) e)= M.originProjection d e := by\n  rw [origin_rule, map_add, map_sub,M.splitting.left,M.splitting.left]; change _+(M.originProjection d _ -M.originProjection d _)=_; rw [sub_self,add_zero]",
+            "line": 68,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Coherent.lean",
+            "fragment": "L68-L69"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Devices.origin_cascade",
+            "lines": [
+              68,
+              69
+            ],
+            "conclusion": "`down d (originProjection (d+1) e) = originProjection d e`, i.e. `T_q P_{q+1} = P_q`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Devices.origin_grade",
+        "module": "YM.Contacts.Coherent",
+        "lines": [
+          76,
+          79
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Devices.origin_grade"
+          },
+          "snippet": {
+            "text": "lemma origin_grade {d w : ℕ} (h : w ≤ d) (e : Expression P) : M.splitting.part w d (M.originProjection d e)= M.splitting.top w (M.base w e) := by\n  induction d,h using Nat.le_induction with\n  | base => rw [M.splitting.top_part]; exact M.top_reads w e\n  | succ d h ih => rw [MultipleContact.Splitting.part,dif_neg (by omega), LinearMap.comp_apply,M.origin_cascade]; exact ih",
+            "line": 76,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Coherent.lean",
+            "fragment": "L76-L79"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Devices.origin_grade",
+            "lines": [
+              76,
+              79
+            ],
+            "conclusion": "The projection decomposes by exact grade, `part w d (originProjection d e) = top w (base w e)`, the sum of exact-degree rows."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Transport.turns_basis",
+        "module": "YM.Contacts.Transport.Register",
+        "lines": [
+          30,
+          33
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Transport.turns_basis"
+          },
+          "snippet": {
+            "text": "lemma turns_basis (s:Ortho)(b:Bool)(n:ℕ){t : S.Field n}(h:t∈M.splitting.stratum n) : M.rotation.act n s (Ribbon.glaze M b n t)∈ M.splitting.stratum n := by\n   let c:M.splitting.stratum n:= ⟨t,h⟩; have he : Ribbon.glaze M b n t∈M.splitting.stratum n:=by cases b; exact h; exact (conjGrade M n c).property\n   cases n; exact Submodule.mem_top\n   show _∈ LinearMap.ker _; rw [LinearMap.mem_ker,← M.covariant.act, show M.splitting.down _ (Ribbon.glaze M b _ t)=0 from he,map_zero]",
+            "line": 30,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Transport/Register.lean",
+            "fragment": "L30-L33"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Transport.turns_basis",
+            "lines": [
+              30,
+              33
+            ],
+            "conclusion": "The kernel of `down` (the degree stratum) is invariant under rotations and the real structure."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Transport.real_basis",
+        "module": "YM.Contacts.Transport.Register",
+        "lines": [
+          52,
+          61
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Transport.real_basis"
+          },
+          "snippet": {
+            "text": "lemma real_basis : Nonempty (SystemBasis M):= by\n   let z: M.splitting.stratum 0:=⟨S.unit 0,Submodule.mem_top⟩\n   have he:z≠0:= fun he=> S.alive 0 M.hierarchy.laws (congr_arg Subtype.val he); have hp:S.conj M.hierarchy.spin 0 (S.unit 0)=S.unit 0:=S.conj_unit ..\n   obtain ⟨V,U,hz,h'⟩:=picked M 0 {z} (singleton_subset_iff.mpr (show _ from (show z∈ RealGrade M 0 from Subtype.ext hp))) ((linearIndepOn_singleton_iff ..).2 he)\n   choose N B h hh using fun n:ℕ=> picked M (n+1) ∅ (by simp) (linearIndepOn_empty ..); let F (ℓ:ℕ):ℕ:= Nat.casesOn ℓ V N; let u(n:ℕ): Module.Basis (Fin (F n)) ℂ (M.splitting.stratum n) := Nat.casesOn (motive:=fun n=> Module.Basis (Fin (F n)) ℂ (M.splitting.stratum n)) n U B; -- \n   refine ⟨F,u,?_,fun n i=>?_⟩ -- Nonempty syntax?\n   · obtain ⟨i,hi⟩:= hz (Set.mem_singleton z); exact ⟨i, congrArg Subtype.val hi⟩\n   cases n with\n   | zero=> exact congr_arg Subtype.val (h' (Set.mem_range_self i))\n   | succ n=> exact congr_arg Subtype.val (hh n (Set.mem_range_self i))",
+            "line": 52,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Transport/Register.lean",
+            "fragment": "L52-L61"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Transport.real_basis",
+            "lines": [
+              52,
+              61
+            ],
+            "conclusion": "Every stratum has a basis of conjugation-fixed vectors, with the unit in degree 0 (`SystemBasis`)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Devices.project_spin",
+        "module": "YM.Contacts.Coherent",
+        "lines": [
+          98,
+          100
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Devices.project_spin"
+          },
+          "snippet": {
+            "text": "lemma project_spin (d) (x : E4) (g : Ortho) (e) : M.rotation.act d g (M.project x d e)= M.project (Ortho.move g x) d (turnExpr D R g e) := by\n  change M.rotation.act d g (M.originProjection d _) = M.originProjection d _\n  simp only [AlgHom.toLinearMap_apply]; rw [M.origin_spin,turn_shift, ← Ortho.motion_at, map_neg]; rfl",
+            "line": 98,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Coherent.lean",
+            "fragment": "L98-L100"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Devices.project_spin",
+            "lines": [
+              98,
+              100
+            ],
+            "conclusion": "The projection is covariant under rotations."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Devices.project_real",
+        "module": "YM.Contacts.Coherent",
+        "lines": [
+          101,
+          102
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Devices.project_real"
+          },
+          "snippet": {
+            "text": "lemma project_real (d) (x : E4) (e) : S.conj ρ d (M.project x d e)= M.project x d (realExpr D ρ e) := by\n  change S.conj ρ d (M.originProjection d _) = M.originProjection d _; simp only [AlgHom.toLinearMap_apply]; rw [M.origin_real, real_shift]",
+            "line": 101,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Coherent.lean",
+            "fragment": "L101-L102"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Devices.project_real",
+            "lines": [
+              101,
+              102
+            ],
+            "conclusion": "The projection is covariant under conjugation."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Devices.project_moves",
+        "module": "YM.Contacts.Coherent",
+        "lines": [
+          103,
+          104
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Devices.project_moves"
+          },
+          "snippet": {
+            "text": "lemma project_moves (d) (x u : E4) (e) : M.project (x+u) d (shiftExpr u e)= M.project x d e := by\n  change M.originProjection d _ = M.originProjection d _; simp only [AlgHom.toLinearMap_apply]; rw [shift_add]; congr 2; abel_nf",
+            "line": 103,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Coherent.lean",
+            "fragment": "L103-L104"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Devices.project_moves",
+            "lines": [
+              103,
+              104
+            ],
+            "conclusion": "The projection at `x+u` of the shifted expression equals the projection at `x`, which is the translation covariance."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          234
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

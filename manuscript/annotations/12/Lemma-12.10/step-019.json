@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 12.10 step 19",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] obtains the smallness as `PricedReset` from the entry-threshold `Gate` in `buys_reset` rather than from the limit epsilon/t^2 -> 0, and the continuity of the correction comes from `correct` (via `balance_solve` and continuity of the target) rather than from Lemma D6.",
+  "subject": [
+    {
+      "location": {
+        "page": 88,
+        "rect": [
+          0.11962,
+          0.8265,
+          0.76357,
+          0.03697
+        ]
+      },
+      "title": "Lemma 12.10 step 19: Text, p. 88",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 12.10 step 19"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVNext.CouplingReset.PricedReset",
+        "module": "YM.UVNext.COUPLING_RESET.Prices",
+        "lines": [
+          66,
+          69
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVNext.CouplingReset.PricedReset"
+          },
+          "snippet": {
+            "text": "def PricedReset (a : Levels G) (η : ℕ → ℝ) (q : ResetPrices) := ∀ m,\n    let i := a.clock.J m; let j := a.clock.J (m+1)\n    Sensor G (a.params m).clip (a.params m).paths (η i) ∧\n      2*(q.cost j i+1) * a.clock.allowance m ≤ η i * (a.budget m).threshold^2 * q.radius j i",
+            "line": 66,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/COUPLING_RESET/Prices.lean",
+            "fragment": "L66-L69"
+          },
+          "proof_context": {
+            "declaration": "YM.UVNext.CouplingReset.PricedReset",
+            "lines": [
+              66,
+              69
+            ],
+            "conclusion": "`2*(cost+1)*allowance <= η*threshold^2*radius`, the entry-threshold condition that makes `|Δ| <= 1` (provided by `buys_reset` / `can_delay_reset`)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVNext.CouplingReset.buys_reset",
+        "module": "YM.UVNext.COUPLING_RESET.Prices",
+        "lines": [
+          71,
+          72
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVNext.CouplingReset.buys_reset"
+          },
+          "snippet": {
+            "text": "lemma buys_reset (a : Levels G) (h : Paid I a) (hη : Sensors p η)\n    (hg : ∀ j x, W.betaEntry j ≤ x → ∀ i, StepStages j i → Gate η q j i x) : PricedReset a η q := by",
+            "line": 71,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/COUPLING_RESET/Prices.lean",
+            "fragment": "L71-L72"
+          },
+          "proof_context": {
+            "declaration": "YM.UVNext.CouplingReset.buys_reset",
+            "lines": [
+              71,
+              89
+            ],
+            "conclusion": "`buys_reset` proves the entry-threshold condition `PricedReset` from the `Gate` of the raised entry threshold."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVNext.CouplingReset.correct",
+        "module": "YM.UVNext.COUPLING_RESET.Advance",
+        "lines": [
+          157,
+          160
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVNext.CouplingReset.correct"
+          },
+          "snippet": {
+            "text": "theorem correct (h : PricedReset B.a η q) (hu : Usable B η N m p V) (he : Income B N m p q s Q V F)\n    (hq : Curve (B.a.budget (m+1)) Q s) (hx : ∀ x∈s, Lives B.bake N (m+1) p (Q x)) :\n    ∃ d, let A := board B N F; let f := A.residual (target Q) V (predictor B N Q)\n         let t := window B.a m q; let T := A.install (target Q) (predictor B N Q) d",
+            "line": 157,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/COUPLING_RESET/Advance.lean",
+            "fragment": "L157-L160"
+          },
+          "proof_context": {
+            "declaration": "YM.UVNext.CouplingReset.correct",
+            "lines": [
+              157,
+              173
+            ],
+            "conclusion": "The correction `d` is continuous on `s` and the output curve `T` is a `Curve`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          88
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

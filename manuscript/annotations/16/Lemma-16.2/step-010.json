@@ -1,0 +1,105 @@
+{
+  "id": "Lemma 16.2 step 10",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 173,
+        "rect": [
+          0.11962,
+          0.38666,
+          0.76357,
+          0.0517
+        ]
+      },
+      "title": "Lemma 16.2 step 10: Text, p. 173",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.2 step 10",
+          "quads": [
+            [
+              0.11962,
+              0.38666,
+              0.88319,
+              0.38666,
+              0.88319,
+              0.42045,
+              0.11962,
+              0.42045
+            ],
+            [
+              0.12026,
+              0.42046,
+              0.55824,
+              0.42046,
+              0.55824,
+              0.43836,
+              0.12026,
+              0.43836
+            ]
+          ]
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Maxwell.Free.matrix_meal",
+        "module": "YM.Next.MAXWELL.Hidden",
+        "lines": [
+          66,
+          87
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Maxwell.Free.matrix_meal"
+          },
+          "snippet": {
+            "text": "lemma matrix_meal (h : G.Simple) : ∃ q : (c : G.ColorIndex) → Flavor c.val, (Matrix.of (fun (c i : G.ColorIndex) => bit (q c) i)).det≠0 := by\n  classical\n  have he (c : G.ColorIndex) : ∃ (q : Flavor c.val) (v : Sheet c.val), q v = 1 := by\n    let B := Module.finBasis ℝ (Sheet c.val)\n    letI := has_sheet h c.val\n    let i := (⟨0,Module.finrank_pos⟩ : Fin (Module.finrank ℝ (Sheet c.val)))\n    exact ⟨B.coord i, B i, (Module.Basis.repr_self_apply B i i).trans (if_pos rfl)⟩\n  choose q w hw using he\n  let A := Matrix.of fun c i : G.ColorIndex => bit (q c) i\n  refine ⟨q,fun H => ?_⟩\n  let y : TaylorTower G := fun j => if h:j<G.lieDim then fill j (unitColor G ⟨j,h⟩) (w ⟨j,h⟩) else 0\n  let P := probe y\n  have hh : A.map P=1 := by\n    ext a b; change probe y (bit (q a) b)=_; rw [bit,symbol_test]\n    rw [show y a.val=fill _ (unitColor G a) (w a) from dif_pos a.isLt, Matrix.one_apply]\n    by_cases h:a=b\n    · subst b; rw [tasted,hw,if_pos rfl]; rfl\n    rw [if_neg h];\n    change (↑(q a (faceMap _ _ (fill _ _ _))):ℂ)= _\n    rw [which,unitPaint a b,if_neg (Ne.symm h),zero_smul,map_zero]; rfl\n  have hk : P A.det=1 := by rw [AlgHom.map_det,show P.mapMatrix A=1 from hh, Matrix.det_one]\n  rw [H,map_zero] at hk; exact zero_ne_one hk",
+            "line": 66,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/MAXWELL/Hidden.lean",
+            "fragment": "L66-L87"
+          },
+          "proof_context": {
+            "declaration": "YM.Maxwell.Free.matrix_meal",
+            "lines": [
+              66,
+              87
+            ],
+            "conclusion": "For simple `G` there are probes `q c` of order `c` with `det (bit (q c) i) ≠ 0`, from coordinate functionals on a basis."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          173
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
+      }
+    }
+  }
+}

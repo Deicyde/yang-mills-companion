@@ -1,0 +1,122 @@
+{
+  "id": "Lemma 14.14 step 6",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 138,
+        "rect": [
+          0.12026,
+          0.57773,
+          0.75948,
+          0.05397
+        ]
+      },
+      "title": "Lemma 14.14 step 6: Text, p. 138",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.14 step 6"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stock.clear_interior",
+        "module": "YM.Overlay.Supplier",
+        "lines": [
+          66,
+          83
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stock.clear_interior"
+          },
+          "snippet": {
+            "text": "lemma clear_interior (C : Family G) (H : C.Makes) (m d : ℕ) : ∀ᶠ N in atTop, ∃ hn : m≤N,\n    ∀ p : ℕ, ∀ x : Site (C.side N p), ∀ F : C.book.Ref d, Interior ((Cells.center C.S p hn x).chamber 0) (C.O N p (d:=d) F x) := by\n  have he (z) (_ : z∈(C.localSection d).stencil) (j : Axis) : ∀ᶠ N in atTop,\n      C.S.a N*(2*((z j).natAbs+1):ℝ)<C.S.a m := (show Tendsto (fun N => C.S.a N*(2*((z j).natAbs+1):ℝ)) atTop (𝓝 0) from by\n        simpa only [zero_mul] using C.S.shrinks.mul_const _).eventually (gt_mem_nhds (C.S.a_pos _))\n  have hv := eventually_all_finset _ |>.mpr (fun z (hz:z∈(C.localSection d).stencil) => eventually_all.mpr (he z hz))\n  filter_upwards [hv,eventually_ge_atTop m] with N HN hn; refine ⟨hn,fun p x F => ?_⟩\n  have hc := C.continuousO N p _ F x\n  refine ⟨C.invariant H _ _ _ _ _,hc.measurable,fun u U H => ?_,hc.bounded_above_of_compact_support (HasCompactSupport.of_compactSpace _)⟩\n  refine C.localO N _ _ _ _ _ _ (agrees_mono H ?_)\n  intro z hz; obtain ⟨y,hY,rfl⟩ := Finset.mem_image.mp hz\n  refine Tiling.fits_stencil _ (centered_margin p hn x) fun j => ?_\n  let t := C.S.toDepth hn p\n  have hh := (HN y hY j).trans_eq (C.S.embeds_scale t).symm\n  change C.S.a N*(2*((y j).natAbs+1):ℝ)< _ at hh\n  have he := lt_of_mul_lt_mul_left hh (C.S.a_pos _).le\n  have hx : 2*((y j).natAbs+1)<t.count.val := by exact_mod_cast he\n  change _< t.count.val/2;omega",
+            "line": 66,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Overlay/Supplier.lean",
+            "fragment": "L66-L83"
+          },
+          "proof_context": {
+            "declaration": "YM.Stock.clear_interior",
+            "lines": [
+              66,
+              83
+            ],
+            "conclusion": "Eventually in `N`, the chamber of the centred cell contains the stencil of `C.O N p F x`, from `a_N * (2(|z_j|+1)) < a_m`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.MergeProof.Accent.gardena",
+        "module": "YM.MergeProof.Gardens",
+        "lines": [
+          39,
+          40
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.MergeProof.Accent.gardena"
+          },
+          "snippet": {
+            "text": "   refine ⟨hn,hi.trans hn,fun j=>⟨hh p' j v',?_⟩⟩\n   change (center C.S p' hn j).rootTest (C.beta N p') (C.O N p' (d:=d) v' j) ≤ _; rw [Stock.translate_s (C:=C) hn j ⟨d,v'⟩ (hh p' 0 v')]; exact (tent C N X i p' d v' g hg B H h hx hX hi hN hp).trans hW",
+            "line": 39,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Gardens.lean",
+            "fragment": "L39-L40"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.Accent.gardena",
+            "lines": [
+              19,
+              40
+            ],
+            "conclusion": "`translate_s` moves the centred bound at `0` to any site `j`, and `tent` gives the bound."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          138
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "id": "Lemma 11.12 step 5",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] takes a window containing a radius-`radiusB x/60` ball (`Bars W p (radiusB x/60)`) and bounds the residual by a rate that decays in that radius, with jets to order `k`. [M] states the setup in order-zero Schur terms.",
+  "subject": [
+    {
+      "location": {
+        "page": 70,
+        "rect": [
+          0.12026,
+          0.36268,
+          0.75982,
+          0.07134
+        ]
+      },
+      "title": "Lemma 11.12 step 5: Text, p. 70",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 11.12 step 5"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.AnalyticBridge.Covariance.editCosts",
+        "module": "YM.AnalyticBridge.SECTOR_COVARIANCE_JETS.Twist",
+        "lines": [
+          120,
+          140
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.AnalyticBridge.Covariance.editCosts"
+          },
+          "snippet": {
+            "text": "lemma editCosts {R : ℕ} (h : RatesPaid p p σ C k A B) (he : Gapped (A B) η) (hv : Price σ C η d 1 V 1 k)\n    (hp : (native c).Volume p d V) (hu : 0≤u) (hw : Bars W p R) :\n    let N := tallyInverse k C V η\n    let r := rateBreak d R k\n    Spiral p (shelve W A u) B u d (V*N) k ∧ RatesPaid p p d (r*unitH k C N V*drain u) k (hitch W A u) B ∧\n      RatesPaid p p d (r*unitF k C N V*drain u*drain u) k (shelve W A u-action A u) B := by\n  intro N r\n  have hW i : i∈W i := per_self hw i\n  have hx := activate h he (roomLow hv)\n  have hM := position_move (native c) (hearth (G:=G)) hv.pos.le\n  rw [← as_glimpse W hW,← as_hitch W hW]; refine ⟨⟨glimpse_smooth hx _ hu hv.r0,fun l hl => ?_⟩,?_,?_⟩\n  · unfold N; rw [panelFactor]\n    refine (glimpse_rates hx hv _ hu hM hp l hl).mono ?_ le_rfl\n    apply le_mul_of_one_le_left hv.pos.le; push_cast; linarith only [show (0:ℝ) ≤ k by positivity]\n  · have hc := hx.miss hv hu hM hp (referee_near W hW hw)\n    apply Bundle.mono hc\n    · exact le_mul_of_one_le_left hv.pos.le (by norm_cast; omega)\n    exact le_of_eq (by unfold r N tallyInverse unitH tagPrice rateBreak; ring)\n  have hc := hx.discrepancy hv hu hM hp (referee_near W hW hw)\n  refine Bundle.mono hc le_rfl (le_of_eq ?_)\n  unfold r N tallyInverse unitF unitH tagPrice rateBreak; ring",
+            "line": 120,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/SECTOR_COVARIANCE_JETS/Twist.lean",
+            "fragment": "L120-L140"
+          },
+          "proof_context": {
+            "declaration": "YM.AnalyticBridge.Covariance.editCosts",
+            "lines": [
+              120,
+              140
+            ],
+            "conclusion": "For a window family with `Bars W p R`, the window inverse `shelve W A u` and the residual `shelve W A u - action A u` carry the factor `rateBreak d R k`, exponentially small in the window radius."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          70
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
+      }
+    }
+  }
+}

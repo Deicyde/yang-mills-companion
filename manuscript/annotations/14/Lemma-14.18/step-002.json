@@ -1,0 +1,84 @@
+{
+  "id": "Lemma 14.18 step 2",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L]'s calculation uses no positivity, as [M] says, but it goes through `projectionExact` rather than an averaging over the adjoint group stated at these lines.",
+  "subject": [
+    {
+      "location": {
+        "page": 143,
+        "rect": [
+          0.11962,
+          0.33053,
+          0.76011,
+          0.03713
+        ]
+      },
+      "title": "Lemma 14.18 step 2: Text, p. 143",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.18 step 2"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.MergeProof.Accent.savings",
+        "module": "YM.MergeProof.Powder",
+        "lines": [
+          25,
+          45
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.MergeProof.Accent.savings"
+          },
+          "snippet": {
+            "text": "   let W:= C.labels.level d; let T:= Maxwell.freeTable C.labels; let B:= Maxwell.equationIdeal G d\n   have hg : T.null d=B.map W.coords.toLinearMap:=by\n      ext x; obtain ⟨i,rfl⟩:= W.coords.surjective x\n      change W.coords i∈ T.null d ↔ _\n      have hh : W.coords i∈T.null d ↔ i∈B:= by\n        have H := Maxwell.projectionExact C.labels (c:=W.coords i)\n        rw [Extra.FD.no_residual] at H\n        refine H.symm.trans ?_ ; simp only [Submodule.mem_bot]\n        constructor\n        · intro h; apply LinearMap.mem_ker.mpr\n          have hh : Maxwell.observable G d ((C.labels.level d).coords.symm (W.coords i))=0 := congr_arg Subtype.val h\n          rw [W.coords.symm_apply_apply] at hh; exact hh\n        intro h; apply Subtype.ext\n        change Maxwell.observable G d ((C.labels.level d).coords.symm (W.coords i))=0; rw [W.coords.symm_apply_apply]; exact h\n      rw [hh]; exact ⟨fun hi=> ⟨i,hi,rfl⟩,fun ⟨j,h,hj⟩=> W.coords.injective (show W.coords j= W.coords i from hj) ▸ h⟩\n   have he := LinearEquiv.finrank_eq (v.submoduleMap B)\n   have hz := LinearEquiv.finrank_eq (W.coords.submoduleMap B)\n   have ha : Module.finrank ℂ (T.Field d)+Module.finrank ℂ (T.null d) = Module.finrank ℂ (C.label d):= (T.null d).finrank_quotient_add_finrank\n   have hz' : Module.finrank ℂ (T.null d)=Module.finrank ℂ B:=\n      (congr_arg (fun L : Submodule ℂ (C.label d)=> Module.finrank ℂ L) hg).trans hz.symm\n   rw [hz'] at ha",
+            "line": 25,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Powder.lean",
+            "fragment": "L25-L45"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.Accent.savings",
+            "lines": [
+              19,
+              47
+            ],
+            "conclusion": "The dimension count identifies the free null space with the equation ideal through `Maxwell.projectionExact` and applies `finrank_quotient_add_finrank`, with no positivity hypothesis."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          143
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
+      }
+    }
+  }
+}

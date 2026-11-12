@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 16.9 step 9",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The split at λ^{-3000}, the weight with exponent -99 and the exponents 3+(150+1-396)/2 and 3-1500+(150+900)/2 correspond to Lean's `due`, `mass`, `mote_size` budgets, but Lean does not display the numbers or an O(λ^{-M}) bound by Lemma H-G3 for a complementary region, and the exponents -119.5 and -972 are not stated.",
+  "subject": [
+    {
+      "location": {
+        "page": 184,
+        "rect": [
+          0.12026,
+          0.58535,
+          0.76213,
+          0.14113
+        ]
+      },
+      "title": "Lemma 16.9 step 9: Text, p. 184",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.9 step 9"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.exterior_size",
+        "module": "YM.Next.ROTATIONS.Vanishing",
+        "lines": [
+          92,
+          109
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.exterior_size"
+          },
+          "snippet": {
+            "text": "    by_cases hc:d=b\n    · subst b\n      have hA : Own A d false := by simpa [spar] using hA d\n      have hD : w d= -100 := chart_there ..\n      let z := fun n => coneWeight d (fuel (-99) n) (homes w n)\n      obtain ⟨hm,hs⟩ := mass V H J P hP hi hr C d A he hA (hg d) (fun i => 1+w i) (-99) (by norm_num)\n        (fun i _ => by linarith [(hk i).2]) _ hG 1 (by norm_num)\n      obtain ⟨M,hM,hN⟩ := bead_size w d f e hj hf (-3000) (-99) (by linarith)\n      obtain ⟨N,hL,hO⟩ := mote_size w d f e hj hf (-3000)\n      let Y n := cave d (-3000) n\n      have hF : Budget (-101) (fun n => cross (V d) B A ((Y n).indicator (X n))) :=\n        (balanced_mul (V d) B A _ (hX.mono fun n hn i => (hn i).indicator (cave_m ..)) u (1+(-99)*4) T z hY hm hT hs 3 M hM (fun n p H => ⟨due_nn _ _ _ _ p H,cone_nn _ _ _ (home_lit w n) p (fuel_pos ..) H,hN n p H⟩)).rise (by linarith)\n      let U := due w d 0\n      have hS := normal w d V A 300 (fun i => by linarith [(hk i).1])\n      have hB : Budget (-101) (fun n => cross (V d) B A ((Y n)ᶜ.indicator (X n))) :=\n        (balanced_mul (V d) B A _ (hX.mono fun n hn i => (hn i).indicator (cave_m .. |>.compl)) u (300*3) T U hY\n          (fun n => cost_int V d A _ (fuel_pos ..) _ _) hT hS (3+(-3000)/2) N hL (fun n p H => ⟨due_nn _ _ _ _ p H,due_nn _ _ _ _ p H,hO n p H⟩)).rise (by linarith)\n      exact (hF.add hB).same (hX.mono fun n hn => partition_cross _ _ _ (X n) hn _ (cave_m ..))",
+            "line": 92,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Vanishing.lean",
+            "fragment": "L92-L109"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.exterior_size",
+            "lines": [
+              68,
+              120
+            ],
+            "conclusion": "For `d=b` the integral is split with `cave d (-3000)` and its complement (`partition_cross`); `mass` with exponent `-99` and `balanced_mul` bound the near part, and `mote_size` with `300*3` the far part, each by `Budget (-101)`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.axisTurn",
+        "module": "YM.Next.ROTATIONS.Route",
+        "lines": [
+          59,
+          67
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.axisTurn"
+          },
+          "snippet": {
+            "text": "  obtain ⟨hA,hB⟩ := drained x hx q J P H hp hi h.tensor h.symmetric a b l hh ht\n  obtain ⟨hY,hZ⟩ := drained x hx q J P H hp hi h.tensor h.symmetric b a l (Ne.symm hh) ht\n  let K := Ortho.plane b a\n  have he : Budget (-1) (fun _ => localTurn p Y K q x) := by\n    refine ((hB.sub hZ).neg).same ?_\n    filter_upwards [hA,hY,eventually_all.mpr fun i => eventually_all.mpr fun j => vane_home (x j) a b l i hh] with n hon hin hs\n    rw [flux_value P H hp J p Y h K x hx q (vane a b l n) (vane_s a b l n) (vane_k a b l n) hs]\n    simp_rw [draught_river x q J h.tensor.symmetric a b l hh n]; rw [integral_sub hon hin]\n  exact tendsto_nhds_unique tendsto_const_nhds (he.limits (by norm_num))",
+            "line": 59,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Route.lean",
+            "fragment": "L59-L67"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.axisTurn",
+            "lines": [
+              57,
+              67
+            ],
+            "conclusion": "The `V_a` terms come from `drained` with `a,b` exchanged, and `tendsto_nhds_unique` forces the `λ`-independent value to vanish from the `Budget (-1)` bound."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.fullTurn",
+        "module": "YM.Next.ROTATIONS.Route",
+        "lines": [
+          83,
+          96
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.fullTurn"
+          },
+          "snippet": {
+            "text": "lemma fullTurn (P : DiffPlan S) (H : S.Hierarchy) (hp : P.Derivatives S) (hi : P.Orientation H.spin) (J : Stress S)\n    (p : Parts S) (Y : SpinRows S) (h : Pre H P J p Y) (x : Points m) (hx : x∈conf _) (q : Fin m → S.Tag) (l : Axis) (ht : onLine l x) (K : Ortho.Skew) :\n    localTurn p Y K q x=0 := by\n  cases m with\n  | zero => simp [localTurn]\n  | succ m =>\n    obtain ⟨U,hU⟩ := swirlLinear p Y q x\n    have he : U=0 := by\n      refine Spin.extendsE _ _ fun i => ?_\n      obtain ⟨b,a⟩ := i\n      by_cases hf:a=b\n      · subst b; rw [show Spin.K (a,a)=0 from Subtype.ext (by simp [Spin.K,Ortho.plane]),map_zero,LinearMap.zero_apply]\n      rw [← hU]; exact axisTurn x hx q J P H hp hi p Y h a b l hf ht\n    rw [hU,he,LinearMap.zero_apply]",
+            "line": 83,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Route.lean",
+            "fragment": "L83-L96"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.fullTurn",
+            "lines": [
+              83,
+              96
+            ],
+            "conclusion": "Linearity in `K` extends the vanishing from the planes to every `K`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          184
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

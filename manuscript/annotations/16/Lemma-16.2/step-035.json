@@ -1,0 +1,122 @@
+{
+  "id": "Lemma 16.2 step 35",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 174,
+        "rect": [
+          0.12026,
+          0.4413,
+          0.76014,
+          0.07134
+        ]
+      },
+      "title": "Lemma 16.2 step 35: Text, p. 174",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.2 step 35"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Maxwell.Free.finite_lenses",
+        "module": "YM.Next.MAXWELL.Scenes",
+        "lines": [
+          92,
+          123
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Maxwell.Free.finite_lenses"
+          },
+          "snippet": {
+            "text": "lemma finite_lenses (d : ℕ) : ∃ L : Select (standard F) d, ∀ t,L.reads t=0 ↔ quiet F t := by\n  classical\n  let K s := LinearMap.ker (Work.A06.lensL (S:=Model F) (d:=d) (hierarchy F) s).toLinearMap\n  let V (S : Finset (Scene (Model F) d)) := ⨅ s∈ S,K s\n  let R k : Prop := ∃ S : Finset (Scene (Model F) d),Module.finrank ℝ (V S)=k\n  have hr : ∃ k,R k := ⟨_,∅,rfl⟩\n  obtain ⟨S,hS⟩ : R (Nat.find hr) := Nat.find_spec hr\n  have he : V S= ⨅ s, K s := by\n    apply le_antisymm\n    · apply le_iInf; intro s\n      have ht : V (insert s S) ≤ V S := by\n        unfold V; apply le_iInf; intro i; apply le_iInf; intro h\n        exact iInf₂_le i (Finset.mem_insert_of_mem h)\n      have hs := Nat.find_min' hr (show R _ from ⟨insert s S,rfl⟩)\n      have hz : V (insert s S)=V S := Submodule.eq_of_le_of_finrank_le ht (hS ▸ hs)\n      rw [← hz]; exact iInf₂_le s (by simp)\n    exact le_iInf fun a => le_iInf fun _ => iInf_le K a\n  let e := Fintype.equivFin ↥S\n  let s (i) : Scene (Model F) d := (e.symm i).val\n  let h := hierarchy F\n  let L : V0 (standard F) d →L[ℝ] (Fin (Fintype.card ↥S) → ℂ) := ContinuousLinearMap.pi fun i => Work.A06.lensL h (s i)\n  let P : Select (standard F) d := { m := Fintype.card ↥S, rows := s, reads := L, stimulated := fun i p => rfl }\n  refine ⟨P,fun t => (Iff.trans ?_ (scenes_gone F _))⟩\n  change Vector d (Model F) at t\n  constructor\n  · intro ht k\n    have hv : t∈ V S := by\n      unfold V; rw [Submodule.mem_iInf]; intro r; rw [Submodule.mem_iInf]; intro h\n      let i : ↥S := ⟨r,h⟩\n      rw [← show s (e i)=r by simp [s,i]]; exact congr_fun ht (e i)\n    rw [he, Submodule.mem_iInf] at hv; exact hv k\n  intro ht; exact funext fun i => ht _",
+            "line": 92,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/MAXWELL/Scenes.lean",
+            "fragment": "L92-L123"
+          },
+          "proof_context": {
+            "declaration": "YM.Maxwell.Free.finite_lenses",
+            "lines": [
+              92,
+              123
+            ],
+            "conclusion": "Finitely many scenes cut out the quiet vectors: a minimal-dimension finite intersection of lens kernels equals the full intersection."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Maxwell.Free.charges_quiet",
+        "module": "YM.Next.MAXWELL.Magnitude",
+        "lines": [
+          178,
+          181
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Maxwell.Free.charges_quiet"
+          },
+          "snippet": {
+            "text": "  rintro ⟨c,rfl⟩; intro n a v x hx\n  rw [← observation, Pi.smul_apply]; change Climb.observed v x _ (c • D a)=_\n  rw [show Climb.observed v x (d+1) (c • D a)=c • Climb.observed v x (d+1) (leaves (scheme F).deriv d a) from map_smul ((Climb.observed v x (d+1)).restrictScalars ℝ) c (D a), observation]\n  rw [ht n a v x hx]; simp",
+            "line": 178,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/MAXWELL/Magnitude.lean",
+            "fragment": "L178-L181"
+          },
+          "proof_context": {
+            "declaration": "YM.Maxwell.Free.charges_quiet",
+            "lines": [
+              142,
+              181
+            ],
+            "conclusion": "Every real multiple of the free derivative is quiet."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          174
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

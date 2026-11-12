@@ -1,0 +1,201 @@
+{
+  "id": "Lemma 15.1 step 4",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "Compact separated sets are eventually in `NoHit` by `room` with `no_wrap_hit`, the volume tables converge uniformly on compact generic sets, the ordered integral limit holds and all persist on refinement. The derivative convergence (eq:F-conf) is not part of this step.",
+  "subject": [
+    {
+      "location": {
+        "page": 162,
+        "rect": [
+          0.12026,
+          0.48241,
+          0.76194,
+          0.12654
+        ]
+      },
+      "title": "Lemma 15.1 step 4: Text, p. 162",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 15.1 step 4"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extraction.RawLimits",
+        "module": "YM.Extraction.Lipschitz",
+        "lines": [
+          156,
+          160
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extraction.RawLimits"
+          },
+          "snippet": {
+            "text": "structure RawLimits (S : Table C.book) (P : ℕ → Table C.book) : Prop where\n  regular (n : ℕ) (v : Fin n → C.book.Token) : ContinuousOn (fun x => S.read x v) (generic n)\n  mesh : f.Meshes C P\n  volume : f.VolumePoints C S P\n  integral : f.Ordered C S",
+            "line": 156,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extraction/Lipschitz.lean",
+            "fragment": "L156-L160"
+          },
+          "proof_context": {
+            "declaration": "YM.Extraction.RawLimits",
+            "lines": [
+              156,
+              160
+            ],
+            "conclusion": "`RawLimits` packages continuity of S on generic points, locally uniform convergence of the volume tables (`mesh`, `volume`) and the ordered smear limit `Ordered`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extraction.room",
+        "module": "YM.Extraction.Patch",
+        "lines": [
+          67,
+          75
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extraction.room"
+          },
+          "snippet": {
+            "text": "theorem room {K : Set (Points n)} (H : IsCompact K) : ∀ᶠ p : ℕ in atTop, K ⊆ Inside S p n := by\n  have hi (i : Fin n) (a : Axis) : ∀ᶠ p : ℕ in atTop, ∀ x ∈ K,\n      -(S.radius p) < x i a ∧ x i a < S.radius p := by\n    obtain ⟨R,hR⟩ := (H.image (show Continuous fun x : Points n => |x i a| from by fun_prop)).bddAbove\n    filter_upwards [S.radius_diverges.eventually (eventually_gt_atTop R)] with p hp\n    intro x hx\n    exact abs_lt.mp (lt_of_le_of_lt (hR ⟨x,hx,rfl⟩) hp)\n  filter_upwards [eventually_all.mpr (fun i => eventually_all.mpr (hi i))] with p hp\n  exact fun x h i a => hp i a x h",
+            "line": 67,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extraction/Patch.lean",
+            "fragment": "L67-L75"
+          },
+          "proof_context": {
+            "declaration": "YM.Extraction.room",
+            "lines": [
+              67,
+              75
+            ],
+            "conclusion": "Every compact K lies in `Inside S p n` for all large p."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extraction.no_wrap_hit",
+        "module": "YM.Extraction.Patch",
+        "lines": [
+          47,
+          57
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extraction.no_wrap_hit"
+          },
+          "snippet": {
+            "text": "theorem no_wrap_hit {p : ℕ} {x} (h : x ∈ Inside S p n) : x ∈ NoHit S p n ↔ x ∈ conf n := by\n  constructor\n  · intro H i j he\n    by_contra hh\n    obtain ⟨a,ha⟩ := H i j hh\n    exact ha ((scalar_periodic S p _ _ (h i a).1 (h j a).1 (h i a).2 (h j a).2).2\n      (congr_arg (fun w : E4 => w a) he))\n  intro H i j hij\n  by_contra! he\n  exact hij ((show Injective x.ofLp from H) (PiLp.ext fun a =>\n    (scalar_periodic S p _ _ (h i a).1 (h j a).1 (h i a).2 (h j a).2).1 (he a)))",
+            "line": 47,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extraction/Patch.lean",
+            "fragment": "L47-L57"
+          },
+          "proof_context": {
+            "declaration": "YM.Extraction.no_wrap_hit",
+            "lines": [
+              47,
+              57
+            ],
+            "conclusion": "For x inside the period box, x in `NoHit S p n` iff x in `conf n`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extraction.copy_down",
+        "module": "YM.Extraction.Lipschitz",
+        "lines": [
+          162,
+          164
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extraction.copy_down"
+          },
+          "snippet": {
+            "text": "theorem copy_down {P} {S} (h : RawLimits C f S P) (g) : RawLimits C (f.refine g) S P :=\n  ⟨h.regular, ⟨h.mesh.continuous, fun p n K hh he v ε hε => g.mesh.cofinal.eventually (h.mesh.onK p n K hh he v ε hε)⟩,\n    fun n K hk he v ε hε => g.per.cofinal.eventually (h.volume n K hk he v ε hε), Order.upon h.integral g⟩",
+            "line": 162,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extraction/Lipschitz.lean",
+            "fragment": "L162-L164"
+          },
+          "proof_context": {
+            "declaration": "YM.Extraction.copy_down",
+            "lines": [
+              162,
+              164
+            ],
+            "conclusion": "`RawLimits` persists under every further refinement."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          162
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

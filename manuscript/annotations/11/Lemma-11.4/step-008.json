@@ -1,0 +1,122 @@
+{
+  "id": "Lemma 11.4 step 8",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 49,
+        "rect": [
+          0.11962,
+          0.35509,
+          0.76011,
+          0.04006
+        ]
+      },
+      "title": "Lemma 11.4 step 8: Text, p. 49",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 11.4 step 8"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Branch.Pairs.compare_energy",
+        "module": "YM.Branch.Synchronize",
+        "lines": [
+          133,
+          156
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Branch.Pairs.compare_energy"
+          },
+          "snippet": {
+            "text": "  have hcost :\n      avg (fun x => avg fun y => avg fun l => ‖G.mat (h x * A.W x y l)-G.mat (h y)‖^2) ≤ d^2 := by\n    calc\n      _ = _ := eq h\n      _ ≤ G.repDim*(2*A.cost 1) := by gcongr; exact hs _\n      _ = _ := (eq 1).symm\n      _ ≤ avg (fun _ : n => avg fun _ : n => avg fun _ : L => d^2) := avg_mono fun i => avg_mono fun j => avg_mono fun k => by\n        simp only [Pi.one_apply, G.mat_one, one_mul]\n        have hd := hw i j k\n        exact (sq_le_sq₀ (norm_nonneg _) ((norm_nonneg _).trans hd)).mpr hd\n      _ = d^2 := by simp only [avg_const]\n  have ha (i j : n) : (‖G.mat (h i) - G.mat (h j)‖^2) ≤ (avg fun k => 2*d^2+2*‖G.mat (h i * A.W i j k)-G.mat (h j)‖^2) := by\n    apply (avg_const (n:=L) _).symm.le.trans\n    refine avg_mono fun k => ?_\n    have hh := norm_sub_le_norm_sub_add_norm_sub (G.mat (h i)) (G.mat (h i * A.W i j k)) (G.mat (h j))\n    rw [show ‖G.mat (h i)-G.mat (h i * A.W i j k)‖ = ‖G.mat (A.W i j k)-1‖ by\n      rw [norm_sub_rev,G.mat_mul, show _ * _-G.mat _ = G.mat (h i) * (G.mat (A.W i j k)-1) by rw [mul_sub,mul_one], Gauge.mul_frob_eq _ _ (G.mat_star_mul _)] ] at hh\n    have hj := hw i j k\n    have hn := norm_nonneg (G.mat (h i)-G.mat (h j))\n    dsimp only\n    nlinarith [norm_nonneg (G.mat (A.W i j k)-1), norm_nonneg (G.mat (h i*A.W i j k) - G.mat (h j)), sq_nonneg (d-‖G.mat (h i*A.W i j k) - G.mat (h j)‖)]\n  apply (avg_mono (g := fun i => _) fun i => avg_mono fun j => ha i j).trans\n  simp_rw [avg_add,avg_mul,avg_const]\n  linarith",
+            "line": 133,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Branch/Synchronize.lean",
+            "fragment": "L133-L156"
+          },
+          "proof_context": {
+            "declaration": "YM.Branch.Pairs.compare_energy",
+            "lines": [
+              127,
+              156
+            ],
+            "conclusion": "Comparing with the constant frame `1` and the triangle inequality `‖h i - h j‖² ≤ 2d²+2‖h i W - h j‖²` give the average bound `4d²`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Branch.Pairs.min_cov",
+        "module": "YM.Branch.Synchronize",
+        "lines": [
+          64,
+          98
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Branch.Pairs.min_cov"
+          },
+          "snippet": {
+            "text": "lemma min_cov {h : n → G.El} (hs : A.Solves h) (x : n) (k : G.El) :\n    ∑ y, ∑ l, A.term h x y l ≤ ∑ y, ∑ l, G.price (k * A.W x y l * (h y)⁻¹) := by\n  classical\n  let g := update h x k\n  let t (p : n → G.El) i j := ∑ l, A.term p i j l\n  let M := Finset.univ.erase x\n  have hn : 0 < (Fintype.card n : ℝ) := by exact_mod_cast Fintype.card_pos\n  have hm : 0 < (Fintype.card L : ℝ) := by exact_mod_cast Fintype.card_pos\n  have eq (p : n → G.El) : A.cost p = (Fintype.card n:ℝ)⁻¹ * (Fintype.card n:ℝ)⁻¹ * (Fintype.card L:ℝ)⁻¹ * ∑ i, ∑ j, t p i j := by\n    simp only [cost,avg, smul_eq_mul,← Finset.mul_sum,t,mul_assoc]\n  have eq' (p : n → G.El) : (∑ i, ∑ j, t p i j) = (∑ i ∈ M, ∑ j ∈ M, t p i j) + 2*(∑ i, t p x i) := by\n    calc\n      _ = (∑ i ∈ M, ∑ j, t p i j) + ∑ j, t p x j := by rw [Finset.sum_erase_add _ _ (Finset.mem_univ x)]\n      _ = (∑ i ∈ M, ((∑ j ∈ M, t p i j)+t p i x)) + ∑ j, t p x j := by\n        unfold M; simp\n      _ = _ := by\n        rw [Finset.sum_add_distrib]\n        have he : (∑ i ∈ M, t p i x) = ∑ i, t p x i := by\n          rw [← Finset.sum_erase_add _ _ (Finset.mem_univ x), show t p x x = 0 by simp [t, term,A.same], add_zero]\n          exact Finset.sum_congr rfl fun i _ ↦ A.opposite p _ _\n        rw [he]; ring\n  have he := hs g\n  rw [eq,eq, mul_le_mul_iff_right₀ (by positivity), eq', eq'] at he\n  have hh (i) (hi : i ∈ M) : g i = h i := update_of_ne (Finset.ne_of_mem_erase hi) ..\n  have hd (i) (hi : i ∈ M) (j) (hj : j ∈ M) : t h i j = t g i j := by simp only [t, term, hh i hi, hh j hj]\n  rw [Finset.sum_congr rfl fun i hi ↦ Finset.sum_congr rfl fun j hj ↦ hd i hi j hj,\n    add_le_add_iff_left,mul_le_mul_iff_right₀ (by positivity)] at he\n  apply he.trans\n  refine Finset.sum_le_sum fun i _ => Finset.sum_le_sum fun j _ => ?_\n  unfold term g\n  by_cases h' : i = x\n  · subst i\n    simp only [update_self, A.same,mul_one,mul_inv_cancel, G.price_one]\n    exact (G.price_range _).1\n  simp [h']",
+            "line": 64,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Branch/Synchronize.lean",
+            "fragment": "L64-L98"
+          },
+          "proof_context": {
+            "declaration": "YM.Branch.Pairs.min_cov",
+            "lines": [
+              64,
+              98
+            ],
+            "conclusion": "Self terms are handled in the competitor comparison (`A.same`, `update_self`) so they cost nothing."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          49
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

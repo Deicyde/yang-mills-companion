@@ -1,0 +1,83 @@
+{
+  "id": "Lemma 13.21 step 11",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 120,
+        "rect": [
+          0.12026,
+          0.78471,
+          0.75948,
+          0.03999
+        ]
+      },
+      "title": "Lemma 13.21 step 11: Text, p. 120",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 13.21 step 11"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.WilsonStartup.charge_price",
+        "module": "YM.Extra.WILSON_STARTUP.Packets",
+        "lines": [
+          84,
+          101
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.WilsonStartup.charge_price"
+          },
+          "snippet": {
+            "text": "  let A := Finset.univ.filter (fun i : Cell n => i.1 ∈ halo b.B D ∧ b.threshold < G.chord (faceValue U i))\n  have hx : D ⊆ A.biUnion touched := by\n    intro z hz\n    obtain ⟨p,hp,he⟩ := (flags_spec ..).mp (hd hz)\n    exact Finset.mem_biUnion.mpr ⟨p,Finset.mem_filter.mpr ⟨Finset.mem_univ _,\n      halo_spec.mpr ⟨z,hz,(visit_near p hp).trans h.radius⟩, he⟩, hp⟩\n  have hb : D.card ≤ A.card*4 := (Finset.card_le_card hx).trans (Finset.card_biUnion_le.trans ((Finset.sum_le_sum\n    (fun i _ => touched_card i)).trans (by simp)))\n  let f := fun i : Key n => if i.native ∈ halo b.B D then Key.owed c b i U else 0\n  have hf (i) : 0 ≤ f i := by unfold f; split; exact (due_range c b h.direct _ _).1; exact le_rfl\n  have he (p) (hp : p ∈ A) : b.threshold^2/4 ≤ f (1,p) := by\n    obtain ⟨hr,ht⟩ := (Finset.mem_filter.mp hp).2\n    have hq := due_large c b h.direct U p ht\n    change _ ≤ if p.1 ∈ _ then _ else _\n    rw [if_pos hr, show (1,p) = Key.shifted 1 p from ?_,Key.shift_due,pull_id]\n    · exact hq\n    change _ = (_,affine _ _ _,p.2)\n    simp [affine]",
+            "line": 84,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/WILSON_STARTUP/Packets.lean",
+            "fragment": "L84-L101"
+          },
+          "proof_context": {
+            "declaration": "YM.WilsonStartup.charge_price",
+            "lines": [
+              82,
+              113
+            ],
+            "conclusion": "Each flag of `D` lies in a plaquette `p` in the set `A` with chord above the threshold, at most four flags per plaquette (`card D ≤ 4 * card A`), and the identity-orientation term `f (1,p) ≥ t^2/4` is kept in the nonnegative sum."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          120
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
+      }
+    }
+  }
+}

@@ -1,0 +1,161 @@
+{
+  "id": "Lemma 17.1 step 4",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 189,
+        "rect": [
+          0.12026,
+          0.18988,
+          0.76293,
+          0.08672
+        ]
+      },
+      "title": "Lemma 17.1 step 4: Text, p. 189",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 17.1 step 4"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OS.Drive.against",
+        "module": "YM.OS.Train",
+        "lines": [
+          20,
+          60
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OS.Drive.against"
+          },
+          "snippet": {
+            "text": "lemma against (A B : V→ₗ[ℂ] V) (X : V →ₗ[ℂ] H) (D : ℝ) (h : 0<D)\n    (hp : ∀ v w, inner ℂ (X (A v)) (X w)=inner ℂ (X v) (X (B w)))\n    (ht : ∀ v:V, ∃ C : ℝ, ∀ n:ℕ, ‖X (((B ∘ₗ A)^n) v)‖ ≤ C*D^(2*n)) (v : V) :\n    ‖X (A v)‖ ≤ D*‖X v‖ := by\n  let T : V→ₗ[ℂ] V := B ∘ₗ A\n  have hh (v w) : inner ℂ (X v) (X (T w))=inner ℂ (X (T v)) (X w) := by\n    change inner ℂ (X _) (X (B _))=_\n    rw [← hp,← inner_conj_symm (X (A v)),hp,inner_conj_symm];rfl\n  have hw n (v w) : inner ℂ (X v) (X ((T^n) w))=inner ℂ (X ((T^n) v)) (X w) := by\n    induction n generalizing v w with\n    | zero => rfl\n    | succ n ih =>\n      conv_rhs => rw [pow_succ]\n      conv_lhs => rw [pow_succ']\n      rw [show (T*T^n) w=T ((T^n) w) from rfl, hh, ih];rfl\n  obtain ⟨C,hC⟩ := ht v\n  let d n := ‖X ((T^n) v)‖/D^(2*n)\n  have Ht n : 0 ≤ d n := by unfold d; positivity\n  have he : BddAbove (range d) := by\n    refine ⟨C, fun c he => ?_⟩; obtain ⟨i,rfl⟩ := he\n    exact (div_le_iff₀ (pow_pos h _)).2 (hC _)\n  let s := ⨆ i, d i\n  have hr n : d n≤s := le_ciSup he _\n  have hz n : d n ^ 2 ≤ ‖X v‖ * s := by\n    have hi : ‖inner ℂ (X v) (X ((T^(n+n)) v))‖= ‖X ((T^n) v)‖^2 := by\n      rw [pow_add,Module.End.mul_apply, hw,inner_self_eq_norm_sq_to_K]; simp\n    calc _ = ‖inner ℂ (X v) (X ((T^(n+n)) v))‖/D^(2*(n+n)) := by unfold d; rw [hi,div_pow, Nat.mul_add, pow_add, pow_two (D^_)]\n         _ ≤ ‖X v‖*d (n+n) := by\n             apply (div_le_div_of_nonneg_right (norm_inner_le_norm _ _) (pow_nonneg h.le _)).trans (le_of_eq ?_); unfold d; ring\n         _ ≤ _ := by gcongr; exact hr _\n  have hs := (Ht 0).trans (hr 0)\n  have hu : s ≤ ‖X v‖ := by\n    have hx : s ≤ √(‖X v‖*s) := ciSup_le fun i => (Real.le_sqrt (Ht i) (by positivity)).mpr (hz i)\n    have he := Real.sq_sqrt (show 0 ≤ ‖X v‖*s by positivity)\n    nlinarith [norm_nonneg (X v)]\n  have hy : ‖X (A v)‖^2=‖inner ℂ (X v) (X ((T^1) v))‖ := by rw [pow_one,show X (T v)=X (B (A v)) from rfl,← hp];simp\n  apply (sq_le_sq₀ (norm_nonneg _) (by positivity)).1\n  rw [hy]\n  have hr : ‖X ((T^1) v)‖ ≤ ‖X v‖*D^(2*1) := (div_le_iff₀ (pow_pos h _)).1 ((hr 1).trans hu)\n  apply (norm_inner_le_norm _ _).trans\n  exact (mul_le_mul_of_nonneg_left hr (norm_nonneg _)).trans_eq (by ring)",
+            "line": 20,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OS/Train.lean",
+            "fragment": "L20-L60"
+          },
+          "proof_context": {
+            "declaration": "YM.OS.Drive.against",
+            "lines": [
+              20,
+              60
+            ],
+            "conclusion": "With `T = B∘A`, adjointness and `‖X(Tⁿv)‖ ≤ C Dⁿ²`, the sup trick gives `‖X (A v)‖ ≤ D‖X v‖`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OS.producer",
+        "module": "YM.OS.Train",
+        "lines": [
+          116,
+          123
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OS.producer"
+          },
+          "snippet": {
+            "text": "theorem producer {A : ℝ} (H : Slab a d w) (hv : S.Hierarchy) (ht : QRead S A H) (hA : 0<A) :\n    ∃ P : V.GNS.H.Op, ‖P‖ ≤ A ∧ ∀ i, P (V.GNS.plant i) = V.GNS.plant (entering H i) := by\n  apply V.GNS.by_bound _ _ hA.le\n  intro f\n  exact (show _ from by\n    rw [show Finsupp.linearCombination ℂ _ f = V.GNS.stems (Up H f) from by\n      rw [Up, Kernel.Gram.stems,Finsupp.lmapDomain_apply,Finsupp.linearCombination_mapDomain];rfl]\n    exact size V H hv ht hA f)",
+            "line": 116,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OS/Train.lean",
+            "fragment": "L116-L123"
+          },
+          "proof_context": {
+            "declaration": "YM.OS.producer",
+            "lines": [
+              116,
+              123
+            ],
+            "conclusion": "The bounded operator on the plants exists with norm `≤ A` by `by_bound`, and acts as `entering`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.B01.with_cost",
+        "module": "YM.Work.B01",
+        "lines": [
+          39,
+          48
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.B01.with_cost"
+          },
+          "snippet": {
+            "text": "  obtain ⟨P, hP, hRead⟩ := producer V hs hv hQ hpos\n  -- Forward time by the *remaining* width, THEN use the s operator.\n  refine ⟨P.comp (V.flow.E (d-s)), (ContinuousLinearMap.opNorm_comp_le ..).trans\n    ((mul_le_of_le_one_right (norm_nonneg _) (V.flow.shrinks _)).trans hP), fun x => ?_⟩\n  rw [ContinuousLinearMap.comp_apply, ← V.atBirth, hRead]\n  congr 1\n  apply Subtype.ext\n  change linked timeAxis _ w _ = linked timeAxis _ w _\n  simp only [linked, travel, raised, paths]\n  rw [← add_smul, ← NNReal.coe_add, tsub_add_cancel_of_le hsd]",
+            "line": 39,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/B01.lean",
+            "fragment": "L39-L48"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.B01.with_cost",
+            "lines": [
+              22,
+              48
+            ],
+            "conclusion": "The operator is composed with `V.flow.E (d-s)` to reach the full width `d`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          189
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

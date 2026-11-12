@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 11.6 step 7",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "[M] compares the tree route with a straight connector and its averaged translates by repeated step interchanges. [L] reaches the same bound through the nonlinear walk comparison E02 and a limit, with no interchange bookkeeping.",
+  "subject": [
+    {
+      "location": {
+        "page": 55,
+        "rect": [
+          0.12026,
+          0.66912,
+          0.75949,
+          0.04007
+        ]
+      },
+      "title": "Lemma 11.6 step 7: Text, p. 55",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 11.6 step 7"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.F01.link_bound",
+        "module": "YM.Work.F01",
+        "lines": [
+          63,
+          108
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.F01.link_bound"
+          },
+          "snippet": {
+            "text": "lemma link_bound (S : StepData c f) (h : S.patch.Branches S.kernel G)\n    (H : Forest S.ratio) (k : S.Choices) (x : Dir G f)\n    (hx : ∀ e ∈ H.trunks, collect G x e = 0)\n    (C : ℝ) (hC : 0 ≤ C) (e : Bond f)\n    (hcops : ∀ U : Config G f, Stores.SliceSet S H U → usable S U (S.ratio.parent e.1) k →\n      Cops (S := S) U 1 (S.prediction U k) e C) :\n    ‖collect G x e‖ ≤ C * (∑ z ∈ box (macroR S.patch), ∑ p : PlaqAxes,\n      ‖dColor G f 1 x (wrap f z + S.ratio.embed (S.ratio.parent e.1), plaquette p)‖) +\n      ‖bills S x (S.ratio.parent e.1, coord e.2)‖ := by\n  let U := fun t : ℝ => represent (t • x)\n  have hu : U 0 = 1 := by simp [U]\n  let i := S.ratio.parent e.1\n  let edge : Bond c := (i, e.2)\n  let loc := fun z : Cover => wrap f z + S.ratio.embed i\n  let X := box (macroR S.patch)\n  have he := chord_limit (U := fun t => U t e) (by rw [hu]; rfl) (represent_deriv x e)\n  have hp := chord_limit (U := fun t => S.prediction (U t) k edge)\n    (by rw [hu]; exact Push.settled S h edge k) (Push.prices S h edge k x)\n  have hs (z : Cover) (p : PlaqAxes) :\n      Tendsto (fun t => ‖t‖⁻¹ * G.chord (faceValue (U t) (loc z,p)))\n        (𝓝[≠] (0 : ℝ)) (𝓝 ‖dColor G f 1 x (loc z, plaquette p)‖) := by\n    apply chord_limit\n    · unfold U faceValue; rw [zero_smul]; exact Push.stroll_zero _ _\n    · rw [← fundamental]; exact Push.travell _ _ _\n  have ht : Tendsto (fun t => ∑ z ∈ X, ∑ p : PlaqAxes,\n      ‖t‖⁻¹ * G.chord (faceValue (U t) (loc z,p))) (𝓝[≠] (0 : ℝ))\n        (𝓝 (∑ z ∈ X, ∑ p : PlaqAxes, ‖dColor G f 1 x (loc z,plaquette p)‖)) := by\n    apply tendsto_finsetSum; intro z _; exact tendsto_finsetSum _ fun p _ => hs z p\n  apply le_of_tendsto_of_tendsto he ((ht.const_mul C).add hp)\n  filter_upwards [(usable_near S x k i).filter_mono nhdsWithin_le_nhds] with t ht'\n  have htree : Stores.SliceSet S H (U t) := by\n    intro u hub\n    change G.lieExp (t • (collect G x u)) * (1:G.El) = _\n    rw [hx u hub, smul_zero, G.mat_lieExp_zero, mul_one]\n  have ha := hcops (U t) htree ht'\n  have ha' : G.chord ((U t) e) ≤ C * port S i (U t) + G.chord (S.prediction (U t) k edge) := by\n    unfold Cops at ha\n    simp only [replica_one, wire, Pi.one_apply, inv_one, mul_one, one_mul, G.chord_inv] at ha\n    split at ha\n    · exact ha.trans (add_le_add_right (G.chord_nonneg _) _)\n    · exact ha\n  change ‖t‖⁻¹ * G.chord ((U t) e) ≤ C * (∑ z ∈ X, ∑ p : PlaqAxes,\n    ‖t‖⁻¹ * G.chord (faceValue (U t) (loc z,p))) + ‖t‖⁻¹ * G.chord (S.prediction (U t) k edge)\n  have hh := ha'.trans (add_le_add_left (mul_le_mul_of_nonneg_left (port_le S (U t) i) hC) _)\n  apply (mul_le_mul_of_nonneg_left hh (show 0 ≤ ‖t‖⁻¹ by positivity)).trans_eq\n  simp only [mul_add, mul_left_comm ‖t‖⁻¹ C, Finset.mul_sum, X, loc]",
+            "line": 63,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/F01.lean",
+            "fragment": "L63-L108"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.F01.link_bound",
+            "lines": [
+              63,
+              108
+            ],
+            "conclusion": "The free-link bound by neighbouring curls and the coarse `bills` value, obtained by linearizing `Cops` along `t • x`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.E02.root_walk",
+        "module": "YM.Work.E02",
+        "lines": [
+          80,
+          83
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.E02.root_walk"
+          },
+          "snippet": {
+            "text": "private lemma root_walk {S : StepData c f} (F : Forest S.ratio) (x : Site f) (a : Axis)\n    (U : Config G f) (h : SliceSet S F U) :\n    ∃ w : Walk, w.length ≤ 8*S.patch.L.val+1 ∧\n      stop (S.ratio.embed (S.ratio.parent x)) w = S.ratio.embed (S.ratio.parent (x+step a)) ∧",
+            "line": 80,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/E02.lean",
+            "fragment": "L80-L83"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.E02.root_walk",
+            "lines": [
+              80,
+              94
+            ],
+            "conclusion": "The tree route of the link is a single walk between parent roots, compared nonlinearly in E02."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          55
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 11.6 step 9",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "[L] has the Cauchy-Schwarz and block-counting part with period-independent constants. The justification of the link bound as an identity in which each step interchange contributes one curl is not there, since `link_bound` comes from linearizing E02.",
+  "subject": [
+    {
+      "location": {
+        "page": 55,
+        "rect": [
+          0.11962,
+          0.76352,
+          0.76258,
+          0.07428
+        ]
+      },
+      "title": "Lemma 11.6 step 9: Text, p. 55",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 11.6 step 9"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.F01.sum_ports_sq",
+        "module": "YM.Work.F01",
+        "lines": [
+          136,
+          138
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.F01.sum_ports_sq"
+          },
+          "snippet": {
+            "text": "lemma sum_ports_sq (g : Ratio c f) (X : Finset Cover) (F : Body 2 f → ℝ) :\n    ∑ i : Site c, (∑ z ∈ X, ∑ p : PlaqAxes, F (wrap f z + g.embed i, plaquette p))^2 ≤\n      ((X.card:ℝ) * (Fintype.card PlaqAxes:ℝ)) * ((X.card:ℝ) * ∑ b : Body 2 f, F b ^ 2) := by",
+            "line": 136,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/F01.lean",
+            "fragment": "L136-L138"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.F01.sum_ports_sq",
+            "lines": [
+              136,
+              165
+            ],
+            "conclusion": "Cauchy-Schwarz over the box and plaquette axes, plus injectivity in the coarse site, bounds the summed squared block sums by `(card X * card PlaqAxes) * card X * ∑ F b ^ 2`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.F01.sum_estimate",
+        "module": "YM.Work.F01",
+        "lines": [
+          174,
+          179
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.F01.sum_estimate"
+          },
+          "snippet": {
+            "text": "lemma sum_estimate (g : Ratio c f) (X : Finset Cover) (F : Body 2 f → ℝ) (Y : Body 1 c → ℝ)\n    (u : Bond f → ℝ) (C : ℝ) (hu : ∀ e, 0 ≤ u e)\n    (ht : ∀ e, u e ≤ C * (∑ z ∈ X, ∑ p : PlaqAxes, F (wrap f z + g.embed (g.parent e.1), plaquette p)) +\n      Y (g.parent e.1, coord e.2)) :\n    ∑ e : Bond f, u e ^ 2 ≤ curlFactor g.count X C * (∑ b, F b ^ 2) +\n      probeFactor g.count * (∑ b, Y b ^ 2) := by",
+            "line": 174,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/F01.lean",
+            "fragment": "L174-L179"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.F01.sum_estimate",
+            "lines": [
+              174,
+              206
+            ],
+            "conclusion": "Squaring and summing the link bound gives `∑ u e ^ 2 ≤ curlFactor * ∑ F b ^ 2 + probeFactor * ∑ Y b ^ 2`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.F01.curlFactor",
+        "module": "YM.Work.F01",
+        "lines": [
+          168,
+          170
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.F01.curlFactor"
+          },
+          "snippet": {
+            "text": "def curlFactor (L : Side) (X : Finset Cover) (C : ℝ) : ℝ :=\n  (2 * C^2) * (Fintype.card (Site L):ℝ) * (Fintype.card Axis:ℝ) *\n    ((X.card:ℝ) * (Fintype.card PlaqAxes:ℝ)) * (X.card:ℝ)",
+            "line": 168,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/F01.lean",
+            "fragment": "L168-L170"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.F01.curlFactor",
+            "lines": [
+              168,
+              170
+            ],
+            "conclusion": "The constant depends on `C`, the ratio side `L` and the box `X` only, not on the period."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          55
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "id": "Lemma 16.10 step 8",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 185,
+        "rect": [
+          0.12026,
+          0.66905,
+          0.75948,
+          0.02255
+        ]
+      },
+      "title": "Lemma 16.10 step 8: Display, p. 185",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.10 step 8"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.PDE.flow_step",
+        "module": "YM.Ward.PDE",
+        "lines": [
+          81,
+          93
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.PDE.flow_step"
+          },
+          "snippet": {
+            "text": "lemma flow_step {f} (hf : C f) (n : ℕ) {x} (h : x∈side) :\n    tower (tangent f) (n+1) x = tangent (tower f (n+1)) x-(n+1) • D e (tower f n) x := by\n  induction n generalizing x with\n  | zero => rw [tower_step,tower_step f,root,root]; simpa using flow_one hf h\n  | succ n hn =>\n    rw [tower_step (tangent _),GermD i (eventuallyEq_of_mem (g := fun t => tangent (tower f (n+1)) t-(n+1) • D e (tower f n) t) (opens.mem_nhds h) (fun x h => hn h)),\n      D_sub (hf.limbs (n+1)).tangentC (show C (fun x => (n+1) • D e (tower f n) x) from fun t ht => by\n        simp_rw [← Nat.cast_smul_eq_nsmul ℝ]; exact contDiffAt_const.smul ((hf.limbs n).incl _ _ ht)) h]\n    rw [flow_one (hf.limbs _) h]\n    have hw : D i (fun y => (n+1) • D e (tower f n) y) x=(n+1) • D i (D e (tower f n)) x := by\n      simp_rw [← Nat.cast_smul_eq_nsmul ℝ]\n      rw [D, fderiv_fun_const_smul ((hf.limbs n).incl e |>.able h)]; rfl\n    rw [hw,(hf.limbs _).swaps i e h,← tower_step f n, tower_step f (n+1),add_smul];simp;ring",
+            "line": 81,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Ward/PDE.lean",
+            "fragment": "L81-L93"
+          },
+          "proof_context": {
+            "declaration": "YM.PDE.flow_step",
+            "lines": [
+              81,
+              93
+            ],
+            "conclusion": "`flow_step` gives `tower (tangent f) (n+1) x = tangent (tower f (n+1)) x - (n+1) • D e (tower f n) x`, the `t ∂_s^{m+1} - m ∂_t ∂_s^{m-1}` form of the angular term."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.PDE.sure",
+        "module": "YM.Ward.PDE",
+        "lines": [
+          133,
+          141
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.PDE.sure"
+          },
+          "snippet": {
+            "text": "      have hv : tangent (tower (F j) n) x=t • tower (F j) (n+1) x := by simp [tangent,x,tower_step]\n      have hy := h j n t ht\n      change tower (law l r F j) n x=0 at hy\n      rw [he, ih n n.lt_succ_self _ ht, ih n n.lt_succ_self _ ht,zero_add,zero_add] at hy\n      cases n with\n      | zero => exact (smul_eq_zero_iff_right ht.ne').mp (hv.symm.trans hy)\n      | succ n =>\n        rw [flow_step (hc j) n (show x∈side from ht), lean (hc j) n (fun t h => ih n (by omega) _ h _) t ht,smul_zero,sub_zero,hv] at hy\n        exact (smul_eq_zero_iff_right ht.ne').mp hy",
+            "line": 133,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Ward/PDE.lean",
+            "fragment": "L133-L141"
+          },
+          "proof_context": {
+            "declaration": "YM.PDE.sure",
+            "lines": [
+              121,
+              141
+            ],
+            "conclusion": "`sure` combines `flow_step` with the vanishing jets of `law l r F` at `(t, 0)`, giving `t ∂_s^{m+1} F = -∂_s^m (F_{l j} + F_{r j}) + m ∂_t ∂_s^{m-1} F` and hence zero."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          185
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

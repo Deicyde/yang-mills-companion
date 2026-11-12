@@ -1,0 +1,200 @@
+{
+  "id": "Lemma 11.11 step 38",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 68,
+        "rect": [
+          0.12026,
+          0.65402,
+          0.76293,
+          0.11973
+        ]
+      },
+      "title": "Lemma 11.11 step 38: Text, p. 68",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 11.11 step 38"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.E09.fine_budget",
+        "module": "YM.Work.E09.Budget",
+        "lines": [
+          21,
+          29
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.E09.fine_budget"
+          },
+          "snippet": {
+            "text": "lemma fine_budget (A : Stores S) (T : Tube G S) (U : Config G f) (V : Config G c)\n    (x m d cF : ℝ) (Q : Config G c) (t : ℝ)\n    (ht : 0 ≤ t) (hu : t ≤ largeT G x S.patch.L)\n    (hm : 0 ≤ m) (hmp : m ≤ T.high.linear/8) (hmd : m ≤ d)\n    (hF : cF ≤ T.high.linear/4)\n    (h : T.high.linear/2*t*(∑ i ∈ A.swell U t, toll U i) +\n      d*t^2*((A.costs \\ A.swell U t).card:ℝ) ≤ A.tally T x U V) :\n    m*t^2*A.costs.card + m*t*largeT G x S.patch.L*(A.spend U Q V x).costs.card +\n      cF*t*(∑ i ∈ A.swell U t, toll U i) ≤ A.tally T x U V := by",
+            "line": 21,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/E09/Budget.lean",
+            "fragment": "L21-L29"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.E09.fine_budget",
+            "lines": [
+              21,
+              54
+            ],
+            "conclusion": "The fine bound leaves `m*t^2` per cost and `m*t*largeT` per spent cost, while keeping `cF*t*sum swell toll` for the signed-row loss."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.E09.noise_budget",
+        "module": "YM.Work.E09.Budget",
+        "lines": [
+          64,
+          72
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.E09.noise_budget"
+          },
+          "snippet": {
+            "text": "lemma noise_budget (A : Stores S) (T : Tube G S) (U : Config G f) (Q V : Config G c)\n    (x m C W t : ℝ)\n    (hw : 1 ≤ W) (hlist : ∀ i ∈ A.aisles, W*t ≤ wire Q V i)\n    (ht : 0 ≤ t) (hu : t ≤ largeT G x S.patch.L)\n    (hm : 0 ≤ m) (hmp : m ≤ S.kernel.penalty/32)\n    (hC : C ≤ S.kernel.penalty/16 * W)\n    (h : S.kernel.penalty/8*(∑ i∈A.aisles, wire Q V i^2) ≤ A.talli T x Q V) :\n    m*t^2*A.aisles.card + m*t*largeT G x S.patch.L*(A.spend U Q V x).aisles.card +\n      C*t*(∑ i ∈ A.aisles, wire Q V i) ≤ A.talli T x Q V := by",
+            "line": 64,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/E09/Budget.lean",
+            "fragment": "L64-L72"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.E09.noise_budget",
+            "lines": [
+              64,
+              106
+            ],
+            "conclusion": "The noise bound leaves `m*t^2` per aisle and `m*t*largeT` per spent aisle, keeping `C*t*sum wire` for the loss."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.E09.coarse_budget",
+        "module": "YM.Work.E09.Budget",
+        "lines": [
+          114,
+          120
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.E09.coarse_budget"
+          },
+          "snippet": {
+            "text": "lemma coarse_budget (A : Stores S) (T : Tube G S) (V : Config G c)\n    (x m B δ t : ℝ) (hs : 0 ≤ temp x) (hx : temp x ≤ δ) (hB : 0 ≤ B)\n    (ht : 0 ≤ t) (hu : t ≤ 2*temp x)\n    (hm : m ≤ T.low.direct/64) (h : Bid.Crowds δ B T x V) :\n    4*m*t^2*((A.tides V x (temp x) \\ A.tides V x δ).card : ℝ) ≤\n      A.tallc T x V + T.low.linear*temp x*(∑ i ∈ A.tides V x δ, toll V i) +\n        B*temp x^4*(A.outs x).card := by",
+            "line": 114,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/E09/Budget.lean",
+            "fragment": "L114-L120"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.E09.coarse_budget",
+            "lines": [
+              114,
+              158
+            ],
+            "conclusion": "The middle range leaves `4*m*t^2` per tide in `(temp, delta]`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.E09.flags_budget",
+        "module": "YM.Work.E09.Budget",
+        "lines": [
+          160,
+          166
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.E09.flags_budget"
+          },
+          "snippet": {
+            "text": "lemma flags_budget (A : Stores S) (V Q : Config G c) (U : Config G f)\n    (x δ : ℝ) (hx : temp x ≤ δ) (K : ℕ) (h : Bid.Payments δ A x U Q V K) :\n    A.flags.card ≤ 4 *\n      ((A.tides V x (temp x) \\ A.tides V x δ).card + K*(A.spend U Q V x).shares) := by\n  apply le_trans h.flags\n  apply Nat.mul_le_mul_left\n  exact le_trans (card_sdiff_add_card_eq_card (tides_subset A V x δ hx)).ge (Nat.add_le_add_left h.fee _)",
+            "line": 160,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/E09/Budget.lean",
+            "fragment": "L160-L166"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.E09.flags_budget",
+            "lines": [
+              160,
+              166
+            ],
+            "conclusion": "`card flags <= 4*(card(tides temp minus tides delta) + K*(spend).shares)`, assigning at most four flags per plaquette."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          68
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

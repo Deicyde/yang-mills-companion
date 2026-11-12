@@ -1,0 +1,158 @@
+{
+  "id": "Section 15 display 3",
+  "kind": "display",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 166,
+        "rect": [
+          0.12026,
+          0.42359,
+          0.75948,
+          0.02236
+        ]
+      },
+      "title": "Display, p. 166",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Section 15 display 3"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Table.Capped",
+        "module": "YM.Euclid.Table",
+        "lines": [
+          97,
+          99
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Table.Capped"
+          },
+          "snippet": {
+            "text": "def Capped := ∀ n (d : Caps n) (v : L.Vector d) (j : ℕ), ∃ A : ℕ, ∃ C : ℝ, 0 ≤ C ∧\n  ∀ r : ℝ, 0 < r → r ≤ 1 → ∀ x : Points n, spaced r x →\n    ‖iteratedFDeriv ℝ j (fun y => S.value d y v) x‖ ≤ C * r⁻¹ ^ A",
+            "line": 97,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Euclid/Table.lean",
+            "fragment": "L97-L99"
+          },
+          "proof_context": {
+            "declaration": "YM.Table.Capped",
+            "lines": [
+              97,
+              99
+            ],
+            "conclusion": "For every arity, degree list, vector and derivative order j there are A and C with the j-th Frechet derivative of the table value bounded by `C * r⁻¹ ^ A` for `0<r≤1` and r-spaced x."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.B10.answer",
+        "module": "YM.Work.B10",
+        "lines": [
+          95,
+          105
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.B10.answer"
+          },
+          "snippet": {
+            "text": "theorem answer : YM.Bid.B10 := by\n  intro G L S T P hR hs hp _ h hT n d v j\n  let q : Fin n → L.Token := fun i => ⟨d i,v i⟩\n  let w : Fin n → S.Tag := S.classTokens ∘ q\n  obtain ⟨A,C,hC,H⟩ := capped_tags P h hs hp.toSymmetric hT w j\n  refine ⟨A,C,hC,fun r hr hr' x hx => ?_⟩\n  have he : (fun y => T.value d y v) =ᶠ[𝓝 x] fun y => S.useAt T y w := by\n    filter_upwards [(conf_open _).mem_nhds (spaced_conf hr hx)] with y hy\n    exact (S.at_project T hp.toSymmetric hR hy q).symm\n  rw [(he.iteratedFDeriv ℝ j).eq_of_nhds]\n  exact H r hr hr' x hx",
+            "line": 95,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/B10.lean",
+            "fragment": "L95-L105"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.B10.answer",
+            "lines": [
+              95,
+              105
+            ],
+            "conclusion": "`answer` derives `Capped` for the smooth table from `OneCap` (order zero) with `Inclusions` and `Derivatives`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.D05.answer",
+        "module": "YM.Work.D05",
+        "lines": [
+          160,
+          180
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.D05.answer"
+          },
+          "snippet": {
+            "text": "theorem answer : YM.Bid.D05 := by\n  intro G C S f H h hS he n d v\n  let w (i : Fin n) : C.book.Token := ⟨d i, v i⟩\n  obtain ⟨M,D,B,hB,hf⟩ := image_power h w\n  obtain ⟨c,hc,hu⟩ := scales C.S C.path.levels.fits.mesh M n\n  refine ⟨4 * D * n,(B * c⁻¹ ^ D) ^ n,by positivity, fun r hr hR x hx => ?_⟩\n  obtain ⟨m,k,hM,hm,hmk,hk,hw⟩ := hu r hr hR\n  have hX : x ∈ separated (r/2) n :=\n    fun i j hij => lt_of_lt_of_le (by linarith) (hx i j hij)\n  have hi : (C.S.a k)⁻¹ ≤ c⁻¹ * (r⁻¹)^4 := calc\n    _ ≤ (c*r^4)⁻¹ := inv_le_inv₀ (C.S.a_pos _) (by positivity) |>.2 hw\n    _ = _ := by rw [mul_inv, inv_pow]\n  change ‖S.read x w‖ ≤ _\n  calc\n    _ ≤ (B * (C.S.a k)⁻¹ ^ D)^n :=\n      separated_bound H hS he w (r/2) _ (by positivity) m k hm hmk hk (hf k hM) x hX\n    _ ≤ (B * (c⁻¹ * (r⁻¹)^4)^D)^n := by\n      have ha := C.S.a_pos k\n      exact pow_le_pow_left₀ (by positivity)\n        (mul_le_mul_of_nonneg_left (pow_le_pow_left₀ (by positivity) hi _) hB) _\n    _ = _ := by simp only [mul_pow, pow_mul]; ring",
+            "line": 160,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/D05.lean",
+            "fragment": "L160-L180"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.D05.answer",
+            "lines": [
+              160,
+              180
+            ],
+            "conclusion": "`answer` proves the order-zero power bound `OneCap` for a smooth table with point limits."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          166
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      }
+    }
+  }
+}

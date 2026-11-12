@@ -1,0 +1,122 @@
+{
+  "id": "Lemma 15.4 step 6",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 167,
+        "rect": [
+          0.12026,
+          0.20781,
+          0.75948,
+          0.03683
+        ]
+      },
+      "title": "Lemma 15.4 step 6: Text, p. 167",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 15.4 step 6"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OS.thickness",
+        "module": "YM.OS.Halves",
+        "lines": [
+          29,
+          30
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OS.thickness"
+          },
+          "snippet": {
+            "text": "lemma thickness (F : ℕ) (h : Q.Gentle) : ∃ r : ℝ, 0 < r ∧ ∀ ε : ℝ, 0 < ε → ε ≤ 1 → ∀ m : ℕ, At Q F m ε → r * ε^2 ≤ Q.a m := by\n  obtain ⟨c,hc,h⟩ := Q.mesh_inequality h",
+            "line": 29,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OS/Halves.lean",
+            "fragment": "L29-L30"
+          },
+          "proof_context": {
+            "declaration": "YM.OS.thickness",
+            "lines": [
+              29,
+              39
+            ],
+            "conclusion": "For a Gentle schedule and level `F` there is `r > 0` with `r * ε^2 <= a m` for the first index `m >= F` with `a m < ε`, for `ε <= 1`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OS.turn",
+        "module": "YM.OS.Halves",
+        "lines": [
+          22,
+          28
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OS.turn"
+          },
+          "snippet": {
+            "text": "lemma turn (F) (r : ℝ) (hr : 0 < r) : ∃ m : ℕ, At Q F m r := by\n  classical\n  have hh : ∃ i, F≤ i ∧ Q.a i<r := by\n    exact ((eventually_ge_atTop F).and (Q.shrinks.eventually (gt_mem_nhds hr))).exists\n  let m := Nat.find hh\n  obtain ⟨p,t⟩ := Nat.find_spec hh\n  exact ⟨m,p,t,fun j hj h => le_of_not_gt (fun ht => h.not_ge (Nat.find_min' hh (And.intro hj ht)))⟩",
+            "line": 22,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OS/Halves.lean",
+            "fragment": "L22-L28"
+          },
+          "proof_context": {
+            "declaration": "YM.OS.turn",
+            "lines": [
+              22,
+              28
+            ],
+            "conclusion": "`turn` produces the first index `m >= F` with `a m < r`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          167
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

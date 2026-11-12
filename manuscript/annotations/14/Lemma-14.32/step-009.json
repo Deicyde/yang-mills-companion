@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 14.32 step 9",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "The fact used is the identification of the derivative of the limit with the limit g_e of the differences. [L] gets it from the limiting Taylor inequality, by `HasFDerivAt`, and has no integral identity g(z+te)-g(z) = integral of g_e.",
+  "subject": [
+    {
+      "location": {
+        "page": 160,
+        "rect": [
+          0.12026,
+          0.42221,
+          0.75948,
+          0.03697
+        ]
+      },
+      "title": "Lemma 14.32 step 9: Display, p. 160",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.32 step 9"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.honors",
+        "module": "YM.FullVolume.Wish",
+        "lines": [
+          29,
+          39
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.honors"
+          },
+          "snippet": {
+            "text": "  have hc:∀ᶠ y in 𝓝 x, ‖f y-f x-L (y-x)‖ ≤ B*‖y-x‖^2:=by\n    filter_upwards [ball_mem_nhds x hr,(nohitOpen ..).mem_nhds hx] with y hy hY\n    let F (x:Points n) (i : ℕ):=address (C.S.a (e i)) x\n    let W (x:Points n) i:=tag (C.S.a (e i)) (F x i)\n    have hv (x):Tendsto (W x) atTop (𝓝 x):=(Extraction.chosen x).comp e.cofinal\n    have ht:Tendsto (fun i=>stretch (fun j=> gKernel C v (j::l) (e i) p (F x i))) atTop (𝓝 L):=\n      stretching (fun j=>returns e p v (j::l) (hh j) hx (hv x))\n    have he:= ((returns e p v l hp hY (hv y)|>.sub (returns e p v l hp hx (hv x))).sub (((show Continuous fun p : (Points n→L[ℝ] ℂ)×Points n => p.1 p.2 from continuous_fst.clm_apply continuous_snd).tendsto _).comp (ht.prodMk_nhds ((hv y).sub (hv x)))))\n    rw [← dist_eq_norm y x]\n    apply le_of_tendsto_of_tendsto he.norm (((hv y).dist (hv x) |>.pow 2).const_mul B)\n    filter_upwards [e.cofinal.eventually H,(hv x).eventually (mem_interior_iff_mem_nhds.mp hT),((hv y).dist (hv x)).eventually (ge_mem_nhds (mem_ball.mp hy))] with i hi ht he using hi _ _ ht he -- refine",
+            "line": 29,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Wish.lean",
+            "fragment": "L29-L39"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.honors",
+            "lines": [
+              22,
+              51
+            ],
+            "conclusion": "The Taylor bound passes to the limit in N, giving ‖f y - f x - L (y-x)‖ ≤ B ‖y-x‖^2 with L built from the limits `g i x`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.honors",
+        "module": "YM.FullVolume.Wish",
+        "lines": [
+          22,
+          24
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.honors"
+          },
+          "snippet": {
+            "text": "theorem honors (l:List (MotionIndex n)) {f:Points n→ℂ}{g: MotionIndex n→Points n→ℂ} (hp:Tuned C e p v l f)\n    (hh:∀ i,Tuned C e p v (i::l) (g i)) :\n    ∀ x∈ NoHit C.S p n, HasFDerivAt f (stretch (fun i=> g i x)) x:= by",
+            "line": 22,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Wish.lean",
+            "fragment": "L22-L24"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.honors",
+            "lines": [
+              22,
+              51
+            ],
+            "conclusion": "`f` has Fréchet derivative `stretch (fun i => g i x)` at every x in `NoHit C.S p n`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          160
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
+      }
+    }
+  }
+}

@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 11.12 step 8",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] obtains the jet bounds of A Gamma - I from those of A and of Gamma - A^{-1} (the reverse of [M]'s order, which derives Gamma - A^{-1} from A Gamma - I), and packages the weights upsilon_i^r and rates in `RatesPaid`.",
+  "subject": [
+    {
+      "location": {
+        "page": 70,
+        "rect": [
+          0.12026,
+          0.57469,
+          0.75982,
+          0.10261
+        ]
+      },
+      "title": "Lemma 11.12 step 8: Text, p. 70",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 11.12 step 8"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.AnalyticBridge.Covariance.moneyStorm",
+        "module": "YM.AnalyticBridge.SECTOR_COVARIANCE_JETS.Vista",
+        "lines": [
+          94,
+          97
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.AnalyticBridge.Covariance.moneyStorm"
+          },
+          "snippet": {
+            "text": "lemma moneyStorm (h : RatesPaid p p σ C k A B)\n    (he : RatesPaid p p σ V k (obscure W A-action A 0) B)\n    (hc : 0≤C) (hv : 0≤V) (hi : Gapped (A B) η) (hz : 0<η) {d : ℝ} (hp : 0≤d) (ht : d+k*d≤σ) :\n    RatesPaid p p d (tagPrice 1 k C V) k (storm W A) B := by",
+            "line": 94,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/SECTOR_COVARIANCE_JETS/Vista.lean",
+            "fragment": "L94-L97"
+          },
+          "proof_context": {
+            "declaration": "YM.AnalyticBridge.Covariance.moneyStorm",
+            "lines": [
+              94,
+              103
+            ],
+            "conclusion": "`moneyStorm` gives `RatesPaid` jet bounds to order `k` for `storm W A = A*Gamma - 1` from those of `A` and of `obscure W A - action A 0` (Gamma - A^{-1})."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.AnalyticBridge.Covariance.Installed",
+        "module": "YM.AnalyticBridge.SECTOR_COVARIANCE_JETS.Pan",
+        "lines": [
+          30,
+          30
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.AnalyticBridge.Covariance.Installed"
+          },
+          "snippet": {
+            "text": "  spray : RatesPaid p p d (Y*C) k (storm W A) B",
+            "line": 30,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/SECTOR_COVARIANCE_JETS/Pan.lean",
+            "fragment": "L30-L30"
+          },
+          "proof_context": {
+            "declaration": "YM.AnalyticBridge.Covariance.Installed",
+            "lines": [
+              25,
+              35
+            ],
+            "conclusion": "`spray`: `storm W A` has `RatesPaid` jet bounds with the small factor `Y*C`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.AnalyticBridge.Covariance.Vista",
+        "module": "YM.AnalyticBridge.SECTOR_COVARIANCE_JETS.Vista",
+        "lines": [
+          22,
+          28
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.AnalyticBridge.Covariance.Vista"
+          },
+          "snippet": {
+            "text": "structure Vista (p : ι → Site c) (A : Directions G c → Matrix ι ι ℝ) (W : ι → Set ι) (B : Directions G c)\n    (d Y C : ℝ) (k : ℕ) : Prop where\n  full (u : ℝ) : 0≤u → Spiral p (action A u) B u d C k\n  thin (s : Set ι) (u : ℝ) : 0≤u → Spiral (fun i:s => p i.val) (fun z => resolve (principal (A z) s) u) B u d C k\n  glass (u : ℝ) : 0≤u → Spiral p (shelve W A u) B u d C k\n  eject (u : ℝ) : 0≤u → RatesPaid p p d (Y*C*drain u) k (hitch W A u) B\n  difference (u : ℝ) : 0≤u → RatesPaid p p d (Y*C*drain u*drain u) k (shelve W A u-action A u) B",
+            "line": 22,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/SECTOR_COVARIANCE_JETS/Vista.lean",
+            "fragment": "L22-L28"
+          },
+          "proof_context": {
+            "declaration": "YM.AnalyticBridge.Covariance.Vista",
+            "lines": [
+              22,
+              28
+            ],
+            "conclusion": "`Vista.full/thin` carry the derivative bounds for the inverse and its principal compressions."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          70
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

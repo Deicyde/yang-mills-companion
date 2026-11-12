@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 11.13 step 15",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "Lean has the exponential-moment bound `exp(2 · quadratic budget)` but for weights on single coordinates and a bound `K` on the covariance; [M]'s joint form 2ℓ_0·z + z^T K z with constant C ∑_i Λ_i is not stated.",
+  "subject": [
+    {
+      "location": {
+        "page": 74,
+        "rect": [
+          0.12026,
+          0.86945,
+          0.75948,
+          0.04763
+        ]
+      },
+      "title": "Lemma 11.13 step 15: Display, p. 74",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 11.13 step 15"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.SectorTools.PhysicalGaussianInsertion.laplace_price",
+        "module": "YM.SectorTools.PHYSICAL_GAUSSIAN_INSERTION.Laplace",
+        "lines": [
+          70,
+          74
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.SectorTools.PhysicalGaussianInsertion.laplace_price"
+          },
+          "snippet": {
+            "text": "lemma laplace_price (hA : A.PosSemidef) (hK : Ceiling A K) (hp : 0 ≤ K)\n    (hw : ∀ i, 0 ≤ w i) (he : ∀ i, K*w i ≤ 1/4) {F : Vec ι → ℝ}\n    (hm : Measurable F) (m : Vec ι) {b : ℝ} (hl : ∀ z, F (m+z) ≤ b + Gauss.pay w z) :\n    Integrable (fun x => Real.exp (F x)) (law A m) ∧\n      (∫ x, Real.exp (F x) ∂law A m) ≤ Real.exp (b+2*K*∑ i, w i) := by",
+            "line": 70,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/SectorTools/PHYSICAL_GAUSSIAN_INSERTION/Laplace.lean",
+            "fragment": "L70-L74"
+          },
+          "proof_context": {
+            "declaration": "YM.SectorTools.PhysicalGaussianInsertion.laplace_price",
+            "lines": [
+              70,
+              87
+            ],
+            "conclusion": "`laplace_price` bounds `∫ exp F` by `exp (b + 2 K ∑ w)` for `F` bounded by a constant plus a quadratic penalty, covering a shift (linear) term."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Primitives.GCC.Quadratic.authentic",
+        "module": "YM.Primitives.CONNECTED_GAUSSIAN_CUMULANTS.Trace",
+        "lines": [
+          228,
+          230
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Primitives.GCC.Quadratic.authentic"
+          },
+          "snippet": {
+            "text": "theorem authentic (h : Ready s q w) :\n    Integrable (fun x => Real.exp (exponent s q w x)) (standard J) ∧\n    (∫ x,Real.exp (exponent s q w x) ∂standard J) ≤ Real.exp (2*trace s q w) := by",
+            "line": 228,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Primitives/CONNECTED_GAUSSIAN_CUMULANTS/Trace.lean",
+            "fragment": "L228-L230"
+          },
+          "proof_context": {
+            "declaration": "YM.Primitives.GCC.Quadratic.authentic",
+            "lines": [
+              228,
+              253
+            ],
+            "conclusion": "`authentic` bounds the integral of the exponential of the quadratic exponent by `exp (2 * trace s q w)`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          74
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 16.2 step 1",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "[L] applies the positivity of Lemma G1.1 as `detects` (inside `hosted_out`); the free-field definition D11 is carried by the Wick pairing used throughout, with no single declaration applied at this place.",
+  "subject": [
+    {
+      "location": {
+        "page": 172,
+        "rect": [
+          0.12026,
+          0.32639,
+          0.75948,
+          0.02002
+        ]
+      },
+      "title": "Lemma 16.2 step 1: Text, p. 172",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.2 step 1"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Maxwell.Free.detects",
+        "module": "YM.Next.MAXWELL.Core",
+        "lines": [
+          94,
+          94
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Maxwell.Free.detects"
+          },
+          "snippet": {
+            "text": "lemma detects (hx : 0 < x a) (p : WickPol G) (hp : p≠0) : 0 < score a x p p := by",
+            "line": 94,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/MAXWELL/Core.lean",
+            "fragment": "L94-L94"
+          },
+          "proof_context": {
+            "declaration": "YM.Maxwell.Free.detects",
+            "lines": [
+              94,
+              110
+            ],
+            "conclusion": "`detects` makes the pairing `score a x p p` of a nonzero polynomial with its reflection strictly positive, which is the positivity of Lemma G1.1."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Maxwell.Free.hosted_out",
+        "module": "YM.Next.MAXWELL.Batch",
+        "lines": [
+          203,
+          218
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Maxwell.Free.hosted_out"
+          },
+          "snippet": {
+            "text": "    have ht := detects timeAxis (basis timeAxis) (by simp) K hk\n    let x := basis timeAxis\n    let v := points (fun _ : Fin 1 => x)\n    have hx : Ortho.move s x=-x := by ext1 i; by_cases hi:i=timeAxis <;> simp_all [x,s]\n    change 0 < moment G (Table.Pairing.closedUp timeAxis v v) (Fin.append (mirrorBar s ∘ (fun _ : Fin 1 => K)) (fun _ => K)) at ht\n    rw [show Table.Pairing.closedUp timeAxis v v = pairPoints (-x) x from ?_,\n      show Fin.append (mirrorBar s ∘ (fun _ : Fin 1 => K)) (fun _ : Fin 1 => K) = Fin.cons P fun _ => K from ?_,← bond_eval] at ht\n    · have hu : -x ≠ x := by intro ha; have H := congr_arg (fun x : E4 => x timeAxis) ha; simp [x] at H; linarith\n      have hl : Pure j P := weightedHomogeneousComponent_isWeightedHomogeneous j p\n      have ho : P∈shelf G k := gloss_shelf (fun _ => (1:ℕ)) j p hw\n      have hw' : P∈shellSector G w := colors_grade (fun _ => (1:ℕ)) j hp\n      have hq : K∈Host G d j := hh j (spaced_mirror s (spaced_real ho)) (pure_mirror s _ (pure_real _ hl))\n        ((sector.mp (closed_sector (closed_sector hw' s).2 s).1).2)\n      rw [show bond G (-x) x P K=0 from collapses p h j ih hu K hq] at ht\n      exact lt_irrefl _ ht\n    · ext1 i; fin_cases i",
+            "line": 203,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/MAXWELL/Batch.lean",
+            "fragment": "L203-L218"
+          },
+          "proof_context": {
+            "declaration": "YM.Maxwell.Free.hosted_out",
+            "lines": [
+              185,
+              223
+            ],
+            "conclusion": "`detects` (strict positivity of the reflected pairing, Lemma G1.1's role) applied to a mirrored `K` with `collapses` gives a contradiction with `p∈ghost`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          172
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

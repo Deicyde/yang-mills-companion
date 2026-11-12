@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 14.6 step 9",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The case m = N of the cap bound is produced by `onTop` from the birth-fee hypothesis `he`, and `Based.cap` states it at every level; the Lean has no separate line citing the E-birth item.",
+  "subject": [
+    {
+      "location": {
+        "page": 131,
+        "rect": [
+          0.12026,
+          0.83867,
+          0.75948,
+          0.02002
+        ]
+      },
+      "title": "Lemma 14.6 step 9: Text, p. 131",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.6 step 9"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extra.Histories.onTop",
+        "module": "YM.Extra.SOURCE_HISTORIES.Song",
+        "lines": [
+          48,
+          90
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extra.Histories.onTop"
+          },
+          "snippet": {
+            "text": "theorem onTop (h : H.Selected) (hS : B.Sound A) (Y : Shelf (H.rep N p N).activities) (q : ℕ) {C : ℝ} (hc : 1 ≤ C)\n    (ht : ∀ (i : F.Index) (U : Config G (H.S.side N p)), ‖B.places (Size.axis F i) 0 U‖ ≤ C)\n    (he : fee F (H.levels.budget N) (B.footprint (0:Site (H.S.side N p))) C (H.levels.clock.forcedAllowance N) ≤\n      Real.sqrt (H.levels.clock.forcedAllowance N)) : OnTop B H N p A (topVoice B H N p Y q) := by\n  let R := H.rep N p N\n  have hv : R.p = H.levels.budget N := (h.represents N p N le_rfl).vac\n  obtain ⟨hp,hs⟩ := launched B R 0 Y hS (h.represents N p N le_rfl).good (forcedPos _ N) hc ht (hv.symm ▸ he) q\n  let V := topVoice B H N p Y q\n  let t := H.levels.clock.threshold N\n  have hb : R.p.threshold=t := congr_arg BudgetPoint.threshold hv\n  let i (v : F.Coeff) := B.places (F.scaled t⁻¹ v) (0:Site (H.S.side N p))\n  let Z (v) := (V.plays v).density 0 B R\n  have ha (v U) : Z v U=liftVac H N p N U * i v U := by\n    unfold i; rw [← hb]; exact (hs v).2.2 U\n  refine ⟨⟨hp,fun v => ⟨(hs v).1,(hs v).2.1⟩,fun _ => rfl,fun v => ?_,?_,fun _ _ => rfl,rfl,?_,?_⟩,\n    fun _ => rfl,fun _ => rfl,fun _ => le_rfl,fun v U => ?_⟩\n  · exact le_mul_of_one_le_left (Work.G08.size_nonneg ..) (H.levels.params _).columns_ge\n  · intro i j; change F.coeffSize (F.core (i+j)) ≤ _; rw [map_add]; exact Size.add F ..\n  · change IsLinearMap ℂ Z\n    have he : IsLinearMap ℂ i := by\n      constructor\n      · intro a b; funext U; simp [i,SectionData.places,B.eval_linear.map_add]\n      intro a b; funext U; simp [i,SectionData.places,B.eval_linear.map_smul]\n    constructor\n    · intro a b; funext U; simp [ha,he.map_add,mul_add]\n    intro a b; funext U; simp [ha,he.map_smul]; ring\n  · have hbar (x : F.Coeff) : i (star x)=star (i x) := by\n      unfold i\n      have ht : F.scaled t⁻¹ (star x)=star (F.scaled t⁻¹ x) := funext fun j => by simp\n      funext U; rw [ht]; exact hS.ordinary_real ..\n    have ht (s : Signed) (v) (U) : i (F.act s.ortho v) U=i v (pull s 0 U) := by\n      unfold i; rw [B.placed_signed hS, F.scaling]; simp [affine]\n    intro v s; funext U\n    change scalar s (Z v (pull _ _ U))=Z (Motion.patch F s v) U\n    simp only [ha,scalar_mul,vac_pull H N p N h le_rfl]\n    rw [show scalar s (liftVac H N p N U)=liftVac H N p N U from scalar_real ..]\n    unfold scalar Motion.patch; split\n    · rw [hbar]; simp [ht]\n    rw [ht]\n  change Z v U = _\n  rw [ha,initial]\n  have hj : (H.S.a N:ℂ)^d ≠ 0 := pow_ne_zero _ (Complex.ofReal_ne_zero.mpr (H.S.a_pos N).ne')\n  simp only [liftVac,i,t,Pi.smul_apply,smul_eq_mul]; field_simp",
+            "line": 48,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/SOURCE_HISTORIES/Song.lean",
+            "fragment": "L48-L90"
+          },
+          "proof_context": {
+            "declaration": "YM.Extra.Histories.onTop",
+            "lines": [
+              48,
+              90
+            ],
+            "conclusion": "The top-level voice is `OnTop`: forced remainder budget `sqrt (forcedAllowance N)` times the coefficient size, with x = v."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Source.TransferData.Based",
+        "module": "YM.Source.Insertion",
+        "lines": [
+          92,
+          94
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Source.TransferData.Based"
+          },
+          "snippet": {
+            "text": "  cap : ∀ m, r ≤ m → m ≤ N → ∀ v,\n    (T.entries m v).remBound 0 (H.rep N p m) (Real.sqrt (H.levels.clock.forcedAllowance m))\n      ((H.levels.params m).columns * F.coeffSize (F.core (T.entries m v).x))",
+            "line": 92,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Source/Insertion.lean",
+            "fragment": "L92-L94"
+          },
+          "proof_context": {
+            "declaration": "YM.Source.TransferData.Based",
+            "lines": [
+              89,
+              114
+            ],
+            "conclusion": "`cap` at m = N gives the remainder bound of Lemma 14.8 at the top level."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          131
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

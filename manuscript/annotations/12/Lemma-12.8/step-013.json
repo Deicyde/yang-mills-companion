@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 12.8 step 13",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] bounds the regulator by 2/(pdist z+1)^2 in the sup-norm alias distance over the finite alias set of odd `Site L`, and sums the cubes to `8*jointMoney`, instead of C/(1+|z|^2) over Z^4; the weights are equivalent up to constants.",
+  "subject": [
+    {
+      "location": {
+        "page": 83,
+        "rect": [
+          0.12026,
+          0.71667,
+          0.75948,
+          0.0459
+        ]
+      },
+      "title": "Lemma 12.8 step 13: Display, p. 83",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 12.8 step 13"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.thin_pay",
+        "module": "YM.Next.STATIONARY.Spectral.AuxReferences",
+        "lines": [
+          450,
+          463
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.thin_pay"
+          },
+          "snippet": {
+            "text": "lemma thin_pay (p : Momentum) (l : Site L) (hl : Odd L.val) (hp : p∈strip (1/128:ℝ)) (hv : Nave p) : ‖damp (inch L) (aliasAt p l)‖ ≤ 2*((pdist l+1:ℝ)^2)⁻¹ := by\n  rcases eq_or_ne l 0 with hl'|hl'\n  · subst l\n    have h : pdist (0:Site L)=0 := by simp [pdist,Lattice.lift]\n    simpa [h] using soda_pay_t (inch_pos L) (inch_le L) (alias_inside hp (0:Site L))\n  let η := inch L; have hx : 0<η := inch_pos L\n  have hw := hv.heights hl' hl\n  let n : ℝ := pdist l; have hn : 1 ≤ n := by unfold n; exact_mod_cast pdist_pos hl'\n  have hh : (n+1)*η ≤ shadeK (aliasAt p l) := by unfold n η at *; nlinarith\n  let D := ‖soda η (aliasAt p l)‖\n  have hd : (1/2:ℝ)*((n+1)*η)^2 ≤ D := (mul_le_mul_of_nonneg_left (le_trans (pow_le_pow_left₀ (by positivity) hh 2) (le_add_of_nonneg_right (sq_nonneg _))) (by norm_num)).trans (soda_safe_cube (inch_pos L) (inch_le L) (alias_inside hp l))\n  have hD : 0<D := lt_of_lt_of_le (by positivity) hd\n  rw [damp,norm_mul,norm_pow,norm_inv, norm_real,Real.norm_of_nonneg (inch_pos L).le]; change η^2 * D⁻¹ ≤ 2*((n+1)^2)⁻¹\n  rw [← div_eq_mul_inv,← div_eq_mul_inv, div_le_div_iff₀ hD (by positivity)]; nlinarith only [hd]",
+            "line": 450,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Spectral/AuxReferences.lean",
+            "fragment": "L450-L463"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.thin_pay",
+            "lines": [
+              450,
+              463
+            ],
+            "conclusion": "`‖damp (inch L) (aliasAt p l)‖ <= 2 * ((pdist l + 1)^2)⁻¹` for the fine aliases, the first bound."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.budgetRun",
+        "module": "YM.Next.STATIONARY.Spectral.AuxReferences",
+        "lines": [
+          465,
+          474
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.budgetRun"
+          },
+          "snippet": {
+            "text": "lemma budgetRun (L : Side) (hl : Odd L.val) (hp : p ∈ strip (1/128:ℝ)) :\n    ∑ l : Site L, ‖damp (inch L) (aliasAt p l)^3‖ ≤ 8*jointMoney := by\n  obtain ⟨z,hz,x,H⟩ := Nave.roll p\n  subst p\n  have hx : z∈strip (1/128:ℝ) := fun j => by simpa [reciprocal] using hp j\n  have he : ∀ i j : Momentum, rolls i j → damp (inch L) i=damp (inch L) j := fun i j hp => by unfold damp; rw [soda_roll hp]\n  simp_rw [he _ _ (alias_roll z x _)]\n  rw [show (∑ i : Site L, ‖damp (inch L) (aliasAt z (i+wrap _ x))^3‖)=_ from Equiv.sum_comp (Equiv.addRight (wrap L x)) (fun i => ‖damp (inch L) (aliasAt z i)^3‖)]\n  apply le_trans _ (mul_le_mul_of_nonneg_left (touring L) (by norm_num : (0:ℝ) ≤ 8)); rw [Finset.mul_sum]; apply sum_le_sum; intro j _\n  rw [norm_pow]; exact (pow_le_pow_left₀ (norm_nonneg _) (thin_pay _ j hl hx hz) _).trans_eq (by rw [mul_pow, inv_pow, ← pow_mul]; norm_num)",
+            "line": 465,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Spectral/AuxReferences.lean",
+            "fragment": "L465-L474"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.budgetRun",
+            "lines": [
+              465,
+              474
+            ],
+            "conclusion": "`∑ l, ‖damp (inch L) (aliasAt p l)^3‖ <= 8 * jointMoney`, the summed cube bound, with `jointMoney` a convergent series."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.touring",
+        "module": "YM.Next.STATIONARY.Spectral.AuxReferences",
+        "lines": [
+          435,
+          449
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.touring"
+          },
+          "snippet": {
+            "text": "lemma touring (L : Side) : ∑ i : Site L, (((pdist i+1:ℝ)^6)⁻¹)≤ jointMoney := by\n  let f (i : ℕ) := (((i:ℝ)+1)^6)⁻¹\n  let g := pdist (n:=L)\n  let Z := (univ : Finset (Site L)).image g\n  have he n (i : Site L) : g i=n → f n=f (g i) := fun h => congr_arg f h.symm\n  have hv n : ∑ i : Site L, (if n=g i then f n else 0) = (univ.filter (fun i : Site L => g i=n)).card*f n := by rw [← sum_filter, Finset.sum_const,nsmul_eq_mul]; simp only [eq_comm (a:=n)]\n  calc\n    _ = ∑ j∈Z,∑ i : Site L, (if j=g i then f j else 0) := by rw [sum_comm]; apply sum_congr rfl; intro i _; simp [Z,f]; rfl\n    _ ≤ ∑ j∈Z,feeStreet j := sum_le_sum fun j _ => by\n      rw [hv]; unfold f\n      apply (mul_le_mul_of_nonneg_right (show (((univ.filter (fun i : Site L => g i=j)).card:ℝ)) ≤ (((2*j+1)^4:ℕ):ℝ) by exact_mod_cast ball_tally L j) (by positivity)).trans\n      unfold feeStreet; push_cast; rw [← div_eq_mul_inv,← div_eq_mul_inv,div_le_div_iff₀ (by positivity) (by positivity)]\n      calc _ ≤ ((2:ℝ)*(j+1))^4*(j+1:ℝ)^2 := by have ht := Nat.cast_nonneg (α:=ℝ) j; gcongr <;> linarith\n           _ = _ := by ring\n    _ ≤ _ := street_quota.sum_le_tsum _ (fun i _ => by unfold feeStreet; positivity)",
+            "line": 435,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Spectral/AuxReferences.lean",
+            "fragment": "L435-L449"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.touring",
+            "lines": [
+              435,
+              449
+            ],
+            "conclusion": "`∑ i : Site L, ((pdist i + 1)^6)⁻¹ <= jointMoney`, the uniform convergent alias sum."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          83
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

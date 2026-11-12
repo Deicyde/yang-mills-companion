@@ -1,0 +1,84 @@
+{
+  "id": "Lemma 13.9 step 4",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "The Lean concludes the same by an algebraic identity chain with `ad_antisym` and `linear_zero` instead of the argument that ad(JX) is both self-adjoint and skew-adjoint.",
+  "subject": [
+    {
+      "location": {
+        "page": 103,
+        "rect": [
+          0.11962,
+          0.80591,
+          0.76258,
+          0.05424
+        ]
+      },
+      "title": "Lemma 13.9 step 4: Text, p. 103",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 13.9 step 4"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.StressFlux.bilinear_real",
+        "module": "YM.Push.STRESS_FLUX.Color",
+        "lines": [
+          73,
+          76
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.StressFlux.bilinear_real"
+          },
+          "snippet": {
+            "text": "  have hW (x y z : G.Color) : A (G.ad x y) z = - A (G.ad y x) z := by nth_rw 1 [ad_antisym]; simp\n  have he (x y z : G.Color) : A (G.ad x y) z = 0 := by linarith [hI x y z,hW x z y,hI z x y,hW z y x,hI y z x,hW y x z]\n  apply invariant_scalar H B (fun x y => sub_eq_zero.mp ?_) hi\n  exact LinearMap.congr_fun (linear_zero H (A.flip y) (fun _ _ => he _ _ _)) x",
+            "line": 73,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/STRESS_FLUX/Color.lean",
+            "fragment": "L73-L76"
+          },
+          "proof_context": {
+            "declaration": "YM.StressFlux.bilinear_real",
+            "lines": [
+              68,
+              76
+            ],
+            "conclusion": "The skew part vanishes (`he`, via `hW` and `hI`), so the form is a scalar multiple of the inner product and the color coefficient is the one given by a unit test vector (`coeff`)."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          103
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
+      }
+    }
+  }
+}

@@ -1,0 +1,161 @@
+{
+  "id": "Lemma 11.10 step 13",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 63,
+        "rect": [
+          0.11961,
+          0.79345,
+          0.76359,
+          0.07428
+        ]
+      },
+      "title": "Lemma 11.10 step 13: Text, p. 63",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 11.10 step 13"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.drift_tip",
+        "module": "YM.Next.STATIONARY.Films.LeadingRay",
+        "lines": [
+          806,
+          818
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.drift_tip"
+          },
+          "snippet": {
+            "text": "  have hx j : Rays 2 (fun k => x k j) := tax_ray _ hk hΩ a j\n  have hW : Rays 3 W := rays_total (f:=fun i x' => x x' i*M i x') (fun i=> (hx i).mul (star_low hp he i (H i) a))\n  have hV : Rays 4 V := by\n    refine rays_total (f:=fun i v=> _) fun i => (halo_neg (hx i)).mul (t:=2) (g:=fun v => ∑ j,x v j*B i j v) ?_\n    refine rays_total (s:=2) (f:=fun j v => x v j *B i j v) fun j=> (hx j).mul (g:=B i j) (rays_zero ?_)\n    exact star_analytic hp (he.pay he) ..\n  have hf : Rays 3 F := by\n    intro v\n    have H' := hW.add (halo_neg hW) v; have hm := (hV.weaker (by norm_num : 3≤4)) v\n    change (fun t : ℝ => (2:ℂ)⁻¹ * stock (Y a a (axes (t • v)))) =O[cutRay] _\n    simp_rw [heq]; exact (((H'.sub (hm.const_mul_left _)).const_mul_left _).const_mul_left _)\n  have ht := (rays_jet (speedy_fits hC hp i) 3).1 hf 2 (by omega)\n  unfold alphaPay leapTip speedy Tensor.diagonal Tensor.coeff; rw [ht]; simp",
+            "line": 806,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Films/LeadingRay.lean",
+            "fragment": "L806-L818"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.drift_tip",
+            "lines": [
+              789,
+              818
+            ],
+            "conclusion": "`hx`, `hW`, `hV`, `hf`: x is `Rays 2`, W is `Rays 3`, V is `Rays 4`, so the diagonal entry is `Rays 3` and the second Taylor coefficient `alphaPay` is zero."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.star_low",
+        "module": "YM.Next.STATIONARY.Films.LeadingRay",
+        "lines": [
+          254,
+          255
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.star_low"
+          },
+          "snippet": {
+            "text": "lemma star_low (j : Loc G 1) (hX : ∀ p : Momentum, star p=p → ∀ x : Phase (Loc G 0),(∑ u : Loc G 1,(pageD G 0 (-p)*ᵥ x) u*stock (hatchTrace F (.inl u) (.inr j) p))=0) (i : Loc G 1) :\n    Rays 1 (fun p : Track=> stock (hatchTrace F (.inl i) (.inr j) (axes p))) := by",
+            "line": 254,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Films/LeadingRay.lean",
+            "fragment": "L254-L255"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.star_low",
+            "lines": [
+              254,
+              276
+            ],
+            "conclusion": "The kernel M(p) = stock (hatchTrace F (.inl i) (.inr j) p) is `Rays 1` along axis rays, using b(0)=0 from the Ward identity."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.star_analytic",
+        "module": "YM.Next.STATIONARY.Films.LeadingRay",
+        "lines": [
+          238,
+          238
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.star_analytic"
+          },
+          "snippet": {
+            "text": "lemma star_analytic (x y) (z : Track) : AnalyticAt ℝ (fun p : Track=> stock (hatchTrace F x y (axes p))) z := by obtain ⟨A,hA⟩ := trace_spot hp h x y; exact ((fireworks (hatchTrace F x y) hA (b:=σ/8) (by linarith) (by linarith))).analytic_real z",
+            "line": 238,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Films/LeadingRay.lean",
+            "fragment": "L238-L238"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.star_analytic",
+            "lines": [
+              238,
+              238
+            ],
+            "conclusion": "The kernels are analytic in the real momentum."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          63
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

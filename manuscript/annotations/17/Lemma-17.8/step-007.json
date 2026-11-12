@@ -1,0 +1,84 @@
+{
+  "id": "Lemma 17.8 step 7",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "The fourier-inversion and positivity claim is the next step; the bump and its transform bound are the same, with `hat` and `Probe.pref` carrying the Fourier normalization.",
+  "subject": [
+    {
+      "location": {
+        "page": 201,
+        "rect": [
+          0.12026,
+          0.82168,
+          0.75948,
+          0.05423
+        ]
+      },
+      "title": "Lemma 17.8 step 7: Text, p. 201",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 17.8 step 7"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.annulus",
+        "module": "YM.EveryPhase.Light",
+        "lines": [
+          49,
+          66
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.annulus"
+          },
+          "snippet": {
+            "text": "  let B : ContDiffBump (0:Space3) := ⟨u,2*u,he,by linarith⟩\n  let f : Probe Space3 := (B.hasCompactSupport.comp_left (show Complex.ofReal 0=0 by simp)).toSchwartzMap\n    (Complex.ofRealCLM.contDiff.comp B.contDiff)\n  -- Uniform pointwise bound in position space, exploiting spatial dimension three\n  let K := volume.real (closedBall (0:Space3) (2*u))\n  haveI : ∀ u : ℝ, IsFiniteMeasure (volume.restrict (closedBall (0:Space3) u)) := fun u =>\n    isFiniteMeasure_restrict.mpr ((isCompact_closedBall _ _).measure_lt_top (μ:=volume)).ne\n  have hx (x : Space3) : ‖hat f x‖ ≤ K := by\n    rw [hat_eq, ← setIntegral_eq_integral_of_forall_compl_eq_zero (s:=closedBall 0 (2*u))]; swap\n    · intro p hp; change _ * (↑(B p):ℂ)=0\n      have HH : p ∉ tsupport B := by rw [B.tsupport_eq]; exact hp\n      simp [image_eq_zero_of_notMem_tsupport HH]\n    have hB p : ‖plane p (-x) * f p‖ ≤ 1 := by\n      rw [norm_mul,plane_norm,one_mul]\n      change ‖Complex.ofReal (B p)‖ ≤ (1:ℝ)\n      simpa only [Complex.norm_real,Real.norm_eq_abs,abs_of_nonneg B.nonneg] using (B.le_one (x:=p))\n    exact le_trans (norm_integral_le_of_norm_le (μ:=volume.restrict (closedBall 0 (2*u)))\n      (integrable_const 1) (ae_of_all _ hB)) (by simp [K])",
+            "line": 49,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Light.lean",
+            "fragment": "L49-L66"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.annulus",
+            "lines": [
+              43,
+              129
+            ],
+            "conclusion": "`B` is a smooth `ContDiffBump` equal to one on the ball of radius `u`, supported in radius `2u` and valued in `[0,1]`, and `‖hat f x‖ ≤ K = vol(closedBall 0 (2u))` for its transform, which is 8|B_1|u^3."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          201
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
+      }
+    }
+  }
+}

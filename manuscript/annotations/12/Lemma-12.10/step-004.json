@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 12.10 step 4",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "[L] bounds the slots by 4h and proves C(4h)^3 + C(4h)^4 ≤ c_dir h^2/4 instead of 2A h^3 ≤ c_dir h^2/4, so the intermediate quantity differs even though the final bound is the same.",
+  "subject": [
+    {
+      "location": {
+        "page": 88,
+        "rect": [
+          0.12026,
+          0.14365,
+          0.75948,
+          0.02496
+        ]
+      },
+      "title": "Lemma 12.10 step 4: Display, p. 88",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 12.10 step 4"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVNext.CouplingReset.sensor",
+        "module": "YM.UVNext.COUPLING_RESET.Probe",
+        "lines": [
+          126,
+          134
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVNext.CouplingReset.sensor"
+          },
+          "snippet": {
+            "text": "    have hsmall : C*(4*h)^3+C*(4*h)^4 ≤ A.direct*h^2/4 := calc\n      _ ≤ C*(4*h)^3 + C*(4*h)^3 := by\n        exact add_le_add_right (mul_le_mul_of_nonneg_left (pow_le_pow_of_le_one h₄ (hz.trans P.threshold_le)\n          (by decide : (3:ℕ) ≤ 4)) hC) _\n      _ = ((512*C)*h)*h^2/4 := by ring\n      _ ≤ _ := by\n        have hb := (le_div_iff₀ (show (0:ℝ) < 512*(1+C) by positivity)).mp (show t ≤ A.direct / _ from min_le_right ..)\n        have hcost : 512*C*h ≤ A.direct := by nlinarith\n        gcongr",
+            "line": 126,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/COUPLING_RESET/Probe.lean",
+            "fragment": "L126-L134"
+          },
+          "proof_context": {
+            "declaration": "YM.UVNext.CouplingReset.sensor",
+            "lines": [
+              96,
+              142
+            ],
+            "conclusion": "`C*(4h)^3 + C*(4h)^4 <= A.direct*h^2/4`, using the choice of `t` through `512*C*h <= A.direct`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVNext.CouplingReset.sensor",
+        "module": "YM.UVNext.COUPLING_RESET.Probe",
+        "lines": [
+          135,
+          139
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVNext.CouplingReset.sensor"
+          },
+          "snippet": {
+            "text": "    have hterm (x : Site n) : -(A.direct*h^2/4) ≤ PathData.atomSeries D.cubic P (pull s 0 U) x +\n          PathData.atomSeries D.quartic P (pull s 0 U) x := by\n      have h1 := neg_le_of_abs_le (atomSeries_chord (P:=P) hD.width hD.three h₄ hm x)\n      have h2 := neg_le_of_abs_le (atomSeries_chord (P:=P) hD.width hD.four h₄ hm x)\n      linarith only [h1,h2,hsmall]",
+            "line": 135,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/COUPLING_RESET/Probe.lean",
+            "fragment": "L135-L139"
+          },
+          "proof_context": {
+            "declaration": "YM.UVNext.CouplingReset.sensor",
+            "lines": [
+              96,
+              142
+            ],
+            "conclusion": "At every site the cubic and quartic atom series of each signed image is at least `-(A.direct*h^2/4)`, by `atomSeries_chord`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          88
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; a re-check of closeMatch records changed it from closeMatch; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
+      }
+    }
+  }
+}

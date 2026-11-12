@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 17.5 step 2",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "The step fixes Z and a and shows Z* = -Z, so a = -||Z Omega||^2; the Lean sets `D` and `answer` and proves the same sign identity before using `Covering.square`.",
+  "subject": [
+    {
+      "location": {
+        "page": 195,
+        "rect": [
+          0.1198,
+          0.68543,
+          0.75994,
+          0.05306
+        ]
+      },
+      "title": "Lemma 17.5 step 2: Text, p. 195",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 17.5 step 2"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.B05.at_tag",
+        "module": "YM.Work.B05",
+        "lines": [
+          30,
+          41
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.B05.at_tag"
+          },
+          "snippet": {
+            "text": "  let D := Grid.θ A w hd\n  have h := t.opposite w hd (Word.reflects _ hd) |>.trans\n    (t.changes (ordinary v hp (Order.grid C k x)) (Word.reflects _ hd) (Grid.apart hd))\n  have ht : star D = -D := by\n    change star (M A w hd - _) = -(M A w hd - _)\n    rw [← h]; simp [star_sub]\n  have hd' : ContinuousLinearMap.adjoint D.val = - D.val := congr_arg Subtype.val ht\n  have hz := p.square A k v x hd he hs s.kernel (b v x k s.cutoff s.kernel s.generic hp hg)\n  have hy : 0 ≤ (inner ℂ V.omega0 (D.val (D.val V.omega0))).re := by\n    simp only [Grid.answer,pow_two] at hz; exact hz\n  have hx : (inner ℂ (D.val V.omega0) (D.val V.omega0)).re=‖D.val V.omega0‖^2 := inner_self_eq_norm_sq (𝕜 := ℂ) _\n  rw [← ContinuousLinearMap.adjoint_inner_right, hd',neg_apply,inner_neg_right, Complex.neg_re] at hx",
+            "line": 30,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/B05.lean",
+            "fragment": "L30-L41"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.B05.at_tag",
+            "lines": [
+              23,
+              43
+            ],
+            "conclusion": "For a grid word, `D = Grid.θ A w hd` satisfies `star D = -D` by `t.opposite` and `t.changes`, so `Re<Omega, D (D Omega)> = -||D Omega||^2`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OS.Grid.θ",
+        "module": "YM.Phase.Square",
+        "lines": [
+          52,
+          52
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OS.Grid.θ"
+          },
+          "snippet": {
+            "text": "def θ (P : Spread V) (w : C.book.Word) (p : distinct w) : P.algebra := M P w p - M P (anti w) (apart p)",
+            "line": 52,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Phase/Square.lean",
+            "fragment": "L52-L52"
+          },
+          "proof_context": {
+            "declaration": "YM.OS.Grid.θ",
+            "lines": [
+              52,
+              52
+            ],
+            "conclusion": "`θ P w p = M P w p - M P (anti w) (apart p)` is Z = M^0(w) - M^0(theta w)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OS.Grid.answer",
+        "module": "YM.Phase.Square",
+        "lines": [
+          53,
+          53
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OS.Grid.answer"
+          },
+          "snippet": {
+            "text": "def answer (P : Spread V) (w : C.book.Word) (p : distinct w) := (inner ℂ V.omega0 (((θ P w p)^2 : P.algebra).val V.omega0)).re",
+            "line": 53,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Phase/Square.lean",
+            "fragment": "L53-L53"
+          },
+          "proof_context": {
+            "declaration": "YM.OS.Grid.answer",
+            "lines": [
+              53,
+              53
+            ],
+            "conclusion": "`answer` is a = Re<Omega, Z^2 Omega>."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          195
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

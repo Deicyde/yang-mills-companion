@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 19.21 step 6",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "[L] needs the probe clearance `Fits M φ w x A` as a hypothesis and states the bound along a filter with a fixed rate sequence.",
+  "subject": [
+    {
+      "location": {
+        "page": 236,
+        "rect": [
+          0.12026,
+          0.20178,
+          0.75996,
+          0.10262
+        ]
+      },
+      "title": "Lemma 19.21 step 6: Text, p. 236",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 19.21 step 6"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Layers.Funds.outputs",
+        "module": "YM.Contacts.Layers.Signed",
+        "lines": [
+          47,
+          54
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Layers.Funds.outputs"
+          },
+          "snippet": {
+            "text": "lemma Funds.outputs (h : Funds Z M φ T A s c e) (hs : 0 ≤ s) (hv : s ≤ 1) (hp : Fits M φ w x A) : RateLE φ T (fun i=> M.row (x i) w (e i)) (c-w*s):= by\n  rcases hs.eq_or_lt with h'|hs\n  · subst s; simpa only [mul_zero, add_zero, sub_zero] using Against.row M hT e (h.tests hT H le_rfl le_rfl hv) le_rfl le_rfl hp h.loose -- dot order inspect\n  obtain ⟨g,hh,hq⟩:= (Matchable.layer hT H ha hs le_rfl hv hx h).replaces (c-w*s-probeFee M w)\n  have hw:= Against.row M hT (e-g) hq le_rfl zero_le_one hp (loose_diff h.loose ((hh.fine hT hx).increase_layer hv))\n  rw [mul_one,sub_add_cancel] at hw\n  refine (hw.add (hh.row hT hs.le w) hT).congr ?_\n  filter_upwards with i; simp",
+            "line": 47,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Layers/Signed.lean",
+            "fragment": "L47-L54"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Layers.Funds.outputs",
+            "lines": [
+              47,
+              54
+            ],
+            "conclusion": "For a `Funds` expression of cost `c` at height `s`, the degree-`w` contact row has rate at most `c - w*s` where `Fits` gives probe clearance; the case `s = 0` tests the fixed probes directly."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Layers.Override.row",
+        "module": "YM.Contacts.Layers.Overrides",
+        "lines": [
+          61,
+          69
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Layers.Override.row"
+          },
+          "snippet": {
+            "text": "lemma row (h : Override Z M φ T x s c e)(hs : 0 ≤ s) (w : ℕ) : RateLE φ T (fun i=> M.row (x i) w (e i)) (c - w*s) := by\n   induction h with\n   | @atom d f h =>\n     by_cases he:w ≤ d\n     · simp_rw [M.row_of_field]; exact (rate_linear (LinearMap.toContinuousLinearMap (M.splitting.part w d)) hT h).mono (by gcongr)\n     simp_rw [M.row_of_field, M.splitting.beyondZero (show d<w from not_le.mp he), LinearMap.zero_apply]; exact RateLE.zero φ T (X:=S.Field w) _\n   | zero => simp only [Pi.zero_apply,map_zero]; exact RateLE.zero φ T (X:=S.Field w) _\n   | plus _ _ hx hy=> simp_rw [Pi.add_apply,map_add]; exact hx.add hy hT\n   | germ _ h hx=> exact hx.congr (h.mono fun i hi=> congr_arg (M.row (x i) w) hi)",
+            "line": 61,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Layers/Overrides.lean",
+            "fragment": "L61-L69"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Layers.Override.row",
+            "lines": [
+              61,
+              69
+            ],
+            "conclusion": "On a degree-`d` field the row is zero for `d < w` and has rate `c - d*s <= c - w*s` otherwise."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Layers.Against.row",
+        "module": "YM.Contacts.Layers.Readout",
+        "lines": [
+          114,
+          125
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Layers.Against.row"
+          },
+          "snippet": {
+            "text": "lemma Against.row {w : ℕ} (e : W→ Expression Z.sector.derivatives)\n    (h : Against Z M φ T A s v c e) (hs : 0 ≤ s) (hv : 0 ≤ v) (hc : Fits M φ w x A) (hE : ∃ u, Fine M φ T A 1 u e) : RateLE φ T (fun i=> M.row (x i) w (e i)) (c+probeFee M w*v) := by\n   let θ := M.tests w; let k:=c+probeFee M w*v; let y (b:Bool) (i:W) (s:Ortho):= θ.decode (fun j=> if b then star (M.survey s j b (shiftExpr (-(x i)) (e i))) else M.survey s j b (shiftExpr (-(x i)) (e i)))\n   have hm (b : Bool) (σ : W→Ortho) : RateLE φ T (fun i=> M.rotation.act w (σ i) (y b i (σ i))) k := by\n      apply act_any (M:=M) hT _; apply rate_linear (LinearMap.toContinuousLinearMap (M.tests w).decode) hT (f:=fun i j=> if b then star (M.survey (σ i) j b (shiftExpr (-(x i)) (e i))) else M.survey (σ i) j b (shiftExpr (-(x i)) (e i))); intro v hv'\n      let f' i (j:(M.tests w).probes):=if b then star (M.survey (σ i) j b (shiftExpr (-(x i)) (e i))) else M.survey (σ i) j b (shiftExpr (-(x i)) (e i))\n      have he(j:(M.tests w).probes):RateLE φ T (fun i=>f' i j) k:= by unfold f'; cases b; exact survey_rate M hT j h hc hs hv false σ; exact fn_star (survey_rate M hT j h hc hs hv true σ)\n      filter_upwards [eventually_all.mpr fun j=> he j v hv'] with i hi using (pi_norm_le_iff_of_nonneg (Real.exp_nonneg (v*T i)) (x:=f' i)).mpr hi\n   have he(b : Bool):= fn_integral (f:=fun s i=> M.rotation.act w s (y b i s)) (hm b); let f:=M.hierarchy.spin\n   let g(i:W):= M.base w (shiftExpr (-(x i)) (e i))\n   apply rate_linear (LinearMap.toContinuousLinearMap (M.splitting.top w)) hT (f:=g); refine RateLE.congr ((((RateLE.const ((2:ℂ)⁻¹) hT).smul ((he false).add (fn_real (M:=M) hT (he true)) hT)).mono (le_of_eq (zero_add k)))) ?_\n   filter_upwards [hE.choose_spec.fit_shift hc le_rfl] with i hi using (M.base_survey w hi).symm",
+            "line": 114,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Layers/Readout.lean",
+            "fragment": "L114-L125"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Layers.Against.row",
+            "lines": [
+              114,
+              125
+            ],
+            "conclusion": "A row is bounded by averaging the probe surveys over `O(4)`, at the cost `probeFee` raised by the precision."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          236
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

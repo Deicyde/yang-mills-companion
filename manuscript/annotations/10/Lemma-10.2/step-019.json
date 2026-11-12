@@ -1,0 +1,122 @@
+{
+  "id": "Lemma 10.2 step 19",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 42,
+        "rect": [
+          0.12026,
+          0.18055,
+          0.75948,
+          0.02296
+        ]
+      },
+      "title": "Lemma 10.2 step 19: Text, p. 42",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 10.2 step 19"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.G05.Cast_blockTaylor",
+        "module": "YM.Work.G05",
+        "lines": [
+          23,
+          36
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.G05.Cast_blockTaylor"
+          },
+          "snippet": {
+            "text": "theorem Cast_blockTaylor {f : GaugePanel G m → Snap G d} (hf : ContDiffAt ℝ d f 0) (u : G.El)\n    (h : ∀ᶠ x in 𝓝 0, f (rotates u x) = Cast u (f x)) (x : GaugePanel G m) :\n    blockTaylor d f (rotates u x) = Cast u (blockTaylor d f x) := by\n  let L : GaugePanel G m →L[ℝ] GaugePanel G m :=\n    { toFun := rotates u\n      map_add' := fun _ _ => funext fun _ => map_add (G.adjoint u) _ _\n      map_smul' := fun _ _ => funext fun _ => map_smul (G.adjoint u) _ _\n      cont := rotates_cont }\n  let R : Snap G d →L[ℝ] Snap G d :=\n    { toFun := Cast u\n      map_add' := fun _ _ => funext fun _ => map_add (Taylor.paint u) _ _\n      map_smul' := fun _ _ => funext fun _ => map_smul (Taylor.paint u) _ _\n      cont := Cast_cont }\n  exact blockTaylor_equivariant hf L R h x",
+            "line": 23,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/G05.lean",
+            "fragment": "L23-L36"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.G05.Cast_blockTaylor",
+            "lines": [
+              23,
+              36
+            ],
+            "conclusion": "`blockTaylor d f (rotates u x) = Cast u (blockTaylor d f x)`: equivariance of the Taylor polynomial."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.G05.answer",
+        "module": "YM.Work.G05",
+        "lines": [
+          134,
+          136
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.G05.answer"
+          },
+          "snippet": {
+            "text": "  apply lows_substitute\n  · intro j; apply lows_of_zero\n    rw [hQ, blockTaylor_zero, hz, expand_zero]; simp [coord]",
+            "line": 134,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/G05.lean",
+            "fragment": "L134-L136"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.G05.answer",
+            "lines": [
+              113,
+              139
+            ],
+            "conclusion": "The constant term vanishes: `blockTaylor_zero` with `f 0 = 0` gives `lows_of_zero` for the coordinate polynomials."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          42
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

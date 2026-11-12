@@ -1,0 +1,145 @@
+{
+  "id": "Lemma 17.3 step 9",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "broadMatch",
+  "note": "`fixed` carries the bound for all profiles, with no zero-moment restriction and diagonal entries included (steps 10 to 15 are absorbed into it), so it is stronger than the annular bound claimed here.",
+  "subject": [
+    {
+      "location": {
+        "page": 193,
+        "rect": [
+          0.12026,
+          0.59062,
+          0.76195,
+          0.0346
+        ]
+      },
+      "title": "Lemma 17.3 step 9: Text, p. 193",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 17.3 step 9",
+          "quads": [
+            [
+              0.64178,
+              0.59062,
+              0.88221,
+              0.59062,
+              0.88221,
+              0.60773,
+              0.64178,
+              0.60773
+            ],
+            [
+              0.12026,
+              0.60773,
+              0.54853,
+              0.60773,
+              0.54853,
+              0.62522,
+              0.12026,
+              0.62522
+            ]
+          ]
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.fixed",
+        "module": "YM.Next.ROTATIONS.Pier",
+        "lines": [
+          116,
+          122
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.fixed"
+          },
+          "snippet": {
+            "text": "lemma fixed (H : S.Hierarchy) (P : DiffPlan S) (hp : P.Derivatives S) (ho : P.Orientation H.spin)\n    (J : Stress S) (C : Conserved P H.spin J) (Y : RawTensor H.spin J)\n    {D : ℕ} {R : Series} (hR : Portrait J D R) (a b c d i) (f : Grouping)\n    (hf : Far (f i)) (hF : ∀ j, Ends (f j)) (hv : ∀ j, j≠i → Reflects (axes a b c d j) (f j))\n    (w : Axis → ℝ) (he : w i=0) (hw : ∀ i,w i ≤ 0) (δ : ℝ) (hδ : 0<δ) :\n    Budget δ (fun n => sent (R a b c d) (mails w f n)) := by\n  let e := signsD a b i",
+            "line": 116,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Pier.lean",
+            "fragment": "L116-L122"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.fixed",
+            "lines": [
+              116,
+              149
+            ],
+            "conclusion": "For every index tuple `a b c d`, a far (fixed annular) profile in direction `i` and transverse profiles with the right reflection parities, `sent (R a b c d)` at the shrinking widths is `Budget δ` for every `δ>0`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.one_mode",
+        "module": "YM.Next.ROTATIONS.Mode",
+        "lines": [
+          99,
+          110
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.one_mode"
+          },
+          "snippet": {
+            "text": "lemma one_mode (H : S.Hierarchy) (i : Axis) (B A : Weight L) (e e')\n    (hi : Mixed Finset.univ e) (hj : Mixed Finset.univ e') (hb : ∀ i, Own B i (e i)) (ha : ∀ i, Own A i (e' i))\n    (hB : ∀ i, Pressed i B) (hA : ∀ i, Pressed i A) (w : Axis→ℝ) (hw : ∀ i,w i ≤ 0)\n    (b : Bool) (hbb : signValue b=signValue (e i)*signValue (e' i))\n    (f : Grouping) (hf : ∀ i, Ends (f i)) (ht : Reflects b (f i)) (δ : ℝ) (hd : 0<δ) :\n    ∃ (s : ℝ) (M : ℕ),1≤s ∧ ∀ m≥M,\n      let Z n := update (mails w f n) i (GridTest b m s (mails w f n i))\n      (∀ n, Integrable (mixPlot S B A (Z n))) ∧\n        Budget δ (fun n => ∫ x,mixPlot S B A (Z n) x) := by\n  obtain ⟨g,s,hg,hG,hT,hS,h⟩ := white (f i) b (hf i) ht\n  let K (n j) := fuel (w j) n\n  have hv n j : 0<K n j := fuel_pos ..",
+            "line": 99,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Mode.lean",
+            "fragment": "L99-L110"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.one_mode",
+            "lines": [
+              99,
+              183
+            ],
+            "conclusion": "After replacing one transverse profile by its zero-moment remainder `GridTest`, the mixed pairing integral is `Budget δ`, by the sign walk and the Cauchy-Schwarz pairing."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          193
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

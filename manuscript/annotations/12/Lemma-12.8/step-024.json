@@ -1,0 +1,83 @@
+{
+  "id": "Lemma 12.8 step 24",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 84,
+        "rect": [
+          0.12026,
+          0.53592,
+          0.75948,
+          0.0223
+        ]
+      },
+      "title": "Lemma 12.8 step 24: Display, p. 84",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 12.8 step 24"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.fine_alpha",
+        "module": "YM.Next.STATIONARY.Loops.HessianMatch",
+        "lines": [
+          676,
+          699
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.fine_alpha"
+          },
+          "snippet": {
+            "text": "  let c : ℝ := (P.L.val:ℝ)^4\n  let f : Track→L[ℝ] Track := μ • ContinuousLinearMap.id ℝ Track\n  let L := c • (μ^2 • (M ∘ f))\n  have h0 := anchored _ X B T hx hU he hp hT hτ hw hε\n  have hu := canonicalGap h hs hg a a h0\n  let g l x := skyline S (aliasAt (axes x) l) (nose X (-(axes x)) (-l) a) (nose X (axes x) l a)\n  have hy : Rays 3 (K-L) := by\n    let b := univ.erase (0:Site P.L)\n    have ht x : K x=c • ((∑ l∈b,g l x)+ g 0 x) := by\n      change rowscape H (axes x) a a=c • ((∑ l∈b,g l x)+g 0 x)\n      rw [sum_erase_add _ _ (mem_univ _), hh _ (axes_real _)]; unfold c; rw [Complex.real_smul,Complex.ofReal_pow]; rfl\n    intro x\n    have hr := Asymptotics.IsBigO.sum (s:=b) (A:=fun l (v':ℝ) => g l (v' • x)) (fun i hi=> ((hr' i (Finset.ne_of_mem_erase hi)).weaker (by decide : 3≤4)) x)\n    have hh : Rays 3 (fun x : Track=> g 0 x-μ^2 • M (f x)) := by\n      unfold g; simp only [neg_zero]; convert hu using 1\n      ext1 v; dsimp only; rw [alias_zero_loc, Complex.real_smul, Complex.ofReal_pow]; rfl\n    have hv := (hr.add (hh x)).const_mul_left (c:ℂ)\n    refine hv.congr_left (fun k=> ?_)\n    change (↑c:ℂ)*((∑ i∈b,g i (k • x))+(g 0 (k • x) - μ^2 • M (f (k • x))))= K (k • x)-c • μ^2 • M (f (k • x)); rw [ht]; simp only [Complex.real_smul]; ring\n  have hk : AnalyticAt ℝ K 0 := priceL hH ..\n  have hm : AnalyticAt ℝ M 0 := priceL hl ..\n  have hn : AnalyticAt ℝ (M ∘ f) 0 := ((show ContDiffAt ℝ ω M (f 0) by rw [map_zero]; exact hm.contDiffAt).comp (f:=fun x => f x) (0:Track) f.contDiff.contDiffAt).analyticAt\n  have hL : AnalyticAt ℝ L 0 := hn.const_smul.const_smul\n  have hx := (rays_jet (hk.sub hL) 3).mp hy 2 (by norm_num); rw [iteratedFDeriv_sub_apply hk.contDiffAt hL.contDiffAt] at hx",
+            "line": 676,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Loops/HessianMatch.lean",
+            "fragment": "L676-L699"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.fine_alpha",
+            "lines": [
+              670,
+              705
+            ],
+            "conclusion": "The folded entry `K` differs from `L = c * (mu^2 * (M ∘ f))`, with `c = L^4`, `mu = inch L` and `f = mu * id`, by a `Rays 3` term, i.e. L^4 L^{-2} Y(xi/L) + O(|xi|^3)."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          84
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
+      }
+    }
+  }
+}

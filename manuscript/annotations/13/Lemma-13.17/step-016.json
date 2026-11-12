@@ -1,0 +1,201 @@
+{
+  "id": "Lemma 13.17 step 16",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "broadMatch",
+  "note": "The diagonal sum is stated for all `‖z‖ ≤ r`, without the restriction 4e‖h‖ < rR that [M] needs for convergence from the norm bound; here the line series gives convergence. The hypothesis is `Often` at p = R/2 rather than the stencil bound.",
+  "subject": [
+    {
+      "location": {
+        "page": 115,
+        "rect": [
+          0.11962,
+          0.33222,
+          0.76358,
+          0.08835
+        ]
+      },
+      "title": "Lemma 13.17 step 16: Text, p. 115",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 13.17 step 16"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.Amp.Often.labels",
+        "module": "YM.FullVolume.Amp.Head",
+        "lines": [
+          17,
+          33
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.Amp.Often.labels"
+          },
+          "snippet": {
+            "text": "lemma labels (k:ℝ) (he:0≤k)(hp:∀ i,‖u i‖≤k): ‖L.anchor n u‖ ≤ (k*fee p r)^n*c:=by\n    let F:= ((Nat.factorial n:ℕ):ℝ); let Ω:= (univ:Finset (Fin n)); have hb:= L.width; have h₀:= zero_lt_one.trans_le L.pays.1\n    have hz T (ht:T∈Ω.powerset): ‖signed Ω T • L.bank n (0+∑ i∈T,u i)‖≤ ((n*k/r)/p)^n*c:=by\n       rw [norm_smul,signed,norm_pow,norm_neg,norm_one,one_pow,one_mul,zero_add]\n       apply lend'; apply le_trans (norm_sum_le ..); refine (sum_le_sum (fun i _=>hp i)).trans ?_; rw [sum_const,nsmul_eq_mul]; rw [mul_div_cancel₀ _ hb.ne']; apply mul_le_mul_of_nonneg_right _ he; exact Nat.cast_le.mpr (by simpa [Ω] using card_le_card (mem_powerset.mp ht))\n    have hc:↑(Ω.powerset.card)=(2:ℝ)^n:=by simp [Ω]\n    unfold anchor; rw [norm_smul,norm_inv,Real.norm_of_nonneg (by positivity)]\n    have hE: (n:ℝ)^n/F ≤ (Real.exp 1)^n:= by\n       rw [← Real.exp_nat_mul,mul_one]; exact le_trans (by apply single_le_sum (f:=fun i:ℕ=>(n:ℝ)^i/i.factorial) (fun _ _=>by positivity) (mem_range.mpr n.lt_succ_self)) (Real.sum_le_exp_of_nonneg (by positivity) (n+1))\n    calc\n      _ ≤ F⁻¹*((2:ℝ)^n*(((n*k/r)/p)^n*c)):= mul_le_mul_of_nonneg_left ((norm_sum_le ..).trans ((sum_le_sum hz).trans_eq (by rw [sum_const,nsmul_eq_mul,hc]))) (by positivity)\n      _ = (n^n/F:ℝ) * ((2*k/(r*p))^n*c) := by\n         push_cast; simp only [div_pow,mul_pow]; ring\n      _ ≤ _ := by\n        change _ ≤ (k*(2*Real.exp 1/(r*p)))^n*c; push_cast\n        apply (mul_le_mul_of_nonneg_right hE (show 0≤(2*k/(r*p))^n*c from mul_nonneg (by positivity) L.pays.2)).trans_eq\n        simp [div_pow,mul_pow]; ring",
+            "line": 17,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Amp/Head.lean",
+            "fragment": "L17-L33"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.Amp.Often.labels",
+            "lines": [
+              17,
+              33
+            ],
+            "conclusion": "`‖anchor n u‖ ≤ (k*fee p r)^n*c` when all `‖u i‖ ≤ k`: 2^n terms of norm at most n k/(rp) c, with n^n/n! ≤ e^n, `fee = 2e/(rp)`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.Amp.Often.course",
+        "module": "YM.FullVolume.Amp.Head",
+        "lines": [
+          78,
+          78
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.Amp.Often.course"
+          },
+          "snippet": {
+            "text": "lemma course: ‖L.gardenL n‖≤ fee p r^n*c:= MultilinearMap.mkContinuous_norm_le _ (mul_nonneg (by unfold fee; have hh:=L.width; have hp:=zero_lt_one.trans_le L.pays.1; positivity) L.pays.2) _",
+            "line": 78,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Amp/Head.lean",
+            "fragment": "L78-L78"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.Amp.Often.course",
+            "lines": [
+              78,
+              78
+            ],
+            "conclusion": "`‖gardenL n‖ ≤ fee p r ^ n * c`, so with p = R/2 and c = 2C the operator bound is 2C(4e/(rR))^n."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.Amp.Often.party",
+        "module": "YM.FullVolume.Amp.Head",
+        "lines": [
+          83,
+          83
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.Amp.Often.party"
+          },
+          "snippet": {
+            "text": "lemma party (z:X)(hz:‖z‖ ≤r) : HasSum (fun n=>L.gardenL n (fun _=>z)) (f (x+z)):= by simp_rw [seeds]; exact L.gift z hz",
+            "line": 83,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Amp/Head.lean",
+            "fragment": "L83-L83"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.Amp.Often.party",
+            "lines": [
+              83,
+              83
+            ],
+            "conclusion": "`∑_n gardenL n (z,...,z)` has sum `f (x+z)` for every `‖z‖ ≤ r`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.Amp.stage",
+        "module": "YM.FullVolume.Amp.Blank",
+        "lines": [
+          42,
+          43
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.Amp.stage"
+          },
+          "snippet": {
+            "text": "lemma stage : ∃ (P:FormalMultilinearSeries ℝ I Y), (∀ n, ‖P n‖ ≤ fee p r^n*c) ∧ ∀ z,‖z‖≤r → HasSum (fun n=> P n (fun _=> e z)) (f (x+z)) := by\n   choose P hP h using fun n:ℕ=> give (Y:=Y) e he h n; exact ⟨fun n=>P n (L.gardenL n),fun n=> (hP ..).trans (L.course n),fun z hz=> (L.party _ hz).congr_fun (fun n=>h n _ (fun _=>z))⟩",
+            "line": 42,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Amp/Blank.lean",
+            "fragment": "L42-L43"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.Amp.stage",
+            "lines": [
+              42,
+              43
+            ],
+            "conclusion": "The multilinear series with `‖P n‖ ≤ fee^n c` also represents `f (x+z)` on a dense isometric embedding `e`, the completion."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          115
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

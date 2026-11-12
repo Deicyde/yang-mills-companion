@@ -1,0 +1,115 @@
+{
+  "id": "Lemma 16.10 step 12",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 186,
+        "rect": [
+          0.12026,
+          0.0962,
+          0.75996,
+          0.05463
+        ]
+      },
+      "title": "Lemma 16.10 step 12: Text, p. 186",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.10 step 12",
+          "quads": [
+            [
+              0.4162,
+              0.0962,
+              0.88021,
+              0.0962,
+              0.88021,
+              0.11663,
+              0.4162,
+              0.11663
+            ],
+            [
+              0.12026,
+              0.11664,
+              0.88022,
+              0.11664,
+              0.88022,
+              0.13292,
+              0.12026,
+              0.13292
+            ],
+            [
+              0.12026,
+              0.13294,
+              0.43527,
+              0.13294,
+              0.43527,
+              0.15083,
+              0.12026,
+              0.15083
+            ]
+          ]
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Ward.line",
+        "module": "YM.Ward.Axis",
+        "lines": [
+          86,
+          97
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Ward.line"
+          },
+          "snippet": {
+            "text": "lemma line (w : a≠b) (x : Points n) (h : arranged a x) (N : Finset (Fin n))\n    (H : ∀ i∉N, (∃ t : ℝ, x i=t • basis a) ∧ ∀ j∈ N, x j a < x i a) : ∃ y, Walk n x y ∧ y∈conf n ∧ onLine a y := by\n  induction N using Finset.strongInductionOn generalizing x with\n  | _ N ih =>\n    rcases N.eq_empty_or_nonempty with hv|hh\n    · subst N; exact ⟨x,.id _, also a h,fun i => (H i (by simp)).1⟩\n    obtain ⟨i,hi,hz⟩ := Finset.exists_min_image N (fun i => x i a) hh\n    have hu : Earliest x a i := by\n      refine ⟨also a h,fun j hj => ?_⟩\n      by_cases e : j∈N\n      · exact lt_of_le_of_ne (hz j e) (arranged_ne a h hj.symm)\n      exact (H j e).2 _ hi",
+            "line": 86,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Ward/Axis.lean",
+            "fragment": "L86-L97"
+          },
+          "proof_context": {
+            "declaration": "YM.Ward.line",
+            "lines": [
+              86,
+              108
+            ],
+            "conclusion": "`line` picks `i ∈ N` with minimal `x i a` (`exists_min_image`) and proves `Earliest x a i`, using that points outside `N` (moved) have larger `a`-coordinate than all of `N` (hypothesis `H`)."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          186
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
+      }
+    }
+  }
+}

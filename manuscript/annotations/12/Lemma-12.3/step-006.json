@@ -1,0 +1,122 @@
+{
+  "id": "Lemma 12.3 step 6",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 86,
+        "rect": [
+          0.12026,
+          0.50696,
+          0.75948,
+          0.03648
+        ]
+      },
+      "title": "Lemma 12.3 step 6: Display, p. 86",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 12.3 step 6"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Push.Loops.loopRow_sum",
+        "module": "YM.Push.LOOP_COEFFICIENT.LoopRow",
+        "lines": [
+          59,
+          60
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Push.Loops.loopRow_sum"
+          },
+          "snippet": {
+            "text": "lemma loopRow_sum (h : W.Bounds p σ C Λ) (i j : Sides G) : HasSum (loopRow W i j) 0 := by\n  rw [← (h.loop_normal ![i.1,j.1] ![i.2,j.2]).1]; exact packed_hasSum _ (h.loopTerms ..).1",
+            "line": 59,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/LOOP_COEFFICIENT/LoopRow.lean",
+            "fragment": "L59-L60"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.Loops.loopRow_sum",
+            "lines": [
+              59,
+              60
+            ],
+            "conclusion": "`loopRow_sum` shows the packed loop coefficients over offsets `z` have `HasSum` zero."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Push.Loops.loopRow_moment",
+        "module": "YM.Push.LOOP_COEFFICIENT.LoopRow",
+        "lines": [
+          61,
+          66
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Push.Loops.loopRow_moment"
+          },
+          "snippet": {
+            "text": "lemma loopRow_moment (h : W.Bounds p σ C Λ) (i j : Sides G) (d : Axis) : HasSum (fun z : Cover => (z d : ℝ)*loopRow W i j z) 0 := by\n  have he := (h.loop_normal ![i.1,j.1] ![i.2,j.2]).2 d\n  have ht := (h.loopTerms ![i.1,j.1] ![i.2,j.2]).2 d\n  have eq (k) : (deltaPos W k d : ℝ)*atomRow W i j k = _ := mul_comm ..\n  simp_rw [loopRow, show ∀ z : Cover, (z d : ℝ)*packed (deltaPos W) (atomRow W i j) z = _ from packed_mul (deltaPos W) (atomRow W i j) (fun z => (z d : ℝ)), eq]\n  rw [← he]; exact packed_hasSum _ ht",
+            "line": 61,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/LOOP_COEFFICIENT/LoopRow.lean",
+            "fragment": "L61-L66"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.Loops.loopRow_moment",
+            "lines": [
+              61,
+              66
+            ],
+            "conclusion": "`loopRow_moment` shows `∑ z_d * loopRow z` has sum zero for each axis `d`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          86
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

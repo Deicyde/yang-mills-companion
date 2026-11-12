@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 16.6 step 3",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] extracts the cluster limit inside `harvested` (via `finite_extract`) and states the bound for the resulting panel. The use of one table for every subfilter is not stated separately.",
+  "subject": [
+    {
+      "location": {
+        "page": 180,
+        "rect": [
+          0.12026,
+          0.7554,
+          0.75996,
+          0.08551
+        ]
+      },
+      "title": "Lemma 16.6 step 3: Text, p. 180",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.6 step 3"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.UVStress.harvested",
+        "module": "YM.Next.UV_STRESS.Station",
+        "lines": [
+          132,
+          139
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.UVStress.harvested"
+          },
+          "snippet": {
+            "text": "lemma harvested (H : S.Hierarchy) (h : F.Ordered C S) (a : (Bel C.book).RealSpin)\n    (X : Station C D) {N : ℕ} {R ε : ℝ} (hs : X.Admissible F a N R ε) :\n    ∃ U : Panel S,\n      (∀ d≤D, StraightAt H.spin a U d) ∧ U 0 ((Bel C.book).unit 0)=S.unit 0 ∧\n      ∀ (n : ℕ), n ≤ N → ∀ v : Fin n → (Bel C.book).Tag, (∀ i,(v i).1 ≤ D) →\n        ∀ t : Test n, tsupport t ⊆ Scaling.window R n →\n        ∀ M : ℝ, 0 < M → (∀ x, ‖t x‖ ≤ M) →\n        ‖t.applyTo (tested X.r U v) - t.applyTo (disc v)‖ ≤ ε * Station.charge v * M := by",
+            "line": 132,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/UV_STRESS/Station.lean",
+            "fragment": "L132-L139"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.UVStress.harvested",
+            "lines": [
+              132,
+              180
+            ],
+            "conclusion": "From bounded lifts at a station, `harvested` produces a `Panel S` of linear maps, unital and eventually `StraightAt`, satisfying the tested error bound for every tuple and test."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.UVStress.Approaches",
+        "module": "YM.Next.UV_STRESS.Rates",
+        "lines": [
+          52,
+          53
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.UVStress.Approaches"
+          },
+          "snippet": {
+            "text": "structure Approaches (R : Zoom) (U : ℕ → Panel S) : Prop where\n  values (n : ℕ) (v : Fin n → (Bel C.book).Tag) : Fades (fun k => tested (R.r k) (U k) v - disc v)",
+            "line": 52,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/UV_STRESS/Rates.lean",
+            "fragment": "L52-L53"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.UVStress.Approaches",
+            "lines": [
+              52,
+              53
+            ],
+            "conclusion": "`Approaches`: the tested difference fades for every finite tuple."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          180
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

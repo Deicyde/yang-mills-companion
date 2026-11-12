@@ -1,0 +1,122 @@
+{
+  "id": "Lemma 14.16 step 5",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 140,
+        "rect": [
+          0.12026,
+          0.39834,
+          0.75948,
+          0.04006
+        ]
+      },
+      "title": "Lemma 14.16 step 5: Text, p. 140",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.16 step 5"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.G09.cone_step_arith",
+        "module": "YM.Work.G09",
+        "lines": [
+          119,
+          136
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.G09.cone_step_arith"
+          },
+          "snippet": {
+            "text": "private lemma cone_step_arith {K q e a b u v y r t : ℝ} (hk : 1 ≤ K)\n    (he : 0 ≤ e) (hq : 0 ≤ q) (ha : 4*K^2 ≤ a) (hb : 0 ≤ b)\n    (hp : 4*K*e ≤ 1) (hp' : 4*K*b*e ≤ 1) (hrent : (4*K^2+1)*(q*e) ≤ 1)\n    (hu : 0 ≤ u) (hy : 0 ≤ y) (ht : 0 ≤ t)\n    (hcone : a*u ≤ r) (hinv : y ≤ K*(u+e*(y+t))) (hh : v ≤ y) (hr : r ≤ K*y+e*t) :\n    b*v ≤ t ∧ q*r ≤ t := by\n  have hk' : 0 < K := by linarith\n  have hm : e*t ≤ K*(e*t) := le_mul_of_one_le_left (mul_nonneg he ht) hk\n  -- The leakage from the preceding level through u is already tiny.\n  have hx : 4*K*u ≤ y+e*t := by\n    apply le_of_mul_le_mul_left _ hk'\n    calc\n      K*(4*K*u) = (4*K^2)*u := by ring\n      _ ≤ a*u := mul_le_mul_of_nonneg_right ha hu\n      _ ≤ K*y+e*t := hcone.trans hr\n      _ ≤ K*(y+e*t) := by rw [mul_add]; exact add_le_add le_rfl hm\n  have hd : y ≤ 4*K*e*t := by\n    linarith only [hx, hinv, hm, mul_le_mul_of_nonneg_right hp hy, mul_nonneg he ht]",
+            "line": 119,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/G09.lean",
+            "fragment": "L119-L136"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.G09.cone_step_arith",
+            "lines": [
+              119,
+              148
+            ],
+            "conclusion": "From `a*u ≤ r`, `4K^2 ≤ a`, the two marked-step inequalities and `4K*e ≤ 1`, `cone_step_arith` derives `4K*u ≤ y + e*t` (`hx`) and then `y ≤ 4K*e*t` (`hd`)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.G09.cone_step",
+        "module": "YM.Work.G09",
+        "lines": [
+          159,
+          164
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.G09.cone_step"
+          },
+          "snippet": {
+            "text": "  have ha : 4*K^2 ≤ 32*(1+C)^2 := by\n    have hc : 64*K^2 ≤ C := le_trans (b := 64*(W.K (H.levels.clock.J i+1))^2)\n      (mul_le_mul_of_nonneg_left\n        (pow_le_pow_left₀ (by linarith) (W.growth (show j ≤ _ from H.levels.fits.stepSlow i)) 2)\n        (by norm_num)) (hC i)\n    nlinarith only [hc, sq_nonneg K, sq_nonneg C]",
+            "line": 159,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/G09.lean",
+            "fragment": "L159-L164"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.G09.cone_step",
+            "lines": [
+              150,
+              170
+            ],
+            "conclusion": "With `a = 32*(1+C)^2`, `4*K^2 ≤ a` follows from `64*K^2 ≤ C`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          140
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

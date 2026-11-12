@@ -1,0 +1,144 @@
+{
+  "id": "Lemma 16.11 step 2",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 187,
+        "rect": [
+          0.12026,
+          0.25593,
+          0.75996,
+          0.0346
+        ]
+      },
+      "title": "Lemma 16.11 step 2: Text, p. 187",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.11 step 2",
+          "quads": [
+            [
+              0.26599,
+              0.25593,
+              0.88023,
+              0.25593,
+              0.88023,
+              0.2734,
+              0.26599,
+              0.2734
+            ],
+            [
+              0.12026,
+              0.27342,
+              0.17457,
+              0.27342,
+              0.17457,
+              0.29053,
+              0.12026,
+              0.29053
+            ]
+          ]
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.A15.orbit_integrable",
+        "module": "YM.Work.A15",
+        "lines": [
+          91,
+          101
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.A15.orbit_integrable"
+          },
+          "snippet": {
+            "text": "private lemma orbit_integrable : Integrable (fun K : Ortho => rotateStress X K J) μ := by\n  have ent (a b : Axis) : Continuous fun K : Ortho => K.val a b := by\n    have hv : Continuous fun K : Ortho => (K.val : Axis → Axis → ℝ) := continuous_subtype_val\n    exact (continuous_apply _).comp ((continuous_apply _).comp hv)\n  have hf : Continuous fun K => rotateStress X K J := by\n    refine continuous_pi fun a => continuous_pi fun b => ?_\n    simp_rw [rotateStress_apply]\n    refine continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun j _ =>\n      (Complex.continuous_ofReal.comp ((ent a i).mul (ent b j))).smul ?_\n    exact h.spin 4 (J i j)\n  exact hf.integrable_of_hasCompactSupport (HasCompactSupport.of_compactSpace _)",
+            "line": 91,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/A15.lean",
+            "fragment": "L91-L101"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.A15.orbit_integrable",
+            "lines": [
+              91,
+              101
+            ],
+            "conclusion": "`rotateStress X K J` is continuous in `K : Ortho` on a compact space, hence integrable against the Haar probability measure `μ`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.A15.compact_ortho",
+        "module": "YM.Work.A15",
+        "lines": [
+          55,
+          64
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.A15.compact_ortho"
+          },
+          "snippet": {
+            "text": "theorem compact_ortho : CompactSpace Ortho := by\n  refine isCompact_iff_compactSpace.mp ?_\n  letI : ProperSpace M4 := FiniteDimensional.proper ℝ _\n  refine (isCompact_closedBall (0 : M4) 2).of_isClosed_subset isClosed_unitary ?_\n  intro A h\n  have hm := sq_frobenius A\n  rw [Matrix.mem_unitaryGroup_iff.mp h, Matrix.trace_one, Fintype.card_fin] at hm\n  rw [Metric.mem_closedBall, dist_zero_right]\n  norm_num at hm\n  nlinarith [hm]",
+            "line": 55,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/A15.lean",
+            "fragment": "L55-L64"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.A15.compact_ortho",
+            "lines": [
+              55,
+              64
+            ],
+            "conclusion": "`Ortho` (the orthogonal group of E4) is a compact space."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          187
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

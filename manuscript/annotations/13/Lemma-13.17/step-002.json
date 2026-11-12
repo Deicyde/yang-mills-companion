@@ -1,0 +1,122 @@
+{
+  "id": "Lemma 13.17 step 2",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 114,
+        "rect": [
+          0.12026,
+          0.5404,
+          0.75948,
+          0.02002
+        ]
+      },
+      "title": "Lemma 13.17 step 2: Text, p. 114",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 13.17 step 2"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.Amp.Often.bank",
+        "module": "YM.FullVolume.Amp.Fish",
+        "lines": [
+          24,
+          24
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.Amp.Often.bank"
+          },
+          "snippet": {
+            "text": "def bank (n:ℕ) (u:X):Y := (L.tubing u).choose n",
+            "line": 24,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Amp/Fish.lean",
+            "fragment": "L24-L24"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.Amp.Often.bank",
+            "lines": [
+              24,
+              24
+            ],
+            "conclusion": "`bank n u` is the coefficient of t^n in the line expansion of `f (x+t•u)` (chosen from `tubing`, with `Tip`)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.Amp.Often.homo",
+        "module": "YM.FullVolume.Amp.Fish",
+        "lines": [
+          38,
+          44
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.Amp.Often.homo"
+          },
+          "snippet": {
+            "text": "lemma homo (a:ℝ) (u:X) (n:ℕ): L.bank n (a • u)= a^n • L.bank n u:=by\n   apply congr_fun (f:=fun n=>L.bank n (a • u)) (g:=fun n=> a^n • L.bank n u) (sole (L.jump _) ?_) n\n   intro n; have he: (fun t:ℝ=>t*a)=(fun t=>t*a):=rfl\n   have ht : Tendsto (fun t:ℝ=>t*a) (𝓝 0) (𝓝 0):= by simpa using! Continuous.tendsto (show Continuous fun t:ℝ=>t*a by fun_prop) 0\n   refine (( (L.jump u n).comp_tendsto ht).trans ?_).congr_left ?_\n   · apply IsBigO.of_bound (‖a‖^n); exact .of_forall (fun y=> by change ‖(y*a)^n‖ ≤ _; rw [norm_pow,norm_pow,norm_mul,mul_pow]; linarith)\n   intro y; simp [shell, smul_smul,mul_pow]",
+            "line": 38,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Amp/Fish.lean",
+            "fragment": "L38-L44"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.Amp.Often.homo",
+            "lines": [
+              38,
+              44
+            ],
+            "conclusion": "Rescaling the direction scales the coefficient: `bank n (a•u) = a^n • bank n u`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          114
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

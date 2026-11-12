@@ -1,0 +1,161 @@
+{
+  "id": "Lemma 11.4 step 13",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 49,
+        "rect": [
+          0.11961,
+          0.54729,
+          0.76014,
+          0.05423
+        ]
+      },
+      "title": "Lemma 11.4 step 13: Text, p. 49",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 11.4 step 13"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Branch.align",
+        "module": "YM.Branch.Synchronize",
+        "lines": [
+          247,
+          265
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Branch.align"
+          },
+          "snippet": {
+            "text": "    obtain hi := H (A.feedback p x) (A.feedback q x) ((A.closeness hd.le hw hp hr x).trans_lt hd')\n      ((A.closeness hd.le hw hq hs x).trans_lt hd') (p x) (q x) (A.self_consistent hp x) (A.self_consistent hq x)\n    have he : G.lie.starProjection (Pairs.centroid p-Pairs.centroid q) = 0 := by\n      rw [show Pairs.centroid p-Pairs.centroid q = (Pairs.centroid p-1)-(Pairs.centroid q-1) by abel]\n      exact (G.lie.starProjection_apply_eq_zero_iff).mpr (sub_mem (G.nearest_normal_one hr) (G.nearest_normal_one hs))\n    have hu : ‖G.lie.starProjection B‖ ≤ u*d := by\n      apply le_trans _ (A.weak_changes hw p q x u hg)\n      have hx := G.lie.norm_starProjection_apply_le (B-(Pairs.centroid p-Pairs.centroid q))\n      rwa [map_sub, he,sub_zero] at hx\n    funext i\n    apply G.mat_injective; apply sub_eq_zero.mp; apply norm_le_zero_iff.mp\n    apply (hg i).trans\n    have H₁ := norm_le_insert' (G.mat (p x)-G.mat (q x)) (G.lie.starProjection B)\n    simp only [NNReal.coe_div,NNReal.coe_one,NNReal.coe_ofNat] at hi\n    have H₂ := A.changes p q x u hg; change ‖B‖ ≤ u at H₂\n    have hy : u*d ≤ u*(1/4) := mul_le_mul_of_nonneg_left (min_le_right ..) (norm_nonneg _)\n    change ‖G.mat (p x)-G.mat (q x)-G.lie.starProjection B‖ ≤ _*‖B‖ at hi\n    change u ≤ _ at H₁\n    linarith only [H₁,H₂,hy,hu,hi]",
+            "line": 247,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Branch/Synchronize.lean",
+            "fragment": "L247-L265"
+          },
+          "proof_context": {
+            "declaration": "YM.Branch.align",
+            "lines": [
+              232,
+              272
+            ],
+            "conclusion": "With `nearest_approximate` at `ε = 1/4` and `3d < δ`, the projection of `B` is at most `u*d` and `u ≤ u*(1/4) + u*d`-type bound forces `u = 0` (`linarith`), so the centered minimizers coincide."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Branch.align",
+        "module": "YM.Branch.Synchronize",
+        "lines": [
+          266,
+          272
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Branch.align"
+          },
+          "snippet": {
+            "text": "  obtain ⟨a,ha⟩ := G.nearest_exists (Pairs.centroid h)\n  obtain ⟨b,hb⟩ := G.nearest_exists (Pairs.centroid k)\n  have H₁ : ∀ i, a⁻¹*h i=b⁻¹*k i := congr_fun (eq (p := fun i => a⁻¹*h i) (q := fun i => b⁻¹*k i)\n    (fun c => by rw [A.moves]; exact hh c) (by\n      rw [Pairs.turns,← inv_mul_cancel a]; exact (G.nearest_left a⁻¹ a _).mpr ha) (fun c => by rw [A.moves]; exact hk c) (by\n      rw [Pairs.turns,← inv_mul_cancel b]; exact (G.nearest_left b⁻¹ b _).mpr hb))\n  exact ⟨b*a⁻¹,fun i => by rw [mul_assoc,H₁ i, mul_inv_cancel_left]⟩",
+            "line": 266,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Branch/Synchronize.lean",
+            "fragment": "L266-L272"
+          },
+          "proof_context": {
+            "declaration": "YM.Branch.align",
+            "lines": [
+              232,
+              272
+            ],
+            "conclusion": "Two minimizers differ by a common left multiple `b*a⁻¹`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.frame_unique",
+        "module": "YM.Branch.Uniform",
+        "lines": [
+          52,
+          56
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.frame_unique"
+          },
+          "snippet": {
+            "text": "  obtain ⟨c,hc'⟩ := H _ _ A hw (toA b) (toA f) (hs _ hb) (hs _ hf)\n  have hx := hc' P.center\n  simp only [toA,hb.1,hf.1, one_mul,mul_eq_right] at hx\n  funext i\n  exact mul_right_cancel (by simpa only [hx,toA,one_mul] using (hc' i).symm)",
+            "line": 52,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Branch/Uniform.lean",
+            "fragment": "L52-L56"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.frame_unique",
+            "lines": [
+              18,
+              56
+            ],
+            "conclusion": "Normalization `h center = 1` fixes the multiple, so the minimizer is unique."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          49
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

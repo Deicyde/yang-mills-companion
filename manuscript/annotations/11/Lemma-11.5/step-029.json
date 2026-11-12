@@ -1,0 +1,84 @@
+{
+  "id": "Lemma 11.5 step 29",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "Lean has only the polarized instance a = W_0 v of the identity (the cross terms cancel by `stationed`); the identity for general a and the quadratic form display are not stated.",
+  "subject": [
+    {
+      "location": {
+        "page": 53,
+        "rect": [
+          0.12026,
+          0.55989,
+          0.75948,
+          0.02312
+        ]
+      },
+      "title": "Lemma 11.5 step 29: Display, p. 53",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 11.5 step 29"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Precision.action",
+        "module": "YM.PREC.TreeMatch",
+        "lines": [
+          93,
+          103
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Precision.action"
+          },
+          "snippet": {
+            "text": "lemma action (i : Inputs S W H H') :\n    let T:=extracted S F W\n    let P:=1-probe S*T\n    T.transpose*K H*T+S.kernel.penalty • (P.transpose*P)=K H' := by\n  intro T P\n  have hv : P = S.kernel.penalty⁻¹ • K H' := by unfold P T; rw [(stationed F W H H' i).1]; simp\n  calc\n    _ = T.transpose*(probe S).transpose*K H'+ P.transpose*(S.kernel.penalty • P) := by\n      rw [Matrix.mul_assoc _ (K H) T,← Matrix.mul_smul,(show K H*T = _ from (stationed F W H H' i).2),Matrix.mul_assoc]\n    _ = (T.transpose*(probe S).transpose + P.transpose)*K H' := by rw [hv, smul_smul,mul_inv_cancel₀ S.kernel.penalty_pos.ne',one_smul,add_mul]\n    _ = _ := by unfold P; rw [transpose_sub,transpose_mul,add_sub_cancel]; simp",
+            "line": 93,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PREC/TreeMatch.lean",
+            "fragment": "L93-L103"
+          },
+          "proof_context": {
+            "declaration": "YM.Precision.action",
+            "lines": [
+              93,
+              103
+            ],
+            "conclusion": "The completed-square identity at a = W v: `T^T K(H) T + kappa P^T P = K(H')`, proved from the normal equations."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          53
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
+      }
+    }
+  }
+}

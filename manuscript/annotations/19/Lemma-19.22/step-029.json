@@ -1,0 +1,297 @@
+{
+  "id": "Lemma 19.22 step 29",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The same case analysis and power count appear in [L], spread over `compact_deviation`, `outset`, `far_lit`, `extra_live` and `ratio`; the transfer of the signed field expression by the signed-layer lemma is by `Loan` and is not a line here. [L] uses a constant `marginFactor` and the exponent `t` playing the role of theta.",
+  "subject": [
+    {
+      "location": {
+        "page": 237,
+        "rect": [
+          0.12026,
+          0.87434,
+          0.75996,
+          0.04006
+        ]
+      },
+      "title": "Lemma 19.22 step 29: Text, pp. 237–238",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 19.22 step 29#0"
+        }
+      }
+    },
+    {
+      "location": {
+        "page": 238,
+        "rect": [
+          0.11962,
+          0.0962,
+          0.76011,
+          0.08829
+        ]
+      },
+      "title": "Lemma 19.22 step 29: Text, pp. 237–238",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 19.22 step 29#1"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Normal.compact_deviation",
+        "module": "YM.Contacts.Normal.ShellTest",
+        "lines": [
+          43,
+          72
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Normal.compact_deviation"
+          },
+          "snippet": {
+            "text": "lemma compact_deviation (n m : ℕ){T : Set E}(hT : IsCompact T) (hU : T⊆ sun K 1) (B : ℝ) (hB : 1≤ B) :\n  ∃ X ≥ (1:ℝ),∀ (a : ℝ)(ha:0 < a) {r s c : ℝ} {A : E≃L[ℝ] E}(f : SmoothTests E), Proper A r K → 0<r → 0<s →\n    (r*a)/s ≤ B → r ≤ B*s →\n    tsupport (composed A f).val ⊆ {x | ‖K.starProjection x‖ ≤ B/2} → Jet (n+m+1) univ (composed A f).val c →\n       Jet n T (composed ((resize K a ha.ne').trans A) (deviation K s m f)).val (X*c*(vanishFactor m a)):= by\n   obtain ⟨p,hp,h⟩:= from_compact K T hT B (zero_le_one.trans hB) m n; obtain ⟨d,hd,hH⟩:= priced_cut K T hT B n\n   let R:=3*B; let X:= p+2^n*d*((m+1:ℝ)*p)\n   have hp':0<p:= zero_lt_one.trans_le hp; have hd':0<d:=zero_lt_one.trans_le hd; have hZ : p ≤ X:= le_add_of_nonneg_right (by positivity); have hR : 1 ≤ R:= by unfold R; linarith; -- one factor\n   refine ⟨X* R^(m+1),one_le_mul_of_one_le_of_one_le (hp.trans hZ) (one_le_pow₀ hR),fun a ha r s c A f hw hr hs hL hk hv hQ=>?_⟩ -- binder maybe lambda implicits\n   rw [cash_a K _ _ hw]\n   let g:=composed A f; let u:=r*a/s; let v:=normedCut K u\n   change Jet n T ((g.val ∘ (slide K a))-v*((jet K m g).val ∘ slide K a)) _\n   have hc:= hQ.pos; have Hv : ContDiff ℝ ∞ v:= (infSmooth (window K _)).comp (contDiff_id.const_smul u); have hx :0 < u:=by unfold u; positivity\n   have H₁ : ContDiff ℝ ∞ (g.val ∘ slide K a):= (infSmooth _).comp (slide K a).contDiff\n   have H₂ : ContDiff ℝ ∞ ((jet K m g).val ∘ slide K a):= (infSmooth _).comp (slide K a).contDiff\n   have HL:= affordable K T h hp hU hQ hv ha\n   have hv':= (whole_bill K m n B h hp'.le ha hQ)\n   let w:=(max 1 a)^m; have hw:1≤ w:= one_le_pow₀ (le_max_left ..); have hN:= HL.sub ((hH u ⟨hx.le,hL⟩).times hv' Hv H₂) H₁ (Hv.mul H₂); have he : Jet n T ((g.val ∘ (slide K a))-v*((jet K m g).val ∘ slide K a)) (X*c*w):=hN.mono (by unfold X w; nlinarith only [le_mul_of_one_le_right (mul_nonneg hp'.le hc) hw])\n   have hX:0 < X:= hp'.trans_le hZ\n   have hY:X≤ X*R^(m+1) := le_mul_of_one_le_right hX.le (one_le_pow₀ hR)\n   by_cases H:a ≤ 1; swap\n   · rw [vanishFactor,if_neg H]; unfold w at he; rw [max_eq_right (not_le.mp H|>.le)] at he; exact he.mono (by gcongr)\n   rw [vanishFactor,if_pos H]; unfold w at he; rw [max_eq_left H,one_pow,mul_one] at he\n   by_cases hb : 3*u ≤ 1\n   · apply ((h.remainds hQ a ⟨ha.le,H.trans hB⟩).near ?_).mono; · gcongr; exact hZ.trans hY\n     intro x hx'; filter_upwards [tiny K T hU hx.le hb x hx'] with y hy; change g.val _- (jet K m g).val _ = g.val _- v y *_; change v y=1 at hy; rw [hy,one_mul]; rfl\n   have hT : 1 ≤ R*a:=by\n      have hx:u ≤ B*a:=by apply (div_le_iff₀ hs).2; linarith only [mul_le_mul_of_nonneg_right hk ha.le]\n      linarith only [hx,not_le.mp hb] -- unfold R?\n   refine he.mono ( (le_mul_of_one_le_right (mul_nonneg hX.le hc) (one_le_pow₀ hT (n:=m+1))).trans_eq (?_)); rw [mul_pow]; ring",
+            "line": 43,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Normal/ShellTest.lean",
+            "fragment": "L43-L72"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Normal.compact_deviation",
+            "lines": [
+              43,
+              72
+            ],
+            "conclusion": "The proof splits `a <= B` (differentiate the Taylor remainder with the cutoff `normedCut`, whose derivatives are bounded on compacta) from `a > B` (bounded test and degree-`m` jet polynomial), as in `affordable` and `priced_cut`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Harvest.Route.named_projection",
+        "module": "YM.Contacts.Harvest.Estimate",
+        "lines": [
+          28,
+          28
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Harvest.Route.named_projection"
+          },
+          "snippet": {
+            "text": "lemma named_projection {v : Fin (levels d l)} : effective (d:=d) (i:=l) (some v) + ((levels d l-1-v.val:ℕ):ℝ) = 0:= by",
+            "line": 28,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Harvest/Estimate.lean",
+            "fragment": "L28-L28"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Harvest.Route.named_projection",
+            "lines": [
+              28,
+              31
+            ],
+            "conclusion": "`effective (some v) + (levels-1-v) = 0`, i.e. the power `q+w-d` plus `k = L-1-w` vanishes for a projected component."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Harvest.Route.outset",
+        "module": "YM.Contacts.Harvest.Estimate",
+        "lines": [
+          32,
+          32
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Harvest.Route.outset"
+          },
+          "snippet": {
+            "text": "lemma outset (v : Way d l)(he : 0<t) (hh:t≤1) : t^(effective v)*tailPay v t≤t:=by",
+            "line": 32,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Harvest/Estimate.lean",
+            "fragment": "L32-L32"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Harvest.Route.outset",
+            "lines": [
+              32,
+              37
+            ],
+            "conclusion": "For `a <= 1`, `a^effective * tailPay <= a`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Harvest.Route.far_lit",
+        "module": "YM.Contacts.Harvest.Estimate",
+        "lines": [
+          38,
+          39
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Harvest.Route.far_lit"
+          },
+          "snippet": {
+            "text": "lemma far_lit {v : Fin (levels d l)} (he : 1<t) : t^(effective (d:=d) (i:=l) (some v))*tailPay (d:=d) (l:=l) (some v) t=1:=by\n   unfold tailPay; rw [Option.elim_some,vanishFactor,if_neg he.not_ge, ← Real.rpow_natCast,← Real.rpow_add (lt_trans zero_lt_one he),named_projection, Real.rpow_zero]",
+            "line": 38,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Harvest/Estimate.lean",
+            "fragment": "L38-L39"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Harvest.Route.far_lit",
+            "lines": [
+              38,
+              39
+            ],
+            "conclusion": "For `a > 1` and a projected component, `a^effective * tailPay = 1`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Harvest.Route.extra_live",
+        "module": "YM.Contacts.Harvest.Estimate",
+        "lines": [
+          24,
+          24
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Harvest.Route.extra_live"
+          },
+          "snippet": {
+            "text": "lemma extra_live (d : Fin k→ℕ)(i : GN) : 1 ≤ effective (none:Way d i):= by",
+            "line": 24,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Harvest/Estimate.lean",
+            "fragment": "L24-L24"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Harvest.Route.extra_live",
+            "lines": [
+              24,
+              27
+            ],
+            "conclusion": "For the unprojected remainder the exponent `effective none` is at least `1`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Harvest.Route.ratio",
+        "module": "YM.Contacts.Harvest.Estimate",
+        "lines": [
+          47,
+          48
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Harvest.Route.ratio"
+          },
+          "snippet": {
+            "text": "lemma ratio (p : r.ramp i (outward b) u v) {t : ℝ} (ht : 0≤ t)(ht':t≤1) :\n    let a:= p.val.2/r.R i.val p.val.1; a^effective b * tailPay b a ≤ r.marginFactor i (d:=d) * a^t:= by",
+            "line": 47,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Harvest/Estimate.lean",
+            "fragment": "L47-L48"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Harvest.Route.ratio",
+            "lines": [
+              47,
+              64
+            ],
+            "conclusion": "`a^effective b * tailPay b a <= marginFactor * a^t` for every `0 <= t <= 1`, with the large-`a` case bounded by the support restriction `a <= 2*reserve`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          237,
+          238
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

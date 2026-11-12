@@ -1,0 +1,193 @@
+{
+  "id": "Lemma 16.11 step 5",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 187,
+        "rect": [
+          0.12026,
+          0.29054,
+          0.75948,
+          0.05131
+        ]
+      },
+      "title": "Lemma 16.11 step 5: Text, p. 187",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.11 step 5",
+          "quads": [
+            [
+              0.63605,
+              0.29054,
+              0.87974,
+              0.29054,
+              0.87974,
+              0.30804,
+              0.63605,
+              0.30804
+            ],
+            [
+              0.12026,
+              0.30805,
+              0.87974,
+              0.30805,
+              0.87974,
+              0.32433,
+              0.12026,
+              0.32433
+            ],
+            [
+              0.12026,
+              0.32434,
+              0.83868,
+              0.32434,
+              0.83868,
+              0.34185,
+              0.12026,
+              0.34185
+            ]
+          ]
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.A15.stressLaws_average",
+        "module": "YM.Work.A15",
+        "lines": [
+          157,
+          183
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.A15.stressLaws_average"
+          },
+          "snippet": {
+            "text": "theorem stressLaws_average (A : Bid.A10) (hc : S.Hierarchy) (u : X.Laws V hc.spin)\n    (xO : X.Oriented S) (c : StressLaws S J V.deriv X.lie) :\n    StressLaws S (averageStress X J) V.deriv X.lie where\n  translation := by\n    intro n x hx q χ w b d B\n    calc\n      _ = translationFlux hx w hc.smooth q B b (averageStress X J) :=\n        (translationFlux_apply hx w hc.smooth q B b _).symm\n      _ = ∫ K : Ortho, translationFlux hx w hc.smooth q B b (rotateStress X K J) ∂μ :=\n        map_average u J ((translationFlux hx w hc.smooth q B b).restrictScalars ℝ)\n      _ = ∫ _ : Ortho, S.useAt S x (Fin.cons ⟨d+1,V.deriv d b B⟩ q) ∂μ :=\n        integral_congr_ae (Filter.Eventually.of_forall fun K =>\n          (translationFlux_apply hx w hc.smooth q B b _).trans\n            ((rotate_flux A hc u xO K J c).translation hx q w b d B))\n      _ = _ := by simp\n  rotation := by\n    intro n x hx q χ w g d B\n    calc\n      _ = angularFlux hx w hc.smooth q B g (averageStress X J) :=\n        (angularFlux_apply hx w hc.smooth q B g _).symm\n      _ = ∫ K : Ortho, angularFlux hx w hc.smooth q B g (rotateStress X K J) ∂μ :=\n        map_average u J ((angularFlux hx w hc.smooth q B g).restrictScalars ℝ)\n      _ = ∫ _ : Ortho, S.useAt S x (Fin.cons ⟨d,X.lie d g B⟩ q) ∂μ :=\n        integral_congr_ae (Filter.Eventually.of_forall fun K =>\n          (angularFlux_apply hx w hc.smooth q B g _).trans\n            ((rotate_flux A hc u xO K J c).rotation hx q w g d B))\n      _ = _ := by simp",
+            "line": 157,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/A15.lean",
+            "fragment": "L157-L183"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.A15.stressLaws_average",
+            "lines": [
+              157,
+              183
+            ],
+            "conclusion": "`averageStress X J` has both shell laws `StressLaws`, obtained by pulling the integral through `translationFlux` and `angularFlux` and using the laws of each `rotateStress X K J`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.A15.rotate_flux",
+        "module": "YM.Work.A15.Transfer",
+        "lines": [
+          124,
+          168
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.A15.rotate_flux"
+          },
+          "snippet": {
+            "text": "theorem rotate_flux (A : Bid.A10) {V : DiffPlan S} (H : S.Hierarchy) {X : Rotation S}\n    (h : X.Laws V H.spin) (p : X.Oriented S) (K : Ortho) (J : S.Stress)\n    (c : StressLaws S J V.deriv X.lie) : StressLaws S (rotateStress X K J) V.deriv X.lie where\n  translation := by\n    intro n x hx q χ w b d B\n    let x' := Points.move K⁻¹ x\n    let q' := X.label K⁻¹ ∘ q\n    let B' := X.act d K⁻¹ B\n    have hx' : x' ∈ conf (n+1) := Points.move_in K⁻¹ hx\n    have w' := window_pull K w\n    calc\n      _ = fluxCore x (Fin.cons ⟨d,B⟩ q) χ (fun _ => basis b) (rotateStress X K J) :=\n        (fluxCore_basis hx w H.smooth q B (rotateStress X K J) b).symm\n      _ = fluxCore x' (Fin.cons ⟨d,B'⟩ q') (χ ∘ Ortho.move K)\n          (fun _ => Ortho.move K⁻¹ (basis b)) J := by\n        rw [pull_flux h p K hx w, label_cons]\n      _ = ∑ j : Axis, ((Ortho.move K⁻¹ (basis b) j : ℝ) : ℂ) •\n          S.useAt S x' (Fin.cons ⟨d+1,V.deriv d j B'⟩ q') := by\n        rw [fluxCore_const hx' w' H.smooth]\n        simp_rw [c.translation hx' q' w']\n      _ = front x' q' (d+1) (X.act (d+1) K⁻¹ (V.deriv d b B)) := by\n        rw [h.vector]\n        simp only [map_sum, map_smul, front_apply, B', Ortho.move, M4.move_basis]\n      _ = _ := by\n        rw [front_apply]; exact oriented_cons p K⁻¹ hx q (d+1) (V.deriv d b B)\n  rotation := by\n    intro n x hx q χ w g d B\n    let x' := Points.move K⁻¹ x\n    let q' := X.label K⁻¹ ∘ q\n    let B' := X.act d K⁻¹ B\n    have hx' : x' ∈ conf (n+1) := Points.move_in K⁻¹ hx\n    have w' := window_pull K w\n    let g' := pullSkew K g\n    have ad : X.act d K⁻¹ (X.lie d g B) = X.lie d g' B' :=\n      (A H.spin X ⟨h.spin,h.fixes,h.group,h.signed,h.real,h.infinitesimal⟩).2 d K⁻¹ g B\n    calc\n      _ = fluxCore x (Fin.cons ⟨d,B⟩ q) χ (fun y => M4.move g.val (y-x 0)) (rotateStress X K J) :=\n        (fluxCore_angular hx w H.smooth q B (rotateStress X K J) g).symm\n      _ = fluxCore x' (Fin.cons ⟨d,B'⟩ q') (χ ∘ Ortho.move K)\n          (fun y => M4.move g'.val (y-x' 0)) J := by\n        rw [pull_flux h p K hx w, label_cons]\n        simp_rw [pull_centered]; rfl\n      _ = S.useAt S x' (Fin.cons ⟨d,X.lie d g' B'⟩ q') := by\n        rw [fluxCore_angular hx' w' H.smooth, c.rotation hx' q' w']\n      _ = _ := by rw [← ad]; exact oriented_cons p K⁻¹ hx q d (X.lie d g B)",
+            "line": 124,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/A15/Transfer.lean",
+            "fragment": "L124-L168"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.A15.rotate_flux",
+            "lines": [
+              124,
+              168
+            ],
+            "conclusion": "Each `rotateStress X K J` keeps both shell laws, by the change of variables `pull_flux` and covariance (`X.Laws`, `X.Oriented`)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.A15.pull_flux",
+        "module": "YM.Work.A15.Transfer",
+        "lines": [
+          83,
+          113
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.A15.pull_flux"
+          },
+          "snippet": {
+            "text": "theorem pull_flux {V : DiffPlan S} {H : S.RealSpin} {X : Rotation S}\n    (h : X.Laws V H) (p : X.Oriented S) (K : Ortho) {x : Points (n+1)} (hx : x ∈ conf _)\n    {χ : E4 → ℝ} (w : Window x χ) (q : Fin (n+1) → S.Tag) (W : E4 → E4) (J : S.Stress) :\n    fluxCore x q χ W (rotateStress X K J) = fluxCore (Points.move K⁻¹ x) (X.label K⁻¹ ∘ q)\n      (χ ∘ Ortho.move K) (fun y => Ortho.move K⁻¹ (W (Ortho.move K y))) J := by\n  let x' := Points.move K⁻¹ x\n  have hf (z : S.Tag) : X.label K (X.label K⁻¹ z) = z := by\n    rcases z with ⟨d,v⟩\n    change Sigma.mk d (X.act d K (X.act d K⁻¹ v)) = _\n    rw [← h.group, mul_inv_cancel, h.fixes]\n  let f := Ortho.motion K\n  unfold fluxCore\n  apply congrArg Neg.neg\n  rw [← MeasurePreserving.integral_comp f.measurePreserving f.toHomeomorph.measurableEmbedding]\n  apply integral_congr_ae\n  filter_upwards [(Set.finite_range x'.ofLp).countable.ae_notMem (volume : Measure E4)] with y hy\n  have hxy : Points.cons y x' ∈ conf _ :=\n    Fin.cons_injective_of_injective hy (show Injective x'.ofLp from Points.move_in K⁻¹ hx)\n  have he : Points.move K (Points.cons y x') = Points.cons (f y) x := by\n    ext1 i\n    refine Fin.cases ?_ (fun j => ?_) i\n    · simp [Points.cons, f]\n    · simp [Points.cons, x']\n  change front (Points.cons (f y) x) q 4\n    (contractStress (gradVec χ (Ortho.move K y)) (W (Ortho.move K y)) (rotateStress X K J)) = _\n  rw [contract_rotate, front_apply, front_apply, gradVec_pull K w.1]\n  have orient := oriented_cons p K hxy (X.label K⁻¹ ∘ q) 4\n    (contractStress (Ortho.move K⁻¹ (gradVec χ (Ortho.move K y)))\n      (Ortho.move K⁻¹ (W (Ortho.move K y))) J)\n  rw [show X.label K ∘ X.label K⁻¹ ∘ q = q from funext fun i => hf _, he] at orient\n  exact orient",
+            "line": 83,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/A15/Transfer.lean",
+            "fragment": "L83-L113"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.A15.pull_flux",
+            "lines": [
+              83,
+              113
+            ],
+            "conclusion": "The flux of `rotateStress X K J` in window `χ` equals the flux of `J` in the window `χ ∘ move K` at the moved configuration."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          187
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

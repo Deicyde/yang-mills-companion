@@ -1,0 +1,83 @@
+{
+  "id": "Lemma 16.2 step 4",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 172,
+        "rect": [
+          0.12026,
+          0.55941,
+          0.76014,
+          0.15394
+        ]
+      },
+      "title": "Lemma 16.2 step 4: Text, p. 172",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.2 step 4"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Maxwell.Free.hosted_out",
+        "module": "YM.Next.MAXWELL.Batch",
+        "lines": [
+          185,
+          218
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Maxwell.Free.hosted_out"
+          },
+          "snippet": {
+            "text": "lemma hosted_out (p : WickPol G) (h : p∈ghost G d) (hh : ∀ j {p : WickPol G}, p ∈ shelf G k→ Pure j p → Painted p → p∈Host G d j)\n    (hw : p∈shelf G k) (hp : p∈shellSector G w) : p=0 := by\n  classical\n  suffices hs : ∀ j : ℕ, distill j p=0 by\n    rw [← MvPolynomial.sum_weightedHomogeneousComponent (fun _ : Slot G => (1:ℕ)) p]; change (finsum fun j => distill j p) = 0\n    simp_rw [hs]; exact finsum_zero\n  intro j\n  induction j using Nat.strong_induction_on with\n  | h j ih =>\n    let P := distill j p\n    by_contra! hv\n    let s := Signed.reflect timeAxis\n    let K := mirrorBar s P\n    have he : mirrorBar s K=P := by\n      unfold K mirrorBar; simp only [LinearMap.coe_mk,AddHom.coe_mk,real_orient,← pol_mul]\n      rw [show s*s=1 by unfold s; nth_rw 1 [← mirrored_inv timeAxis]; exact inv_mul_cancel _,pol_one]\n      apply equalPol; intro A; rw [real_eval,real_eval,star_star]\n    have hk : K≠0 := fun H => hv (he.symm.trans (by rw [H,map_zero]))\n    have ht := detects timeAxis (basis timeAxis) (by simp) K hk\n    let x := basis timeAxis\n    let v := points (fun _ : Fin 1 => x)\n    have hx : Ortho.move s x=-x := by ext1 i; by_cases hi:i=timeAxis <;> simp_all [x,s]\n    change 0 < moment G (Table.Pairing.closedUp timeAxis v v) (Fin.append (mirrorBar s ∘ (fun _ : Fin 1 => K)) (fun _ => K)) at ht\n    rw [show Table.Pairing.closedUp timeAxis v v = pairPoints (-x) x from ?_,\n      show Fin.append (mirrorBar s ∘ (fun _ : Fin 1 => K)) (fun _ : Fin 1 => K) = Fin.cons P fun _ => K from ?_,← bond_eval] at ht\n    · have hu : -x ≠ x := by intro ha; have H := congr_arg (fun x : E4 => x timeAxis) ha; simp [x] at H; linarith\n      have hl : Pure j P := weightedHomogeneousComponent_isWeightedHomogeneous j p\n      have ho : P∈shelf G k := gloss_shelf (fun _ => (1:ℕ)) j p hw\n      have hw' : P∈shellSector G w := colors_grade (fun _ => (1:ℕ)) j hp\n      have hq : K∈Host G d j := hh j (spaced_mirror s (spaced_real ho)) (pure_mirror s _ (pure_real _ hl))\n        ((sector.mp (closed_sector (closed_sector hw' s).2 s).1).2)\n      rw [show bond G (-x) x P K=0 from collapses p h j ih hu K hq] at ht\n      exact lt_irrefl _ ht\n    · ext1 i; fin_cases i",
+            "line": 185,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/MAXWELL/Batch.lean",
+            "fragment": "L185-L218"
+          },
+          "proof_context": {
+            "declaration": "YM.Maxwell.Free.hosted_out",
+            "lines": [
+              185,
+              223
+            ],
+            "conclusion": "By strong induction on the pure degree `j`, the lowest nonzero part `P` of a ghost `p` is paired with its mirror `K` (a hosted product), `collapses` evaluates the coalesced pairing and positivity (`detects`) contradicts it."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          172
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
+      }
+    }
+  }
+}

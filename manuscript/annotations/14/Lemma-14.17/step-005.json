@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 14.17 step 5",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "The bound (A^n/r) × displacement and the arity-one case match, but [L] takes the product of roots through the `K i` of `passage` rather than a chessboard bound on the cyclic product and does not split the two terms, a different argument.",
+  "subject": [
+    {
+      "location": {
+        "page": 142,
+        "rect": [
+          0.12026,
+          0.61369,
+          0.75948,
+          0.08845
+        ]
+      },
+      "title": "Lemma 14.17 step 5: Text, p. 142",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.17 step 5"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extraction.Difference.stepTotal",
+        "module": "YM.Extraction.Equicontinuity",
+        "lines": [
+          66,
+          72
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extraction.Difference.stepTotal"
+          },
+          "snippet": {
+            "text": "lemma stepTotal {m : ℕ} (H : C.Makes) (v : Fin (m+1)→C.book.Token) {A r : ℝ} (ha : 0 ≤ A)\n    (hr : 0<r) (K : Set (Points (m+1))) (p N D : ℕ) (hd : D≤N) (h : Permit v A D N p)\n    (he : ∀ x∈K, allFine C.S p (4*r) x) (hv : C.S.a D < r)\n    (k : Fin (m+1)) (i : Axis) (l : ℕ) (u : positions (m+1))\n    (hq : tag (C.S.a N) u ∈ K) (hb : dist (tag (C.S.a N) (advance u k i l)) (tag (C.S.a N) u) ≤ r) :\n    dist (lifted C N p v (advance u k i l)) (lifted C N p v u) ≤\n      (A^(m+1)/r)*dist (tag (C.S.a N) (advance u k i l)) (tag (C.S.a N) u) := by",
+            "line": 66,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extraction/Equicontinuity.lean",
+            "fragment": "L66-L72"
+          },
+          "proof_context": {
+            "declaration": "YM.Extraction.Difference.stepTotal",
+            "lines": [
+              66,
+              103
+            ],
+            "conclusion": "A one-coordinate move of size at most `r` from an all-fine configuration changes the lifted correlation by at most `(A^(m+1)/r) * displacement`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extraction.Difference.stepTotal",
+        "module": "YM.Extraction.Equicontinuity",
+        "lines": [
+          81,
+          87
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extraction.Difference.stepTotal"
+          },
+          "snippet": {
+            "text": "  cases Nat.eq_zero_or_pos m with\n  | inl e =>\n    subst m; rw [shifted]; change dist _ (C.numeric N p v x) ≤ _\n    let t := offset i ((↑l:Per (C.side N p)))\n    rw [show update (⇑(wrap _) ∘ u) k _= fun i : Fin (0+1) => x i + t by\n      ext1 i; rw [@Subsingleton.elim (Fin 1) _ i k, Function.update_self];rfl, C.anchored H v hp t x,dist_self]\n    exact mul_nonneg (div_nonneg (pow_nonneg ha _) hr.le) (mul_nonneg hh.le (Nat.cast_nonneg _))",
+            "line": 81,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extraction/Equicontinuity.lean",
+            "fragment": "L81-L87"
+          },
+          "proof_context": {
+            "declaration": "YM.Extraction.Difference.stepTotal",
+            "lines": [
+              66,
+              103
+            ],
+            "conclusion": "The arity-one case: the change is zero by translation invariance."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          142
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; a re-check of closeMatch records changed it from closeMatch; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
+      }
+    }
+  }
+}

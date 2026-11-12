@@ -1,0 +1,122 @@
+{
+  "id": "Lemma 18.6 step 7",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 214,
+        "rect": [
+          0.12026,
+          0.73781,
+          0.75948,
+          0.02336
+        ]
+      },
+      "title": "Lemma 18.6 step 7: Display, p. 214",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 18.6 step 7"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.rescaled_energy",
+        "module": "YM.TraceExtension.LogScaling",
+        "lines": [
+          125,
+          141
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.rescaled_energy"
+          },
+          "snippet": {
+            "text": "    obtain ⟨D,hD⟩ := eventually_atTop.mp ((reciprocal ht).eventually (ge_mem_nhds (lt_add_one A)))\n    filter_upwards [eventually_ge_atTop D,eventually_gt_atTop (1:ℝ)] with r hh hp R hr\n    have hz : 0<r := zero_lt_one.trans hp\n    have hk : r≤r*R := le_mul_of_one_le_right hz.le hr\n    have hx := hD (r*R) (hh.trans hk)\n    have hB : 0<R := zero_lt_one.trans_le hr\n    unfold C; rw [div_mul_eq_mul_div]; apply lower_energy _ _ hr\n    rw [rescaled_lag,lag_time_univ h _ (by positivity), ← ENNReal.ofReal_mul (Zlog_nonneg _)]\n    apply ENNReal.ofReal_le_ofReal; rw [show R⁻¹/r=(r*R)⁻¹ by ring]\n    have he : Zlog r ≤ Zlog (r*R)* R^8 := by\n        have hv : 0 ≤ Real.log r := Real.log_nonneg hp.le\n        calc\n          _ ≤ r⁻¹^8 * (Real.log (r*R))^2 := by unfold Zlog; gcongr\n          _ = _ := by unfold Zlog; field_simp\n    have hQ : 0 ≤ (euclidean F (r*R)⁻¹).re := by rw [h.laplace _ (by positivity),ofReal_re]; positivity\n    refine (mul_le_mul_of_nonneg_right he hQ).trans ?_\n    rw [mul_right_comm]; exact mul_le_mul_of_nonneg_right hx (by positivity)",
+            "line": 125,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/LogScaling.lean",
+            "fragment": "L125-L141"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.rescaled_energy",
+            "lines": [
+              120,
+              141
+            ],
+            "conclusion": "For `R ≥ 1` and large `r`, `lower_energy` bounds `rescaled μ r {time p ≤ R}` by `e` times the transform at `(r R)⁻¹`, which is `Zlog r * (euclidean F (r R)⁻¹).re`, and this is at most `C * R^8` with `C = (A+1)/exp(-1)`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.lower_energy",
+        "module": "YM.TraceExtension.LogScaling",
+        "lines": [
+          108,
+          115
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.lower_energy"
+          },
+          "snippet": {
+            "text": "lemma lower_energy {μ : Measure E4} (A R : ℝ) (hr : 1≤R) (h : lag μ (R⁻¹ • basis timeAxis) univ ≤ ENNReal.ofReal A) :\n    μ {p | time p≤R} ≤ ENNReal.ofReal (A/Real.exp (-1)) := by\n    have hp : 0<R := zero_lt_one.trans_le hr\n    have he := damped_lower μ (R:=R) (inv_pos.mpr hp).le\n    rw [← time_lag, neg_mul,inv_mul_cancel₀ hp.ne'] at he\n    rw [ENNReal.ofReal_div_of_pos (Real.exp_pos _)]\n    apply (ENNReal.le_div_iff_mul_le (Or.inl (by positivity)) (Or.inl ENNReal.ofReal_ne_top)).2\n    rw [mul_comm]; exact he.trans h",
+            "line": 108,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/LogScaling.lean",
+            "fragment": "L108-L115"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.lower_energy",
+            "lines": [
+              108,
+              115
+            ],
+            "conclusion": "`μ {time p ≤ R} ≤ ofReal (A / exp (-1))` whenever the transform at `R⁻¹ e_t` is at most `A`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          214
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

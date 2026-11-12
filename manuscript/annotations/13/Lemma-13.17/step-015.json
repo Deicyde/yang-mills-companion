@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 13.17 step 15",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "Additivity, continuity, real linearity per slot and the diagonal are in [L]. Symmetry of T_k (commuting operators) is not stated: `garden` is a `MultilinearMap`, not a symmetric one.",
+  "subject": [
+    {
+      "location": {
+        "page": 115,
+        "rect": [
+          0.11962,
+          0.26075,
+          0.76076,
+          0.07144
+        ]
+      },
+      "title": "Lemma 13.17 step 15: Text, p. 115",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 13.17 step 15"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.Amp.Often.coast",
+        "module": "YM.FullVolume.Amp.Head",
+        "lines": [
+          34,
+          40
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.Amp.Often.coast"
+          },
+          "snippet": {
+            "text": "lemma coast (i:Fin n)(y:X)(v:X): L.anchor n (Function.update u i (y+v))=L.anchor n (Function.update u i y)+L.anchor n (Function.update u i v):=by\n    let Ω := univ.erase i\n    let U:= L.bank n\n    have hh(p x:X): block univ (Function.update u i p) U x= block Ω u U (x+p)-block Ω u U x:=by\n       rw [show (univ:Finset (Fin n))=insert i Ω from (insert_erase (mem_univ _)).symm, cons Ω _ _ _ (notMem_erase i Finset.univ), Function.update_self, same Ω (Function.update u i p) (v:=u) (h:=fun j hj=> Function.update_of_ne (ne_of_mem_erase hj) ..),same Ω (Function.update u i p) (v:=u) (h:=fun j hj=>Function.update_of_ne (ne_of_mem_erase hj) ..)]\n    unfold anchor; rw [← smul_add]; congr 1; change block _ _ U _ =block _ _ U _+block _ _ U _\n    rw [L.clone univ (Function.update u i v) 0 y _ (by simp),hh,hh,hh]; simp",
+            "line": 34,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Amp/Head.lean",
+            "fragment": "L34-L40"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.Amp.Often.coast",
+            "lines": [
+              34,
+              40
+            ],
+            "conclusion": "`anchor` is additive in each slot, from `cons` for δ_{u+v} and `clone` for the vanishing extra difference."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.Amp.Often.coastS",
+        "module": "YM.FullVolume.Amp.Head",
+        "lines": [
+          42,
+          60
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.Amp.Often.coastS"
+          },
+          "snippet": {
+            "text": "lemma coastS (i:Fin n)(y:X)(a:ℝ): L.anchor n (Function.update u i (a • y))= a • L.anchor n (Function.update u i y):=by\n   let P:X→+Y:= { toFun := fun t=> L.anchor n (Function.update u i t), map_zero' := by have h:=L.coast n u i 0 0; simp only [zero_add] at h; exact (add_right_cancel (Eq.trans (zero_add _) h)).symm, map_add' := L.coast n u i }\n   apply (map_real_smul P ?_ _ _)\n   apply continuous_of_continuousAt_zero P\n   apply Metric.continuousAt_iff.mpr\n   intro ε he\n   let e:=‖u‖+1; let c':= (e*fee p r)^n*c\n   obtain ⟨m,hM⟩:=exists_nat_gt (c'/ε)\n   have hE:1≤ e := le_add_of_nonneg_left (norm_nonneg _)\n   have hp:0≤fee p r:= by unfold fee; have hh:=L.width; have hg:=zero_lt_one.trans_le L.pays.1; positivity\n   have h:c'≥0:= mul_nonneg (pow_nonneg (mul_nonneg (zero_le_one.trans hE) hp) _) L.pays.2\n   have h₀:0<(m:ℝ):= (div_nonneg h he.le).trans_lt hM\n   refine ⟨m⁻¹, by positivity,fun z hz=>?_⟩ -- Nat notation\n   simp only [map_zero,dist_zero_right] at *; apply lt_of_mul_lt_mul_left _ h₀.le\n   rw [← Real.norm_of_nonneg h₀.le,← norm_smul, Real.norm_of_nonneg h₀.le,Nat.cast_smul_eq_nsmul ℝ, ← map_nsmul]\n   refine (L.labels n _ e (zero_le_one.trans hE) ?_).trans_lt ((div_lt_iff₀ he).1 hM)\n   intro j; by_cases hk:j=i\n   · subst j; rw [Function.update_self,← Nat.cast_smul_eq_nsmul ℝ,norm_smul,Real.norm_of_nonneg h₀.le]; exact (by apply le_trans _ hE; nlinarith [mul_inv_cancel₀ h₀.ne'])\n   rw [Function.update_of_ne hk]; exact (norm_le_pi_norm _ j).trans (le_add_of_nonneg_right (by norm_num))",
+            "line": 42,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Amp/Head.lean",
+            "fragment": "L42-L60"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.Amp.Often.coastS",
+            "lines": [
+              42,
+              60
+            ],
+            "conclusion": "A locally bounded additive slot map is continuous, hence real homogeneous, by the bound `labels`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.Amp.Often.draw",
+        "module": "YM.FullVolume.Amp.Fish",
+        "lines": [
+          73,
+          76
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.Amp.Often.draw"
+          },
+          "snippet": {
+            "text": "lemma draw (u:X): block s (fun _=>u) (L.bank s.card) 0=((Nat.factorial s.card:ℕ):ℝ) • L.bank s.card u:= by\n  rw [rear, face]; simp_rw [zero_add,L.homo,smul_smul]; rw [←sum_smul]; congr 1\n  have hp:= face (X:=ℝ) (Y:=ℝ) (f:=fun t=>t^s.card) (x:=0) 1 s.card\n  rw [fwdDiff_iter_eq_factorial] at hp; simpa using hp.symm",
+            "line": 73,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Amp/Fish.lean",
+            "fragment": "L73-L76"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.Amp.Often.draw",
+            "lines": [
+              73,
+              76
+            ],
+            "conclusion": "`block s (fun _ => u) (bank s.card) 0 = (s.card)! • bank s.card u`, the diagonal identity δ_h^k P_k(0) = k! P_k(h)."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          115
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

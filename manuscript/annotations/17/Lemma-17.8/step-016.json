@@ -1,0 +1,201 @@
+{
+  "id": "Lemma 17.8 step 16",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "`saturated` and `paste` carry Morera and Liouville, and `irreducible` the equivalence of Lemma H2.2.",
+  "subject": [
+    {
+      "location": {
+        "page": 202,
+        "rect": [
+          0.11962,
+          0.44733,
+          0.76357,
+          0.09139
+        ]
+      },
+      "title": "Lemma 17.8 step 16: Text, p. 202",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 17.8 step 16"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.commutant",
+        "module": "YM.EveryPhase.Irreducible",
+        "lines": [
+          143,
+          171
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.commutant"
+          },
+          "snippet": {
+            "text": "    have hk (t : ℝ) : p (↑t) = q (-↑t) := by\n      let r := t • basis timeAxis\n      let g := Mink.Poincare.translation (-r)\n      let c := X.spin.po g b\n      have ht : X.action.orbit.translation (-r) (X.action.orbit.translation r (B Ω))=B Ω := by\n        rw [← ContinuousLinearMap.comp_apply,X.action.orbit.sends,neg_add_cancel,X.action.orbit.origin]; rfl\n      have hv : X.spin.po g (Sentence.rev X.J b)=Sentence.rev X.J c := by\n        unfold c Spins.po Sentence.rev; rw [List.map_reverse,List.map_map,List.map_map]; congr 2; ext1 z\n        exact (Letter.rewrites F.room.kernel.laws.toSymmetric F.phase.transport.injection hp.induced\n          X.spin hp.letters ..).symm\n      have hO : V.vector c=X.action.orbit.translation (-r) u := (hp.covariant g b).symm\n      have hG : V.vector (Sentence.rev X.J c)=X.action.orbit.translation ((-t) • basis timeAxis) v := by\n        rw [← hv,neg_smul]; exact (hp.covariant g (Sentence.rev X.J b)).symm\n      unfold p q; rw [← Complex.ofReal_neg,pairing_at hi,pairing_at hi,← hG]\n      calc\n        _ = inner ℂ (X.action.orbit.translation (-r) u) (X.action.orbit.translation (-r)\n            (X.action.orbit.translation r (B Ω))) := (X.action.flavor g u _).symm\n        _ = _ := by rw [ht,← hO, he,ContinuousLinearMap.adjoint_inner_left]\n    have hy := saturated (D.flow.altitude 0 (J u) (J (B Ω))) (D.flow.altitude 0 (J (B.adjoint Ω)) (J v)) hk\n    have hs (s : ℝ≥0) : inner ℂ u (B Ω) = inner ℂ u (bHeat J s (B Ω)) := by\n      have hx (s : ℝ≥0) : p (Complex.I * ↑(s:ℝ))=inner ℂ u (bHeat J s (B Ω)) := by\n        unfold p; rw [direct]; exact (ContinuousLinearMap.adjoint_inner_right J u _).symm\n      have h₀ : p 0=inner ℂ u (B Ω) := by\n        rw [show (0:ℂ)=(↑(0:ℝ):ℂ) from rfl]; dsimp only [p]; rw [pairing_at hi,zero_smul,X.action.orbit.origin]; rfl\n      rw [← hx, ← h₀]; exact (hy _ (show _ from by simp [Paley.high])).symm\n    have ht := bHeat_limit hi hp (B Ω)\n    rw [all_plant L i] at ht\n    exact tendsto_nhds_unique_of_eventuallyEq (f:=fun _ : ℝ≥0 => inner ℂ u (B Ω)) tendsto_const_nhds\n      (tendsto_const_nhds.inner ht) (Eventually.of_forall hs)",
+            "line": 143,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Irreducible.lean",
+            "fragment": "L143-L171"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.commutant",
+            "lines": [
+              118,
+              193
+            ],
+            "conclusion": "`p t = q (-t)` on the real line by covariance and the weak relation (`hk`), `saturated` makes the pasted function constant, so `<u, B Ω> = <u, bHeat s (B Ω)>`, and `bHeat_limit` with `all_plant` gives `<u, B Ω> = <u, a Ω>`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.commutant",
+        "module": "YM.EveryPhase.Irreducible",
+        "lines": [
+          172,
+          193
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.commutant"
+          },
+          "snippet": {
+            "text": "  have hc : B Ω=a • Ω := by\n    apply hp.soil.whole.eq_of_inner_right ℂ; intro x\n    induction x using Finsupp.induction_linear with\n    | zero => simp\n    | add i j hi hj => simp only [map_add, inner_add_left,hi,hj]\n    | single i c => simp only [Kernel.Gram.stems,Finsupp.linearCombination_single,inner_smul_left]; exact congrArg _ (hh i)\n  change B=a • _\n  apply Kernel.Gram.by_bud hp.soil; intro b\n  apply hp.soil.whole.eq_of_inner_right ℂ; intro p\n  induction p using Finsupp.induction_linear with\n  | zero => simp\n  | add i j hi hj => simp only [map_add,inner_add_left,hi,hj]\n  | single i c =>\n    have hz := word_central (X:=X) h b (V.evaluates i) V.omega\n    change inner ℂ (monomial V _ _).val (B Ω)=inner ℂ (V.vector i) (B (monomial V b V.omega).val) at hz\n    have hk := star_monomial V X.J hp.adj V.omega (V.evaluates i) b\n    rw [evaluate_word V b, hc,inner_smul_right] at hz; rw [evaluate_word V b] at hk\n    simp only [Kernel.Gram.stems,Finsupp.linearCombination_single,inner_smul_left, _root_.smul_apply,inner_smul_right]\n    change _ * inner ℂ (V.vector i) (B (V.evaluates b).val)=_ * (_ * inner ℂ (V.evaluates i).val (V.evaluates b).val)\n    rw [← hz,show inner ℂ _ Ω=inner ℂ (V.evaluates i).val (V.evaluates b).val from by\n      apply (starRingEnd ℂ).injective; rw [inner_conj_symm,inner_conj_symm]; exact hk.symm]\n    ring",
+            "line": 172,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Irreducible.lean",
+            "fragment": "L172-L193"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.commutant",
+            "lines": [
+              118,
+              193
+            ],
+            "conclusion": "`B Ω = a Ω` and then `B = a • id` by moving words with `word_central` and density."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.saturated",
+        "module": "YM.EveryPhase.Irreducible",
+        "lines": [
+          56,
+          84
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.saturated"
+          },
+          "snippet": {
+            "text": "private theorem saturated {F G : ℂ → ℂ} {C D : ℝ} (hF : Air F C) (hG : Air G D)\n    (h : ∀ x : ℝ, F (x:ℂ)=G (- (x:ℂ))) : ∀ z∈high, F z=F 0 := by\n  classical\n  let L : ℂ → ℂ := high.piecewise F (fun z => G (-z))\n  let v := {x : ℂ| x.im ≤ 0}\n  have he : EqOn L F high := piecewise_eqOn _ _ _\n  have hl : EqOn L (fun z => G (-z)) v := by\n    intro z hp; by_cases hZ : z.im=0\n    · rw [he (show z∈high from hZ.symm.le),show z = (↑z.re:ℂ) from Complex.ext rfl (by simpa)]\n      exact h z.re\n    unfold L; rw [piecewise_eq_of_notMem _ _ _ (show z ∉ high from fun hh => hZ (le_antisymm hp hh))]\n  have hc : Continuous L := by\n    have hF' := hF.connects.congr he\n    have hG' : ContinuousOn L v := ((hG.connects.comp continuous_neg.continuousOn (fun z hz =>\n      show 0≤(-z).im by simpa using (show z.im≤0 from hz))) : ContinuousOn (fun z => G (-z)) v).congr hl\n    apply continuousOn_univ.mp\n    rw [show (@univ ℂ)=high∪v from by ext z; exact ⟨fun _ => le_total 0 z.im,fun _ => trivial⟩]\n    exact hF'.union_of_isClosed hG' highC (isClosed_le continuous_im continuous_const)\n  have hx : DifferentiableOn ℂ L loft := hF.straight.congr (he.mono Paley.subset)\n  have hu : DifferentiableOn ℂ L {z : ℂ| z.im < 0} :=\n    (hG.straight.comp (f:=-id) (differentiable_id.neg.differentiableOn) (fun z hz => show 0<(-z).im by simpa using (show z.im<0 from hz))).congr\n      (fun z hz => hl (show z.im≤0 from (show z.im<0 from hz).le))\n  have hp := paste hc hx hu\n  have hh : Bornology.IsBounded (Set.range L) := (Metric.isBounded_closedBall (x:= (0:ℂ)) (r:=max C D)).subset (by\n    rintro _ ⟨z,rfl⟩\n    rw [mem_closedBall_zero_iff]; rcases le_total 0 z.im with H|H\n    · exact (he H).symm ▸ le_trans (hF.bounded z H) (le_max_left C D)\n    rw [hl H]; exact (hG.bounded (-z) (by simpa [high] using H)).trans (le_max_right C D))\n  exact fun z hz => (he hz).symm.trans ((hp.apply_eq_apply_of_bounded hh z 0).trans (he (by simp [high])))",
+            "line": 56,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Irreducible.lean",
+            "fragment": "L56-L84"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.saturated",
+            "lines": [
+              56,
+              84
+            ],
+            "conclusion": "Two bounded continuous functions on the closed upper half-plane, holomorphic inside and equal as `F x = G (-x)` on the line, give a bounded entire function (`paste`, Morera) that is constant (Liouville)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.irreducible",
+        "module": "YM.EveryPhase.Irreducible",
+        "lines": [
+          207,
+          216
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.irreducible"
+          },
+          "snippet": {
+            "text": "theorem irreducible (i) (B) : weaklyCentral (L.actors i) B ↔\n    ∃ a : ℂ, B=a • ContinuousLinearMap.id ℂ _ := by\n  constructor\n  · intro h; exact ⟨_,commutant L i B h⟩\n  rintro ⟨a,rfl⟩ p g u v\n  simp only [_root_.smul_apply,ContinuousLinearMap.id_apply,inner_smul_right]\n  apply congrArg\n  have h := (L.cores i).adj p g v u\n  apply (starRingEnd ℂ).injective\n  rw [inner_conj_symm,inner_conj_symm]; exact h.symm",
+            "line": 207,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Irreducible.lean",
+            "fragment": "L207-L216"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.irreducible",
+            "lines": [
+              207,
+              216
+            ],
+            "conclusion": "`weaklyCentral B` holds iff `B` is a scalar; scalars satisfy it by the adjoint law `adj`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          202
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

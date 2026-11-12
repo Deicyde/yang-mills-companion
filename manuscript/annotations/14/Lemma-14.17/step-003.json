@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 14.17 step 3",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] gets the slab lengths as the strict `2r < Y i` without splitting at reflection planes, where [M] has n_sl+1 ≥ 2r/a_N. The cell side d_cell = a_D/a_N is `L` with `g*L = a_D`.",
+  "subject": [
+    {
+      "location": {
+        "page": 142,
+        "rect": [
+          0.12026,
+          0.47412,
+          0.75949,
+          0.09139
+        ]
+      },
+      "title": "Lemma 14.17 step 3: Text, p. 142",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.17 step 3"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extraction.Difference.stepTotal",
+        "module": "YM.Extraction.Equicontinuity",
+        "lines": [
+          89,
+          98
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extraction.Difference.stepTotal"
+          },
+          "snippet": {
+            "text": "    have hw : g*L=C.S.a D := C.S.embeds_scale (C.S.toDepth hd p)\n    have ht (a b : Fin (m+1)) (hs:a≠b) : (2:ℝ)*L + 2*(r/g) < ((x b i - x a i).val:ℝ) := by\n      have hz := gridAxis _ x rfl (he _ hq) _ _ hs i\n      apply lt_of_mul_lt_mul_left _ hh.le\n      calc\n        g * ((2:ℝ)*L+2*(r/g)) = 2*(g*L)+2*r := by field_simp\n        _ < 4*r := by linarith\n        _ ≤ _ := hz\n    have hf : (l:ℝ) ≤ r/g := (le_div_iff₀' hh).mpr hb\n    have hu := primitive H i v hp hd L rfl (fun _ => A) e x (r/g) (div_pos hr hh) ht (fun j w hh => ?_) k l hf",
+            "line": 89,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extraction/Equicontinuity.lean",
+            "fragment": "L89-L98"
+          },
+          "proof_context": {
+            "declaration": "YM.Extraction.Difference.stepTotal",
+            "lines": [
+              66,
+              103
+            ],
+            "conclusion": "With `g*L = a_D` and `a_D < r`, the directed gaps exceed `2L + 2r/g`, and `l ≤ r/g`, for the call of `primitive`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Slice.Time.organized",
+        "module": "YM.Slice.Ordered",
+        "lines": [
+          78,
+          85
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Slice.Time.organized"
+          },
+          "snippet": {
+            "text": "  let Y := fun i => cyclicGaps x i - w\n  have hh (i) : (w:ℝ)+2*r < cyclicGaps x i := by\n    refine Fin.lastCases ?_ (fun i => ?_) i\n    · rw [cyclicGaps,Fin.snoc_last,last_val D N]; exact he _ _ (ne_of_gt (by simpa [Fin.lt_def]))\n    rw [cyclicGaps, Fin.snoc_castSucc, section_duration D]; exact he _ _ (Fin.castSucc_lt_succ).ne\n  have hw (i) : w + Y i = cyclicGaps x i := by\n    apply Nat.add_sub_of_le; apply Nat.le_of_lt; exact Nat.cast_lt.mp (lt_trans (by linarith) (hh i))\n  have hv (i) : 2*r < Y i := by have hh := hh i; rw [← hw,Nat.cast_add] at hh;linarith",
+            "line": 78,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Slice/Ordered.lean",
+            "fragment": "L78-L85"
+          },
+          "proof_context": {
+            "declaration": "YM.Slice.Time.organized",
+            "lines": [
+              68,
+              115
+            ],
+            "conclusion": "The slabs `Y i = gap - w` next to the moved insertion are longer than `2r` sites (`hv`)."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          142
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 14.1 step 6",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] proves o(s) in the log-scale s rather than o(t) in the level, which agree on a stage where s grows linearly; the intermediate O_j((log log)^2 + log log) bound appears only inside the proof of `possible_bump`.",
+  "subject": [
+    {
+      "location": {
+        "page": 125,
+        "rect": [
+          0.12026,
+          0.61948,
+          0.76293,
+          0.01708
+        ]
+      },
+      "title": "Lemma 14.1 step 6: Text, p. 125",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.1 step 6"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Rank.Ship.accommodate",
+        "module": "YM.Next.RANK.Voucher",
+        "lines": [
+          74,
+          81
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Rank.Ship.accommodate"
+          },
+          "snippet": {
+            "text": "lemma accommodate (b : ℝ) (j : ℕ) (h : G.Simple) (hb : 0≤b) :\n    Tendsto (fun s : ℝ => (benchCost Z b j s:ℝ)/s) atTop (𝓝 0) := by\n  have hv : Tendsto (preHat Z) atTop atTop := Filter.tendsto_atTop_add_const_left _ _\n    (Tendsto.const_mul_atTop (Gauge.slopeConstant_pos h) tendsto_id)\n  have hu : 1 < ((w.L j).val:ℝ) := by have ht := (w.large j).size; exact_mod_cast (by omega : 1 < (w.L j).val)\n  have hp : preHat Z=O[atTop] id := ((isLittleO_const_id_atTop _).isBigO).add ((isBigO_refl id _).const_mul_left _)\n  have he := (((possible_bump hu hb).comp_tendsto hv).trans_isBigO hp).tendsto_div_nhds_zero\n  simpa only [benchCost,Nat.cast_add] using! he",
+            "line": 74,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Voucher.lean",
+            "fragment": "L74-L81"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Rank.Ship.accommodate",
+            "lines": [
+              74,
+              81
+            ],
+            "conclusion": "`benchCost Z b j s / s → 0`: the comparison length `bump + more` (the h_t(b)+v_t of the window) is o(s) for each stage j."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Rank.Ship.honoured",
+        "module": "YM.Next.RANK.Voucher",
+        "lines": [
+          104,
+          112
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Rank.Ship.honoured"
+          },
+          "snippet": {
+            "text": "  let P' : Wait Z := {\n    minLength := P.minLength\n    readyHere := fun j => max (P.readyHere j) (v j)\n    window := fun j s => P.window j s+z j s\n    sublin j := by\n      have ht : Tendsto (fun s => (z j s:ℝ)/s) atTop (𝓝 0) := by\n        have he := tendsto_finsetSum (D j) (fun i _ => accommodate Z (b i) j h (hb i))\n        simpa [z,Finset.sum_div] using! he\n      simpa [add_div] using! (P.sublin j).add ht }",
+            "line": 104,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Voucher.lean",
+            "fragment": "L104-L112"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Rank.Ship.honoured",
+            "lines": [
+              96,
+              115
+            ],
+            "conclusion": "The enlarged `window j s = P.window j s + Σ benchCost` keeps `sublin`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          125
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

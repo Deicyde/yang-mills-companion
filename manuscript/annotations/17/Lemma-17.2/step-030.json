@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 17.2 step 30",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean takes `K` as the max of 0 and `-min w` (including `q`), and the lower response bound uses `c_m = 2⁻¹^n * 2⁻¹^(2n)` with `n = max m k`; `point_cost` additionally assumes `w j ≤ 0` on `Q`, which is the case for [M]'s `β_j ≤ 0`.",
+  "subject": [
+    {
+      "location": {
+        "page": 192,
+        "rect": [
+          0.11962,
+          0.0962,
+          0.76357,
+          0.09139
+        ]
+      },
+      "title": "Lemma 17.2 step 30: Text, p. 192",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 17.2 step 30"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.point_cost",
+        "module": "YM.Next.ROTATIONS.Tunnel",
+        "lines": [
+          55,
+          67
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.point_cost"
+          },
+          "snippet": {
+            "text": "  let W := update w i q; let F := update f i center\n  have hW : W i=q := update_self ..; have hF : F i=center := update_self ..\n  obtain ⟨z,hz,h⟩ := walk V H Q e i hi he A hp hk W (fun j hj => by\n    by_cases h : j=i\n    · subst j; exact hW ▸ hq.le\n    · rw [show W j=w j from update_of_ne h ..]; exact hw _ hj) δ hd\n  have hx := mail_room hq center center_ends\n  have he' : ∀ᶠ n in atTop, Room (mails W F n i) (1*fuel 0 n) := by\n    simp_rw [mails,hW,hF,one_mul]; exact hx\n  obtain ⟨m,h⟩ := h 0 le_rfl hz.le 1 le_rfl F (fun j hj => by\n    by_cases he : j=i\n    · subst j; rw [hF]; exact ⟨center_ends,center_plus,center_even⟩\n    · rw [show F j=f j from update_of_ne he ..]; exact hf _ hj) he'",
+            "line": 55,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Tunnel.lean",
+            "fragment": "L55-L67"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.point_cost",
+            "lines": [
+              51,
+              94
+            ],
+            "conclusion": "`W = update w i q`, `F = update f i center`, and the walk bound is applied at `d = 0`, `s = 1` with head profile `center` and the given transverse profiles."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.point_cost",
+        "module": "YM.Next.ROTATIONS.Tunnel",
+        "lines": [
+          75,
+          94
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.point_cost"
+          },
+          "snippet": {
+            "text": "  have ht := h n (le_max_left m k); simp_rw [hW,hy,pay_self,hF] at ht\n  apply projects V i A Q _ _ (fun n l hh => bill_plus (hf l (Finset.mem_of_mem_erase hh)).2.1 _ _) q ?_ ?_ δ ht\n  · refine .of_forall (fun k => hV _ (le_max_right ..) _ ?_ _ (center_ends.width _) (center_even.tall _))\n    simp [fuel0]\n  let C : ℝ := 2⁻¹ ^ n * 2⁻¹^(2*n)\n  have hC : 0<C := by unfold C; positivity\n  refine ⟨C⁻¹,inv_pos.mpr hC,?_⟩\n  filter_upwards [he'] with j hj p hp\n  let a := fuel q j\n  let s := 1*fuel 0 j\n  rw [hy j,update_self] at hj\n  have hS : 1≤s := by simp [s,fuel0]\n  rw [low]; split_ifs with H\n  · rw [inv_mul_eq_div]; apply (le_div_iff₀ hC).mpr\n    refine le_trans ?_ (lower n s a (p i) hS (fuel_pos ..) hj hp)\n    change (p i+a)⁻¹ * _ ≤ _\n    unfold C\n    have hx : 0<p i+a := by have := show 0<a from fuel_pos ..; linarith\n    rw [← mul_assoc,(mul_comm (p i+a)⁻¹)]; gcongr; linarith\n  exact mul_nonneg (inv_pos.mpr hC |>.le) (lamp_signs n q 0 1 center center_ends center_plus j zero_lt_one hj i p hp)",
+            "line": 75,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Tunnel.lean",
+            "fragment": "L75-L94"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.point_cost",
+            "lines": [
+              51,
+              94
+            ],
+            "conclusion": "On `p i ≤ 1` the integrand `low i (fuel q n) p = (p i + fuel q n)⁻¹` is at most `C⁻¹` times the response with `C = 2⁻¹^n * 2⁻¹^(2n)` (via `lower`), and `projects` transfers the budget bound to the cost integral."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.walk",
+        "module": "YM.Next.ROTATIONS.Walk",
+        "lines": [
+          159,
+          172
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.walk"
+          },
+          "snippet": {
+            "text": "theorem walk (H : S.Hierarchy) (Q : Finset Axis) (e : Axis→Bool) (i) (hi : i∈Q)\n    (he : Mixed Q e) (A : Weight L) (hp : ∀ j∈Q,Pressed j A) (hb : ∀ j∈Q,Own A j (e j))\n    (w : Axis→ℝ) (hw : ∀ j∈Q,w j ≤ 0) (δ : ℝ) (hd : 0<δ) : ∃ a : ℝ, 0 < a ∧\n    ∀ (d : ℝ), 0 ≤ d → d ≤ a → ∀ (s : ℝ), 1≤s → ∀ (f : Grouping), Colors Q f →\n      (∀ᶠ n in atTop, Room (mails w f n i) (s*fuel d n)) → ∃ M : ℕ, ∀ m≥M,\n        Budget δ (fun n => pay (ν (V i) A) i Q (lamps m (w i) d s (f i) n) (mails w f n)) := by\n  obtain ⟨B,hB⟩ := (finite_range w).bddBelow\n  let k := max 0 (-B)\n  obtain ⟨a,ha,H⟩ := affordable V H Q Q i e (tracking Q Q e he (by simp) i hi) A hp hb _ k hd (le_max_left ..)\n  refine ⟨a,ha,fun d hv hk s hs f hf hr => H _ hv hk w ?_ ((hw i hi).trans hv) ?_ f hf s hs hr⟩\n  · intro j hj; refine ⟨?_,(hw j hj).trans ha.le⟩\n    have ht : B ≤ w j := hB ⟨j,rfl⟩\n    have he := show -B ≤ k from le_max_right ..; linarith\n  · intro j h hh; contradiction",
+            "line": 159,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Walk.lean",
+            "fragment": "L159-L172"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.walk",
+            "lines": [
+              159,
+              172
+            ],
+            "conclusion": "`walk` applies `affordable` with `U = Q`, so every axis is visited, and `K = max 0 (-B)` for `B` a lower bound of `w`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          192
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

@@ -1,0 +1,161 @@
+{
+  "id": "Lemma 14.16 step 9",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 140,
+        "rect": [
+          0.12026,
+          0.72783,
+          0.75948,
+          0.07298
+        ]
+      },
+      "title": "Lemma 14.16 step 9: Text, p. 140",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.16 step 9"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Bid.gainChart",
+        "module": "YM.Bid.Loan",
+        "lines": [
+          130,
+          130
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Bid.gainChart"
+          },
+          "snippet": {
+            "text": "def gainChart {G : Gauge} (H : History G) (k i : ℕ) := Real.exp (((1:ℝ)/8)*(H.S.scale k-H.S.scale i))",
+            "line": 130,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Bid/Loan.lean",
+            "fragment": "L130-L130"
+          },
+          "proof_context": {
+            "declaration": "YM.Bid.gainChart",
+            "lines": [
+              130,
+              130
+            ],
+            "conclusion": "`gainChart H k i = exp((s_k - s_i)/8)`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.G09.gain_step",
+        "module": "YM.Work.G09",
+        "lines": [
+          174,
+          179
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.G09.gain_step"
+          },
+          "snippet": {
+            "text": "private lemma gain_step (H : History G) (o i : ℕ) :\n    gainChart H o i = gainChart H o (i+1) * puffs (H.S.block i) := by\n  unfold gainChart puffs\n  rw [H.S.scale_succ, Real.rpow_def_of_pos (by positivity), ← Real.exp_add]\n  congr 1\n  ring",
+            "line": 174,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/G09.lean",
+            "fragment": "L174-L179"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.G09.gain_step",
+            "lines": [
+              174,
+              179
+            ],
+            "conclusion": "`gainChart o i = gainChart o (i+1) * puffs (block i)`, so the product of the factors ℓ_i^(1/8) is the exponential of the scale difference over 8."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.G09.cone_cost",
+        "module": "YM.Work.G09",
+        "lines": [
+          189,
+          207
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.G09.cone_cost"
+          },
+          "snippet": {
+            "text": "  have cone (m : ℕ) (hm : k ≤ m) : m ≤ o →\n      32*(1+(H.levels.params m).columns)^2 * F.coeffSize (P.voice m).x ≤ P.cost m := by\n    induction m, hm using Nat.le_induction with\n    | base =>\n      intro hko\n      have hn : 0 ≤ P.cost k := by\n        obtain ⟨a,b,ha,hb,hab,-⟩ := (hP.origin k le_rfl hko).2\n        exact (add_nonneg ha hb).trans hab\n      simpa [hP.pairing, Labels.Frame.coeffSize] using hn\n    | succ m hm ih =>\n      intro hh\n      exact (cone_step hC hbank (hP.funds m hm hh) (ih (by omega))).1\n  refine ⟨cone i hi hi', ?_⟩\n  induction hi' using Nat.decreasingInduction with\n  | self => simp [gainChart]\n  | of_succ j hj ih =>\n    rw [gain_step, mul_assoc]\n    have ha := (cone_step hC hbank (hP.funds j hi hj) (cone j hi hj.le)).2\n    exact le_trans (mul_le_mul_of_nonneg_left ha (Real.exp_pos _).le) (ih (by omega))",
+            "line": 189,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/G09.lean",
+            "fragment": "L189-L207"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.G09.cone_cost",
+            "lines": [
+              183,
+              207
+            ],
+            "conclusion": "The cone induction starts at the zero matched coordinate at `k`, uses only the steps in `[k, o)`, and multiplies the one-step gains to `gainChart H o i * cost i ≤ cost o`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          140
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

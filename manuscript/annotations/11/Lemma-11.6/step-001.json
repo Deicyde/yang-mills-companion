@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 11.6 step 1",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "[M] gets both minimizing choices from the complexified chart equations, using the positive definite frame quadratic part and the Hessian I of the predictor objective. [L] proves the frame choice analytic by a real-analytic implicit function argument on the nearest-point fixed-point equation, and the predictor analytic as an explicit nearest projection of a weighted average, both as germs at 0.",
+  "subject": [
+    {
+      "location": {
+        "page": 55,
+        "rect": [
+          0.11961,
+          0.34484,
+          0.76359,
+          0.10556
+        ]
+      },
+      "title": "Lemma 11.6 step 1: Text, p. 55",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 11.6 step 1"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Push.scheme",
+        "module": "YM.PREC.Pred",
+        "lines": [
+          129,
+          147
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Push.scheme"
+          },
+          "snippet": {
+            "text": "lemma scheme (i : S.patch.Points) : ContDiffAt ℝ ω (fun v : In G f => hats S y t v i) 0 := by\n  let a := hats S y t (G:=G)\n  let F := uncurry (fun x u => plant S y (x,u)) (α:=In G f)\n  have hk : ContDiffAt ℝ ω F (0,a 0) := by\n    refine contDiffAt_pi.mpr fun v => ?_\n    unfold F uncurry plant\n    dsimp only\n    split\n    · exact ((contDiffAt_apply ℝ G.Mat v _).comp ((0:In G f),a 0) contDiffAt_snd).sub contDiffAt_const\n    apply ((contDiffAt_apply ℝ G.Mat v _).comp ((0:In G f),a 0) contDiffAt_snd).sub\n    have hh : ContDiffAt ℝ ω (fun x => G.mat (G.focus x)) (cloud S y (0,a 0) v)  :=\n      by rw [show cloud _ _ _ _=1 from cloud_zero S y t (h:=h) _]; exact G.focus_diff\n    exact hh.comp (f:=fun p => cloud S y p v) ((0:In G f),a 0) (cloud_form S y v (a 0))\n  have hx : ∀ᶠ x : In G f in 𝓝 0,F (x,a x)=0 := by\n    filter_upwards [roots S y t (G:=G), eventually_all.mpr (stars S y t (h:=h))] with x hx hh\n    funext i; change plant _ _ _ _=_; unfold plant; split\n    next hi => rw [hi]; simp [a,hx]\n    exact sub_eq_zero.mpr (hh i)\n  refine (contDiffAt_apply ℝ G.Mat i _).comp 0 (authored a F 0 hx (continuousAt_pi.mpr fun i => hat_cont S y t (h:=h) i) hk fun u H => ?_)",
+            "line": 129,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PREC/Pred.lean",
+            "fragment": "L129-L147"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.scheme",
+            "lines": [
+              129,
+              187
+            ],
+            "conclusion": "The frame choice `hats` is real analytic near 0: the self-consistency equation `plant` (a nearest-point fixed point of the averaged `cloud`) is analytic and the real-analytic implicit function lemma `authored` applies with a trivial-kernel derivative."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Push.lips",
+        "module": "YM.PREC.Derivative",
+        "lines": [
+          95,
+          96
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Push.lips"
+          },
+          "snippet": {
+            "text": "lemma lips (t : S.Choices) : ∀ᶠ x : In G f in 𝓝 0,\n    S.prediction (represent x) t e = G.focus (bonds S e t.1 x) := by",
+            "line": 95,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PREC/Derivative.lean",
+            "fragment": "L95-L96"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.lips",
+            "lines": [
+              95,
+              111
+            ],
+            "conclusion": "Near 0 the predictor equals `G.focus` (nearest projection) of the weighted average `bonds` of the connectors."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Push.prediction_cont",
+        "module": "YM.PREC.Derivative",
+        "lines": [
+          118,
+          124
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Push.prediction_cont"
+          },
+          "snippet": {
+            "text": "lemma prediction_cont (t : S.Choices) : ContDiffAt ℝ ω (fun v : In G f => G.mat (S.prediction (represent v) t e)) 0 := by\n  refine ContDiffAt.congr_of_eventuallyEq (f:=fun v => G.mat (G.focus (bonds S e t.1 v))) ?_ (by\n    filter_upwards [lips S h e t] with i hi; rw [hi])\n  have hh : ContDiffAt ℝ ω (fun u => G.mat (G.focus u)) (bonds S e t.1 (0:In G f)) := by rw [bonds_zero _ h]; exact G.focus_diff\n  have he : ContDiffAt ℝ ω (bonds S e t.1 (G:=G)) 0 := by\n    unfold bonds; apply ContDiffAt.sum; intro i _; exact (builds S h e t.1 i).const_smul (S.patch.weight i)\n  exact hh.comp (f:=bonds S e t.1) 0 he",
+            "line": 118,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PREC/Derivative.lean",
+            "fragment": "L118-L124"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.prediction_cont",
+            "lines": [
+              118,
+              124
+            ],
+            "conclusion": "Hence the predictor `S.prediction (represent v)` is real analytic at 0."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          55
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

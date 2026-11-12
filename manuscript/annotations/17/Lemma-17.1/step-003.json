@@ -1,0 +1,201 @@
+{
+  "id": "Lemma 17.1 step 3",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "The contraction, null vectors, symmetry, commuting unitary translations, strong continuity and spectral measure are in [L]. The Hamiltonian `H_4^OS = ∫ -log v dP(v)`, the exclusion of zero spectral mass, and `E_t = e^{-tH} → P_0` are not.",
+  "subject": [
+    {
+      "location": {
+        "page": 189,
+        "rect": [
+          0.12026,
+          0.0962,
+          0.76293,
+          0.09366
+        ]
+      },
+      "title": "Lemma 17.1 step 3: Text, p. 189",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 17.1 step 3"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OS.contract",
+        "module": "YM.OS.Flow",
+        "lines": [
+          70,
+          89
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OS.contract"
+          },
+          "snippet": {
+            "text": "lemma contract (H : S.Hierarchy) (t) (p : Voice L a) : ‖timed X t p‖ ≤ ‖X.stems p‖ := by\n  let d i := ‖timed X i p‖\n  have ht : BddAbove (Set.range d) := by\n    obtain ⟨A,hA⟩ := enough X H p; exact ⟨A,by rintro _ ⟨y,rfl⟩; exact hA y⟩\n  let c := ⨆ i : ℝ≥0, d i\n  have he i : d i ≤ c := le_ciSup ht _\n  have hp : 0 ≤ d t := norm_nonneg _\n  have hh (i) : d i ^ 2 ≤ ‖X.stems p‖ * c := by\n    change ‖timed X i p‖^2 ≤ _\n    rw [sq_key X, symmetrical X H.translations]\n    exact (norm_inner_le_norm ..).trans (mul_le_mul_of_nonneg_left (he _) (norm_nonneg _))\n  let A := ‖X.stems p‖*c\n  have hA : 0 ≤ A := le_trans (sq_nonneg _) (hh t)\n  have h₀ := hp.trans (he t)\n  have hw : c ≤ √A := ciSup_le fun i => (Real.le_sqrt (norm_nonneg (timed X i p)) hA).mpr (hh i)\n  apply (he t).trans\n  have hq := sq_le_sq₀ h₀ (Real.sqrt_nonneg A) |>.2 hw\n  rw [Real.sq_sqrt hA] at hq\n  dsimp only [A] at hq\n  nlinarith [norm_nonneg (X.stems p)]",
+            "line": 70,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OS/Flow.lean",
+            "fragment": "L70-L89"
+          },
+          "proof_context": {
+            "declaration": "YM.OS.contract",
+            "lines": [
+              70,
+              89
+            ],
+            "conclusion": "`‖timed X t p‖ ≤ ‖X.stems p‖`: the time translates contract."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OS.Semigroup",
+        "module": "YM.OS.Flow",
+        "lines": [
+          94,
+          106
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OS.Semigroup"
+          },
+          "snippet": {
+            "text": "structure Semigroup (H : Hilbert) (a : Axis) where\n  E (t : ℝ≥0) : H.Op\n  U (s : Cross a) : H.Op\n  eZero : E 0=ContinuousLinearMap.id ℂ _\n  time t s : E (t+s)=(E t).comp (E s)\n  shrinks t : ‖E t‖ ≤ 1\n  sym t : (E t).adjoint = E t\n  uZero : U 0=ContinuousLinearMap.id ℂ _\n  space t s : U (t+s)=(U t).comp (U s)\n  unitary t v : ‖U t v‖=‖v‖\n  independent t s : (E t).comp (U s)=(U s).comp (E t)\n  continuousE v : Continuous (fun t => E t v)\n  continuousU v : Continuous (fun t => U t v)",
+            "line": 94,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OS/Flow.lean",
+            "fragment": "L94-L106"
+          },
+          "proof_context": {
+            "declaration": "YM.OS.Semigroup",
+            "lines": [
+              94,
+              106
+            ],
+            "conclusion": "A `Semigroup` has contractions `E`, adjoints `sym`, unitary commuting `U`, and strong continuity `continuousE`, `continuousU`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OS.implement",
+        "module": "YM.OS.Dynamics",
+        "lines": [
+          63,
+          104
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OS.implement"
+          },
+          "snippet": {
+            "text": "lemma implement (H : S.Hierarchy) : ∃ C : Chamber S a, C.GNS = X := by\n  choose E hE hP using fun (t : ℝ≥0) => X.by_bound (fun v => X.plant (travel v t)) 1 zero_le_one (by\n    intro g; rw [one_mul]; exact contract X H t g)\n  choose U hU hW using fun (x : Cross a) => X.by_bound (fun v => X.plant (over v x)) 1 zero_le_one (by\n    intro g; rw [one_mul]; exact (safe X x H g).le)\n  have es t : (E t).adjoint=E t := by\n    apply X.by_bud; intro v\n    refine X.whole.eq_of_inner_left ℂ fun f => ?_\n    rw [ContinuousLinearMap.adjoint_inner_left]\n    -- linearity on all sums; compare singles\n    induction f using Finsupp.induction_linear with\n    | zero => simp\n    | add f g hf hg => -- extract v form after adj rewrite\n      simp only [map_add, inner_add_right,hf,hg]\n    | single i c =>\n      simp only [Kernel.Gram.stems,Finsupp.linearCombination_single,map_smul,\n        inner_smul_right,hP,X.measure,sym_time H.translations]\n  have hu : U 0=ContinuousLinearMap.id ℂ X.H := X.by_bud fun i => by rw [hW,pause]; rfl\n  have hv (x y) : U (x+y)=(U x).comp (U y) := by\n    apply X.by_bud; intro i; simp [hW, parallel, add_comm x y]\n  let B : Semigroup X.H a := {\n    E := E\n    U := U\n    eZero := X.by_bud fun i => by rw [hP,done]; rfl\n    sym := es\n    uZero := hu\n    space := hv\n    shrinks := hE\n    time := fun x y => X.by_bud fun i => by simp [hP,add_comm x y]\n    independent := fun t y => X.by_bud fun i => by simp [hP,hW]\n    unitary := by\n      intro t p\n      have ht (t : Cross a) (p) : ‖U t p‖ ≤ ‖p‖ := ((U t).le_opNorm p).trans\n        (mul_le_of_le_one_left (norm_nonneg _) (hU _))\n      refine le_antisymm (ht _ _) ?_\n      have he := ht (-t) (U t p)\n      rw [← ContinuousLinearMap.comp_apply,← hv,neg_add_cancel,hu] at he\n      exact he\n    continuousE := strong X (D := X.H) hE fun i => by simp_rw [hP]; exact contE X H i\n    continuousU := strong X (D := X.H) hU fun i => by simp_rw [hW]; exact contU X H i\n  }\n  exact ⟨⟨X,B,fun t v => (hP t v).symm,fun x v => (hW x v).symm⟩,rfl⟩",
+            "line": 63,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OS/Dynamics.lean",
+            "fragment": "L63-L104"
+          },
+          "proof_context": {
+            "declaration": "YM.OS.implement",
+            "lines": [
+              63,
+              104
+            ],
+            "conclusion": "A `Chamber` exists on any Schwinger functional: the `E t` and `U x` are built as bounded operators with these laws."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OS.Semigroup.heat",
+        "module": "YM.Heat.Lift",
+        "lines": [
+          108,
+          114
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OS.Semigroup.heat"
+          },
+          "snippet": {
+            "text": "lemma heat (x : E4) (v : H) {z : ℂ} (h : z∈ Paley.high) :\n    S.J x v v z=(∫ p, plane p x * Complex.exp (↑(p a)*z*I) ∂S.ℚmeasure.diagonal v) := by\n  let k := Paley.cell (S.ℚmeasure.diagonal v) (fun p : E4 => p a) (plane · x)\n  have hp := Paley.heat _ _ (by fun_prop : Continuous fun p : E4 => p a) (S.bright v) (plane · x) ?_ (fun i => plane_norm _ x)\n  · apply Paley.along_edge (S.altitude x v v) hp _ h\n    intro i; rw [S.assigned]; unfold Paley.cell Paley.weight; simp only [ofReal_mul]\n  unfold plane; fun_prop",
+            "line": 108,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Heat/Lift.lean",
+            "fragment": "L108-L114"
+          },
+          "proof_context": {
+            "declaration": "YM.OS.Semigroup.heat",
+            "lines": [
+              108,
+              114
+            ],
+            "conclusion": "The displaced matrix element equals an integral of a plane wave against the damped spectral measure `ℚmeasure.diagonal v`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          189
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

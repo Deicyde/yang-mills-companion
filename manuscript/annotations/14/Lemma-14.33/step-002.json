@@ -1,0 +1,84 @@
+{
+  "id": "Lemma 14.33 step 2",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "The same statement is proved, with the lattice values bounded on the compact support and the sum converging to the integral. [L] compares the smear with the integral of a step function by dominated convergence instead of a Riemann-sum estimate, and takes `suitable` for p-admissible separated.",
+  "subject": [
+    {
+      "location": {
+        "page": 160,
+        "rect": [
+          0.1198,
+          0.77131,
+          0.76042,
+          0.12266
+        ]
+      },
+      "title": "Lemma 14.33 step 2: Text, p. 160",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.33 step 2"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.pudding",
+        "module": "YM.FullVolume.Smears",
+        "lines": [
+          49,
+          82
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.pudding"
+          },
+          "snippet": {
+            "text": "lemma pudding {F:ℕ→Positions n→ℂ}{f:Points n→ℂ}(h:Cluster C e p n F f) (t:Test n)(ht:suitable C.S p t) : Integrable (fun x:Points n=> t x * f x) ∧\n    Tendsto (fun j=> sumOn F C.S p (e j) t) atTop (𝓝 (t.applyTo f)):=by\n  classical\n  obtain ⟨D,hD,H⟩:= usable e h _ t.hasCompactSupport (readable C.S p t ht)\n  obtain ⟨R,hR,hT⟩:= Order.testSup t\n  let B:= (Fund C.S p n).indicator (fun _=>R*D)\n  have hb : Integrable B:= (integrable_indicator_iff (full_box ..).1).mpr (integrableOn_const (full_box ..).2.ne)\n  let g i:=stepping F C.S p (e i) t\n  have hm i:AEStronglyMeasurable (g i) volume:= (stored F C.S p (e i) t).1.aestronglyMeasurable\n  have hP : ∀ᶠ j in atTop, ∀ x, ‖g j x‖ ≤ B x:=by\n    filter_upwards [H] with i hi x\n    by_cases he:x∈Fund C.S p n\n    · unfold g B stepping; rw [indicator_of_mem he,indicator_of_mem he]\n      let a:= address (C.S.a (e i)) x; let y:= tag (C.S.a (e i)) a; change ‖t y* F (e i) a‖ ≤ _\n      rcases eq_or_ne (t y) 0 with H|H\n      · rw [H,zero_mul,norm_zero]; exact mul_nonneg hR hD\n      exact (norm_mul_le ..).trans (mul_le_mul (hT _) (hi a (subset_closure H)) (norm_nonneg _) hR)\n    simp [g,B,stepping,he]\n  have he:∀ᵐ x:Points n,Tendsto (fun i=>g i x) atTop (𝓝 (t x*f x)):=by\n    filter_upwards [almostCyclic C.S p n] with x hx\n    by_cases hp:x∈Fund C.S p n\n    · simp_rw [g,stepping,indicator_of_mem hp]; let a j:=address (C.S.a (e j)) x\n      have he:= (Extraction.chosen (S:=C.S) x).comp e.cofinal\n      have hv : x∈ NoHit C.S p n:= fun i j hij=> ⟨0,hx i j hij 0⟩\n      have hr:= h.2 x hv a id tendsto_id he; exact (t.continuous.continuousAt.tendsto.comp he).mul hr\n    have hw : t x=0:= by\n      by_contra! H\n      have hu : x∈ Inside C.S p n:= ht (subset_closure H)\n      exact hp (show ∀ i a, _< x i a ∧ x i a ≤ _ from fun i a=> ⟨(hu i a).1,(hu i a).2.le⟩)\n    simp_rw [g,stepping,indicator_of_notMem hp,hw,zero_mul]; exact tendsto_const_nhds\n  constructor\n  · exact hb.mono' (aestronglyMeasurable_of_tendsto_ae atTop hm he) (he.mono fun x hx=> le_of_tendsto hx.norm (hP.mono fun _ hi=> hi x))\n  apply (tendsto_integral_filter_of_dominated_convergence B (Eventually.of_forall hm)\n    (hP.mono fun i H=> Eventually.of_forall H) hb he).congr' (Eventually.of_forall fun i=> (stored ..).2)",
+            "line": 49,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Smears.lean",
+            "fragment": "L49-L82"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.pudding",
+            "lines": [
+              49,
+              82
+            ],
+            "conclusion": "From `Cluster`, `t * f` is integrable and `sumOn F C.S p (e j) t` tends to `t.applyTo f` for suitable t, by a bound on the lattice values on the test support (`usable`) and dominated convergence for the step function `stepping`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          160
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
+      }
+    }
+  }
+}

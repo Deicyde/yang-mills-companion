@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 11.13 step 16",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "Lean obtains the polynomial moment bounds from the moment generating function (`salience`, `mgf`) instead of an exponential tilt with covariance 2Γ and mean (I-2ΓK)^{-1}(2Γℓ_0).",
+  "subject": [
+    {
+      "location": {
+        "page": 75,
+        "rect": [
+          0.11962,
+          0.0962,
+          0.76012,
+          0.07134
+        ]
+      },
+      "title": "Lemma 11.13 step 16: Text, p. 75",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 11.13 step 16"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.ConnectedActivityE6.Blaze.Flux.globes",
+        "module": "YM.AnalyticNext.CONNECTED_ACTIVITY_JETS_E6.LogosG",
+        "lines": [
+          53,
+          75
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.ConnectedActivityE6.Blaze.Flux.globes"
+          },
+          "snippet": {
+            "text": "lemma globes (p : Rotator P L η r Q Y X) (j : ℕ) : let v:= lensS I G; let f (z:Air f G):=facescale I z^j\n    let c:=↑v.card; let Y:=1+(I.card:ℝ)+c+c; let B:= payE η r Q (tubularPrice G L)\n    Integrable f X.dice ∧ ∫ z,f z ∂X.dice ≤ Y^j*(1+c*(2*Real.exp (B*(j:ℝ)^2/2))) := by\n  intro v f' c Y B; let b (z:Air f G):= 1+∑ i∈v,(1+|z i|)^j\n  obtain ⟨hr,hQ⟩:= salience v p.fullC.posSemidef (fun i=> only_price ((p.scale.mate _).1) p.full.prices.le i i) j\n  have hp p : f' p ≤ Y^j*b p := by\n    by_cases hv:v.Nonempty\n    swap\n    · have hv : v=∅:= not_nonempty_iff_eq_empty.mp hv\n      unfold f' Y b facescale c; rw [show lensS I G=v from rfl]; simp [hv]\n    obtain ⟨z,hz,h⟩:= exists_max_image v (fun i:Tubular _ G=>|p i|) hv\n    have hs : facescale I p ≤ Y*(1+|p z|) := by\n      unfold facescale Y; have hk := sum_le_sum (s:=v) (f:=fun i=> |p i|) (g:=fun i=> |p z|) h\n      rw [sum_const,nsmul_eq_mul] at hk; unfold c v at *; nlinarith [Nat.cast_nonneg (α:=ℝ) (I.card), abs_nonneg (p z),Nat.cast_nonneg (α:=ℝ) (lensS I G).card]\n    unfold f'; apply (pow_le_pow_left₀ (zero_le_one.trans (expenses I p).1) hs j).trans\n    rw [mul_pow]; exact mul_le_mul_of_nonneg_left ((Finset.single_le_sum (f:=fun i=> (1+|p i|)^j) (fun i _=> by positivity) hz).trans\n      (le_add_of_nonneg_left zero_le_one)) (by unfold Y c; positivity)\n  have hY : Integrable b X.dice := (integrable_const 1).add hr\n  have hf : Integrable f' X.dice := (hY.const_mul (Y^j)).mono' (by unfold f' facescale; fun_prop)\n     (ae_of_all _ (fun x=> by rw [Real.norm_of_nonneg (show 0≤ f' x from pow_nonneg (zero_le_one.trans (expenses ..).1) _)]; exact hp x))\n  refine ⟨hf, (integral_mono hf (hY.const_mul _) hp).trans ?_⟩\n  rw [integral_const_mul]; apply mul_le_mul_of_nonneg_left _ (by unfold Y c; positivity)\n  unfold b dice; rw [integral_add (integrable_const _) hr, integral_const]; rw [probReal_univ,one_smul]; exact add_le_add_right hQ _",
+            "line": 53,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/LogosG.lean",
+            "fragment": "L53-L75"
+          },
+          "proof_context": {
+            "declaration": "YM.ConnectedActivityE6.Blaze.Flux.globes",
+            "lines": [
+              53,
+              75
+            ],
+            "conclusion": "`globes` bounds `∫ facescale^j` under the transported Gaussian by `Y^j * (1 + c * (2 exp (B j²/2)))`, a polynomial in the support size."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.PhysicalNext.Repeat.Daisy.timing",
+        "module": "YM.PhysicalNext.RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP.Daisy.Charm",
+        "lines": [
+          102,
+          105
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.PhysicalNext.Repeat.Daisy.timing"
+          },
+          "snippet": {
+            "text": "      have hc : ∫ x,f x^2 ∂X.dice ≤ (e x*S'^K)^2 := by\n        unfold f; simp_rw [← pow_mul]; apply hp.trans\n        exact (mul_le_mul_of_nonneg_right (le_add_of_nonneg_left zero_le_one) (pow_nonneg (zero_le_one.trans hx') _)).trans\n          (le_self_pow₀ (one_le_mul_of_one_le_of_one_le he (one_le_pow₀ hx')) (by omega))",
+            "line": 102,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Daisy/Charm.lean",
+            "fragment": "L102-L105"
+          },
+          "proof_context": {
+            "declaration": "YM.PhysicalNext.Repeat.Daisy.timing",
+            "lines": [
+              58,
+              179
+            ],
+            "conclusion": "The square of the envelope has integral at most `(e x * S'^K)^2`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          75
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

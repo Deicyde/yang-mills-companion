@@ -1,0 +1,237 @@
+{
+  "id": "Section 11 display 5",
+  "kind": "display",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "The Lean predictor is a chosen minimizer rather than a defined argmin; the two agree wherever uniqueness holds, which Lemma 11.4 supplies.",
+  "subject": [
+    {
+      "location": {
+        "page": 48,
+        "rect": [
+          0.12026,
+          0.47486,
+          0.75948,
+          0.03648
+        ]
+      },
+      "title": "Display, p. 48",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Section 11 display 5"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.Patch.bondCost",
+        "module": "YM.RG.Patch",
+        "lines": [
+          159,
+          159
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.Patch.bondCost"
+          },
+          "snippet": {
+            "text": "def bondCost (Y : P.Connector G) (u : G.El) : ℝ := ∑ x, P.weight x * G.price (Y x * u⁻¹)",
+            "line": 159,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/RG/Patch.lean",
+            "fragment": "L159-L159"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.Patch.bondCost",
+            "lines": [
+              159,
+              159
+            ],
+            "conclusion": "`bondCost Y u = sum_x weight x * price (Y x * u⁻¹)` is the objective sum_z w_z^av price(Y_{e,z} u^-1)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.Patch.best",
+        "module": "YM.RG.Patch",
+        "lines": [
+          169,
+          169
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.Patch.best"
+          },
+          "snippet": {
+            "text": "def best (Y : P.Connector G) := (P.bond_min Y).choose",
+            "line": 169,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/RG/Patch.lean",
+            "fragment": "L169-L169"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.Patch.best",
+            "lines": [
+              169,
+              169
+            ],
+            "conclusion": "`best Y` is a minimizer of `bondCost Y` over u, chosen with `Classical.choose`; it is the unique argmin on the branch under `Branches.predictor_unique`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.Patch.usesBest",
+        "module": "YM.RG.Patch",
+        "lines": [
+          171,
+          171
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.Patch.usesBest"
+          },
+          "snippet": {
+            "text": "def usesBest (C : KernelChoices) (Y : P.Connector G) : Prop := P.bondCost Y (P.best Y) < C.predictor_cut",
+            "line": 171,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/RG/Patch.lean",
+            "fragment": "L171-L171"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.Patch.usesBest",
+            "lines": [
+              171,
+              171
+            ],
+            "conclusion": "The minimizing branch is the case `bondCost Y (best Y) < predictor_cut`, the condition that the minimum be below eps_pred."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.Patch.predict",
+        "module": "YM.RG.Patch",
+        "lines": [
+          173,
+          175
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.Patch.predict"
+          },
+          "snippet": {
+            "text": "def predict (C : KernelChoices) (Y : P.Connector G) (r : P.Points) : G.El := by\n  classical\n  exact if P.usesBest C Y then P.best Y else Y r",
+            "line": 173,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/RG/Patch.lean",
+            "fragment": "L173-L175"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.Patch.predict",
+            "lines": [
+              173,
+              175
+            ],
+            "conclusion": "`predict` is `best Y` on that branch and `Y r` otherwise, which is Q^pred."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.Patch.weight",
+        "module": "YM.RG.Patch",
+        "lines": [
+          87,
+          88
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.Patch.weight"
+          },
+          "snippet": {
+            "text": "def weight (x : P.Points) : ℝ :=\n  ∑ i : P.Rolls, if P.addRoll i = x then (Fintype.card P.Rolls : ℝ)⁻¹ else 0",
+            "line": 87,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/RG/Patch.lean",
+            "fragment": "L87-L88"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.Patch.weight",
+            "lines": [
+              87,
+              88
+            ],
+            "conclusion": "`weight` is the J-fold convolution of the uniform weight on the centered L-block, i.e. w^av."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          48
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      }
+    }
+  }
+}

@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 17.8 step 10",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "Γ(3) = 2 gives [M]'s 2 C_A s^{-2}; `bHeat` is e^{-sH} and `momentum.region zeroE` is Q.",
+  "subject": [
+    {
+      "location": {
+        "page": 202,
+        "rect": [
+          0.12026,
+          0.1544,
+          0.75948,
+          0.02493
+        ]
+      },
+      "title": "Lemma 17.8 step 10: Text, p. 202",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 17.8 step 10"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.decay",
+        "module": "YM.EveryPhase.Decay",
+        "lines": [
+          22,
+          75
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.decay"
+          },
+          "snippet": {
+            "text": "theorem decay (μ : Measure E4) [IsFiniteMeasure μ] (C : ℝ) (_ : 0≤C)\n    (h : ∀ u > (0:ℝ), μ.real (lowE u) ≤ C*u^2) (s : ℝ≥0) (hs : 0<s) :\n    (∫ p in aboveE, boltz s p ∂μ) ≤ (C*Real.Gamma 3)*(s:ℝ)⁻¹^2 := by\n  classical\n  let r : ℝ := s\n  have hr : 0 < r := hs\n  let f (t : ℝ) := r * Real.exp (-r*t)\n  let g (p : E4) := (Ici (time p)).indicator f\n  let V := μ.restrict aboveE\n  let T := volume.restrict (Ioi (0:ℝ))\n  have hf : Integrable f T := (integrableOn_exp_mul_Ioi (neg_lt_zero.mpr hr) 0).const_mul _\n  have hg : Integrable (uncurry g) (V.prod T) := by\n    let S := {x : E4 × ℝ | time x.1 ≤ x.2}\n    have hv : MeasurableSet S := (isClosed_le (clock_cont.comp continuous_fst) continuous_snd).measurableSet\n    have he : uncurry g=S.indicator (f ∘ Prod.snd) := by\n      funext x; by_cases h : x ∈ S\n      · exact (indicator_of_mem h (f:=f ∘ Prod.snd)).symm ▸ (indicator_of_mem h (s:=Ici (time x.1)) (f:=f))\n      rw [indicator_of_notMem h]; exact indicator_of_notMem (s:=Ici (time x.1)) (a:=x.2) h f\n    haveI : IsFiniteMeasure V := by unfold V; infer_instance\n    rw [he]; exact (hf.comp_snd (μ:=V)).indicator hv\n  haveI : SigmaFinite T := by unfold T; infer_instance\n  haveI : SigmaFinite V := by unfold V; infer_instance\n  calc\n    _ = ∫ p, (∫ t, g p t ∂T) ∂V := by\n      apply setIntegral_congr_fun aboveE_m; intro p (hp : p∈aboveE)\n      have hk : Ici (time p) ⊆ Ioi 0 := fun t ht => show 0 < t from lt_of_lt_of_le (show 0<time p from hp) ht\n      dsimp only [T,g]; rw [integral_indicator measurableSet_Ici,Measure.restrict_restrict_of_subset hk, integral_Ici_eq_integral_Ioi]\n      unfold f; rw [integral_const_mul, integral_exp_mul_Ioi (neg_lt_zero.mpr hr)]\n      change Real.exp (-r*time p) = _; field_simp\n    _ = ∫ t, (∫ p, g p t ∂V) ∂T := integral_integral_swap hg\n    _ ≤ ∫ t, (C*r)*(t^2 * Real.exp (-r*t)) ∂T := by\n      have hb : Integrable (fun t => t^2 * Real.exp (-r*t)) T := by\n        by_contra! hh\n        have ht := integral_undef hh; dsimp only [T] at ht; rw [density_power r hr] at ht\n        exact (ne_of_gt (by positivity)) ht\n      apply integral_mono_ae hg.integral_prod_right (hb.const_mul _)\n      filter_upwards [ae_restrict_mem (μ:=volume) measurableSet_Ioi] with t ht\n      have he : 0≤ f t := mul_nonneg hr.le (Real.exp_pos _).le\n      let s' := {p | time p ≤ t}\n      have hh : (g · t) = s'.indicator (fun _ => f t) := by\n        ext p; by_cases h : p ∈ s'\n        · rw [indicator_of_mem h]; exact indicator_of_mem (s:=Ici (time p)) (a:=t) h _\n        rw [indicator_of_notMem h]; exact indicator_of_notMem (s:=Ici (time p)) (a:=t) h _\n      have ht' : s' ∩ aboveE=lowE t := by ext p; exact and_comm\n      change (∫ x : E4, g x t ∂V) ≤ _\n      dsimp only [V]\n      rw [hh,integral_indicator (measurableSet_le clock_cont.measurable measurable_const),\n        Measure.restrict_restrict (measurableSet_le clock_cont.measurable measurable_const), ht', setIntegral_const,\n        smul_eq_mul]\n      apply (mul_le_mul_of_nonneg_right (h t ht) he).trans_eq\n      unfold f; ring\n    _ = _ := by\n      rw [integral_const_mul]; dsimp only [T]; rw [density_power _ hr]; change _ = _ * r⁻¹^2\n      field_simp",
+            "line": 22,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Decay.lean",
+            "fragment": "L22-L75"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.decay",
+            "lines": [
+              22,
+              75
+            ],
+            "conclusion": "`decay`: from `μ(lowE u) ≤ C u^2` for all `u>0`, Tonelli (`integral_integral_swap`) with `e^{-sE} = ∫_E^∞ s e^{-st} dt` gives `∫_{E>0} boltz s p dμ ≤ C Γ(3) s^{-2}`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.inverse_square",
+        "module": "YM.EveryPhase.Decay",
+        "lines": [
+          173,
+          192
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.inverse_square"
+          },
+          "snippet": {
+            "text": "theorem inverse_square (h : finite w) : ∃ M : ℝ, 0≤M ∧ ∀ i, ∀ s ≥ (1:ℝ≥0),\n    let A := stands (L.actors i).operators w\n    let P := (L.actors i).momentum.region zeroE\n    let r := inner ℂ A ((bHeat (L.J i) s - P) A)\n    0 ≤ r ∧ r ≤ ↑(M*(s:ℝ)⁻¹^2) := by\n  obtain ⟨B,hB,hW⟩ := word_bound L w\n  obtain ⟨C,hC,hL⟩ := light_bound L w h\n  let D := max B C\n  have hD : 0≤ D := le_trans hC (le_max_right ..)\n  have hI i (x : ℝ) (hx : 0 < x) : (νletter L i w).real (lowE x) ≤ D*x^2 := by\n    by_cases H : x ≤ 1\n    · exact (hL i x ⟨hx,H⟩).trans (mul_le_mul_of_nonneg_right (le_max_right ..) (sq_nonneg _))\n    refine le_trans (measureReal_mono (μ:=νletter L i w) (subset_univ _)) ((hW i).trans\n      ((le_max_left B C).trans (le_mul_of_one_le_right hD (one_le_pow₀ (le_of_lt (lt_of_not_ge H))))))\n  refine ⟨D*Real.Gamma 3, by positivity, fun i s hs => ?_⟩\n  have hh := zero_lt_one.trans_le hs\n  dsimp only\n  rw [residual_pair (L.links i) (L.cores i) s]\n  exact ⟨Complex.zero_le_real.mpr (integral_nonneg fun p => (Real.exp_pos _).le),\n    Complex.real_le_real.mpr (decay _ _ hD (hI i) _ hh)⟩",
+            "line": 173,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Decay.lean",
+            "fragment": "L173-L192"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.inverse_square",
+            "lines": [
+              173,
+              192
+            ],
+            "conclusion": "For `s ≥ 1`, `0 ≤ <A, (bHeat s - P) A> ≤ M s^{-2}`: the bound for `u>1` is the total mass (`hI`), and `residual_pair` writes the pairing as `∫_{aboveE} boltz`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.residual_pair",
+        "module": "YM.EveryPhase.Projection",
+        "lines": [
+          145,
+          150
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.residual_pair"
+          },
+          "snippet": {
+            "text": "lemma residual_pair (I : Attachment X V J) (H : FieldCore W U h X) (s : ℝ≥0)\n    (x : X.operators.H) : inner ℂ x ((bHeat J s-X.momentum.region zeroE) x) =\n      (↑(∫ p in aboveE, boltz s p ∂X.momentum.diagonal x):ℂ) := by\n  rw [_root_.sub_apply, inner_sub_right, bHeat_pair I H,\n    ← X.momentum.at_pair zeroE_m, residual _ ?h,Complex.ofReal_add,add_sub_cancel_left]\n  exact (cave H x).mono fun p hp => ((Mink.cone_self _).mp hp).1",
+            "line": 145,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Projection.lean",
+            "fragment": "L145-L150"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.residual_pair",
+            "lines": [
+              145,
+              150
+            ],
+            "conclusion": "`<x, (bHeat J s - zeroE-projection) x> = ∫_{aboveE} boltz s p d(momentum.diagonal x)`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          202
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

@@ -1,0 +1,200 @@
+{
+  "id": "Theorem 7.2 step 4",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 214,
+        "rect": [
+          0.12026,
+          0.20628,
+          0.75995,
+          0.08821
+        ]
+      },
+      "title": "Theorem 7.2 step 4: Text, p. 214",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Theorem 7.2 step 4"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Trace.Verse.border",
+        "module": "YM.TraceExtension.Verse.Cape",
+        "lines": [
+          53,
+          76
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Trace.Verse.border"
+          },
+          "snippet": {
+            "text": "lemma border (h:G.Simple)(h₁:Scribe f J V Z F.sector 𝓛 F.room.kernel H): Tendsto (fun i=> clue (J.r i) • euclidean F (J.r i)) atTop (𝓝 (award G:ℂ)):=by\n    let f:= fun i=> (clue (J.r i) • euclidean F (J.r i)).re\n    have hq(t:ℝ):0 ≤ clue t:= by unfold clue;positivity\n    let T (s:ℝ):= award G/s^8; have hM:ContinuousAt T 1:= (continuousAt_const.div (continuous_id.pow _|>.continuousAt) (by simp))\n    obtain ⟨Y,hz⟩:= h₁.meters\n    have hv(s:ℝ)(hh:1/2<s)(ht:s<2): Tendsto (fun i=>width (fad (V i) (shot s))) atTop (𝓝 s)∧\n        Tendsto (fun i=> (clue (J.r i) • euclidean F (J.r i*width (fad (V i) (shot s)))).re) atTop (𝓝 (T s)):=by\n       have hx:0<s:=by linarith\n       have hu:= shot_width hx.le\n       have hg := tagline F hb h h₁ (shot_generic hx) (open_shot hh ht); rw [hu] at hg\n       refine ⟨?_,Complex.continuous_re.continuousAt.tendsto.comp hg⟩\n       have ht:= (show Continuous (width:Points 2→ℝ) from by unfold width;fun_prop).continuousAt (x:=shot s)|>.tendsto; rw[hu] at ht; exact ht.comp (rounds hz h (shot s))\n    have he : T 1=award G:=by simp [T];\n    have hm(a b c:ℝ)(ha:0<a)(h:a ≤ b)(hc:0≤c): (c • euclidean F b).re≤(c • euclidean F a).re:=by simp only [Complex.real_smul,Complex.mul_re, Complex.ofReal_re,Complex.ofReal_im,zero_mul,sub_zero]; exact mul_le_mul_of_nonneg_left (monotone_axis F a b ha h) hc\n    have hF:Tendsto f atTop (𝓝 (T 1)):=by\n       apply tendsto_order.mpr; constructor\n       · intro p h; obtain ⟨s,hs,hs',hp⟩:= ((show ∀ᶠ s:ℝ in 𝓝[>] 1,1<s from self_mem_nhdsWithin).and ((Eventually.filter_mono nhdsWithin_le_nhds (gt_mem_nhds (show (1:ℝ)<2 by norm_num))).and ((hM.tendsto.mono_left nhdsWithin_le_nhds).eventually (lt_mem_nhds h)))).exists\n         obtain ⟨hh,hI⟩:= hv s (by linarith) hs'; filter_upwards [hh.eventually (le_mem_nhds hs), hI.eventually (lt_mem_nhds hp)] with i hi hp; exact lt_of_lt_of_le hp (hm _ _ _ (J.positive i) (le_mul_of_one_le_right (J.positive i).le hi) (hq _))\n       intro p h; obtain ⟨s,hs,hs',hp⟩:= ((show ∀ᶠ s:ℝ in 𝓝[<] 1,s<1 from self_mem_nhdsWithin).and ((show ∀ᶠ s:ℝ in 𝓝[<] 1,1/2<s from ((show ∀ᶠ s:ℝ in 𝓝 1,1/2<s from lt_mem_nhds (by norm_num)).filter_mono nhdsWithin_le_nhds)).and ((hM.tendsto.mono_left nhdsWithin_le_nhds).eventually (gt_mem_nhds h)))).exists\n       obtain ⟨ht,hI⟩:= hv s hs' (by linarith); filter_upwards [ht.eventually (ge_mem_nhds hs),ht.eventually (lt_mem_nhds (show 0<s by linarith)),hI.eventually (gt_mem_nhds hp)] with i hi hk hp; exact lt_of_le_of_lt (hm _ _ _ (mul_pos (J.positive i) hk) (mul_le_of_le_one_right (J.positive i).le hi) (hq _)) hp\n    rw[he] at hF\n    apply (Complex.continuous_ofReal.continuousAt.tendsto.comp hF).congr; intro i\n    obtain ⟨μ,H,-⟩:=traceSpectrum_exists F; change (↑(f i):ℂ)=_\n    unfold f; rw[H.laplace _ (J.positive i)]; simp only [Complex.real_smul,Complex.mul_re,Complex.ofReal_im,Complex.ofReal_re,sub_zero,Complex.ofReal_mul,mul_zero]",
+            "line": 53,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Verse/Cape.lean",
+            "fragment": "L53-L76"
+          },
+          "proof_context": {
+            "declaration": "YM.Trace.Verse.border",
+            "lines": [
+              53,
+              76
+            ],
+            "conclusion": "Along `J.r i`, `clue (J.r i) • euclidean F (J.r i)` tends to `award G`, from the generic pair `shot s`, monotonicity (`monotone_axis`) on both sides of 1, and `s → 1`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Trace.Verse.outside",
+        "module": "YM.TraceExtension.Verse.Cape",
+        "lines": [
+          77,
+          88
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Trace.Verse.outside"
+          },
+          "snippet": {
+            "text": "lemma outside (h:G.Simple)(H:Gallery C f): EuclideanAsymptotic F (award G):=by\n    obtain ⟨b,Z,a,hb,hZ,hq₁,hq₂,hx⟩:= H.lead S F.room F.sector F.phase.transport; unfold EuclideanAsymptotic\n    rw [Filter.tendsto_def]; intro W hW; by_contra! hh\n    let J:=(fun s=> clue s • euclidean F s); let Y:={s | J s∈W}; change Y ∉ _ at hh\n    have hp: ∃ s:ℕ→ℝ,Tendsto s atTop (𝓝 0) ∧ ∀ i,0<s i ∧ J (s i) ∉ W:=by\n       let d:= costHint; have he (i:ℕ):∃ s:ℝ,0<s ∧ s<d i ∧ J s∉ W:=by\n          by_contra! h\n          apply hh; have hk: ∀ᶠ s:ℝ in 𝓝[>] 0,0<s:=self_mem_nhdsWithin\n          filter_upwards[hk,(Eventually.filter_mono nhdsWithin_le_nhds (gt_mem_nhds (show d i > 0 from cost_pos i)))] with s hs hI; exact h s hs hI\n       choose s hs hv ht using he\n       exact ⟨s,tendsto_of_tendsto_of_tendsto_of_le_of_le tendsto_const_nhds cost_clears (fun i=> (hs i).le) (fun i=>(hv i).le),fun i=>⟨hs i,ht i⟩⟩\n    obtain ⟨s,hs,hv⟩:= hp; obtain ⟨p,hP,I,hi,w,hQ⟩:= hx s hs fun i=> (hv i).1; have hu:= border F hb h hQ; rw[hi] at hu; obtain ⟨i,hI⟩:= (hu.eventually hW).exists; exact (hv (p i)).2 hI",
+            "line": 77,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Verse/Cape.lean",
+            "fragment": "L77-L88"
+          },
+          "proof_context": {
+            "declaration": "YM.Trace.Verse.outside",
+            "lines": [
+              77,
+              88
+            ],
+            "conclusion": "From the sequence limit for every null sequence, `EuclideanAsymptotic F (award G)` holds on the whole of `𝓝[>] 0`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Trace.Verse.award_pos",
+        "module": "YM.TraceExtension.Verse.Cape",
+        "lines": [
+          23,
+          27
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Trace.Verse.award_pos"
+          },
+          "snippet": {
+            "text": "lemma award_pos (h:G.Simple):0<award G:=by\n    have hp :0 < b0 G:=by unfold b0; have he:= Gauge.casimir_pos h; positivity\n    have ht:0 < (G.lieDim:ℝ):= Nat.cast_pos.mpr (by rw [Gauge.lieDim, ← G.colorIso.finrank_eq]; haveI := h.nontrivial_color; exact Module.finrank_pos)\n    have hd:0 < d2 G^ (2:ℕ):=sq_pos_of_ne_zero (by rw [force_b]; exact ne_of_lt (by linarith))\n    unfold award; positivity",
+            "line": 23,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Verse/Cape.lean",
+            "fragment": "L23-L27"
+          },
+          "proof_context": {
+            "declaration": "YM.Trace.Verse.award_pos",
+            "lines": [
+              23,
+              27
+            ],
+            "conclusion": "`0 < award G` for simple `G`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.nonzero_strength",
+        "module": "YM.TraceExtension.Sundial.Grand",
+        "lines": [
+          23,
+          27
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.nonzero_strength"
+          },
+          "snippet": {
+            "text": "lemma nonzero_strength {A:ℝ} (ha:0<A)(he:EuclideanAsymptotic F A) : pinned F≠0:=by\n   intro hv; have hx : center F=0:= S.pin_inj _ (hv.trans (map_zero _).symm)\n   have hp(t):euclidean F t=0:=by unfold euclidean;rw[hx];exact MultilinearMap.map_coord_zero _ (0:Fin 2) rfl\n   unfold EuclideanAsymptotic at he; simp only [hp,smul_zero] at he\n   have h:= tendsto_nhds_unique he tendsto_const_nhds; exact Complex.ofReal_ne_zero.mpr ha.ne' h",
+            "line": 23,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Sundial/Grand.lean",
+            "fragment": "L23-L27"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.nonzero_strength",
+            "lines": [
+              23,
+              27
+            ],
+            "conclusion": "With `0 < A` and `EuclideanAsymptotic F A`, `pinned F ≠ 0`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          214
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

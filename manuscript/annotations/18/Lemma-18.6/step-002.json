@@ -1,0 +1,84 @@
+{
+  "id": "Lemma 18.6 step 2",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "broadMatch",
+  "note": "The Lean takes any amplitude A ≥ 0 satisfying the trace law, where [M] uses the specific amplitude of TR; the transform identity `lag_time_univ` and the limit are the same.",
+  "subject": [
+    {
+      "location": {
+        "page": 214,
+        "rect": [
+          0.12026,
+          0.48497,
+          0.75948,
+          0.03379
+        ]
+      },
+      "title": "Lemma 18.6 step 2: Display, p. 214",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 18.6 step 2"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.transform_limit",
+        "module": "YM.TraceExtension.LogScaling",
+        "lines": [
+          93,
+          106
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.transform_limit"
+          },
+          "snippet": {
+            "text": "lemma transform_limit {A : ℝ} (h : TraceSpectrum F μ) (ha : 0 ≤ A) (ht : EuclideanAsymptotic F A) (u : inside) :\n    Tendsto (fun r => lag (rescaled μ r) u univ) atTop (𝓝 (lag (coneMeasure A) u univ)) := by\n    obtain ⟨u,hu⟩ := u; obtain ⟨s,hs,g,rfl⟩ := future hu; dsimp only\n    simp_rw [lag_invariant _ (coneMeasure_invariant A), cone_laplace _ _ ha hs]\n    have hr : Tendsto (fun r:ℝ => r/s) atTop atTop := Tendsto.atTop_div_const hs tendsto_id\n    rw [mul_comm A]\n    apply (ENNReal.continuous_ofReal.continuousAt.tendsto.comp\n      ((zlog_shift s hs).mul ((reciprocal ht).comp hr))).congr'\n    filter_upwards [hr.eventually (eventually_gt_atTop 1),eventually_gt_atTop 1] with r hr hp\n    have hh : 0 < r := lt_trans zero_lt_one hp\n    rw [lag_invariant _ (fun g => rescaled_invariant μ r g (h.boost g)), rescaled_lag,\n      lag_time_univ h _ (div_pos hs hh), ← ENNReal.ofReal_mul (Zlog_nonneg _)]\n    dsimp only [Function.comp_apply]; change _=(_ : ℝ≥0∞); congr 1\n    rw [inv_div]; field_simp [(Zlog_pos hr).ne']",
+            "line": 93,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/LogScaling.lean",
+            "fragment": "L93-L106"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.transform_limit",
+            "lines": [
+              93,
+              106
+            ],
+            "conclusion": "For `TraceSpectrum F μ`, `0 ≤ A` and `EuclideanAsymptotic F A`, `lag (rescaled μ r) u univ` tends to `lag (coneMeasure A) u univ`, which `cone_laplace` evaluates as `A * s⁻¹^8`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          214
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
+      }
+    }
+  }
+}

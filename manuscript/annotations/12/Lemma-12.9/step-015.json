@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 12.9 step 15",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] combines the same tadpole and bubble bounds with cube radius 1+2π instead of 2π, and the regulator product rule sits in the `Jam` calculus; only the constants differ.",
+  "subject": [
+    {
+      "location": {
+        "page": 85,
+        "rect": [
+          0.11962,
+          0.6751,
+          0.76045,
+          0.08845
+        ]
+      },
+      "title": "Lemma 12.9 step 15: Text, p. 85",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 12.9 step 15"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.Rally.shell",
+        "module": "YM.Next.STATIONARY.OneLoop.Bubbles",
+        "lines": [
+          216,
+          222
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.Rally.shell"
+          },
+          "snippet": {
+            "text": "  have hh : a≤r := h.first.2.2.2.upper _\n  change _ ≤ P/a^3+P*w^2/a^6; calc\n   _ = (u*a+x*a+A+B)/a^3+(A+B+v+y)*w^2/a^6 := by\n     change _ + (B*(a+w^2*(a^2)⁻¹)/a^4+A*(a+w^2*(a^2)⁻¹)/a^4)=_; field_simp; ring\n   _ ≤ _ := by\n     have hx : u*a+x*a+A+B ≤ P := (show u*a+x*a+A+B ≤ u*r+x*r+A+B by nlinarith [mul_le_mul_of_nonneg_left hh hU,mul_le_mul_of_nonneg_left hh hX]).trans (le_max_left ..)\n     apply add_le_add (div_le_div_of_nonneg_right hx (by positivity)); gcongr; exact le_max_right ..",
+            "line": 216,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/OneLoop/Bubbles.lean",
+            "fragment": "L216-L222"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.Rally.shell",
+            "lines": [
+              191,
+              222
+            ],
+            "conclusion": "With `a ≤ r` the tadpole and bubble bounds combine into `P/a^3 + P μ^2/a^6` on `μ ≤ flay`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.Rally.register",
+        "module": "YM.Next.STATIONARY.OneLoop.Bubbles",
+        "lines": [
+          186,
+          190
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.Rally.register"
+          },
+          "snippet": {
+            "text": "lemma Rally.register : ∃ A : ℝ,0≤A ∧ ∀ i, ‖keelRay (Rally.bait G F μ i) (b i) (X.lens i)‖≤ A/T i^4 := by\n  obtain ⟨A,hA,h1⟩ := rod_bill h.first; obtain ⟨B,hB,h2⟩ := rod_bill h.spare\n  let c := (1/2:ℂ); have ht (x : ℂ) : ‖c*x‖≤ ‖x‖ := by rw [norm_mul]; exact mul_le_of_le_one_left (norm_nonneg _) (by unfold c; norm_num)\n  refine ⟨A+B,by positivity,fun i=> ?_⟩; rw [h.coin i]\n  exact (ht _).trans ((norm_sub_le ..).trans ((add_le_add ((ht _).trans (h1 i)) (h2 i)).trans_eq (by ring)))",
+            "line": 186,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/OneLoop/Bubbles.lean",
+            "fragment": "L186-L190"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.Rally.register",
+            "lines": [
+              186,
+              190
+            ],
+            "conclusion": "`‖keelRay‖ ≤ A/T^4` on the cube from the tadpole and bubble bounds."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.astronomy",
+        "module": "YM.Next.STATIONARY.OneLoop.Bubbles",
+        "lines": [
+          278,
+          280
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.astronomy"
+          },
+          "snippet": {
+            "text": "lemma astronomy (h : V.fees η C) (hv : V.grey) (he : 0<ε) (hp : 0<η) (ht : G.Simple) (D A : ℝ) : ∃ i j : ℝ, 0 ≤ i ∧ 0≤j ∧ ∀ p : Orion V η D ε A,\n    let X := amena p.μ G (p.l.combine V|>.cast)\n    Waves1 i p.μ (keelRay X p.a) ∧ Waves2 j p.μ (keelRay X p.a) G := by",
+            "line": 278,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/OneLoop/Bubbles.lean",
+            "fragment": "L278-L280"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.astronomy",
+            "lines": [
+              278,
+              292
+            ],
+            "conclusion": "Both inequalities hold uniformly in `μ`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          85
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; a re-check of closeMatch records kept it; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

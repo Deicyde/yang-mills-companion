@@ -1,0 +1,240 @@
+{
+  "id": "Lemma 17.3 step 19",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "broadMatch",
+  "note": "The conservation step `heights` has error `O(W^2)` with no `λ^δ` loss (the remainders `DB`, `DC` are bounded by `accounts_cost` without `δ`), which is stronger than [M]'s `O_δ(λ^δ W^2)`; the final `d_0` bound is the same.",
+  "subject": [
+    {
+      "location": {
+        "page": 194,
+        "rect": [
+          0.12026,
+          0.0962,
+          0.75948,
+          0.08845
+        ]
+      },
+      "title": "Lemma 17.3 step 19: Text, p. 194",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 17.3 step 19"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.heights",
+        "module": "YM.Next.ROTATIONS.Pivot",
+        "lines": [
+          94,
+          95
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.heights"
+          },
+          "snippet": {
+            "text": "lemma heights (i : Axis) (w) (a) (Z C U : TestMap) (hh : U=Pmul 2 i Z+C) (k : ℕ) (p : ℝ) (f r) (hc : Ach (update w i a) r C) :\n    Budget ((-a)*(2*(k+1):ℕ)+r) (fun n => cabin U (k+1) a w f i p n-p^2*cabin Z k a w f i p n) := by",
+            "line": 94,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Pivot.lean",
+            "fragment": "L94-L95"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.heights",
+            "lines": [
+              94,
+              100
+            ],
+            "conclusion": "From `U = Pmul 2 i Z + C` with `C` of cost `Ach r`, `cabin U (k+1) - p^2 * cabin Z k` is `Budget (-a*2(k+1)+r)`, i.e. `c_{r+1}(t) = t^2 c_r(t) + O(W^2)` for the laws `BL_law`, `CL_law`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.rift",
+        "module": "YM.Next.ROTATIONS.Pivot",
+        "lines": [
+          102,
+          104
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.rift"
+          },
+          "snippet": {
+            "text": "lemma rift (i : Axis) (w) (T : TestMap) (x a) (k : ℕ) (ha : a ≤ 0) (hp : Quest (update w i 0) i (fun _ => false) x T) (f : Grouping) (hf : ∀ j,Ends (f j)) (he : ∀ j,j≠i → Reflects false (f j)) (m) :\n    Budget (-a*(2*k:ℕ)+(2*a+x))\n      (fun n => hole T m k a w f i n - (cabin T k a w f i 1 n - cabin T k a w f i 2 n)) := by",
+            "line": 102,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Pivot.lean",
+            "fragment": "L102-L104"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.rift",
+            "lines": [
+              102,
+              108
+            ],
+            "conclusion": "`hole T m k a w f i n - (cabin T k a w f i 1 n - cabin T k a w f i 2 n)` is `Budget (-a*2k + 2a + x)`, i.e. `d_r = c_r(1) - c_r(2) + O(λ^δ W^2)`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.intersects",
+        "module": "YM.Next.ROTATIONS.Mass",
+        "lines": [
+          48,
+          52
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.intersects"
+          },
+          "snippet": {
+            "text": "    (hl : ∀ j, Plus (f j)) : ∃ m : ℕ,\n      let y (n) (p : E4) := fee m (fuel x n) 0 (p i)*crop (other i) (mails w f n) p\n      (∀ n,\n        Integrable (y n) (ν K A) ∧ hole (SelfB R i) m 0 x w f i n = toll*(∫ p, y n p ∂ν K A) ∧\n        0 ≤ hole (SelfB R i) m 0 x w f i n ∧ hole (BL R i) m 1 x w f i n ≤ 0 ∧ 0≤hole (CL R i) m 2 x w f i n) := by",
+            "line": 48,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Mass.lean",
+            "fragment": "L48-L52"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.intersects",
+            "lines": [
+              45,
+              102
+            ],
+            "conclusion": "For the corrected profile, `hole (SelfB R i) ≥ 0`, `hole (BL R i) ≤ 0`, `hole (CL R i) ≥ 0` (`d_0 ≥ 0`, `d_1 ≤ 0`, `d_2 ≥ 0`), with `hole (SelfB R i) = toll * ∫ ..` by reflection positivity."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.budget_lock",
+        "module": "YM.Next.ROTATIONS.Pivot",
+        "lines": [
+          59,
+          64
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.budget_lock"
+          },
+          "snippet": {
+            "text": "lemma budget_lock (x : ℝ) (a b v V r R f g h : ℕ → ℝ)\n    (hv : Budget x (fun n => v n-a n)) (hV : Budget x (fun n => V n-4*b n))\n    (hr : Budget x (fun n => r n-v n)) (hR : Budget x (fun n => R n-4*V n))\n    (hh : ∀ᶠ n in atTop, 0 ≤ f n ∧ g n ≤ 0 ∧ 0≤ h n)\n    (he : Budget x (fun n => f n - (a n-b n)))\n    (hu : Budget x (fun n => g n - (v n-V n)))",
+            "line": 59,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Pivot.lean",
+            "fragment": "L59-L64"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.budget_lock",
+            "lines": [
+              59,
+              72
+            ],
+            "conclusion": "From the relations `v≈a`, `V≈4b`, `r≈v`, `R≈4V`, `f≈a-b`, `g≈v-V`, `h≈r-R` and the signs `f≥0, g≤0, h≥0`, `f` is `Budget x`: the linear lock `4d_0 = 5d_1 - d_2 + error` forces `d_0` small."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.mass",
+        "module": "YM.Next.ROTATIONS.Mass",
+        "lines": [
+          138,
+          152
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.mass"
+          },
+          "snippet": {
+            "text": "  have hCash : Budget (δ+a*2) (hole M m 0 a w f i) := by\n    have hp p : Budget (δ+a*2) (fun n => cabin N 1 a w f i p n - p^2 * cabin M 0 a w f i p n) :=\n      (heights i w a M (DB F i) N (BL_law hI i) 0 p f _ hE).rise (by push_cast; linarith)\n    have ht' p : Budget (δ+a*2) (fun n => cabin L 2 a w f i p n - p^2 * cabin N 1 a w f i p n) :=\n      (heights i w a N (DC F i) L (CL_law hI i) 1 p f _ hL).rise (by push_cast; linarith)\n    apply budget_lock (δ+a*2) (cabin M 0 a w f i 1) (cabin M 0 a w f i 2) (cabin N 1 a w f i 1) (cabin N 1 a w f i 2)\n      (cabin L 2 a w f i 1) (cabin L 2 a w f i 2) (hole M m 0 a w f i) (hole N m 1 a w f i) (hole L m 2 a w f i)\n    · simpa using hp 1\n    · convert hp 2 using 1; norm_num\n    · simpa using ht' 1\n    · convert ht' 2 using 1; norm_num\n    · exact Eventually.of_forall fun n => (h n).2.2\n    · exact (rift i w _ δ a 0 ht B f hG (fun j _ => hT j) m).rise (by push_cast; linarith)\n    · exact (rift i w _ (δ+a+a) a 1 ht Y f hG (fun j _ => hT j) m).rise (by push_cast; linarith)\n    · exact (rift i w _ (δ+a+a+a+a) a 2 ht Z f hG (fun j _ => hT j) m).rise (by push_cast; linarith)",
+            "line": 138,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Mass.lean",
+            "fragment": "L138-L152"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.mass",
+            "lines": [
+              115,
+              180
+            ],
+            "conclusion": "`hole (SelfB F i) m 0 a w f i` is `Budget (δ+a*2)`, i.e. `d_0 = O(λ^δ W^2)`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          194
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 15.5 step 1",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] gets the same B_* a_k^{-d_pow} bound on the enlarged coefficient ball before the word, from the hypothesis `CellHyp`, with the exponent existential and the bound eventually along the order; these are differences in hypotheses and range.",
+  "subject": [
+    {
+      "location": {
+        "page": 168,
+        "rect": [
+          0.11819,
+          0.0962,
+          0.76401,
+          0.08974
+        ]
+      },
+      "title": "Lemma 15.5 step 1: Text, p. 168",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 15.5 step 1"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Phase.mirror_ball",
+        "module": "YM.Next.PHASE.Seats",
+        "lines": [
+          24,
+          26
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Phase.mirror_ball"
+          },
+          "snippet": {
+            "text": "private lemma mirror_ball (L : Register G) (D : ℕ) (R : ℝ) : ∃ Q : ℝ, 0 < Q ∧\n    ∀ v : L.Token, v.1 ≤ D → ‖v.2‖ ≤ R → ∀ b : Frame, ‖(token L v b).2‖ ≤ Q := by\n  let B (d : ℕ) (s : Signed) := LinearMap.toContinuousLinearMap (L.mirrorGroup d s)",
+            "line": 24,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/PHASE/Seats.lean",
+            "fragment": "L24-L26"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Phase.mirror_ball",
+            "lines": [
+              24,
+              35
+            ],
+            "conclusion": "`mirror_ball` gives one constant `Q` bounding `token L v b` for every signed or conjugated image of a token of degree at most `D` and coefficient norm at most `R`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Phase.rates",
+        "module": "YM.Next.PHASE.Seats",
+        "lines": [
+          55,
+          63
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Phase.rates"
+          },
+          "snippet": {
+            "text": "lemma rates (H : CellHyp C f) (D : ℕ) (R : ℝ) :\n    ∃ (F P : ℕ) (B : ℝ), 0 < B ∧ ∀ k ≥ F, ∀ v : C.book.Token, v.1 ≤ D → ‖v.2‖ ≤ R →\n      f.late (Single C v (B*(C.S.a k)⁻¹^P) k) := by\n  classical\n  obtain ⟨Q,hQ,hv⟩ := mirror_ball C.book D R\n  choose m b hb h using fun i : Fin (D+1) => one_grade H i Q hQ\n  obtain ⟨F,hF⟩ := (eventually_all.mpr fun i : Fin (D+1) => eventually_ge_atTop (m i)).exists\n  obtain ⟨B,hB,O⟩ := ((eventually_gt_atTop (0:ℝ)).and (eventually_all.mpr fun i => eventually_ge_atTop (b i))).exists\n  let P := D+1",
+            "line": 55,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/PHASE/Seats.lean",
+            "fragment": "L55-L63"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Phase.rates",
+            "lines": [
+              55,
+              77
+            ],
+            "conclusion": "`rates` gives a level `F`, an exponent `P` (`let P := D+1`) and `B > 0` such that every such image is bounded by `B * (a k)⁻¹^P` at all levels `k >= F`, eventually along the order."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Phase.one_grade",
+        "module": "YM.Next.PHASE.Seats",
+        "lines": [
+          40,
+          42
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Phase.one_grade"
+          },
+          "snippet": {
+            "text": "private lemma one_grade (h : CellHyp C f) (d : ℕ) (R : ℝ) (hr : 0 < R) :\n    ∃ (M : ℕ) (B : ℝ), 0 ≤ B ∧ ∀ k ≥ M, ∀ t : C.book.Ref d, ‖t‖ ≤ R →\n    f.late (centeredBudget C ⟨d,t⟩ (B*(C.S.a k)⁻¹^(d+1)) k) := by",
+            "line": 40,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/PHASE/Seats.lean",
+            "fragment": "L40-L42"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Phase.one_grade",
+            "lines": [
+              40,
+              52
+            ],
+            "conclusion": "`one_grade` turns the centered cell hypothesis `CellHyp` into the bound `B*(a k)⁻¹^(d+1)` for centered roots of degree `d` at levels `k >= M`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          168
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; a re-check of closeMatch records kept it; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

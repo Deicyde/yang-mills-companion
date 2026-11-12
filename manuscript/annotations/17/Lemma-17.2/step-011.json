@@ -1,0 +1,201 @@
+{
+  "id": "Lemma 17.2 step 11",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The proofs follow the sketch: the mass of `raw` gives the upper bound, the floor and ceiling bound the product, the lower bound integrates over a small interval (up to `wE/(E+w)` without the factor 2), and `lower` gets the value at zero by continuity of `Mlamp` (`Mlamp_cont`).",
+  "subject": [
+    {
+      "location": {
+        "page": 190,
+        "rect": [
+          0.11962,
+          0.72903,
+          0.76012,
+          0.05423
+        ]
+      },
+      "title": "Lemma 17.2 step 11: Text, p. 190",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 17.2 step 11"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.raw_mass",
+        "module": "YM.Next.ROTATIONS.Energy",
+        "lines": [
+          41,
+          42
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.raw_mass"
+          },
+          "snippet": {
+            "text": "lemma raw_mass (E : ℝ) (hE : 0<E) : ∫ p : ℝ,raw E p=Real.pi/E := by\n  have he := Measure.integral_comp_mul_left (raw E) E",
+            "line": 41,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Energy.lean",
+            "fragment": "L41-L42"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.raw_mass",
+            "lines": [
+              41,
+              49
+            ],
+            "conclusion": "`∫ raw E p dp = π/E`, so `2E ∫ (p^2+E^2)⁻¹ = 2π`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.kernel_ceiling",
+        "module": "YM.Next.ROTATIONS.Response",
+        "lines": [
+          133,
+          134
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.kernel_ceiling"
+          },
+          "snippet": {
+            "text": "lemma kernel_ceiling (m E p v s) (hs : 0<s) (hv : sun v≠0) (hp : |p|≤s) (he : 0<E) :\n    kernel m (s*v) p E ≤ kernelPrice m*(s/E)^(2*m) := by",
+            "line": 133,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Response.lean",
+            "fragment": "L133-L134"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.kernel_ceiling",
+            "lines": [
+              133,
+              146
+            ],
+            "conclusion": "`kernel m (s v) p E ≤ kernelPrice m * (s/E)^(2m)` for `|p| ≤ s`, the product bound by `∏ (2 num j s/E)^2`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.kernel_floor",
+        "module": "YM.Next.ROTATIONS.Response",
+        "lines": [
+          148,
+          149
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.kernel_floor"
+          },
+          "snippet": {
+            "text": "lemma kernel_floor (m : ℕ) (E p v s : ℝ) (hs : 1≤s) (hv : sun v≠0) (hp : |p| ≤ s) (he : 0<E) :\n    (2:ℝ)⁻¹^m * (1+E)⁻¹^(2*m) ≤ kernel m (s*v) p E := by",
+            "line": 148,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Response.lean",
+            "fragment": "L148-L149"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.kernel_floor",
+            "lines": [
+              148,
+              165
+            ],
+            "conclusion": "For `|p| ≤ s`, `1 ≤ s`, the kernel is at least `2⁻¹^m * (1+E)⁻¹^(2m)`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.raw_bottom",
+        "module": "YM.Next.ROTATIONS.Energy",
+        "lines": [
+          102,
+          102
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.raw_bottom"
+          },
+          "snippet": {
+            "text": "lemma raw_bottom (w E : ℝ) (hw : 0<w) (he : 0<E) : (E+w)⁻¹ ≤ 2*E*directLap E (width w center) := by",
+            "line": 102,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Energy.lean",
+            "fragment": "L102-L102"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.raw_bottom",
+            "lines": [
+              102,
+              129
+            ],
+            "conclusion": "`(E+w)⁻¹ ≤ 2*E*directLap E (width w center)`, from integrating `raw` over `0<p≤wE/(E+w)`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          190
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

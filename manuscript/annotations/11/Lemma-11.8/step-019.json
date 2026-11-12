@@ -1,0 +1,116 @@
+{
+  "id": "Lemma 11.8 step 19",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "The Lean freezes at the real point `ground p` and uses a ball estimate in place of the geometric-sum weights comparison `|q(θ(ξ)) - q(θ(ξ'))| ≤ Cμ|ξ-ξ'|`.",
+  "subject": [
+    {
+      "location": {
+        "page": 59,
+        "rect": [
+          0.12026,
+          0.76269,
+          0.76195,
+          0.0688
+        ]
+      },
+      "title": "Lemma 11.8 step 19: Text, p. 59",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 11.8 step 19",
+          "quads": [
+            [
+              0.69324,
+              0.76269,
+              0.88221,
+              0.76269,
+              0.88221,
+              0.78058,
+              0.69324,
+              0.78058
+            ],
+            [
+              0.12026,
+              0.78059,
+              0.88039,
+              0.78059,
+              0.88039,
+              0.81399,
+              0.12026,
+              0.81399
+            ],
+            [
+              0.12026,
+              0.814,
+              0.22933,
+              0.814,
+              0.22933,
+              0.83149,
+              0.12026,
+              0.83149
+            ]
+          ]
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.shelter",
+        "module": "YM.Next.STATIONARY.Spectral.Slabs",
+        "lines": [
+          153,
+          168
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.shelter"
+          },
+          "snippet": {
+            "text": "  have hq p (hq : p∈strip (min i j)) : Stable (carryM X Y p p (K p)) (a/2) := by\n    let x := ground p\n    have hp' := ground_near hq\n    have hr : p∈ ball x i := by rw [mem_ball,dist_eq_norm]; exact hp'.trans_le (min_le_left ..)\n    have hx := ground_real p\n    obtain ⟨P,h1,h2,h3⟩ := HX.feel x hx\n    obtain ⟨T,g1,g2,g3⟩ := HY.feel x hx\n    let Q := fun z => carryM P T z z (K z)\n    have hw z (hw : z∈ ball x σ) : vflux (Q z)≤ C*A*C := by\n      have hi := ((h3 z hw).2.bond (hg z (air_ride hx hw))).bond (g3 z hw).1\n      rwa [Matrix.one_mul, Matrix.mul_one] at hi\n    have hL z (hW : z∈ball x σ) : BillD Q z := ((BillD.take (h1 z hW) (P.whole z)).bond (hz.shape (air_ride hx hW))).bond (g1 z hW)\n    have hU : Q x=carryM X Y x x (K x) := by\n      unfold Q carryM; rw [h2 x (axes_of_real hx), g2 x (axes_of_real hx)]\n    have hV : Q p=carryM X Y p p (K p) := by unfold Q carryM; rw [h2 p rfl, g2 p rfl]\n    rw [← hV]; apply Stable.mono (Stable.cove (U:=Q x) (hU.symm ▸ hl x hx) (contour_matrix hs hL hw hr))",
+            "line": 153,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Spectral/Slabs.lean",
+            "fragment": "L153-L168"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.shelter",
+            "lines": [
+              140,
+              174
+            ],
+            "conclusion": "`shelter` compares the complex momentum `p` with a real base point `ground p` at distance at most `σ/2`, and bounds the operator `Q z` on the ball by `C A C`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          59
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
+      }
+    }
+  }
+}

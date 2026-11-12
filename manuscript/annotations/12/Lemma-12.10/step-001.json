@@ -1,0 +1,161 @@
+{
+  "id": "Lemma 12.10 step 1",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 87,
+        "rect": [
+          0.12026,
+          0.68117,
+          0.76126,
+          0.07428
+        ]
+      },
+      "title": "Lemma 12.10 step 1: Text, p. 87",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 12.10 step 1"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVNext.CouplingReset.stripe",
+        "module": "YM.UVNext.COUPLING_RESET.Probe",
+        "lines": [
+          56,
+          57
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVNext.CouplingReset.stripe"
+          },
+          "snippet": {
+            "text": "private def stripe (u : G.El) (he : 2 ∣ n.val) : Config G n :=\n  fun i => if i.2 = 0 ∧ ZMod.castHom he (ZMod 2) (i.1 1) = 0 then u else 1",
+            "line": 56,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/COUPLING_RESET/Probe.lean",
+            "fragment": "L56-L57"
+          },
+          "proof_context": {
+            "declaration": "YM.UVNext.CouplingReset.stripe",
+            "lines": [
+              56,
+              57
+            ],
+            "conclusion": "`stripe u he` puts the group element `u` on direction-1 links (`i.2 = 0`) whose second coordinate is even (`ZMod.castHom he (ZMod 2) (i.1 1) = 0`) and the identity elsewhere."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVNext.CouplingReset.reachable_chord",
+        "module": "YM.UVNext.COUPLING_RESET.Probe",
+        "lines": [
+          40,
+          54
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVNext.CouplingReset.reachable_chord"
+          },
+          "snippet": {
+            "text": "lemma reachable_chord (G : Gauge) [Nontrivial G.Color] :\n    ∃ ε : ℝ, 0 < ε ∧ ∀ h ∈ Icc (0:ℝ) ε, ∃ u : G.El, G.chord u = h := by\n  obtain ⟨c,hc⟩ := exists_ne (0:G.Color)\n  let γ (t : ℝ) := G.lieExp (t • c)\n  obtain ⟨t,ht⟩ : ∃ t : ℝ, 0 < G.chord (γ t) := by\n    by_contra! ha\n    have hz : (fun t => G.curvature (γ t)) = fun _ => 0 := funext fun t => norm_le_zero_iff.mp <|\n      (G.curvature_norm _).trans (ha t)\n    have hd : HasDerivAt (fun t => G.curvature (γ t)) c 0 := G.leading_curvature c\n    rw [hz] at hd\n    exact hc (hd.unique (hasDerivAt_const _ _))\n  have hg : Continuous (fun t => G.chord (γ t)) := G.continuous_chord.comp (G.lieExp_cont.comp (by fun_prop))\n  refine ⟨_,ht,fun h hh => ?_⟩\n  obtain ⟨x,hx⟩ := intermediate_value_univ 0 t hg (show h ∈ Icc (G.chord (γ 0)) _ by simpa [γ] using hh)\n  exact ⟨γ x,hx⟩",
+            "line": 40,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/COUPLING_RESET/Probe.lean",
+            "fragment": "L40-L54"
+          },
+          "proof_context": {
+            "declaration": "YM.UVNext.CouplingReset.reachable_chord",
+            "lines": [
+              40,
+              54
+            ],
+            "conclusion": "Continuity of the chord along a one-parameter subgroup gives `ε > 0` such that every chord in `[0, ε]` is `G.chord u` for some `u`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVNext.CouplingReset.sensor",
+        "module": "YM.UVNext.COUPLING_RESET.Probe",
+        "lines": [
+          106,
+          107
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVNext.CouplingReset.sensor"
+          },
+          "snippet": {
+            "text": "  obtain ⟨u,hu⟩ := hg _ ⟨hh,hh'.trans ((min_le_left ..).trans (min_le_left ..))⟩\n  let U := stripe u he",
+            "line": 106,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/COUPLING_RESET/Probe.lean",
+            "fragment": "L106-L107"
+          },
+          "proof_context": {
+            "declaration": "YM.UVNext.CouplingReset.sensor",
+            "lines": [
+              96,
+              142
+            ],
+            "conclusion": "The probe uses the chord `h = t * P.threshold`, obtains `u` with `G.chord u = h` and sets `U := stripe u he`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          87
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

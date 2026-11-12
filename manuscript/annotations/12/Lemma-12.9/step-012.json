@@ -1,0 +1,122 @@
+{
+  "id": "Lemma 12.9 step 12",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 85,
+        "rect": [
+          0.12026,
+          0.55057,
+          0.76194,
+          0.07134
+        ]
+      },
+      "title": "Lemma 12.9 step 12: Text, p. 85",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 12.9 step 12"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.Fleet.bubbleControl",
+        "module": "YM.Next.STATIONARY.OneLoop.Propagators",
+        "lines": [
+          462,
+          464
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.Fleet.bubbleControl"
+          },
+          "snippet": {
+            "text": "lemma bubbleControl : ∃ A : ℝ, 0≤A ∧ ∀ i, ‖flareY 2 (fun t=> (lowerJet X (atopY F Y) i t).trace)‖≤A/T i^4 := by\n  obtain ⟨A,hA,hB⟩ := focus_bill (bubbleHV h).2 h.2.2.2.lower\n  exact ⟨A,hA,fun i => (hB i).trans_eq (by simp; ring)⟩",
+            "line": 462,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/OneLoop/Propagators.lean",
+            "fragment": "L462-L464"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.Fleet.bubbleControl",
+            "lines": [
+              462,
+              464
+            ],
+            "conclusion": "The bubble second derivative is at most `A/T^4` with `T ≍ κ+μ`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.Fleet.haloControl",
+        "module": "YM.Next.STATIONARY.OneLoop.Propagators",
+        "lines": [
+          573,
+          579
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.Fleet.haloControl"
+          },
+          "snippet": {
+            "text": "lemma haloControl (h : Fleet X T μ F G W r) (hx : T=flay ∘ X.lens) : ∃ A : ℝ,0≤A ∧ ∀ i, ‖flareY 2 (fun t=> (lowerJet X (atopY F G) i t).trace) - flareY 2 (fun t => (haloC X W i t).trace)‖ ≤ A*rimEdge T μ i/T i^4 := by\n  obtain ⟨⟨A,hA,hp,hL⟩,hv⟩ := h.brass hx\n  obtain ⟨B,hB,M⟩ := focus_bill hv h.2.2.2.lower\n  refine ⟨B,hB,fun i=>?_⟩\n  rw [← flare_dec (h.lacy i).2 (hL i|>.run.sides)]\n  have ht : (fun t=> trace ((lowerJet X (atopY F G)-haloC X W) i t))= (fun t=> (lowerJet X (atopY F G) i t).trace) -(fun t=> (haloC X W i t).trace) := by ext1 t; simp\n  rw [← ht]; exact (M i).trans_eq (by simp; ring)",
+            "line": 573,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/OneLoop/Propagators.lean",
+            "fragment": "L573-L579"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.Fleet.haloControl",
+            "lines": [
+              573,
+              579
+            ],
+            "conclusion": "The difference between the lattice bubble and the leading bubble is at most `A * rimEdge T μ / T^4 = A/T^3 + A μ^2/T^6`: one power of `κ` gained and the regulator term."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          85
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

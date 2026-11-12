@@ -1,0 +1,161 @@
+{
+  "id": "Lemma 16.9 step 3",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 184,
+        "rect": [
+          0.11962,
+          0.26721,
+          0.76012,
+          0.05423
+        ]
+      },
+      "title": "Lemma 16.9 step 3: Text, p. 184",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.9 step 3"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.axisTurn",
+        "module": "YM.Next.ROTATIONS.Route",
+        "lines": [
+          65,
+          66
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.axisTurn"
+          },
+          "snippet": {
+            "text": "    rw [flux_value P H hp J p Y h K x hx q (vane a b l n) (vane_s a b l n) (vane_k a b l n) hs]\n    simp_rw [draught_river x q J h.tensor.symmetric a b l hh n]; rw [integral_sub hon hin]",
+            "line": 65,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Route.lean",
+            "fragment": "L65-L66"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.axisTurn",
+            "lines": [
+              57,
+              67
+            ],
+            "conclusion": "`flux_value` writes `localTurn` as minus the integral of `river` for the compactly supported `vane`, and `draught_river` turns the integrand into `draught a b - draught b a`, the sums over `d∈other a` and `other b`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.vane_home",
+        "module": "YM.Next.ROTATIONS.Route",
+        "lines": [
+          21,
+          27
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.vane_home"
+          },
+          "snippet": {
+            "text": "lemma vane_home (x : E4) (a b l d : Axis) (h : a≠b) : ∀ᶠ n in atTop, vane a b l n d =ᶠ[𝓝 x] comps d (roll (Ortho.plane b a)) := by\n  filter_upwards [petal_home a b l x,petal_home b a l x] with n ht hl\n  filter_upwards [ht,hl] with p hp hv; by_cases hb:d=b\n  · subst d; rw [vane,if_pos rfl,hp,comps,roll_plane]; simp [Ne.symm h]\n  by_cases ha:d=a\n  · subst d; rw [vane,if_neg hb,if_pos rfl,Pi.neg_apply,hv,comps,roll_plane];simp [hb]\n  simp [comps,vane,hb,ha,roll_plane]",
+            "line": 21,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Route.lean",
+            "fragment": "L21-L27"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.vane_home",
+            "lines": [
+              21,
+              27
+            ],
+            "conclusion": "Eventually in `n`, `vane a b l n` agrees near each point `x j` with the rotation field `comps d (roll (Ortho.plane b a))`, i.e. `V=Ky` near the insertions."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.draught_river",
+        "module": "YM.Next.ROTATIONS.Route",
+        "lines": [
+          46,
+          48
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.draught_river"
+          },
+          "snippet": {
+            "text": "  have hz : breeze J q x a b l a n y=breeze J q x b a l b n y := by\n    unfold breeze; rw [petal_self,petal_self,chart_symm a b]; unfold viewed; rw [hs a b]\n  rw [hz]; abel",
+            "line": 46,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Route.lean",
+            "fragment": "L46-L48"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.draught_river",
+            "lines": [
+              31,
+              48
+            ],
+            "conclusion": "The `d=a` and `d=b` terms cancel exactly: `breeze … a … a = breeze … b … b` by `petal_self`, `chart_symm` and `hs : J a b = J b a`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          184
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

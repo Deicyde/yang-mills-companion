@@ -1,0 +1,200 @@
+{
+  "id": "Lemma 18.9 step 1",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 216,
+        "rect": [
+          0.11962,
+          0.17519,
+          0.76077,
+          0.10849
+        ]
+      },
+      "title": "Lemma 18.9 step 1: Text, p. 216",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 18.9 step 1"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.Wick.wick_excludes",
+        "module": "YM.TraceExtension.Wick.Palette",
+        "lines": [
+          130,
+          133
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.Wick.wick_excludes"
+          },
+          "snippet": {
+            "text": "theorem wick_excludes (ht : EuclideanAsymptotic F A)(hA : 0<A) (P:Palette Flavor)(q w:PolyField Flavor) :\n    ¬ ∀ f g:Probe E4, HasCompactSupport ⇑(waveTest (productTest f g)) →\n       F.A.world.W 2 (pairV F.action.J (pinned F)) (productTest f g)= P.wicks q w (waveTest (productTest f g)) := by\n    obtain ⟨x,hx⟩:= P.wicks_painted q w; exact fun h=> polynomial_excludes ht hA x fun f g H=> (h f g H).trans (hx _ (SchwartzMap.continuous _) H).symm",
+            "line": 130,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Wick/Palette.lean",
+            "fragment": "L130-L133"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.Wick.wick_excludes",
+            "lines": [
+              130,
+              133
+            ],
+            "conclusion": "Under `EuclideanAsymptotic F A` and `0 < A`, the Wightman two-point function does not equal `P.wicks q w` on all product tests with compactly supported wave transform; it reduces to `polynomial_excludes` through `wicks_painted`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.Wick.polynomial_excludes",
+        "module": "YM.TraceExtension.Wick.Refute",
+        "lines": [
+          86,
+          105
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.Wick.polynomial_excludes"
+          },
+          "snippet": {
+            "text": "theorem polynomial_excludes (ht : EuclideanAsymptotic F A) (hA : 0<A) (W : Collection) :\n    ¬ ∀ f g : Probe E4, HasCompactSupport ⇑(waveTest (productTest f g)) →\n       F.A.world.W 2 (pairV F.action.J (pinned F)) (productTest f g)=tests W (waveTest (productTest f g)) := by\n    intro h\n    obtain ⟨μ,hμ,hM⟩:=traceSpectrum_exists F\n    apply euclidean_excludes ht hA W\n    apply mostly.mono; intro x hx; apply identifies_euclid hμ W _ _ hx.1\n    intro v hv\n    obtain ⟨p,hp⟩ := hv.isBounded.subset_closedBall (0:E4)\n    obtain ⟨u,hu⟩:= probe_one (Nat.ceil p)\n    obtain ⟨w,hw⟩:= testPlus_onto (Probe.sew (testPlus u) v)\n    have he : waveTest (productTest u w)=v := by\n        ext1 x\n        rw [waveTest_product,hw,Probe.sews,← mul_assoc]\n        by_cases hx : v x=0\n        · rw [hx,mul_zero]\n        have ht := hu x ((closedBall_subset_closedBall (Nat.le_ceil p)) (hp (subset_tsupport v hx)))\n        have he : ‖testPlus u x‖^2=(1:ℝ) := by exact congr_arg (fun y : ℝ≥0 => (↑y:ℝ)) ht\n        rw [mul_comm (star _),Complex.star_def,Complex.mul_conj,Complex.normSq_eq_norm_sq,he,Complex.ofReal_one,one_mul]\n    rw [← he,← hμ.absolute]; exact h u w (he.symm ▸ hv)",
+            "line": 86,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Wick/Refute.lean",
+            "fragment": "L86-L105"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.Wick.polynomial_excludes",
+            "lines": [
+              86,
+              105
+            ],
+            "conclusion": "Equality on product tests gives equality on every compactly supported `v` (`probe_one`, `testPlus_onto`), hence via `identifies_euclid` equality of `euclidean F` and `atPoint W` near 0, which `euclidean_excludes` refutes."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.Wick.identifies_euclid",
+        "module": "YM.TraceExtension.Wick.Refute",
+        "lines": [
+          62,
+          73
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.Wick.identifies_euclid"
+          },
+          "snippet": {
+            "text": "lemma identifies_euclid (hs : TraceSpectrum F μ) (t : Collection) (h : ∀ f : Probe E4, HasCompactSupport ⇑f→(∫ p,f p ∂μ)=tests t f)\n    (s : ℝ) (hS : 0<s) : euclidean F s=atPoint t s := by\n    obtain ⟨w,hx,hW⟩ := approximate s\n    haveI ht := hs.damped_mass _ hS\n    have hh : Integrable (fun p => Real.exp (-s*time p)) μ := by\n        have hp : Integrable (fun _ : E4 => (1:ℝ)) (OS.Semigroup.transform timeAxis s μ) := integrable_const _\n        have he := (integrable_withDensity_iff_integrable_smul (OS.Semigroup.measurable ..)).1 hp\n        apply Integrable.congr he; exact ae_of_all _ fun p=> (by change Real.exp _ * 1=_; rw [mul_one]; rfl)\n    rw [heat_value s hS hs]\n    refine tendsto_nhds_unique_of_eventuallyEq (f:=fun n => ∫ p,w n p ∂μ) ?_ (reads t s hS w (fun i => (hx i).2) hW)\n        (Eventually.of_forall fun n=>h _ (hx n).1)\n    exact tendsto_integral_of_dominated_convergence _ (fun i => (w i).continuous.aestronglyMeasurable) hh (fun i=> ae_of_all _ (hx i).2) (ae_of_all _ hW)",
+            "line": 62,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Wick/Refute.lean",
+            "fragment": "L62-L73"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.Wick.identifies_euclid",
+            "lines": [
+              62,
+              73
+            ],
+            "conclusion": "Equality on compactly supported tests implies `euclidean F s = atPoint t s` for all `s > 0`, approximating `exp (-s time p)` by compact cutoffs (`approximate`) and using dominated convergence (`reads`)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.Wick.exhibit_painted",
+        "module": "YM.TraceExtension.Wick.Palette",
+        "lines": [
+          82,
+          94
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.Wick.exhibit_painted"
+          },
+          "snippet": {
+            "text": "lemma exhibit_painted {n} (arcs:Fin n→Hue) : Painted (exhibit arcs) := by\n    let V:= (i:Fin n) → Fin (arcs i).num.l; letI : Fintype V:=by unfold V; infer_instance\n    let m (p:V):Track:=⟨n,fun i=>(arcs i).monochrome (p i)⟩\n    let a (p:V) : ℂ :=∏ i, (arcs i).num.c (p i)\n    obtain ⟨x,hx⟩:=Painted.sum Finset.univ (fun p : V=>fun v:E4→ℂ=> a p * (m p).read v) fun p=> Painted.times (painted_tariff _) _\n    refine ⟨x,?_⟩; intro f he hW\n    rw [hx _ he hW,exhibit]; simp_rw [Track.read,← integral_const_mul]\n    have hr:=fun p:V=> ((m p).read_int he hW).const_mul (a p)\n    rw [← integral_finsetSum (μ:=volume (α:= Fin n → Space3)) (f:=fun p:V => fun k=> a p*(m p).tariff f k) Finset.univ (fun p _=>hr p)];\n    congr! 1; ext1 k\n    simp_rw [Hue.coloration]\n    rw [Fintype.prod_sum, Finset.sum_mul]; apply Finset.sum_congr rfl; intro p _; unfold Track.tariff; rw [Finset.prod_mul_distrib,Complex.real_smul];\n    rw [show ∑ i,(arcs i).forward (k i)=(m p).order k from rfl, mul_assoc]; unfold a Track.weight; rw [Complex.ofReal_prod]",
+            "line": 82,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Wick/Palette.lean",
+            "fragment": "L82-L94"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.Wick.exhibit_painted",
+            "lines": [
+              82,
+              94
+            ],
+            "conclusion": "Expanding the numerators into monomials, `exhibit arcs` is a finite combination of mode reads (`Painted`)."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          216
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

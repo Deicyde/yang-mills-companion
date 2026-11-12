@@ -1,0 +1,161 @@
+{
+  "id": "Lemma 11.6 step 12",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 56,
+        "rect": [
+          0.12026,
+          0.13312,
+          0.75948,
+          0.01963
+        ]
+      },
+      "title": "Lemma 11.6 step 12: Display, p. 56",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 11.6 step 12"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.F01.hess_lower",
+        "module": "YM.Work.F01",
+        "lines": [
+          252,
+          262
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.F01.hess_lower"
+          },
+          "snippet": {
+            "text": "lemma hess_lower {S : StepData c f} (H : Forest S.ratio) (k : S.Choices)\n    {B : Bed} {p : Clip} {W : PathData G} {a A : ℝ} (hF : Floor B p f a A)\n    (h : Prismatic H p W) (hc : Comptroller H B p W) (v : AxisChart G H) :\n    let x := stretch (S:=S) H (0, v)\n    a * (∑ b, ‖dColor G f 1 x b‖^2) + S.kernel.penalty * (∑ b, ‖bills S x b‖^2) ≤\n      iteratedFDeriv ℝ 2 (tested H k p W 0) 0 ![v,v] := by\n  intro x\n  rw [vertical_hessian H k h, (hc k).2.2]\n  have he : crop (S:=S) H (0,v) = -bills S x := zero_sub _\n  rw [he]\n  simp only [Pi.neg_apply, real_inner_self_eq_norm_sq, norm_neg]; exact add_le_add_left (curl_floor hF x) _",
+            "line": 252,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/F01.lean",
+            "fragment": "L252-L262"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.F01.hess_lower",
+            "lines": [
+              252,
+              262
+            ],
+            "conclusion": "Through `Comptroller` restricted to the vertical slice, `a * ∑‖dColor x‖^2 + penalty * ∑‖bills S x‖^2 ≤` the Hessian of `tested` at 0 on `![v, v]` for `x = stretch H (0, v)`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.F01.answer",
+        "module": "YM.Work.F01",
+        "lines": [
+          300,
+          311
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.F01.answer"
+          },
+          "snippet": {
+            "text": "  have hm : ∑ i : H.Free, ‖v i‖^2 ≤ ∑ e : Bond f, u e ^ 2 := by\n    have he (i : H.Free) : u i.val = ‖v i‖ := by\n      change ‖collect G (stretch (S:=S) H (0,v)) _‖ = _\n      rw [collect_vertical, dif_neg i.property]\n    simp_rw [← he]\n    exact sum_comp_le (fun i : H.Free => i.val) Subtype.val_injective (fun i => u i ^ 2) (fun i => sq_nonneg _)\n  apply (mul_le_mul_of_nonneg_left (hm.trans hall) hη.le).trans\n  have Hh : a*D + K.penalty*Q ≤ iteratedFDeriv ℝ 2 (tested H k p W 0) 0 ![v,v] := by\n    rw [← hk]; exact hess_lower H k hF hP hc v\n  apply le_trans ?_ Hh\n  rw [mul_add, ← mul_assoc, ← mul_assoc]\n  exact add_le_add (mul_le_mul_of_nonneg_right hprices.1 hd) (mul_le_mul_of_nonneg_right hprices.2 hq)",
+            "line": 300,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/F01.lean",
+            "fragment": "L300-L311"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.F01.answer",
+            "lines": [
+              266,
+              311
+            ],
+            "conclusion": "Combined with `hall`, this gives `η * ∑‖v i‖^2 ≤` that Hessian, i.e. `PriceGap H p W η`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Precision.PriceGap",
+        "module": "YM.PCalc.Chart",
+        "lines": [
+          100,
+          101
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Precision.PriceGap"
+          },
+          "snippet": {
+            "text": "def PriceGap (B : Forest S.ratio) (p : Clip) (R : PathData G) (η : ℝ) := ∀ r, ∀ v : AxisChart G B,\n    η*(∑ i : B.Free, ‖v i‖^2) ≤ iteratedFDeriv ℝ 2 (tested B r p R 0) 0 ![v,v]",
+            "line": 100,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PCalc/Chart.lean",
+            "fragment": "L100-L101"
+          },
+          "proof_context": {
+            "declaration": "YM.Precision.PriceGap",
+            "lines": [
+              100,
+              101
+            ],
+            "conclusion": "`PriceGap` states `η * ∑ ‖v i‖^2 ≤ iteratedFDeriv ℝ 2 (tested B r p R 0) 0 ![v,v]`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          56
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

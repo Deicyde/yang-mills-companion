@@ -1,0 +1,122 @@
+{
+  "id": "Lemma 14.2 step 6",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 127,
+        "rect": [
+          0.12026,
+          0.16744,
+          0.75995,
+          0.08564
+        ]
+      },
+      "title": "Lemma 14.2 step 6: Text, p. 127",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.2 step 6"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.Shoot.steps",
+        "module": "YM.Shoot.Reach",
+        "lines": [
+          112,
+          154
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.Shoot.steps"
+          },
+          "snippet": {
+            "text": "lemma steps (p N : ℕ) (hh : R.Issues N p) (h : G.Simple) (hA : Drifting a) (m : ℕ) (hm : m ≤ N) :\n    ∃ l u : ℝ, l ≤ u ∧ ∃ F : ℝ → Trail a p,\n      (∀ x∈Icc l u, Competes R p N m (F x)) ∧\n        Curve (a.budget m) (fun x => F x m) (Icc l u) ∧\n        (F l m).beta=floorBeta a m ∧ (F u m).beta=ceilBeta a m := by\n  induction hm using Nat.decreasingInduction with\n  | self =>\n    obtain ⟨F,H,ht⟩ := hh.initial\n    let t := floorBeta a N; let u := ceilBeta a N\n    obtain ⟨h0,h1⟩ := limits a h N\n    let f := fun x : ℝ => update (padding a R p N) N (F x)\n    have he (x) : f x N=F x := update_self ..\n    refine ⟨t,u,h0,f,fun x hx ↦ ?_,?_,?_,?_⟩\n    · have hy := ht _ (h1 hx)\n      refine ⟨fun i hi hi' => ?_, he x |>.symm ▸ hy.2.2, fun i hi HI => False.elim ((hi.trans_lt HI).false)⟩\n      rw [Nat.le_antisymm hi' hi,he]; exact ⟨hy.2.1,hy.1.symm ▸ h1 hx⟩\n    · simp only [he]; exact H.mono h1\n    · rw [he]; exact (ht _ (h1 (left_mem_Icc.mpr h0))).1\n    rw [he]; exact (ht _ (h1 (right_mem_Icc.mpr h0))).1\n  | of_succ i ik H =>\n    obtain ⟨l,u,hw,F,hb,hc,hl,hu⟩ := H\n    obtain ⟨T,ht,HI⟩ := hh.advances i ik l u hw (fun x => F x (i+1)) hc (fun x hx => (hb x hx).prices _ le_rfl ik)\n    have hy := ((gates (HI _ (left_mem_Icc.mpr hw)).2 h hA).1 hl)\n    have hY := ((gates (HI _ (right_mem_Icc.mpr hw)).2 h hA).2 hu)\n    obtain ⟨o,ho,e,he,hea,heb,X⟩ := narrow hw ht.beta hy.le (limits a h i).1 hY.le\n    have ht' : Icc o e⊆Icc l u := Icc_subset_Icc ho.1 he.2\n    let f := fun x : ℝ => update (F x) i (T x)\n    refine ⟨o,e,he.1,f,fun x hx => ?_,?_,?_,?_⟩\n    · have ha := ht' hx\n      have hi := hb x ha\n      have HGG := HI x ha\n      have hg : f x i=T x := update_self ..\n      have hz (k) (hk : i < k) : f x k=F x k := update_of_ne (Nat.ne_of_gt hk) ..\n      refine ⟨fun j hj hj' => ?_,by rw [hz _ ik]; exact hi.fromTop, fun j hj hj' => ?_⟩\n      · rcases eq_or_lt_of_le hj with hO|hO\n        · subst j; rw [hg]; exact ⟨HGG.1,(limits a h i).2 (X hx)⟩\n        rw [hz _ hO]; exact hi.prices _ hO hj'\n      rcases eq_or_lt_of_le hj with rfl|hj\n      · rw [hg,hz _ (by omega)]; exact HGG.2\n      rw [hz _ hj,hz _ (by omega)]; exact hi.persists _ hj hj'\n    · simp only [f,update_self]; exact ht.mono ht'\n    · simp only [f,update_self]; exact hea\n    simp only [f,update_self]; exact heb",
+            "line": 112,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Shoot/Reach.lean",
+            "fragment": "L112-L154"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.Shoot.steps",
+            "lines": [
+              112,
+              154
+            ],
+            "conclusion": "By decreasing induction from N, `steps` starts with the initial curve restricted to [floorBeta N, ceilBeta N] and at each level restricts to a sub-interval where all levels compete, ending with `F l m` at `floorBeta a m`, `F u m` at `ceilBeta a m`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.Shoot.successful",
+        "module": "YM.Shoot.Reach",
+        "lines": [
+          156,
+          159
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.Shoot.successful"
+          },
+          "snippet": {
+            "text": "lemma successful (p N : ℕ) (hh : R.Issues N p) (h : G.Simple) (hA : Drifting a) :\n    ∃ T, Competes R p N 0 T ∧ (T 0).beta=a.clock.bar := by\n  obtain ⟨l,b,hl,F,hb,-,H,-⟩ := steps p N hh h hA 0 (Nat.zero_le _)\n  exact ⟨F l, hb l (left_mem_Icc.mpr hl), H.trans (by simp [floorBeta])⟩",
+            "line": 156,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Shoot/Reach.lean",
+            "fragment": "L156-L159"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.Shoot.successful",
+            "lines": [
+              156,
+              159
+            ],
+            "conclusion": "`successful` takes m = 0, where `floorBeta a 0 = bar`, and gives a trajectory `T` with `Competes R p N 0 T` and `(T 0).beta = bar`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          127
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

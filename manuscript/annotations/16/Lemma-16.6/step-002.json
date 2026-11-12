@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 16.6 step 2",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] takes the vanishing of each term as the `Balances` hypothesis, not from strict exponent inequalities. It bounds tuples of tags directly by `charge`, with no expansion into basis words.",
+  "subject": [
+    {
+      "location": {
+        "page": 180,
+        "rect": [
+          0.12026,
+          0.70114,
+          0.76013,
+          0.05424
+        ]
+      },
+      "title": "Lemma 16.6 step 2: Text, p. 180",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.6 step 2"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.UVStress.Balances",
+        "module": "YM.Next.UV_STRESS.Glide",
+        "lines": [
+          24,
+          31
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.UVStress.Balances"
+          },
+          "snippet": {
+            "text": "structure Balances (F : Extraction.Order) (R : ℝ) (u : ∀ i,t i≤D) (w : Ribbon (Bel C.book) t) (e A B : ℕ → ℝ) : Prop where\n  goes : Tendsto e atTop (𝓝 0)\n  stripe : Tendsto (fun k => (W k).σ) atTop (𝓝 0)\n  room : ∀ᶠ k in atTop,(4*n:ℝ)*(W k).spacing ≤ (W k).σ\n  pos : ∀ᶠ k in atTop, 0≤A k ∧ 0≤B k\n  off : Tendsto (fun k => A k^n * (W k).σ) atTop (𝓝 0)\n  on_ : Tendsto (fun k => B k^n * ((W k).spacing / (W k).σ)) atTop (𝓝 0)\n  costs : ∀ᶠ k in atTop,(W k).Spots F R (e k) (A k) (B k) u w",
+            "line": 24,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/UV_STRESS/Glide.lean",
+            "fragment": "L24-L31"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.UVStress.Balances",
+            "lines": [
+              24,
+              31
+            ],
+            "conclusion": "`Balances`: the error `e`, the stripe `σ`, `A^n σ` and `B^n spacing/σ` all tend to zero."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.UVStress.harvested",
+        "module": "YM.Next.UV_STRESS.Station",
+        "lines": [
+          132,
+          139
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.UVStress.harvested"
+          },
+          "snippet": {
+            "text": "lemma harvested (H : S.Hierarchy) (h : F.Ordered C S) (a : (Bel C.book).RealSpin)\n    (X : Station C D) {N : ℕ} {R ε : ℝ} (hs : X.Admissible F a N R ε) :\n    ∃ U : Panel S,\n      (∀ d≤D, StraightAt H.spin a U d) ∧ U 0 ((Bel C.book).unit 0)=S.unit 0 ∧\n      ∀ (n : ℕ), n ≤ N → ∀ v : Fin n → (Bel C.book).Tag, (∀ i,(v i).1 ≤ D) →\n        ∀ t : Test n, tsupport t ⊆ Scaling.window R n →\n        ∀ M : ℝ, 0 < M → (∀ x, ‖t x‖ ≤ M) →\n        ‖t.applyTo (tested X.r U v) - t.applyTo (disc v)‖ ≤ ε * Station.charge v * M := by",
+            "line": 132,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/UV_STRESS/Station.lean",
+            "fragment": "L132-L139"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.UVStress.harvested",
+            "lines": [
+              132,
+              180
+            ],
+            "conclusion": "The tested error for a tuple `v` is at most `ε * charge v * M`, with `charge v` the product of the field norms."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          180
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

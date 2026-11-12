@@ -1,0 +1,122 @@
+{
+  "id": "Lemma 11.11 step 3",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 66,
+        "rect": [
+          0.12026,
+          0.27373,
+          0.75948,
+          0.02997
+        ]
+      },
+      "title": "Lemma 11.11 step 3: Display, p. 66",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 11.11 step 3"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.E06.square_direct",
+        "module": "YM.Work.E06",
+        "lines": [
+          229,
+          237
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.E06.square_direct"
+          },
+          "snippet": {
+            "text": "private lemma square_direct (T : Tube G S) (U : Config G f) (V : Config G c)\n    (x t : ℝ) (i : Cell f) (hi : toll U i ≤ t) :\n    let v := T.Mv (till x) (temp x) V (i,false)\n    (Real.sqrt T.high.direct * toll U i - ‖v‖)^2 / 2 ≤ directPart T U V x t i := by\n  intro v\n  calc\n    _ ≤ T.high.direct * toll U i ^ 2 / 2 + (‖v‖^2 / 2 - inner ℝ v (Pressure.shoot T.high U i)) :=\n      square_bound T.high.quadratic_pos.le v _ (shoot_norm T U i)\n    _ = _ := by simp only [directPart, v, PathData.clipped, if_pos hi]; ring",
+            "line": 229,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/E06.lean",
+            "fragment": "L229-L237"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.E06.square_direct",
+            "lines": [
+              229,
+              237
+            ],
+            "conclusion": "For `toll U i <= t`, `(sqrt T.high.direct * toll U i - norm v)^2 / 2 <= directPart T U V x t i`, where `v = Mv (i,false)` is `Phi v_c(p,0)`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.E06.square_bound",
+        "module": "YM.Work.E06",
+        "lines": [
+          215,
+          222
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.E06.square_bound"
+          },
+          "snippet": {
+            "text": "private lemma square_bound {m r : ℝ} (hm : 0 ≤ m) (v y : G.Color)\n    (hy : ‖y‖ ≤ Real.sqrt m * r) :\n    (Real.sqrt m * r - ‖v‖)^2 / 2 ≤ m * r^2/2 + (‖v‖^2 / 2 - inner ℝ v y) := by\n  have hi := le_trans (real_inner_le_norm v y) (mul_le_mul_of_nonneg_left hy (norm_nonneg v))\n  calc\n    _ = m * r^2 / 2 + (‖v‖^2 / 2 - ‖v‖ * (Real.sqrt m * r)) := by\n      nlinarith only [show Real.sqrt m ^ 2 * r^2 = m * r^2 by rw [Real.sq_sqrt hm]]\n    _ ≤ _ := by linarith only [hi]",
+            "line": 215,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/E06.lean",
+            "fragment": "L215-L222"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.E06.square_bound",
+            "lines": [
+              215,
+              222
+            ],
+            "conclusion": "The square inequality `(sqrt m r - norm v)^2/2 <= m r^2/2 + (norm v^2/2 - inner v y)` from `norm y <= sqrt m * r`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          66
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 14.32 step 6",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "Uniform convergence on K from the dense pointwise Cauchy property and the Lipschitz bound, and continuity of the limit, are carried. [L] measures lattice values at the nearest grid point instead of the interpolant with an O(a_N) vertex displacement, treats the interpolants separately in `held`, and states no periodicity of the limit.",
+  "subject": [
+    {
+      "location": {
+        "page": 160,
+        "rect": [
+          0.12026,
+          0.17519,
+          0.75982,
+          0.07134
+        ]
+      },
+      "title": "Lemma 14.32 step 6: Text, p. 160",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.32 step 6"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.circulating",
+        "module": "YM.FullVolume.Tuned",
+        "lines": [
+          38,
+          54
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.circulating"
+          },
+          "snippet": {
+            "text": "lemma circulating : oscillation (NoHit C.S p n) (evaluate C e p v l):= by\n  intro K hU hK ε hε\n  obtain ⟨t,ht,hT⟩:= hK.exists_cthickening_subset_open (nohitOpen ..) hU\n  obtain ⟨r,B,hr,hB,H⟩:= M.localLip v l p hT hK.cthickening\n  let g:= min r (ε/(B+1))\n  have hg: 0<g := lt_min hr (by positivity)\n  have hv: 0<g/4:= by positivity\n  refine ⟨g/4,hv,?_⟩\n  filter_upwards [e.cofinal.eventually H,nearest (n:=n) (C:=C) e ht, nearest (n:=n) (C:=C) e hv] with i hi he hF x hx y hy hw\n  let a:= C.S.a (e i); let f x := tag a (address a (x: Points n))\n  have hl : f y∈ cthickening t K:= mem_cthickening_of_dist_le _ _ _ _ hy (he y).le\n  have hz : dist (f x) (f y) < g := by\n    have hv' := hF y; change dist (f y) y<g/4 at hv'; rw [dist_comm] at hv'\n    have ht:=hF x; change dist (f x) x<_ at ht; linarith [dist_triangle (f x) x y, dist_triangle (f x) y (f y)]\n  apply lt_of_le_of_lt (hi _ _ hl (hz.le.trans (min_le_left ..))); change B*dist (f x) _ < _\n  apply lt_of_le_of_lt (mul_le_mul_of_nonneg_left hz.le hB); have hw:= (le_div_iff₀' (by positivity : 0 < B+1)).1 (min_le_right r (ε/(B+1)))\n  change (B+1)*g ≤ ε at hw; linarith",
+            "line": 38,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Tuned.lean",
+            "fragment": "L38-L54"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.circulating",
+            "lines": [
+              38,
+              56
+            ],
+            "conclusion": "The Lipschitz bound `localLip` makes the lattice values `evaluate C e p v l` equicontinuous (`oscillation`) on compacts of `NoHit C.S p n`, using nearest grid points via `address`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.established",
+        "module": "YM.FullVolume.Tuned",
+        "lines": [
+          60,
+          61
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.established"
+          },
+          "snippet": {
+            "text": "lemma established (hp:Purchased C e):∃ f,Tuned C e p v [] f:= by\n  exact growFrom (nohitOpen ..) (circulating M e p v []) (Cyclic C.S p n) (MeasureTheory.Measure.dense_of_ae (almostCyclic C.S p n)) (fun x hx=>hp _ _ _ x hx.1)",
+            "line": 60,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Tuned.lean",
+            "fragment": "L60-L61"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.established",
+            "lines": [
+              60,
+              63
+            ],
+            "conclusion": "`growFrom` upgrades pointwise Cauchy at a dense set plus `oscillation` to `Tuned C e p v [] f`, i.e. `f` continuous on `NoHit` with locally uniform convergence."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.held",
+        "module": "YM.FullVolume.Panes",
+        "lines": [
+          64,
+          77
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.held"
+          },
+          "snippet": {
+            "text": "theorem held {F:ℕ→Positions n→ℂ}{f:Points n→ℂ}(h:Cluster C e p n F f):\n    Meets (NoHit C.S p n) (fun i=> interpolated C.S (e i) (F (e i))) f:=by\n  refine ⟨h.1,fun K hx hK ε hε=>?_⟩\n  suffices H:∀ j:Vertex n, ∀ᶠ i in atTop, ∀ x∈K, dist (F (e i) (vertex x (C.S.a (e i)) j)) (f x)≤ε/2 from\n    (eventually_all.mpr H).mono (fun _ hi x hX=> (coinprice _ _ _ _ _ _ (fun i=>hi i _ hX)).trans_lt (half_lt_self hε))\n  intro j; by_contra! ht\n  choose s hs x hX hH using frequently_atTop.mp ht\n  obtain ⟨y,hy,w,hw,hW⟩:= hK.tendsto_subseq hX\n  let Y i:=x (w i); let g:=s ∘ w\n  have hg:Tendsto g atTop atTop:=tendsto_atTop_mono (fun i=>hs (w i)) hw.tendsto_atTop\n  let q i:= vertex (Y i) (C.S.a (e (g i))) j\n  have hh:Tendsto (fun i=> tag (C.S.a (e (g i))) (q i)) atTop (𝓝 y):= hW.congr_dist (squeeze_zero (fun _=>dist_nonneg) (fun i=>(dist_comm ..).trans_le (surrounds _ _ (C.S.a_pos _))) (by simpa using! (((C.S.shrinks.comp e.cofinal).comp hg).const_mul (2*(4*(n:ℝ)):ℝ))))\n  have hp:= (h.2 y (hx hy) q g hg hh).dist (((h.1.continuousAt ((nohitOpen ..).mem_nhds (hx hy))).tendsto).comp hW); rw [dist_self] at hp\n  obtain ⟨i,hi⟩:= (hp.eventually (ge_mem_nhds (half_pos hε))).exists; exact (hH (w i)).not_ge hi",
+            "line": 64,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Panes.lean",
+            "fragment": "L64-L77"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.held",
+            "lines": [
+              64,
+              77
+            ],
+            "conclusion": "Convergence along moving lattice points (`Cluster`) gives locally uniform convergence of the multilinear interpolants (`Meets`), using `coinprice` for the convex combination."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          160
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

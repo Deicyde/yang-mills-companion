@@ -1,0 +1,122 @@
+{
+  "id": "Corollary 17.6 step 3",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 197,
+        "rect": [
+          0.11962,
+          0.37892,
+          0.76012,
+          0.04066
+        ]
+      },
+      "title": "Corollary 17.6 step 3: Text, p. 197",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Corollary 17.6 step 3"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.B13.answer",
+        "module": "YM.Work.B13",
+        "lines": [
+          91,
+          105
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.B13.answer"
+          },
+          "snippet": {
+            "text": "theorem answer : YM.Bid.B13 := by\n  intro G C S V A P X H _ hs hA _ ho p hr i Z\n  classical\n  have he (d : ℝ≥0) (w : C.book.Word) : ∃ U : Z.GNS.H.Op, ∀ h : Slab timeAxis d w,\n      ‖U‖ ≤ ‖A.place d w‖ ∧ ∀ v, U (Z.GNS.plant v) = Z.GNS.plant (entering h v) := by\n    by_cases h : Slab timeAxis d w\n    · obtain ⟨U,hU⟩ := actual A H hs ho (hr.reads i) Z (hr.loci i) h\n      exact ⟨U,fun _ => hU⟩\n    · exact ⟨0,fun hp => (h hp).elim⟩\n  choose U hU using he\n  let B : Spread Z := ⟨U,fun h => (hU _ _ h).2⟩\n  refine ⟨B,fun D R => ?_⟩\n  obtain ⟨K,J,hK,hJ⟩ := hA.cap D R\n  exact ⟨K,J,hK,fun w d hc hw r hr hb hB =>\n    le_trans (show ‖B.place d w‖ ≤ ‖A.place d w‖ from (hU d w hw).1) (hJ w d hc hw r hr hb hB)⟩",
+            "line": 91,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/B13.lean",
+            "fragment": "L91-L105"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.B13.answer",
+            "lines": [
+              91,
+              105
+            ],
+            "conclusion": "Each phase gets slab operators `U` with ||U|| <= ||A.place d w|| acting on plants by `entering`, and the cap bounds with the original constants."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.B02.answer",
+        "module": "YM.Work.B02",
+        "lines": [
+          17,
+          30
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.B02.answer"
+          },
+          "snippet": {
+            "text": "theorem answer : YM.Bid.B02 := by\n  intro G L S T P V A _ hT hr _ ht hD hb\n  constructor\n  · exact hb\n  · intro d n v\n    rw [show {x | Slab timeAxis d (realize v x)} = region timeAxis d n from\n      Set.ext fun x => in_region d v x]\n    exact smooth_place P A d ht hT.smooth hr hD hb v\n  intro d n v x p hx j\n  let b := (p,j)\n  change Analysis.D _ _ _ = A.place d (realize (nextLabels P v b) x)\n  unfold Analysis.D\n  rw [(deriv_place P A d ht hT.smooth hr hD hb v ((in_region d v x).1 hx)).fderiv]\n  exact columnD_column P A d v x b",
+            "line": 17,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/B02.lean",
+            "fragment": "L17-L30"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.B02.answer",
+            "lines": [
+              17,
+              30
+            ],
+            "conclusion": "For the resulting spread the slab laws, smoothness and the derivative identity hold."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          197
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "id": "Corollary 17.6 step 1",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 197,
+        "rect": [
+          0.12026,
+          0.30112,
+          0.75948,
+          0.04295
+        ]
+      },
+      "title": "Corollary 17.6 step 1: Text, p. 197",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Corollary 17.6 step 1"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.B13.x_enter",
+        "module": "YM.Work.B13",
+        "lines": [
+          22,
+          28
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.B13.x_enter"
+          },
+          "snippet": {
+            "text": "private lemma x_enter (h : Slab timeAxis d w) (v : Future C.book timeAxis) :\n    Ground.X A (entering h v) = (A.place d w).comp (Ground.X A v) := by\n  obtain ⟨e,he⟩ := Ground.future_reach v\n  rw [standing A (entering h v) (connects h he), standing A v he]\n  change (A.place (d+e) (linked timeAxis d w v.val)).comp _ = _\n  rw [A.concatenate h he]\n  rfl",
+            "line": 22,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/B13.lean",
+            "fragment": "L22-L28"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.B13.x_enter",
+            "lines": [
+              22,
+              28
+            ],
+            "conclusion": "`X A (entering h v) = (A.place d w) ∘ X A v`, the mixed-space map intertwines the slab operator."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.B13.x_train",
+        "module": "YM.Work.B13",
+        "lines": [
+          30,
+          48
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.B13.x_train"
+          },
+          "snippet": {
+            "text": "private lemma x_train (H : S.Hierarchy) (h : Slab timeAxis d w) (D : ℝ) (hb : ‖A.place d w‖ ≤ D)\n    (v : Future C.book timeAxis) (n : ℕ) : ‖Ground.X A (ride h v n)‖ ≤ ‖Ground.X A v‖ * D^(2*n) := by\n  have hd : 0 ≤ D := le_trans (norm_nonneg _) hb\n  induction n with\n  | zero => rw [show ride h v 0=v from rfl]; simp\n  | succ n ih =>\n    let u := A.place d w\n    let q := Ground.X A (ride h v n)\n    have he : ride h v (n+1) = entering (mirrorsSlab h) (entering h (ride h v n)) := by\n      simp [ride,iterate_succ_apply']\n    rw [he,x_enter A (mirrorsSlab h), x_enter A h, ← A.adjoints h H.translations]\n    change ‖(u.adjoint.comp u).comp q‖ ≤ _\n    change ‖q‖ ≤ _ at ih\n    change ‖u‖ ≤ D at hb\n    calc\n      _ ≤ ‖u.adjoint.comp u‖ * ‖q‖ := ContinuousLinearMap.opNorm_comp_le _ _\n      _ = (‖u‖ * ‖u‖) * ‖q‖ := by rw [ContinuousLinearMap.norm_adjoint_comp_self]\n      _ ≤ (D*D)*(‖Ground.X A v‖ * D^(2*n)) := by gcongr\n      _ = _ := by rw [Nat.mul_add, pow_add]; ring",
+            "line": 30,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/B13.lean",
+            "fragment": "L30-L48"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.B13.x_train",
+            "lines": [
+              30,
+              48
+            ],
+            "conclusion": "`ride h v n` is the power (A^* A)^n v and `X A (ride)` is the corresponding power applied to `X A v`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          197
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

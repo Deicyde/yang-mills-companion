@@ -1,0 +1,84 @@
+{
+  "id": "Lemma 13.18 step 9",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "[L] does the same truncation at level k with zero terminal data, but the preceding-kernel error is carried by the convergence `Arrives` of the previous level (via `Sign.stamps`), not by an explicit error e_{N,N',i}. The contraction is `soft` and the terminal bound 1, not 1/4 and 2.",
+  "subject": [
+    {
+      "location": {
+        "page": 116,
+        "rect": [
+          0.12026,
+          0.51355,
+          0.75996,
+          0.08607
+        ]
+      },
+      "title": "Lemma 13.18 step 9: Text, p. 116",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 13.18 step 9"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVExtension.Camp.mist",
+        "module": "YM.UVExtension.Camp.Plum",
+        "lines": [
+          57,
+          67
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVExtension.Camp.mist"
+          },
+          "snippet": {
+            "text": "lemma mist (m k:ℕ)(h:m≤k): Arrives (fun i=> drawerE S i m n (cup S n w m k h i)) ∧ ∀ i:ℕ,k≤ i → ‖drawerE S i m n (cup S n w m k h i)‖≤ Camp.soft ∧‖drawerE S i m n (cup S n w m k h i)-drawerE S i m n (rose S n w m i)‖≤ Camp.soft^(k-m):= by\n   induction h using Nat.decreasingInduction with\n   | self=>\n     have hm: cup S n w k k le_rfl=0:= Nat.decreasingInduction_self ..\n     rw [hm]; simp only [drawerE,Pi.zero_apply,map_zero,ZeroMemClass.coe_zero]; constructor; exact Arrives.steady _\n     intro i hi; have hh:= gains S n w hp ht k i hi; simp only [zero_sub,norm_neg,norm_zero,Nat.sub_self,pow_zero]; exact ⟨by norm_num [Camp.soft,Oriel.rim], (show ‖place T! k n _ (rose S n w k i)‖≤1 from hh ▸ ((S.cart i n).seats _ _ _ (hp i) k hi|>.1.trans (by norm_num [Camp.soft,Oriel.rim])))⟩\n   | of_succ i hi ih=>\n     have hx j (h:k≤j):= purchase S n w hp ht i k hi j h (cup S n w (i+1) k hi) (ih.2 _ h |>.1)\n     rw [show cup S n w i k (Nat.le_of_lt hi) = wood S (centers w S (i+1)) i n (cup S n w (i+1) k hi) from funext fun j=>chase S n w j _ _ hi]\n     constructor; · exact (H.stamps _ _ _ _ ((eventually_ge_atTop k).mono fun j hj=> hx j hj|>.2.1) (ratings S w hw hC _) ih.1).2\n     intro j hj; refine ⟨(hx j hj).1,?_⟩; apply (hx j hj).2.2.trans; nth_rw 1 [show k-i=k-(i+1)+1 by omega]; rw [pow_succ']; exact mul_le_mul_of_nonneg_left (ih.2 _ hj|>.2) (by norm_num [Camp.soft,Oriel.rim])",
+            "line": 57,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVExtension/Camp/Plum.lean",
+            "fragment": "L57-L67"
+          },
+          "proof_context": {
+            "declaration": "YM.UVExtension.Camp.mist",
+            "lines": [
+              57,
+              67
+            ],
+            "conclusion": "By decreasing induction on the level, the truncated stack `cup` (zero at level k) converges along cutoffs and stays within `soft^(k-m)` of the true level-m output `rose`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          116
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
+      }
+    }
+  }
+}

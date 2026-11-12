@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 19.23 step 1",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "broadMatch",
+  "note": "`totalTestOrder d g` is (2+Σd)*g.card, which is [M]'s (2+|A|_deg)n when g is the full index set. [L] states it for arbitrary collision groups and for the major kernel, so it is more general, and the order is stated for all compacts at once.",
+  "subject": [
+    {
+      "location": {
+        "page": 238,
+        "rect": [
+          0.12026,
+          0.86949,
+          0.75948,
+          0.02296
+        ]
+      },
+      "title": "Lemma 19.23 step 1: Text, p. 238",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 19.23 step 1"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Solstice.global_charge",
+        "module": "YM.Contacts.Solstice.Venue",
+        "lines": [
+          62,
+          63
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Solstice.global_charge"
+          },
+          "snippet": {
+            "text": "lemma global_charge {o : Points k} (h : plane g ≤ LinearMap.range P.toLinearMap) (hp : Collapsed g o) (t : Cells S d) (α : Viewers Z){s B : ℝ} (hb : B∈ Ioc (0:ℝ) 1) (hz : B ≤ M.clearance (∑ i,d i+0)) (hh : 0<s ∧ 2*s ≤ B) (H : Services C F S): Charge (majorKernel P g M t α o s) ⊤ (totalTestOrder d g):= by\n   constructor; intro K hK; obtain ⟨A,hA,hg⟩:= glues_total M H t α h hp K.isCompact hb hz hh; exact ⟨A,hA, fun i _ hm h=>hg i _ hm h⟩",
+            "line": 62,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Solstice/Venue.lean",
+            "fragment": "L62-L63"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Solstice.global_charge",
+            "lines": [
+              62,
+              63
+            ],
+            "conclusion": "`global_charge` gives a `Charge` of order `totalTestOrder d g` for `majorKernel` on every compact set, via `glues_total`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Solstice.Charge",
+        "module": "YM.Contacts.Solstice.Venue",
+        "lines": [
+          30,
+          31
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Solstice.Charge"
+          },
+          "snippet": {
+            "text": "structure Charge (P : E→ SmoothTests E→ₗ[ℂ] X)(U : Opens E)(n : ℕ) : Prop where\n   cost : ∀ K:Compacts E, (K:Set E) ⊆ U → ∃ C> (0:ℝ),∀ (p:SmoothTests E){m:ℝ}, tsupport p.val ⊆ K → Jet n univ p.val m → Dust (fun x=> P x p) (C*m)",
+            "line": 30,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Solstice/Venue.lean",
+            "fragment": "L30-L31"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Solstice.Charge",
+            "lines": [
+              30,
+              31
+            ],
+            "conclusion": "`Charge` says that on each compact K there is C>0 with the integral bounded by C times the sup-norm jet of order n on test functions supported in K."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Solstice.MultipleLight",
+        "module": "YM.Contacts.Solstice.Result",
+        "lines": [
+          61,
+          63
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Solstice.MultipleLight"
+          },
+          "snippet": {
+            "text": "   distribution :\n       ∀ (E : Type) [NormedAddCommGroup E][InnerProductSpace ℝ E][FiniteDimensional ℝ E]\n        [MeasureSpace E][BorelSpace E][(volume:Measure E).IsAddHaarMeasure] {k:ℕ}(P:E→ₗᵢ[ℝ] Points k) g o, plane g ≤ LinearMap.range P.toLinearMap → Collapsed g o → ∀ (d:Fin k→ℕ)(t:Cells S d) (α : Viewers Z) (B s:ℝ), B∈ Ioc 0 1 → B ≤ M.clearance (∑ i,d i+0) → 0<s ∧2*s≤B → Charge (majorKernel P g M t α o s) ⊤ (totalTestOrder d g)",
+            "line": 61,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Solstice/Result.lean",
+            "fragment": "L61-L63"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Solstice.MultipleLight",
+            "lines": [
+              52,
+              63
+            ],
+            "conclusion": "The `distribution` field of `MultipleLight` asserts this charge of order `totalTestOrder d g` for every group and slice."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          238
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

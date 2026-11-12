@@ -1,0 +1,162 @@
+{
+  "id": "Eq (18.9) step 6",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "The Lean reads the flux from the jet limit and the normalized Ward identity inside `year_spec`, which gives the same limit; the three claims (tensor limit, trace limit, ν_i → 1) are spread over `yields`, `blossoms` and `year_spec`.",
+  "subject": [
+    {
+      "location": {
+        "page": 213,
+        "rect": [
+          0.12026,
+          0.63093,
+          0.76246,
+          0.13668
+        ]
+      },
+      "title": "Eq (18.9) step 6: Text, p. 213",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Eq (18.9) step 6"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Trace.Over.year_spec",
+        "module": "YM.TraceExtension.Chart.North",
+        "lines": [
+          28,
+          65
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Trace.Over.year_spec"
+          },
+          "snippet": {
+            "text": "lemma year_spec : Tendsto (fun k=>Year J k R) atTop (𝓝 (materialB C none)) ∧\n    Tendsto (fun i=>BQ Z V i • ∑ j:Axis, Year J i R j j) atTop (𝓝 ((4*forceR G) • OScale C.book)):=by\n    obtain ⟨b,o,v,hg⟩:= awake_o H h hv hu; let F:= Climb.Bel C.book\n    obtain ⟨p,hV⟩:= hR.flux; obtain ⟨q,hU⟩:= h'.flux; let y:= o.test 5 (Y.deriv 4 b v); let χ:=o.cut\n    have he:shellGrad F (materialB C none) χ b o.x o.q v=y:=by\n        rw [hU.translation o.hx o.q o.cut_window]; unfold y Observer.test; rw [frontRead_at];rfl\n    let f(k):= (J.r k:ℂ)* shellGrad S R (stretch (J.r k) χ) b (J.r k • o.x) (J.pins k ∘ o.q) (J.U k 4 v)\n    have ht(k):Window (J.r k • o.x) (stretch (J.r k) χ):= window_stretch (J.positive k) o.cut_window\n    have hB(k):J.r k • o.x∈ conf _:= smul_conf (J.positive k) o.hx\n    have hF:Tendsto f atTop (𝓝 y):= (pay_jet HE H U Y hp ‹_› hv 4 b v o).congr (fun i=>by unfold f; rw[hV.translation (hB i) _ (ht i)])\n    have hN:R≠0:=by\n         intro hK; have hz(i):f i=0:=by\n             unfold f; rw[hK,← A15.translationFlux_apply (hB i) (ht i) HE.smooth]; rw[map_zero, mul_zero]\n         exact hg (tendsto_nhds_unique_of_eventuallyEq hF tendsto_const_nhds (Eventually.of_forall hz))\n    obtain ⟨g,hts,hJ,hY⟩:= hK.intent\n    let k₀:= LinearMap.ker (currentDiv U HE.spin ho); let r:KernelSpace HE.spin:=⟨R,hR.currents.1⟩; let R':k₀:=⟨r,(linear_cons U HE.spin ho r).mpr (hR.currents.2)⟩; have hN':R'≠0:=fun hq=>hN (congr_arg (fun v:k₀=>v.val.val) hq)\n    let w(k:ℕ):= (g k).val; let T:=materialB C none;\n    have hh : ∀ᶠ i:ℕ in atTop, ∃ v:ℝ,w i= v • R:=by filter_upwards [hts] with i hi; obtain ⟨v,hv⟩:= (finrank_eq_one_iff_of_nonzero' R' hN'|>.1 hK.rank) ⟨g i, (linear_cons _ _ _ _).mpr hi⟩; exact ⟨v, (congr_arg (fun t:k₀=> t.val.val) hv).symm⟩\n    let v'(i):= if hp:∃ v:ℝ,w i= v • R then hp.choose else 1; have ht':∀ᶠ i in atTop,w i=v' i • R:= hh.mono (fun i hi=>by unfold v'; rw [dif_pos hi]; exact hi.choose_spec)\n    obtain ⟨D,N,M,hM,hO⟩:= o.enough 4; have hM':= hO _ le_rfl _ le_rfl _ le_rfl; have hh := comparison_jets HE ‹_› H hv J hp N D 0 M (zero_lt_one.trans_le hM);\n    have hV:= drape J HE.smooth H.smooth (T:=T) hJ o.x o.hx o.cut_window b hh hM'.total hM'.stress hM'.ringFits o.q hM'.rest 4 v hM'.stress; rw [he] at hV\n    have hf:Tendsto (fun i=>(v' i:ℂ)*f i) atTop (𝓝 y):=by\n         refine hV.congr' ?_; filter_upwards[ht'] with i hi\n         change (J.r i:ℂ)*shellGrad S (w i) (stretch (J.r i) χ) _ _ _ _=_\n         rw [← A15.translationFlux_apply (hB i) (ht i) HE.smooth,hi,RCLike.real_smul_eq_coe_smul (K:=ℂ) (v' i) R,map_smul,A15.translationFlux_apply, smul_eq_mul]; unfold f;exact mul_left_comm _ _ _\n    have hq1:Tendsto v' atTop (𝓝 1):=by\n        have hu :Tendsto (fun i=>(v' i:ℂ)) atTop (𝓝 1):=by\n            have h1 := hf.div hF hg; rw [div_self hg] at h1; exact h1.congr' ((hF.eventually_ne hg).mono fun i hi=>mul_div_cancel_right₀ _ hi)\n        exact Complex.continuous_re.continuousAt.tendsto.comp hu\n    have hA : ∀ᶠ i in atTop,(v' i)⁻¹ • w i=R:=by\n        filter_upwards[ht',hq1.eventually_ne one_ne_zero] with i hi ht\n        rw [hi,inv_smul_smul₀ ht]\n    have hv:Tendsto (fun i=>(v' i)⁻¹) atTop (𝓝 1):=by simpa using! hq1.inv₀ one_ne_zero\n    constructor\n    · have he:= hv.smul hJ; rw [one_smul] at he; refine he.congr' (hA.mono fun i hi=>?_ ); change _ • Year J i (w i)=Year J i R; rw[← hi,map_smul]\n    have he := hv.smul hY; rw[one_smul] at he; apply he.congr'; filter_upwards [hA] with i hi\n    change (v' i)⁻¹ • (BQ Z V i • ∑ j:Axis, Year J i (w i) j j)=BQ Z V i • ∑ j:Axis,Year J i R j j; conv_rhs=> rw[← hi]; rw [map_smul]\n    rw [smul_comm (_:ℝ) (BQ Z V i),Finset.smul_sum];rfl",
+            "line": 28,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Chart/North.lean",
+            "fragment": "L28-L65"
+          },
+          "proof_context": {
+            "declaration": "YM.Trace.Over.year_spec",
+            "lines": [
+              28,
+              65
+            ],
+            "conclusion": "For a conserved nonzero kernel element `R`, the scaled tensors `Year J k R` converge to `materialB C none` and `BQ Z V i • ∑ j, Year J i R j j` converges to `(4*forceR G) • OScale C.book`; the proof writes `w i = v' i • R` and shows `v' → 1` by comparing fluxes."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Trace.Over.yields",
+        "module": "YM.TraceExtension.Chart.Stage",
+        "lines": [
+          69,
+          81
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Trace.Over.yields"
+          },
+          "snippet": {
+            "text": "lemma yields : Tendsto (fun i=>Year J i (Cloak H' V L Δ Ω c Z i).val) atTop (𝓝 (materialB C none)):=by\n    let U L i:= (Phase4 J V Z i) (L# L i).val; let p:=BQ Z V; let q(n i):= (c i n)*(p i)⁻¹; let X(i):=(Cloak H' V L Δ Ω c Z i).val\n    have hx(i): Year J i (X i)=U L i + (q 0 i • U Ω i + q 1 i • U Δ i):=by\n        let n(D₀:PaceBook C):= Year J i (L# D₀ i).val; have hz(A':PaceBook C): n A'=(p i)⁻¹ • U A' i:= tweak P h θ K ht hM hT hb hu hz hL hq H' HF hq' hJ hP ho hY ho' hc he hΔ hΩ c I ht₁ hK hω i (L# A' i)\n        change Year J i (p i • (L# L i).val+(c i 0 • (L# Ω i).val+c i 1 • (L# Δ i).val))=_; rw [map_add, ← YearP, map_add,map_smul, map_smul]; change _+(c i 0 • n Ω+c i 1 • n Δ)=_; rw [hz,hz,smul_smul, smul_smul]\n    have hq₀(i): Tendsto (q i) atTop (𝓝 0) :=by\n        apply tendsto_zero_iff_norm_tendsto_zero.mpr; let v:=Pig (A); have he := (washout P h hb hz (1/6)).comp ( (Sstar A).comp hq.growth); refine squeeze_zero' (Eventually.of_forall fun i=>norm_nonneg _) ?_ (show Tendsto (fun k=> I*(RQ! k*(BQ! k)⁻¹)) _ _ from ?_)\n        · filter_upwards[hK] with k hk; rw [show q i k=(c k i)*(BQ! k)⁻¹ from rfl,norm_mul,Real.norm_of_nonneg (show 0 ≤ (BQ! k)⁻¹ from inv_nonneg.mpr (measured hb P hz _|>.le)), ← mul_assoc]; exact mul_le_mul_of_nonneg_right ((norm_le_pi_norm _ _).trans hk.1) (inv_nonneg.mpr (measured hb P hz _|>.le))\n        simpa only [Pig,mul_zero] using! he.const_mul I\n    have hi:= (hq₀ 0).smul (nearing_h P h ht hb hu hz hq H' hΩ hω); have hj:= (hq₀ 1).smul (nearing_h P h ht hb hu hz hq H' hΔ hω)\n    have ht': Tendsto (U L) atTop (𝓝 (materialB C none)):= nearing_h P h ht hb hu hz hq H' hL hω\n    have hu:= ht'.add (hi.add hj); simp only [zero_smul,add_zero] at hu; exact hu.congr (fun i=> (hx i).symm)\ninclude hI",
+            "line": 69,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Chart/Stage.lean",
+            "fragment": "L69-L81"
+          },
+          "proof_context": {
+            "declaration": "YM.Trace.Over.yields",
+            "lines": [
+              69,
+              81
+            ],
+            "conclusion": "`Year J i (Cloak ...).val` tends to `materialB C none`, i.e. r^4 U^{-1} X_i tends to L."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Trace.Over.blossoms",
+        "module": "YM.TraceExtension.Chart.Stage",
+        "lines": [
+          82,
+          95
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Trace.Over.blossoms"
+          },
+          "snippet": {
+            "text": "lemma blossoms : Tendsto (fun i=> BQ! i • ∑ j:Axis, (Year J i (Cloak H' V L Δ Ω c Z i).val) j j) atTop (𝓝 ((4*forceR G) • OScale C.book)):=by\n    let U L i:= ∑ j:Axis, (Phase4 J V Z i (L# L i|>.val)) j j; let p:= BQ Z V; let x:= fun i=> H! (P! i) ^(1:ℕ)\n    have hp(i):0≤x i:=pow_nonneg (bell ..|>.le) _; have hℓ:= Sstar A|>.comp hq.growth; let N:= (Cells.standard C).Field 4\n    have hx:Tendsto (fun i=> p i • U L i) atTop (𝓝 0):=by refine invest (E:=N) zero_le_two (g:=x) (Eventually.of_forall (fun i=> ?_)) (Eventually.of_forall hp) (muteP P h θ K ht hM hT hb hu hz hq H' HF hL hω hc 1 (by simp)); change |Z.β (P! i)|≤2*x i; rw [abs_of_nonneg (measured hb P hz _|>.le : 0 ≤ p i)]; simpa only [x,pow_one] using dex hb P hz (P! i)\n    have htR:= hℓ.eventually (timid (C:=C) h (1/6)); have hy:Tendsto (fun i=> c i 0 • U Ω i) atTop (𝓝 0):=by\n         refine invest ht₁ ?_ (Eventually.of_forall hp) (muteP P h θ K ht hM hT hb hu hz hq H' HF hΩ hω hc 1 (by simp)); filter_upwards [hK,htR] with i hi hq; exact (norm_le_pi_norm (c i) 0).trans (hi.1.trans (mul_le_mul_of_nonneg_left (show RQ! i≤x i from hq.trans_eq (pow_one ..).symm) ht₁))\n    have ht' : Tendsto (U Δ) atTop (𝓝 ((4:ℝ) • OScale C.book)):=by rw[← sum_delta (C:=C)]; exact tendsto_finsetSum _ (fun i _=> tendsto_pi_nhds.mp (tendsto_pi_nhds.mp (nearing_h P h ht hb hu hz hq H' hΔ hω) i) i)\n    have hz:= hx.add (hy.add (hI.smul ht')); rw [zero_add,zero_add,smul_smul,mul_comm] at hz\n    refine hz.congr (fun i=> ?_); let X:=Cloak H' V L Δ Ω c Z i; let L₁:= L# L i;let Γ:= L# Ω i; let Δ':=L# Δ i\n    have he : p i • Year J i X.val= p i • M# i L₁.val + (c i 0 • M# i Γ.val+c i 1 • M# i Δ'.val):=by\n         rw[← show M# i X.val = p i • Year J i X.val from ?_]; swap; · rw [YearP,map_smul]\n         change M# i (p i • L₁.val+(c i 0 • Γ.val+c i 1 • Δ'.val))=_; rw [map_add,map_add,map_smul,map_smul,map_smul]\n    unfold U; change p i • (∑ j:Axis, (M# i L₁.val) j j)+(c i 0 • (∑ j:Axis, (M# i Γ.val) j j)+ c i 1 • (∑ j:Axis,(M# i Δ'.val) j j))= p i • ∑ j:Axis,Year J i X.val j j\n    simp only [Finset.smul_sum]; simp_rw [← Finset.sum_add_distrib]; exact Finset.sum_congr rfl fun j _=> (congr_fun (congr_fun he j) j).symm",
+            "line": 82,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Chart/Stage.lean",
+            "fragment": "L82-L95"
+          },
+          "proof_context": {
+            "declaration": "YM.Trace.Over.blossoms",
+            "lines": [
+              82,
+              95
+            ],
+            "conclusion": "`BQ! i • ∑ j, (Year J i (Cloak ...).val) j j` tends to `(4*forceR G) • OScale C.book`, the weighted trace limit 4 d_2 times the square of the curvature."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          213
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

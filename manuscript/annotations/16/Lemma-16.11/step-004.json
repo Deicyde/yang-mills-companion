@@ -1,0 +1,144 @@
+{
+  "id": "Lemma 16.11 step 4",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 187,
+        "rect": [
+          0.12026,
+          0.27342,
+          0.75948,
+          0.0346
+        ]
+      },
+      "title": "Lemma 16.11 step 4: Text, p. 187",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.11 step 4",
+          "quads": [
+            [
+              0.56048,
+              0.27342,
+              0.87974,
+              0.27342,
+              0.87974,
+              0.29052,
+              0.56048,
+              0.29052
+            ],
+            [
+              0.12026,
+              0.29055,
+              0.62518,
+              0.29055,
+              0.62518,
+              0.30802,
+              0.12026,
+              0.30802
+            ]
+          ]
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.A15.conserved_average",
+        "module": "YM.Work.A15",
+        "lines": [
+          134,
+          154
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.A15.conserved_average"
+          },
+          "snippet": {
+            "text": "theorem conserved_average (c : Conserved V H J) : Conserved V H (averageStress X J) where\n  symmetric a b := by\n    rw [average_component h, average_component h]\n    exact integral_congr_ae (Filter.Eventually.of_forall fun K =>\n      (rotate_conserved h K J c).symmetric a b)\n  real a b := calc\n    _ = ∫ K : Ortho, S.conj H 4 (rotateStress X K J a b) ∂μ :=\n      map_average h J (realConjugateComponent H a b)\n    _ = ∫ K : Ortho, rotateStress X K J a b ∂μ :=\n      integral_congr_ae (Filter.Eventually.of_forall fun K =>\n        (rotate_conserved h K J c).real a b)\n    _ = _ := (average_component h J a b).symm\n  divergence b := by\n    calc\n      _ = divergenceMap V b (averageStress X J) := (divergenceMap_apply V b _).symm\n      _ = ∫ K : Ortho, divergenceMap V b (rotateStress X K J) ∂μ :=\n        map_average h J ((divergenceMap V b).restrictScalars ℝ)\n      _ = ∫ _ : Ortho, (0 : S.Field (4+1)) ∂μ :=\n        integral_congr_ae (Filter.Eventually.of_forall fun K =>\n          (divergenceMap_apply V b _).trans ((rotate_conserved h K J c).divergence b))\n      _ = 0 := integral_zero _ _",
+            "line": 134,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/A15.lean",
+            "fragment": "L134-L154"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.A15.conserved_average",
+            "lines": [
+              134,
+              156
+            ],
+            "conclusion": "`averageStress X J` is symmetric, real and divergence-free, the integrals commuting with the linear maps `component`, `S.conj` and `divergenceMap` via `map_average`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.A15.rotate_conserved",
+        "module": "YM.Work.A15.Tensor",
+        "lines": [
+          129,
+          141
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.A15.rotate_conserved"
+          },
+          "snippet": {
+            "text": "theorem rotate_conserved {V : DiffPlan S} {H : S.RealSpin} {X : Rotation S}\n    (h : X.Laws V H) (K : Ortho) (J : S.Stress) (c : Conserved V H J) :\n    Conserved V H (rotateStress X K J) where\n  symmetric a b := by\n    rw [rotateStress_apply, rotateStress_apply, Finset.sum_comm]\n    refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun i _ => ?_\n    rw [mul_comm (K.val a i), c.symmetric i j]\n  real a b := by\n    simp only [rotateStress_apply, map_sum, map_smulₛₗ, h.real, c.real]\n    simp\n  divergence b := by\n    rw [← divergenceMap_apply, rotate_divergence h]\n    simp only [divergenceMap_apply, c.divergence, map_zero, smul_zero, Finset.sum_const_zero]",
+            "line": 129,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/A15/Tensor.lean",
+            "fragment": "L129-L141"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.A15.rotate_conserved",
+            "lines": [
+              129,
+              141
+            ],
+            "conclusion": "Each `rotateStress X K J` is symmetric, real and conserved, using the vector law `h.vector` for derivatives (`rotate_divergence`)."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          187
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

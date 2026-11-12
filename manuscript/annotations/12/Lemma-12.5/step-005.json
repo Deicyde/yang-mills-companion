@@ -1,0 +1,201 @@
+{
+  "id": "Lemma 12.5 step 5",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "Closedness is stated at real momenta.",
+  "subject": [
+    {
+      "location": {
+        "page": 79,
+        "rect": [
+          0.11962,
+          0.43081,
+          0.76045,
+          0.04007
+        ]
+      },
+      "title": "Lemma 12.5 step 5: Text, p. 79",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 12.5 step 5"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.cob_step",
+        "module": "YM.Next.STATIONARY.Lift.Koszul",
+        "lines": [
+          435,
+          441
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.cob_step"
+          },
+          "snippet": {
+            "text": "private lemma cob_step {σ A : ℝ} (hs : 0<σ) (ha : 0 ≤ A) (f : SheetLeg α ξ r)\n    {s : ℕ} (hf : CostWall σ A f) (hv : Cycles (projected m') r f) (hk : JetWall s f)\n    {U} (hU : Uniforms ξ α m' U) (hw : wall U f) :\n    let g := comb m' i f\n    CostWall σ A g ∧ Cycles (projected m') r g ∧ JetWall s g ∧ wall U g ∧\n    ∃ B : SheetLeg α ξ (r+1), CostWall (σ/4) (A*priceDivision α σ) B ∧ JetWall (s-1) B ∧\n      wall U B ∧ ∀ p : Corn α, f (axes p)= (cob r (projected m') B) (axes p)+g (axes p) := by",
+            "line": 435,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Lift/Koszul.lean",
+            "fragment": "L435-L441"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.cob_step",
+            "lines": [
+              435,
+              514
+            ],
+            "conclusion": "`cob_step` gives `g = comb m' i f` with `Cycles g`, `wall U g` and bounds, and `B` with `f = cob B + g`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.cob_step",
+        "module": "YM.Next.STATIONARY.Lift.Koszul",
+        "lines": [
+          479,
+          493
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.cob_step"
+          },
+          "snippet": {
+            "text": "  have hv' : Cycles (projected m') r g := by\n    cases r with\n    | zero => trivial\n    | succ r =>\n      intro p; funext a x\n      let c := axes p\n      have H := congr_fun (congr_fun (congr_fun (cob_zero r (projected m') B) c) a) x\n      have z : cob r (projected m') (f-g) c a x=0 := by\n        change ((symbol r _).transpose *ᵥ _) a=0\n        rw [show (fun y => (f-g) c y x) = (fun y => cob (r+1) (projected m') B c y x) from\n          funext fun b => (congr_fun (congr_fun (hy p) b) x).symm]; exact H\n      rw [cob_sub] at z\n      simp only [Pi.sub_apply] at z\n      exact (sub_eq_zero.mp z).symm.trans (congr_fun (congr_fun (hv p) a) x)\n  refine ⟨hg,hv',jet_comb m' i hk,comb_wall m' i hU hw,B,hB,hj,?_,fun p => by rw [hy]; abel⟩",
+            "line": 479,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Lift/Koszul.lean",
+            "fragment": "L479-L493"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.cob_step",
+            "lines": [
+              435,
+              514
+            ],
+            "conclusion": "`hv'` shows the remainder `g` is again closed, using `cob_zero` and `hy`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.comb",
+        "module": "YM.Next.STATIONARY.Lift.Koszul",
+        "lines": [
+          357,
+          358
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.comb"
+          },
+          "snippet": {
+            "text": "def comb (f : SheetLeg α ξ r) : SheetLeg α ξ r := fun p A x =>\n    if i∈A.val then 0 else f (update p (m' i) 0) A x",
+            "line": 357,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Lift/Koszul.lean",
+            "fragment": "L357-L358"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.comb",
+            "lines": [
+              357,
+              358
+            ],
+            "conclusion": "The remainder has no component containing the axis `i`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.wall_lift",
+        "module": "YM.Next.STATIONARY.Lift.Koszul",
+        "lines": [
+          576,
+          576
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.wall_lift"
+          },
+          "snippet": {
+            "text": "  obtain ⟨B,H,h1,h2,h3⟩ := allcombs m' hs ha (List.finRange 4) f hf hv hk hU hw",
+            "line": 576,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Lift/Koszul.lean",
+            "fragment": "L576-L576"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.wall_lift",
+            "lines": [
+              571,
+              587
+            ],
+            "conclusion": "`allcombs` is applied to the list of the four axes `List.finRange 4`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          79
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

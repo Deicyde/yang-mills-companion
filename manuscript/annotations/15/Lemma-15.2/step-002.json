@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 15.2 step 2",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The translation, distinct cells, spectator bounds, chessboard step and smear estimate all appear; [L] uses a single margin L/J from `fits_together` and takes the smallness as the hypothesis `rents`, differences in content but not in argument.",
+  "subject": [
+    {
+      "location": {
+        "page": 163,
+        "rect": [
+          0.12026,
+          0.64506,
+          0.76293,
+          0.13977
+        ]
+      },
+      "title": "Lemma 15.2 step 2: Text, p. 163",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 15.2 step 2"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extraction.Lease.take",
+        "module": "YM.Lane.Lease",
+        "lines": [
+          94,
+          124
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extraction.Lease.take"
+          },
+          "snippet": {
+            "text": "  obtain ⟨i,hi⟩ := T.fits_together z (L/J) (by omega) hp\n  let V := T.newly i\n  let s := V.which (z u)\n  let X := V.newly (V.starts s)\n  let g (i : Fin n) := V.which (z i)-s\n  have ha : X.side.val=L:=rfl\n  have h0 s : z s∈X.margin (g s) (L/J) := (margins V _ _ _).symm ▸ hi s\n  have hgm : Injective g := by\n    intro i j hh; by_contra h\n    have hp := X.extent ((h0 i).1) (show z j ∈ X.chamber (g i) from hh ▸ (h0 j).1)\n    exact hk.not_ge ((hdist i j h).trans ((mul_le_mul_of_nonneg_left (show (separation (z i) (z j):ℝ) ≤ L by exact_mod_cast hp) (C.S.a_pos _).le).trans_eq he))\n  have hU : g u=(0:X.Cell) := sub_self _\n  choose W hw hh hT using fun i : Fin n=> alive (T:=X) H i (z i) hx hx.1 (inherits (C:=C) H2 hx.1) (fewer X (g i) hb (h0 i))\n  let Y : Fin n → Config G B → ℂ := update W u (F D Q (z u))\n  have hz : z u ∈ X.margin 0 (L/J) := hU ▸ h0 u\n  have hZ := o X (show X.side.val=_ from rfl) (show X.kind=.link from rfl) (z u) hz\n  have hg (b : Fin n) (v : Config G B) : (if b=u then F D Q (z u) v else C.seen (q b) (z b) v)= X.copy (g b) (Y b) v := by\n    by_cases h : b=u; subst b; rw [hU]; simp [Y]; simp [Y,h,hw]\n  have hz (i) : Interior (X.chamber 0) (Y i) := by\n    by_cases h : i=u; subst i; simp only [Y,update_self]; exact hZ.1\n    simp only [Y,update_of_ne h]; exact hh _\n  have ha i (h : i ∈ Finset.univ.erase u) : X.rootTest β (Y i) ≤ p i := by\n    have hb : i≠u := Finset.ne_of_mem_erase h\n    simp only [Y,update_of_ne hb,p, if_neg hb]; exact hT i\n  unfold featuring\n  change ‖moment β _‖ ≤ _\n  apply le_trans ?_ (mul_le_mul (Finset.prod_le_prod (fun i (_:i∈Finset.univ.erase u) => X.root_nonneg β (Y i)) ha) hZ.2\n    (X.root_nonneg _ _) (by exact Finset.prod_nonneg (fun k _ => by unfold p; split <;> linarith)))\n  conv_rhs => rw [show F D Q (z u) = Y u by simp [Y],Finset.prod_erase_mul _ _ (Finset.mem_univ _)]\n  change ‖moment β (fun v => ∏ b : Fin n, if b=u then F D Q _ v else C.seen (q b) (z b) v)‖ ≤ _\n  simp_rw [hg]; exact X.planted (seamless H ..) g hgm Y hz",
+            "line": 94,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Lane/Lease.lean",
+            "fragment": "L94-L124"
+          },
+          "proof_context": {
+            "declaration": "YM.Extraction.Lease.take",
+            "lines": [
+              57,
+              124
+            ],
+            "conclusion": "`fits_together` gives a translation with all anchors in margins, separation δ > a_k puts anchors in distinct cells (`hgm`), `alive` bounds each spectator by A, and the chessboard `planted` gives the bound `A * y N p` (`gain`)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.D02.answer",
+        "module": "YM.Work.D02",
+        "lines": [
+          24,
+          84
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.D02.answer"
+          },
+          "snippet": {
+            "text": "theorem answer : YM.Bid.D02 := by\n  classical\n  intro G C f _ _ P ⟨y,hy,hg⟩ v\n  let K := tsupport v.f\n  have hk : IsCompact K := v.f.hasCompactSupport\n  obtain ⟨δ,hδ,hp⟩ := Gaps.someGrows C.S hk (show K ⊆ conf v.n from v.f.tsupport_subset)\n  obtain ⟨A,hA,he⟩ := hg v.n v.left v.i δ hδ\n  obtain ⟨M,hM⟩ := (hk.image continuous_norm).bddAbove\n  let B := Metric.closedBall (0 : Points v.n) (M+1)\n  have hB : IsCompact B := isCompact_closedBall ..\n  obtain ⟨T,hT,hf⟩ := Order.testSup v.f\n  let bound := fun z : ℕ × ℕ => T*(A*|uncurry y z|)\n  let stairF := fun N p : ℕ => stair C.S (fun r : Var C.S v.n N p =>\n    v.f (Order.cells C N p r) * featuring P v.left v.i N p r)\n  have hmesh : ∀ᶠ N : ℕ in atTop, (4*v.n:ℝ)*C.S.a N ≤ 1 :=\n    (C.S.shrinks.const_mul (4*v.n : ℝ)).eventually (ge_mem_nhds (by simp))\n  have hr : ∀ᶠ z in f.fuse, ∀ x, ‖stairF z.1 z.2 x‖ ≤ B.indicator (fun _ => bound z) x := by\n    rw [Order.fused, Order.late]\n    unfold Order.late at he\n    filter_upwards [he,f.per.cofinal.eventually hp] with p he' hp'\n    filter_upwards [he',f.mesh.cofinal.eventually hmesh] with N hg' ha x\n    let n' := f.mesh N\n    let p' := f.per p\n    let r := bucket n' p' x (S := C.S)\n    let t := tag (C.S.a n') (address (C.S.a n') x)\n    change ‖stairF n' p' x‖ ≤ B.indicator (fun _ => bound (n',p')) x\n    have hpos : 0 ≤ B.indicator (fun _ => bound (n',p')) x := indicator_nonneg (fun _ _ => by\n      dsimp only [bound]; positivity) _\n    by_cases hx : x ∈ Fund C.S p' v.n\n    · have hcell : Order.cells C n' p' r = t := cells_bucket C hx\n      change ‖(Fund C.S p' v.n).indicator _ x‖ ≤ _\n      rw [indicator_of_mem hx]\n      change ‖v.f (Order.cells C n' p' r) * featuring P v.left v.i n' p' r‖ ≤ _\n      rw [hcell]\n      rcases eq_or_ne (v.f t) 0 with ht|ht\n      · rwa [ht,zero_mul,norm_zero]\n      have htK : t ∈ K := subset_closure ht\n      have hd := approximate (C.S.a_pos n') x\n      change dist t x ≤ _ at hd\n      have hxB : x ∈ B := Metric.mem_closedBall.mpr (calc\n        dist x 0 ≤ dist x t + dist t 0 := dist_triangle x t 0\n        _ ≤ M+1 := by\n          rw [dist_zero_right,dist_comm x t]; have h := hM ⟨t,htK,rfl⟩; linarith)\n      rw [indicator_of_mem hxB]\n      have hsep := Gaps.gridSeparation C.S r rfl (hp' t htK)\n      have h := (hg' r (fun i j hij => hsep j i hij.symm)).trans (mul_le_mul_of_nonneg_left (le_abs_self _) hA)\n      exact (norm_mul_le ..).trans (mul_le_mul (hf t) h (norm_nonneg _) hT)\n    · rw [show stairF n' p' x = 0 from indicator_of_notMem hx _ ,norm_zero]\n      exact hpos\n  have h0 : Tendsto (fun z : ℕ × ℕ => volume.real B * bound z) f.fuse (𝓝 0) := by\n    simpa only [bound,abs_zero,mul_zero] using (((hy.abs.const_mul A).const_mul T).const_mul (volume.real B))\n  apply tendsto_zero_iff_norm_tendsto_zero.mpr\n  refine squeeze_zero' (Eventually.of_forall fun _ => norm_nonneg _) ?_ h0\n  filter_upwards [hr] with z hz\n  have hI : Integrable (B.indicator (fun _ => bound z)) := (integrable_indicator_iff hB.measurableSet).mpr\n    (integrableOn_const hB.measure_lt_top.ne)\n  have H := norm_integral_le_of_norm_le hI (Eventually.of_forall hz)\n  rw [integral_indicator hB.measurableSet, setIntegral_const, smul_eq_mul] at H\n  change ‖targetB P v _ _‖ ≤ _\n  have ht : (∫ x, stairF z.1 z.2 x) = targetB P v z.1 z.2 := stair_integral _\n  rwa [← ht]",
+            "line": 24,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/D02.lean",
+            "fragment": "L24-L84"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.D02.answer",
+            "lines": [
+              24,
+              84
+            ],
+            "conclusion": "With `gain` and y tending to 0, the smear against a fixed test of one error slot tends to 0, with the cell sum bounded by a step-function integral over a fixed ball."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          163
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; a re-check of closeMatch records kept it; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

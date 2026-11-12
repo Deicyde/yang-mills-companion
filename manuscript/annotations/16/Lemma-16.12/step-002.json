@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 16.12 step 2",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "[L] takes the constant `c` as part of the hypothesis `Crystal` and averages `c⁻¹ J`, so it never derives `J = cT` or `c = c_⋆`. Centering and nonzeroness of the average are not in [L] (see step 8, 9 of Lemma 16.11).",
+  "subject": [
+    {
+      "location": {
+        "page": 187,
+        "rect": [
+          0.12026,
+          0.66011,
+          0.75992,
+          0.05028
+        ]
+      },
+      "title": "Lemma 16.12 step 2: Text, p. 187",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.12 step 2"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Climb.Crystal",
+        "module": "YM.Climb.Beams",
+        "lines": [
+          83,
+          87
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Climb.Crystal"
+          },
+          "snippet": {
+            "text": "structure Crystal (H : S.Hierarchy) (V : DiffPlan S) (J : S.Stress) (p : Parts S) (Y : SpinRows S) (c : ℝ) : Prop where\n  positive : c≠0\n  pre : Shapes H V J p Y\n  sizes d : leaves p d=c • leaves V.deriv d\n  ready : commutes V ((c⁻¹:ℝ) • Y) ∧ Collinear V ((c⁻¹:ℝ) • Y)",
+            "line": 83,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Climb/Beams.lean",
+            "fragment": "L83-L87"
+          },
+          "proof_context": {
+            "declaration": "YM.Climb.Crystal",
+            "lines": [
+              83,
+              87
+            ],
+            "conclusion": "`Crystal` carries a real `c ≠ 0` with `leaves p d = c • leaves V.deriv d`, the translation-shell comparison."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.A15.normalize_flux",
+        "module": "YM.Work.A15",
+        "lines": [
+          22,
+          41
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.A15.normalize_flux"
+          },
+          "snippet": {
+            "text": "theorem normalize_flux {X : Rotation S} {V : DiffPlan S} {p : Climb.Parts S}\n    {Y : Ward.SpinRows S} (H : S.Hierarchy) (J : S.Stress) (c : ℝ)\n    (h : Climb.Crystal H V J p Y c) (e : X.lie = c⁻¹ • Y) :\n    StressLaws S (((c⁻¹ : ℝ) : ℂ) • J) V.deriv X.lie where\n  translation := by\n    intro n x hx q χ w b d B\n    have he : p d b B = (c : ℂ) • V.deriv d b B :=\n      Eq.trans (congrArg (fun f : Climb.Vector d S => f b B) (h.sizes d))\n        (RCLike.real_smul_eq_coe_smul (K := ℂ) c _)\n    rw [← translationFlux_apply hx w H.smooth, map_smul, translationFlux_apply,\n      h.pre.local_.raw.translation hx q w, ← front_apply, ← map_smul, he, Complex.ofReal_inv,\n      inv_smul_smul₀, front_apply]\n    exact_mod_cast h.positive\n  rotation := by\n    intro n x hx q χ w g d B\n    have he : X.lie d g B = ((c⁻¹ : ℝ) : ℂ) • Y d g B := by\n      rw [e]\n      exact RCLike.real_smul_eq_coe_smul (K := ℂ) c⁻¹ _\n    rw [← angularFlux_apply hx w H.smooth, map_smul, angularFlux_apply,\n      h.pre.local_.raw.rotation hx q w, ← front_apply, ← map_smul, ← he, front_apply]",
+            "line": 22,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/A15.lean",
+            "fragment": "L22-L41"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.A15.normalize_flux",
+            "lines": [
+              22,
+              41
+            ],
+            "conclusion": "`c⁻¹ • J` has both shell laws, the translation law coming from `p d b B = c • V.deriv d b B`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          187
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

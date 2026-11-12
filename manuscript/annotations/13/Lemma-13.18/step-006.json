@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 13.18 step 6",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "[L] gets the Lipschitz constant from boundedness on a larger complex domain (Cauchy estimate), not from the thresholds on ratios, the input size 64 and the extrapolated point K_*; none of those constants appear.",
+  "subject": [
+    {
+      "location": {
+        "page": 116,
+        "rect": [
+          0.11962,
+          0.24292,
+          0.76358,
+          0.18269
+        ]
+      },
+      "title": "Lemma 13.18 step 6: Text, p. 116",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 13.18 step 6"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVExtension.Oriel.Charted.slides",
+        "module": "YM.UVExtension.Oriel.Loop",
+        "lines": [
+          64,
+          73
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVExtension.Oriel.Charted.slides"
+          },
+          "snippet": {
+            "text": "lemma slides (ht:y∈ Grip)(he:paint L y): ‖fill L f M y-fill L f M x‖≤M*‖y-x‖:=by\n  by_cases hA:x=y\n  · rw [hA]; simp\n  let d:= ‖y-x‖; have hd:0<d:= norm_pos_iff.mpr (sub_ne_zero.mpr (Ne.symm hA))\n  have hv : d < traceB:=(norm_sub_le y x).trans_lt (lt_trans (add_lt_add (mem_ball_zero_iff.mp ht) (mem_ball_zero_iff.mp hx)) (by norm_num [traceB,rim]))\n  let v: X:= d⁻¹ • (y-x)\n  obtain ⟨H,hP,hQ,hF⟩:= bill L P h (mem_ball_zero_iff.mp hx) hp (y:=v) (by rw [show ‖v‖=d⁻¹*d from (norm_smul ..).trans (by rw [Real.norm_of_nonneg (inv_pos.mpr hd).le]), inv_mul_cancel₀ hd.ne']) (show v∈undertone L from (by unfold v; rw [← rsmul X]; exact (undertone L).smul_mem _ ((undertone L).sub_mem he hp)))\n  have hs:‖(d:ℂ)‖=d:= (norm_real d).trans (Real.norm_of_nonneg hd.le)\n  have hJ:= diary H hP hQ (x:= (d:ℂ)) (hs.trans_lt (hv.trans (by norm_num [traceB])))\n  rw [hF _ (hs.trans_le hv.le), hF 0 (by norm_num [traceB]),zero_smul,add_zero,hs, rsmul,show d • v=y-x from smul_inv_smul₀ hd.ne' _,add_sub_cancel] at hJ; exact hJ",
+            "line": 64,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVExtension/Oriel/Loop.lean",
+            "fragment": "L64-L73"
+          },
+          "proof_context": {
+            "declaration": "YM.UVExtension.Oriel.Charted.slides",
+            "lines": [
+              64,
+              73
+            ],
+            "conclusion": "The extended map `fill L f M` satisfies `‖fill y - fill x‖ ≤ M*‖y-x‖` on the ball `Grip`, from a bound by M on the larger domain."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVExtension.Oriel.conquest",
+        "module": "YM.UVExtension.Oriel.Dial",
+        "lines": [
+          87,
+          99
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVExtension.Oriel.conquest"
+          },
+          "snippet": {
+            "text": "lemma conquest : ∃ F:X→Y, Bumps Grip F ∧ (∀ x∈Grip, ‖F x‖≤ M)∧(∀ x∈Grip,∀ y∈Grip, ‖F x-F y‖ ≤ M*‖x-y‖)∧∀ x, U x∈Grip → F (U x)=f x:=by\n    have hS : IsOpen (Grip (X:=X)):= isOpen_ball\n    have ht : 0 < rim:=by norm_num [rim]\n    have hu := Charted.canvas U P h (x:=0) (mem_ball_self ht) ((undertone U).zero_mem)\n    let L: ℝ≥0:=⟨M,(norm_nonneg _).trans hu⟩\n    let v:= Charted.fill U f M\n    let T:= well U; have hJ: Grip ⊆ closure T:= fun x hx=> IsOpen.inter_closure hS ⟨hx,P.runs x⟩\n    obtain ⟨F,hF,hM,hL⟩:= wells (f:=v) (T:=T) (L:=L) (lipschitzOnWith_iff_dist_le_mul.mpr (fun x (hx:x∈Grip∩_) y (hy:y∈Grip∩_)=> by simp only [dist_eq_norm]; exact slides U P h hy.1 hy.2 hx.1 hx.2)) (fun x (hx:x∈Grip∩_)=> canvas U P h hx.1 hx.2)\n    refine ⟨F, across F (undertone U) hS P.runs (hL.mono hJ) (fun x hx hs y hy=>?_),fun x hx=>hM _ (hJ hx), fun x hx y hy=> ?_, fun x hx=> (hF (show U x∈ T from ⟨hx,inkwell U x⟩)).trans (meets U P h x (mem_ball_zero_iff.mp hx))⟩\n    · apply (gate U P h hx hs hy).congr_of_eventuallyEq; let g(z:ℂ):=x+z • y; have hg : g 0=x:=by simp [g]\n      filter_upwards [(show Continuous g by unfold g; fun_prop).continuousAt.preimage_mem_nhds (x:=0) (by rw [hg]; exact hS.mem_nhds hx)] with z hz\n      exact hF (show g z∈T from ⟨hz,(undertone U).add_mem hs ((undertone U).smul_mem _ hy)⟩)\n    simpa only [dist_eq_norm] using! hL.dist_le_mul _ (hJ hx) _ (hJ hy)",
+            "line": 87,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVExtension/Oriel/Dial.lean",
+            "fragment": "L87-L99"
+          },
+          "proof_context": {
+            "declaration": "YM.UVExtension.Oriel.conquest",
+            "lines": [
+              87,
+              99
+            ],
+            "conclusion": "A charted map bounded by M extends holomorphically to `Grip` with sup bound M and Lipschitz constant M."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          116
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

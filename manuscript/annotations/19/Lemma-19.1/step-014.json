@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 19.1 step 14",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The accounting is the same (`1+2C` times the output bound) but [L] states it as the `Accord` weighted cost with `barunit` for `ε_i` and `Q.bill` for the fine remainder bound, not with the `(a_m/a_l)^{1/8}` discount; the iteration is by `Nat.decreasingInduction` in `eaves`.",
+  "subject": [
+    {
+      "location": {
+        "page": 220,
+        "rect": [
+          0.11936,
+          0.54199,
+          0.76039,
+          0.08551
+        ]
+      },
+      "title": "Lemma 19.1 step 14: Text, p. 220",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 19.1 step 14"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extra.Histories.Relay.acclaim",
+        "module": "YM.MergeProof.Accord",
+        "lines": [
+          57,
+          83
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extra.Histories.Relay.acclaim"
+          },
+          "snippet": {
+            "text": "  · intro v\n    let y := Q.a+v\n    let j := vowel F L ((M.tone (i+1)).plays y).x\n    obtain ⟨hn,hd,J,hJ,hX,hY⟩ := hu.tally y\n    have hF := keys B H N p A M v hy hh\n    have hG := keys B H N p A M v hk hl\n    have hw : P.a+v=y+b := by unfold P y; simp [add_right_comm]\n    have hi : (P.bar M v).x=(M.tone i).index y+ U.x := by rw [hG.1,hw,map_add,show (M.tone i).index b=U.x from l.index.apply_symm_apply _]\n    have hj' : (Q.bar M v).x=((M.tone (i+1)).plays y).x := by rw [hF.1,hh.currents]\n    have hz : ((M.tone i).plays y).x=(M.tone i).index y := hl.currents y\n    rw [hj',hi,← hz]\n    refine ⟨rem_nonneg hG.2.2,rem_nonneg hF.2.2,J,hJ,?_,?_⟩\n    · rw [show ((M.tone i).plays y).x+U.x - J j = (((M.tone i).plays y).x-J j) + U.x by abel]\n      refine (Size.add F _ _).trans ((add_le_add hX hQ).trans ?_)\n      have hb : η * Q.bill ≤ barunit L * Q.bill := mul_le_mul_of_nonneg_right hs hq\n      unfold Solo.cost\n      change _ ≤ barunit L * (F.coeffSize (F.core ((M.tone (i+1)).plays y).x)+(Q.bill+(M.tone (i+1)).charge y))\n      simp only [mul_add, L] at *; linarith\n    unfold Solo.cost\n    rw [hw]\n    change e+l.charge (-b)+l.charge (y+b) ≤ _\n    refine (add_le_add_right (hl.summed y b) _).trans ?_\n    have hv : (1+2*c)*η*Q.bill ≤ barunit L*Q.bill := mul_le_mul_of_nonneg_right hx hq\n    calc\n      _ ≤ e+c*e+(l.charge y+c*e) := add_le_add (add_le_add_right hj _) (add_le_add_right hp _)\n      _ = l.charge y+(1+2*c)*η*Q.bill := by unfold e; ring\n      _ ≤ _ := (add_le_add hY hv).trans_eq (by unfold L y; ring)",
+            "line": 57,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Accord.lean",
+            "fragment": "L57-L83"
+          },
+          "proof_context": {
+            "declaration": "YM.Extra.Histories.Relay.acclaim",
+            "lines": [
+              25,
+              118
+            ],
+            "conclusion": "The cost of the recentred family is at most the column cost plus `(1+2c)*η*Q.bill ≤ barunit*Q.bill`, with the coefficient changed by `U.x`, recentring `charge (-b)` and shifting `charge (y+b)`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extra.Histories.Relay.eaves",
+        "module": "YM.MergeProof.Antilles",
+        "lines": [
+          25,
+          42
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extra.Histories.Relay.eaves"
+          },
+          "snippet": {
+            "text": "  | of_succ k hk ih =>\n    obtain ⟨Q,hQ,hx,hY⟩ := ih (hr.trans k.le_succ) (fun i hi => he i (by omega))\n    obtain ⟨⟨η,hT⟩,hR⟩ := he k le_rfl hk\n    have hz := lt_of_lt_of_le hk hM\n    obtain ⟨X,hX,hv,hb⟩ := acclaim B H N p A W M h hz (hm.earned k hr hz.le) (hm.earned _ (hr.trans k.le_succ) hz)\n        (hm.step _ hr hz) hR hT (hx.chairs _ le_rfl hk)\n    let t := update Q k X\n    have hl (i : ℕ) (hi : k  <  i) : t i = Q i := update_of_ne hi.ne' X Q\n    refine ⟨t,(hl m hk).trans hQ,⟨fun i hi hy => ?_,fun i hi hy => ?_⟩,fun i hi hy=>?_⟩\n    · rcases lt_or_eq_of_le hi with he|he\n      · rw [hl i he]; exact hx.chairs _ he hy\n      subst i; unfold t; rw [update_self]; exact hX\n    · rcases lt_or_eq_of_le hi with he|he\n      · rw [hl i he,hl (i+1) (by omega)]; exact hx.ships _ he hy\n      subst i; rw [hl (k+1) k.lt_succ_self]; unfold t; rw [update_self]; exact hv\n    rcases lt_or_eq_of_le hi with he|he\n    · rw [hl i he,hl (i+1) (by omega)]; exact hY _ he hy\n    subst i; rw [hl (k+1) k.lt_succ_self]; unfold t; rw [update_self]; exact hb",
+            "line": 25,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Antilles.lean",
+            "fragment": "L25-L42"
+          },
+          "proof_context": {
+            "declaration": "YM.Extra.Histories.Relay.eaves",
+            "lines": [
+              15,
+              42
+            ],
+            "conclusion": "`eaves` repeats `acclaim` downward from `m` to `l` and assembles the family `Q` on the whole interval."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          220
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

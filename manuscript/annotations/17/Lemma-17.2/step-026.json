@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 17.2 step 26",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean needs `a*D < δ`, which is implied by [M]'s `a < δ/(D+1)` and is the condition actually used.",
+  "subject": [
+    {
+      "location": {
+        "page": 191,
+        "rect": [
+          0.12026,
+          0.69331,
+          0.75948,
+          0.02189
+        ]
+      },
+      "title": "Lemma 17.2 step 26: Text, p. 191",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 17.2 step 26"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.forwards",
+        "module": "YM.Next.ROTATIONS.Walk",
+        "lines": [
+          80,
+          80
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.forwards"
+          },
+          "snippet": {
+            "text": "  obtain ⟨a,ha,ht,hT⟩ := tiny D δ a' hd ha'",
+            "line": 80,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Walk.lean",
+            "fragment": "L80-L80"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.forwards",
+            "lines": [
+              70,
+              148
+            ],
+            "conclusion": "`tiny D δ a'` gives `a` with `0 < a < a'` and `a * D < δ`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.tiny",
+        "module": "YM.Next.ROTATIONS.Walk",
+        "lines": [
+          48,
+          53
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.tiny"
+          },
+          "snippet": {
+            "text": "private lemma tiny (D : ℕ) (δ b : ℝ) (hd : 0<δ) (hb : 0<b) : ∃ a : ℝ, 0<a ∧ a<b ∧ a*D < δ := by\n  refine (Eventually.exists (p:=fun a => 0<a ∧ a<b ∧ a*D < δ) (f:=𝓝[>] (0:ℝ)) ?_)\n  have he : Tendsto (fun x : ℝ => x*D) (𝓝[>] 0) (𝓝 0) := by\n    simpa using (continuous_id.mul_const (D:ℝ)).continuousAt (x:=0) |>.continuousWithinAt (s:=Ioi 0) |>.tendsto\n  filter_upwards [self_mem_nhdsWithin,(gt_mem_nhds hb).filter_mono (nhdsWithin_le_nhds (s:=Ioi 0)), he.eventually (gt_mem_nhds hd)] with a ha hu hv\n  exact ⟨ha,hu,hv⟩",
+            "line": 48,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Walk.lean",
+            "fragment": "L48-L53"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.tiny",
+            "lines": [
+              48,
+              53
+            ],
+            "conclusion": "For `D`, `δ>0`, `b>0` there is `a` with `0<a<b` and `a*D<δ`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          191
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

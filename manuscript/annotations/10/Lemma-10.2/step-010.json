@@ -1,0 +1,122 @@
+{
+  "id": "Lemma 10.2 step 10",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 41,
+        "rect": [
+          0.11962,
+          0.55116,
+          0.7606,
+          0.05384
+        ]
+      },
+      "title": "Lemma 10.2 step 10: Text, p. 41",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 10.2 step 10"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.G03.answer",
+        "module": "YM.Work.G03",
+        "lines": [
+          212,
+          224
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.G03.answer"
+          },
+          "snippet": {
+            "text": "theorem answer : YM.Bid.G03 := by\n  intro G H d peg\n  let r {m : ℕ} (B : Fin m → Slot) := Module.finrank ℝ (kernel H d B)\n  let s : Set ℕ := {k | ∃ (m : ℕ) (B : Fin m → Slot), r B = k}\n  obtain ⟨n,⟨m,B,rfl⟩,hmin⟩ := wellFounded_lt.has_min s ⟨_,0,Fin.elim0,rfl⟩\n  refine ⟨m,B,fun A ha => detects_all H d peg A (fun b => ?_)⟩\n  let B' : Fin (m+1) → Slot := Fin.cons b B\n  have hh : kernel H d B' ≤ kernel H d B := by\n    intro x hx; rw [mem_kernel] at hx ⊢; exact fun i => by simpa only [B', Fin.cons_succ] using hx i.succ\n  have he : kernel H d B = kernel H d B' := Eq.symm (hh.eq_of_not_lt (fun hl =>\n    hmin (r B') ⟨_,B',rfl⟩ (Submodule.finrank_lt_finrank_of_lt hl)))\n  have hA : A ∈ kernel H d B' := he ▸ (mem_kernel ..).2 ha\n  exact (mem_kernel ..).1 hA 0",
+            "line": 212,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/G03.lean",
+            "fragment": "L212-L224"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.G03.answer",
+            "lines": [
+              212,
+              224
+            ],
+            "conclusion": "Take `B` minimising the kernel dimension `r B`; if a further measurement could shrink it, the kernel would drop, so the minimal family has zero kernel (`lifts`)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.G03.all_terms",
+        "module": "YM.Work.G03",
+        "lines": [
+          187,
+          197
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.G03.all_terms"
+          },
+          "snippet": {
+            "text": "theorem all_terms (A : Jet G) (k : ℕ)\n    (h : ∀ (x : Cover) (i j : Axis), i < j → ∑ l ∈ Finset.range k, net (A l) i j (castPos x) 1 = 0) :\n    ∀ l < k, A l = 0 := by\n  induction k with\n  | zero => simp\n  | succ k ih =>\n    have hk := top_term A k h\n    intro l hl\n    obtain hl|rfl := (Nat.le_of_lt_succ hl).lt_or_eq\n    · apply ih ?_ l hl; simpa only [Finset.sum_range_succ, hk, net_zero, add_zero] using h\n    exact hk",
+            "line": 187,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/G03.lean",
+            "fragment": "L187-L197"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.G03.all_terms",
+            "lines": [
+              187,
+              197
+            ],
+            "conclusion": "Induction downward on the order: once the top component vanishes the lower ones follow."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          41
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

@@ -1,0 +1,240 @@
+{
+  "id": "Lemma 13.10 step 1",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "broadMatch",
+  "note": "The Lean proves the identity directly for the infinite series (stronger than [M]'s finite expansions, which [M] extends by the summable envelope) and packages the component decomposition in `fused_hasSum_iff`.",
+  "subject": [
+    {
+      "location": {
+        "page": 105,
+        "rect": [
+          0.11818,
+          0.50049,
+          0.76502,
+          0.13977
+        ]
+      },
+      "title": "Lemma 13.10 step 1: Text, p. 105",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 13.10 step 1"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Bid.H01",
+        "module": "YM.Bid.Kitchen",
+        "lines": [
+          15,
+          16
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Bid.H01"
+          },
+          "snippet": {
+            "text": "def H01 : Prop := ∀ (G : Gauge) (n : Side) (X : Pipes G n) (d : Tap G n) (F : ℕ≃Pellet X) (δ u κ γ : ℝ) (P : BudgetPoint),\n    X.Digests d P δ u → X.Buys d P κ γ → ∀ V : Config G n, (fused F P d).gas P V=(X.pours d).gas P V*Real.exp (∑' i,d.logarithm i V)",
+            "line": 15,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Bid/Kitchen.lean",
+            "fragment": "L15-L16"
+          },
+          "proof_context": {
+            "declaration": "YM.Bid.H01",
+            "lines": [
+              15,
+              16
+            ],
+            "conclusion": "Under `Digests` and `Buys`, the fused gas equals the original gas times `exp (tsum logarithm)`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.H01.gathered",
+        "module": "YM.Work.H01",
+        "lines": [
+          245,
+          251
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.H01.gathered"
+          },
+          "snippet": {
+            "text": "theorem gathered {X : Pipes G n} {d : Tap G n} {F : ℕ ≃ Pellet X} {δ u : ℝ} {P : BudgetPoint}\n    (H : X.Digests d P δ u) (V : Config G n) :\n    HasSum (fun b => (fused F P d).gasOccurrence P b V)\n      ((X.pours d).gas P V * Real.exp (∑' i, d.logarithm i V)) := by\n  apply (fused_hasSum_iff H).2\n  exact mayer_sum (fun b => (X.pours d).gasOccurrence P b V) _\n    ((Activities.gasSeries H.stamp).absolute V) (H.pays.summable V)",
+            "line": 245,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/H01.lean",
+            "fragment": "L245-L251"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.H01.gathered",
+            "lines": [
+              245,
+              251
+            ],
+            "conclusion": "The fused gas occurrences sum to `(X.pours d).gas * exp(sum l_i)` on the actual series."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.H01.mayer_sum",
+        "module": "YM.Work.H01",
+        "lines": [
+          214,
+          242
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.H01.mayer_sum"
+          },
+          "snippet": {
+            "text": "private lemma mayer_sum (f : Finset ℕ → ℝ) (l : ℕ → ℝ)\n    (hf : Summable (fun i => ‖f i‖)) (hl : Summable l) :\n    HasSum (fun c : Finset (ℕ ⊕ ℕ) => f c.toLeft * (∏ i ∈ c.toRight, (Real.exp (l i) - 1)))\n      ((∑' b, f b) * Real.exp (∑' i, l i)) := by\n  let y := fun i => Real.exp (l i) - 1\n  let g := fun b : Finset ℕ => ∏ i ∈ b, y i\n  have hy : Summable y := by\n    refine (hl.norm.mul_left 2).of_norm_bounded_eventually ?_\n    filter_upwards [hl.norm.tendsto_cofinite_zero.eventually_le_const zero_lt_one] with i hi\n    change ‖Real.exp (l i) - 1‖ ≤ 2 * ‖l i‖\n    simp only [Real.norm_eq_abs] at hi ⊢\n    exact Real.abs_exp_sub_one_le hi\n  have hg : Summable g := summable_finsetProd_of_summable_norm hy.norm\n  have hlog : Real.exp (∑' i, l i) = ∑' b, g b := by\n    have hy' : (Real.exp ∘ l) = (fun i => 1 + y i) := by\n      ext i\n      change Real.exp (l i) = 1 + (Real.exp (l i) - 1)\n      ring\n    calc\n      _ = ∏' i, (Real.exp ∘ l) i := hl.hasSum.rexp.tprod_eq.symm\n      _ = ∏' i, (1 + y i) := by rw [hy']\n      _ = _ := tprod_one_add hg\n  let e : Finset Ovens.Label ≃ Finset ℕ × Finset ℕ := Finset.sumEquiv.toEquiv\n  let p := fun b : Finset ℕ × Finset ℕ => f b.1 * g b.2\n  have hp : HasSum p ((∑' b, f b) * Real.exp (∑' i, l i)) := by\n    rw [hlog, tsum_mul_tsum_of_summable_norm hf hg.norm]\n    exact (summable_mul_of_summable_norm hf hg.norm).hasSum\n  have hz := (e.hasSum_iff (f := p)).mpr hp\n  exact hz",
+            "line": 214,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/H01.lean",
+            "fragment": "L214-L242"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.H01.mayer_sum",
+            "lines": [
+              214,
+              242
+            ],
+            "conclusion": "Expansion `exp(sum l) = prod(1+(e^l-1))` gives the sum over pairs (selection, selection of exponentials)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Ovens.Pipes.addr",
+        "module": "YM.Ovens.Coffee",
+        "lines": [
+          72,
+          72
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Ovens.Pipes.addr"
+          },
+          "snippet": {
+            "text": "def addr (P : BudgetPoint) (i : ℕ) : ForcedAddress G n := ⟨X.skin (F i),X.plot (F i),X.plot_ne (F i),X.plot_sub (F i), condition F P i⟩",
+            "line": 72,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Ovens/Coffee.lean",
+            "fragment": "L72-L72"
+          },
+          "proof_context": {
+            "declaration": "YM.Ovens.Pipes.addr",
+            "lines": [
+              72,
+              72
+            ],
+            "conclusion": "`addr` is the forced address of a pellet: union support, inventory and conjunction of eligibility tests."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Ovens.Pipes.solid",
+        "module": "YM.Ovens.Coffee",
+        "lines": [
+          75,
+          76
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Ovens.Pipes.solid"
+          },
+          "snippet": {
+            "text": "def solid (P : BudgetPoint) (d : Tap G n) (i : ℕ) (U : Config G n) := if (addr F P i).eligible P.threshold U then\n    ∏ j∈ (F i).val,reach d j U else 0",
+            "line": 75,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Ovens/Coffee.lean",
+            "fragment": "L75-L76"
+          },
+          "proof_context": {
+            "declaration": "YM.Ovens.Pipes.solid",
+            "lines": [
+              75,
+              76
+            ],
+            "conclusion": "A fused label is the product of the selection's `reach` factors when eligible, else zero."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          105
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

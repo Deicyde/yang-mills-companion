@@ -1,0 +1,122 @@
+{
+  "id": "Lemma 19.14 step 15",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 232,
+        "rect": [
+          0.12026,
+          0.38182,
+          0.75948,
+          0.03827
+        ]
+      },
+      "title": "Lemma 19.14 step 15: Display, p. 232",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 19.14 step 15"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Nesting.Tree.rate_base",
+        "module": "YM.OPE.Nesting.Weights",
+        "lines": [
+          91,
+          93
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Nesting.Tree.rate_base"
+          },
+          "snippet": {
+            "text": "lemma rate_base {s:L→(fork n f).Inner→ℝ}{a:(fork n f).Inner→ℝ}\n       (hT:Tendsto T l atTop)(hs:∀ v,RateIs l T (fun i=>s i v) (-a v))(w:(fork n f).Leaf→ℝ)(ε m:ℝ):\n    RateIs l T (fun i=>scaleFee w (s i) ε m) (m*(-a (Sum.inl ())) + (fork n f).cost 0 a w + ε*∑ v:(fork n f).Inner,(fork n f).step 0 a v):=by",
+            "line": 91,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Nesting/Weights.lean",
+            "fragment": "L91-L93"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Nesting.Tree.rate_base",
+            "lines": [
+              91,
+              98
+            ],
+            "conclusion": "The rate of `toll` is `-m a_root + B + ε ∑ step`, where `∑ step 0 a v = a root + ∑ (a v - a parent)` is A_*."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Nesting.Tree.has_grain",
+        "module": "YM.OPE.Nesting.Actual",
+        "lines": [
+          36,
+          39
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Nesting.Tree.has_grain"
+          },
+          "snippet": {
+            "text": "lemma has_grain : 0<∑ v:(fork n f).Inner,(fork n f).step 0 α v:=by\n    have ⟨v,hv⟩:∃ v:(fork n f).Inner,0<α v:= by\n       by_contra! h'; have he:∑ v,α v≤0:=sum_nonpos fun i _=>h' i; linarith only [h₀,he]\n    have hl:=step_sum_bound _ h v; rw [zero_add] at hl; exact hv.trans_le hl",
+            "line": 36,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Nesting/Actual.lean",
+            "fragment": "L36-L39"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Nesting.Tree.has_grain",
+            "lines": [
+              36,
+              40
+            ],
+            "conclusion": "With `∑ a = 1` and `ordered`, `∑ step 0 a v > 0`, which is A_* > 0."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          232
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

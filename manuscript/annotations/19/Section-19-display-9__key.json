@@ -1,0 +1,159 @@
+{
+  "id": "Section 19 display 9",
+  "kind": "display",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "The span of E_j by the real basis and the sum F_j = jF_{j-1} + E_j follow from these lines, but no declaration states that the sum is direct or equals F_j, and F_{-1} = 0 is only the empty recursion at degree 0.",
+  "subject": [
+    {
+      "location": {
+        "page": 223,
+        "rect": [
+          0.12026,
+          0.69043,
+          0.75948,
+          0.02021
+        ]
+      },
+      "title": "Display, p. 223",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Section 19 display 9"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Orbits.Reader.knife_apply",
+        "module": "YM.OPE.Orbits.Cuts",
+        "lines": [
+          53,
+          60
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Orbits.Reader.knife_apply"
+          },
+          "snippet": {
+            "text": "lemma knife_apply (m q:ℕ){h:q ≤ m} (z:S.Field q):\n    R.knife m (Q.rise h z) = Q.rise h z - ∑ i:Fin m, Q.rise i.isLt.le (R.cutTest i.val q z):=by\n    have hi(k:ℕ):R.liftOne k m (Q.rise h z)=R.liftOne k q z :=by\n       exact R.liftOne_affinity .. -- coherence of R.port.ope under inclusions+rot averages (for testing one only, old P.test affinity)\n    have hw:R.knife m = LinearMap.id - ∑ i:Fin m, (Q.rise i.isLt.le) ∘ₗ R.cutTest i.val m:=by\n          apply Nat.strongRecOn_eq\n    rw [hw]\n    simp only [LinearMap.sub_apply, LinearMap.id_apply, LinearMap.sum_apply, LinearMap.comp_apply]; apply congr_arg (_-·); refine Finset.sum_congr rfl ?_; intro i hv; rw [cutTest,LinearMap.comp_apply,hi]; rfl",
+            "line": 53,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Orbits/Cuts.lean",
+            "fragment": "L53-L60"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Orbits.Reader.knife_apply",
+            "lines": [
+              53,
+              60
+            ],
+            "conclusion": "`knife m (rise z) = rise z - sum_{i<m} rise (cutTest i q z)`, which with `Q.arrival` writes every field as its `knife` (an element of the stratum) plus lower fields lifted."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Orbits.Reader.knife_mem",
+        "module": "YM.OPE.Orbits.Cuts",
+        "lines": [
+          86,
+          101
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Orbits.Reader.knife_mem"
+          },
+          "snippet": {
+            "text": "lemma knife_mem (m:ℕ) (x:S.Field m) : R.knife m x∈R.stratum m:= by\n   induction m using Nat.strong_induction_on with\n   | h m ih =>\n      refine (piece_mem R).mpr fun i=> ?_\n      rw [show x=Q.rise (d:=m) le_rfl x from (Q.arrival R.continuum.laws.toSymmetric R.lifts _).symm] -- occurrences?\n      rw [R.knife_apply, map_sub,map_sum]; simp_rw [R.cut_rise]; apply sub_eq_zero.mpr (?_); symm; rw [Finset.sum_eq_single i]; rotate_left\n      · intro j _ h\n        rcases lt_or_gt_of_ne (show i.val ≠ j.val from (fun he=> h ((Fin.ext he).symm))) with he|he\n        · exact (piece_mem R).1 (ih j.val j.isLt (R.liftOne j.val m x)) ⟨i.val,he⟩\n        exact R.kills_lower i.val j.val he _\n      · exact fun hi=> False.elim (hi (Finset.mem_univ ..))\n      have hx:= ih i.val i.isLt (R.liftOne i.val m x)\n      let p:=R.cutTest i.val m x\n      change R.cutTest i.val i.val p = R.cutTest i.val m x\n      rw [test_formula R _ _ le_rfl p, Q.arrival R.continuum.laws.toSymmetric R.lifts p, Finset.sum_eq_zero fun j _=>?_ , sub_zero]\n      erw [(piece_mem R).1 hx j,map_zero]",
+            "line": 86,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Orbits/Cuts.lean",
+            "fragment": "L86-L101"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Orbits.Reader.knife_mem",
+            "lines": [
+              86,
+              101
+            ],
+            "conclusion": "`knife m x` lies in `stratum m`, so the image of Q_j is contained in E_j."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Orbits.Reader.basis",
+        "module": "YM.OPE.Orbits.Stars",
+        "lines": [
+          81,
+          81
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Orbits.Reader.basis"
+          },
+          "snippet": {
+            "text": "def basis (m:ℕ): Module.Basis (R.channels m) ℂ (R.stratum m):= (Classical.choice (R.findBasis m).choose_spec).val",
+            "line": 81,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Orbits/Stars.lean",
+            "fragment": "L81-L81"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Orbits.Reader.basis",
+            "lines": [
+              81,
+              81
+            ],
+            "conclusion": "`basis m` is a basis of `stratum m` over C consisting of conjugation-fixed vectors, so E_j is the complex span of the real fields O_{j,lambda}."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          223
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      }
+    }
+  }
+}

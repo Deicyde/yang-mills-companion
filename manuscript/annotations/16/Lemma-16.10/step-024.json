@@ -1,0 +1,232 @@
+{
+  "id": "Lemma 16.10 step 24",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 186,
+        "rect": [
+          0.12026,
+          0.44267,
+          0.75948,
+          0.05171
+        ]
+      },
+      "title": "Lemma 16.10 step 24: Text, p. 186",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.10 step 24",
+          "quads": [
+            [
+              0.50585,
+              0.44267,
+              0.87974,
+              0.44267,
+              0.87974,
+              0.46056,
+              0.50585,
+              0.46056
+            ],
+            [
+              0.12026,
+              0.46058,
+              0.87974,
+              0.46058,
+              0.87974,
+              0.47686,
+              0.12026,
+              0.47686
+            ],
+            [
+              0.12026,
+              0.47687,
+              0.66907,
+              0.47687,
+              0.66907,
+              0.49438,
+              0.12026,
+              0.49438
+            ]
+          ]
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Spin.offset",
+        "module": "YM.Spin.Isolates",
+        "lines": [
+          21,
+          21
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Spin.offset"
+          },
+          "snippet": {
+            "text": "lemma offset (x : R) : φ x-x=(1-2*x)*defect x := by unfold φ defect; noncomm_ring",
+            "line": 21,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Spin/Isolates.lean",
+            "fragment": "L21-L21"
+          },
+          "proof_context": {
+            "declaration": "YM.Spin.offset",
+            "lines": [
+              21,
+              21
+            ],
+            "conclusion": "`offset` proves `φ x - x = (1 - 2x) * defect x` for `φ x = 3x² - 2x³`, `defect x = x² - x`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Spin.demand",
+        "module": "YM.Spin.Isolates",
+        "lines": [
+          22,
+          22
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Spin.demand"
+          },
+          "snippet": {
+            "text": "lemma demand (x : R) : defect (φ x)=(4*defect x-3)*defect x^2 := by unfold φ defect; noncomm_ring",
+            "line": 22,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Spin/Isolates.lean",
+            "fragment": "L22-L22"
+          },
+          "proof_context": {
+            "declaration": "YM.Spin.demand",
+            "lines": [
+              22,
+              22
+            ],
+            "conclusion": "`demand` proves `defect (φ x) = (4 defect x - 3) * defect x ^ 2`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Spin.rectify",
+        "module": "YM.Spin.Isolates",
+        "lines": [
+          25,
+          69
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Spin.rectify"
+          },
+          "snippet": {
+            "text": "lemma rectify (A C ε : ℝ) (hC : ‖(1:R)‖ + ‖(2:R)‖*A < C) (x : R) (hx : ‖x‖ + C * (ε*2) ≤ A)\n    (he : ‖defect x‖ ≤ ε) (hh : (‖(4:R)‖ * ε + ‖(3:R)‖) * ε ≤ 1/2) (hc : 0<C) :\n    ∃ y : R, Tendsto (fun n : ℕ => φ^[n] x) atTop (𝓝 y) ∧ defect y=0 ∧ ‖y-x‖ ≤ C * (ε*2) := by\n  let θ := (1:ℝ)/2\n  have h : 0 ≤ ε := (norm_nonneg _).trans he\n  let f (i : ℕ) := φ^[i] x\n  have hθ : 0 < θ := by norm_num [θ]\n  have ht i : f (i+1)=φ (f i) := iterate_succ_apply' ..\n  let s (i : ℕ) := ε*θ^i\n  have hs i : 0 ≤ s i := by unfold s; positivity\n  have hb (i : ℕ) (hi : ‖defect (f i)‖ ≤ s i) (hy : ‖f i-x‖ ≤ C*(ε-s i)*2) :\n      dist (f (i+1)) (f i) ≤ C * s i := by\n    have hl : ‖f i‖ ≤ A := by\n      calc ‖f i‖ ≤ ‖f i-x‖ + ‖x‖ := by nth_rw 1 [← sub_add_cancel (f i) x]; exact norm_add_le ..\n           _ ≤ C*ε*2+‖x‖ := add_le_add_left (hy.trans (mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left\n               (sub_le_self _ (hs i)) hc.le) (by norm_num))) _\n           _ ≤ A := by linarith\n    rw [dist_eq_norm,ht,offset]; apply (norm_mul_le _ _).trans (mul_le_mul (?_ : ‖1-2*f i‖ ≤ C) hi (norm_nonneg _) hc.le)\n    apply (norm_sub_le ..).trans _\n    linarith [le_trans (norm_mul_le (2:R) (f i)) (mul_le_mul_of_nonneg_left hl (norm_nonneg (2:R)))]\n  have hv i : ‖defect (f i)‖ ≤ s i ∧ ‖f i-x‖ ≤ C*(ε-s i)*2 := by\n    induction i with\n    | zero => simpa [f,s] using he\n    | succ i ih =>\n      have ha : s i ≤ ε := mul_le_of_le_one_right h (pow_le_one₀ hθ.le (by norm_num [θ]))\n      have hz : s (i+1)=s i/2 := by simp only [s,pow_succ,θ]; ring\n      constructor\n      · rw [ht,demand,hz];\n        have Ht : ‖4*(defect (f i))-3‖ ≤ ‖(4:R)‖*ε+‖(3:R)‖ := (norm_sub_le ..).trans\n          (add_le_add_left ((norm_mul_le _ _).trans (mul_le_mul_of_nonneg_left (ih.1.trans ha) (norm_nonneg _))) _)\n        apply le_trans ((norm_mul_le ..).trans (mul_le_mul Ht (le_trans (show ‖defect (f i)^2‖ ≤ ‖defect (f i)‖^2 by simp only [pow_two]; exact norm_mul_le _ _) (pow_le_pow_left₀\n          (norm_nonneg (defect (f i))) ih.1 2)) (norm_nonneg _) ((norm_nonneg _).trans Ht)))\n        have he := le_trans (mul_le_mul_of_nonneg_left ha (show 0 ≤ _*ε + ‖(3:R)‖ from by positivity)) hh\n        nlinarith [hs i]\n      calc _ = dist (f (i+1)) x := (dist_eq_norm _ _).symm\n           _ ≤ dist (f (i+1)) (f i)+dist (f i) x := dist_triangle ..\n           _ ≤ _ := by rw [hz]; have hh := hb i ih.1 ih.2; rw [dist_eq_norm (f i) x]; linarith [ih.2]\n  have hΘ : θ < 1 := by norm_num [θ]\n  obtain ⟨y,hy⟩ := cauchySeq_tendsto_of_complete (cauchySeq_of_le_geometric θ (C*ε) hΘ (fun i => show dist (f i) (f (i+1)) ≤ _ by\n    rw [dist_comm,mul_assoc]; exact hb _ (hv i).1 (hv i).2))\n  have he : Tendsto s atTop (𝓝 0) := by simpa only [mul_zero] using (tendsto_pow_atTop_nhds_zero_of_lt_one hθ.le hΘ).const_mul ε\n  refine ⟨y,hy, norm_eq_zero.mp ?_,?_⟩\n  · exact tendsto_nhds_unique ((hy.pow 2 |>.sub hy).norm) (squeeze_zero (fun i => norm_nonneg _) (fun i => (hv i).1) he)\n  rw [← mul_assoc]\n  exact le_of_tendsto_of_tendsto' ((hy.sub_const x).norm) (show Tendsto (fun i => C*(ε-s i)*2) atTop (𝓝 (C*ε*2)) by simpa only [sub_zero] using ((he.const_sub ε).const_mul C).mul_const (2:ℝ)) (fun i => (hv i).2)",
+            "line": 25,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Spin/Isolates.lean",
+            "fragment": "L25-L69"
+          },
+          "proof_context": {
+            "declaration": "YM.Spin.rectify",
+            "lines": [
+              25,
+              69
+            ],
+            "conclusion": "`rectify` shows that near an element of small defect the iterates of `φ` have squaring errors and a convergent geometric sum of displacements, converging to an idempotent."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Spin.stable",
+        "module": "YM.Spin.Isolates",
+        "lines": [
+          72,
+          98
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Spin.stable"
+          },
+          "snippet": {
+            "text": "lemma stable {z : R} (hz : defect z=0) (Z : ℕ → R) (ht : Tendsto Z atTop (𝓝 z)) : ∃ P : ℕ → R,\n    (∀ᶠ n in atTop, Tendsto (fun i : ℕ => φ^[i] (Z n)) atTop (𝓝 (P n)) ∧ defect (P n)=0) ∧ Tendsto P atTop (𝓝 z) := by\n  let A := ‖z‖+1\n  obtain ⟨C,hC⟩ := exists_gt (‖(1:R)‖+‖(2:R)‖*A)\n  have hc : 0 < C := by\n    have hv : 0<A := by dsimp only [A]; positivity\n    exact lt_of_le_of_lt (by positivity) hC\n  let E n := ‖defect (Z n)‖\n  have he : Tendsto E atTop (𝓝 0) := by\n    have hv := (ht.pow 2 |>.sub ht).norm\n    rw [show z^2-z=0 from hz,norm_zero] at hv; exact hv\n  have hh : Tendsto (fun i => C*(E i*2)) atTop (𝓝 0) := by simpa using ((he.mul_const (2:ℝ)).const_mul C)\n  have hy : ∀ᶠ i in atTop, ‖Z i‖+C*(E i*2) ≤ A := by\n    apply ((ht.norm.add hh).eventually (gt_mem_nhds (?_ : ‖z‖+0 < A))).mono (fun i hi => show _ from le_of_lt hi)\n    dsimp only [A]; linarith\n  have hp := (he.const_mul ‖(4:R)‖ |>.add_const ‖(3:R)‖ |>.mul he)\n  simp only [mul_zero,zero_add] at hp\n  let e (p : ℕ) (y : R) := Tendsto (fun i : ℕ => φ^[i] (Z p)) atTop (𝓝 y) ∧ defect y=0 ∧ ‖y-Z p‖ ≤ C*(E p*2)\n  have hE : ∀ᶠ i in atTop, ∃ y, e i y := (hy.and (hp.eventually (gt_mem_nhds\n    (by norm_num : (0:ℝ)<1/2)))).mono (fun i hi => rectify A C (E i) hC _ hi.1 le_rfl (le_of_lt hi.2) hc)\n  classical\n  let P (n : ℕ) := if h : ∃ y, e n y then h.choose else z\n  replace hE : ∀ᶠ i in atTop,e i (P i) := hE.mono fun i hi => by dsimp only [P]; rw [dif_pos hi];exact hi.choose_spec\n  refine ⟨P,hE.mono (fun i hi => ⟨hi.1,hi.2.1⟩),?_⟩\n  have hv : Tendsto (fun i => P i-Z i) atTop (𝓝 0) := tendsto_zero_iff_norm_tendsto_zero.mpr (squeeze_zero'\n    (Eventually.of_forall fun _ => norm_nonneg _) (hE.mono fun i hi => hi.2.2) hh)\n  simpa using hv.add ht",
+            "line": 72,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Spin/Isolates.lean",
+            "fragment": "L72-L98"
+          },
+          "proof_context": {
+            "declaration": "YM.Spin.stable",
+            "lines": [
+              72,
+              98
+            ],
+            "conclusion": "`stable` builds idempotents `P n` as limits of `φ^[i] (Z n)` with `P n → z` when `Z n → z` and `z² = z`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          186
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

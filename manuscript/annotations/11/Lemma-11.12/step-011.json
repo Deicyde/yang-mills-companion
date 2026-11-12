@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 11.12 step 11",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean packages the bounds as `Parcel` jets with constants M, v and the rate exp(-v radiusB x); [M]'s B = ceil((log x)^2) and the absorption of g^{-1} <= C beta^{1/2} are not separate steps, and the identity (I - AP*)b is the definition of `residual`.",
+  "subject": [
+    {
+      "location": {
+        "page": 70,
+        "rect": [
+          0.11962,
+          0.77036,
+          0.76258,
+          0.09085
+        ]
+      },
+      "title": "Lemma 11.12 step 11: Text, p. 70",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 11.12 step 11"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.AnalyticBridge.SectorAffine.Offset.prices",
+        "module": "YM.AnalyticBridge.SECTOR_AFFINE_JETS.Center",
+        "lines": [
+          115,
+          121
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.AnalyticBridge.SectorAffine.Offset.prices"
+          },
+          "snippet": {
+            "text": "theorem prices (G : Gauge) (P : Patch) (Pt : Teller G) (B : ℝ) (hB : 0<B) (q : Chi) (n : ℕ) (hP : P.Branches Pt.bind G) :\n    ∃ r d d' v M N η l : ℝ, 0<r ∧ 0<d ∧ 0<d' ∧ 0<v ∧ 0<M ∧ 0<N ∧ 0<η ∧ 0<l ∧\n    ∀ᶠ x : ℝ in atTop, 120 ≤ radiusB x ∧ ∀ {c f : Side} (S : StepData c f) (T : Tube G S), S.patch=P →\n    100*(1+radiusB x) ≤ c.val → Pt.Funds S T → ∀ (A : Stores S) (F : Forest S.ratio) (V : Config G c),\n    V∈eligible A G x → ∀ k : S.Choices,\n      (∀ z : PriceCoords G c, ‖z‖≤r → Estimate n d' v η l N A F T x V k z) ∧\n        Shift n x d v (B*fiery G x S.patch.L) M T F A V k q := by",
+            "line": 115,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/SECTOR_AFFINE_JETS/Center.lean",
+            "fragment": "L115-L121"
+          },
+          "proof_context": {
+            "declaration": "YM.AnalyticBridge.SectorAffine.Offset.prices",
+            "lines": [
+              115,
+              151
+            ],
+            "conclusion": "Jets of the source `b`, of `mean` bounded by `M*t`, and of the `residual` bounded by `M*t*exp(-v*radiusB x)`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.AnalyticBridge.SectorAffine.Offset.residual",
+        "module": "YM.AnalyticBridge.SECTOR_AFFINE_JETS.Center",
+        "lines": [
+          35,
+          35
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.AnalyticBridge.SectorAffine.Offset.residual"
+          },
+          "snippet": {
+            "text": "def residual := Rows.gram T x V k (shots S x) A F *ᵥ mean T x k A F q d Y V + b T x k A F q d Y V",
+            "line": 35,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/SECTOR_AFFINE_JETS/Center.lean",
+            "fragment": "L35-L35"
+          },
+          "proof_context": {
+            "declaration": "YM.AnalyticBridge.SectorAffine.Offset.residual",
+            "lines": [
+              35,
+              35
+            ],
+            "conclusion": "`residual = gram *ᵥ mean + b`, the analogue of `A m_Y + b`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.AnalyticBridge.SectorAffine.Offset.mean",
+        "module": "YM.AnalyticBridge.SECTOR_AFFINE_JETS.Center",
+        "lines": [
+          33,
+          33
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.AnalyticBridge.SectorAffine.Offset.mean"
+          },
+          "snippet": {
+            "text": "def mean := -(Schur.per (panels A F) (Rows.gram T x V k (shots S x) A F)).transpose *ᵥ b T x k A F q d Y V",
+            "line": 33,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/SECTOR_AFFINE_JETS/Center.lean",
+            "fragment": "L33-L33"
+          },
+          "proof_context": {
+            "declaration": "YM.AnalyticBridge.SectorAffine.Offset.mean",
+            "lines": [
+              33,
+              33
+            ],
+            "conclusion": "`mean = -(Schur.per ...)ᵀ *ᵥ b`, the product of the window inverse with the source."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          70
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

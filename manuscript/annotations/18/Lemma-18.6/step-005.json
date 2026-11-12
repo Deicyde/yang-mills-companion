@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 18.6 step 5",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "The Lean proves convergence of the integrals directly, by density of the exponential-Laplace functions (Stone-Weierstrass: `scan_dense`, `laplace_algebra`), with no Riesz extraction of subsequential limits and no holomorphic uniqueness or Fourier inversion.",
+  "subject": [
+    {
+      "location": {
+        "page": 214,
+        "rect": [
+          0.1198,
+          0.60531,
+          0.76241,
+          0.10556
+        ]
+      },
+      "title": "Lemma 18.6 step 5: Text, p. 214",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 18.6 step 5"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.laplace_compact",
+        "module": "YM.TraceExtension.LaplaceLimit",
+        "lines": [
+          142,
+          148
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.laplace_compact"
+          },
+          "snippet": {
+            "text": "theorem laplace_compact (f : E4 → ℝ) (hc : Continuous f) (hp : HasCompactSupport f) :\n    Tendsto (fun i => ∫ p,f p ∂μ i) l (𝓝 (∫ p,f p ∂ν)) := by\n    let u : inside := ⟨_,clock_inside⟩\n    obtain ⟨x,h⟩ := decode_compact f hc hp u\n    rw [← (compact_evaluation (u:=u) h ν hν).1]\n    apply (laplace_continuous μ ν hf hν hx x u).congr'\n    filter_upwards [hf] with i hi using (compact_evaluation h (μ i) hi).1",
+            "line": 142,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/LaplaceLimit.lean",
+            "fragment": "L142-L148"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.laplace_compact",
+            "lines": [
+              142,
+              148
+            ],
+            "conclusion": "If the Laplace transforms of `μ i` converge to that of `ν` at every inside point, then `∫ f ∂μ i → ∫ f ∂ν` for continuous compactly supported real `f` (`decode_compact`, `laplace_continuous`)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.laplace_compact_complex",
+        "module": "YM.TraceExtension.LaplaceSchwartz",
+        "lines": [
+          16,
+          26
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.laplace_compact_complex"
+          },
+          "snippet": {
+            "text": "theorem laplace_compact_complex {ι : Type*} {l : Filter ι} (μ : ι → Measure E4) (ν : Measure E4)\n    (hf : ∀ᶠ i in l, AllowsLaplace (μ i)) (hν : AllowsLaplace ν)\n    (hx : ∀ (u : inside), Tendsto (fun i => lag (μ i) u univ) l (𝓝 (lag ν u univ)))\n    (f : E4 → ℂ) (hc : Continuous f) (hp : HasCompactSupport f) :\n    Tendsto (fun i => ∫ p,f p ∂μ i) l (𝓝 (∫ p,f p ∂ν)) := by\n    have hr := laplace_compact μ ν hf hν hx (re ∘ f) (continuous_re.comp hc) (hp.comp_left rfl)\n    have hi := laplace_compact μ ν hf hν hx (im ∘ f) (continuous_im.comp hc) (hp.comp_left rfl)\n    rw [← integral_re_add_im (integrable_complex hν f hc hp)]\n    apply ((Complex.continuous_ofReal.continuousAt.tendsto.comp hr).add\n             ((Complex.continuous_ofReal.continuousAt.tendsto.comp hi).mul_const I)).congr'\n    filter_upwards [hf] with i hk using integral_re_add_im (integrable_complex hk f hc hp)",
+            "line": 16,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/LaplaceSchwartz.lean",
+            "fragment": "L16-L26"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.laplace_compact_complex",
+            "lines": [
+              16,
+              26
+            ],
+            "conclusion": "The same convergence for complex-valued continuous compactly supported `f`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          214
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

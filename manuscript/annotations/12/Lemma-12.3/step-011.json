@@ -1,0 +1,84 @@
+{
+  "id": "Lemma 12.3 step 11",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The condition `C^pb ℓ^{-2} ≤ 1/4` appears as the hypothesis `t.send j i / L^2 ≤ 1/4` with `send` abstract; the choice of `ℓ` is made elsewhere.",
+  "subject": [
+    {
+      "location": {
+        "page": 86,
+        "rect": [
+          0.12026,
+          0.84555,
+          0.75948,
+          0.04006
+        ]
+      },
+      "title": "Lemma 12.3 step 11: Text, p. 86",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 12.3 step 11"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Push.PriceCompiler.buys_loop",
+        "module": "YM.Push.PRICE_COMPILER.LoopGate",
+        "lines": [
+          80,
+          101
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Push.PriceCompiler.buys_loop"
+          },
+          "snippet": {
+            "text": "theorem buys_loop (t : LoopPrices) (a : Levels G) (h : Paid I a) (m : ℕ) :\n    let j := a.clock.J (m+1)\n    let i := a.clock.J m\n    let L := a.S.block m\n    Grows t T j i (a.clock.hatBeta m) →\n    t.send j i / (L.val:ℝ)^2 ≤ 1/4 →\n      t.cost j i (L.val:ℝ) (a.clock.loopCap (m+1)) ≤ a.clock.loopCap m := by\n  intro j i L hg hq\n  have he := h.theta\n  let x := a.clock.hatBeta m\n  let y := a.clock.hatBeta (m+1)\n  have hu : a.clock.loopCap (m+1) = 2 * mon y ^ T.theta j := by rw [Calendar.loopCap, he]; rfl\n  have hx : a.clock.loopCap m = 2 * mon x ^ T.theta i := by rw [Calendar.loopCap, he]; rfl\n  have hb : y=betaF G x (D.L j) := beta_eq h m\n  have ht : t.add j i * (L.val:ℝ)^ (4:ℕ) ≤ mon x ^ T.theta i := by\n    rw [show L = D.L j from block_eq h m]\n    exact hg.seed\n  have hy : mon y ^ T.theta j ≤ 2 * mon x ^ T.theta i := hb.symm ▸ hg.transfer\n  have hw : (0:ℝ) ≤ 2 * mon y ^ T.theta j := mul_nonneg (by norm_num) (Real.rpow_nonneg (mon_pos _).le _)\n  have hk := mul_le_mul_of_nonneg_right hq hw\n  unfold LoopPrices.cost\n  rw [hu,hx]; linarith",
+            "line": 80,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/PRICE_COMPILER/LoopGate.lean",
+            "fragment": "L80-L101"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.PriceCompiler.buys_loop",
+            "lines": [
+              80,
+              101
+            ],
+            "conclusion": "`buys_loop` assumes `send j i / L^2 ≤ 1/4` and bounds the cost, including `send/L^2 * Λ_{m+1}`, by `Λ_m`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          86
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
+      }
+    }
+  }
+}

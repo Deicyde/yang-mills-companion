@@ -1,0 +1,183 @@
+{
+  "id": "Lemma 16.10 step 29",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 186,
+        "rect": [
+          0.12026,
+          0.54572,
+          0.75948,
+          0.03713
+        ]
+      },
+      "title": "Lemma 16.10 step 29: Text, p. 186",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.10 step 29",
+          "quads": [
+            [
+              0.85205,
+              0.54572,
+              0.87974,
+              0.54572,
+              0.87974,
+              0.5628,
+              0.85205,
+              0.5628
+            ],
+            [
+              0.12026,
+              0.56349,
+              0.49146,
+              0.56349,
+              0.49146,
+              0.58284,
+              0.12026,
+              0.58284
+            ]
+          ]
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Spin.preserves",
+        "module": "YM.Spin.Shape",
+        "lines": [
+          37,
+          45
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Spin.preserves"
+          },
+          "snippet": {
+            "text": "def preserves (S : AddSubgroup (Mat X)) : Subring (End X) where\n  carrier := {P | MapsTo P S S}\n  add_mem' {_ _} hf hg _ hx := S.add_mem (hf hx) (hg hx)\n  neg_mem' {_} hf _ hx := S.neg_mem (hf hx)\n  mul_mem' {_ _} hf hg _ hx := hf (hg hx)\n  one_mem' _ hx := hx\n  zero_mem' _ _ := S.zero_mem\n\nomit [CompleteSpace X] in",
+            "line": 37,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Spin/Shape.lean",
+            "fragment": "L37-L45"
+          },
+          "proof_context": {
+            "declaration": "YM.Spin.preserves",
+            "lines": [
+              37,
+              45
+            ],
+            "conclusion": "`preserves S` is the subring of endomorphisms preserving the additive subgroup `S`, closed when `S` is."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Spin.fine",
+        "module": "YM.Spin.Sheets",
+        "lines": [
+          55,
+          64
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Spin.fine"
+          },
+          "snippet": {
+            "text": "def fine (a : S.RealSpin) (d : ℕ) : AddSubgroup (Mat (S.Field d)) where\n  carrier := {f | (∀ h x, f (S.mirror a d h x)= S.mirror a d h (f x)) ∧\n    ∀ x, f (S.conj a d x) = S.conj a d (f x)}\n  add_mem' := by\n    intro x y hx hy\n    obtain ⟨A,B⟩ := hx; obtain ⟨T,W⟩ := hy\n    constructor <;> simp [A,B,T,W]\n  neg_mem' := by\n    intro x hx; obtain ⟨A,B⟩ := hx; constructor <;> simp [A,B]\n  zero_mem' := by constructor <;> simp",
+            "line": 55,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Spin/Sheets.lean",
+            "fragment": "L55-L64"
+          },
+          "proof_context": {
+            "declaration": "YM.Spin.fine",
+            "lines": [
+              55,
+              64
+            ],
+            "conclusion": "`fine a d` is the additive subgroup of matrices commuting with the real structure and the signed action, the real signed commutant."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Spin.onto",
+        "module": "YM.Spin.Close",
+        "lines": [
+          42,
+          46
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Spin.onto"
+          },
+          "snippet": {
+            "text": "lemma onto [CompleteSpace R] (l r : I → I) (D : I → ℕ → R) (d : I → R) (h : ∀ i, Tendsto (D i) atTop (𝓝 (d i)))\n    (he : ∀ᶠ i in atTop, Relations (fun p => D p i) l r) (P : ℕ → R) (p : R) (hx : Tendsto P atTop (𝓝 p))\n    (hd : p*p=p) (hp : ∀ i, d i*p=0) (S : Subring R) (hs : IsClosed (S : Set R)) (hS : ∀ᶠ i in atTop, P i∈S)\n    (H : ∀ᶠ n in atTop, ∀ i, Commute (P n) (D i n)) : ∃ Q : ℕ → R, Tendsto Q atTop (𝓝 p) ∧\n    ∀ᶠ n in atTop, Q n∈S ∧ Q n*Q n=Q n ∧ ∀ i, Commute (Q n) (D i n) ∧ D i n*Q n=0 := by",
+            "line": 42,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Spin/Close.lean",
+            "fragment": "L42-L46"
+          },
+          "proof_context": {
+            "declaration": "YM.Spin.onto",
+            "lines": [
+              42,
+              70
+            ],
+            "conclusion": "`onto` keeps `Q n` inside the closed subring `S`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          186
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

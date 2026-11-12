@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 11.7 step 5",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "X R = I and det(R,I)^2=1 are carried directly. For positivity, Lean shows only that the Hessian determinant is positive near zero, not that Q(v) itself stays positive definite.",
+  "subject": [
+    {
+      "location": {
+        "page": 57,
+        "rect": [
+          0.12026,
+          0.79174,
+          0.76293,
+          0.06841
+        ]
+      },
+      "title": "Lemma 11.7 step 5: Text, p. 57",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 11.7 step 5"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.carries",
+        "module": "YM.Next.STATIONARY.Joint.Regulator",
+        "lines": [
+          527,
+          533
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.carries"
+          },
+          "snippet": {
+            "text": "lemma carries (h : S.patch.Branches S.kernel G) {U : Joint G c f} (p : Explosives S t 1 U) : indexX S t 1 U * stood S U=1 := by\n  have hp := (rocket_root S t h U).fderiv_eq (𝕜:=ℝ)\n  have hv : DifferentiableAt ℝ (rocket S t 1 U) (parade S U 0) := by rw [parade_zero]; exact (market S t 1 U p).differentiableAt (by simp)\n  rw [fderiv_comp _ hv ((parade_diff S U).differentiableAt (by simp)),parade_zero,fderiv_id] at hp\n  refine testers fun x y => ?_\n  rw [← Matrix.mulVec_mulVec,stands,indexX,bill_at,cash_pocket, one_mulVec]\n  exact congr_arg _ (DFunLike.congr_fun hp y)",
+            "line": 527,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Joint/Regulator.lean",
+            "fragment": "L527-L533"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.carries",
+            "lines": [
+              527,
+              533
+            ],
+            "conclusion": "`indexX * stood = 1`, the identity X R = I from gauge covariance of the rocket."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.commandment",
+        "module": "YM.Next.STATIONARY.Joint.Completion",
+        "lines": [
+          384,
+          437
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.commandment"
+          },
+          "snippet": {
+            "text": "lemma commandment (V : Config G c) (y : AxisChart G F) : (pawns F V y).det^2=1 := by\n  let M := pawns F V y\n  let U := abode S F V y\n  let L := M.toBlocks₁₁\n  have he (x : Site f) (k : G.ColorIndex) (h : ¬ leaf S.ratio x) (i : Lines G f 0) :\n      L (x,vac,k) i= -(pocket (Lines G f 0) i (x,vac,k)) := by\n    let p : BaseSites G f := pocket (Lines G f 0) i\n    change stood S U (march F G (.inl (x,vac,k))) i = _\n    rw [march_root F x h k,stood,bill_def,helmets_site,(soldier_mounted S U p).2]\n    change (-G.adjoint 1 _ : G.Color) k = _\n    rw [G.adjoint_one, ← (show x=S.ratio.embed (S.ratio.parent x) from Classical.not_not.mp h)]\n    rfl\n  have hp (x : Site f) (k : G.ColorIndex) (h : leaf S.ratio x) (i : Lines G f 0) :\n      L (x,vac,k) i=(if (F.up x).neg then (-1:ℝ) else 1)* (pocket _ i (x,vac,k) - pocket _ i (x+(F.up x).vec,vac,k)) := by\n    let p : BaseSites G f := pocket (Lines G f 0) i\n    change stood S U (march F G (.inl (x,vac,k))) i = _\n    rw [march_leaf F x h k,stood,bill_def,helmets_link,(soldier_mounted S U p).1,cant_at,\n      show U.1 ((F.up x).used x)=1 from F.on_tree _ (⟨_, (F.trunk_mem_iff _).2 ⟨x,h,rfl⟩⟩),G.adjoint_one]\n    simp only [PiLp.sub_apply, pin_color]; cases hv : (F.up x).neg <;> simp [p,Step.used,Step.vec,hv,← sub_eq_add_neg]\n  have hT : L.det^2=1 := by\n    let H := fun i : Lines G f 0 => F.height i.1\n    rw [grouped_det L H]; swap\n    · rintro ⟨x,b,k⟩ i hi; rw [vac_only b] at hi ⊢\n      by_cases h : leaf S.ratio x\n      · rw [hp x k h,Pi.basisFun_apply] at hi; simp only [Pi.single_apply] at hi\n        by_cases hh : (x,vac,k)=i\n        · exact Or.inl hh\n        right; rw [if_neg hh] at hi\n        by_cases h' : (x+(F.up x).vec,vac,k)=i\n        · rw [← h']; exact F.rise x h\n        simp [h'] at hi\n      left; by_contra hv; rw [he x k h] at hi; simp [hv] at hi\n    rw [← prod_pow]; convert Finset.prod_const_one (s:=univ (α:=Lines G f 0)) using 1\n    refine Finset.prod_congr rfl ?_; rintro ⟨x,b,k⟩ _\n    rw [vac_only b]; by_cases hh : leaf S.ratio x\n    · have hn : (x+(F.up x).vec : Site f)≠x := fun hi => by have he:=F.rise x hh; rw [hi] at he; exact he.false\n      have hne : (x+(F.up x).vec,vac,k) ≠ (x,vac,k) := fun h => hn (congr_arg Prod.fst h)\n      rw [hp x k hh]; rw [Pi.basisFun_apply,Pi.single_eq_same,Pi.single_eq_of_ne hne]\n      cases (F.up x).neg <;> norm_num\n    rw [he x k hh]; simp\n  have h : M=fromBlocks L (0:Matrix (Lines G f 0) _ _) M.toBlocks₂₁ (1:Funds (Key F G)) := by\n    ext (i|i) (j|j)\n    · rfl\n    · rcases i with ⟨x,b,k⟩; rw [vac_only b]\n      change rangers F G (march F G (.inl (x,vac,k))) j=0\n      by_cases hh : leaf S.ratio x\n      · rw [march_leaf F x hh,rangers,bill_def,helmets_link]; change edgeColor (pad F _) _ k=_\n        rw [show edgeColor (pad F _) _ (k)=(0:G.Color) k from congrArg (fun c : G.Color => c k) (pad_trunk F _ (⟨(F.up x).used x,(F.trunk_mem_iff _).2 ⟨x,hh,rfl⟩⟩))]; rfl\n      rw [march_root F x hh,rangers,bill_def,helmets_site]; simp\n    · rfl\n    change rangers F G (.inl (paintLink i.1.val i.2)) j=(1:Funds (Key F G)) i j\n    rw [rangers,bill_def,helmets_link]; change edgeColor (pad F _) i.1.val i.2=_\n    rw [pad_free, ← rangers_fee F]; rw [cash_works,Basis.repr_self]; simp [Matrix.one_apply,Finsupp.single_apply,eq_comm]\n  change M.det^2=1; rw [h,det_fromBlocks_zero₁₂,det_one,mul_one]; exact hT",
+            "line": 384,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Joint/Completion.lean",
+            "fragment": "L384-L437"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.commandment",
+            "lines": [
+              384,
+              437
+            ],
+            "conclusion": "`(pawns F V y).det^2 = 1` for the matrix pasting gauge insertion with the free-edge identity block, by triangular height ordering via `grouped_det`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.F05.hessian_pos",
+        "module": "YM.Work.F05.Graphs",
+        "lines": [
+          75,
+          79
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.F05.hessian_pos"
+          },
+          "snippet": {
+            "text": "lemma hessian_pos (ha : 0 < a) (hQ : PriceGap B p W a) (hB : Critical B p W ρ) (r : S.Choices) :\n    ∀ᶠ x in 𝓝 0, 0 < (hessian B r p W x (ρ x)).det := by\n  simp_rw [hessian_eq]\n  exact (crit_home hB).eventually\n    (bend_det_pos (countingBasis B G) (hB.2.2 r |>.1) (tested_diag ha hQ r))",
+            "line": 75,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/F05/Graphs.lean",
+            "fragment": "L75-L79"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.F05.hessian_pos",
+            "lines": [
+              75,
+              79
+            ],
+            "conclusion": "The Hessian determinant `(hessian B r p W x (ρ x)).det` is positive for x near 0, derived from positivity of the diagonal at 0 (`tested_diag`)."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          57
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

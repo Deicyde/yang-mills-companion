@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 17.8 step 8",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "The display's chain is [L]'s upper bound and the positivity lower bound; the constant (2π)^3 of [M] is `Probe.pref Space3⁻¹` and the shell is `ringE u = {u/2 < time ≤ u}`.",
+  "subject": [
+    {
+      "location": {
+        "page": 201,
+        "rect": [
+          0.12026,
+          0.87907,
+          0.75948,
+          0.03647
+        ]
+      },
+      "title": "Lemma 17.8 step 8: Display, p. 201",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 17.8 step 8"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.annulus",
+        "module": "YM.EveryPhase.Light",
+        "lines": [
+          67,
+          87
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.annulus"
+          },
+          "snippet": {
+            "text": "  have hI : ‖∫ x, averaged A x * hat f x‖ ≤ fee R M * u^3 := by\n    rw [← setIntegral_eq_integral_of_forall_compl_eq_zero (s:=closedBall 0 R)]; swap\n    · intro p hp\n      have he : R < ‖p‖ := by simpa using hp\n      rw [h p he,zero_mul]\n    apply le_trans (norm_integral_le_of_norm_le (μ:=volume.restrict (closedBall 0 R)) (integrable_const (M*K))\n      (ae_of_all _ (fun p => show ‖averaged A p * hat f p‖ ≤ M*K by\n        rw [norm_mul]; exact mul_le_mul (averaged_bound μ ν M hs p) (hx p) (norm_nonneg _) hM)))\n    rw [setIntegral_const,smul_eq_mul]\n    dsimp only [fee,K]; rw [Measure.addHaar_real_closedBall' volume _ (show 0≤(2*u:ℝ) by positivity),\n      show Module.finrank ℝ Space3=3 from finrank_euclideanSpace_fin]\n    apply le_of_eq; ring\n  have hμ : ∀ᵐ p ∂μ, 0 ≤ p timeAxis := hc.mono fun _ hp => ((cone_self _).mp hp).1\n  have hν : ∀ᵐ p ∂ν, 0 ≤ p timeAxis := hd.mono fun _ hp => ((cone_self _).mp hp).1\n  let U := (weighted μ).map spatial\n  let V := (weighted ν).map fun p => -spatial p\n  let r : ℝ := ∫ x, B x ∂U\n  let s : ℝ := ∫ x, B x ∂V\n  have hr : 0 ≤ r := integral_nonneg fun _ => B.nonneg\n  have hs : 0 ≤ s := integral_nonneg fun _ => B.nonneg\n  have hP := Probe.prepos (V:=Space3)",
+            "line": 67,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Light.lean",
+            "fragment": "L67-L87"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.annulus",
+            "lines": [
+              43,
+              129
+            ],
+            "conclusion": "`‖∫ averaged A x * hat f x dx‖ ≤ fee R M * u^3` with `fee R M = vol(B_R) * M * 2^3 vol(B_1)`, the upper bound."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.annulus",
+        "module": "YM.EveryPhase.Light",
+        "lines": [
+          88,
+          129
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.annulus"
+          },
+          "snippet": {
+            "text": "  have hh : (Probe.pref Space3) * r ≤ fee R M * u^3 := by\n    have hw : (∫ x, averaged A x * hat f x) = ↑((Probe.pref Space3)*(r+s)) := by\n      simp_rw [fun x => two_average μ ν x hμ hν,add_mul]\n      rw [integral_add (char_int U f) (char_int V f), wave_integral, wave_integral]\n      change (pref Space3) • (∫ x, (↑(B x):ℂ) ∂U) + (pref Space3) • (∫ x,(↑(B x):ℂ) ∂V) = _\n      rw [integral_complex_ofReal,integral_complex_ofReal]; simp only [Complex.real_smul]\n      dsimp only [r,s]; push_cast; ring\n    rw [hw, Complex.norm_real,Real.norm_eq_abs,abs_of_nonneg (by positivity)] at hI\n    exact le_trans (by gcongr; simp [hs]) hI\n  have hi : r = ∫ p : E4, (up p:ℝ) * B (spatial p) ∂μ := by\n    unfold r U; rw [integral_map rest_cont.measurable.aemeasurable B.continuous.aestronglyMeasurable,\n      weighted, integral_withDensity_eq_integral_smul up_measurable]; rfl\n  rw [hi] at hh\n  let g := fun p : E4 => (up p:ℝ) * B (spatial p)\n  have hn (p) : 0 ≤ g p := mul_nonneg (by simp) B.nonneg\n  have hb : Integrable g μ := by\n    apply (integrable_const 1).mono'\n    · exact up_measurable.coe_nnreal_real.aestronglyMeasurable.mul\n        (B.continuous.comp rest_cont).aestronglyMeasurable\n    refine ae_of_all _ fun p => ?_\n    rw [Real.norm_eq_abs,abs_of_nonneg (hn _)]\n    exact mul_le_one₀ (up_limit _) B.nonneg B.le_one\n  let v : ℝ := u/(2 * Real.pi)\n  have hm : μ.real (ringE u)*v ≤ ∫ p, g p ∂μ := by\n    have hV : (∫ p in ringE u, v ∂μ) = μ.real (ringE u)*v := by simp\n    rw [← hV]; apply le_trans _ (setIntegral_le_integral (s:=ringE u) hb (ae_of_all _ hn))\n    apply integral_mono_ae (integrable_const _) hb.integrableOn\n    filter_upwards [ae_restrict_mem (μ:=μ) (measurable_ring u),ae_restrict_of_ae hc]\n      with p hp hc\n    obtain ⟨hT,hU⟩ := hp\n    have hK : 0 ≤ time p := le_trans (by positivity : 0≤u/2) hT.le\n    have hs : spatial p ∈ closedBall (0:Space3) u := mem_closedBall.mpr\n      (by simpa using (le_trans hc hU))\n    dsimp only [g,up]; rw [B.one_of_mem_closedBall hs,mul_one,Real.coe_toNNReal _ (pulse_positive hK)]\n    apply le_trans _ (pulse_lower ⟨hK,hU.trans hu.2⟩); unfold v; rw [← div_div]; gcongr\n  let c : ℝ := μ.real (ringE u)\n  have hC : pref Space3*(c*v) ≤ _ := (mul_le_mul_of_nonneg_left hm hP.le).trans hh\n  change c ≤ _\n  apply (mul_le_mul_iff_of_pos_right (show 0<v by unfold v; positivity)).mp\n  apply (mul_le_mul_iff_of_pos_left hP).mp\n  apply hC.trans_eq\n  unfold v; field_simp",
+            "line": 88,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Light.lean",
+            "fragment": "L88-L129"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.annulus",
+            "lines": [
+              43,
+              129
+            ],
+            "conclusion": "The integral is `pref * (r+s)` with `r,s ≥ 0` the bump integrals of the two pushforwards, and `r ≥ μ(ringE u) * u/(2π)` by `pulse_lower`, giving `μ(ringE u) ≤ fee R M * pref⁻¹ * 2π * u^2`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          201
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
+      }
+    }
+  }
+}

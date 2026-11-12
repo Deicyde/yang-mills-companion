@@ -1,0 +1,119 @@
+{
+  "id": "Section 15 display 2",
+  "kind": "display",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 164,
+        "rect": [
+          0.12026,
+          0.34523,
+          0.75948,
+          0.0375
+        ]
+      },
+      "title": "Display, p. 164",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Section 15 display 2"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.DiffPlan.Orientation",
+        "module": "YM.Euclid.Differential",
+        "lines": [
+          71,
+          72
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.DiffPlan.Orientation"
+          },
+          "snippet": {
+            "text": "  mirrorDer d b (s : Signed) (B : S.Field d) : S.mirror hp (d+1) s (P.deriv d b B) =\n    ∑ a : Axis, (s.matrix a b : ℂ) • P.deriv d a (S.mirror hp d s B)",
+            "line": 71,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Euclid/Differential.lean",
+            "fragment": "L71-L72"
+          },
+          "proof_context": {
+            "declaration": "YM.DiffPlan.Orientation",
+            "lines": [
+              66,
+              72
+            ],
+            "conclusion": "`mirrorDer` says the signed-permutation action on `P.deriv d b B` equals the sum over axes a of `s.matrix a b` times `P.deriv d a` of the acted field, the identity h d_b = sum_a h_ab d_a h."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.D06.compat",
+        "module": "YM.Work.D06",
+        "lines": [
+          112,
+          135
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.D06.compat"
+          },
+          "snippet": {
+            "text": "  mirrorDer d b s B := by\n    apply signed_ext h H s; intro n q x hx\n    let t := signedTag H s ∘ q\n    let B' := S.mirror H d s B\n    let u : Fin (n+1) → S.Tag := Fin.cons ⟨d,B'⟩ t\n    let f z := S.useAt S z u\n    let y := move s.ortho x\n    have hy : y ∈ conf _ := move_in _ hx\n    let m := Ward.here u y 0 (d+1)\n    have em (p : S.Field (d+1)) : m p = S.useAt S y (Fin.cons ⟨d+1,p⟩ t) := by\n      rw [show m p = _ from Ward.takes u y 0 (d+1) p, Fin.update_cons_zero]; rfl\n    change S.useAt S y _ = _\n    rw [← em, map_sum]\n    have hf := (((S.class_smooth S hs u) y hy).contDiffAt ((conf_open _).mem_nhds hy)).differentiableAt (by simp)\n    calc\n      _ = ∑ a, s.ortho.val a b • gradient 0 a f y := by\n        apply Finset.sum_congr rfl; intro a _\n        rw [map_smul, em, hd.kernels d a B' hy,Complex.real_smul]; rfl\n      _ = gradient 0 b (f ∘ move s.ortho) x := (gradient_move _ _ b f x hf).symm\n      _ = gradient 0 b (fun z => S.useAt S z (Fin.cons ⟨d,B⟩ q)) x := by\n        apply GermD\n        filter_upwards [(conf_open _).mem_nhds hx] with z hz\n        exact signed_front h H B s hz q\n      _ = _ := (hd.kernels d b B hx q).symm",
+            "line": 112,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/D06.lean",
+            "fragment": "L112-L135"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.D06.compat",
+            "lines": [
+              98,
+              135
+            ],
+            "conclusion": "`compat` proves `mirrorDer` for a smooth symmetric table with `Derivatives` and `Inclusions`, via `gradient_move` on the kernels."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          164
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      }
+    }
+  }
+}

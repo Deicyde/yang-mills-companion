@@ -1,0 +1,122 @@
+{
+  "id": "Lemma 14.25 step 9",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 150,
+        "rect": [
+          0.12026,
+          0.82302,
+          0.75982,
+          0.05423
+        ]
+      },
+      "title": "Lemma 14.25 step 9: Text, p. 150",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.25 step 9"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Rank.base_price",
+        "module": "YM.Next.RANK.Determinant",
+        "lines": [
+          133,
+          146
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Rank.base_price"
+          },
+          "snippet": {
+            "text": "    · calc\n        _ ≤ c*((a/g)^2)/2 := by\n          have hj : 0 ≤ c*((a/g)-1)^2 := mul_nonneg hc.le (sq_nonneg _)\n          have hv : c ≤ 1 := strength_le_one _\n          nlinarith only [hj, hv]\n        _ = R.beta * (c*a^2/2) := by rw [show R.beta=1/g^2 from (eq_div_iff (pow_ne_zero _ hg.ne')).2 hm]; ring\n        _ ≤ R.beta * (R.clip.direct * a^2 / 2) := by gcongr\n    · calc\n        _ ≤ c * (a/g) := by linarith only\n        _ ≤ R.beta * (R.clip.linear*g*a) := by\n          have hs : 0≤a/g := div_nonneg hn hg.le\n          apply le_trans (mul_le_mul_of_nonneg_right hq hs); apply le_of_eq\n          rw [show R.beta=1/g^2 from (eq_div_iff (pow_ne_zero _ hg.ne')).2 hm]; field_simp\n        _ ≤ _ := by gcongr; exact R.clip.tail_pos.le",
+            "line": 133,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Determinant.lean",
+            "fragment": "L133-L146"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Rank.base_price",
+            "lines": [
+              120,
+              151
+            ],
+            "conclusion": "`base_price` proves the inequality in the quadratic branch by `0 ≤ c (a/g-1)^2` and in the linear branch from `c ≤ clip.linear`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Rank.numerator",
+        "module": "YM.Next.RANK.Determinant",
+        "lines": [
+          209,
+          211
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Rank.numerator"
+          },
+          "snippet": {
+            "text": "      unfold v\n      rw [← Real.exp_sum,← Real.exp_add,Finset.sum_neg_distrib]\n      apply Real.exp_monotone; have hb := exponent_retains h hg he hm U",
+            "line": 209,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Determinant.lean",
+            "fragment": "L209-L211"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Rank.numerator",
+            "lines": [
+              189,
+              217
+            ],
+            "conclusion": "`numerator` turns the sum over faces into the product of `exp(-chord/E)` factors."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          150
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

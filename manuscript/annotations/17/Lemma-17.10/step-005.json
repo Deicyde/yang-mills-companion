@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 17.10 step 5",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "[L] gets the uniform bound from the existence of the two side limits and compactness of [0,1] (`neighborhoods`) rather than bounding the side integrals directly by the spacelike germs, a different argument.",
+  "subject": [
+    {
+      "location": {
+        "page": 201,
+        "rect": [
+          0.11962,
+          0.2161,
+          0.76357,
+          0.07111
+        ]
+      },
+      "title": "Lemma 17.10 step 5: Text, p. 201",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 17.10 step 5"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.Stress.core_jump",
+        "module": "YM.EveryPhase.Through",
+        "lines": [
+          56,
+          72
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.Stress.core_jump"
+          },
+          "snippet": {
+            "text": "  let J (p : ℝ × ℂ) := hole k.succ (u p.2) (morn (t p.2) k p.1)∈strict (n+2) ∧\n    hole k.castSucc (u p.2) (eve (t p.2) k p.1)∈strict (n+2) ∧ u p.2 ∈ strict (n+1)\n  obtain ⟨r,hr',M,hM⟩ := neighborhoods (F:= {p : ℝ × ℂ | J p}) (R:=fun p : ℝ × ℂ => ‖X p.1 p.2‖)\n    (L:=𝓝[>] 0) he (by\n      rintro z ⟨d,hh',rfl⟩\n      let x := t d\n      have hr (i : Fin (n+1)) : (x.1.2 i).im = (p.1.2 i).im := by simp [x,t,u]\n      have hp : x.1.2 ∈ strict (n+1) := by intro i j ht; simp only [hr]; exact hu ht\n      have hd : allows x g k := fun i r hr => lt_of_le_of_lt (by change |(0:ℝ)| ≤ |p.2|; simp [abs_nonneg]) (hs i r hr)\n      have hv : atlases Z (sundial x k) k := by simp_rw [sundial,hr]; exact hh\n      have hy : Tendsto (fun p : ℝ × ℂ => (t p.2,p.1)) (𝓝[>] 0 ×ˢ 𝓝 (d:ℂ)) ((𝓝 x) ×ˢ 𝓝[>] 0) :=\n        ((ht.tendsto _).comp tendsto_snd).prodMk tendsto_fst\n      obtain ⟨a,b,ha,hb⟩ := first_ports K T V k x hp hv w g hg hd\n      refine ⟨?_,‖a-b‖+1,((ha.sub hb).comp hy).norm.eventually (ge_mem_nhds (by simp))⟩\n      have hi := (show Continuous (fun i : Dock (n+1) => i.1.2) from by fun_prop).tendsto x\n      filter_upwards [hy.eventually (affordable x hp k), (tendsto_fst.comp hy).eventually (hi.eventually ((open_strict (n+1)).mem_nhds hp))] with i hi hi'\n      exact ⟨hi.1, hi.2, hi'⟩)",
+            "line": 56,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Through.lean",
+            "fragment": "L56-L72"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.Stress.core_jump",
+            "lines": [
+              41,
+              126
+            ],
+            "conclusion": "A neighbourhood `thickening r` of `[0,1]` keeps the strict height gaps for the after (`succ`) and before (`castSucc`) insertions, and the jump has a bound `M` uniform for small `s`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.Stress.first_ports",
+        "module": "YM.EveryPhase.Cross",
+        "lines": [
+          91,
+          96
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.Stress.first_ports"
+          },
+          "snippet": {
+            "text": "lemma first_ports (K : Killing) (T : S.Stress) (v : Fin n → S.Union) (k : Fin n)\n    (p : Dock n) (hp : p.1.2∈strict n) (he : atlases Z (sundial p k) k) (w : Prospect F Z U P H T)\n    (g : Probe Space3) (hg : HasCompactSupport ⇑g) (hr : allows p g k) :\n    ∃ a b : ℂ,\n      Tendsto (crest Z K T v g k) (𝓝 p ×ˢ 𝓝[>] 0) (𝓝 a) ∧\n      Tendsto (trough Z K T v g k) (𝓝 p ×ˢ 𝓝[>] 0) (𝓝 b) := by",
+            "line": 91,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Cross.lean",
+            "fragment": "L91-L96"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.Stress.first_ports",
+            "lines": [
+              91,
+              128
+            ],
+            "conclusion": "`first_ports` gives limits of both side terms in the dock and the offset `s`, near the base point, under the spacelike-germ hypothesis `atlases`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.Stress.tidal_shift",
+        "module": "YM.EveryPhase.Docks",
+        "lines": [
+          187,
+          194
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.Stress.tidal_shift"
+          },
+          "snippet": {
+            "text": "lemma tidal_shift (K : Killing) (T : S.Stress) (v : Fin n → S.Union) (k : Fin n)\n    (p : Dock n) (hp : p.1.2∈strict n) (he : atlases Z (sundial p k) k) (hZ : Z.FullBody F)\n    (g : Probe Space3) (hg : HasCompactSupport ⇑g) (hr : allows p g k) :\n    ∃ a : ℂ,\n      Tendsto (fun w : Dock n × ℝ => docks Z K v T g k.succ w.1.1.1 w.1.1.2 (morn w.1 k w.2))\n        (𝓝 p ×ˢ 𝓝[>] 0) (𝓝 a) ∧\n      Tendsto (fun w : Dock n × ℝ => docks Z K v T g k.castSucc w.1.1.1 w.1.1.2 (eve w.1 k w.2))\n        (𝓝 p ×ˢ 𝓝[>] 0) (𝓝 a) := by",
+            "line": 187,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Docks.lean",
+            "fragment": "L187-L194"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.Stress.tidal_shift",
+            "lines": [
+              187,
+              196
+            ],
+            "conclusion": "Under `atlases` and `allows`, the gradient-cutoff terms `docks` on both sides converge to a common limit."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          201
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; a re-check of closeMatch records changed it from closeMatch; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

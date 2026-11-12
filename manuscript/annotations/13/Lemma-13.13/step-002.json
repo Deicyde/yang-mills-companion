@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 13.13 step 2",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] uses the same subsequence argument with a common summable envelope and dominated convergence, with the margin handled through `PreBound` instead of the explicit (2B+1)^4 γ ≤ 1/2; the difference is in the constants.",
+  "subject": [
+    {
+      "location": {
+        "page": 108,
+        "rect": [
+          0.12026,
+          0.50931,
+          0.76294,
+          0.17105
+        ]
+      },
+      "title": "Lemma 13.13 step 2: Text, p. 108",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 13.13 step 2"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.AnalyticBridge.VerifiedReset.Collection.Compared.selected",
+        "module": "YM.AnalyticBridge.VERIFIED_RESET_STEP.Topology",
+        "lines": [
+          84,
+          85
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.AnalyticBridge.VerifiedReset.Collection.Compared.selected"
+          },
+          "snippet": {
+            "text": "lemma selected (α : ℝ) {x : ℝ} (h' : x∈T) (s : ℕ → ℝ) (hs : ∀ j,s j∈T) (hh : Tendsto s atTop (𝓝 x)) :\n    ∃ r : ℕ → ℕ, StrictMono r ∧ PreBound p (brew X R c p a α) (shelves X R p) (sample x (s ∘ r)) := by",
+            "line": 84,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/VERIFIED_RESET_STEP/Topology.lean",
+            "fragment": "L84-L85"
+          },
+          "proof_context": {
+            "declaration": "YM.AnalyticBridge.VerifiedReset.Collection.Compared.selected",
+            "lines": [
+              84,
+              103
+            ],
+            "conclusion": "Along any sequence tending to x there is a strictly increasing subsequence with one summable majorant (`PreBound`) for the fused activities, with Delta bounded by `|delta x|+1`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.AnalyticBridge.VerifiedReset.Collection.Compared.completed",
+        "module": "YM.AnalyticBridge.VERIFIED_RESET_STEP.Topology",
+        "lines": [
+          116,
+          125
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.AnalyticBridge.VerifiedReset.Collection.Compared.completed"
+          },
+          "snippet": {
+            "text": "  by_contra h'\n  obtain ⟨s, hs,ht⟩ := exists_seq_forall_of_frequently ((not_eventually.mp h').and_eventually (show ∀ᶠ y in 𝓝[T] x,y∈T from self_mem_nhdsWithin))\n  have hs' := hs.mono_right nhdsWithin_le_nhds\n  obtain ⟨r,hr,hR⟩ := h.selected g L hx hc hw α hT s (fun j => (ht j).2) hs'\n  have hy := sample_sub hT fun i => (ht (r i)).2\n  let J := X'.encoding.some\n  obtain ⟨j,hj⟩ := ((within (sample_map x _) (hs'.comp hr.tendsto_atTop)).eventually\n    (((h.flow g L hx hc hn α).tighter hy).measured hR J (mem_insert ..) ε hε)).exists\n  obtain ⟨κ₁,ν₁,u₁,H₁,_⟩ := (hh x hT).pays; obtain ⟨κ₂,ν₂,u₂,H₂,_⟩ := (hh (s (r j)) (ht _).2).pays\n  exact (ht _).1 ((lift_fused H₁ J).compares (lift_fused H₂ J) hj)",
+            "line": 116,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/VERIFIED_RESET_STEP/Topology.lean",
+            "fragment": "L116-L125"
+          },
+          "proof_context": {
+            "declaration": "YM.AnalyticBridge.VerifiedReset.Collection.Compared.completed",
+            "lines": [
+              104,
+              125
+            ],
+            "conclusion": "By contradiction, a sequence with deviation bounded away from zero yields a subsequence with common majorant on which dominated-convergence comparison gives deviation, a contradiction."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          108
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; a re-check of closeMatch records kept it; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

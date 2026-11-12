@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 15.1 step 3",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "The diagonal Arzela-Ascoli extraction from a prescribed refinement, over countably many indices and multilinear in the token list, is carried by `first_surface`. The identification of derivative limits by integration by parts and the smooth table with convergence of every derivative are not in it: `first_surface` gives only continuity of S on generic points, and smoothness comes from a different table T in `serves`.",
+  "subject": [
+    {
+      "location": {
+        "page": 162,
+        "rect": [
+          0.12026,
+          0.34555,
+          0.75996,
+          0.13684
+        ]
+      },
+      "title": "Lemma 15.1 step 3: Text, p. 162",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 15.1 step 3"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extraction.first_surface",
+        "module": "YM.Extraction.Lipschitz",
+        "lines": [
+          166,
+          184
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extraction.first_surface"
+          },
+          "snippet": {
+            "text": "theorem first_surface (H : TransferLip C f) (h : Bound C f) :\n    ∃ g : Order, ∃ S P, RawLimits C (f.refine g) S P := by\n  obtain ⟨t,P,hP⟩ := setMeshes C f H h\n  let w := f.refine (meshMore t)\n  let F (p : Indices C.book) (j) (x) := (P (w.per j)).read x (stack p)\n  obtain ⟨u,v,hu⟩ := localAscoli (fun i : Indices C.book => Points i.1) (fun i => generic i.1) (fun i => genericOpen _)\n    F (fun p => volume_oscillates _ _ (further _ _ H _) p.1 hP (stack p))\n    (fun p x hx => extendsBound _ _ (h.further _) hP _ hx)\n  let g := Order.mk t u\n  let S := fitted v\n  have Hs (n) (p : Fin n → C.book.Token) : Meets (generic n)\n      (fun i x => (P ((f.refine g).per i)).read x p) (fun x => S.read x p) := by\n    apply components S (fun i => P _) generic _ n p\n    intro i; simpa only [S,knobs] using! hu i\n  have hm : (f.refine g).Meshes C P := ⟨hP.continuous,hP.onK⟩\n  have hV : (f.refine g).VolumePoints C S P := by\n    intro n K hk he v ε hε\n    simpa only [dist_eq_norm] using (Hs n v).uniform K he hk ε hε\n  exact ⟨g,S,P,⟨fun n p => (Hs n p).continuousOn,hm,hV, Order.poses _ _ (h.further g) ⟨P,hm,hV⟩⟩⟩",
+            "line": 166,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extraction/Lipschitz.lean",
+            "fragment": "L166-L184"
+          },
+          "proof_context": {
+            "declaration": "YM.Extraction.first_surface",
+            "lines": [
+              166,
+              184
+            ],
+            "conclusion": "Arzela-Ascoli (`localAscoli`) over all arities and token lists gives a strictly increasing refinement g and tables S, P with `RawLimits` (continuous S on `generic n`, locally uniform volume limits, ordered integral limit)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Org.Arrives.serves",
+        "module": "YM.Org.Input",
+        "lines": [
+          101,
+          109
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Org.Arrives.serves"
+          },
+          "snippet": {
+            "text": "lemma serves (h : C.Makes) (h' : CenterPort C F) : ∃ T : Table C.book,∃ W : DiffPlan T, Cleaner S P T W F := by\n  obtain ⟨R,hR⟩ := H.pin\n  obtain ⟨Y,hY⟩ := lifts_model H.born H.census.integral R hR\n  obtain ⟨T,ht,hT⟩ := awake S H.born H.census.regular hY.through_ties\n  have hx := H.census.ready (Around.size_done h (h'.book _ _)) hT fun n w x hx => (ht _ _ hx).symm\n  have hb := Extraction.Order.limits_basic h hT (f:=F) ⟨P,hx.mesh,hx.volume⟩\n  have hv : Live T := fun n v t => Test.smearing t (T.smooth_read hT v).continuousOn\n  have hi := sameWake (p := hv) ht hY\n  exact ⟨T,Y.descends hv hi hT hb.toSymmetric,ht,hx,hb,hT,Y.readies hi hT hb.toSymmetric,Y.tilts hi hT hb.toSymmetric⟩",
+            "line": 101,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Org/Input.lean",
+            "fragment": "L101-L109"
+          },
+          "proof_context": {
+            "declaration": "YM.Org.Arrives.serves",
+            "lines": [
+              101,
+              109
+            ],
+            "conclusion": "There is a smooth table T (`T.Smooth`) matching S on generic points with `RawLimits C F T P`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          162
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "id": "Lemma 14.25 step 16",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 151,
+        "rect": [
+          0.12026,
+          0.48672,
+          0.75996,
+          0.04345
+        ]
+      },
+      "title": "Lemma 14.25 step 16: Text, p. 151",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.25 step 16"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Rank.Station.four_prices",
+        "module": "YM.Next.RANK.StationMeter",
+        "lines": [
+          94,
+          114
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Rank.Station.four_prices"
+          },
+          "snippet": {
+            "text": "  filter_upwards [exp_bills A (8*G.lieDim)] with m hm p P g Λ δ H\n  rw [div_le_one (by exact_mod_cast (Fintype.card_pos (α:=Site (A.S.side m p))))]\n  set d := G.lieDim\n  have he : P.beta=(1 / g^2) := (eq_div_iff (pow_ne_zero _ H.positive.ne')).2 H.assigned\n  have hb : 0<P.beta := he ▸ div_pos zero_lt_one (pow_pos H.positive _)\n  have hh : -(4:ℝ) * G.lieDim * Real.log g=2*d*Real.log P.beta := by rw [he,one_div,Real.log_inv,Real.log_pow];unfold d; ring\n  rw [show -(4:ℝ)*d*Real.log g= _ from hh]\n  let v := A.S.denominator m\n  let N := A.S.side m p\n  calc\n    _ ≤ (8*d)*A.clock.hatBeta m := by\n      have hk := mul_le_mul_of_nonneg_left ((Real.log_le_self hb.le).trans H.cap) (show 0 ≤ (2:ℝ)*d by positivity)\n      linarith only [hk]\n    _ ≤ _ := hm\n    _ ≤ _ := by\n      rw [Schedule.scale,Schedule.a,inv_inv,Real.exp_log (by positivity)]\n      rw [site_card]\n      have hv : v.val ≤ N.val := Nat.le_mul_of_pos_left _ (A.S.period p).property\n      have hN : 1 ≤ N.val := N.property\n      have hh : N.val ≤ N.val^4 := by simpa only [pow_one] using (pow_le_pow_right₀ hN (by norm_num : 1 ≤ 4))\n      exact_mod_cast hv.trans hh",
+            "line": 94,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/StationMeter.lean",
+            "fragment": "L94-L114"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Rank.Station.four_prices",
+            "lines": [
+              92,
+              114
+            ],
+            "conclusion": "`-4 dim log g = 2 dim log β ≤ 8 dim β̂`, which is at most `exp(scale m) ≤` the number of sites."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Rank.Station.rolls_law",
+        "module": "YM.Next.RANK.StationMeter",
+        "lines": [
+          53,
+          73
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Rank.Station.rolls_law"
+          },
+          "snippet": {
+            "text": "  have hl : A.clock.loopCap m * t^2 ≤ 1 := by\n    refine hm.2.2.2 _ ((A.fits.thetaRange m).2.trans ?_)\n    have hy : (1:ℝ) ≤ A.clock.J m := by have ht := A.clock.adm m; exact_mod_cast (by omega : 1 ≤ A.clock.J m)\n    exact le_trans (inv_anti₀ zero_lt_one hy) inv_one.le\n  have ht : 0<P.p.threshold := P.p.threshold_pos\n  have hY : Λ*P.p.threshold^2 ≤ 1 := by\n    have hx : 0 ≤ A.clock.loopCap m := by unfold Calendar.loopCap Calendar.monitor; positivity\n    apply le_trans ?_ hl; exact mul_le_mul H.loopCap (pow_le_pow_left₀ ht.le H.max_threshold _) (sq_nonneg _) hx\n  have hf := H.assigned\n  let r := a.paths\n  have hR : 0 < r := a.paths_pos\n  have hE : P.exCost r Λ δ ≤ 1+(8*r+1) := by\n    have h3 : b*t^3 ≤ 1 := hm.2.1\n    have h4 : b*t^4 ≤ 1 := hm.2.2.1\n    apply add_le_add H.cap_E (add_le_add _ hY)\n    have hc := H.cap\n    have hy : 0 < b := zero_lt_one.trans (A.fits.delayed m)\n    apply (mul_le_mul hc (add_le_add (mul_le_mul_of_nonneg_left\n        (pow_le_pow_left₀ ht.le H.max_threshold 3) hR.le) (mul_le_mul_of_nonneg_left (pow_le_pow_left₀ ht.le H.max_threshold 4) hR.le))\n      (show 0 ≤ r*P.p.threshold^3+r*P.p.threshold^4 by positivity) (show 0 ≤ 4*b by positivity)).trans\n    change 4*b*(r*t^3+r*t^4) ≤ 8*r; linarith only [mul_le_mul_of_nonneg_left h3 hR.le, mul_le_mul_of_nonneg_left h4 hR.le]",
+            "line": 53,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/StationMeter.lean",
+            "fragment": "L53-L73"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Rank.Station.rolls_law",
+            "lines": [
+              46,
+              79
+            ],
+            "conclusion": "`β̂ t^3 ≤ 1`, `β̂ t^4 ≤ 1` and `Λ t^2 ≤ 1` on late levels give the bound for `exCost`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          151
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

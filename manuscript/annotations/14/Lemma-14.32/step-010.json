@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 14.32 step 10",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "Same argument: induct on the difference list, identify each derivative with the limit, and conclude smoothness with locally uniform statements. The higher-order bounds that [M] takes from Lemma E2.4 are the hypothesis `FixedBounds`.",
+  "subject": [
+    {
+      "location": {
+        "page": 160,
+        "rect": [
+          0.11962,
+          0.45941,
+          0.76012,
+          0.05717
+        ]
+      },
+      "title": "Lemma 14.32 step 10: Text, p. 160",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.32 step 10"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.augments",
+        "module": "YM.FullVolume.Wish",
+        "lines": [
+          61,
+          72
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.augments"
+          },
+          "snippet": {
+            "text": "theorem augments (hp:Purchased C e): ∃ f:Points n→ℂ,(∀ l,Tuned C e p v l (derive f l)) ∧ ContDiffOn ℝ ∞ f (NoHit C.S p n):=by\n  obtain ⟨f,hf⟩:= established M e p v hp\n  let U:= NoHit C.S p n\n  have H(l):Tuned C e p v l (derive f l):=by\n    induction l with\n    | nil=> exact hf\n    | cons a l ih=>\n        choose g hg using from_previous M e p v l ih\n        have he (x : Points n) (hx:x ∈ U): derive f (a::l) x = g a x:=by simp only [derive]; rw [(honors M e p v l ih hg x hx).fderiv]; exact loyal ..\n        refine ⟨(hg a).continuousOn.congr (fun _ hx=>he _ hx),fun K hK hk e hE=>?_⟩\n        filter_upwards [(hg a).uniform K hK hk e hE] with i hi x hx; rw [he _ (hK hx)]; exact hi x hx\n  refine ⟨f,H,?_⟩; obtain ⟨A,hA⟩:= trills n",
+            "line": 61,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Wish.lean",
+            "fragment": "L61-L72"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.augments",
+            "lines": [
+              61,
+              81
+            ],
+            "conclusion": "By induction on the list l, `Tuned C e p v l (derive f l)` for all l, with the derivative identified through `honors` (line 69) and `Meets` uniform on compacts of `NoHit`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.augments",
+        "module": "YM.FullVolume.Wish",
+        "lines": [
+          72,
+          81
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.augments"
+          },
+          "snippet": {
+            "text": "  refine ⟨f,H,?_⟩; obtain ⟨A,hA⟩:= trills n\n  have hz (k:ℕ): ∀ l,ContDiffOn ℝ k (derive f l) U:=by\n    induction k with\n    | zero=> exact fun l=> contDiffOn_zero.mpr (H l).continuousOn\n    | succ k ih=>\n      intro l; have ht l:= honors M e p v l (H l) (g:=fun i=> derive f (i::l)) (fun i=>H (i::l)); rw [Nat.cast_add_one]\n      apply (contDiffOn_succ_iff_hasFDerivWithinAt_of_uniqueDiffOn (nohitOpen C.S p n).uniqueDiffOn).2\n      let L (x:Points n):MotionIndex n→ℂ:= fun i=> derive f (i::l) x\n      have hp: ContDiffOn ℝ k L U:=contDiffOn_pi.mpr fun i=> ih _; refine ⟨by simp,A∘ L,A.contDiff.comp_contDiffOn hp, fun x hx=>?_⟩; dsimp only [Function.comp_apply]; rw [hA]; exact (ht l x hx).hasFDerivWithinAt\n  exact contDiffOn_infty.mpr (fun k=> hz k [])",
+            "line": 72,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Wish.lean",
+            "fragment": "L72-L81"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.augments",
+            "lines": [
+              61,
+              81
+            ],
+            "conclusion": "All orders of derivatives exist and are continuous, giving `ContDiffOn ℝ ∞ f (NoHit C.S p n)`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          160
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
+      }
+    }
+  }
+}

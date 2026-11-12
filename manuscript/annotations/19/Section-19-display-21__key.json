@@ -1,0 +1,198 @@
+{
+  "id": "Section 19 display 21",
+  "kind": "display",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "The root has no ratio factor in `toll`: its scale appears as the power of r, as in [M].",
+  "subject": [
+    {
+      "location": {
+        "page": 231,
+        "rect": [
+          0.12026,
+          0.17471,
+          0.75948,
+          0.07594
+        ]
+      },
+      "title": "Display, p. 231",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Section 19 display 21"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Nesting.Tree.toll",
+        "module": "YM.OPE.Nesting.Actual",
+        "lines": [
+          18,
+          19
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Nesting.Tree.toll"
+          },
+          "snippet": {
+            "text": "def toll (w:(fork n f).Leaf→ℝ) (ε m:ℝ) (s:(fork n f).Inner→ℝ):=\n   (s (.inl ()))^(m-(∑ i,w i)-ε) * ∏ p:Σ i,(f i).Inner, ((fork n f).ratios 1 s (.inr p))^(-(fork n f).headSum w (.inr p)-ε)",
+            "line": 18,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Nesting/Actual.lean",
+            "fragment": "L18-L19"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Nesting.Tree.toll",
+            "lines": [
+              18,
+              19
+            ],
+            "conclusion": "`toll w eps m s` is the root scale to the power `m - sum w - eps` times the product over non-root internal vertices of `ratios ^ (-headSum w v - eps)`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Nesting.Tree.nestPrice",
+        "module": "YM.OPE.Nesting.Weights",
+        "lines": [
+          102,
+          103
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Nesting.Tree.nestPrice"
+          },
+          "snippet": {
+            "text": "def nestPrice (s:(fork n f).Inner→ℝ)(D:(fork n f).Inner→ℕ):ℝ :=\n      ∑ v:Σ i:Fin n,(f i).Inner, ((fork n f).ratios 1 s (Sum.inr v))^(D (Sum.inr v)+1)",
+            "line": 102,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Nesting/Weights.lean",
+            "fragment": "L102-L103"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Nesting.Tree.nestPrice",
+            "lines": [
+              102,
+              103
+            ],
+            "conclusion": "`nestPrice s D` is the sum over non-root internal vertices of `ratios ^ (D v + 1)`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Nesting.Tree.headSum",
+        "module": "YM.OPE.Nesting.Weights",
+        "lines": [
+          23,
+          26
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Nesting.Tree.headSum"
+          },
+          "snippet": {
+            "text": "def headSum : (t:Tree)→(t.Leaf→ℝ)→(t.Inner→ℝ)\n | bud,_,v=>nomatch v\n | fork n f,a,Sum.inl ()=> ∑ v:Σ i:Fin n,(f i).Leaf,a v\n | fork n f,a,Sum.inr ⟨i,v⟩ => headSum (f i) (childWages i a) v",
+            "line": 23,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Nesting/Weights.lean",
+            "fragment": "L23-L26"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Nesting.Tree.headSum",
+            "lines": [
+              23,
+              26
+            ],
+            "conclusion": "`headSum` gives at each internal vertex the sum of the leaf weights below it, which is W_v."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Nesting.Tree.ratios",
+        "module": "YM.OPE.Nesting.Weights",
+        "lines": [
+          28,
+          31
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Nesting.Tree.ratios"
+          },
+          "snippet": {
+            "text": "def ratios : (t:Tree)→ℝ→(t.Inner→ℝ)→(t.Inner→ℝ)\n | bud,_,_,v=>nomatch v\n | fork n f,p,a, Sum.inl ()=>a (Sum.inl ())/p\n | fork n f,p,a, Sum.inr ⟨i,v⟩=> ratios (f i) (a (Sum.inl ())) (childAge i a) v",
+            "line": 28,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Nesting/Weights.lean",
+            "fragment": "L28-L31"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Nesting.Tree.ratios",
+            "lines": [
+              28,
+              31
+            ],
+            "conclusion": "`ratios` gives each internal scale divided by its parent's scale, which is q_v, and the root scale divided by 1."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          231
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      }
+    }
+  }
+}

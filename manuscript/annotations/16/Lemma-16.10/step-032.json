@@ -1,0 +1,239 @@
+{
+  "id": "Lemma 16.10 step 32",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 186,
+        "rect": [
+          0.11962,
+          0.62464,
+          0.76258,
+          0.09139
+        ]
+      },
+      "title": "Lemma 16.10 step 32: Text, p. 186",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.10 step 32"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Spin.produces",
+        "module": "YM.Spin.Lands",
+        "lines": [
+          26,
+          47
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Spin.produces"
+          },
+          "snippet": {
+            "text": "theorem produces {A : S.RealSpin} {a : (comparator L).RealSpin} (D : SpinRows S) (h : ∀ d, ∃ U z, Tilt P A a D d U z)\n    (he : Port P a) :\n    ∃ V : ∀ d, change S d, (∀ d, realH A a (V d)) ∧ Port (morph P D V) A := by\n  choose U z hv using h\n  choose V hw hz using fun d => meet P _ (hv d)\n  refine ⟨V,hw,fun_prop_rest V hw hz⟩\nwhere\n fun_prop_rest (V : ∀ d, change S d) (hp : ∀ d, realH A a (V d)) (ht : ∀ d k x, D d k (V d x)=V d (P.lie d k x)) :\n    Port (morph P D V) A := {\n    spin := fun d x => (V d).toLinearMap.continuous_of_finiteDimensional.comp (he.spin d ((V d).symm x))\n    fixes := fun d x => by simp [morph,he.fixes]\n    sends := fun d v x p => by simp [morph,he.sends]\n    signed := fun d v x => by\n      simp only [morph,LinearEquiv.trans_apply,he.signed,(hp d).1, LinearEquiv.apply_symm_apply]\n    real := fun d s x => by\n      obtain ⟨u,rfl⟩ := (V d).surjective x\n      simp only [morph,LinearEquiv.trans_apply,← (hp d).2, LinearEquiv.symm_apply_apply,he.real]\n    spinAt := fun d g x => by\n      obtain ⟨u,rfl⟩ := (V d).surjective x\n      let L := (V d).toContinuousLinearEquiv.toContinuousLinearMap.restrictScalars ℝ\n      simp only [morph,LinearEquiv.trans_apply, LinearEquiv.symm_apply_apply,ht]\n      exact L.hasFDerivAt.comp_hasDerivAt 0 (he.spinAt d g u) }",
+            "line": 26,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Spin/Lands.lean",
+            "fragment": "L26-L47"
+          },
+          "proof_context": {
+            "declaration": "YM.Spin.produces",
+            "lines": [
+              26,
+              47
+            ],
+            "conclusion": "`produces` proves `Port (morph P D V) A`: the transported action is continuous, real, extends the signed action and has generator `D`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.A14.cov_parameter",
+        "module": "YM.Work.A14",
+        "lines": [
+          245,
+          261
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.A14.cov_parameter"
+          },
+          "snippet": {
+            "text": "private theorem cov_parameter (H : S.Hierarchy) (V : DiffPlan S) (hd : V.Derivatives S)\n    (U : Rotation S) (hU : Spin.Port U H.spin)\n    (hs : ∀ (n : ℕ) (x : Points n), x ∈ conf n → Still V U.lie x)\n    (K : Ortho.Skew) (t : ℝ) : Cov U (Ortho.oneParameter K t) := by\n  intro n v x hx\n  let f := fun s => S.useAt S (Points.move (Ortho.oneParameter K s) x) (U.label (Ortho.oneParameter K s) ∘ v)\n  have he (s : ℝ) : HasDerivAt f 0 s := by\n    have hh : HasDerivAt f (angular V U.lie (U.label (Ortho.oneParameter K s) ∘ v) K\n        (Points.move (Ortho.oneParameter K s) x)) s := parameterDeriv H V hd U hU K x hx v s\n    rwa [hs n _ (Points.move_in _ hx) _ K] at hh\n  have hc : f t = f 0 := is_const_of_deriv_eq_zero\n    (fun s => (he s).differentiableAt) (fun s => (he s).deriv) t 0\n  change f t = _\n  rw [hc]\n  unfold f\n  rw [parameter_zero]\n  exact cov_one hU n v x hx",
+            "line": 245,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/A14.lean",
+            "fragment": "L245-L261"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.A14.cov_parameter",
+            "lines": [
+              245,
+              261
+            ],
+            "conclusion": "`cov_parameter` shows covariance under one-parameter rotations from `Still V U.lie` (the angular identity makes the correlator constant along the flow, `parameterDeriv`)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.A14.oriented",
+        "module": "YM.Work.A14",
+        "lines": [
+          277,
+          292
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.A14.oriented"
+          },
+          "snippet": {
+            "text": "private theorem oriented (hg : YM.Bid.A13) (H : S.Hierarchy) (V : DiffPlan S) (hd : V.Derivatives S)\n    (U : Rotation S) (hU : Spin.Port U H.spin) (hs : ∀ n (x : Points n), x ∈ conf n → Still V U.lie x) :\n    U.Oriented S := by\n  let A : Subgroup Ortho := {\n    carrier := {s | Cov U s}\n    one_mem' := cov_one hU\n    mul_mem' := cov_mul hU\n    inv_mem' := cov_inv hU }\n  have hi : YM.Bid.AxisGens ≤ A := by\n    apply (Subgroup.closure_le A).mpr\n    rintro x (⟨s,rfl⟩ | ⟨K,t,rfl⟩)\n    · exact cov_signed H U hU s\n    exact cov_parameter H V hd U hU hs K t\n  rw [show YM.Bid.AxisGens = ⊤ from hg] at hi\n  intro n v x hx K\n  exact (show Cov U K from hi (Subgroup.mem_top K)) n v x hx",
+            "line": 277,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/A14.lean",
+            "fragment": "L277-L292"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.A14.oriented",
+            "lines": [
+              277,
+              292
+            ],
+            "conclusion": "`oriented` shows covariance under all of `O(4)` since signed permutations and one-parameter rotations generate it (`A13`)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.A14.laws_of_oriented",
+        "module": "YM.Work.A14",
+        "lines": [
+          403,
+          415
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.A14.laws_of_oriented"
+          },
+          "snippet": {
+            "text": "theorem laws_of_oriented (H : S.Hierarchy) (V : DiffPlan S) (hi : V.Inclusions S)\n    (hd : V.Derivatives S) (U : Rotation S) (hU : Spin.Port U H.spin)\n    (ho : U.Oriented S) : U.Laws V H.spin := by\n  exact {\n    spin := hU.spin\n    fixes := hU.fixes\n    group := hU.sends\n    signed := hU.signed\n    real := hU.real\n    identity := unit_fixed H U hU ho\n    filtered := fun _ _ w s v => Spin.team U H hU ho V hi w s v\n    vector := vectorLaw H V hd U hU ho\n    infinitesimal := hU.spinAt }",
+            "line": 403,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/A14.lean",
+            "fragment": "L403-L415"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.A14.laws_of_oriented",
+            "lines": [
+              403,
+              415
+            ],
+            "conclusion": "`laws_of_oriented` derives the unit, inclusion and vector laws from covariance by testing against exterior words."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Org.Commission.picks",
+        "module": "YM.Org.Twist",
+        "lines": [
+          45,
+          53
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Org.Commission.picks"
+          },
+          "snippet": {
+            "text": "lemma Commission.picks (Z : Commission V W I H) (hv : V.Inclusions S) (hp : V.Derivatives S) :\n    ∃ c U J, Tab S V W I H c U J ∧ ∃ K0 : Boundary.Spins S, K0.Descends (mill W I c U) H.basis.kernel.spin := by\n  obtain ⟨c,Hc⟩ := Z.scales hv hp (Z.shape hv hp)\n  obtain ⟨U,hu,ht,hp'⟩ := Climb.descends W.T W.lit _ V Hc hp (Z.lens hv hp c Hc)\n  obtain ⟨he,hh⟩ := Z.group c U hv hp ht hp'\n  obtain ⟨J,h1,h2,h3⟩ := Z.retune c U hv hp Hc he hh\n  have hj : Tab S V W I H c U J := ⟨Hc,hu,ht, hv,hp,H.aligned,he,hh, Climb.comparison H.weak,h1,h2,h3⟩\n  refine ⟨c,U,J,hj,Spin.reach V W.T U (c⁻¹ • I.Y) hu ?_ hv H.basis.kernel.laws.toSymmetric W.vacuum W.rolls (Z.generate c U J hj)⟩\n  exact Spin.transmits U _ W.lit _ ht",
+            "line": 45,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Org/Twist.lean",
+            "fragment": "L45-L53"
+          },
+          "proof_context": {
+            "declaration": "YM.Org.Commission.picks",
+            "lines": [
+              45,
+              53
+            ],
+            "conclusion": "`picks` assembles `c`, the frames `U` and the rotation `mill W I c U` with generator `c⁻¹ Y` and the same `c` in every degree."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          186
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

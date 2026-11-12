@@ -1,0 +1,200 @@
+{
+  "id": "Lemma 11.11 step 21",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 67,
+        "rect": [
+          0.11962,
+          0.31296,
+          0.76258,
+          0.1256
+        ]
+      },
+      "title": "Lemma 11.11 step 21: Text, p. 67",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 11.11 step 21"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Pressure.traverse",
+        "module": "YM.Pressure.Macro",
+        "lines": [
+          81,
+          83
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Pressure.traverse"
+          },
+          "snippet": {
+            "text": "lemma traverse (j : Axis) (P : Patch) (U : CoverConfig G) (d : ℕ) (v : Cover) (X : Finset Cover) (h : ∀ k : ℕ, k ≤ d →\n    ∀ x ∈ P.sites, x+v+k • step j ∈ X) :\n    (∑ x : P.Points,G.chord (travel U (x.val+v) (straight j d))) ≤ d*edges X U := by",
+            "line": 81,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Pressure/Macro.lean",
+            "fragment": "L81-L83"
+          },
+          "proof_context": {
+            "declaration": "YM.Pressure.traverse",
+            "lines": [
+              81,
+              100
+            ],
+            "conclusion": "A fine edge is counted at most `d = L` times along straight segments: `sum chord (travel ...) <= d * edges X U`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Pressure.planting",
+        "module": "YM.Pressure.Cost",
+        "lines": [
+          72,
+          76
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Pressure.planting"
+          },
+          "snippet": {
+            "text": "lemma planting (G : Gauge) (K : KernelChoices) (j : ℕ) : ∃ C D : ℝ, 0<C ∧ 0<D ∧\n    ∀ (c f : Side) (S : StepData c f), K=S.kernel → j=S.patch.J →\n      ∀ U : Config G f, ∀ x : Site c, ∀ t : S.Choices, usable S U x t → ∃ H : Cover → G.El, ∃ p : Cover → G.El,\n        edges (box (macroR S.patch)) (Lattice.gauge H (expandAt (S.ratio.embed x) U)) ≤ D * S.patch.L.val * port S x U ∧\n        ∀ y ∈ box 2,",
+            "line": 72,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Pressure/Cost.lean",
+            "fragment": "L72-L76"
+          },
+          "proof_context": {
+            "declaration": "YM.Pressure.planting",
+            "lines": [
+              72,
+              122
+            ],
+            "conclusion": "The axial link sum is at most `D*L*port` and the end-frame sums are at most `C*L^2*port` (nearest-point frames)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Pressure.price_query",
+        "module": "YM.Pressure.Macro",
+        "lines": [
+          102,
+          103
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Pressure.price_query"
+          },
+          "snippet": {
+            "text": "lemma price_query (P : Patch) (K : KernelChoices) (Y : P.Connector G) (t : P.Points) (x y : G.El) :\n    G.chord (x⁻¹ * P.predict K Y t * y) ≤ 2*max 1 K.predictor_cut⁻¹ * ∑ i,P.weight i * G.chord (x⁻¹*Y i*y) := by",
+            "line": 102,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Pressure/Macro.lean",
+            "fragment": "L102-L103"
+          },
+          "proof_context": {
+            "declaration": "YM.Pressure.price_query",
+            "lines": [
+              102,
+              129
+            ],
+            "conclusion": "On either predictor branch, `chord (x^-1 * predict * y) <= 2*max 1 cut^-1 * sum i, weight i * chord (x^-1 * Y i * y)`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Pressure.qdc",
+        "module": "YM.Pressure.Cost",
+        "lines": [
+          242,
+          250
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Pressure.qdc"
+          },
+          "snippet": {
+            "text": "  have hR : G.chord (faceValue Q (x,p)) ≤ 4*z := by\n    rw [← G.chord_conj (y 0)⁻¹,inv_inv,corners]\n    rw [show (y 0)⁻¹ * (Q (x,p.val.1)*_*_*_) * y 0 =\n      ((y 0)⁻¹*Q (x,i)*y (step i))*((y (step i))⁻¹*Q (x+step i,k)*y (step i+step k))*\n      ((y (step k))⁻¹*Q (x+step k,i)*y (step i+step k))⁻¹*((y 0)⁻¹*Q (x,k)*y (step k))⁻¹ by unfold i k; group]\n    apply (G.chord_triangle _ _).trans\n    rw [G.chord_inv]\n    refine (add_le_add (le_trans (G.chord_triangle _ _) ?_) hg).trans_eq (show (z+z)+z+z=4*z by ring)\n    rw [G.chord_inv]; exact add_le_add ((G.chord_triangle _ _).trans (add_le_add hb hn)) hu",
+            "line": 242,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Pressure/Cost.lean",
+            "fragment": "L242-L250"
+          },
+          "proof_context": {
+            "declaration": "YM.Pressure.qdc",
+            "lines": [
+              210,
+              252
+            ],
+            "conclusion": "Around the four sides of a coarse plaquette the root adjustments cancel and the four link bounds add to `4*z`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          67
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

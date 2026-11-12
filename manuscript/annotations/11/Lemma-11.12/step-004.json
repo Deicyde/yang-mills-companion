@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 11.12 step 4",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "broadMatch",
+  "note": "[M] shows order-zero Schur bounds through exponential conjugation and a Neumann series; [L] reaches exponential bounds on the inverse and its compressions through `inverseCost`/`areaCost` with all jets up to order `k`. The conjugation argument is not in the Lean.",
+  "subject": [
+    {
+      "location": {
+        "page": 70,
+        "rect": [
+          0.12026,
+          0.26004,
+          0.76013,
+          0.10262
+        ]
+      },
+      "title": "Lemma 11.12 step 4: Text, p. 70",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 11.12 step 4"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.AnalyticBridge.Covariance.makeVista",
+        "module": "YM.AnalyticBridge.SECTOR_COVARIANCE_JETS.Vista",
+        "lines": [
+          42,
+          56
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.AnalyticBridge.Covariance.makeVista"
+          },
+          "snippet": {
+            "text": "lemma makeVista (h : RatesPaid p p σ C k A B) (he : Gapped (A B) η) (hv : Price σ C η d 1 V 1 k)\n    (hp : (native c).Volume p d V) (hw : Bars W p n) : Vista p A W B d (rateBreak d n k) (tower k C V η) k := by\n  let N := tallyInverse k C V η\n  let T := tower k C V η\n  have hh : N ≤ T := le_max_of_le_left (le_max_left ..)\n  have hz : rateBreak d n k ≥ 0 := (Real.exp_pos _).le\n  have hx u (hu : 0≤u) := editCosts W h he hv hp hu hw\n  refine ⟨fun u hu => (inverseCost h he hv hp hu).less hh le_rfl hu,\n    fun s u hu => (areaCost s h he hv hp hu).less hh le_rfl hu,fun u hu => ?_,fun u hu => ?_,fun u hu => ?_⟩\n  · exact ((hx u hu).1).less (le_max_of_le_left (le_max_right ..)) le_rfl hu\n  · exact Bundle.mono ((hx u hu).2.1) le_rfl (mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left\n      (le_max_of_le_right (le_max_left ..)) hz) (drain_pos hu).le)\n  have ht : unitF k C N V ≤ T := le_max_of_le_right (le_max_right ..)\n  exact Bundle.mono ((hx u hu).2.2) le_rfl (mul_le_mul_of_nonneg_right\n    (mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left ht hz) (drain_pos hu).le) (drain_pos hu).le)",
+            "line": 42,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/SECTOR_COVARIANCE_JETS/Vista.lean",
+            "fragment": "L42-L56"
+          },
+          "proof_context": {
+            "declaration": "YM.AnalyticBridge.Covariance.makeVista",
+            "lines": [
+              42,
+              56
+            ],
+            "conclusion": "From `RatesPaid` for `A` and `Gapped (A B) η`, `Vista` gives exponential jet bounds for the inverse (`full`) and its principal compressions (`thin`)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.AnalyticBridge.Covariance.Vista",
+        "module": "YM.AnalyticBridge.SECTOR_COVARIANCE_JETS.Vista",
+        "lines": [
+          22,
+          28
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.AnalyticBridge.Covariance.Vista"
+          },
+          "snippet": {
+            "text": "structure Vista (p : ι → Site c) (A : Directions G c → Matrix ι ι ℝ) (W : ι → Set ι) (B : Directions G c)\n    (d Y C : ℝ) (k : ℕ) : Prop where\n  full (u : ℝ) : 0≤u → Spiral p (action A u) B u d C k\n  thin (s : Set ι) (u : ℝ) : 0≤u → Spiral (fun i:s => p i.val) (fun z => resolve (principal (A z) s) u) B u d C k\n  glass (u : ℝ) : 0≤u → Spiral p (shelve W A u) B u d C k\n  eject (u : ℝ) : 0≤u → RatesPaid p p d (Y*C*drain u) k (hitch W A u) B\n  difference (u : ℝ) : 0≤u → RatesPaid p p d (Y*C*drain u*drain u) k (shelve W A u-action A u) B",
+            "line": 22,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/SECTOR_COVARIANCE_JETS/Vista.lean",
+            "fragment": "L22-L28"
+          },
+          "proof_context": {
+            "declaration": "YM.AnalyticBridge.Covariance.Vista",
+            "lines": [
+              22,
+              28
+            ],
+            "conclusion": "`Vista` bundles the `Spiral` jet bounds for `action A u`, principal compressions and the window inverse."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          70
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 16.6 step 5",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Comparison preserved, eventual injectivity and the filling of earlier indices agree. [L] gets surjectivity from the hypothesis `DimAbove` and a finrank count, where [M] cites the isomorphism of Proposition FC, and the units are handled by `fun_kit`.",
+  "subject": [
+    {
+      "location": {
+        "page": 181,
+        "rect": [
+          0.12026,
+          0.17519,
+          0.76293,
+          0.10556
+        ]
+      },
+      "title": "Lemma 16.6 step 5: Text, p. 181",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.6 step 5"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.UVStress.adjusts",
+        "module": "YM.Next.UV_STRESS.Arrange",
+        "lines": [
+          188,
+          190
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.UVStress.adjusts"
+          },
+          "snippet": {
+            "text": "lemma adjusts (H : S.Hierarchy) (a : (Bel C.book).Hierarchy) (hW : W.Inclusions S) (hV : V.Inclusions (Bel C.book))\n    (X : Zoom) (R : Drop (Bel C.book)) (ht : Approaches X U) :\n    Approaches X (fun k => corrected W V R (U k)) := by",
+            "line": 188,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/UV_STRESS/Arrange.lean",
+            "fragment": "L188-L190"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.UVStress.adjusts",
+            "lines": [
+              188,
+              203
+            ],
+            "conclusion": "`adjusts` shows the corrected maps `corrected W V R (U k)` still approach with the same `Zoom`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.UVStress.MeterTest.injects",
+        "module": "YM.Next.UV_STRESS.Invert",
+        "lines": [
+          88,
+          89
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.UVStress.MeterTest.injects"
+          },
+          "snippet": {
+            "text": "lemma injects (H : S.Smooth) (h : (Bel C.book).Hierarchy) (ht : Approaches X U) (d : ℕ) :\n    ∀ᶠ k in atTop, Injective (U k d) := by",
+            "line": 88,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/UV_STRESS/Invert.lean",
+            "fragment": "L88-L89"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.UVStress.MeterTest.injects",
+            "lines": [
+              88,
+              103
+            ],
+            "conclusion": "`injects` shows each `U k d` is eventually injective, from a finite separating family of tested correlations."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.UVStress.Stations.equivalences",
+        "module": "YM.Next.UV_STRESS.Invert",
+        "lines": [
+          142,
+          147
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.UVStress.Stations.equivalences"
+          },
+          "snippet": {
+            "text": "  have he d : ∀ᶠ k : ℕ in atTop, Bijective (Q k d) := by\n    filter_upwards [MeterTest.injects H.smooth a ha d] with k hk\n    exact ⟨hk,(LinearMap.injective_iff_surjective_of_finrank_eq_finrank\n      (le_antisymm (LinearMap.finrank_le_finrank_of_injective hk) (dim d))).1 hk⟩\n  let M k d := if p : Bijective (Q k d) then LinearEquiv.ofBijective _ p else\n    LinearEquiv.ofBijective _ (he d).exists.choose_spec",
+            "line": 142,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/UV_STRESS/Invert.lean",
+            "fragment": "L142-L147"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.UVStress.Stations.equivalences",
+            "lines": [
+              132,
+              181
+            ],
+            "conclusion": "Eventually `Bijective (Q k d)`, by injectivity and the dimension hypothesis `DimAbove`, and `M k d` is any such equivalence for the earlier indices."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          181
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "id": "Lemma 10.2 step 1",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "[M] uses the transports and labels, disposes of d<2 by constant sections and then fixes d>=2; the Lean construction treats every d uniformly with the same `Hol` and `Label` objects, and the triviality of `Snap G d` for d<2 appears only in an unnamed `example` of G03.",
+  "subject": [
+    {
+      "location": {
+        "page": 41,
+        "rect": [
+          0.12026,
+          0.12462,
+          0.76294,
+          0.03892
+        ]
+      },
+      "title": "Lemma 10.2 step 1: Text, p. 41",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 10.2 step 1"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.G06.answer",
+        "module": "YM.Work.G06",
+        "lines": [
+          43,
+          60
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.G06.answer"
+          },
+          "snippet": {
+            "text": "theorem answer : YM.Bid.G06 := by\n  intro G H d F m B hS hP\n  obtain ⟨P,hP⟩ := hP\n  obtain ⟨n,V,Q,hQ,hv⟩ := common_pose B P hP\n  obtain ⟨r,hr⟩ := enclose V\n  obtain ⟨E,hE⟩ := realize G V (box r) hr\n  let A : SectionData F := ⟨box r,E.toLinearMap.comp Q⟩\n  have he (c : F.Coeff) : A.evaluate c = averaged B P c := by\n    rw [hQ]; funext U\n    exact hE U (Q c)\n  refine ⟨A, ?_, ?_⟩\n  · exact ⟨center_box r,box_covariant r,fun c => by rw [he]; exact averaged_gauge B P hP c,\n      by rw [he]; exact averaged_unit B P hP,\n      fun s c U => by rw [he,he]; exact averaged_Hpart B P s c U,\n      fun c U => by rw [he,he]; exact averaged_bar B P hP c U,\n      fun c => by rw [he]; exact averaged_projects B P hS hP c⟩\n  intro i\n  exact ⟨n,V,hr,Q (Pi.single i 1), (he _).trans (hQ _),hv i⟩",
+            "line": 43,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/G06.lean",
+            "fragment": "L43-L60"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.G06.answer",
+            "lines": [
+              43,
+              60
+            ],
+            "conclusion": "`answer` builds the section for every degree `d` at once from `Cumuli` data, averaged over `Signed`, on the common stencil `box r`, with no case split on `d`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          41
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
+      }
+    }
+  }
+}

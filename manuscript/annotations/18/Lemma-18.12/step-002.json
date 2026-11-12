@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 18.12 step 2",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "The same two displays: the sector factorization is `Form.means`, and the spectral measure formula is `recognized` plus `pieces`, with sectors indexed by `Index m` (particle number and tags).",
+  "subject": [
+    {
+      "location": {
+        "page": 217,
+        "rect": [
+          0.12026,
+          0.13335,
+          0.75948,
+          0.03713
+        ]
+      },
+      "title": "Lemma 18.12 step 2: Text, p. 217",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 18.12 step 2"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.Photons.Form",
+        "module": "YM.TraceExtension.Fock.Form",
+        "lines": [
+          18,
+          21
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.Photons.Form"
+          },
+          "snippet": {
+            "text": "structure Form (F : Spec.Final C a S) (U : F.action.operators.H →ₗᵢ[ℂ] Ambient m) where\n    val : Wavespace m → ℂ\n    leg : Measurable val\n    means (f : Probe E4) : (⇑(signal F U f) : Wavespace m → ℂ)=ᵐ[sumMeasure m] readout f * val",
+            "line": 18,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Fock/Form.lean",
+            "fragment": "L18-L21"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.Photons.Form",
+            "lines": [
+              18,
+              21
+            ],
+            "conclusion": "`Form` packages the sector amplitudes: a measurable `val` with `signal F U f = readout f * val` a.e., where `readout f x = testPlus f (forward x)`, the factor f-hat_+(p_tot)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.Photons.Form.recognized",
+        "module": "YM.TraceExtension.Fock.Form",
+        "lines": [
+          52,
+          57
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.Photons.Form.recognized"
+          },
+          "snippet": {
+            "text": "lemma recognized (X : Comparison F U) (h : TraceSpectrum F μ) : μ = Y.costs.map forward := by\n    apply weights_injective; intro f\n    rw [recovered Y X h f]; unfold costs\n    rw [withDensity_mul (sumMeasure m) (rent_meas Y) (g := fun x => (probeWeight f (forward x):ℝ≥0∞)) ((probe_meas f).comp measurable_forward)]\n    ext A hA\n    rw [map_apply measurable_forward hA, withDensity_apply _ hA,setLIntegral_map hA (probe_meas f) measurable_forward,withDensity_apply _ (measurable_forward hA)]",
+            "line": 52,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Fock/Form.lean",
+            "fragment": "L52-L57"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.Photons.Form.recognized",
+            "lines": [
+              52,
+              57
+            ],
+            "conclusion": "The trace spectrum `mu` equals the push-forward by `forward` (total momentum) of `|val|^2` times the sum measure."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.Photons.pieces",
+        "module": "YM.TraceExtension.Fock.Weight",
+        "lines": [
+          64,
+          67
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.Photons.pieces"
+          },
+          "snippet": {
+            "text": "lemma pieces (X : Comparison F U) (h : TraceSpectrum F μ) {V : Set E4} (hv : MeasurableSet V) :\n    μ V=∑' (i : Index m), sectorsMass (Y.wave i) {p | totalMomentum p∈V} := by\n    rw [Y.recognize_terms X h hv]; congr! 1; ext1 i; rw [sectors_eq, withDensity_apply _ (s:={p|totalMomentum p∈V}) (total_cont.measurable hv)]\n    rfl",
+            "line": 64,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Fock/Weight.lean",
+            "fragment": "L64-L67"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.Photons.pieces",
+            "lines": [
+              64,
+              67
+            ],
+            "conclusion": "`mu V` is the sum over sectors `Index m` of `sectorsMass (Y.wave i)` of `{p | totalMomentum p in V}`, one amplitude `Y.wave i` per sector (k, s)."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          217
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

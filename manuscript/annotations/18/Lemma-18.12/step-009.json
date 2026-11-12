@@ -1,0 +1,201 @@
+{
+  "id": "Lemma 18.12 step 9",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "The branch separation, reflection and uniqueness, Fourier inversion and countable bumps are `branch`, `spans`/`shell_unique`, `supported` and `annihilator`; the Rudin theorems are replaced by Lean's `Paley`/`Air` development.",
+  "subject": [
+    {
+      "location": {
+        "page": 217,
+        "rect": [
+          0.11962,
+          0.56702,
+          0.76357,
+          0.15502
+        ]
+      },
+      "title": "Lemma 18.12 step 9: Text, p. 217",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 18.12 step 9"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.Photons.annihilator",
+        "module": "YM.TraceExtension.Fock.Branches",
+        "lines": [
+          120,
+          122
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.Photons.annihilator"
+          },
+          "snippet": {
+            "text": "lemma annihilator (q : Wave n) (hp : tempered q d) (i : Fin n)\n    (he : ∀ g : Fin n → Probe E4,(∀ j,Remote (g j)) → ∀ f,data 0 q g i f=0 ∧ data 1 q g i f=0) : q=0 := by\n    obtain ⟨g,hg,h⟩ := witnesses",
+            "line": 120,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Fock/Branches.lean",
+            "fragment": "L120-L122"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.Photons.annihilator",
+            "lines": [
+              120,
+              130
+            ],
+            "conclusion": "If both Cauchy data `data 0` and `data 1` of `q` vanish on all remote tests for every f, then `q = 0` a.e., using a countable family of shrinking bumps `testAway`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.Photons.supported",
+        "module": "YM.TraceExtension.Fock.Branches",
+        "lines": [
+          68,
+          71
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.Photons.supported"
+          },
+          "snippet": {
+            "text": "lemma supported (q : Wave n) (hp : tempered q d) (i : Fin n)\n    (hq : ∀ g : Fin n→Probe E4,(∀ i, Remote (g i)) → ∀ f, data 0 q g i f=0 ∧ data 1 q g i f=0)\n    (g : Fin n→ Probe E4) (h : ∀ i, Remote (g i)) (w : Probe Space3) (hw : Away w) :\n    (fun k=>q k * sink 1 (Probe.hat ∘ g) i w k) =ᵐ[photons n] 0 := by",
+            "line": 68,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Fock/Branches.lean",
+            "fragment": "L68-L71"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.Photons.supported",
+            "lines": [
+              68,
+              85
+            ],
+            "conclusion": "Smeared against remote tests, the weighted amplitude `q * sink 1 ...` is zero a.e., after translation invariance of the vanishing set (`place_ample`) and `shell_unique`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.Photons.branch",
+        "module": "YM.TraceExtension.Fock.Branches",
+        "lines": [
+          23,
+          25
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.Photons.branch"
+          },
+          "snippet": {
+            "text": "lemma branch (q : Wave n) (g : Fin n→ Probe E4) (i : Fin n) (h : ∀ f, data 0 q g i f=0 ∧ data 1 q g i f=0)\n    (w : Probe Space3) (hw : Away w) :\n    (∫ k,q k*sink 1 (Probe.hat ∘ g) i w k ∂photons n)=0 := by",
+            "line": 23,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Fock/Branches.lean",
+            "fragment": "L23-L25"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.Photons.branch",
+            "lines": [
+              23,
+              39
+            ],
+            "conclusion": "Vanishing of both Cauchy data separates the frequency branches: the integral against `sink 1` of the amplitude is zero for tests away from 0."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.Photons.shell_unique",
+        "module": "YM.TraceExtension.Fock.SpectrumLocal",
+        "lines": [
+          102,
+          103
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.Photons.shell_unique"
+          },
+          "snippet": {
+            "text": "lemma shell_unique (f : Mom n→ℂ) (hf : Integrable f (photons n)) (ht : rapid f=ᶠ[𝓝 0] 0) : f=ᵐ[photons n] 0 := by\n    let V := PiLp 2 fun _ : Fin n => Space3",
+            "line": 102,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Fock/SpectrumLocal.lean",
+            "fragment": "L102-L103"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.Photons.shell_unique",
+            "lines": [
+              102,
+              120
+            ],
+            "conclusion": "An integrable function whose Fourier-type transform `rapid f` vanishes near 0 is zero a.e. (holomorphic continuation via `spans`)."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          217
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

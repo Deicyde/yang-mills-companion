@@ -1,0 +1,161 @@
+{
+  "id": "Lemma 11.4 step 10",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 49,
+        "rect": [
+          0.12026,
+          0.43408,
+          0.75948,
+          0.03713
+        ]
+      },
+      "title": "Lemma 11.4 step 10: Text, p. 49",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 11.4 step 10"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Branch.Pairs.cluster",
+        "module": "YM.Branch.Synchronize",
+        "lines": [
+          158,
+          170
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Branch.Pairs.cluster"
+          },
+          "snippet": {
+            "text": "lemma cluster {d : ℝ} (hd : 0 ≤ d) (hw : ∀ x y k, ‖G.mat (A.W x y k)-1‖ ≤ d)\n    {h : n → G.El} (hs : A.Solves h) (hr : G.Nearest 1 (centroid h)) :\n    ‖centroid h-1‖ ≤ 2*d := by\n  obtain ⟨i, hi⟩ := le_avg (fun i => avg fun j => ‖G.mat (h i)-G.mat (h j)‖^2)\n  apply (hr (h i)).trans\n  have he := hi.trans (A.compare_energy hw hs)\n  rw [norm_sub_rev]\n  unfold centroid\n  have hh : (avg fun j => G.mat (h i)-G.mat (h j)) = G.mat (h i)-avg fun j => G.mat (h j) := by rw [avg_sub, avg_const]\n  rw [← hh]\n  have hk := (avg_sq (fun j => G.mat (h i)-G.mat (h j))).trans he\n  apply (sq_le_sq₀ (norm_nonneg _) (by positivity)).1\n  nlinarith [hk]",
+            "line": 158,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Branch/Synchronize.lean",
+            "fragment": "L158-L170"
+          },
+          "proof_context": {
+            "declaration": "YM.Branch.Pairs.cluster",
+            "lines": [
+              158,
+              170
+            ],
+            "conclusion": "If `1` is nearest to the centroid then `‖centroid h - 1‖ ≤ 2*d`, by `avg_sq` (Jensen)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Branch.Pairs.closeness",
+        "module": "YM.Branch.Synchronize",
+        "lines": [
+          172,
+          188
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Branch.Pairs.closeness"
+          },
+          "snippet": {
+            "text": "lemma closeness {d : ℝ} (hd : 0 ≤ d) (hw : ∀ x y k, ‖G.mat (A.W x y k)-1‖ ≤ d)\n    {h : n → G.El} (hs : A.Solves h) (hr : G.Nearest 1 (centroid h)) (x : n) : ‖A.feedback h x-1‖ ≤ 3*d := by\n  have hh : ‖A.feedback h x-centroid h‖ ≤ d := by\n    simp only [feedback,centroid,← avg_sub]\n    apply (norm_avg _).trans\n    apply le_trans _ (avg_const (n:=n) d).le\n    refine avg_mono fun i => ?_\n    dsimp only; rw [show (avg fun l => G.mat (h i*(A.W x i l)⁻¹))-G.mat (h i) = avg fun l => G.mat (h i*(A.W x i l)⁻¹)-G.mat (h i) by rw [avg_sub,avg_const]]\n    apply (norm_avg _).trans\n    apply le_trans _ (avg_const (n:=L) d).le\n    refine avg_mono fun k => ?_\n    dsimp only\n    rw [← Gauge.frob_mul_eq (G.mat (h i*(A.W x i k)⁻¹)-G.mat (h i)) (G.mat (A.W x i k)) (G.mat_mul_star _)]\n    rw [sub_mul, ← G.mat_mul, mul_assoc,inv_mul_cancel,mul_one,norm_sub_rev,\n      show G.mat (h i)*G.mat _-G.mat _ = G.mat (h i) * (G.mat (A.W x i k)-1) by rw [mul_sub,mul_one], Gauge.mul_frob_eq _ _ (G.mat_star_mul _)]\n    exact hw ..\n  exact (norm_sub_le_norm_sub_add_norm_sub _ (centroid h) _).trans (by linarith [A.cluster hd hw hs hr])",
+            "line": 172,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Branch/Synchronize.lean",
+            "fragment": "L172-L188"
+          },
+          "proof_context": {
+            "declaration": "YM.Branch.Pairs.closeness",
+            "lines": [
+              172,
+              188
+            ],
+            "conclusion": "Then `‖A.feedback h x - 1‖ ≤ 3*d`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Branch.align",
+        "module": "YM.Branch.Synchronize",
+        "lines": [
+          266,
+          271
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Branch.align"
+          },
+          "snippet": {
+            "text": "  obtain ⟨a,ha⟩ := G.nearest_exists (Pairs.centroid h)\n  obtain ⟨b,hb⟩ := G.nearest_exists (Pairs.centroid k)\n  have H₁ : ∀ i, a⁻¹*h i=b⁻¹*k i := congr_fun (eq (p := fun i => a⁻¹*h i) (q := fun i => b⁻¹*k i)\n    (fun c => by rw [A.moves]; exact hh c) (by\n      rw [Pairs.turns,← inv_mul_cancel a]; exact (G.nearest_left a⁻¹ a _).mpr ha) (fun c => by rw [A.moves]; exact hk c) (by\n      rw [Pairs.turns,← inv_mul_cancel b]; exact (G.nearest_left b⁻¹ b _).mpr hb))",
+            "line": 266,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Branch/Synchronize.lean",
+            "fragment": "L266-L271"
+          },
+          "proof_context": {
+            "declaration": "YM.Branch.align",
+            "lines": [
+              232,
+              272
+            ],
+            "conclusion": "Left multiplication by `a⁻¹` (`Pairs.turns`, `nearest_left`) makes `1` nearest to the centroid."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          49
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

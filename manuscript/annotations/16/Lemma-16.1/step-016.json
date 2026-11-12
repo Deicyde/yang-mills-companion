@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 16.1 step 16",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L]'s `cross f g` is minus [M]'s t_ab (it has the opposite sign of both terms, summed over both orders), so the divergence has `div f` and `div g` terms with the sign flipped. The shell integral with its sign is `singleFlux`.",
+  "subject": [
+    {
+      "location": {
+        "page": 171,
+        "rect": [
+          0.12026,
+          0.4849,
+          0.75949,
+          0.06978
+        ]
+      },
+      "title": "Lemma 16.1 step 16: Text, p. 171",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.1 step 16"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Maxwell.Free.div_cross",
+        "module": "YM.Next.MAXWELL.Current",
+        "lines": [
+          121,
+          123
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Maxwell.Free.div_cross"
+          },
+          "snippet": {
+            "text": "lemma div_cross {f g : Field F} {U : Set E4} (H : Bianchi U f) (K : Bianchi U g)\n    (hU : IsOpen U) {x} (hx : x ∈ U) (b : Axis) :\n    (∑ a : Axis, grad a (cross f g a b) x) = ∑ c : Axis, (⟪divF f c x,g b c x⟫_ℝ + ⟪f b c x,divF g c x⟫_ℝ) := by",
+            "line": 121,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/MAXWELL/Current.lean",
+            "fragment": "L121-L123"
+          },
+          "proof_context": {
+            "declaration": "YM.Maxwell.Free.div_cross",
+            "lines": [
+              121,
+              135
+            ],
+            "conclusion": "`div_cross` shows that for two Bianchi fields the divergence of the polarized stress `cross f g` is `sum_c <div f, g_bc> + <f_bc, div g>`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Maxwell.Free.current_div",
+        "module": "YM.Next.MAXWELL.Current",
+        "lines": [
+          151,
+          153
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Maxwell.Free.current_div"
+          },
+          "snippet": {
+            "text": "lemma current_div {f g : Field F} {U : Set E4} (H : Bianchi U f) (K : Bianchi U g) (hU : IsOpen U)\n    {v : Drive} (h : Killing v) {x : E4} (hx : x ∈ U) : (∑ a : Axis, grad a (current v f g a) x) =\n      ∑ b : Axis, v b x * ∑ c : Axis, (⟪divF f c x,g b c x⟫_ℝ + ⟪f b c x,divF g c x⟫_ℝ) := by",
+            "line": 151,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/MAXWELL/Current.lean",
+            "fragment": "L151-L153"
+          },
+          "proof_context": {
+            "declaration": "YM.Maxwell.Free.current_div",
+            "lines": [
+              151,
+              181
+            ],
+            "conclusion": "`current_div` gives the divergence of the current `v_b cross f g a b` for a Killing field `v`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Maxwell.Free.pays_reg",
+        "module": "YM.Next.MAXWELL.Contact",
+        "lines": [
+          56,
+          58
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Maxwell.Free.pays_reg"
+          },
+          "snippet": {
+            "text": "private theorem pays_reg (i l : Axis) (c : G.ColorIndex) {t : ℝ} (ht : 0 < t) (x : E4) :\n    singleFlux v χ (regulated t x i l c) f =\n      (∫ y, source t (y-x) * grad l (contractedTest f v χ c i) y) -",
+            "line": 56,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/MAXWELL/Contact.lean",
+            "fragment": "L56-L58"
+          },
+          "proof_context": {
+            "declaration": "YM.Maxwell.Free.pays_reg",
+            "lines": [
+              56,
+              100
+            ],
+            "conclusion": "`pays_reg` evaluates the shell flux of the regulated field by integrating by parts twice against `source t`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          171
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

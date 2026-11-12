@@ -1,0 +1,239 @@
+{
+  "id": "Lemma 10.2 step 26",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 42,
+        "rect": [
+          0.12026,
+          0.48042,
+          0.75995,
+          0.07134
+        ]
+      },
+      "title": "Lemma 10.2 step 26: Text, p. 42",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 10.2 step 26"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.G06.averaged_Hpart",
+        "module": "YM.Work.G06.Average",
+        "lines": [
+          141,
+          149
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.G06.averaged_Hpart"
+          },
+          "snippet": {
+            "text": "theorem averaged_Hpart (s : Signed) (c : F.Coeff) (U : CoverConfig G) :\n    averaged B P c (pull s 0 U) = averaged B P (F.act s.ortho c) U := by\n  have he (t : Signed) : term B P c t (pull s 0 U) = term B P (F.act s.ortho c) (s*t) U := by\n    simp only [term, comp_apply,pull_pull,affine,Signed.act_zero,add_zero]\n    rw [← Frame.act_mul,show (s*t).ortho=s.ortho*t.ortho from map_mul Signed.inclusionO ..]\n    rw [mul_inv_rev,mul_assoc,inv_mul_cancel,mul_one]\n  simp only [averaged,Pi.smul_apply, Finset.sum_apply,he]\n  have hh := Equiv.sum_comp (Equiv.mulLeft s) (fun t => term B P (F.act s.ortho c) t U)\n  exact congr_arg (fun x : ℂ => share • x) hh",
+            "line": 141,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/G06/Average.lean",
+            "fragment": "L141-L149"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.G06.averaged_Hpart",
+            "lines": [
+              141,
+              149
+            ],
+            "conclusion": "`averaged (pull s 0 U) c = averaged U (act s c)`, by reindexing the sum with `Equiv.mulLeft s`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.G06.averaged_gauge",
+        "module": "YM.Work.G06.Average",
+        "lines": [
+          129,
+          139
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.G06.averaged_gauge"
+          },
+          "snippet": {
+            "text": "theorem averaged_gauge (h : Cumuli H d F B P) (c : F.Coeff) : GaugeInvariant (averaged B P c) := by\n  have hb (x : F.Coeff) : GaugeInvariant (beforeTurn B P x) := by\n    intro t U\n    have hx : mapped B (Lattice.gauge t U) = rotates (t 0) (mapped B U) :=\n      funext fun i => slot_gauge (B i) t U\n    rw [before_eq]; simp only [Finset.sum_apply,Pi.smul_apply,comp_apply,hx,h.2.1]\n  intro t U\n  simp only [averaged,Pi.smul_apply,Finset.sum_apply,term,Function.comp_apply,\n    pull_gauge_zero]\n  apply congr_arg (fun z : ℂ => share • z)\n  exact Finset.sum_congr rfl fun _ _ => hb _ _ _",
+            "line": 129,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/G06/Average.lean",
+            "fragment": "L129-L139"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.G06.averaged_gauge",
+            "lines": [
+              129,
+              139
+            ],
+            "conclusion": "`averaged B P c` is gauge invariant."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.G06.averaged_bar",
+        "module": "YM.Work.G06.Average",
+        "lines": [
+          153,
+          162
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.G06.averaged_bar"
+          },
+          "snippet": {
+            "text": "theorem averaged_bar (h : Cumuli H d F B P) (c : F.Coeff) (U : CoverConfig G) :\n    averaged B P (star c) U = star (averaged B P c U) := by\n  have hv (x : F.Coeff) : F.coords (realBar (F.coords.symm x)) = star x :=\n    funext fun _ => F.conj_basis ..\n  have ht (s : Ortho) : F.act s (star c) = star (F.act s c) := by\n    rw [← hv c, ← hv (F.act s c)]; simp [Frame.act]\n  have hb (s : Signed) : term B P (star c) s U = star (term B P c s U) := by\n    simp only [term, before_eq, ht, Function.comp_apply,Finset.sum_apply,Pi.smul_apply,\n      Pi.star_apply,star_sum,star_smul,h.2.2.1]\n  simp only [averaged,Pi.smul_apply, Finset.sum_apply, hb,star_smul,share_real,star_sum]",
+            "line": 153,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/G06/Average.lean",
+            "fragment": "L153-L162"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.G06.averaged_bar",
+            "lines": [
+              153,
+              162
+            ],
+            "conclusion": "`averaged (star c) = star (averaged c)`: reality."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.G06.averaged_unit",
+        "module": "YM.Work.G06.Average",
+        "lines": [
+          116,
+          127
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.G06.averaged_unit"
+          },
+          "snippet": {
+            "text": "theorem averaged_unit (h : Cumuli H d F B P) : averaged B P F.e0 = 1 := by\n  have he (s : Signed) : F.act s.ortho⁻¹ F.e0 = F.e0 := by\n    rw [← F.coords_unit,F.act_coords]; congr 1\n    apply Subtype.ext; exact (rotated (G := G) _).map_one\n  have ht (s : Signed) : term B P F.e0 s = 1 := by\n    unfold term\n    rw [he,before_eq]\n    rw [Finset.sum_eq_single_of_mem 0 (Finset.mem_univ _)]\n    · funext U\n      simp [Frame.e0, h.1, lumin]\n    intro b _ hb; simp [Frame.e0,Pi.single_eq_of_ne hb]\n  simp only [averaged,ht,share_sum]",
+            "line": 116,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/G06/Average.lean",
+            "fragment": "L116-L127"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.G06.averaged_unit",
+            "lines": [
+              116,
+              127
+            ],
+            "conclusion": "`averaged B P F.e0 = 1`: the constant column stays one."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.G06.common_pose",
+        "module": "YM.Work.G06.Pose",
+        "lines": [
+          87,
+          114
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.G06.common_pose"
+          },
+          "snippet": {
+            "text": "theorem common_pose (h : Cumuli H d F B P) :\n    ∃ (n : ℕ) (B' : Fin n → Slot) (Q : F.Coeff →ₗ[ℂ] Pose G n),\n      (∀ c, averaged B P c = lumin (Q c) ∘ mapped B') ∧\n      ∀ i : F.Index, lows (Q (Pi.single i 1)) (F.grades i).2 := by\n  choose v r hr hv using fun (s : Signed) (i : Fin m) => slot_pull (G:=G) s (B i)\n  let E := Fintype.equivFin (Signed × Fin m)\n  let n := Fintype.card (Signed × Fin m)\n  let B' (i : Fin n) := v (E.symm i).1 (E.symm i).2\n  let D (s : Signed) : Pose G m →ₐ[ℂ] Pose G n := redirect (fun j => E (s,j)) (r s)\n  let R (s : Signed) : F.Coeff →ₗ[ℂ] Pose G n :=\n      D s |>.toLinearMap.comp ((assemble P).comp (F.act s.ortho⁻¹))\n  refine ⟨n,B',share • ∑ s,R s, ?_, ?_⟩\n  · intro c\n    funext U\n    have he (s : Signed) : term B P c s U = lamp (mapped B' U) (R s c) := by\n      let q := assemble (F:=F) P (F.act s.ortho⁻¹ c)\n      change lumin q (mapped B (pull s 0 U)) = lumin (redirect (fun j => E (s,j)) (r s) q) (mapped B' U)\n      rw [redirect_lumin]\n      apply congr_arg (lumin q); funext i; simp [mapped,hv,B']\n    change averaged B P c U = lamp (mapped B' U) ((share • ∑ s,R s) c)\n    simp only [averaged,Pi.smul_apply,Finset.sum_apply,LinearMap.smul_apply,\n      LinearMap.sum_apply,map_smul,map_sum,he]\n  intro i\n  simp only [LinearMap.smul_apply,LinearMap.sum_apply]\n  apply (high_iff _ _).mp\n  apply Submodule.smul_mem; apply Submodule.sum_mem; intro s _\n  change redirect (fun j => E (s,j)) (r s) (assemble P (F.act s.ortho⁻¹ (Pi.single i 1))) ∈ _\n  exact (high_iff _ _).mpr (redirect_lows (fun j => E (s,j)) (r s) _ _ ((high_iff _ _).mp (assemble_high B P h i _)))",
+            "line": 87,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/G06/Pose.lean",
+            "fragment": "L87-L114"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.G06.common_pose",
+            "lines": [
+              87,
+              114
+            ],
+            "conclusion": "The averaged section is again a polynomial in slots whose monomials have at least `(F.grades i).2` factors."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          42
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

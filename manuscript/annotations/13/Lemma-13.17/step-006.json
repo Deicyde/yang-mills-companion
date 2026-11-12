@@ -1,0 +1,122 @@
+{
+  "id": "Lemma 13.17 step 6",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 114,
+        "rect": [
+          0.12026,
+          0.69045,
+          0.75949,
+          0.0346
+        ]
+      },
+      "title": "Lemma 13.17 step 6: Text, p. 114",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 13.17 step 6"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.Amp.Often.reveal",
+        "module": "YM.FullVolume.Amp.Drill",
+        "lines": [
+          58,
+          78
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.Amp.Often.reveal"
+          },
+          "snippet": {
+            "text": "   let b:ℝ:= (‖u‖+1)/r; have hu:0<r:= L.width; have hb:0<b:=by unfold b; positivity\n   let y: X:= b⁻¹ • u; have hV: ‖y‖≤ r:= by\n     unfold y; rw [norm_smul,norm_inv,Real.norm_of_nonneg hb.le, inv_mul_le_iff₀ hb]; unfold b; rw [div_mul_cancel₀ _ hu.ne']; linarith\n   have hz: ∀ᶠ t in 𝓝 (0:ℝ),Scout 1 (fun i:ℝ=>f (x+t • z+i • y)) c:= ((show Tendsto (fun t:ℝ=>x+t • z) (𝓝 (0:ℝ)) (𝓝 x) from (by simpa using! ((continuous_const.add (continuous_id'.smul continuous_const)): Continuous (fun t:ℝ=>x+t • z)).tendsto 0)).eventually L.lens).mono fun t h=> (h y hV).lessen le_rfl L.pays.1\n   let S:= range (n+1); refine IsBigO.of_bound (∑ i∈ S, ‖hat n i‖*(‖(i:ℝ)*b‖^n*c)) ?_\n   filter_upwards [hz,(eventually_all_finset S).mpr (fun i _=>sprite ((i:ℝ)*b))] with t ht h\n   obtain ⟨_,P,hP,hz⟩ := ht\n   let H i := ((i:ℕ):ℝ)*b*t\n   let v:=x+t • z\n   have hi i: v+(i:ℕ) • t • u=v+H i • y:= by unfold H y; rw [←Nat.cast_smul_eq_nsmul ℝ,smul_smul,smul_smul]; field_simp\n   have hc: (∑ i∈ S,hat n i • shell P n (H i))=0:= by\n     unfold shell; simp_rw [smul_sum]; rw [sum_comm]; apply sum_eq_zero; intro j hj\n     unfold H; simp_rw [smul_smul,mul_pow,←mul_assoc]; unfold S; rw [←sum_smul,← sum_mul, ← sum_mul, cold (mem_range.mp hj),zero_mul,zero_mul,zero_smul]\n     -- simp [smul_smul,pow_mul]\n   change ‖_‖≤ _*‖t^n‖; rw [face]\n   let Y i : Y:= f (v+H i • y)\n   simp_rw [Nat.cast_smul_eq_nsmul]\n   change ‖∑ j∈ S, hat n j • f (v+j • t • u)‖ ≤ _\n   simp_rw [hi]; conv_lhs=> arg 1; rw [← sub_zero (∑ i∈S,_),←hc]\n   simp only [←sum_sub_distrib,← smul_sub]; rw [sum_mul]; refine (norm_sum_le ..).trans ?_; apply sum_le_sum; intro i hi; rw [norm_smul]\n   have ht':= h i hi; have hh:=hz (H i) (abs_le.mp ht'); simp_rw [div_one] at hh; exact (mul_le_mul_of_nonneg_left (macroH (B:=fun _=>Y i) hP n ht' hh) (norm_nonneg _)).trans_eq (by simp only [norm_mul,mul_pow,norm_pow]; ring)",
+            "line": 58,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Amp/Drill.lean",
+            "fragment": "L58-L78"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.Amp.Often.reveal",
+            "lines": [
+              57,
+              78
+            ],
+            "conclusion": "Expands f along the line at the nearby centre in its `Scout` series, cancels the terms of degree below n in the n-th difference by `cold`, and bounds the remaining tail by O(t^n)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.Amp.Often.cold",
+        "module": "YM.FullVolume.Amp.Drill",
+        "lines": [
+          52,
+          55
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.Amp.Often.cold"
+          },
+          "snippet": {
+            "text": "lemma cold (hj:j<n): (∑ i∈range (n+1),hat n i*(i:ℝ)^j)=0:= by\n  have hp:= face (X:=ℝ) (Y:=ℝ) (f:=fun t:ℝ=> t^j) (x:=(0:ℝ))\n  specialize hp 1 n; simpa [fwdDiff_iter_pow_eq_zero_of_lt (R:=ℝ) hj,smul_eq_mul] using hp.symm\ninclude L",
+            "line": 52,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Amp/Drill.lean",
+            "fragment": "L52-L55"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.Amp.Often.cold",
+            "lines": [
+              52,
+              55
+            ],
+            "conclusion": "`∑_{i≤n} (-1)^{n-i} C(n,i) i^j = 0` for j < n."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          114
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

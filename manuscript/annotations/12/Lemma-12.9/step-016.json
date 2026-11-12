@@ -1,0 +1,200 @@
+{
+  "id": "Lemma 12.9 step 16",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 85,
+        "rect": [
+          0.12026,
+          0.76358,
+          0.75995,
+          0.07134
+        ]
+      },
+      "title": "Lemma 12.9 step 16: Text, p. 85",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 12.9 step 16"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.joy_heights",
+        "module": "YM.Next.STATIONARY.OneLoop.MomentumIntegral",
+        "lines": [
+          292,
+          304
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.joy_heights"
+          },
+          "snippet": {
+            "text": "lemma joy_heights (i j : Axis) (ht : i ≠ j) : joyMix μ i j = landX μ/24 := by\n  let f i' := joyMix μ i i'; let A:= f i; let B:= f j\n  have hp : (∑ i : Axis, f i)= joyAx μ (springAx i) 2 := by\n    unfold joyAx f joyMix; rw [← integral_finsetSum]; swap; · exact fun k _ => joy_meal h i k\n    apply setIntegral_congr_fun shell_meas; intro k hk; unfold opJen jetMix; simp_rw [springTouch,← sum_div,← mul_sum,geode_sum]; field_simp [((h.trans hk.1).ne')]\n  have ha : A=joyAx μ (springAx i) 4 := by\n    unfold A f joyMix joyAx; apply setIntegral_congr_fun shell_meas; intro x hx; unfold jetMix opJen; simp only [springTouch]; ring\n  have he (a) (h' : a ≠ i) : f a=B := by\n    have hx := joy_knot h i a h'.symm; have hq := joy_knot h i j ht; unfold f B; linarith\n  rw [show ∑ i,f i = A + 3*B from ?_,joy_two h i] at hp\n  swap\n  · rw [← sum_erase_add _ _ (mem_univ i)]; simp_rw [sum_congr rfl (s₁:=_) (f:=f) (g:=fun _ => B) (fun k hk=> he k (ne_of_mem_erase hk))]; simp [Finset.card_erase_of_mem,A, Fintype.card_fin]; ring\n  rw [ha,joy_knot h i j ht] at hp; unfold B f at hp; linarith",
+            "line": 292,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/OneLoop/MomentumIntegral.lean",
+            "fragment": "L292-L304"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.joy_heights",
+            "lines": [
+              292,
+              304
+            ],
+            "conclusion": "`joyMix μ i j = landX μ / 24` for `i ≠ j`: the mean of `k_2^2 k_1^2/κ^4` on the shell is 1/24 of the shell integral of `κ^-4`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.joy_knot",
+        "module": "YM.Next.STATIONARY.OneLoop.MomentumIntegral",
+        "lines": [
+          282,
+          291
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.joy_knot"
+          },
+          "snippet": {
+            "text": "lemma joy_knot (i j : Axis) (ht : i≠j) : joyAx μ (springAx i) 4 = 3*joyMix μ i j := by\n  let M := joyAx μ (springAx i) 4\n  let P:=springAx i+springAx j; let Q:=springAx i-springAx j\n  have hh : joyAx μ P 4 + joyAx μ Q 4=2*M + 2* joyAx μ (springAx j) 4+12*joyMix μ i j := by\n    unfold M joyAx joyMix\n    rw [← integral_add (joy_paid h _ 4) (joy_paid h _ 4)]; simp_rw [← integral_const_mul]; rw [← integral_add (f:=fun v=>2*opJen (springAx i) v 4) (g:=fun v=>2*opJen (springAx j) v 4) ((joy_paid h _ 4).const_mul 2) ((joy_paid h _ 4).const_mul 2), ← integral_add ?_ ((joy_meal h i j).const_mul 12)]\n    · apply setIntegral_congr_fun shell_meas; intro x hx; unfold opJen jetMix P Q; simp only [inner_add_left,inner_sub_left,springTouch]; ring\n    exact Integrable.add ((joy_paid h _ 4).const_mul 2) ((joy_paid h _ 4).const_mul 2)\n  rw [switchG (μ:=μ) P i 4,switchG (μ:=μ) Q i 4,show ‖P‖^4=_ from (prismAx (μ:=μ) h i j ht).1,show ‖Q‖^4=_ from (prismAx (μ:=μ) h i j ht).2, joy_rotate (show ‖springAx j‖=‖springAx i‖ by rw [spring_unit,spring_unit]) 4] at hh\n  unfold M at hh; linarith",
+            "line": 282,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/OneLoop/MomentumIntegral.lean",
+            "fragment": "L282-L291"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.joy_knot",
+            "lines": [
+              282,
+              291
+            ],
+            "conclusion": "`joyAx μ (springAx i) 4 = 3 * joyMix μ i j`, from the `π/4` rotation (`e_i ± e_j`, norm^4 = 4): this is `a = 3b`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.joy_two",
+        "module": "YM.Next.STATIONARY.OneLoop.MomentumIntegral",
+        "lines": [
+          270,
+          275
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.joy_two"
+          },
+          "snippet": {
+            "text": "lemma joy_two (i : Axis) : joyAx μ (springAx i) 2=landX μ/4 := by\n  have hp : (∑ j:Axis,joyAx μ (springAx j) 2)=landX μ := by\n    unfold joyAx landX; rw [← integral_finsetSum]; swap; · intro a _; exact joy_paid h _ _\n    apply setIntegral_congr_fun shell_meas; intro a ha; unfold opJen snowY\n    simp_rw [springTouch,← sum_div,geode_sum a]; have hv : 0<‖a‖ := h.trans ha.1; field_simp\n  simp_rw [show ∀ a,joyAx μ (springAx a) 2= joyAx μ (springAx i) 2 from fun a=>joy_rotate ((spring_unit a).trans (spring_unit i).symm) 2] at hp; simp at hp; linarith",
+            "line": 270,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/OneLoop/MomentumIntegral.lean",
+            "fragment": "L270-L275"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.joy_two",
+            "lines": [
+              270,
+              275
+            ],
+            "conclusion": "`joyAx μ (springAx i) 2 = landX μ / 4`: the mean of `k_2^2/κ^2` is 1/4."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.poleSpin",
+        "module": "YM.Next.STATIONARY.OneLoop.MomentumIntegral",
+        "lines": [
+          326,
+          338
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.poleSpin"
+          },
+          "snippet": {
+            "text": "lemma poleSpin (h : 0<μ) (he : μ≤1) : cartWeight*(∫ x in orbShell μ,poleVec G (exileE x))= -G.slopeConstant*Real.log μ⁻¹ := by\n  let f := fun x : Gaia=> opJen (springAx 1) x 2\n  let r := fun x : Gaia=> jetMix x 1 0\n  have hr (x : Gaia) : poleVec G (exileE x)=4*G.casimir*(f x-4*r x-snowY x) := by\n    change 4*_*((x 1)^2 / ‖x‖^6-4*(x 1)^2*(x 0)^2/‖x‖^8 - (‖x‖^4)⁻¹)=_; unfold f opJen; rw [springTouch]; unfold r jetMix snowY; ring\n  simp_rw [hr]\n  have hy : IntegrableOn snowY (orbShell μ) volume := by\n    change IntegrableOn (fun x:Gaia=> (‖x‖^4)⁻¹) _ _; simpa using geoS h (fun _=>1) continuous_const 4\n  rw [integral_const_mul,integral_sub (f:=fun x=>f x-4*r x) ((joy_paid h (springAx 1) 2).sub ((joy_meal h 1 0).const_mul 4)) hy,\n    integral_sub (f:=f) (joy_paid h _ _) ((joy_meal h 1 0).const_mul 4), integral_const_mul]\n  change cartWeight*(_*(joyAx μ (springAx 1) 2- _*joyMix μ 1 0- landX μ))=_\n  rw [joy_two h 1,joy_heights h _ _ (by decide : (1:Axis) ≠0),show landX μ=_ from polar_m μ h he]\n  unfold Gauge.slopeConstant cartWeight; field_simp; ring",
+            "line": 326,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/OneLoop/MomentumIntegral.lean",
+            "fragment": "L326-L338"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.poleSpin",
+            "lines": [
+              326,
+              338
+            ],
+            "conclusion": "`cartWeight * ∫_{shell} poleVec = -slopeConstant * log μ⁻¹`, using the shell integral `2π^2 log μ⁻¹` of `κ^-4`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          85
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

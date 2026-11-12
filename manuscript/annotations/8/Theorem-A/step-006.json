@@ -1,0 +1,201 @@
+{
+  "id": "Theorem A step 6",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The Lean selects `atPoint` with a unique ground state (`UniqueHeat`) but does not state that such points form a full-measure set, from which [M] chooses `ξ_*`.",
+  "subject": [
+    {
+      "location": {
+        "page": 34,
+        "rect": [
+          0.12026,
+          0.83274,
+          0.75996,
+          0.07428
+        ]
+      },
+      "title": "Theorem A step 6: Text, p. 34",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Theorem A step 6"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OS.Selection",
+        "module": "YM.Phase.Mixture",
+        "lines": [
+          127,
+          134
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OS.Selection"
+          },
+          "snippet": {
+            "text": "structure Selection (B : Table L) where\n  room : Chamber B timeAxis\n  unselected : Spread room\n  space : unselected.Resolution\n  ensemble : space.X → Table L\n  atPoint : space.X\n  leaps : Chamber (ensemble atPoint) timeAxis\n  slabs : Spread leaps",
+            "line": 127,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Phase/Mixture.lean",
+            "fragment": "L127-L134"
+          },
+          "proof_context": {
+            "declaration": "YM.OS.Selection",
+            "lines": [
+              127,
+              134
+            ],
+            "conclusion": "The selection carries the phase space `space`, the phase tables `ensemble` and the selected point `atPoint`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OS.Selection.Certificate",
+        "module": "YM.Phase.Mixture",
+        "lines": [
+          136,
+          148
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OS.Selection.Certificate"
+          },
+          "snippet": {
+            "text": "structure Selection.Certificate {P : DiffPlan S} (R : S.Rotation) (J : S.Stress) (C : Selection S) : Prop where\n  lengths : Spread.Laws C.unselected P\n  still : ∀ x : C.room.D, ∀ i, C.room.flow.U i x = x\n  decomposition : C.space.Out\n  chosen (i) : C.space.receives (C.ensemble i) i\n  states (i) : (C.ensemble i).Hierarchy\n  sym i : R.Oriented (C.ensemble i)\n  retains i d : (C.ensemble i).null d=S.null d\n  coordinates i : P.Inclusions (C.ensemble i)\n  calculus i : P.Derivatives (C.ensemble i)\n  flux i : Table.StressLaws (C.ensemble i) J P.deriv R.lie\n  goes : Spread.Laws C.slabs P\n  heat : C.leaps.UniqueHeat",
+            "line": 136,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Phase/Mixture.lean",
+            "fragment": "L136-L148"
+          },
+          "proof_context": {
+            "declaration": "YM.OS.Selection.Certificate",
+            "lines": [
+              136,
+              148
+            ],
+            "conclusion": "The certificate gives the decomposition, the phase tables on the same quotients, and `heat : C.leaps.UniqueHeat`, the unique ground state of the selected phase."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Nonperturbative.Headline.Reconstruction",
+        "module": "YM.Nonperturbative.HeadlineSpec",
+        "lines": [
+          75,
+          81
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Nonperturbative.Headline.Reconstruction"
+          },
+          "snippet": {
+            "text": "structure Reconstruction (L : EveryPhase.Almanac F) : Prop where\n  unselected : F.B.From S\n  selected : F.A.From (F.α.ensemble F.α.atPoint)\n  chosen : WightmanAxioms F.action F.A.world\n  characters (i : F.α.space.X) : WightmanAxioms (L.actors i) (L.contours i).world\n  average (n : ℕ) (v : Fin n → S.Union) (g : Joint n) :\n    (∫ i, (L.contours i).world.W n v g ∂F.α.space.μ) = F.B.world.W n v g",
+            "line": 75,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Nonperturbative/HeadlineSpec.lean",
+            "fragment": "L75-L81"
+          },
+          "proof_context": {
+            "declaration": "YM.Nonperturbative.Headline.Reconstruction",
+            "lines": [
+              75,
+              81
+            ],
+            "conclusion": "`Reconstruction` gives Wightman axioms (with a unique vacuum) for the selected phase and for every character, and the average over `F.α.space.μ`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YangMills.publicReconstruction",
+        "module": "HierarchyBridge",
+        "lines": [
+          79,
+          80
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YangMills.publicReconstruction"
+          },
+          "snippet": {
+            "text": "theorem publicReconstruction (L : EveryPhase.Almanac F) (h : EveryPhase.Completed F L) :\n    (hierarchy F Q).Reconstructed := by",
+            "line": 79,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/HierarchyBridge.lean",
+            "fragment": "L79-L80"
+          },
+          "proof_context": {
+            "declaration": "YangMills.publicReconstruction",
+            "lines": [
+              79,
+              133
+            ],
+            "conclusion": "`publicReconstruction` turns `EveryPhase.Completed F L` into `Reconstructed` for the hierarchy."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          34
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

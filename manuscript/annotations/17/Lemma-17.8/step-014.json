@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 17.8 step 14",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "The field adjoint law is `weaklyCentral` and `precise`; the Lean pairings are the continuations through the OS flow `D.flow.J`, which carry [M]'s bounded matrix elements.",
+  "subject": [
+    {
+      "location": {
+        "page": 202,
+        "rect": [
+          0.11962,
+          0.35785,
+          0.76012,
+          0.05424
+        ]
+      },
+      "title": "Lemma 17.8 step 14: Text, p. 202",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 17.8 step 14"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.precise",
+        "module": "YM.EveryPhase.Irreducible",
+        "lines": [
+          195,
+          205
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.precise"
+          },
+          "snippet": {
+            "text": "theorem precise (h : FieldCore W R s X) (B) : weaklyCentral X B ↔ ∀ p f (u v : X.operators.domain),\n    let T := X.operators.denselyDefined p f\n    ∃ (he : u.val ∈ T.adjoint.domain), inner ℂ (T.adjoint (⟨u.val,he⟩)) (B v.val)=\n      inner ℂ u.val (B ((X.operators.field p f v).val)) := by\n  have ht (p : S.Union) (f : Test4) := X.operators.really X.J h.total h.adj p f\n  have hh p f (u : X.operators.domain) (hp : u.val ∈ (X.operators.denselyDefined p f).adjoint.domain) :\n      (X.operators.field (X.J p) (Probe.bar f) u).val=(X.operators.denselyDefined p f).adjoint ⟨u.val,hp⟩ :=\n    (ht p f).2 rfl\n  constructor\n  · intro H p f u v; refine ⟨(ht p f).1 u.property,?_⟩; rw [← hh p f u]; exact H p f u v\n  intro H p f u v; obtain ⟨he,hv⟩ := H p f u v; rw [hh p f u he]; exact hv",
+            "line": 195,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Irreducible.lean",
+            "fragment": "L195-L205"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.precise",
+            "lines": [
+              195,
+              205
+            ],
+            "conclusion": "The weak relation with the unbounded adjoint is equivalent to `weaklyCentral`, the relation with the field adjoint law `X.J p`, `Probe.bar f`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.word_central",
+        "module": "YM.EveryPhase.Irreducible",
+        "lines": [
+          99,
+          108
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.word_central"
+          },
+          "snippet": {
+            "text": "lemma word_central {B} (h : weaklyCentral X B) (w : Sentence S) :\n    let V := X.operators\n    ∀ u v : V.domain, inner ℂ (monomial V (Sentence.rev X.J w) u).val (B v.val)=\n      inner ℂ u.val (B (monomial V w v).val) := by\n  dsimp only\n  induction w with\n  | nil => intros; rfl\n  | cons i b ih =>\n    intro u v; rw [show Sentence.rev X.J (i::b)=Sentence.rev X.J b++[Letter.op X.J i] by simp [Sentence.rev],\n      append_op, LinearMap.comp_apply, ih]; exact h i.1 i.2 u (monomial _ _ v)",
+            "line": 99,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Irreducible.lean",
+            "fragment": "L99-L108"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.word_central",
+            "lines": [
+              99,
+              108
+            ],
+            "conclusion": "`weaklyCentral` iterates over words: `<monomial (rev w) u, B v> = <u, B (monomial w v)>`, with no domain hypothesis on `B`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.commutant",
+        "module": "YM.EveryPhase.Irreducible",
+        "lines": [
+          128,
+          142
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.commutant"
+          },
+          "snippet": {
+            "text": "  have he : ∀ w : Sentence S, inner ℂ (V.vector w) (B Ω)=\n      inner ℂ Ω (B (V.vector (Sentence.rev X.J w))) := by\n    intro w\n    have hJ := Boundary.invol F.room.kernel.laws.toSymmetric F.phase.transport.injection hp.induced\n    have h := word_central (X:=X) h (Sentence.rev X.J w)\n    dsimp only at h; rw [Sentence.rev_rev X.J hJ w] at h\n    have he := h V.omega V.omega\n    change inner ℂ (monomial V w V.omega).val _ = inner ℂ _ (B (monomial V _ V.omega).val) at he\n    rw [evaluate_word,evaluate_word] at he; exact he\n  let a := inner ℂ Ω (B Ω)\n  have hh (b : Sentence S) : inner ℂ (V.vector b) (B Ω)=inner ℂ (V.vector b) (a • Ω) := by\n    let u := V.vector b\n    let v := V.vector (Sentence.rev X.J b)\n    let p t := D.flow.J 0 (J u) (J (B Ω)) t\n    let q t := D.flow.J 0 (J (B.adjoint Ω)) (J v) t",
+            "line": 128,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Irreducible.lean",
+            "fragment": "L128-L142"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.commutant",
+            "lines": [
+              118,
+              193
+            ],
+            "conclusion": "For a word `b`, `u = V.vector b`, `v = V.vector (rev b)` and `p`, `q` are the continuation pairings of `J u` with `J (B Ω)` and of `J (B* Ω)` with `J v`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          202
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

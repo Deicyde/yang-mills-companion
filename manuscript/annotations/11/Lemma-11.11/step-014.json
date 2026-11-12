@@ -1,0 +1,122 @@
+{
+  "id": "Lemma 11.11 step 14",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 66,
+        "rect": [
+          0.12026,
+          0.84197,
+          0.75948,
+          0.06336
+        ]
+      },
+      "title": "Lemma 11.11 step 14: Display, p. 66",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 11.11 step 14"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Bid.Crowds",
+        "module": "YM.Bid.Energy",
+        "lines": [
+          94,
+          97
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Bid.Crowds"
+          },
+          "snippet": {
+            "text": "structure Crowds (δ B : ℝ) {S : StepData c f} (T : Tube G S) (x : ℝ) (V : Config G c) : Prop where\n  positive (i : Cell c) : temp x < toll V i → toll V i ≤ δ → T.low.direct/4*temp x*toll V i ≤ T.workC (till x) V (temp x) i\n  middle (i : Cell c) : toll V i ≤ temp x → -(B*temp x^4) ≤ T.workC (till x) V (temp x) i\n  last (i : Cell c) : δ < toll V i → -(T.low.linear*temp x*toll V i) ≤ T.workC (till x) V (temp x) i",
+            "line": 94,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Bid/Energy.lean",
+            "fragment": "L94-L97"
+          },
+          "proof_context": {
+            "declaration": "YM.Bid.Crowds",
+            "lines": [
+              94,
+              97
+            ],
+            "conclusion": "`Crowds` states `workC >= low.direct/4*temp*toll` for `temp < toll <= delta`, `workC >= -(B*temp^4)` for `toll <= temp`, and `workC >= -(low.linear*temp*toll)` for `toll > delta`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.E05.answer",
+        "module": "YM.Work.E05",
+        "lines": [
+          215,
+          228
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.E05.answer"
+          },
+          "snippet": {
+            "text": "  refine ⟨δ,hδ,P.below.clip.direct*K/2,by positivity,fun L W => ⟨?_⟩⟩\n  filter_upwards [ultimately_cool δ hδ] with x hx\n  intro c f S _ _ T hT _ A U k V _ _\n  refine ⟨fun i hs ht => ?_, fun i hi => ?_, fun i hi => ?_⟩\n  · exact workC_mid T _ V _ i hx.1 hs ((h _ ht).2)\n  · rw [← hT.low]\n    exact workC_small T _ V _ i hi K hK.le (h _ (hi.trans hx.2)).1\n  · have he : temp x < toll V i := hx.2.trans_lt hi\n    have ht : 0 < toll V i := hx.1.trans_lt he\n    apply le_trans ?_ (workC_large T _ V _ i hx.1 he)\n    have hd := T.low.quadratic_pos\n    have hs := hx.1\n    have hk : 0 ≤ T.low.direct * (temp x / toll V i / 2) * ‖G.curvature (faceValue V i)‖^2 := by positivity\n    linarith only [hk]",
+            "line": 215,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/E05.lean",
+            "fragment": "L215-L228"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.E05.answer",
+            "lines": [
+              211,
+              228
+            ],
+            "conclusion": "The three ranges follow from `workC_small`, `workC_mid`, `workC_large` with `B = direct*K/2` and the common `delta`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          66
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

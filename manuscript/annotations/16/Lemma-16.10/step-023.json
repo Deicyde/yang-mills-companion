@@ -1,0 +1,271 @@
+{
+  "id": "Lemma 16.10 step 23",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 186,
+        "rect": [
+          0.12026,
+          0.40887,
+          0.76156,
+          0.05168
+        ]
+      },
+      "title": "Lemma 16.10 step 23: Text, p. 186",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.10 step 23",
+          "quads": [
+            [
+              0.6756,
+              0.40887,
+              0.88182,
+              0.40887,
+              0.88182,
+              0.42635,
+              0.6756,
+              0.42635
+            ],
+            [
+              0.12026,
+              0.42636,
+              0.87975,
+              0.42636,
+              0.87975,
+              0.44265,
+              0.12026,
+              0.44265
+            ],
+            [
+              0.12026,
+              0.44266,
+              0.49804,
+              0.44266,
+              0.49804,
+              0.46055,
+              0.12026,
+              0.46055
+            ]
+          ]
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Bid.A09",
+        "module": "YM.Bid.Angular",
+        "lines": [
+          81,
+          83
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Bid.A09"
+          },
+          "snippet": {
+            "text": "def A09 : Prop := ∀ {G : Gauge} {L : Register G} {S : Table L} (D : Ward.SpinRows S), Brackets D →\n    rel D ∧ ∀ K : Ward.SpinRows S, Brackets K → ∀ d (z : List ℝ) i,\n      Commute (wave z (leaf D d) (leaf K d)) (effect (leaf D d i) (leaf K d i))",
+            "line": 81,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Bid/Angular.lean",
+            "fragment": "L81-L83"
+          },
+          "proof_context": {
+            "declaration": "YM.Bid.A09",
+            "lines": [
+              81,
+              83
+            ],
+            "conclusion": "`A09` states that for `Brackets` families `D`, `K`, the operator `wave z (leaf D d) (leaf K d)` commutes with `effect (leaf D d i) (leaf K d i)`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.A09.casimir",
+        "module": "YM.Work.A09",
+        "lines": [
+          35,
+          50
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.A09.casimir"
+          },
+          "snippet": {
+            "text": "lemma casimir (p : Ind) : Commute (∑ q : Ind, f (Spin.K q)^2) (f (Spin.K p)) := by\n  obtain ⟨i,j⟩ := p\n  let P (a b : Axis) := f (plane a b)\n  let g (a b : Axis) := (if b=i then P a j else 0) - (if b=j then P a i else 0) +\n    (if a=i then P j b else 0) - (if a=j then P i b else 0)\n  have hg (a b : Axis) : P a b * P i j - P i j * P a b = g a b := by\n    dsimp [P]; rw [h, bracket_planes]; simp [P, g, apply_ite f]\n  have he (a b : Axis) : P a b^2 * P i j - P i j * P a b^2 = P a b * g a b + g a b * P a b := by\n    rw [← hg]; noncomm_ring\n  change (∑ q : Ind, P q.1 q.2 ^ 2) * P i j = P i j * (∑ q : Ind, P q.1 q.2 ^ 2)\n  rw [Fintype.sum_prod_type]\n  dsimp only\n  apply sub_eq_zero.mp\n  simp_rw [Finset.sum_mul, Finset.mul_sum, ← Finset.sum_sub_distrib, he]\n  simp [g, mul_add, add_mul, mul_sub, sub_mul, Finset.sum_add_distrib, Finset.sum_sub_distrib]\n  abel",
+            "line": 35,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/A09.lean",
+            "fragment": "L35-L50"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.A09.casimir",
+            "lines": [
+              35,
+              50
+            ],
+            "conclusion": "`casimir` shows the sum of squares of the relative generators commutes with each one, the antisymmetric structure constants cancelling in pairs."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.A09.commutes_evaluate",
+        "module": "YM.Work.A09",
+        "lines": [
+          79,
+          83
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.A09.commutes_evaluate"
+          },
+          "snippet": {
+            "text": "lemma commutes_evaluate {X : Type*} [NormedAddCommGroup X] [NormedSpace ℂ X]\n    {A B : Spin.End X} (h : Commute A B) (z : List ℝ) : Commute (evaluate z A) B := by\n  induction z with\n  | nil => exact Commute.zero_left _\n  | cons t z ih => exact ((Commute.one_left _).smul_left (t:ℂ)).add_left (h.mul_left ih)",
+            "line": 79,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/A09.lean",
+            "fragment": "L79-L83"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.A09.commutes_evaluate",
+            "lines": [
+              79,
+              83
+            ],
+            "conclusion": "`commutes_evaluate` passes the commutation from the Casimir to every polynomial `z` of it."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Bid.imaginary",
+        "module": "YM.Bid.Town",
+        "lines": [
+          102,
+          122
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Bid.imaginary"
+          },
+          "snippet": {
+            "text": "private lemma imaginary {L : Register G} {S : Table L} (d) {X : SpinRows S} {Y : SpinRows (Bel L)} (hu : Brackets X)\n    (ht : Brackets Y) (v : Spin.change S d) (z : List ℝ) (i : Spin.Ind) (A : A09) :\n    Commute (wave z (transport X v) (leaf Y d)) (effect (transport X v i) (leaf Y d i)) := by\n  classical\n  -- transport at this cap; pad others default with free.\n  let b : Ortho.Skew→ₗ[ℝ] ((Bel L).Field d→ₗ[ℂ] (Bel L).Field d) := {\n    toFun t := v.symm.toLinearMap ∘ₗ ((X d t) ∘ₗ v.toLinearMap)\n    map_add' i j := by ext u; simp\n    map_smul' a t := by\n      apply LinearMap.ext; intro u\n      change v.symm (X d (a • t) (v u))=a • v.symm _\n      rw [map_smul]; exact (v.symm.toLinearMap.restrictScalars ℝ).map_smul a _ }\n  let F := update Y d b\n  have hf : Brackets F := by\n    intro n g k; by_cases h : n=d\n    · subst n; unfold F; rw [update_self]; apply LinearMap.ext; intro u\n      have he := LinearMap.congr_fun (hu d g k) (v u)\n      apply v.injective; simpa [b] using! he -- needs coe rewrites\n    rw [show F n=Y n from update_of_ne h ..]; exact ht n g k\n  have hp : leaf F d=transport X v := by unfold leaf transport; simp only [F,update_self]; rfl\n  rw [← hp]; exact (A F hf).2 Y ht d z i",
+            "line": 102,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Bid/Town.lean",
+            "fragment": "L102-L122"
+          },
+          "proof_context": {
+            "declaration": "YM.Bid.imaginary",
+            "lines": [
+              102,
+              122
+            ],
+            "conclusion": "`imaginary` applies `A09` to the transported generators `transport X v` and the limit generators `leaf Y d`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Spin.Tracks",
+        "module": "YM.Spin.Shape",
+        "lines": [
+          74,
+          75
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Spin.Tracks"
+          },
+          "snippet": {
+            "text": "def Tracks (S : AddSubgroup (Mat X)) (p : List ℝ) (C : I → Mat X) (B : I → Mat X) :=\n    wave p B C ∈ preserves S ∧ ∀ i, Commute (wave p B C) (effect (B i) (C i))",
+            "line": 74,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Spin/Shape.lean",
+            "fragment": "L74-L75"
+          },
+          "proof_context": {
+            "declaration": "YM.Spin.Tracks",
+            "lines": [
+              74,
+              75
+            ],
+            "conclusion": "`Tracks` records `Commute (wave p B C) (effect (B i) (C i))` for all `i`, together with membership in `preserves S`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          186
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

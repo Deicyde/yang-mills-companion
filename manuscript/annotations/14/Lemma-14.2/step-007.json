@@ -1,0 +1,161 @@
+{
+  "id": "Lemma 14.2 step 7",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 127,
+        "rect": [
+          0.11962,
+          0.2531,
+          0.76357,
+          0.08551
+        ]
+      },
+      "title": "Lemma 14.2 step 7: Text, p. 127",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.2 step 7"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.History.partition_eq",
+        "module": "YM.RG.History",
+        "lines": [
+          242,
+          249
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.History.partition_eq"
+          },
+          "snippet": {
+            "text": "theorem partition_eq (h : A.Selected) (N p m : ℕ) (hv : m ≤ N) :\n    (∫ U, (A.rep N p m).eval U ∂prior G (A.S.side m p)) = partition G (A.S.side N p) (A.β N p N) := by\n  induction hv using Nat.decreasingInduction with\n  | self => rw [(h.starts N p).2]; rfl\n  | of_succ k hk H =>\n    rw [(h.steps N p k hk).1]\n    rw [StepData.push_integral (A.levels.transition_mass ..) _\n      (((A.rep N p (k+1)).envelope (h.represents _ _ _ hk).good).integrable _), H]",
+            "line": 242,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/RG/History.lean",
+            "fragment": "L242-L249"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.History.partition_eq",
+            "lines": [
+              242,
+              249
+            ],
+            "conclusion": "For a `Selected` history, by decreasing induction using `Transfer` equality of `eval` with `push`, `push_integral` and the Wilson start `bare`, the integral of `rep N p m` against the Haar prior equals `partition` at `β N p N` for every m <= N."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.Levels.transition_mass",
+        "module": "YM.RG.History",
+        "lines": [
+          158,
+          159
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.Levels.transition_mass"
+          },
+          "snippet": {
+            "text": "theorem transition_mass (m p : ℕ) (β : ℝ) : (s.clock.op m p).IsKernel β G :=\n  (s.clock.op m p).isKernel (s.blocks m p).branches _",
+            "line": 158,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/RG/History.lean",
+            "fragment": "L158-L159"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.Levels.transition_mass",
+            "lines": [
+              158,
+              159
+            ],
+            "conclusion": "The block kernel `op m p` is a kernel at every coupling (integrates to one in its coarse argument)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.History.Selected",
+        "module": "YM.RG.History",
+        "lines": [
+          235,
+          235
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.History.Selected"
+          },
+          "snippet": {
+            "text": "  path_shared (N p q m : ℕ) : m ≤ N → (A.rep N p m).path = (A.rep N q m).path",
+            "line": 235,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/RG/History.lean",
+            "fragment": "L235-L235"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.History.Selected",
+            "lines": [
+              234,
+              240
+            ],
+            "conclusion": "`path_shared`: the path data at level m do not depend on the period p."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          127
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

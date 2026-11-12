@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 14.1 step 3",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "The stage intervals with postponed entry are carried, and B_i is defined as ⌈(log hatBeta_i)^2⌉; the growth claims (s_i linear on a stage, B_i = O((log(2+s_i))^2), q_i = O(1+log(2+s_i))) are not stated.",
+  "subject": [
+    {
+      "location": {
+        "page": 125,
+        "rect": [
+          0.12026,
+          0.347,
+          0.75948,
+          0.05424
+        ]
+      },
+      "title": "Lemma 14.1 step 3: Text, p. 125",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.1 step 3"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.Supply.Wait.engine",
+        "module": "YM.PhysicalNext.RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP.Pane.Divisors",
+        "lines": [
+          30,
+          39
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.Supply.Wait.engine"
+          },
+          "snippet": {
+            "text": "  obtain ⟨E,HA,HB⟩ := Program.exhaust (fun i => b (i-1)) c\n  let s := E.extent w\n  have big (i : ℕ) (ha : E.J (i+1) > 0) :\n      let j:=p.first+E.J (i+1)\n      W.betaEntry j ≤ Y.value+G.slopeConstant*s i ∧ W.scaleEntry j Y.value ≤ s i ∧\n      0 < s i ∧ Real.log (w.L j).val ≤ (j:ℝ)⁻¹*s i ∧ (Y.bill j (s i):ℝ) ≤ Real.exp (s i) := by\n    intro j; have hk := HA i ha\n    unfold j; cases he : E.J (i+1) with\n    | zero => omega\n    | succ j => exact Hb _ _ (by simpa only [he,Nat.add_sub_cancel] using hk) _ (E.scaled_lower w i)",
+            "line": 30,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Pane/Divisors.lean",
+            "fragment": "L30-L39"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.Supply.Wait.engine",
+            "lines": [
+              26,
+              135
+            ],
+            "conclusion": "`Program.exhaust` allocates consecutive constant-stage intervals `E.J`, each new stage entered only at a scale `s i` where `big` gives all its entry bounds (`betaEntry`, `scaleEntry`, `log L ≤ s/j`, `bill ≤ exp s`)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.Supply.Wait.engine",
+        "module": "YM.PhysicalNext.RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP.Pane.Divisors",
+        "lines": [
+          56,
+          58
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.Supply.Wait.engine"
+          },
+          "snippet": {
+            "text": "    have e1 : Nat.ceil (Real.log (Y.value+G.slopeConstant*s i)^2) = A.coverSize i := by\n      unfold Calendar.coverSize Calendar.hatBeta; rw [e]; rfl\n    have e2 : Nat.ceil (Real.log (Y.value+G.slopeConstant*(s i+Real.log (w.L (A.J (i+1))).val))^2) = A.coverSize (i+1) := by unfold Calendar.coverSize Calendar.hatBeta; rw [e]; rfl",
+            "line": 56,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Pane/Divisors.lean",
+            "fragment": "L56-L58"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.Supply.Wait.engine",
+            "lines": [
+              26,
+              135
+            ],
+            "conclusion": "`coverSize i = ⌈log(hatBeta i)^2⌉` with `hatBeta i = Y.value + slope*s i`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          125
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
+      }
+    }
+  }
+}

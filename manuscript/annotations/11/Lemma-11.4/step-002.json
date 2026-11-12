@@ -1,0 +1,83 @@
+{
+  "id": "Lemma 11.4 step 2",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 48,
+        "rect": [
+          0.11962,
+          0.88457,
+          0.76011,
+          0.02296
+        ]
+      },
+      "title": "Lemma 11.4 step 2: Text, p. 48",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 11.4 step 2"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Gauge.nearest_approximate",
+        "module": "YM.Gauge.Nearest",
+        "lines": [
+          172,
+          181
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Gauge.nearest_approximate"
+          },
+          "snippet": {
+            "text": "theorem nearest_approximate (ε : ℝ≥0) (h : 0 < ε) : ∃ δ : ℝ, 0 < δ ∧\n    ∀ X Y, ‖X-1‖ < δ → ‖Y-1‖ < δ → ∀ u v, G.Nearest u X → G.Nearest v Y →\n      ‖G.mat u - G.mat v - G.lie.starProjection (X-Y)‖ ≤ ε * ‖X-Y‖ := by\n  obtain ⟨s,hS,H⟩ := G.focus_deriv.approximates_deriv_on_nhds (Or.inr h)\n  obtain ⟨δ,hp,hδ⟩ := Metric.mem_nhds_iff.mp (inter_mem hS G.nearest_is_focus)\n  refine ⟨δ,hp,fun X Y hx hy u v hu hv => ?_⟩\n  have ei := hδ (show X ∈ Metric.ball (1:G.Mat) δ from by rwa [Metric.mem_ball,dist_eq_norm])\n  have ej := hδ (show Y ∈ Metric.ball (1:G.Mat) δ from by rwa [Metric.mem_ball,dist_eq_norm])\n  rw [ei.2 u hu, ej.2 v hv]\n  exact H X ei.1 Y ej.1",
+            "line": 172,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Gauge/Nearest.lean",
+            "fragment": "L172-L181"
+          },
+          "proof_context": {
+            "declaration": "YM.Gauge.nearest_approximate",
+            "lines": [
+              172,
+              181
+            ],
+            "conclusion": "The estimate `‖u-v-P(X-Y)‖ ≤ ε‖X-Y‖` on a small ball about 1 is proved from the derivative of `G.focus` by `approximates_deriv_on_nhds`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          48
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
+      }
+    }
+  }
+}

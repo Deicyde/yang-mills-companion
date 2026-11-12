@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 10.2 step 13",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "Lean uses `splitRange` on a transported copy of the panel space with an L2 structure; the construction is the inverse on the range composed with the projection.",
+  "subject": [
+    {
+      "location": {
+        "page": 41,
+        "rect": [
+          0.12026,
+          0.64778,
+          0.75996,
+          0.08845
+        ]
+      },
+      "title": "Lemma 10.2 step 13: Text, p. 41",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 10.2 step 13"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.G04.answer",
+        "module": "YM.Work.G04",
+        "lines": [
+          121,
+          139
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.G04.answer"
+          },
+          "snippet": {
+            "text": "theorem answer : YM.Bid.G04 := by\n  intro G H d m B hp hl\n  have ha : AnalyticAt ℝ (bring H d B) 0 := AnalyticAt.pi fun i => hp.shot (B i)\n  have hd := ha.differentiableAt\n  refine ⟨ha, ?_⟩\n  let D := fderiv ℝ (bring H d B) 0\n  let L : GaugePanel G m ≃ₗ[ℝ] PanelL2 G m := transport\n  let T := L.toLinearMap.comp D.toLinearMap\n  have commute (u : G.El) (y : GaugePanel G m) : L (rotates u y) = rotateIso u (L y) := rfl\n  have ht (u : G.El) (x : Snap G d) : T (Cast u x) = rotateIso u (T x) := by\n    change L (fderiv ℝ (bring H d B) 0 (Cast u x)) = rotateIso u (L (D x))\n    rw [deriv_comm H B hp hd u x]\n    exact commute u (D x)\n  have hi : Function.Injective T := L.injective.comp (deriv_inj H B hl hd)\n  obtain ⟨C, hc, he⟩ := splitRange T (Cast (G:=G)) rotateIso rotateIso_inv ht hi\n  refine ⟨C.comp L.toLinearMap, fun x => hc x, ?_⟩\n  intro u y\n  change C (L (rotates u y)) = Cast u (C (L y))\n  rw [commute, he]",
+            "line": 121,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/G04.lean",
+            "fragment": "L121-L139"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.G04.answer",
+            "lines": [
+              121,
+              139
+            ],
+            "conclusion": "The derivative `T` of `bring` is equivariant (`deriv_comm`) and injective, and `splitRange` gives an equivariant linear left inverse `C` (inverse on the range, projection off it)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.G04.deriv_comm",
+        "module": "YM.Work.G04",
+        "lines": [
+          91,
+          104
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.G04.deriv_comm"
+          },
+          "snippet": {
+            "text": "private lemma deriv_comm (H : Hol G) (B : Fin m → Slot) (hp : Peg H d)\n    (hd : DifferentiableAt ℝ (bring H d B) 0) (u : G.El) (x : Snap G d) :\n    fderiv ℝ (bring H d B) 0 (Cast u x) = rotates u (fderiv ℝ (bring H d B) 0 x) := by\n  let F := bring H d B\n  let D := fderiv ℝ F 0\n  let P : Snap G d →L[ℝ] Snap G d := castL u\n  let Q : GaugePanel G m →L[ℝ] GaugePanel G m := rotatesL u\n  have ha : HasFDerivAt F D (P 0) := by rw [map_zero]; exact hd.hasFDerivAt\n  have ha' : HasFDerivAt (F ∘ P) (D.comp P) 0 := ha.comp 0 P.hasFDerivAt\n  have hb : HasFDerivAt (Q ∘ F) (Q.comp D) 0 := Q.hasFDerivAt.comp 0 hd.hasFDerivAt\n  have eqn : F ∘ P = Q ∘ F := funext fun a => funext fun i => hp.observes (B i) u a\n  rw [eqn] at ha'\n  change D.comp P x = Q.comp D x\n  rw [ha'.unique hb]",
+            "line": 91,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/G04.lean",
+            "fragment": "L91-L104"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.G04.deriv_comm",
+            "lines": [
+              91,
+              104
+            ],
+            "conclusion": "Equivariance of the derivative: `D (Cast u x) = rotates u (D x)`, from uniqueness (`Peg.observes`)."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          41
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

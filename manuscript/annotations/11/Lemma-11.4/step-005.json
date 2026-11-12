@@ -1,0 +1,161 @@
+{
+  "id": "Lemma 11.4 step 5",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 49,
+        "rect": [
+          0.11962,
+          0.17344,
+          0.76258,
+          0.05423
+        ]
+      },
+      "title": "Lemma 11.4 step 5: Text, p. 49",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 11.4 step 5"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Branch.weighted_unique",
+        "module": "YM.Branch.Center",
+        "lines": [
+          95,
+          108
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Branch.weighted_unique"
+          },
+          "snippet": {
+            "text": "lemma weighted_unique (G : Gauge) : ∃ δ : ℝ, 0 < δ ∧ ∀ (n : Type) [Fintype n],\n    ∀ (w : n → ℝ), (∀ i, 0 ≤ w i) → (∑ i, w i) = 1 → ∀ f : n → G.El,\n    (∃ u : G.El, (∑ i, w i * G.price (f i * u⁻¹))<δ) → ∃! u, G.Nearest u (∑ i, w i • G.mat (f i)) := by\n  obtain ⟨r,hr,H⟩ := G.nearest_tube\n  have hg : 0 < (G.repDim:ℝ)*2 := mul_pos (by exact_mod_cast G.dimPos) two_pos\n  refine ⟨r^2/((G.repDim:ℝ)*2),by positivity,fun n _ w hw hb f ⟨u,hu⟩ => H _ u ?_⟩\n  apply (sq_lt_sq₀ (norm_nonneg _) hr.le).1\n  calc\n    _ = ‖∑ i, w i • (G.mat (f i)-G.mat u)‖^2 := by\n      simp_rw [smul_sub]; rw [Finset.sum_sub_distrib, ← Finset.sum_smul,hb]; simp only [one_smul]\n    _ ≤ _ := weighted (fun i => G.mat (f i)-G.mat u) w hw hb\n    _ < _ := by\n      simp only [← price_diff, ← mul_assoc (G.repDim:ℝ), mul_comm ((G.repDim:ℝ)*2)]\n      simpa only [Finset.sum_mul, mul_assoc (w _)] using (lt_div_iff₀ hg).mp hu",
+            "line": 95,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Branch/Center.lean",
+            "fragment": "L95-L108"
+          },
+          "proof_context": {
+            "declaration": "YM.Branch.weighted_unique",
+            "lines": [
+              95,
+              108
+            ],
+            "conclusion": "For weights summing to 1 and a point with weighted price `< r^2/(repDim*2)`, `‖m - mat u‖ < r` so the nearest point is unique (`nearest_tube`), with the cutoff independent of the weights and their number."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Branch.min_iff",
+        "module": "YM.Branch.Center",
+        "lines": [
+          72,
+          74
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Branch.min_iff"
+          },
+          "snippet": {
+            "text": "lemma min_iff (w : n → ℝ) (hw : ∑ i, w i = 1) (f : n → G.El) (u : G.El) :\n    G.Nearest u (∑ i, w i • G.mat (f i)) ↔ ∀ v : G.El,\n      (∑ i, w i * G.price (f i * u⁻¹)) ≤ (∑ i, w i * G.price (f i * v⁻¹)) := by",
+            "line": 72,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Branch/Center.lean",
+            "fragment": "L72-L74"
+          },
+          "proof_context": {
+            "declaration": "YM.Branch.min_iff",
+            "lines": [
+              72,
+              93
+            ],
+            "conclusion": "`G.Nearest u m` iff `u` minimizes the weighted price."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.predictor_unique",
+        "module": "YM.Branch.Uniform",
+        "lines": [
+          58,
+          63
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.predictor_unique"
+          },
+          "snippet": {
+            "text": "theorem predictor_unique : ∃ δ : ℝ, 0 < δ ∧ ∀ C : KernelChoices, C.predictor_cut ≤ δ → ∀ P : Patch,\n    ∀ Y : P.Connector G, P.usesBest C Y → ∃! u, ∀ v, P.bondCost Y u ≤ P.bondCost Y v := by\n  obtain ⟨δ,hn,H⟩ := weighted_unique G\n  refine ⟨δ,hn,fun C hc P Y h => ?_⟩\n  obtain ⟨u,hu,hy⟩ := H P.Points P.weight P.weight_nonneg P.weight_sum Y ⟨P.best Y, lt_of_lt_of_le h hc⟩\n  exact ⟨u, (min_iff P.weight P.weight_sum Y u).1 hu, fun j hj => hy j ((min_iff _ P.weight_sum Y _).2 (show ∀ _, _ from hj))⟩",
+            "line": 58,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Branch/Uniform.lean",
+            "fragment": "L58-L63"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.predictor_unique",
+            "lines": [
+              58,
+              63
+            ],
+            "conclusion": "For `predictor_cut ≤ δ` and `usesBest`, the predictor minimizer is unique."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          49
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

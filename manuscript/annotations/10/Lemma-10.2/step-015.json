@@ -1,0 +1,84 @@
+{
+  "id": "Lemma 10.2 step 15",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean takes `bring` analytic at 0 and produces an analytic inverse, where [M] has smooth; equivariance is obtained eventually near 0 through the maps `p`,`q` tending to 0, in place of invariant balls.",
+  "subject": [
+    {
+      "location": {
+        "page": 41,
+        "rect": [
+          0.11961,
+          0.77503,
+          0.76259,
+          0.10849
+        ]
+      },
+      "title": "Lemma 10.2 step 15: Text, p. 41",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 10.2 step 15"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Source.Drops.hammered",
+        "module": "YM.Source.Drops",
+        "lines": [
+          112,
+          143
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Source.Drops.hammered"
+          },
+          "snippet": {
+            "text": "private lemma hammered {X Y ι : Type*} [NormedAddCommGroup X] [NormedSpace ℝ X] [CompleteSpace X] [NormedAddCommGroup Y] [NormedSpace ℝ Y] [CompleteSpace Y]\n    (f : X → Y) (C : Y →L[ℝ] X) (h : AnalyticAt ℝ f 0) (hh : C.comp (fderiv ℝ f 0)=ContinuousLinearMap.id _ _) (hz : f 0=0) (p : ι → X → X) (q : ι → Y → Y)\n    (hx : ∀ i,Tendsto (p i) (𝓝 0) (𝓝 0)) (hy : ∀ i,Tendsto (q i) (𝓝 0) (𝓝 0)) (HP : ∀ i x,f (p i x)=q i (f x)) (HQ : ∀ i x,C (q i x)=p i (C x)) : ∃ F : Y → X,\n      AnalyticAt ℝ F 0 ∧ F 0=0 ∧ (∀ᶠ i in 𝓝 0,F (f i)=i) ∧ ∀ u,∀ᶠ i in 𝓝 0,F (q u i)=p u (F i) := by\n  let g := C ∘ f\n  have hg : ContDiffAt ℝ ω g 0 := ((C.analyticAt _).comp h).contDiffAt\n  have ha : HasFDerivAt g (ContinuousLinearEquiv.refl ℝ X).toContinuousLinearMap 0 := by\n    rw [show (ContinuousLinearEquiv.refl ℝ X).toContinuousLinearMap= C.comp (fderiv ℝ f 0) from hh.symm]\n    exact C.hasFDerivAt.comp 0 h.differentiableAt.hasFDerivAt\n  let t := hg.toOpenPartialHomeomorph _ ha (by simp)\n  have hw : ContDiffAt ℝ ω t.symm (g 0) := hg.to_localInverse ha (show ω≠(0:WithTop ℕ∞) by simp)\n  have hT : g 0=0:=by simp [g,hz]\n  have hs : (0:X)∈t.source:=ContDiffAt.mem_toOpenPartialHomeomorph_source ..\n  have ht : t.symm (0:X)=0 := by nth_rw 1 [← hT]; exact t.left_inv hs\n  rw [hT] at hw\n  let F := t.symm ∘ C\n  have hi : F 0=0 := by simp [F,ht]\n  have hq := (show AnalyticAt ℝ (t.symm) (C 0) from by rw [map_zero]; exact hw.analyticAt) |>.comp (C.analyticAt _)\n  refine ⟨F,hq,hi,?_,fun i => ?_⟩\n  · filter_upwards [t.open_source.mem_nhds hs] with i hh; exact t.left_inv hh\n  have he : 0∈t.target:= hT ▸ t.map_source hs\n  have hl : Tendsto F (𝓝 0) (𝓝 0) := by simpa only [hi] using (show ContinuousAt F 0 from hq.continuousAt).tendsto\n  have hu := t.open_source.mem_nhds hs\n  have hH := t.open_target.mem_nhds he\n  have hw : Tendsto C (𝓝 0) (𝓝 0) := by simpa only [map_zero] using C.continuous.tendsto 0\n  filter_upwards [(hl.comp (hy i)).eventually hu,((hx i).comp hl).eventually hu,hw.eventually hH,(hw.comp (hy i)).eventually hH] with x ht hs he hb\n  apply t.injOn ht hs\n  change t (t.symm (C (q i x))) = g (p i (F x))\n  rw [t.right_inv (show C (q i x) ∈ t.target from hb), show g (p i (F x))=p i (t (t.symm (C x))) from by\n    change C (f _)=p i (C (f (F x)))\n    rw [HP,HQ], t.right_inv he]\n  exact HQ _ _",
+            "line": 112,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Source/Drops.lean",
+            "fragment": "L112-L143"
+          },
+          "proof_context": {
+            "declaration": "YM.Source.Drops.hammered",
+            "lines": [
+              112,
+              143
+            ],
+            "conclusion": "Local inverse of `C ∘ f` by the inverse function theorem, with `F = t.symm ∘ C` satisfying `F (f i) = i` and eventual equivariance near 0."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          41
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
+      }
+    }
+  }
+}

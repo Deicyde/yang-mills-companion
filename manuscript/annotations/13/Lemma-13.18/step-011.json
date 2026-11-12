@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 13.18 step 11",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] uses the same argument (convergent fixed truncation, geometric tail, then k → ∞) with ratio 2^-20 instead of 1/4, proved level by level by induction; only the constant and the bookkeeping differ.",
+  "subject": [
+    {
+      "location": {
+        "page": 116,
+        "rect": [
+          0.11961,
+          0.64546,
+          0.76013,
+          0.03713
+        ]
+      },
+      "title": "Lemma 13.18 step 11: Text, p. 116",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 13.18 step 11"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVExtension.Camp.income",
+        "module": "YM.UVExtension.Camp.Pear",
+        "lines": [
+          31,
+          35
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVExtension.Camp.income"
+          },
+          "snippet": {
+            "text": "lemma income (m:ℕ): Arrives (fun i=> drawerE S i m n (rose S n w m i)) := by\n    refine Camp.trim ?_; intro ε h\n    have he (v:ℕ):= mist S n H w hp ht hw hC m (m+v) (Nat.le_add_right ..)\n    obtain ⟨k,hk⟩:= ((tendsto_pow_atTop_nhds_zero_of_lt_one (by norm_num [Camp.soft,Oriel.rim]:0≤ Camp.soft) (by norm_num [Camp.soft,Oriel.rim])).eventually_le_const h).exists\n    exact ⟨_, (he k).1,(eventually_ge_atTop (m+k)).mono fun i hi=> by rw [dist_comm,dist_eq_norm]; exact ((he k).2 _ hi|>.2.trans (by simpa only [Nat.add_sub_cancel_left] using hk))⟩",
+            "line": 31,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVExtension/Camp/Pear.lean",
+            "fragment": "L31-L35"
+          },
+          "proof_context": {
+            "declaration": "YM.UVExtension.Camp.income",
+            "lines": [
+              31,
+              35
+            ],
+            "conclusion": "The level-m outputs `drawerE (rose ..)` converge: for every ε choose k with `soft^k ≤ ε`, so they are within ε eventually of the convergent truncation `cup` from `mist`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVExtension.Camp.trim",
+        "module": "YM.UVExtension.Camp.Buckles",
+        "lines": [
+          43,
+          49
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVExtension.Camp.trim"
+          },
+          "snippet": {
+            "text": "lemma trim {Z: Type*} [MetricSpace Z][CompleteSpace Z] {f:ℕ→ Z}(he:∀ ε:ℝ,0<ε →∃ g:ℕ→Z, Arrives g ∧ ∀ᶠ i in atTop, dist (f i) (g i)≤ ε): Arrives f:=by\n   apply cauchySeq_tendsto_of_complete; rw [Metric.cauchySeq_iff]\n   intro ε h; obtain ⟨g,⟨y,hg⟩,hx⟩:= he (ε/4) (by positivity)\n   obtain ⟨i,hi⟩:= eventually_atTop.mp (hx.and (hg.eventually (ball_mem_nhds y (by positivity : 0 < ε/4))))\n   refine ⟨i, fun j hj k hk=>?_⟩\n   obtain ⟨h1,h2⟩:= hi _ hj; obtain ⟨h3,h4⟩:= hi _ hk\n   exact (dist_triangle (f j) y (f k)).trans_lt (by rw [dist_comm y]; linarith only [dist_triangle (f j) (g j) y,dist_triangle (f k) (g k) y,h1,h3,mem_ball.mp h2,mem_ball.mp h4])",
+            "line": 43,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVExtension/Camp/Buckles.lean",
+            "fragment": "L43-L49"
+          },
+          "proof_context": {
+            "declaration": "YM.UVExtension.Camp.trim",
+            "lines": [
+              43,
+              49
+            ],
+            "conclusion": "A sequence in a complete metric space that is eventually ε-close to a convergent sequence for every ε converges (Cauchy)."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          116
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; a re-check of closeMatch records kept it; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

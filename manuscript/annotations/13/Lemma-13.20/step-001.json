@@ -1,0 +1,122 @@
+{
+  "id": "Lemma 13.20 step 1",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 118,
+        "rect": [
+          0.12026,
+          0.77628,
+          0.75948,
+          0.05423
+        ]
+      },
+      "title": "Lemma 13.20 step 1: Text, p. 118",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 13.20 step 1"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.PhysicalNext.Repeat.Lark.Glide.Window.thinning",
+        "module": "YM.FullVolume.Glide.Triumph",
+        "lines": [
+          28,
+          34
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.PhysicalNext.Repeat.Lark.Glide.Window.thinning"
+          },
+          "snippet": {
+            "text": "lemma thinning : ∃ g:ℕ→ℕ,StrictMono g∧ ∃ k:ℕ→ℝ,∀ i,Tendsto (fun n=> saga (P (g n)) i) atTop (𝓝 (k i)):=by\n    let f n i:= saga (P n) i; have he i :∃ z:ℝ,∀ n, ‖f n i‖ ≤ z:=by\n        let w:=normedWidth (Ω i); have hw:0<w:= widthP (Y.largeG.scale _|>.floor); let b₀:= (23/20:ℝ)/w\n        have hk: ∀ᶠ n in atTop,‖f n i‖ ≤ b₀:= (hU.eventually_ge_atTop i).mono fun n hn=> by\n               have hx:= mildS Y (P n) i hn; have hh:|w*f n i| ≤ 23/20:=abs_le.mpr ⟨le_trans (by norm_num) hx.1,hx.2⟩; apply (le_div_iff₀ hw).2; rw [mul_comm]; rwa [abs_mul,abs_of_nonneg hw.le] at hh\n        obtain ⟨N,hN⟩:=eventually_atTop.mp hk; obtain ⟨C,hC⟩:= ((finite_Iic N).image (fun n=> ‖f n i‖)).bddAbove; exact ⟨max b₀ C,fun n=> le_total N n|>.elim (fun h=>le_max_of_le_left (hN n h)) (fun h=> le_max_of_le_right (hC ⟨_,h,rfl⟩))⟩\n    choose b hb using he; obtain ⟨x,hx,k,hk,h⟩:= (isCompact_pi_infinite (fun i=>isCompact_Icc (a:=-b i) (b:=b i))).tendsto_subseq (x:=f) fun n i=> abs_le.mp (hb i n); exact ⟨k,hk,x,tendsto_pi_nhds.mp h⟩",
+            "line": 28,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Glide/Triumph.lean",
+            "fragment": "L28-L34"
+          },
+          "proof_context": {
+            "declaration": "YM.PhysicalNext.Repeat.Lark.Glide.Window.thinning",
+            "lines": [
+              28,
+              34
+            ],
+            "conclusion": "`thinning` bounds each scalar coordinate `saga (P n) i` by `(23/20)/w` from `mildS` and extracts, by `isCompact_pi_infinite`, a strictly monotone subsequence along which every coordinate converges."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.PhysicalNext.Repeat.Lark.Glide.Window.awaiting",
+        "module": "YM.FullVolume.Glide.Triumph",
+        "lines": [
+          35,
+          36
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.PhysicalNext.Repeat.Lark.Glide.Window.awaiting"
+          },
+          "snippet": {
+            "text": "lemma awaiting : ∃ g:ℕ→ℕ,StrictMono g ∧ ∃ f X g',Banked Y (fun i=> P (g i)) (fun i=> Q (g i)) f X g':=by\n    obtain ⟨g,hg,k,hk⟩:= thinning Y hU P; exact ⟨g,hg,k,bankA Y h he hp (hU.comp hg.tendsto_atTop) (fun i=> P (g i)) (fun i=> Q (g i)) hk⟩",
+            "line": 35,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Glide/Triumph.lean",
+            "fragment": "L35-L36"
+          },
+          "proof_context": {
+            "declaration": "YM.PhysicalNext.Repeat.Lark.Glide.Window.awaiting",
+            "lines": [
+              35,
+              36
+            ],
+            "conclusion": "`awaiting` applies `thinning` and `bankA` to obtain a subsequence along which the scalars, activity coordinates and corrections converge."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          118
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

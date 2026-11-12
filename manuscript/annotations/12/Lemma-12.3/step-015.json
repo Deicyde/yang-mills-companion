@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 12.3 step 15",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "The zero-loop start and the absolute convergence (summable budgets) are carried; the fourth-order Wilson matching and the single choice of kernels for all periods are not stated in these lines.",
+  "subject": [
+    {
+      "location": {
+        "page": 87,
+        "rect": [
+          0.12026,
+          0.21347,
+          0.75948,
+          0.06082
+        ]
+      },
+      "title": "Lemma 12.3 step 15: Text, p. 87",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 12.3 step 15"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Precision.Kin.Planned",
+        "module": "YM.PCalc.Loop",
+        "lines": [
+          102,
+          102
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Precision.Kin.Planned"
+          },
+          "snippet": {
+            "text": "  initial N b : ( (M.path N N).loop b).coeff=0",
+            "line": 102,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PCalc/Loop.lean",
+            "fragment": "L102-L102"
+          },
+          "proof_context": {
+            "declaration": "YM.Precision.Kin.Planned",
+            "lines": [
+              93,
+              115
+            ],
+            "conclusion": "`initial` states that the top path has zero loop coefficients for every `b`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.PathData.Bounds",
+        "module": "YM.RG.PathActions",
+        "lines": [
+          173,
+          185
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.PathData.Bounds"
+          },
+          "snippet": {
+            "text": "structure Bounds (c : Clip) (σ C Λ : ℝ) : Prop where\n  width : 0 < σ\n  rows (p : PlaqAxes) : SumBudget (fun i ↦ |(R.row p i).1| * Real.exp (σ * (R.row p i).2.length)) C\n  two : SumBudget (fun i ↦ (R.loop i).budget σ) Λ\n  three : SumBudget (fun i ↦ (R.cubic i).budget σ) C\n  four : SumBudget (fun i ↦ (R.quartic i).budget σ) C\n  invariant (i : ℕ) : (R.loop i).Invariant ∧ (R.cubic i).Invariant ∧ (R.quartic i).Invariant\n  symTerms (p q : PlaqAxes) : Summable fun k => if (R.row p k).2.plaq = q then (R.row p k).1 else 0\n  metric : R.metric_zero c\n  loopTerms (i x) : Summable (R.loop_coeff i x) ∧ ∀ l : Axis,\n    Summable (fun k => R.loop_coeff i x k *\n      ((((R.loop k).leg 1).offset l - ((R.loop k).leg 0).offset l : ℤ) : ℝ))\n  loop_normal : R.loop_jets",
+            "line": 173,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/RG/PathActions.lean",
+            "fragment": "L173-L185"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.PathData.Bounds",
+            "lines": [
+              173,
+              185
+            ],
+            "conclusion": "`Bounds` packages the row, loop (`two`), cubic and quartic weighted sums at width `σ` with the invariance, `symTerms`, `metric`, `loopTerms` and `loop_normal` fields."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          87
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

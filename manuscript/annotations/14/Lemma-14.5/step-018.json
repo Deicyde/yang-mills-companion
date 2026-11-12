@@ -1,0 +1,84 @@
+{
+  "id": "Lemma 14.5 step 18",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "Lean has the Lipschitz estimate with the extra factors `s` and orbit cost `Z` as a statement about two graphs; the vanishing Taylor coefficients, support conversion and the claim about keeping the whole forced family are not in these lines.",
+  "subject": [
+    {
+      "location": {
+        "page": 130,
+        "rect": [
+          0.11962,
+          0.48783,
+          0.76357,
+          0.08845
+        ]
+      },
+      "title": "Lemma 14.5 step 18: Text, p. 130",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.5 step 18"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.MergeProof.Matric.Gram.communes",
+        "module": "YM.FullVolume.Mark.Booths",
+        "lines": [
+          47,
+          64
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.MergeProof.Matric.Gram.communes"
+          },
+          "snippet": {
+            "text": "lemma communes (hv: Q.Within U t)(x:F.Coeff) : F.coeffSize (Q.index P hx h hp hk x - U.index P hx h hp hk x) ≤ ε*(t*s)* Z * F.coeffSize x ∧ ‖R₁ x- R₂ x‖ ≤ ε*(t*s)* Z * F.coeffSize x:=by\n     let b:= ε*(t*s)* Z\n     let Y1:= Q.point P; let Y2:=U.point P; let p':= breakP (Y1 x) (Y2 x)\n     let f(i:Tally F):=breakP (T₁ i) (T₂ i); let A(i:Tally F):= ε*‖Q.g (Size.axis F i.2)-U.g (Size.axis F i.2)‖; let g(i:Tally F):=chips F x i\n     have hf(i):= buyers P hx h Q U ha i; have ht:= hx.budget.epsilon; have hs:= hv.1; have hM:s≥0:= zero_le_one.trans (H.levels.params (m+1)).columns_ge\n     have hε:∑ i:Tally F,‖g i‖ * A i ≤ b * F.coeffSize x:=by\n        have hy i: A i ≤ ε*(t*s):=(mul_le_mul_of_nonneg_left (hv.2 _) ht).trans_eq (by rw [Size.size_axis,mul_one])\n        refine (sum_le_sum (fun i _=> mul_le_mul_of_nonneg_left (hy i) (norm_nonneg (g i)))).trans ?_\n        rw [← Finset.sum_mul]; exact (mul_le_mul_of_nonneg_right (rip F x) (mul_nonneg ht (mul_nonneg hs hM))).trans_eq (by unfold b; ring)\n     have he : p' = Extra.Histories.pencil (code _) f (chips F) x:= (pencil_br ..).symm\n     refine ⟨?_ ,?_⟩\n     · change F.coeffSize p'.x ≤ b*_; rw [he,pencil_x]\n       apply (Size.finite F _ _).trans ((sum_le_sum ?_).trans hε); intro i _; rw [Size.smul]; exact mul_le_mul_of_nonneg_left (hf i).2.1 (norm_nonneg _)\n     have hx':(Y1 x).support=(Y2 x).support:=by\n        funext i; exact congr_fun (equalityS P Q U (code (Tally F) i).1) (code _ i).2\n     have hf' : Coin.uses (R₁ x- R₂ x)= capture p' P.down:=by rw [map_sub]; exact (collected _ _ _ hx' (Q.prose P hx h hp hk x).2.1 (U.prose P hx h hp hk x).2.1).symm\n     apply (Coin.wealths _).mpr; rw [hf']; rw [he]\n     obtain ⟨hz,hr⟩:= pencil_cost (code _) f (chips F) (Real.sqrt_pos.mpr (forcedPos ..)) (fun i=> ⟨(hf i).1,(hf i).2.2⟩) x; exact alongPay hu _ _ hz (rem_mono hr hε)",
+            "line": 47,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Mark/Booths.lean",
+            "fragment": "L47-L64"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.Matric.Gram.communes",
+            "lines": [
+              47,
+              64
+            ],
+            "conclusion": "For two graphs within `t`, the coarse coefficient and remainder differences are at most `ε*(t*s)*Z*|x|`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          130
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
+      }
+    }
+  }
+}

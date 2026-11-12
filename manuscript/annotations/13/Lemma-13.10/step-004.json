@@ -1,0 +1,240 @@
+{
+  "id": "Lemma 13.10 step 4",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "[L] bounds the connected selections through the induction on finite label sets `film` (no repeated labels) and gets the total e^gamma - 1 directly. [M] uses height-n rooted trees T^(n) with repetition, a spanning tree, and the intermediate bound gamma.",
+  "subject": [
+    {
+      "location": {
+        "page": 105,
+        "rect": [
+          0.11962,
+          0.80037,
+          0.76012,
+          0.10849
+        ]
+      },
+      "title": "Lemma 13.10 step 4: Text, p. 105",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 13.10 step 4"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Ac.all_pack",
+        "module": "YM.Ac.Tree",
+        "lines": [
+          48,
+          50
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Ac.all_pack"
+          },
+          "snippet": {
+            "text": "private lemma all_pack {f : ι → ℝ} {a γ} (hf : ∀ i, 0 ≤ f i) (hh : Hit X M f (a+1) γ) (hp : (M+M+1:ℕ)^4*(γ:ℝ) ≤ 1)\n    (hG : 0≤γ) (D : Finset ι) (Y : Support n) :\n      film X D Y (fun i => f i * Real.exp (a*coverNumber M (X i))) ≤ Real.exp (coverNumber M Y) := by",
+            "line": 48,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Ac/Tree.lean",
+            "fragment": "L48-L50"
+          },
+          "proof_context": {
+            "declaration": "YM.Ac.all_pack",
+            "lines": [
+              48,
+              57
+            ],
+            "conclusion": "`all_pack`: by strong induction on finite label sets, `film X D Y (f * exp(a*cover)) ≤ exp (coverNumber M Y)` when `(2M+1)^4 γ ≤ 1`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Ac.step",
+        "module": "YM.Ac.Tree",
+        "lines": [
+          29,
+          32
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Ac.step"
+          },
+          "snippet": {
+            "text": "private lemma step {f : ι → ℝ} {a γ} (hf : ∀ i, 0 ≤ f i) (hh : Hit X M f (a+1) γ)\n    (D : Finset ι) (Y : Support n) (H : ∀ P, P ⊂ D → ∀ y,\n      film X P y (fun i => f i * Real.exp (a*coverNumber M (X i))) ≤ Real.exp (coverNumber M y)) :\n      film X D Y (fun i => f i * Real.exp (a*coverNumber M (X i))) ≤ Real.exp (Y.card*γ) := by",
+            "line": 29,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Ac/Tree.lean",
+            "fragment": "L29-L32"
+          },
+          "proof_context": {
+            "declaration": "YM.Ac.step",
+            "lines": [
+              29,
+              46
+            ],
+            "conclusion": "`step` gives `film ≤ exp (Y.card * γ)` from the `Hit` bound on labels meeting each site."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Ac.cover",
+        "module": "YM.Ac.Tree",
+        "lines": [
+          59,
+          59
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Ac.cover"
+          },
+          "snippet": {
+            "text": "lemma cover {s : Finset ι} (hs : Spark X s) : coverNumber M (s.biUnion X) ≤ ∑ i∈s,coverNumber M (X i) := by",
+            "line": 59,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Ac/Tree.lean",
+            "fragment": "L59-L59"
+          },
+          "proof_context": {
+            "declaration": "YM.Ac.cover",
+            "lines": [
+              59,
+              82
+            ],
+            "conclusion": "`cover`: the covering number of a connected union is at most the sum of the covering numbers."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Ac.forest",
+        "module": "YM.Ac.Tree",
+        "lines": [
+          89,
+          91
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Ac.forest"
+          },
+          "snippet": {
+            "text": "lemma forest {f : ι → ℝ} {a γ} (ha : 0≤ a) (hf : ∀ i, 0 ≤ f i) (hh : Hit X M f (a+1) γ)\n    (hp : (M+M+1:ℕ)^4*(γ:ℝ) ≤ 1) (hG : 0≤γ) (x : Site n) :\n    SumBudget (roots X M f a x) (Real.exp γ-1) := by",
+            "line": 89,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Ac/Tree.lean",
+            "fragment": "L89-L91"
+          },
+          "proof_context": {
+            "declaration": "YM.Ac.forest",
+            "lines": [
+              89,
+              127
+            ],
+            "conclusion": "`forest`: the connected selections rooted at `x`, weighted by `exp(a*cover)` of their union, are summable with total at most `exp γ - 1`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.H02.answer",
+        "module": "YM.Work.H02",
+        "lines": [
+          76,
+          80
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.H02.answer"
+          },
+          "snippet": {
+            "text": "    refine ⟨fun i => mul_nonneg hw (hR.1 _), hs.mul_left w, ?_⟩\n    have hl : (∑' i, R (e i)) ≤ ∑' s, R s :=\n      Summable.tsum_le_tsum_of_inj e hinj (fun s _ => hR.1 s) (fun _ => le_rfl) hs hR.2.1\n    rw [tsum_mul_left]\n    exact (mul_le_mul_of_nonneg_left (hl.trans hR.2.2) hw).trans hquote",
+            "line": 76,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/H02.lean",
+            "fragment": "L76-L80"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.H02.answer",
+            "lines": [
+              17,
+              80
+            ],
+            "conclusion": "`H02.answer` multiplies the `forest` bound by `w`, retaining the factor `exp(-κ)`, to get the forced bound."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          105
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

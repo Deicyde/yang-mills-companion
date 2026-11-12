@@ -1,0 +1,159 @@
+{
+  "id": "Section 11 display 19",
+  "kind": "display",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "Lean carries the display for steps satisfying `Larger` (patch no larger than f/100) and the `Floor`, `Attached`, `Sworn` hypotheses, which are standing assumptions in [M].",
+  "subject": [
+    {
+      "location": {
+        "page": 55,
+        "rect": [
+          0.12026,
+          0.1287,
+          0.75948,
+          0.01958
+        ]
+      },
+      "title": "Display, p. 55",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Section 11 display 19"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Precision.Critical",
+        "module": "YM.PCalc.Chart",
+        "lines": [
+          88,
+          91
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Precision.Critical"
+          },
+          "snippet": {
+            "text": "def Critical (B : Forest S.ratio) (p : Clip) (R : PathData G) (f : fieldDir G c 1 → AxisChart G B) : Prop :=\n    f 0=0 ∧ ContDiffAt ℝ ω f 0 ∧ ∀ t : S.Choices,\n      ContDiffAt ℝ ω (Function.uncurry (tested B t p R)) 0 ∧\n        ∀ᶠ x in nhds 0, HasFDerivAt (tested B t p R x) (0 : AxisChart G B →L[ℝ] ℝ) (f x)",
+            "line": 88,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PCalc/Chart.lean",
+            "fragment": "L88-L91"
+          },
+          "proof_context": {
+            "declaration": "YM.Precision.Critical",
+            "lines": [
+              88,
+              91
+            ],
+            "conclusion": "`Critical B p R f` gives `f 0 = 0`, `f` analytic at 0 and `HasFDerivAt (tested x) 0 (f x)` near 0, i.e. z(0)=0 and D_z S(v,z(v))=0 on an analytic branch."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Precision.PriceGap",
+        "module": "YM.PCalc.Chart",
+        "lines": [
+          100,
+          101
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Precision.PriceGap"
+          },
+          "snippet": {
+            "text": "def PriceGap (B : Forest S.ratio) (p : Clip) (R : PathData G) (η : ℝ) := ∀ r, ∀ v : AxisChart G B,\n    η*(∑ i : B.Free, ‖v i‖^2) ≤ iteratedFDeriv ℝ 2 (tested B r p R 0) 0 ![v,v]",
+            "line": 100,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PCalc/Chart.lean",
+            "fragment": "L100-L101"
+          },
+          "proof_context": {
+            "declaration": "YM.Precision.PriceGap",
+            "lines": [
+              100,
+              101
+            ],
+            "conclusion": "`eta * sum ‖v i‖^2 <= iteratedFDeriv 2 (tested r 0) 0 ![v,v]` is Q = D_z^2 S(0,0) >= eta I."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Bid.Scene",
+        "module": "YM.Bid.Station",
+        "lines": [
+          102,
+          106
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Bid.Scene"
+          },
+          "snippet": {
+            "text": "structure Scene (G : Gauge) (L : Side) (j : ℕ) (K : KernelChoices) (a : ℝ) : Prop where\n  χ : ∃ η : ℝ, 0<η ∧ ∀ (c f : Side) (S : StepData c f), S.kernel=K → S.patch.L=L → S.patch.J=j → Larger (G:=G) S →\n      ∀ (H : Forest S.ratio) (B C : Bed) (p q : Clip) (W : PathData G) (σ c₀ Λ m v u : ℝ) (T : Towers S.patch.L),\n        Towers.Diagonal S B C T → Floor B p f a m → W.Bounds p σ c₀ Λ → Attached B W → Sworn B f G →\n          Floor C q c v u → PriceGap H p W η ∧ ∃ ρ,Critical H p W ρ ∧ Guessed H (installed S.ratio T.A0) ρ ∧ HeatG H p W ρ C",
+            "line": 102,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Bid/Station.lean",
+            "fragment": "L102-L106"
+          },
+          "proof_context": {
+            "declaration": "YM.Bid.Scene",
+            "lines": [
+              102,
+              106
+            ],
+            "conclusion": "`Scene` gives, with eta depending only on the group, L, j and the kernel choices (not on c or f), `PriceGap H p W eta` and a `Critical` branch `rho`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          55
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      }
+    }
+  }
+}

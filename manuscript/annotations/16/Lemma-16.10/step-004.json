@@ -1,0 +1,278 @@
+{
+  "id": "Lemma 16.10 step 4",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 185,
+        "rect": [
+          0.11962,
+          0.29445,
+          0.76357,
+          0.0513
+        ]
+      },
+      "title": "Lemma 16.10 step 4: Text, p. 185",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.10 step 4"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.outer",
+        "module": "YM.Next.ROTATIONS.Route",
+        "lines": [
+          118,
+          121
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.outer"
+          },
+          "snippet": {
+            "text": "  intro d n l b hb v x hx ht\n  let q := column v\n  have he := stagger x hx p Y q H l b (Ne.symm hb)\n  rw [fullTurn P H hp hi J p Y h _ hx _ l ht, fullTurn P H hp hi J p Y h _ (Points.across_in _ hx) _ l (shiftedLine x l ht),zero_add] at he; exact he.symm",
+            "line": 118,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Route.lean",
+            "fragment": "L118-L121"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.outer",
+            "lines": [
+              114,
+              121
+            ],
+            "conclusion": "`outer` translates the collinear configuration along `l` (`shiftedLine`, `stagger` with `K = plane b a`) and subtracts the two collinear identities, giving `LineSum p`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.stagger",
+        "module": "YM.Next.ROTATIONS.Route",
+        "lines": [
+          98,
+          108
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.stagger"
+          },
+          "snippet": {
+            "text": "lemma stagger (x : Points m) (hx : x∈conf _) (p : Parts S) (Y : SpinRows S) (q : Fin m→ S.Tag) (H : S.Hierarchy) (a b : Axis) (h : a≠b) :\n    localTurn p Y (Ortho.plane b a) q (Points.across (basis a) x) = localTurn p Y (Ortho.plane b a) q x +\n      ∑ i, disc (update q i (⟨_,p _ b (q i).2⟩:S.Tag)) x := by\n  let K := Ortho.plane b a; let y := Points.across (basis a) x\n  have he (r : Fin m→S.Tag) : disc r y=disc r x := H.translations m x hx _ (expose ∘ r)\n  have hf (i : Fin m) (j : Axis) : M4.move K.val (y i) j = M4.move K.val (x i) j + basis b j := by\n    have h : roll K (basis a) j=basis b j := by\n      rw [show K= _ from rfl,roll_plane]; by_cases hv : j=b <;> simp [hv,Ne.symm h]\n    rw [← h]; exact congr_arg (fun y : E4 => y j) (map_add (Matrix.toEuclideanLin K.val) (x i) (basis a))\n  change localTurn p Y K q y=_; unfold localTurn; simp_rw [he,hf,add_smul,Finset.sum_add_distrib]\n  simp [add_assoc,K]",
+            "line": 98,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Route.lean",
+            "fragment": "L98-L108"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.stagger",
+            "lines": [
+              98,
+              108
+            ],
+            "conclusion": "`stagger` computes the angular sum at the configuration translated by `basis a`, which differs by the extra term `basis b` from the sum at the original."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Bid.LineSum",
+        "module": "YM.Bid.Angular",
+        "lines": [
+          35,
+          36
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Bid.LineSum"
+          },
+          "snippet": {
+            "text": "def LineSum (p : Climb.Parts S) := ∀ d n (b j : Axis), j ≠ b → ∀ v : Fin n → S.Field d, ∀ x : Points n, x∈conf _ → onLine b x →\n    diagram v (leaves p d j) x=0",
+            "line": 35,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Bid/Angular.lean",
+            "fragment": "L35-L36"
+          },
+          "proof_context": {
+            "declaration": "YM.Bid.LineSum",
+            "lines": [
+              35,
+              36
+            ],
+            "conclusion": "`LineSum p` says `diagram v (leaves p d j) x = 0` for `x` on the line `b` and `j ≠ b`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.A03.full_jet",
+        "module": "YM.Work.A03",
+        "lines": [
+          152,
+          186
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.A03.full_jet"
+          },
+          "snippet": {
+            "text": "private lemma full_jet (h : S.Hierarchy) (W : DiffPlan S)\n    (inc : W.Inclusions S) (der : W.Derivatives S)\n    (p : Parts S) (c : ColorLaw p W h.spin)\n    (delta : ∀ d b i u, W.deriv (d+1) b (p d i u) = p (d+1) i (W.deriv d b u))\n    (hl : LineSum p)\n    (b j : Axis) (hj : j ≠ b)\n    {x : Points n} (hx : x ∈ conf _) (ht : onLine b x)\n    (q : Fin n → S.Tag) (m : ℕ) (u : Fin m → Points n) :\n    iteratedFDeriv ℝ m (row p j q) x u = 0 := by\n  induction m generalizing q with\n  | zero =>\n    simpa using all_line h W inc p c hl b j hj q hx ht\n  | succ m ih =>\n    have hr : ContDiffAt ℝ ∞ (row p j q) x := by\n      apply ContDiffAt.sum\n      exact fun i _ => cont_disc h _ hx\n    have hh : ContDiffAt ℝ (↑(m+1 : ℕ)) (row p j q) x :=\n      hr.of_le (show ((↑(m+1 : ℕ)) : WithTop ℕ∞) ≤ ∞ from WithTop.coe_le_coe.mpr le_top)\n    let v := Fin.init u\n    let g : Points n →L[ℝ] ℂ := (iteratedFDeriv ℝ (m+1) (row p j q) x).curryRight v\n    have hb (k : Fin n) (a : Axis) : g (Points.direction k a) = 0 := by\n      change iteratedFDeriv ℝ (m+1) (row p j q) x (Fin.snoc v (Points.direction k a)) = 0\n      have hp :\n          D (Points.direction k a) (row p j q) =ᶠ[𝓝 x] row p j (update q k (rise W a (q k))) := by\n        filter_upwards [(conf_open _).mem_nhds hx] with y hy\n        exact row_D h W der p delta j q hy k a\n      rw [snoc_jet hh, (hp.iteratedFDeriv ℝ m).eq_of_nhds]\n      exact ih _ _\n    have ha (w : Points n) : g w = 0 := by\n      rw [← expand_pts w, map_sum]\n      simp [map_sum,hb]\n    have hy := ha (u (Fin.last m))\n    change iteratedFDeriv ℝ (m+1) (row p j q) x\n      (Fin.snoc (Fin.init u) (u (Fin.last m))) = 0 at hy\n    rwa [Fin.snoc_init_self] at hy",
+            "line": 152,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/A03.lean",
+            "fragment": "L152-L186"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.A03.full_jet",
+            "lines": [
+              152,
+              186
+            ],
+            "conclusion": "`full_jet` shows by induction on `m`, using `delta`, that every positional jet of the line sum vanishes on the line."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.A03.line_native",
+        "module": "YM.Work.A03",
+        "lines": [
+          121,
+          147
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.A03.line_native"
+          },
+          "snippet": {
+            "text": "private lemma line_native (h : S.Hierarchy) (W : DiffPlan S) (der : W.Derivatives S) :\n    LineSum W.deriv := by\n  intro d n b j hj v x hx ht\n  let q := column v\n  let u := points fun _ : Fin n => basis j\n  have hu : (∑ i : Fin n, Points.direction i j) = u := by\n    simpa [u] using expand_pts u\n  let F (t : ℝ) := x+t • u\n  have hr : F 0 = x := by simp [F]\n  have hh : HasDerivAt F u 0 := by\n    have he := (ContinuousLinearMap.toSpanSingleton ℝ u).hasDerivAt (x := 0)\n    simpa [F] using he.const_add x\n  have he : (disc q ∘ F) = fun (_ : ℝ) => disc q x := by\n    funext t\n    exact h.translations n x hx (t • basis j) (fun i => ⟨(q i).1,S.representative _ (q i).2⟩)\n  have hd : DifferentiableAt ℝ (disc q) (F 0) := by\n    rw [hr]\n    exact (cont_disc h q hx).differentiableAt (by simp)\n  have hz : fderiv ℝ (disc q) x u = 0 := by\n    have hp := hd.hasFDerivAt.comp_hasDerivAt 0 hh\n    rw [he,hr] at hp\n    exact hp.unique (hasDerivAt_const _ _)\n  change row W.deriv j q x = 0\n  rw [← hz, ← hu, map_sum]\n  apply Finset.sum_congr rfl\n  intro i hi\n  exact (fromD W h der hx i j q).symm",
+            "line": 121,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/A03.lean",
+            "fragment": "L121-L147"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.A03.line_native",
+            "lines": [
+              121,
+              147
+            ],
+            "conclusion": "`line_native` gives `LineSum W.deriv` by translation invariance, the same identities for `∂`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.A03.answer",
+        "module": "YM.Work.A03",
+        "lines": [
+          197,
+          202
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.A03.answer"
+          },
+          "snippet": {
+            "text": "theorem answer : YM.Bid.A03 := by\n  intro G L S h W inc der o p Y c hc hl\n  refine ⟨all_scenes h W inc der p c hc.delta hl, ?_⟩\n  exact all_scenes h W inc der W.deriv (native W h inc der o)\n    (fun _ b i u => W.abelian h.laws.toSymmetric der h.smooth u b i)\n    (line_native h W der)",
+            "line": 197,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/A03.lean",
+            "fragment": "L197-L202"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.A03.answer",
+            "lines": [
+              197,
+              202
+            ],
+            "conclusion": "`A03` concludes `transverse p` and `transverse W.deriv`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          185
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

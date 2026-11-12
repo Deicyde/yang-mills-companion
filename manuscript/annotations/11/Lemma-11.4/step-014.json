@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 11.4 step 14",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "narrowMatch",
+  "note": "[M] counts each plaquette between at most `2R` layer pairs and obtains `(2R+1){E(X_0) + F(X)}`; Lean bounds each layer separately by `4 F(X)` and obtains the weaker `(2R+1){E(X_0) + 4F(X)}`, which still gives the same final `4r(2R+1)F`.",
+  "subject": [
+    {
+      "location": {
+        "page": 49,
+        "rect": [
+          0.12026,
+          0.60155,
+          0.76013,
+          0.12267
+        ]
+      },
+      "title": "Lemma 11.4 step 14: Text, p. 49",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 11.4 step 14"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Axial.existence",
+        "module": "YM.Branch.Pick",
+        "lines": [
+          89,
+          98
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Axial.existence"
+          },
+          "snippet": {
+            "text": "  | append_singleton l j ih =>\n    rw [List.nodup_append] at hl\n    have hj : j ∉ l := fun h => hl.2.2 j h j (by simp) rfl\n    let f z := faces (slab r (update o j z) l) U\n    obtain ⟨z,hz,h⟩ := exists_min_image (layers r) f ⟨0,by simp [layers]⟩\n    have he := faces_pins hj U (r:=r) (o:=o)\n    have ht : (layers r).card*f z ≤ faces (slab r o (l++[j])) U := le_trans (by simp [f,nsmul_eq_mul])\n      (le_trans (sum_le_sum (f:=fun _ => f z) fun i hi => h i hi) he)\n    obtain ⟨p,hp,hs⟩ := ih (update o j z) hl.1 (update_box ho hz j)\n    refine ⟨p, ((lower_pin hj _).mp hp).1, (total_slab hj hl.1 hp hz).trans ?_⟩",
+            "line": 89,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Branch/Pick.lean",
+            "fragment": "L89-L98"
+          },
+          "proof_context": {
+            "declaration": "YM.Axial.existence",
+            "lines": [
+              80,
+              105
+            ],
+            "conclusion": "By induction on the axis list, the layer `z` minimizing the face sum (hence at most the slab average) is chosen, the induction hypothesis is applied to it and the frame is extended along the last axis."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Axial.total_slab",
+        "module": "YM.Branch.Pick",
+        "lines": [
+          43,
+          46
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Axial.total_slab"
+          },
+          "snippet": {
+            "text": "lemma total_slab {r o l j z} {U : CoverConfig G} (hj : j ∉ l) (hl : List.Nodup l)\n    {p} (hp : p ∈ slab r (update o j z) l) (hz : z ∈ layers r) :\n    edges (slab r o (l++[j])) (gauge (traveller (l++[j]) U p) U) ≤\n      ((layers r).card:ℝ)*(edges (slab r (update o j z) l) (gauge (traveller l U p) U)+4*faces (slab r o (l++[j])) U) := by",
+            "line": 43,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Branch/Pick.lean",
+            "fragment": "L43-L46"
+          },
+          "proof_context": {
+            "declaration": "YM.Axial.total_slab",
+            "lines": [
+              43,
+              78
+            ],
+            "conclusion": "With the vertical links equal to `1` (`vertical`), the slab edge sum is at most `card (layers r) * (edges of the chosen layer + 4 * faces of the slab)`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Axial.total_slab",
+        "module": "YM.Branch.Pick",
+        "lines": [
+          72,
+          75
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Axial.total_slab"
+          },
+          "snippet": {
+            "text": "  have H (i) (hi : i ∈ layers r) : edges (C i) V ≤ edges (C z) V +4 * faces X U := by\n    have hx := (abs_le.mp <| window_le hj V hv hi hz).2\n    rw [show faces X U= faces X V from (faces_gauge_symm ..).symm]\n    linarith [show edges (C i) V-edges (C z) V ≤ 4*faces X V from hx]",
+            "line": 72,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Branch/Pick.lean",
+            "fragment": "L72-L75"
+          },
+          "proof_context": {
+            "declaration": "YM.Axial.total_slab",
+            "lines": [
+              43,
+              78
+            ],
+            "conclusion": "Each layer's edge sum exceeds the chosen layer's by at most `4 * faces` of the whole slab (`window_le`)."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          49
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

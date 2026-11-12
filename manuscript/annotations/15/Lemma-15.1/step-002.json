@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 15.1 step 2",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "narrowMatch",
+  "note": "[L] gets equicontinuity of the values from the Lipschitz control `TransferLip` and the fixed-p threshold, as in [M]. It is stated for compacts of `generic n` (all coordinates distinct in each axis), a smaller domain than [M]'s compacts of `Conf n`, and only for values.",
+  "subject": [
+    {
+      "location": {
+        "page": 162,
+        "rect": [
+          0.11962,
+          0.3084,
+          0.76011,
+          0.03713
+        ]
+      },
+      "title": "Lemma 15.1 step 2: Text, p. 162",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 15.1 step 2"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extraction.volume_oscillates",
+        "module": "YM.Extraction.Lipschitz",
+        "lines": [
+          116,
+          138
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extraction.volume_oscillates"
+          },
+          "snippet": {
+            "text": "lemma volume_oscillates (H : TransferLip C f) (n : ℕ) {P} (Hp : f.Meshes C P) (v : Fin n → C.book.Token) :\n    oscillation (generic n) (fun i x => (P (f.per i)).read x v) := by\n  intro K hU hk ε hε\n  obtain ⟨T,hT,hKT,hTg⟩ := exists_compact_between hk (genericOpen n) hU\n  obtain ⟨d,hd,H⟩ := H.expanding n _ hT hTg v (ε/2) (by positivity)\n  refine ⟨d,hd,?_⟩\n  unfold Order.late at H\n  filter_upwards [H, f.per.cofinal.eventually (room C.S hT)] with i hi hr x hx y hy hD\n  let p := f.per i\n  have he (x : Points n) (hx : x ∈ K) : x ∈ Cyclic C.S p n :=\n    (no_wrap_tie C.S (hr (interior_subset (hKT hx)))).mpr (hU hx)\n  let a (j : ℕ) := C.S.a (f.mesh j)\n  let r (x : Points n) (j : ℕ) := address (a j) x\n  let w j := tag (a j) (n := n)\n  have hu (x) : Tendsto (fun i => w i (r x i)) atTop (𝓝 x) := (chosen (S := C.S) x).comp f.mesh.cofinal\n  have hh (x hx) := f.evaluated C Hp p n v x (he x hx) (r x) (hu x)\n  have ht : dist ((P (f.per i)).read x v) ((P (f.per i)).read y v) ≤ ε/2 := by\n    apply le_of_tendsto ((hh x hx).dist (hh y hy))\n    have hp := ((hu x).dist (hu y)).eventually (gt_mem_nhds hD)\n    filter_upwards [hi, hp,(hu x).eventually (mem_interior_iff_mem_nhds.mp (hKT hx)),\n      (hu y).eventually (mem_interior_iff_mem_nhds.mp (hKT hy))] with j ht hu hv hw\n    exact (ht (r x j) (r y j) hv hw hu).le\n  linarith",
+            "line": 116,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extraction/Lipschitz.lean",
+            "fragment": "L116-L138"
+          },
+          "proof_context": {
+            "declaration": "YM.Extraction.volume_oscillates",
+            "lines": [
+              116,
+              138
+            ],
+            "conclusion": "From `TransferLip.expanding`, the limit tables `(P (f.per i)).read x v` are equicontinuous (`oscillation`) on compacts of `generic n`, via `Order.evaluated` at each fixed p."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extraction.TransferLip",
+        "module": "YM.Extraction.Lipschitz",
+        "lines": [
+          26,
+          30
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extraction.TransferLip"
+          },
+          "snippet": {
+            "text": "structure TransferLip : Prop where\n  grid (p n : ℕ) (K : Set (Points n)) (h : IsCompact K) (hu : K ⊆ Cyclic C.S p n) (v : Fin n → C.book.Token)\n      (ε : ℝ) (hε : 0 < ε) : ∃ δ : ℝ, 0 < δ ∧ ∀ᶠ i : ℕ in atTop, LocalLattice C K v ε δ (f.mesh i) p\n  expanding (n) (K : Set (Points n)) (h : IsCompact K) (hu : K ⊆ generic n) (v : Fin n → C.book.Token)\n      (ε : ℝ) (hε : 0 < ε) : ∃ δ : ℝ, 0 < δ ∧ f.late (LocalLattice C K v ε δ)",
+            "line": 26,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extraction/Lipschitz.lean",
+            "fragment": "L26-L30"
+          },
+          "proof_context": {
+            "declaration": "YM.Extraction.TransferLip",
+            "lines": [
+              26,
+              30
+            ],
+            "conclusion": "`expanding` gives a local lattice Lipschitz-type control uniform late in the volume index, for compact K in `generic n`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          162
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

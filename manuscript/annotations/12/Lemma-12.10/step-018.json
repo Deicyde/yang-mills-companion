@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 12.10 step 18",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] gets Delta = -f(0)/`leg V` from `yield_shape` and |f(0)| <= (`leg V`/2)·width with width <= 1, so |Delta| <= 1; the explicit quotient (c_pre+1)epsilon/(chi t^2) is replaced by the abstract width and cost prices.",
+  "subject": [
+    {
+      "location": {
+        "page": 88,
+        "rect": [
+          0.12026,
+          0.77313,
+          0.75948,
+          0.04223
+        ]
+      },
+      "title": "Lemma 12.10 step 18: Display, p. 88",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 12.10 step 18"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.AnalyticBridge.VerifiedReset.Return.yield_shape",
+        "module": "YM.AnalyticBridge.VERIFIED_RESET_STEP.Advance",
+        "lines": [
+          25,
+          30
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.AnalyticBridge.VerifiedReset.Return.yield_shape"
+          },
+          "snippet": {
+            "text": "private lemma yield_shape {x : ℝ} (h : x∈l) (d : ℝ) : let A := board B N (ledger B N m p X a)\n    A.residual (target Q) V (predictor B N Q) x d = (d - Averaging.delta (X.read (a x))) * A.leg V := by\n  intro A\n  refine Fixed.rate A (fun _ => rfl) ((records g hm hb hx h 0).1.regular.at_flat) ?_ (settled g hm hb hx he h).1 d\n  exact hv.1\ninclude hv hP in",
+            "line": 25,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/VERIFIED_RESET_STEP/Advance.lean",
+            "fragment": "L25-L30"
+          },
+          "proof_context": {
+            "declaration": "YM.AnalyticBridge.VerifiedReset.Return.yield_shape",
+            "lines": [
+              25,
+              30
+            ],
+            "conclusion": "`residual = (d - Δ) * leg V`, so `Δ = -residual(0)/leg V`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVNext.CouplingReset.Income.balance",
+        "module": "YM.UVNext.COUPLING_RESET.Advance",
+        "lines": [
+          139,
+          152
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVNext.CouplingReset.Income.balance"
+          },
+          "snippet": {
+            "text": "lemma Income.balance (h : PricedReset B.a η q) (hu : Usable B η N m p V) (he : Income B N m p q s Q V F) {x : ℝ} (hx : x ∈ s) :\n    let A := board B N F\n    |A.residual (target Q) V (predictor B N Q) x 0| ≤ A.leg V / 2 * width B.a m q := by\n  intro A\n  have h₀ : 0 ∈ window B.a m q := abs_le.mp (by simpa using (q.rad_pos ..).le)\n  have hc := he.catalog.valid x hx 0 h₀\n  let n := B.a.S.side m p\n  have hh : |A.add V x 0| ≤ sites n * B.a.clock.allowance m := volumeE _ hc V\n  have hk := he.surplus x hx\n  have hr := (rate (F:=F) h hu).2\n  apply le_trans _ hr\n  change |(predictor B N Q x + 0)*A.leg V + A.background V + A.add V x 0 - contrast (target Q) V x| ≤ sites n * _\n  change |predictor B N Q x*A.leg V + A.background V - contrast (target Q) V x| ≤ sites n * _ at hk\n  rw [add_zero]; have ⟨ha,hb⟩ := abs_le.mp hh; have ⟨hc,hd⟩ := abs_le.mp hk; exact abs_le.mpr ⟨by linarith,by linarith⟩",
+            "line": 139,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/COUPLING_RESET/Advance.lean",
+            "fragment": "L139-L152"
+          },
+          "proof_context": {
+            "declaration": "YM.UVNext.CouplingReset.Income.balance",
+            "lines": [
+              139,
+              152
+            ],
+            "conclusion": "`|residual (target Q) V (predictor) x 0| <= leg V / 2 * width`, the bound on `|f(u,0)|` against `K_pr`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVNext.CouplingReset.rate",
+        "module": "YM.UVNext.COUPLING_RESET.Advance",
+        "lines": [
+          108,
+          119
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVNext.CouplingReset.rate"
+          },
+          "snippet": {
+            "text": "private lemma rate (h : PricedReset B.a η q) (hu : Usable B η N m p V) : let κ := (board B N F).leg V / 2\n    0 < κ ∧ sites (B.a.S.side m p) * (funds B.a m q + B.a.clock.allowance m) ≤ κ * width B.a m q := by\n  have hw := q.rad_pos (B.a.clock.J (m+1)) (B.a.clock.J m)\n  obtain ⟨⟨hη,-⟩,ht⟩ := h m\n  let z := η (B.a.clock.J m)*(B.a.budget m).threshold^2\n  have hz : 0 < z := mul_pos hη (sq_pos_of_pos (B.a.budget m).threshold_pos)\n  let n := B.a.S.side m p\n  have hK : sites n * z ≤ (board B N F).leg V := hu.2\n  have hh : 2*(funds B.a m q+B.a.clock.allowance m) ≤ z*width B.a m q := by unfold funds; dsimp [z,width]; linarith\n  intro κ\n  exact ⟨half_pos ((mul_pos (sites_pos n) hz).trans_le hK),by\n    dsimp [κ]; nlinarith only [mul_le_mul_of_nonneg_left hh (sites_pos n).le,mul_le_mul_of_nonneg_right hK hw.le]⟩",
+            "line": 108,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/COUPLING_RESET/Advance.lean",
+            "fragment": "L108-L119"
+          },
+          "proof_context": {
+            "declaration": "YM.UVNext.CouplingReset.rate",
+            "lines": [
+              108,
+              119
+            ],
+            "conclusion": "`sites*(funds + allowance) <= (leg V/2) * width` with `κ = leg V/2`, from `Usable` (`leg V >= sites*η*t^2`) and `PricedReset`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          88
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

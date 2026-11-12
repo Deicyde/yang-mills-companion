@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 12.10 step 7",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] takes the pre-reset exponential identity as the field `emit` of `Prereset` and takes the same logarithmic contrast in `value_income` with `scalar` = v_u; the identity is a hypothesis where [M] cites Lemma D4.",
+  "subject": [
+    {
+      "location": {
+        "page": 88,
+        "rect": [
+          0.12026,
+          0.25419,
+          0.75948,
+          0.05717
+        ]
+      },
+      "title": "Lemma 12.10 step 7: Text, p. 88",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 12.10 step 7"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVNext.CouplingReset.Prereset",
+        "module": "YM.UVNext.COUPLING_RESET.Regular",
+        "lines": [
+          53,
+          59
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVNext.CouplingReset.Prereset"
+          },
+          "snippet": {
+            "text": "structure Prereset (B : Directed G I Z K P) (q : ResetPrices) (s : Set ℝ) (N m p : ℕ) (Q : In B.a m p)\n    (u : ℝ → ℝ) (S : ℝ → Activities G (B.a.S.side m p)) : Prop where\n  early x : x ∈ s → (S x).EBound (B.a.budget m) (funds B.a m q / 4)\n  emit x : x∈s → ∀ V, flags (B.a.budget m).threshold V = ∅ →\n    let R := B.kin.path N m; let A := (B.a.params m).clip\n    target Q x V = Real.exp (u x * sites (B.a.S.side m p) - ((Q x).beta * mainTerm A R V + B.kin.alpha N m * secondTerm A R V + loop R V) -\n      (S x).additive (B.a.budget m) V)",
+            "line": 53,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/COUPLING_RESET/Regular.lean",
+            "fragment": "L53-L59"
+          },
+          "proof_context": {
+            "declaration": "YM.UVNext.CouplingReset.Prereset",
+            "lines": [
+              53,
+              59
+            ],
+            "conclusion": "On unflagged `V`, `target Q x V = exp(u x * sites - (beta * mainTerm + alpha * secondTerm + loop) - additive(S x) V)`, with `secondTerm` the K_2 functional and `S x` the preparatory activities."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVNext.CouplingReset.Prereset.value_income",
+        "module": "YM.UVNext.COUPLING_RESET.Regular",
+        "lines": [
+          73,
+          87
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVNext.CouplingReset.Prereset.value_income"
+          },
+          "snippet": {
+            "text": "lemma Prereset.value_income (h : Prereset B q s N m p Q u S) (hV : flags (B.a.budget m).threshold V = ∅)\n    {x : ℝ} (hx : x∈s) :\n    (0 < target Q x 1 ∧ 0 < target Q x V) ∧ |scalar (target Q) x - u x| ≤ funds B.a m q / 4 ∧\n      |vacuumError B N Q V x| ≤ sites (B.a.S.side m p) * (funds B.a m q / 2) := by\n  have h₀ := preBound (h.early x hx) (flags_one _)\n  have hh := preBound (h.early x hx) hV\n  constructor\n  · exact ⟨(Real.exp_pos _).trans_eq (h.emit x hx 1 (flags_one _)).symm,(Real.exp_pos _).trans_eq (h.emit x hx V hV).symm⟩\n  constructor\n  · let n := B.a.S.side m p\n    have hn : sites n ≠ 0 := (sites_pos n).ne'\n    rw [scalar,h.flat hx,sub_div,mul_div_cancel_right₀ _ hn,sub_sub_cancel_left,abs_neg, abs_div,abs_of_pos (sites_pos n)]\n    apply (div_le_iff₀ (sites_pos n)).mpr; rw [mul_comm]; exact h₀\n  unfold vacuumError contrast; rw [h.flat hx,h.emit x hx _ hV,Real.log_exp]\n  obtain ⟨h1,h2⟩ := abs_le.mp h₀; obtain ⟨h3,h4⟩ := abs_le.mp hh; exact abs_le.mpr ⟨by linarith,by linarith⟩",
+            "line": 73,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/COUPLING_RESET/Regular.lean",
+            "fragment": "L73-L87"
+          },
+          "proof_context": {
+            "declaration": "YM.UVNext.CouplingReset.Prereset.value_income",
+            "lines": [
+              73,
+              87
+            ],
+            "conclusion": "Positivity of `target Q x 1` and `target Q x V`, the bound on `scalar (target Q) x - u x`, and the bound on `vacuumError`, i.e. the logarithmic contrast identity with its error terms."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVNext.CouplingReset.scalar",
+        "module": "YM.UVNext.COUPLING_RESET.Reset",
+        "lines": [
+          51,
+          51
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVNext.CouplingReset.scalar"
+          },
+          "snippet": {
+            "text": "def scalar (H : ℝ → Config G n → ℝ) x := Real.log (H x 1) / sites n",
+            "line": 51,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/COUPLING_RESET/Reset.lean",
+            "fragment": "L51-L51"
+          },
+          "proof_context": {
+            "declaration": "YM.UVNext.CouplingReset.scalar",
+            "lines": [
+              51,
+              51
+            ],
+            "conclusion": "`scalar H x = log (H x 1) / sites n` is `v_u`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          88
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; a re-check of closeMatch records kept it; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

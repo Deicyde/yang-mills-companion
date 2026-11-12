@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 19.14 step 4",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] carries the plan through the abstract `Eligible`/`Agrees`/`Comparable` relations: an equal-height child reuses its own menu (the flattening) and a strictly higher child is replaced by `high` with a horizon chosen by `exists_nat_gt`, the improvement (H+1)(a_u-a_v) appearing as the inequality on `N`.",
+  "subject": [
+    {
+      "location": {
+        "page": 231,
+        "rect": [
+          0.12026,
+          0.72609,
+          0.76194,
+          0.13898
+        ]
+      },
+      "title": "Lemma 19.14 step 4: Text, p. 231",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 19.14 step 4"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Nesting.Fusion.supplies",
+        "module": "YM.OPE.Nesting.Fusion",
+        "lines": [
+          70,
+          80
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Nesting.Fusion.supplies"
+          },
+          "snippet": {
+            "text": "    have hPick(j:Fin n)(W' γ':ℝ):∃ q,good j q ∧ Eligible l T (down j z) b_b q ∧ Agrees U l T (down j z) (Tree.topAge (fork n f) κ a) b_b W' γ' (p j) q := by\n      let e:=childAge j a\n      rcases (h.inside j).ageLower.eq_or_lt with he|he\n      · change (Tree.topAge (fork n f) κ a)=(f j).topAge ((fork n f).topAge κ a) (childAge j a) at he\n        obtain ⟨q,hq,he'⟩:= (rec j b_b (hB j)).2 W' γ'\n        exact ⟨q,by unfold good; rw [← he] at hq; exact hq, hq.earns ((h_b j).trans (hB j)),by intro J _ w y s hw hv; rw [he] at hv; exact he' w y s hw hv⟩\n      let hv:=ready j\n      change Meets U R l T (down j z) _ ((f j).topAge (Tree.topAge (fork n f) κ a) e) _ _ at hv; obtain ⟨H,h',hg,hG⟩:=high U R (childWages j v) hv (h.inside j) rfl he ((le_max_right ..).trans h_b') W' γ' 0\n      exact ⟨_,hg,hg.earns ((le_max_right ..).trans h_b'), hG⟩\n    obtain ⟨B,h₁,h₂⟩:= sequential U (W:=W) (r:=γ) p good h ((le_max_right ..).trans h_b') hT hp hPick\n    exact ⟨fuse B, comparable_bundle hT v h B h₁,Agrees.then U hT (@he') h₂⟩",
+            "line": 70,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Nesting/Fusion.lean",
+            "fragment": "L70-L80"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Nesting.Fusion.supplies",
+            "lines": [
+              58,
+              80
+            ],
+            "conclusion": "For each child, equal heights reuse the child's own menu (flattening) and strictly higher children are replaced via `high`; the replaced menus are combined by `sequential`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Nesting.high",
+        "module": "YM.OPE.Nesting.Reload",
+        "lines": [
+          38,
+          44
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Nesting.high"
+          },
+          "snippet": {
+            "text": "lemma high (hk:t.topAge κ a=k)(hg:κ<k)(b₀:κ≤ b) (W r:ℝ)(D:ℕ) : ∃ H:ℕ, D ≤ H ∧ let P:=loadedRaw U R z v (Tree.center z) H; Comparable l T z κ Ω P ∧ Agrees U l T z κ b W r (Menu.raw z v) P :=by\n     subst k; obtain ⟨N,hN⟩:=exists_nat_gt ((Ω+W*b-r)/(t.topAge κ a-κ)); let q:=max N D\n     refine ⟨q,(le_max_right ..),cost_loaded U R v hd hg.le q, fun w y s he hu hb=> ?_⟩\n     have hc:=h.zeroBorder\n     apply (hd.tested w y q s b κ hb (interval_comp hu (fun _:Unit=>_) id) hu hc b₀ hg.le).mono ?_ |>.congr (Eventually.of_forall fun i=> loaded_test U R ..)\n     rw [div_lt_iff₀ (sub_pos.mpr hg)] at hN; have hf₀:= mul_le_mul_of_nonneg_right (show (N:ℝ) ≤ ↑q + 1 from by exact_mod_cast le_max_left N D |>.trans q.le_succ) (sub_nonneg.mpr hg.le)\n     linarith only [hf₀,hN,mul_le_mul_of_nonneg_right he (hc.trans b₀)]",
+            "line": 38,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Nesting/Reload.lean",
+            "fragment": "L38-L44"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Nesting.high",
+            "lines": [
+              38,
+              44
+            ],
+            "conclusion": "A child with strictly larger age can be replaced by the loaded expansion to a horizon `H >= D`, with `H` chosen by `exists_nat_gt` so that the remainder rate is below any prescribed value."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Nesting.sequential",
+        "module": "YM.OPE.Nesting.Transactions",
+        "lines": [
+          95,
+          98
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Nesting.sequential"
+          },
+          "snippet": {
+            "text": "lemma sequential (P:Fin n→Menu S L)(good:(i:Fin n)→Menu S L→Prop)\n       (hg:Regular l T (fork n f) a ν z)(hb:((fork n f).topAge a ν) ≤ b)(hT:Tendsto T l atTop)(h:∀ j,Eligible l T (down j z) b (P j))\n       (h_pick : ∀ j W' r', ∃ B:Menu S L,good j B ∧ Eligible l T (down j z) b B ∧ Agrees U l T (down j z) ((fork n f).topAge a ν) b W' r' (P j) B) :\n       ∃ P':Fin n→Menu S L, (∀ j,good j (P' j)) ∧ Agrees U l T z ((fork n f).topAge a ν) b W r (fuse P) (fuse P') :=by",
+            "line": 95,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Nesting/Transactions.lean",
+            "fragment": "L95-L98"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Nesting.sequential",
+            "lines": [
+              95,
+              117
+            ],
+            "conclusion": "The replacements are made one child at a time, each chosen after the earlier ones are fixed, with accuracy `r` for the whole fuse."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          231
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

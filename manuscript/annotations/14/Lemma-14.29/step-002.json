@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 14.29 step 2",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "Lean packages the bounded real approximations as `Figures` with a cap `limitPrice` and an error tending to 0, obtained from the hypothesis `MixAt` and applied to every translate. The explicit roots bound C, the margins, the error delta and the bound C+delta are not constructed in these lines.",
+  "subject": [
+    {
+      "location": {
+        "page": 156,
+        "rect": [
+          0.11961,
+          0.15046,
+          0.76359,
+          0.11973
+        ]
+      },
+      "title": "Lemma 14.29 step 2: Text, p. 156",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.29 step 2"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Push.GridApprox.from_palette",
+        "module": "YM.Push.GRID_APPROXIMATION.Produce",
+        "lines": [
+          71,
+          76
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Push.GridApprox.from_palette"
+          },
+          "snippet": {
+            "text": "  have hu : Grid.plain (C:=C) (flipTokens v) := by\n    intro i\n    change star (C.book.mirrorGroup _ _ (v i).2) = _; rw [Register.star_mirror,hp i]; rfl\n  have h1 := hm v hv hp\n  have h2 := hm (flipTokens (C:=C) v) hv hu\n  exact ⟨cover x _ _ h1 h2,covers x _ _ h1 h2 H hx⟩",
+            "line": 71,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/GRID_APPROXIMATION/Produce.lean",
+            "fragment": "L71-L76"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.GridApprox.from_palette",
+            "lines": [
+              63,
+              76
+            ],
+            "conclusion": "`from_palette` takes the bounded approximations `Z` (a `Figures` family with cap and vanishing error) for the word `v` and for its flipped word `flipTokens v`, and builds the `Covering` `cover x _ _ h1 h2` from both."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Push.GridApprox.figures_all",
+        "module": "YM.Push.GRID_APPROXIMATION.Produce",
+        "lines": [
+          53,
+          58
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Push.GridApprox.figures_all"
+          },
+          "snippet": {
+            "text": "lemma figures_all (H : C.Makes) (hm : MixAt C f d h) :\n    ∃ Z : ∀ j ≤ d, ∀ i : Ind C j, Figures C (swatch C j i) h,\n      (∀ (j : ℕ) (hj : j ≤ d), Z j hj 0 = onePaint C j h) ∧\n      ∀ (j : ℕ) (hj : j ≤ d) (v : C.label j), star v=v → (palette (Z j hj) v).Gives f := by\n  choose Z hZ hz using fun (j : ℕ) (hj : j ≤ d) => paints H f j h (hm j hj)\n  exact ⟨Z, hZ, fun j hj => palette_gives (Z j hj) H (hz j hj)⟩",
+            "line": 53,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/GRID_APPROXIMATION/Produce.lean",
+            "fragment": "L53-L58"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.GridApprox.figures_all",
+            "lines": [
+              53,
+              58
+            ],
+            "conclusion": "`figures_all` produces the `Figures` family `Z` for all labels of degree <= d from the hypothesis `MixAt`, the same family used at every anchor."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          156
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

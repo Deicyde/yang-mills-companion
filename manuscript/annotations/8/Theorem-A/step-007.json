@@ -1,0 +1,200 @@
+{
+  "id": "Theorem A step 7",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 35,
+        "rect": [
+          0.12026,
+          0.0962,
+          0.76294,
+          0.1256
+        ]
+      },
+      "title": "Theorem A step 7: Text, p. 35",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Theorem A step 7"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YangMills.hierarchy",
+        "module": "HierarchyBridge",
+        "lines": [
+          33,
+          37
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YangMills.hierarchy"
+          },
+          "snippet": {
+            "text": "  project := S.classTokens\n  Character := F.α.space.X\n  phaseMeasure := F.α.space.μ\n  selected := F.α.atPoint\n  correlation s v x := S.useAt (spectator F s) x v",
+            "line": 33,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/HierarchyBridge.lean",
+            "fragment": "L33-L37"
+          },
+          "proof_context": {
+            "declaration": "YangMills.hierarchy",
+            "lines": [
+              27,
+              42
+            ],
+            "conclusion": "The hierarchy takes `project := S.classTokens` as `π_quo` and defines the phase correlations by `S.useAt` at every point, including collisions."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YangMills.publicReconstruction",
+        "module": "HierarchyBridge",
+        "lines": [
+          81,
+          95
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YangMills.publicReconstruction"
+          },
+          "snippet": {
+            "text": "  refine ⟨view_axioms _ F.realization.qt, F.realization.qt.faithful, S.pin_inj, ?_, ?_, ?_,\n    F.phase.phase.decomposition.normalized, F.phase.phase.decomposition.support,\n    fun s _ a x hx π => S.class_perm _ (spectate F s).laws.toSymmetric π hx a,\n    fun s _ a => S.class_smooth _ (spectate F s).smooth a, ?_, ?_, ?_, ?_, ?_⟩\n  · let a : S.Tag := ⟨0,S.unit 0⟩\n    have ne : S.pin 0 (S.unit 0) ≠ 0 := fun e => S.alive 0 F.room.kernel.laws ((S.pin_inj 0) (e.trans (map_zero _).symm))\n    obtain ⟨f,hf⟩ := F.realization.qt.faithful _ ne\n    exact ⟨a,f,hf⟩\n  · intro u\n    obtain ⟨d,v,e⟩ := F.sector.derivatives.covered F.room.kernel.laws.toSymmetric F.phase.transport.injection u\n    exact ⟨⟨d,v⟩,e⟩\n  · intro a\n    refine ⟨⟨a.1,S.representative _ a.2⟩,?_⟩\n    change Sigma.mk a.1 (S.project _ (S.representative _ a.2)) = a\n    rw [S.rep]",
+            "line": 81,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/HierarchyBridge.lean",
+            "fragment": "L81-L95"
+          },
+          "proof_context": {
+            "declaration": "YangMills.publicReconstruction",
+            "lines": [
+              79,
+              133
+            ],
+            "conclusion": "Reconstruction gives Q2 by `view_axioms`, faithfulness, injectivity, the nonzero unit field `S.pin 0 (S.unit 0) ≠ 0` with a nonzero acting field, the covering of the labels, ontoness of `project` by representatives, and the phase clauses."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YangMills.publicReconstruction",
+        "module": "HierarchyBridge",
+        "lines": [
+          96,
+          133
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YangMills.publicReconstruction"
+          },
+          "snippet": {
+            "text": "  · intro n a x hx\n    let w := Word.realize (fun i => quoteTag (a i)) x\n    have hd : Word.distinct w := (Word.realized ..).mpr hx\n    obtain ⟨z,d,hs⟩ := OS.Spread.Resolution.place_exists hd\n    have he i : (hierarchy F Q).correlation (some i) a x = (F.α.ensemble i).expect w := by\n      rw [show w = Word.realize (fun i => quoteTag (a i)) x from rfl, Table.readAt]\n      rfl\n    simp_rw [he, fun i => F.phase.phase.chosen i w hd z d hs]\n    exact F.phase.phase.decomposition.weak _\n  · intro n a x hx\n    let w := Word.realize (fun i => quoteTag (a i)) x\n    have hd : Word.distinct w := (Word.realized ..).mpr hx\n    have he i : (hierarchy F Q).correlation (some i) a x = (F.α.ensemble i).expect w := by\n      rw [show w = Word.realize (fun i => quoteTag (a i)) x from rfl, Table.readAt]\n      rfl\n    simp_rw [he]\n    exact (h.at_words w hd).trans (S.readAt _ _)\n  · intro n v x\n    exact F.realization.chosen.heat.hol n _ x\n  · intro n a x h\n    have eqx : YM.Boundary.place (Hierarchy.spatialPoints x) (fun i => time (x i)) = x := by\n      apply PiLp.ext\n      intro i\n      exact YM.position_eta (x i)\n    have root := F.realization.chosen.heat.roots n a (Hierarchy.spatialPoints x) (fun i => time (x i)) h\n    rw [eqx] at root\n    exact root\n  · intro n a h hh tests\n    have edge := F.realization.chosen.emerges.profile n\n      (fun i => S.pin (a i).1 (a i).2) h hh (YM.Boundary.Joint.materialize n tests)\n    change Tendsto _ _ (𝓝 ((view F.action).fields.vacuumExpectation _ tests))\n    rw [publicMoment _ F.realization.qt.meets]\n    have eqShift (r : ℝ) (x : Points n) : Hierarchy.complexShift r h x = YM.Boundary.shift x (r • h) := by\n      funext i; simp [Hierarchy.complexShift,YM.Boundary.shift,Pi.smul_apply,YangMills.time,YM.time]\n    have eqSpace (x : Points n) : Hierarchy.spatialPoints x = YM.Boundary.trace x := rfl\n    simp only [hierarchy, Hierarchy.tensorTest, eqShift, eqSpace,\n      YM.Boundary.Waves.atSlopes, YM.Boundary.Waves.restricted, YM.Boundary.Joint.material_at] at edge ⊢\n    exact edge",
+            "line": 96,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/HierarchyBridge.lean",
+            "fragment": "L96-L133"
+          },
+          "proof_context": {
+            "declaration": "YangMills.publicReconstruction",
+            "lines": [
+              79,
+              133
+            ],
+            "conclusion": "The mixture and selected correlations are read from the phase tables, and the continuation and boundary conditions of Q4 hold."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YangMills.wilsonLimit",
+        "module": "HierarchyBridge",
+        "lines": [
+          44,
+          56
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YangMills.wilsonLimit"
+          },
+          "snippet": {
+            "text": "theorem wilsonLimit {s : Extraction.Sequence} (h : (Extraction.Order.mk .full s).Ordered C S) :\n    (wilsonFamily C).Converges s (fun v => (hierarchy F Q).correlation none ((hierarchy F Q).project ∘ v)) := by\n  intro n v t\n  obtain ⟨hv,row,hr,hl⟩ := fromWilson C h n v t\n  refine ⟨hv,row,hr,?_⟩\n  convert hl using 2\n  congr 1\n  funext x\n  change t x * S.useAt S x (S.classTokens ∘ v) = t x * S.read x v\n  by_cases hx : x ∈ conf n\n  · rw [S.at_project S F.room.kernel.laws.toSymmetric (fun _ => le_rfl) hx]\n  · have hz : t x = 0 := notMem_support.mp (fun h => hx (t.tsupport_subset (subset_closure h)))\n    simp [hz]",
+            "line": 44,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/HierarchyBridge.lean",
+            "fragment": "L44-L56"
+          },
+          "proof_context": {
+            "declaration": "YangMills.wilsonLimit",
+            "lines": [
+              44,
+              56
+            ],
+            "conclusion": "`wilsonLimit` identifies the lattice limit with `correlation none (project ∘ v)` using `S.at_project` on `conf n`, and separated tests vanish off `conf n`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          35
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

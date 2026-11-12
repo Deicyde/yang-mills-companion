@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 12.3 step 14",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] shows mon(x+k)^r/mon(x)^r -> 1 (`mon_power_ratio`) and combines it with antitonicity of theta and `mon >= 1` to conclude the ratio of consecutive loop caps is eventually at most 2, rather than the displayed chain <= (ratio)^theta <= ratio -> 1.",
+  "subject": [
+    {
+      "location": {
+        "page": 87,
+        "rect": [
+          0.12026,
+          0.16724,
+          0.75948,
+          0.04198
+        ]
+      },
+      "title": "Lemma 12.3 step 14: Display, p. 87",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 12.3 step 14"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Push.PriceCompiler.Grows.late",
+        "module": "YM.Push.PRICE_COMPILER.LoopGate",
+        "lines": [
+          62,
+          69
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Push.PriceCompiler.Grows.late"
+          },
+          "snippet": {
+            "text": "lemma Grows.late (t : LoopPrices) (T : Protection D) {j i : ℕ} (h : i ≤ j) : ∀ᶠ x in atTop, Grows t T j i x := by\n  let k := G.slopeConstant * Real.log (D.L j).val\n  have hg := (mon_power_ratio k (T.theta j)).eventually (ge_mem_nhds (show (1:ℝ)<2 by norm_num))\n  have ht := (mon_power_deep (T.pos i)).eventually_ge_atTop (t.add j i * ((D.L j).val:ℝ)^4)\n  filter_upwards [hg,ht] with x hx he\n  refine ⟨?_,he⟩\n  exact ((div_le_iff₀ (Real.rpow_pos_of_pos (mon_pos _) _)).mp hx).trans\n    (mul_le_mul_of_nonneg_left (Real.rpow_le_rpow_of_exponent_le (mon_ge x) (T.dec h)) (by norm_num))",
+            "line": 62,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/PRICE_COMPILER/LoopGate.lean",
+            "fragment": "L62-L69"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.PriceCompiler.Grows.late",
+            "lines": [
+              62,
+              69
+            ],
+            "conclusion": "The transfer step bounds `mon(x+k)^θ_j ≤ 2 mon x^θ_j ≤ 2 mon x^θ_i` using `mon_power_ratio` and `rpow_le_rpow_of_exponent_le` with `θ` antitone."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Push.PriceCompiler.mon_power_ratio",
+        "module": "YM.Push.PRICE_COMPILER.LoopGate",
+        "lines": [
+          48,
+          51
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Push.PriceCompiler.mon_power_ratio"
+          },
+          "snippet": {
+            "text": "lemma mon_power_ratio (k r : ℝ) : Tendsto (fun x : ℝ => mon (x+k) ^ r / mon x ^ r) atTop (𝓝 1) := by\n  have hz : Tendsto (fun x : ℝ => (mon (x+k)/ mon x) ^ r) atTop (𝓝 1) := by\n    simpa using (mon_ratio k).rpow_const (p:=r) (by simp)\n  exact hz.congr fun x => Real.div_rpow (mon_pos _).le (mon_pos _).le r",
+            "line": 48,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/PRICE_COMPILER/LoopGate.lean",
+            "fragment": "L48-L51"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.PriceCompiler.mon_power_ratio",
+            "lines": [
+              48,
+              51
+            ],
+            "conclusion": "`mon (x+k)^r / mon x^r → 1` as `x → ∞`, the ratio of consecutive monitors to a fixed power tends to one."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          87
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

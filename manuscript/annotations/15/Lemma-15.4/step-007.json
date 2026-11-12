@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 15.4 step 7",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "narrowMatch",
+  "note": "The choice of m and k, the strips, the tiling bound and the limit at separation r/2 are as in [M], but the per-anchor bound B a_k^{-D} has an abstract exponent D from `image_power`, whereas [M] states C_ctr a_k^{-d_pow} with d_pow = 1 + max d_i.",
+  "subject": [
+    {
+      "location": {
+        "page": 167,
+        "rect": [
+          0.12026,
+          0.24467,
+          0.76194,
+          0.10791
+        ]
+      },
+      "title": "Lemma 15.4 step 7: Text, p. 167",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 15.4 step 7"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.D05.scales",
+        "module": "YM.Work.D05",
+        "lines": [
+          132,
+          135
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.D05.scales"
+          },
+          "snippet": {
+            "text": "lemma scales (Q : Schedule) (h : Q.Gentle) (M n : ℕ) :\n    ∃ c : ℝ, 0 < c ∧ ∀ r : ℝ, 0 < r → r ≤ 1 → ∃ m k : ℕ,\n      M ≤ k ∧ Q.a m < r/2 ∧ m ≤ k ∧ (n:ℝ)*(2*(3*Q.a k)) < Q.a m ∧\n      c * r^4 ≤ Q.a k := by",
+            "line": 132,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/D05.lean",
+            "fragment": "L132-L135"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.D05.scales",
+            "lines": [
+              132,
+              158
+            ],
+            "conclusion": "For `r ≤ 1` there are `m ≤ k` with `M ≤ k`, `a m < r/2`, `n * (2 * (3 * a k)) < a m` and `c * r^4 ≤ a k`; the proof takes `k` first with `a k < a m / (6(n+1))`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.D05.separated_bound",
+        "module": "YM.Work.D05",
+        "lines": [
+          95,
+          100
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.D05.separated_bound"
+          },
+          "snippet": {
+            "text": "private lemma separated_bound (H : C.Makes) (hS : S.Smooth) (he : f.PointLimits C S)\n    (v : Fin n → C.book.Token) (s A : ℝ) (hs : 0 < s)\n    (m k : ℕ) (hm : C.S.a m < s) (hmk : m ≤ k)\n    (hk : (n:ℝ)*(2*(3*C.S.a k)) < C.S.a m)\n    (hA : f.late (Around.imageBudget v A k)) :\n    ∀ x∈separated s n, ‖S.read x v‖ ≤ A ^ n := by",
+            "line": 95,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/D05.lean",
+            "fragment": "L95-L100"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.D05.separated_bound",
+            "lines": [
+              95,
+              128
+            ],
+            "conclusion": "For `s`-separated points, `‖S.read x v‖ ≤ A ^ n` from the lattice budget at level `k` under the strip condition, passed to the limit."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.D05.answer",
+        "module": "YM.Work.D05",
+        "lines": [
+          163,
+          175
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.D05.answer"
+          },
+          "snippet": {
+            "text": "  obtain ⟨M,D,B,hB,hf⟩ := image_power h w\n  obtain ⟨c,hc,hu⟩ := scales C.S C.path.levels.fits.mesh M n\n  refine ⟨4 * D * n,(B * c⁻¹ ^ D) ^ n,by positivity, fun r hr hR x hx => ?_⟩\n  obtain ⟨m,k,hM,hm,hmk,hk,hw⟩ := hu r hr hR\n  have hX : x ∈ separated (r/2) n :=\n    fun i j hij => lt_of_lt_of_le (by linarith) (hx i j hij)\n  have hi : (C.S.a k)⁻¹ ≤ c⁻¹ * (r⁻¹)^4 := calc\n    _ ≤ (c*r^4)⁻¹ := inv_le_inv₀ (C.S.a_pos _) (by positivity) |>.2 hw\n    _ = _ := by rw [mul_inv, inv_pow]\n  change ‖S.read x w‖ ≤ _\n  calc\n    _ ≤ (B * (C.S.a k)⁻¹ ^ D)^n :=\n      separated_bound H hS he w (r/2) _ (by positivity) m k hm hmk hk (hf k hM) x hX",
+            "line": 163,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/D05.lean",
+            "fragment": "L163-L175"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.D05.answer",
+            "lines": [
+              160,
+              180
+            ],
+            "conclusion": "With `image_power` giving `A = B * (a k)⁻¹ ^ D`, the bound is applied at separation `r/2`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          167
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

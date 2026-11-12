@@ -1,0 +1,120 @@
+{
+  "id": "Section 19 display 20",
+  "kind": "display",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "`costRemainder` is r^(D+1 - weight - eps), B plays B_0, and `formula` is the remainder at the phase i(alpha).",
+  "subject": [
+    {
+      "location": {
+        "page": 230,
+        "rect": [
+          0.12026,
+          0.58914,
+          0.75948,
+          0.03807
+        ]
+      },
+      "title": "Display, p. 230",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Section 19 display 20"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Orbits.estimates_weighted",
+        "module": "YM.OPE.Orbits.Profile",
+        "lines": [
+          98,
+          101
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Orbits.estimates_weighted"
+          },
+          "snippet": {
+            "text": "lemma estimates_weighted : ∀ᶠ r:ℝ in 𝓝[>]0,\n    ∀ (μ:Measure K)(f:K→ℂ)(p:K→Loc I J), AEMeasurable p μ→ Integrable f μ→ (∫ s, ‖f s‖ ∂μ) ≤ B→ (∀ᵐ s ∂μ,f s ≠ 0 → p s∈FitsOn I J M η δ r) →\n    ((∀ χ : K→U.α.space.X,AEMeasurable χ μ→ JointEstimate U R m v w (B*costRemainder m d ε r) μ f p (some ∘ χ)) ∧\n       JointEstimate U R m v w (B*costRemainder m d ε r) μ f p (fun _=>none)) :=by",
+            "line": 98,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Orbits/Profile.lean",
+            "fragment": "L98-L101"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Orbits.estimates_weighted",
+            "lines": [
+              98,
+              108
+            ],
+            "conclusion": "Eventually in r, for every measure, weight `f` with L1 norm at most `B` and a.e. admissible geometry, `JointEstimate` holds for every a.e.-measurable phase map and for the mixed state, with bound `B * costRemainder m d eps r`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Orbits.JointEstimate",
+        "module": "YM.OPE.Orbits.Profile",
+        "lines": [
+          53,
+          57
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Orbits.JointEstimate"
+          },
+          "snippet": {
+            "text": "def JointEstimate (U:Spec.Final C F S)(R:Reader U.sector.derivatives U.sector.turns U.room.kernel.spin)(m:ℕ)(v:Labels S d)(w:Labels S e)(bound:ℝ)(μ:Measure K)(f:K→ℂ)(p:K→Loc I J) (i:K→Viewers U) :=\n       let raw:= fun α:K=>f α * whole (spectator U (i α)) (p α).1 v (p α).2.2 w\n       let cut:= fun α:K=>f α * uponDiscount U R m v w (p α) (i α)\n       let delta:=fun α:K=> f α * formula U R (p α).1 (p α).2.1 v (p α).2.2 w m (i α)\n       Integrable raw μ ∧ Integrable cut μ ∧ Integrable delta μ ∧ (∫ α,raw α ∂μ)-(∫ α,cut α ∂μ) = ∫ α,delta α ∂μ ∧ ‖∫ α,delta α ∂μ‖ ≤ bound",
+            "line": 53,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Orbits/Profile.lean",
+            "fragment": "L53-L57"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Orbits.JointEstimate",
+            "lines": [
+              53,
+              57
+            ],
+            "conclusion": "`JointEstimate` makes the weighted raw, truncated and remainder integrands integrable and bounds the norm of the integral of `f * formula` by the given bound."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          230
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      }
+    }
+  }
+}

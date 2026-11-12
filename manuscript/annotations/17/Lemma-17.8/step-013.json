@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 17.8 step 13",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "`UniqueHeat` is the OS vacuum line; `Q Ω = Ω` is `groundvac`.",
+  "subject": [
+    {
+      "location": {
+        "page": 202,
+        "rect": [
+          0.12026,
+          0.3207,
+          0.75996,
+          0.03713
+        ]
+      },
+      "title": "Lemma 17.8 step 13: Text, p. 202",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 17.8 step 13"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.all_plant",
+        "module": "YM.EveryPhase.Vacuum",
+        "lines": [
+          115,
+          144
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.all_plant"
+          },
+          "snippet": {
+            "text": "lemma all_plant (i) (x : (L.actors i).operators.H) :\n    (L.actors i).momentum.region zeroE x = inner ℂ (L.actors i).operators.vacuum x • (L.actors i).operators.vacuum := by\n  let Z := (L.actors i).operators\n  let Ω := Z.vacuum\n  let Q := (L.actors i).momentum.region zeroE\n  let P := (innerSL ℂ Ω).smulRight Ω\n  suffices H : Q=P from DFunLike.congr_fun H x\n  apply Kernel.Gram.by_bud (L.cores i).soil\n  intro b\n  let v := fun j => (b.get j).1\n  let f := fun j => (b.get j).2\n  obtain ⟨Ψ,hΨ,hu⟩ := (L.links i).smears b.length v\n  have hv (k : ℕ) : Q (Ψ (Joint.materialize _ fun i => Probe.cap k (f i)))=\n      P (Ψ (Joint.materialize _ fun i => Probe.cap k (f i))) := by\n    rw [hΨ (fun i => Probe.cap k (f i))]\n    let g := tensorWord v (fun i => Probe.cap k (f i))\n    have he : stands Z [(1,g)] = Z.vector g := by rw [stands_cons,one_smul]; simp [stands,operator]\n    change Q (Z.vector g)=P (Z.vector g)\n    rw [← he]; apply cluster_zero\n    intro i hi j hj\n    obtain rfl := List.mem_singleton.mp hi\n    obtain ⟨i,rfl⟩ := List.mem_ofFn.mp hj\n    exact Probe.finite_cap _\n  have he : Tendsto (fun k => fun i => Probe.cap k (f i)) atTop (𝓝 f) :=\n    tendsto_pi_nhds.mpr fun i => persistent (f i)\n  have ht := ((Joint.jointCont b.length).tendsto f).comp he\n  have h := (Ψ.continuous.tendsto (Joint.materialize b.length f)).comp ht\n  rw [hΨ,show tensorWord v f=b by simp [tensorWord,v,f]] at h\n  exact tendsto_nhds_unique_of_eventuallyEq (Q.continuous.continuousAt.tendsto.comp h)\n    (P.continuous.continuousAt.tendsto.comp h) (Eventually.of_forall hv)",
+            "line": 115,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Vacuum.lean",
+            "fragment": "L115-L144"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.all_plant",
+            "lines": [
+              115,
+              144
+            ],
+            "conclusion": "`momentum.region zeroE x = <Ω, x> Ω` for all `x`, by density of word vectors (`Kernel.Gram.by_bud`) from `cluster_zero` and `groundvac` (`P Ω = Ω`)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.boundary_zero_energy",
+        "module": "YM.EveryPhase.Vacuum",
+        "lines": [
+          158,
+          162
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.boundary_zero_energy"
+          },
+          "snippet": {
+            "text": "lemma boundary_zero_energy (i) (x : (L.actors i).operators.H) :\n    (L.actors i).momentum.region zeroE x=x ↔ ∃ z : ℂ, z • (L.actors i).operators.vacuum=x := by\n  constructor\n  · intro h; exact ⟨_, (all_plant L i x).symm.trans h⟩\n  rintro ⟨z,rfl⟩; rw [map_smul,groundvac (L.links i) (L.cores i)]",
+            "line": 158,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Vacuum.lean",
+            "fragment": "L158-L162"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.boundary_zero_energy",
+            "lines": [
+              158,
+              162
+            ],
+            "conclusion": "The zero-energy space is the vacuum line on the Wightman side."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.every",
+        "module": "YM.EveryPhase.Vacuum",
+        "lines": [
+          146,
+          153
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.every"
+          },
+          "snippet": {
+            "text": "theorem every (i : F.α.space.X) : (L.chambers i).UniqueHeat := by\n  intro v\n  let V := L.chambers i\n  obtain ⟨x,hx⟩ := reaches L i v.val\n  let a := inner ℂ (L.actors i).operators.vacuum x\n  have he : V.flow.orth ((L.J i) x)=(L.J i) x := by rw [hx]; exact V.D.starProjection_eq_self_iff.mpr v.property\n  rw [reflection_projection,← (L.links i).projections (L.cores i) _ zeroE_m,all_plant,map_smul,(L.links i).acts.start] at he\n  exact ⟨a,Subtype.ext (he.trans hx)⟩",
+            "line": 146,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Vacuum.lean",
+            "fragment": "L146-L153"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.every",
+            "lines": [
+              146,
+              153
+            ],
+            "conclusion": "The OS chamber satisfies `UniqueHeat`: every heat-fixed vector is a multiple of the OS vacuum, via `J` surjective and `reflection_projection`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          202
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

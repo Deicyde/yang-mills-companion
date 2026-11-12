@@ -1,0 +1,154 @@
+{
+  "id": "Lemma 13.11 step 10",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 107,
+        "rect": [
+          0.12026,
+          0.29117,
+          0.76194,
+          0.06863
+        ]
+      },
+      "title": "Lemma 13.11 step 10: Text, p. 107",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 13.11 step 10",
+          "quads": [
+            [
+              0.23464,
+              0.29117,
+              0.87974,
+              0.29117,
+              0.87974,
+              0.30865,
+              0.23464,
+              0.30865
+            ],
+            [
+              0.12026,
+              0.30867,
+              0.8822,
+              0.30867,
+              0.8822,
+              0.34206,
+              0.12026,
+              0.34206
+            ],
+            [
+              0.12026,
+              0.34207,
+              0.74815,
+              0.34207,
+              0.74815,
+              0.35981,
+              0.12026,
+              0.35981
+            ]
+          ]
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.AnalyticBridge.VerifiedReset.Collection.Local.fittings",
+        "module": "YM.AnalyticBridge.VERIFIED_RESET_STEP.Trays",
+        "lines": [
+          133,
+          152
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.AnalyticBridge.VerifiedReset.Collection.Local.fittings"
+          },
+          "snippet": {
+            "text": "lemma fittings : Payments.Fittings (fill X R c p v α Δ) (shelves X R p) p := by\n  have he := h.loose (R:=R) hc α Δ\n  refine ⟨h.regFamily g hx hc hn α Δ, h.hardFamily α Δ,fun s b => ?_,fun i => (he _).2.2.2,fun i => (he _).1,fun i => (he _).2.1,\n    fun i => (he _).2.2.1,fun s b => ?_⟩\n  · obtain ⟨e⟩ := h.transforms s b\n    let N := numbering (EKey n); let π := spins n e.ep s b; let u := (N.trans π).trans N.symm\n    have hN (i) : N (u i) = π (N i) := N.apply_symm_apply _\n    have hj (i) := (h.action (R:=R) (c:=c) g hn α Δ s b e).1 (N i)\n    let Y := ((shelves X R p).pours (fill X R c p v α Δ))\n    change Nonempty (Y.Moves s b)\n    refine ⟨⟨u,e.kp,fun i => ?_,fun i => ?_, e.forced_support, e.forced_inventory, e.forced_tests,fun i U => ?_, e.valuesK⟩⟩\n    · change (incoming X R p (N (u i))).site = _; exact hN i ▸ (hj i).1\n    · change (incoming X R p (N (u i))).support = _; exact hN i ▸ (hj i).2.1\n    change archive X R c v α Δ (N (u i)) U = _; exact hN i ▸ congr_fun (hj i).2.2 U\n  obtain ⟨e⟩ := h.transforms s b\n  let N := numbering (LKey n); let π := knots n e.ep s b; let u := (N.trans π).trans N.symm\n  have hN (i) : N (u i) = π (N i) := N.apply_symm_apply _\n  have hj (i) := (h.action (R:=R) (c:=c) g hn α Δ s b e).2 (N i)\n  exact ⟨u,fun i => by change soft X R p (N (u i)) = _; exact hN i ▸ (hj i).1,fun U i => by\n    change loses X R c p v α Δ (N (u i)) U = _; exact hN i ▸ congr_fun (hj i).2 U⟩",
+            "line": 133,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/VERIFIED_RESET_STEP/Trays.lean",
+            "fragment": "L133-L152"
+          },
+          "proof_context": {
+            "declaration": "YM.AnalyticBridge.VerifiedReset.Collection.Local.fittings",
+            "lines": [
+              133,
+              152
+            ],
+            "conclusion": "For every signed permutation `s` and translation `b`, the output forced and regular families admit `Moves s b` by reindexing through `spins`/`knots`, with transported support, inventory, tests and values."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Bid.H03",
+        "module": "YM.Bid.Kitchen",
+        "lines": [
+          23,
+          24
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Bid.H03"
+          },
+          "snippet": {
+            "text": "def H03 : Prop := ∀ (G : Gauge) (n : Side) (X : Pipes G n) (d : Tap G n) (F : ℕ≃ Pellet X) (δ u : ℝ) (P : BudgetPoint),\n    X.Digests d P δ u → (fused F P d).ForcedFamily P ∧ ∀ s b, Nonempty ((fused F P d).Moves s b)",
+            "line": 23,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Bid/Kitchen.lean",
+            "fragment": "L23-L24"
+          },
+          "proof_context": {
+            "declaration": "YM.Bid.H03",
+            "lines": [
+              23,
+              24
+            ],
+            "conclusion": "The fused activities are a forced family admitting all `Moves`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          107
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

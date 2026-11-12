@@ -1,0 +1,83 @@
+{
+  "id": "Lemma 14.25 step 5",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 150,
+        "rect": [
+          0.12026,
+          0.64588,
+          0.75948,
+          0.07064
+        ]
+      },
+      "title": "Lemma 14.25 step 5: Text, p. 150",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.25 step 5"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Rank.vacuum_bound",
+        "module": "YM.Next.RANK.Determinant",
+        "lines": [
+          80,
+          111
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Rank.vacuum_bound"
+          },
+          "snippet": {
+            "text": "  let T := Axial.axle n\n  let K := Set.pi Set.univ fun _ : T.Free => G.shell (g/4)\n  let q := 3*Fintype.card (Site n)+1\n  have hq : Fintype.card T.Free=q := Axial.free_count n\n  have hk : MeasurableSet K := MeasurableSet.univ_pi fun _ => G.shell_meas _\n  let D := R.scalar-(Fintype.card (Site n):ℝ)*(R.exCost A Λ δ+R.beta*baseBudget R.clip A g)\n  have he : ∀ S∈ K, Real.exp D ≤ R.eval (T.drape S) := by\n    intro S hs\n    have hu : T.drape S ∈ RG.calm G n g := by\n      intro i _\n      change G.chord (T.drape S i) ≤ _\n      by_cases h : i∈T.trunks\n      · rw [show T.drape S i=1 from T.on_tree S ⟨i,h⟩,G.chord_one]; positivity\n      rw [show T.drape S i=S ⟨i,h⟩ from T.off_tree S ⟨i,h⟩]; exact hs ⟨i,h⟩ (mem_univ _)\n    rw [Rep.eval,Activities.gas_one _ _ (RG.voids hu hr),mul_one]\n    exact Real.exp_monotone (R.exponent_lo h (beta_pos g hy).le _ hg hr hu)\n  have hI : Integrable (fun U => R.eval (T.drape U)) (T.order G) := by\n    obtain ⟨C,hC⟩ := (R.envelope h).cost\n    exact Integrable.of_bound ((R.envelope h).meas.comp T.continuous_drape.measurable).aestronglyMeasurable C (Eventually.of_forall fun i => hC _)\n  rw [T.pack R.eval ((R.envelope h).integrable _) (fun k _ => gauge_eval h k)]\n  change Real.exp D * _ ≤ _\n  calc\n    _ ≤ (T.order G).real K * Real.exp D := by\n      rw [mul_comm _ (Real.exp D)]; apply mul_le_mul_of_nonneg_left _ (Real.exp_pos _).le\n      unfold K Tree.Forest.order\n      rw [measureReal_def,Measure.pi_pi,Finset.prod_const,Finset.card_univ,hq,ENNReal.toReal_pow]\n      exact pow_le_pow_left₀ (mul_nonneg O.positive.le (by positivity)) (O.low _ hg (hr.trans R.p.threshold_le)) _\n    _ = ∫ U, K.indicator (fun _ => Real.exp D) U∂T.order G := by rw [integral_indicator hk, setIntegral_const]; rfl\n    _ ≤ _ := integral_mono (integrable_const _|>.indicator hk) hI fun S => by\n      by_cases hs : S∈ K\n      · rw [indicator_of_mem hs]; exact he _ hs\n      rw [indicator_of_notMem hs]; exact hn _",
+            "line": 80,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Determinant.lean",
+            "fragment": "L80-L111"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Rank.vacuum_bound",
+            "lines": [
+              76,
+              113
+            ],
+            "conclusion": "`vacuum_bound` restricts the free links of the axial tree `Axial.axle` (`3K+1` of them) to the shell of radius g/4, where `Activities.gas_one` makes the forced factor 1, and bounds below by the Haar measure."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          150
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
+      }
+    }
+  }
+}

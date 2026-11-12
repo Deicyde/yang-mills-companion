@@ -1,0 +1,84 @@
+{
+  "id": "Lemma 17.7 step 17",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "In [L], ρ_n^∨(Λ_{iβ})^{-1} is the analytic label change `U` given by `Weighty`. The domain N_β is `N ⁻¹' tube n` together with a condition on the path.",
+  "subject": [
+    {
+      "location": {
+        "page": 200,
+        "rect": [
+          0.12026,
+          0.38352,
+          0.75948,
+          0.02312
+        ]
+      },
+      "title": "Lemma 17.7 step 17: Display, p. 200",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 17.7 step 17"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.C19.paneAlong",
+        "module": "YM.Work.C19",
+        "lines": [
+          161,
+          176
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.C19.paneAlong"
+          },
+          "snippet": {
+            "text": "private lemma paneAlong {K : Spins S} (hX : X.FullBody F) {R : S.Rotation}\n    {h : S.RealSpin} (hK : K.Descends R h) {P : DiffPlan S} (hS : S.Symmetric)\n    (hP : P.Inclusions S) (hU : Weighty K) (hTurn : wave_turn F W D X K)\n    (v : Fin n → S.Union) (e : Ray)\n    (N : Full n → Full n) (hN : AnalyticOnNhd ℂ N univ)\n    (hReal : ∀ (a : ℝ) l, N (augment e (↑a) l) = rect (e.boost a) (N l))\n    (γ : ℝ → ℂ) (hγ : Continuous γ) (h0 : γ 0 = 0) {x : Full n} {t : ℝ} (ht : 0 ≤ t)\n    (hend : N (augment e (γ t) x) ∈ tube n)\n    (hpath : ∀ᶠ l in 𝓝[N ⁻¹' tube n] x, ∀ b : ℝ, b ∈ Icc 0 t →\n      N (augment e (γ b) l) ∈ tube n) :\n    Nonempty (Pane (X.emit v ∘ N) (N ⁻¹' tube n) x) := by\n  obtain ⟨d, a, rfl⟩ := P.joint hS hP v\n  obtain ⟨U, ha, hr⟩ := hU d e\n  let V (z : ℂ) (i : Fin n) := S.pin d (U z (a i))\n  let Q (l : Full n) (z : ℂ) := X.emit (V z) (N (augment e z l))\n  refine ⟨⟨fun l => Q l (γ t), ?_, ?_⟩⟩",
+            "line": 161,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/C19.lean",
+            "fragment": "L161-L176"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.C19.paneAlong",
+            "lines": [
+              161,
+              211
+            ],
+            "conclusion": "Along the imaginary-boost path `γ`, the germ at `x` is `Q l (γ t)`, the emission with labels moved by the analytic family `U` and positions by `augment e`, on `N ⁻¹' tube n`, for both orders (`N = id` or `P.name`)."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          200
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
+      }
+    }
+  }
+}

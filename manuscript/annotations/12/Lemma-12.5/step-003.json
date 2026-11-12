@@ -1,0 +1,84 @@
+{
+  "id": "Lemma 12.5 step 3",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "Lean proves the same relation between `δ'` of the quotient and `u` pointwise at a real momentum with `divZ ≠ 0`, using closedness of the restriction at `p₀`, not that `D_a` commutes with `δ'` and `D_a(q_a u) = u`. Zeros of `q_a` are handled afterwards by continuity in `cob_step`.",
+  "subject": [
+    {
+      "location": {
+        "page": 79,
+        "rect": [
+          0.11962,
+          0.35334,
+          0.76011,
+          0.04006
+        ]
+      },
+      "title": "Lemma 12.5 step 3: Text, p. 79",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 12.5 step 3"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.cob_comb_core",
+        "module": "YM.Next.STATIONARY.Lift.Koszul",
+        "lines": [
+          416,
+          425
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.cob_comb_core"
+          },
+          "snippet": {
+            "text": "    have hh : wedge r (q z)=wedge r (q z₀)+d • left ℂ r i := by\n      rw [show q z=_ from symbol_update m' i p]\n      simp only [wedge,Pi.add_apply, add_smul, sum_add_distrib, Pi.smul_apply,Pi.single_apply]\n      simp [ite_smul,z₀,d,p₀]\n    have hD : d • D=v-u := hd\n    have hp' : (left ℂ r i)*ᵥ ((wedge r (q z)).transpose *ᵥ D) = -((left ℂ r i)*ᵥ ((left ℂ r i).transpose *ᵥ u)) := by\n      apply smul_right_injective (r:=d) _ hp\n      dsimp only\n      rw [← Matrix.mulVec_smul, ← Matrix.mulVec_smul,hD,Matrix.mulVec_sub,h1,zero_sub,hh,\n        Matrix.transpose_add,Matrix.add_mulVec,h0,zero_add,Matrix.mulVec_neg,Matrix.transpose_smul,Matrix.smul_mulVec,Matrix.mulVec_smul,smul_neg]",
+            "line": 416,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Lift/Koszul.lean",
+            "fragment": "L416-L425"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.cob_comb_core",
+            "lines": [
+              392,
+              431
+            ],
+            "conclusion": "From closedness of `f` at `p` and at the zeroed momentum `p₀`, and `wedge (q z) = wedge (q z₀) + d • left i`, `hp'` gives `left i · (wedge (q z))ᵀ D = -left i · (left i)ᵀ u` for `d • D = v - u`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          79
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
+      }
+    }
+  }
+}

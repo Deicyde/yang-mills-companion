@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 14.16 step 7",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The two one-step inequalities, the zero start, the interval gain and the finest-level closure are all present; the displayed bound is in Lean in terms of the explicit starting size `w` and `gainChart`, not a subpower E'' absorbing E and E'.",
+  "subject": [
+    {
+      "location": {
+        "page": 140,
+        "rect": [
+          0.11962,
+          0.4714,
+          0.76012,
+          0.07428
+        ]
+      },
+      "title": "Lemma 14.16 step 7: Text, p. 140",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.16 step 7"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.G09.cone_step",
+        "module": "YM.Work.G09",
+        "lines": [
+          150,
+          154
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.G09.cone_step"
+          },
+          "snippet": {
+            "text": "private lemma cone_step {W : Worth} {H : History G} (hC : roomCost H.levels W)\n    (hbank : Bank W H.levels) {F : Labels.Frame G d} {i : ℕ} {u v : F.Coeff}\n    {r t : ℝ} (hstep : direction H W i F u v r t)\n    (h : 32*(1+(H.levels.params i).columns)^2 * F.coeffSize u ≤ r) :\n    32*(1+(H.levels.params (i+1)).columns)^2 * F.coeffSize v ≤ t ∧ puffs (H.S.block i)*r ≤ t := by",
+            "line": 150,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/G09.lean",
+            "fragment": "L150-L154"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.G09.cone_step",
+            "lines": [
+              150,
+              170
+            ],
+            "conclusion": "One step gives `32(1+C_{i+1})^2 * size v <= t` and `puffs * r <= t`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.G09.cone_cost",
+        "module": "YM.Work.G09",
+        "lines": [
+          183,
+          188
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.G09.cone_cost"
+          },
+          "snippet": {
+            "text": "theorem cone_cost {W : Worth} {H : History G} (hC : roomCost H.levels W) (hbank : Bank W H.levels)\n    {F : Labels.Frame G d} {B : SectionData F} {A : Hol G} {N p k o : ℕ}\n    {P : Duet H F N p k o} {w : ℝ} (hP : Duet.Woke P A W B w)\n    (i : ℕ) (hi : k ≤ i) (hi' : i ≤ o) :\n    32*(1+(H.levels.params i).columns)^2 * F.coeffSize (P.voice i).x ≤ P.cost i ∧\n    gainChart H o i * P.cost i ≤ P.cost o := by",
+            "line": 183,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/G09.lean",
+            "fragment": "L183-L188"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.G09.cone_cost",
+            "lines": [
+              183,
+              207
+            ],
+            "conclusion": "Along the interval, `32(1+C_i)^2 size(x_i) <= cost i` and `gainChart o i * cost i <= cost o`, started from `pairing` (coordinate zero at the reference level)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.G09.cost_finest",
+        "module": "YM.Work.G09",
+        "lines": [
+          210,
+          214
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.G09.cost_finest"
+          },
+          "snippet": {
+            "text": "theorem cost_finest {W : Worth} {H : History G} (hC : roomCost H.levels W) (hbank : Bank W H.levels)\n    {F : Labels.Frame G d} {B : SectionData F} {A : Hol G} {N p k o : ℕ}\n    {P : Duet H F N p k o} {w : ℝ} (hP : Duet.Woke P A W B w) :\n    P.cost o ≤ 2*(1+(H.levels.params o).columns)*w := by\n  have hh := (cone_cost hC hbank hP o hP.basic.1 le_rfl).1",
+            "line": 210,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/G09.lean",
+            "fragment": "L210-L214"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.G09.cost_finest",
+            "lines": [
+              210,
+              222
+            ],
+            "conclusion": "At the finest level `cost o <= 2(1+C_o) w`, absorbing the coefficient into the remainder bound."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          140
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

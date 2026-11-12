@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 14.29 step 8",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "[L] keeps the error as a sum of four `expense` terms tending to 0 instead of choosing δ with 4(2n)δ(C+1)^{2n-1} ≤ ε, so the smallness comes from a different quantity.",
+  "subject": [
+    {
+      "location": {
+        "page": 156,
+        "rect": [
+          0.12026,
+          0.6462,
+          0.75982,
+          0.10556
+        ]
+      },
+      "title": "Lemma 14.29 step 8: Text, p. 156",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.29 step 8"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Push.GridApprox.covers",
+        "module": "YM.Push.GRID_APPROXIMATION.Cover",
+        "lines": [
+          96,
+          110
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Push.GridApprox.covers"
+          },
+          "snippet": {
+            "text": "  intro q i j hij\n  filter_upwards [spent_shifts Z Z H hz hz q hx hx i j hij,spent_shifts Z D H hz hd q hx hh i j hij,\n    spent_shifts D Z H hd hz q hh hx i j hij,spent_shifts D D H hd hd q hh hh i j hij] with t ha hb hc hw\n  have he := placed_free Z hz q; have hf := placed_free D hd q\n  unfold Extraction.Order.late at *\n  filter_upwards [ha,hb,hc,hw,he,hf] with k uk vk wk kk ek fk\n  filter_upwards [uk,vk,wk,kk,ek,fk] with l a b c d e F\n  let E m := literal h v (offset x t m) (f.mesh l) (f.per k)\n  let J m := literal h (flipTokens (C:=C) v) (offset (flipCover x) t m) (f.mesh l) (f.per k)\n  have hl m U : Grid.flash h v x (f.mesh l) (f.per k) t m U = E m U - J m U := rfl\n  have hE m : Envelope (E m) := literal_env ..\n  have hJ m : Envelope (J m) := literal_env ..\n  unfold Grid.bill; simp_rw [hl]; dsimp only [cover,flashPlot,receiptPrice]\n  exact realPrice (law G _ (C.beta (f.mesh l) (f.per k))) (e _).1 (F _).1 (e _).1 (F _).1 (hE i) (hJ i) (hE j) (hJ j)\n    (fun U => by simp only [Pi.sub_apply,star_sub, ((e _).2 _).1, ((F _).2 _).1]) a b c d",
+            "line": 96,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/GRID_APPROXIMATION/Cover.lean",
+            "fragment": "L96-L110"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.GridApprox.covers",
+            "lines": [
+              84,
+              110
+            ],
+            "conclusion": "For `i < j`, intersecting the four eventual sets of `spent_shifts` (Z/Z, Z/D, D/Z, D/D), `covers` bounds `|<g_i g_j> - bill i j|` by `receiptPrice`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Push.GridApprox.realPrice",
+        "module": "YM.Push.GRID_APPROXIMATION.Cover",
+        "lines": [
+          35,
+          55
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Push.GridApprox.realPrice"
+          },
+          "snippet": {
+            "text": "private lemma realPrice {A B C D E F J K : X → ℂ}\n    (ha : Envelope A) (hb : Envelope B) (hc : Envelope C) (hd : Envelope D)\n    (he : Envelope E) (hf : Envelope F) (hj : Envelope J) (hk : Envelope K)\n    (hp : ∀ x, star ((A-B) x) = (A-B) x) {a b c d : ℝ}\n    (h₁ : ‖bi μ A C - bi μ E J‖ ≤ a) (h₂ : ‖bi μ A D - bi μ E K‖ ≤ b)\n    (h₃ : ‖bi μ B C - bi μ F J‖ ≤ c) (h₄ : ‖bi μ B D - bi μ F K‖ ≤ d) :\n    |(∫ x, ((A-B) x).re * ((C-D) x).re ∂μ) - ∫ x, ((E x-F x)*(J x-K x)).re ∂μ| ≤ (a+b)+(c+d) := by\n  have ht {A B C D : X → ℂ} (ha : Envelope A) (hb : Envelope B) (hc : Envelope C) (hd : Envelope D) :\n      (∫ x, ((A x-B x)*(C x-D x)).re ∂μ) = (bi μ (A-B) (C-D)).re :=\n    integral_re (((ha.subC hb).mulC (hc.subC hd)).integrableC μ)\n  have hl (x) : ((A-B) x).re * ((C-D) x).re=((A x-B x)*(C x-D x)).re := by\n    have hh : ↑((A-B) x).re=((A-B) x) := Complex.conj_eq_iff_re.mp (hp x)\n    change _ = (((A-B) x)*((C-D) x)).re; conv_rhs => rw [← hh]\n    simp\n  simp_rw [hl]; rw [ht ha hb hc hd,ht he hf hj hk, ← Complex.sub_re]\n  apply (Complex.abs_re_le_norm _).trans\n  rw [swapped μ A B C D ha hb hc hd,swapped μ E F J K he hf hj hk]\n  rw [show (bi μ A C- _ - (bi μ B C- _)) - (bi μ E J-bi μ E K-(bi μ F J-bi μ F K))=\n      (bi μ A C-bi μ E J)-(bi μ A D-bi μ E K) - ((bi μ B C-bi μ F J)-(bi μ B D-bi μ F K)) by abel]\n  exact (norm_sub_le ..).trans (add_le_add ((norm_sub_le ..).trans (add_le_add h₁ h₂))\n    ((norm_sub_le ..).trans (add_le_add h₃ h₄)))",
+            "line": 35,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/GRID_APPROXIMATION/Cover.lean",
+            "fragment": "L35-L55"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.GridApprox.realPrice",
+            "lines": [
+              35,
+              55
+            ],
+            "conclusion": "`realPrice` expands the product of two real differences into four terms and bounds `|int Re*Re - int Re(E-F)(J-K)|` by `(a+b)+(c+d)` from the four pair estimates."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Push.GridApprox.cover",
+        "module": "YM.Push.GRID_APPROXIMATION.Cover",
+        "lines": [
+          76,
+          82
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Push.GridApprox.cover"
+          },
+          "snippet": {
+            "text": "  small := receiptPrice Z D\n  grows := by\n    have e1 := expense_zero (combined Z D) (combined_gives Z D hz hd)\n    have e0 := expense_zero (combined Z Z) (combined_gives Z Z hz hz)\n    have e2 := expense_zero (combined D Z) (combined_gives D Z hd hz)\n    have e3 := expense_zero (combined D D) (combined_gives D D hd hd)\n    simpa only [add_zero] using! ((e0.add e1).add (e2.add e3))",
+            "line": 76,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/GRID_APPROXIMATION/Cover.lean",
+            "fragment": "L76-L82"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.GridApprox.cover",
+            "lines": [
+              73,
+              82
+            ],
+            "conclusion": "`small := receiptPrice Z D` tends to 0, as the sum of four `expense_zero` limits."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          156
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; a re-check of closeMatch records changed it from closeMatch; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "id": "Corollary 17.6 step 2",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The Lean bound carries the factor ||f|| of the character as a functional, which [M] omits (it is 1 for a character); the bound is in terms of D with ||A.place|| <= D.",
+  "subject": [
+    {
+      "location": {
+        "page": 197,
+        "rect": [
+          0.12026,
+          0.34884,
+          0.75948,
+          0.02248
+        ]
+      },
+      "title": "Corollary 17.6 step 2: Display, p. 197",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Corollary 17.6 step 2"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.B13.buys",
+        "module": "YM.Work.B13",
+        "lines": [
+          51,
+          72
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.B13.buys"
+          },
+          "snippet": {
+            "text": "private lemma buys (H : S.Hierarchy) (hs : Steady V) (ho : P.Out) (hr : P.receives T i)\n    (h : Slab timeAxis d w) (D : ℝ) (hb : ‖A.place d w‖ ≤ D) : QRead T D h := by\n  have hd : 0 ≤ D := le_trans (norm_nonneg _) hb\n  haveI : IsClosed (A.algebra : Set V.VacuumOp) := isClosed_closure\n  letI : CStarAlgebra A.algebra := StarSubalgebra.cstarAlgebra A.algebra\n  let f : A.algebra →L[ℂ] ℂ := { (P.character i).toAlgHom.toLinearMap with cont := ho.values i }\n  have he (v : Future C.book timeAxis) : ‖T.gram timeAxis v.val v.val‖ ≤\n      ‖f‖ * (‖Ground.X A v‖ * ‖Ground.X A v‖) := by\n    let p := M A _ (twoSides v.property v.property)\n    have hp : f p=T.gram timeAxis v.val v.val :=\n      Extraction.Retain.pops A P hr _ (twoSides v.property v.property)\n    rw [← hp]\n    apply (f.le_opNorm p).trans_eq\n    change ‖f‖ * ‖p.val‖ = _\n    rw [show p.val = _ from slim A H hs v v, ContinuousLinearMap.norm_adjoint_comp_self]\n  intro v\n  refine ⟨‖f‖ * (‖Ground.X A v‖ * ‖Ground.X A v‖),fun n => ?_⟩\n  apply (he (ride h v n)).trans\n  have hx := x_train A H h D hb v n\n  calc\n    _ ≤ ‖f‖*((‖Ground.X A v‖ * D^(2*n))*(‖Ground.X A v‖ * D^(2*n))) := by gcongr\n    _ = _ := by rw [show 4*n=2*n+2*n by omega, pow_add]; ring",
+            "line": 51,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/B13.lean",
+            "fragment": "L51-L72"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.B13.buys",
+            "lines": [
+              51,
+              72
+            ],
+            "conclusion": "`gram v v` of the ride is bounded by ||f|| (||X A v|| D^(2n))^2 where f is the character functional."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.B13.x_train",
+        "module": "YM.Work.B13",
+        "lines": [
+          30,
+          48
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.B13.x_train"
+          },
+          "snippet": {
+            "text": "private lemma x_train (H : S.Hierarchy) (h : Slab timeAxis d w) (D : ℝ) (hb : ‖A.place d w‖ ≤ D)\n    (v : Future C.book timeAxis) (n : ℕ) : ‖Ground.X A (ride h v n)‖ ≤ ‖Ground.X A v‖ * D^(2*n) := by\n  have hd : 0 ≤ D := le_trans (norm_nonneg _) hb\n  induction n with\n  | zero => rw [show ride h v 0=v from rfl]; simp\n  | succ n ih =>\n    let u := A.place d w\n    let q := Ground.X A (ride h v n)\n    have he : ride h v (n+1) = entering (mirrorsSlab h) (entering h (ride h v n)) := by\n      simp [ride,iterate_succ_apply']\n    rw [he,x_enter A (mirrorsSlab h), x_enter A h, ← A.adjoints h H.translations]\n    change ‖(u.adjoint.comp u).comp q‖ ≤ _\n    change ‖q‖ ≤ _ at ih\n    change ‖u‖ ≤ D at hb\n    calc\n      _ ≤ ‖u.adjoint.comp u‖ * ‖q‖ := ContinuousLinearMap.opNorm_comp_le _ _\n      _ = (‖u‖ * ‖u‖) * ‖q‖ := by rw [ContinuousLinearMap.norm_adjoint_comp_self]\n      _ ≤ (D*D)*(‖Ground.X A v‖ * D^(2*n)) := by gcongr\n      _ = _ := by rw [Nat.mul_add, pow_add]; ring",
+            "line": 30,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/B13.lean",
+            "fragment": "L30-L48"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.B13.x_train",
+            "lines": [
+              30,
+              48
+            ],
+            "conclusion": "||X A (ride h v n)|| <= ||X A v|| D^(2n)."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          197
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

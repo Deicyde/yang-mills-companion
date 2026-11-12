@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 14.1 step 18",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "broadMatch",
+  "note": "[L] works with a free parameter s ≥ 1 in the opening condition s·B² ≤ a_m/a_k, and [M] takes s = 1. The minimality bound in [L] carries the extra factor s.",
+  "subject": [
+    {
+      "location": {
+        "page": 126,
+        "rect": [
+          0.12026,
+          0.18427,
+          0.76194,
+          0.03291
+        ]
+      },
+      "title": "Lemma 14.1 step 18: Text, p. 126",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.1 step 18"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stock.Tabs.mayOpen",
+        "module": "YM.Overlay.Prior",
+        "lines": [
+          36,
+          58
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stock.Tabs.mayOpen"
+          },
+          "snippet": {
+            "text": "lemma mayOpen (h : Tabs a) (m : ℕ) : ∃ b, opens a s m b := by\n  by_cases hs : 0≤s\n  · have hu i : a.S.a (i+1)* (a.clock.coverSize (i+1):ℝ)^ (2:ℕ) ≤\n        ((2:ℝ)/3)*(a.S.a i * (a.clock.coverSize i:ℝ)^ (2:ℕ)) := by\n      have hb : (a.clock.coverSize (i+1):ℝ)^ (2:ℕ) ≤ 2*(a.clock.coverSize i:ℝ)^ (2:ℕ) := by exact_mod_cast h.grows i\n      rw [a.S.a_step]\n      have ha := a.S.a_pos i\n      apply le_trans (mul_le_mul (b:=a.S.a i/3) ?_ hb (by positivity) (by positivity)) (by ring_nf; rfl)\n      gcongr; exact_mod_cast a.S.block_large i\n    let f (i : ℕ) := a.S.a i * ((a.clock.coverSize i:ℝ)^ (2:ℕ))\n    have hv i : f i ≤ f 0*((2:ℝ)/3)^i := by\n      induction i with\n      | zero => simp\n      | succ i ih => apply (hu i).trans; apply (mul_le_mul_of_nonneg_left ih (by positivity : 0≤(2:ℝ)/3)).trans_eq; ring\n    have ht : Tendsto (fun i : ℕ => s*f i) atTop (𝓝 0) := by\n      have he : Tendsto f atTop (𝓝 0) := squeeze_zero (fun i => mul_nonneg (a.S.a_pos i).le (sq_nonneg _)) hv (by\n        simpa only [mul_zero] using (tendsto_pow_atTop_nhds_zero_of_lt_one (r:= (2:ℝ)/3) (by norm_num) (by norm_num)).const_mul (f 0))\n      simpa only [mul_zero] using he.const_mul s\n    obtain ⟨i,H,he⟩ := ((eventually_ge_atTop m).and (ht.eventually (ge_mem_nhds\n       (a.S.a_pos m)))).exists\n    refine ⟨i,H,(le_div_iff₀ (a.S.a_pos _)).2 (le_trans (le_of_eq ?_) (show s*f i≤_ from he))⟩\n    unfold f; ring\n  refine ⟨m,le_rfl,(mul_nonpos_of_nonpos_of_nonneg (le_of_not_ge hs) (by positivity)).trans (div_nonneg (a.S.a_pos m).le (a.S.a_pos m).le)⟩",
+            "line": 36,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Overlay/Prior.lean",
+            "fragment": "L36-L58"
+          },
+          "proof_context": {
+            "declaration": "YM.Stock.Tabs.mayOpen",
+            "lines": [
+              36,
+              58
+            ],
+            "conclusion": "For every m there is b ≥ m with s·B_b² ≤ a_m/a_b, via a_i B_i² decreasing by the factor 2/3 (`grows` and a_{i+1} ≤ a_i/3)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stock.Tabs.expensive",
+        "module": "YM.Overlay.Prior",
+        "lines": [
+          71,
+          83
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stock.Tabs.expensive"
+          },
+          "snippet": {
+            "text": "lemma expensive (h : Tabs a) (hs : 1 ≤ s) (i : ℕ) (F : ℕ) (hF : chosen a s h i=F+1) :\n    a.S.a i / a.S.a (F+1) ≤ s * ((a.S.block F).val * (a.clock.coverSize F:ℝ)^2) := by\n  have ht := (opened a s h i).1\n  have hh := a.S.a_pos F\n  have hg : (3:ℝ)≤ (a.S.block F).val := by exact_mod_cast (a.S.block_large F)\n  have hp : 0< ((a.S.block F).val:ℝ) := lt_of_lt_of_le (by norm_num) hg\n  have h1 : (1:ℝ) ≤ (a.clock.coverSize F:ℝ) := by exact_mod_cast (a.budget F).B_pos\n  rcases eq_or_lt_of_le ht with e|e\n  · have hw : a.S.a i=a.S.a (F+1) := congr_arg a.S.a (e.trans hF)\n    rw [hw,div_self (a.S.a_pos _).ne']\n    exact one_le_mul_of_one_le_of_one_le hs (one_le_mul_of_one_le_of_one_le (by linarith) (one_le_pow₀ h1))\n  rw [a.S.a_step, show a.S.a i / (a.S.a F / (a.S.block F).val)= (a.S.a i/a.S.a F)*(a.S.block F).val by field_simp]\n  exact (mul_le_mul_of_nonneg_right (needs a s h e hF) hp.le).trans_eq (by ring)",
+            "line": 71,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Overlay/Prior.lean",
+            "fragment": "L71-L83"
+          },
+          "proof_context": {
+            "declaration": "YM.Stock.Tabs.expensive",
+            "lines": [
+              71,
+              83
+            ],
+            "conclusion": "If the first open level is F+1 then a_i/a_{F+1} ≤ s·(block F·B_F²), which is (E-first-open)."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          126
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

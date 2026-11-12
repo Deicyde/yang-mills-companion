@@ -1,0 +1,83 @@
+{
+  "id": "Lemma 16.2 step 7",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 173,
+        "rect": [
+          0.12026,
+          0.20178,
+          0.75996,
+          0.03713
+        ]
+      },
+      "title": "Lemma 16.2 step 7: Text, p. 173",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.2 step 7"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Maxwell.Free.clears_faint",
+        "module": "YM.Next.MAXWELL.Faint",
+        "lines": [
+          80,
+          108
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Maxwell.Free.clears_faint"
+          },
+          "snippet": {
+            "text": "lemma clears_faint {f : E4 → F} (H : Pole r f) (hr : 2 ≤ r) (S : Clears (r-2) f) : EqOn f 0 away := by\n  have he {s : ℕ} (B : Clears s f) (h : s < r-1) : Clears 0 f := by\n    induction s with\n    | zero => exact B\n    | succ s ih =>\n      apply ih _ (by omega)\n      obtain ⟨g,hg,hv⟩ := B\n      let w := (4*(s+1:ℕ)*((s:ℝ)+2 - (r:ℝ)):ℝ)\n      have hw : w≠0 := by\n        have ht : s+2 < r := by omega\n        apply mul_ne_zero (by positivity); apply sub_ne_zero.mpr\n        exact (by exact_mod_cast Nat.ne_of_lt ht : (s:ℝ)+2≠r)\n      refine ⟨w⁻¹ • lap g,(contDiff_iff_contDiffAt.mpr fun y => lap_smooth hg.contDiffAt).const_smul _,fun x hx => ?_⟩\n      have he : g =ᶠ[𝓝 x] rad (s+1) • f := (show EqOn g _ away from fun y h => (hv y h).symm).eventuallyEq_of_mem (open_away.mem_nhds hx)\n      rw [Pi.smul_apply, lap_local he, lap_valued H s hx]; exact (inv_smul_smul₀ hw _).symm\n  obtain ⟨g,hg,hv⟩ := he S (by omega)\n  intro x hx\n  let y (t : ℝ) := t • x\n  have ht : Tendsto id little (𝓝 (0:ℝ)) := tendsto_id.mono_left nhdsWithin_le_nhds\n  have hm := (ht.pow r).smul ((hg.continuous.continuousAt (x:=(0:ℝ) • x)).tendsto.comp (ht.smul tendsto_const_nhds))\n  rw [zero_pow (n:=r) (by omega),zero_smul] at hm\n  have hv : Tendsto (fun _ : ℝ => f x) little (𝓝 0) := by\n    apply hm.congr'\n    filter_upwards [self_mem_nhdsWithin (a:=(0:ℝ)) (s:=Ioi 0)] with t hl\n    change t^r • g (y t)=f x\n    have h : 0 < t := hl\n    rw [← hv _ (show y t∈away from smul_ne_zero h.ne' hx),show rad 0 _=1 from pow_zero _,one_smul]\n    unfold y; rw [H.degree _ h _ hx,inv_pow,smul_inv_smul₀ (by positivity : t^r≠0)]\n  exact tendsto_nhds_unique tendsto_const_nhds hv",
+            "line": 80,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/MAXWELL/Faint.lean",
+            "fragment": "L80-L108"
+          },
+          "proof_context": {
+            "declaration": "YM.Maxwell.Free.clears_faint",
+            "lines": [
+              80,
+              108
+            ],
+            "conclusion": "A harmonic homogeneous pole `f` of order `r≥2` that is cleared by `rad (r-2)` (real analytic after multiplication) vanishes off the origin."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          173
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
+      }
+    }
+  }
+}

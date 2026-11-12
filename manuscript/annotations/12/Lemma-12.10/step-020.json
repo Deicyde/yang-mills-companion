@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 12.10 step 20",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The drift is the parameter `drift` of the next stage (`kinetic` field of `Planned`), and the comparison with omega_j^RG is not stated in these lines; the density identity at Delta is `eval_install` together with `realizes`.",
+  "subject": [
+    {
+      "location": {
+        "page": 88,
+        "rect": [
+          0.12026,
+          0.8635,
+          0.75948,
+          0.03782
+        ]
+      },
+      "title": "Lemma 12.10 step 20: Text, p. 88",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 12.10 step 20"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVNext.CouplingReset.Template.eval_install",
+        "module": "YM.UVNext.COUPLING_RESET.Reset",
+        "lines": [
+          94,
+          96
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVNext.CouplingReset.Template.eval_install"
+          },
+          "snippet": {
+            "text": "lemma eval_install {x : ℝ} (hx : 0 < H x 1) (U : Config G n) :\n    (A.install H base d x).eval U = H x 1 * A.shape base U x (d x) := by\n  rw [install,eval_trial,scalar, div_mul_cancel₀ _ (sites_pos n).ne', Real.exp_log hx]",
+            "line": 94,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/COUPLING_RESET/Reset.lean",
+            "fragment": "L94-L96"
+          },
+          "proof_context": {
+            "declaration": "YM.UVNext.CouplingReset.Template.eval_install",
+            "lines": [
+              94,
+              96
+            ],
+            "conclusion": "The installed trial has `eval U = H x 1 * shape base U x (d x)`, the density identity after multiplying by `H(1) = e^{v|Λ|}`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVNext.CouplingReset.advance",
+        "module": "YM.UVNext.COUPLING_RESET.Advance",
+        "lines": [
+          186,
+          189
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVNext.CouplingReset.advance"
+          },
+          "snippet": {
+            "text": "  refine ⟨⟨H,hW.2,⟨rfl,rfl,rfl,⟨hD,he.catalog.valid x hx _ hw⟩,hW.1⟩,hr.forced x hx _ hw,?_⟩,abs_le.mpr hw⟩\n  change |(Q x).beta + B.kin.alpha N m + d x - (Q x).beta - B.kin.alpha N m| ≤ _\n  rw [show (Q x).beta + B.kin.alpha N m + d x - (Q x).beta - B.kin.alpha N m = d x by ring]\n  exact (abs_le.mpr hw).trans (q.unit ..)",
+            "line": 186,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/COUPLING_RESET/Advance.lean",
+            "fragment": "L186-L189"
+          },
+          "proof_context": {
+            "declaration": "YM.UVNext.CouplingReset.advance",
+            "lines": [
+              175,
+              189
+            ],
+            "conclusion": "The output coupling is `(Q x).beta + alpha + d x` and `Move` holds with `|u.beta - v.beta - alpha| <= 1`, i.e. `|Δ_u| <= 1`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Input.Directed.links",
+        "module": "YM.PCalc.Band",
+        "lines": [
+          57,
+          63
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Input.Directed.links"
+          },
+          "snippet": {
+            "text": "lemma links {N m p} (hk : m<N) {u v} (h : Move B N m p u v) : B.bake.Relays N m p u v := by\n  refine ⟨h.ident,?_,h.step⟩\n  obtain ⟨h₁,h₂⟩ := abs_le.mp h.δ\n  have he := B.support.kinetic N m hk\n  apply abs_le.mpr\n  obtain ⟨ht,hi⟩ := (abs_le.mp <| le_sub_iff_add_le.mpr he)\n  constructor <;> linarith",
+            "line": 57,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PCalc/Band.lean",
+            "fragment": "L57-L63"
+          },
+          "proof_context": {
+            "declaration": "YM.Input.Directed.links",
+            "lines": [
+              57,
+              63
+            ],
+            "conclusion": "From `Move` and the kinetic bound `|alpha + slope*log L| + 1 <= drift`, `|beta_fine - beta_coarse - slope*log L| <= drift`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          88
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

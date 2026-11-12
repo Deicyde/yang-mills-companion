@@ -1,0 +1,122 @@
+{
+  "id": "Lemma 16.2 step 3",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 172,
+        "rect": [
+          0.12026,
+          0.4025,
+          0.76293,
+          0.15688
+        ]
+      },
+      "title": "Lemma 16.2 step 3: Text, p. 172",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.2 step 3"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Maxwell.Free.hosting",
+        "module": "YM.Next.MAXWELL.Living",
+        "lines": [
+          63,
+          107
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Maxwell.Free.hosting"
+          },
+          "snippet": {
+            "text": "theorem hosting (G : Gauge) (j : ℕ) : ∃ d, ∀ (k : ℕ) (p : WickPol G), p∈shelf G j → Pure k p → Painted p → p ∈ Host G d k := by\n  classical\n  let R := ↥(Rack G j)\n  letI := finstock G j\n  let V : Set R := {p|∃ k : ℕ,0< k ∧ Pure k p.val ∧ Painted p.val}\n  let W : Submodule R R := Submodule.span R V\n  obtain ⟨s,hs,h⟩ := (Submodule.fg_span_iff_fg_span_finset_subset (R:=R) V).mp (show W.FG from IsNoetherian.noetherian _)\n  choose L hL using (fun p : R => cap_exists p.val)\n  let d := s.sup L\n  refine ⟨d,?_⟩\n  intro k\n  induction k using Nat.strong_induction_on with\n  | h k ih =>\n    intro p hp hK H\n    by_cases ht : k=0\n    · subst k; rw [bulk_zero p hK]\n      have h : (1:WickPol G)∈ Host G d 0 := by\n        apply Submodule.subset_span; exact ⟨0,fun _ => 0,fun _ => 1, isEmptyElim,by simp,by simp⟩\n      nth_rw 1 [← mul_one (C _)]; rw [C_mul']; exact Submodule.smul_mem _ _ h\n    let u : R := ⟨p,hp⟩\n    let A : WickPol G →ₗ[ℂ] WickPol G := moyenne G |>.comp (distill k)\n    have he (b : R) (hh : b∈ Submodule.span R (s:Set R)) (r : R) : A (r.val*b.val) ∈ Host G d k := by\n      induction hh using Submodule.span_induction generalizing r with\n      | mem b hh =>\n        obtain ⟨l,ht,h',H⟩ := hs hh\n        have hd : b.val∈shellSector G d := chain (Finset.le_sup (f:=L) hh) (sector.mpr ⟨hL b,H⟩)\n        change moyenne G (distill k (_ * _)) ∈ _\n        rw [distills_mul _ _ k l h']; split_ifs with hw\n        · rw [paints_fact H]\n          have hi : k-l < k := by omega\n          have hy := gloss_shelf (fun i => (1:ℕ)) (k-l) r.val r.property\n          let B := moyenne G (distill (k-l) r.val)\n          have ha : k-l+l=k := by omega\n          have hk : Pure (k-l) B := by\n            rw [show B= distill (k-l) (moyenne G r.val) from (moyenne_gloss (fun _ => (1:ℕ)) _ _).symm]\n            exact weightedHomogeneousComponent_isWeightedHomogeneous (k-l) _\n          have hm := host_extend hd h' (ih (k-l) hi B (spaced_moy _ hy) hk (painted_moy _))\n          rw [ha] at hm; exact hm\n        rw [map_zero]; exact Submodule.zero_mem _\n      | zero => simp [R]\n      | add p q _ _ hx hy =>\n        change A (r.val*(p.val+q.val))∈_; rw [mul_add,map_add]; exact Submodule.add_mem _ (hx r) (hy r)\n      | smul c p _ hv => change A (r.val*(c.val*p.val)) ∈ _; rw [← mul_assoc]; exact hv (r*c)\n    have ht := he u (h ▸ Submodule.subset_span (show u∈V from ⟨k,Nat.pos_of_ne_zero ht,hK,H⟩)) 1\n    change moyenne G (distill k (1*p)) ∈ _ at ht; rwa [one_mul,(distilled_eq k p).mp hK,paints_self H] at ht",
+            "line": 63,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/MAXWELL/Living.lean",
+            "fragment": "L63-L107"
+          },
+          "proof_context": {
+            "declaration": "YM.Maxwell.Free.hosting",
+            "lines": [
+              63,
+              107
+            ],
+            "conclusion": "By Noetherianity of `Rack G j` (`finstock`), finitely many pure painted generators, gauge averaging `moyenne` and induction on degree, every invariant pure polynomial lies in `Host G d k`, products of factors of weight at most `d`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Maxwell.Free.finstock",
+        "module": "YM.Next.MAXWELL.Living",
+        "lines": [
+          54,
+          61
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Maxwell.Free.finstock"
+          },
+          "snippet": {
+            "text": "private theorem finstock (G : Gauge) (j : ℕ) : IsNoetherianRing ↥(Rack G j) := by\n  classical\n  let V := {i : Slot G|i.1 ≤ j}\n  let W := (a : Fin (j+1)) × Fin (legDim G a.val)\n  let L : V → W := fun i => ⟨⟨i.val.1, Nat.lt_succ_of_le i.property⟩,i.val.2⟩\n  haveI : Finite V := Finite.of_injective L (fun i j h => by\n    let T : W → Slot G := fun p => ⟨p.1.val,p.2⟩; exact Subtype.ext (congr_arg T h))\n  exact isNoetherianRing_of_ringEquiv _ (supportedEquivMvPolynomial (R:=ℂ) V).symm.toRingEquiv",
+            "line": 54,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/MAXWELL/Living.lean",
+            "fragment": "L54-L61"
+          },
+          "proof_context": {
+            "declaration": "YM.Maxwell.Free.finstock",
+            "lines": [
+              54,
+              61
+            ],
+            "conclusion": "`Rack G j` (polynomials on jet slots up to order `j`) is a Noetherian ring."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          172
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

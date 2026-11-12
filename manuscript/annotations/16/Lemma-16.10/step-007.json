@@ -1,0 +1,356 @@
+{
+  "id": "Lemma 16.10 step 7",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 185,
+        "rect": [
+          0.12026,
+          0.55318,
+          0.76294,
+          0.10746
+        ]
+      },
+      "title": "Lemma 16.10 step 7: Text, p. 185",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.10 step 7"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Ward.traverses",
+        "module": "YM.Ward.Sum",
+        "lines": [
+          92,
+          136
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Ward.traverses"
+          },
+          "snippet": {
+            "text": "theorem traverses (h : S.Hierarchy) (he : W.Derivatives S) (hc : commutes W T)\n    {x : Points n} (hx : x∈conf _) (q : Fin n → S.Tag) (a : Axis) (k : Fin n) (K : Ortho.Skew) :\n    let r := update q k (rise W a (q k))\n    D (Points.direction k a) (angular W T q K) x= angular W T r K x := by\n  intro r\n  let t := Points.direction k a\n  let comp (i) := disc (update q i (turns T K (q i)))\n  let L (i) (b : Axis) := disc (update q i (rise W b (q i)))\n  let y (i) (b) (z : Points n) := factor i b K z • L i b z\n  let f (i) z := comp i z + ∑ b, y i b z\n  have hu (i : Fin n) b : DifferentiableAt ℝ (L i b) x := (cont_disc h _ hx).differentiableAt (by simp)\n  have hh i b : DifferentiableAt ℝ (y i b) x := (factor i b K).differentiableAt.smul (hu i b)\n  have hz i : DifferentiableAt ℝ (comp i) x := (cont_disc h _ hx).differentiableAt (by simp)\n  have hp i : DifferentiableAt ℝ (f i) x := (hz i).add (DifferentiableAt.fun_sum fun b hb => hh i b)\n  have hm (i : Fin n) : D t (f i) x=D t (comp i) x+∑ b, D t (y i b) x := by\n    simp only [f,D,fderiv_fun_add (hz i) (DifferentiableAt.fun_sum (fun b hb => hh i b)),\n      fderiv_fun_sum (fun b hb => hh i b),_root_.sum_apply, _root_.add_apply]\n  change fderiv ℝ (fun z => ∑ i, f i z) x t= _\n  rw [fderiv_fun_sum (fun i hi => hp i),_root_.sum_apply]; unfold angular\n  apply Finset.sum_congr rfl; intro i hi\n  change D t (f i) x=_; rw [hm]\n  by_cases hv : i=k\n  · subst i; simp only [r,update_self,update_idem]\n    -- derivative comm produces orbital cancel\n    have hvb b : D t (y k b) x=(K.val b a) • disc (update q k (rise W b (q k))) x + factor k b K x • disc\n        (update q k (rise W b (rise W a (q k)))) x := by\n      unfold y\n      rw [D_prod _ _ _ x (hu k b)]\n      dsimp only [t,L]\n      rw [fac,if_pos rfl,fromD W h he hx,update_self, update_idem]; unfold rise\n      simp only\n      rw [W.abelian h.laws.toSymmetric he h.smooth]\n    simp_rw [hvb,Finset.sum_add_distrib,← add_assoc]\n    congr 1\n    unfold comp; rw [fromD W h he hx,update_self,update_idem]; unfold turns rise; simp only\n    simp_rw [← takes,Complex.real_smul]\n    rw [← hc _,map_add,map_sum]; simp\n  have hu' : r i=q i := update_of_ne hv ..\n  rw [hu']; congr 1\n  · unfold comp; rw [fromD W h he hx,update_of_ne (Ne.symm hv),update_comm (show k≠i from (Ne.symm hv))] -- order check\n  apply Finset.sum_congr rfl; intro b hb\n  unfold y\n  rw [D_prod _ _ _ x (hu i b)]\n  dsimp only [L,t]; rw [fac,if_neg (Ne.symm hv),zero_smul,zero_add,fromD W h he hx,update_of_ne (Ne.symm hv),update_comm (show k≠i from (Ne.symm hv))]\n  rfl",
+            "line": 92,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Ward/Sum.lean",
+            "fragment": "L92-L136"
+          },
+          "proof_context": {
+            "declaration": "YM.Ward.traverses",
+            "lines": [
+              92,
+              136
+            ],
+            "conclusion": "`traverses` shows the derivative of `angular W T q K` in direction `(k, a)` is the angular sum with the label `q k` replaced by `rise W a (q k)`, using the commutator `commutes`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Ward.jet_line",
+        "module": "YM.Ward.Motion",
+        "lines": [
+          31,
+          42
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Ward.jet_line"
+          },
+          "snippet": {
+            "text": "lemma jet_line (h : S.Hierarchy) (g : W.Derivatives S) (hc : commutes W T) (K : Ortho.Skew) (q : Fin n → S.Tag)\n    (x : Points n) (i b s) (ht : cast x i b s ∈ conf _) (hp : ∀ w, angular W T w K (cast x i b s)=0) (m : ℕ) :\n    iteratedDeriv m (angular W T q K ∘ cast x i b) s=0 := by\n  induction m generalizing q with\n  | zero => simp [hp]\n  | succ m ih =>\n    have hx := (conf_open _).mem_nhds ht\n    have hu : deriv (angular W T q K ∘ cast x i b) =ᶠ[𝓝 s] angular W T (update q i (rise W b (q i))) K ∘ cast x i b :=\n      Eventually.mono (p := fun j => cast x i b j ∈ conf n) ((moves _ _ _ s).continuousAt.preimage_mem_nhds hx)\n        fun k hk => (arrow W T h g hc K q _ _ _ _ hk).deriv\n    rw [iteratedDeriv_succ', hu.iteratedDeriv_eq (n := m)]\n    exact ih _",
+            "line": 31,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Ward/Motion.lean",
+            "fragment": "L31-L42"
+          },
+          "proof_context": {
+            "declaration": "YM.Ward.jet_line",
+            "lines": [
+              31,
+              42
+            ],
+            "conclusion": "`jet_line` shows that if all angular sums vanish at a point of a motion `cast x i b`, every iterated derivative of `angular W T q K ∘ cast x i b` vanishes there."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Ward.F",
+        "module": "YM.Ward.Rows",
+        "lines": [
+          31,
+          31
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Ward.F"
+          },
+          "snippet": {
+            "text": "def F (p : S.Tag × S.Tag) (x : PDE.V) : ℂ := pair p.1 p.2 (lift a b x)",
+            "line": 31,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Ward/Rows.lean",
+            "fragment": "L31-L31"
+          },
+          "proof_context": {
+            "declaration": "YM.Ward.F",
+            "lines": [
+              31,
+              31
+            ],
+            "conclusion": "`F a b p x` is `Φ(t, s) = S(u(t e_a + s e_b), v(0))` in the plane `(a, b)`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Ward.Q",
+        "module": "YM.Ward.Circles",
+        "lines": [
+          89,
+          90
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Ward.Q"
+          },
+          "snippet": {
+            "text": "def Q (K : Ortho.Skew) (a : Axis) (p : S.Tag × S.Tag) (x : PDE.V) := pair\n  (spin T p.1 K (-Circle.θ x)) (spin T p.2 K (-Circle.θ x)) (Circle.r x • basis a)",
+            "line": 89,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Ward/Circles.lean",
+            "fragment": "L89-L90"
+          },
+          "proof_context": {
+            "declaration": "YM.Ward.Q",
+            "lines": [
+              89,
+              90
+            ],
+            "conclusion": "`Q T K a p` is `Ψ`: the pair of `exp(-θ D_K)`-rotated labels (`spin`) at the axial point `r • basis a`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Ward.htQ",
+        "module": "YM.Ward.Circles",
+        "lines": [
+          115,
+          128
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Ward.htQ"
+          },
+          "snippet": {
+            "text": "lemma htQ (K) (p : S.Tag × S.Tag) : AnalyticOnNhd ℝ (Q T K a p) PDE.side := by\n  obtain ⟨⟨d,u⟩,⟨e,v⟩⟩ := p\n  intro x hx\n  change AnalyticAt ℝ (fun x => E (clock T u K (-Circle.θ x)) (clock T v K (-Circle.θ x)) (Circle.r x • basis a)) x\n  simp_rw [stars (sector d) (sector e) (clock T u K _) (clock T v K _)]\n  -- need selectively\n  apply ContDiffAt.analyticAt; refine ContDiffAt.sum (fun i hi => ?_)\n  apply ContDiffAt.sum; intro j hj\n  let A : S.Field d →L[ℝ] ℂ := (LinearMap.toContinuousLinearMap ((sector (S := S) d).coord i)).restrictScalars ℝ\n  let B : S.Field e →L[ℝ] ℂ := (LinearMap.toContinuousLinearMap ((sector (S := S) e).coord j)).restrictScalars ℝ\n  obtain ⟨hθ,hr⟩ := Circle.uniform hx\n  exact ((((A.analyticAt _).comp ((atClock T u K _).comp hθ.neg)).mul\n    ((B.analyticAt _).comp ((atClock T v K _).comp hθ.neg))).mul\n    ((radial V h ⟨d,sector (S := S) d i⟩ ⟨e,sector (S := S) e j⟩ (Circle.r x) (Circle.pos hx)).comp hr)).contDiffAt",
+            "line": 115,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Ward/Circles.lean",
+            "fragment": "L115-L128"
+          },
+          "proof_context": {
+            "declaration": "YM.Ward.htQ",
+            "lines": [
+              115,
+              128
+            ],
+            "conclusion": "`htQ` proves `Q` analytic on the half plane `side`, through the matrix coefficient `radial`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Ward.solves",
+        "module": "YM.Ward.Circles",
+        "lines": [
+          130,
+          174
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Ward.solves"
+          },
+          "snippet": {
+            "text": "lemma solves (K) (p : S.Tag × S.Tag) (x : PDE.V) (hx : x∈PDE.side) : PDE.law (left K T) (right K T) (Q T K a) p x=0 := by\n  let H := htQ V h T K p\n  have hv := Circle.transport ((H x hx).differentiableAt)\n  suffices he : HasDerivAt (fun t => Q T K a p (Circle.shift x t))\n      (-Q T K a (left K T p) x+-Q T K a (right K T p) x) 0 by\n    unfold PDE.law; rw [PDE.vector (show PDE.C (Q T K a p) from fun x hx => (H x hx).contDiffAt) hx, ← Circle.u, hv.unique he]; ring\n  clear H hv\n  obtain ⟨⟨d,v⟩,⟨e,u⟩⟩ := p\n  obtain ⟨hθ,hρ⟩ := Circle.vector hx\n  let f (t : ℝ) := Circle.θ (Circle.shift x t)\n  let Z (t : ℝ) := -f t\n  let r (t : ℝ) := Circle.r (Circle.shift x t)\n  have hr : 0 < r 0 := by unfold r;rw [Circle.gone]; exact Circle.pos hx\n  let V' := T d K v\n  let U' := T e K u\n  let X (i) : S.Field d →L[ℝ] ℂ := (LinearMap.toContinuousLinearMap ((sector (S := S) d).coord i)).restrictScalars ℝ\n  let Y (i) : S.Field e →L[ℝ] ℂ := (LinearMap.toContinuousLinearMap ((sector (S := S) e).coord i)).restrictScalars ℝ\n  have hy : Z 0= -Circle.θ x := by simp [Z,f]\n  have hl : r 0= Circle.r x := by simp [r]\n  change HasDerivAt (fun t => E (clock T v K (Z t)) (clock T u K (Z t)) (r t • basis a))\n    (- E (clock T V' K (-Circle.θ x)) (clock T u K (-Circle.θ x)) (Circle.r x • basis a)+\n       - E (clock T v K (-Circle.θ x)) (clock T U' K (-Circle.θ x)) (Circle.r x • basis a)) 0\n  rw [← hy,← hl]\n  simp_rw [stars (sector d) (sector e) (clock T _ K _)]\n  simp_rw [← Finset.sum_neg_distrib,← Finset.sum_add_distrib]\n  apply HasDerivAt.fun_sum; intro i hi; apply HasDerivAt.fun_sum; intro j hj\n  have he : HasDerivAt Z (-1) 0 := hθ.neg\n  have hw : HasDerivAt (fun t => r t) 0 0 := hρ\n  have hh (c : ℕ) (v : S.Field c) : HasDerivAt (fun t => clock T v K (Z t)) (-clock T (T c K v) K (Z 0)) 0 := by\n    have hh := (moveClock T v K (Z 0)).scomp 0 he\n    simpa only [neg_smul,one_smul,Function.comp_def] using hh\n  have hV : HasDerivAt (fun t => X i (clock T v K (Z t))) (- X i (clock T V' K (Z 0))) 0 := by\n    have hv := (X i).hasFDerivAt.comp_hasDerivAt 0 (hh d v)\n    simpa only [map_neg, Function.comp_def] using hv\n  have hU : HasDerivAt (fun t => Y j (clock T u K (Z t))) (- Y j (clock T U' K (Z 0))) 0 := by\n    have hv := (Y j).hasFDerivAt.comp_hasDerivAt 0 (hh e u)\n    simpa only [map_neg,Function.comp_def] using hv\n  let g (q : ℝ) := E (sector (S := S) d i) (sector (S := S) e j) (q • basis a)\n  have hg : HasDerivAt (g ∘ r) 0 0 := by\n    have hA : AnalyticAt ℝ g (r 0) := radial V h ⟨d,_⟩ ⟨e,_⟩ _ hr\n    simpa only [zero_smul] using hA.differentiableAt.hasDerivAt.scomp 0 hw\n  change HasDerivAt (fun t => (X i (clock T v K (Z t))*Y j (clock T u K (Z t)))*g (r t))\n    (-(X i (clock T V' K (Z 0))*Y j (clock T u K (Z 0))*g (r 0))+ -(X i (clock T v K (Z 0))* Y j (clock T U' K (Z 0))*g (r 0))) 0\n  convert (hV.mul hU).mul hg using 1 <;> try rfl\n  dsimp only [Pi.mul_apply,Function.comp_apply];ring",
+            "line": 130,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Ward/Circles.lean",
+            "fragment": "L130-L174"
+          },
+          "proof_context": {
+            "declaration": "YM.Ward.solves",
+            "lines": [
+              130,
+              174
+            ],
+            "conclusion": "`solves` shows `Q` satisfies the angular equation `PDE.law (left K T) (right K T) (Q T K a) p x = 0`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Ward.launch",
+        "module": "YM.Ward.Circles",
+        "lines": [
+          93,
+          93
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Ward.launch"
+          },
+          "snippet": {
+            "text": "lemma launch {a b} (K : Ortho.Skew) (p) {t : ℝ} (h : 0<t) : Q T K a p (t,0)=F a b p (t,0) := by simp [Q,F,Circle.θ,Circle.r,lift,h.le]",
+            "line": 93,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Ward/Circles.lean",
+            "fragment": "L93-L93"
+          },
+          "proof_context": {
+            "declaration": "YM.Ward.launch",
+            "lines": [
+              93,
+              93
+            ],
+            "conclusion": "`launch` shows `Q = F` on the axis `(t, 0)`, so the difference vanishes there."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Ward.realized",
+        "module": "YM.Ward.Rows",
+        "lines": [
+          99,
+          116
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Ward.realized"
+          },
+          "snippet": {
+            "text": "theorem realized (h : b≠a) (W : DiffPlan S) (T : SpinRows S) (H : S.Hierarchy) (g : W.Derivatives S)\n    (C : commutes W T) (Y : Collinear W T)\n    (p : S.Tag × S.Tag) (n : ℕ) (t : ℝ) (ht : 0<t) :\n    let K := Ortho.plane b a\n    PDE.tower (PDE.law (left K T) (right K T) (F a b) p) n (t,0)=0 := by\n  intro K\n  rw [← PDE.actual (f := PDE.law _ _ _ p) (PDE.regular (left K T) (right K T) (fun i => Fu a b H i h) p)\n    (x := (t,0)) (show _ from ht) n]; dsimp only\n  let z := put a b (t,0)\n  have hz y : put a b (t,y)=cast z 0 b y := by\n    ext i; fin_cases i <;> simp [put,lift,z,cast,Points.direction]\n  rw [show (fun y => PDE.law _ _ _ p (t,y))= angular W T ![p.1,p.2] K ∘ cast z 0 b from\n      funext (fun y => (sigma a b h W T H g p (x := (t,y)) (show _ from ht)).trans (by rw [hz];rfl))]\n  have hv : cast z 0 b 0 ∈ conf _ := by rw [start]; exact ranges a b ht h\n  refine jet_line W T H g C K _ z 0 b 0 hv (fun w => Y a _ _ _ _ hv ?_) n\n  rw [start]; intro i; fin_cases i\n  · exact ⟨t,by simp [z,put,lift]⟩\n  exact ⟨0,by simp [z,put,lift]⟩",
+            "line": 99,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Ward/Rows.lean",
+            "fragment": "L99-L116"
+          },
+          "proof_context": {
+            "declaration": "YM.Ward.realized",
+            "lines": [
+              99,
+              116
+            ],
+            "conclusion": "`realized` shows all jets of the angular law of `F` vanish on the axis, from `Collinear` and `jet_line`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          185
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

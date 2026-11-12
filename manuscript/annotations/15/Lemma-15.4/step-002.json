@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 15.4 step 2",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "[L] proves E5 and deduces E4 as [M] does, but its lattice reflection is the site reflection through x^a = 0 (`Kind.site`, shift 0) rather than [M]'s bond reflection x^a ↦ a_N - x^a with planes at a_N/2.",
+  "subject": [
+    {
+      "location": {
+        "page": 166,
+        "rect": [
+          0.12026,
+          0.55448,
+          0.76194,
+          0.13759
+        ]
+      },
+      "title": "Lemma 15.4 step 2: Text, p. 166",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 15.4 step 2"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extraction.Order.realPositive",
+        "module": "YM.Extraction.Harvest",
+        "lines": [
+          46,
+          60
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extraction.Order.realPositive"
+          },
+          "snippet": {
+            "text": "theorem realPositive (H : f.Ordered C S) (hp : C.Makes) (hd : S.Symmetric) (hx : S.Smooth) : S.RPSmear := by\n  refine ⟨fun _ a b => pairedIntegrable S hd hx a b,fun a n v c => ?_⟩\n  simp_rw [← at_integral S hd hx]\n  apply ge_of_tendsto (tendsto_finsetSum _ (fun i _ => tendsto_finsetSum _ (fun j _ =>\n    ((H.reads _ (tied (v i).v (v j).v a) (withOther (v i) (v j)) |> along).const_mul _))))\n  let k := plane C\n  have hh (i) : ∀ᶠ j in f.fuse, supported C (v i) j.2 := by\n    rw [fused]\n    exact (f.per.cofinal.eventually (reading C.S (v i).f)).mono fun _ hi => Eventually.of_forall fun _ => hi\n  filter_upwards [eventually_all.mpr hh, eventually_all.mpr (fun i => witnesses (v i).v f),\n    eventually_all.mpr (fun i => kept C hp f (v i))] with x hy he hs\n  obtain ⟨N,p⟩ := x\n  have hh i j := at_cut C (N := N) (v i) (v j) (he i) (hy i) hp\n  simp only; simp_rw [hh]\n  exact posVectors ((seamless hp N p).positive _) n (fun i => stem C (v i) N p) c hs",
+            "line": 46,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extraction/Harvest.lean",
+            "fragment": "L46-L60"
+          },
+          "proof_context": {
+            "declaration": "YM.Extraction.Order.realPositive",
+            "lines": [
+              46,
+              60
+            ],
+            "conclusion": "From `f.Ordered C S`, `S.RPSmear` (E5): the smears are eventually supported in the positive sector (`supported`, `kept`, `at_cut`) and the lattice reflection positivity `(seamless hp N p).positive` for the cut `plane C` passes to the limit."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extraction.Banks.plane",
+        "module": "YM.Extraction.Banks",
+        "lines": [
+          19,
+          19
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extraction.Banks.plane"
+          },
+          "snippet": {
+            "text": "def plane (N p : ℕ) (a : Axis) : Cut (C.side N p) := ⟨half C.S N p, original C.S N p, .site, a,0⟩",
+            "line": 19,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extraction/Banks.lean",
+            "fragment": "L19-L19"
+          },
+          "proof_context": {
+            "declaration": "YM.Extraction.Banks.plane",
+            "lines": [
+              19,
+              19
+            ],
+            "conclusion": "The reflection cut used is of kind `.site` with base line 0, the site reflection x^a ↦ -x^a."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extraction.Order.assembles",
+        "module": "YM.Extraction.Harvest",
+        "lines": [
+          63,
+          65
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extraction.Order.assembles"
+          },
+          "snippet": {
+            "text": "  let x := limits_basic hp h hu\n  have ht := realPositive H hp x.toSymmetric h\n  exact ⟨x, spin hp h hu, homogeneous hp h hu, at_point x.toSymmetric h ht, ht,h,hc⟩",
+            "line": 63,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extraction/Harvest.lean",
+            "fragment": "L63-L65"
+          },
+          "proof_context": {
+            "declaration": "YM.Extraction.Order.assembles",
+            "lines": [
+              62,
+              65
+            ],
+            "conclusion": "`at_point` derives pointwise positivity `S.RP` (E4) from `RPSmear`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          166
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

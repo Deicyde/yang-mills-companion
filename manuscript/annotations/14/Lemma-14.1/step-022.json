@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 14.1 step 22",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "The three inequalities and the period properties are carried, through one entry bound `bill ≤ exp(s)` instead of the separate postponements such as e^{s_m} ≥ 100(j+4); the remark that the third supplies the five-torus period bound in Lemma D-localization, with its healthy radius-R neighbourhood, is not there.",
+  "subject": [
+    {
+      "location": {
+        "page": 126,
+        "rect": [
+          0.11962,
+          0.37952,
+          0.76012,
+          0.14741
+        ]
+      },
+      "title": "Lemma 14.1 step 22: Text, p. 126",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.1 step 22"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.Supply.Wait.engine",
+        "module": "YM.PhysicalNext.RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP.Pane.Divisors",
+        "lines": [
+          51,
+          79
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.Supply.Wait.engine"
+          },
+          "snippet": {
+            "text": "  have vol (i k) :\n      let F := W.shells (A.J (i+1)) * (1+A.coverSize i+A.coverSize (i+1))^(W.growth (A.J (i+1)))\n      F ≤ (A.schedule.side i k).val ∧ 100*(A.coverSize i+1) ≤ (A.schedule.side i k).val ∧\n      100*((A.op i k).patch.radius+1) ≤ (A.schedule.side (i+1) k).val := by\n    intro F\n    have e1 : Nat.ceil (Real.log (Y.value+G.slopeConstant*s i)^2) = A.coverSize i := by\n      unfold Calendar.coverSize Calendar.hatBeta; rw [e]; rfl\n    have e2 : Nat.ceil (Real.log (Y.value+G.slopeConstant*(s i+Real.log (w.L (A.J (i+1))).val))^2) = A.coverSize (i+1) := by unfold Calendar.coverSize Calendar.hatBeta; rw [e]; rfl\n    have bill : Y.bill (A.J (i+1)) (s i) = F+100*(A.coverSize i+1)+100*((A.op i k).patch.radius+1) := by rw [Bar.bill,e1,e2]; rfl\n    have hi : Y.bill (A.J (i+1)) (s i) ≤ (A.schedule.side i k).val := by\n      by_cases he : E.J (i+1)=0\n      · have hx : i < n+1 := by\n          by_contra! hi\n          have hv : 1 ≤ E.J (i+1) := hn _ (by omega); omega\n        have hz : A.J (i+1)=p.first := by change _+E.J (i+1)=_; rw [he,Nat.add_zero]\n        rw [hz]\n        have he : Y.bill p.first (s i) ≤ M := le_trans (le_sup (f:=fun i => Y.bill p.first (s i)) (mem_range.mpr hx)) (Nat.le_add_left ..)\n        change _ ≤ 4*(M+k+1)*(A.schedule.denominator i).val\n        have hb : Y.bill p.first (s i) ≤ 4*(M+k+1) := by omega\n        exact hb.trans (Nat.le_mul_of_pos_right _ (A.schedule.denominator i).property)\n      have he := (big i (Nat.pos_of_ne_zero he)).2.2.2.2\n      have hp : Real.exp (s i) = (A.schedule.denominator i).val := by\n        rw [← e]; unfold Schedule.scale Schedule.a\n        rw [inv_inv, Real.exp_log (by positivity)]\n      rw [hp] at he\n      apply le_trans (b := (A.schedule.denominator i).val) (by exact_mod_cast he)\n      exact Nat.le_mul_of_pos_left _ (A.schedule.period k).property\n    have hl : (A.schedule.side i k).val ≤ (A.schedule.side (i+1) k).val := Nat.mul_le_mul_left _ (A.schedule.den_strict.monotone (Nat.le_succ i))\n    omega",
+            "line": 51,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Pane/Divisors.lean",
+            "fragment": "L51-L79"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.Supply.Wait.engine",
+            "lines": [
+              26,
+              135
+            ],
+            "conclusion": "`vol` proves the three side inequalities from the entry bound `bill ≤ exp (s i)` and the period `4*(M+k+1)`, with `M` large for the finitely many initial levels."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.Supply.Wait.engine",
+        "module": "YM.PhysicalNext.RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP.Pane.Divisors",
+        "lines": [
+          129,
+          135
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.Supply.Wait.engine"
+          },
+          "snippet": {
+            "text": "  intro c z\n  let p := c.val * (M+z+1)-(M+1)\n  have hc : 1 ≤ c.val:= c.property\n  have hf : M+z+1≤ c.val*(M+z+1) := Nat.le_mul_of_pos_left _ hc\n  refine ⟨p,by unfold p; omega,?_⟩\n  change c.val ∣ 4*(M+p+1)\n  rw [show M+p+1=c.val*(M+z+1) by unfold p; omega]; exact dvd_mul_of_dvd_right (dvd_mul_right ..) _",
+            "line": 129,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Pane/Divisors.lean",
+            "fragment": "L129-L135"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.Supply.Wait.engine",
+            "lines": [
+              26,
+              135
+            ],
+            "conclusion": "For every `c` and `z` there is `p ≥ z` with `c ∣ 4*(M+p+1)`: every integer divides infinitely many periods."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Schedule",
+        "module": "YM.Lattice.Scale",
+        "lines": [
+          33,
+          34
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Schedule"
+          },
+          "snippet": {
+            "text": "  period_four : ∀ p, 4 ∣ (period p).val\n  period_strict : StrictMono fun p => (period p).val",
+            "line": 33,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Lattice/Scale.lean",
+            "fragment": "L33-L34"
+          },
+          "proof_context": {
+            "declaration": "YM.Schedule",
+            "lines": [
+              28,
+              34
+            ],
+            "conclusion": "`period_four`, `period_strict`: periods are divisible by 4 and strictly increasing."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          126
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

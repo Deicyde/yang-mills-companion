@@ -1,0 +1,179 @@
+{
+  "id": "Lemma 16.3 step 4",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 174,
+        "rect": [
+          0.12026,
+          0.86017,
+          0.75996,
+          0.05423
+        ]
+      },
+      "title": "Lemma 16.3 step 4: Text, pp. 174–175",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.3 step 4#0"
+        }
+      }
+    },
+    {
+      "location": {
+        "page": 175,
+        "rect": [
+          0.12026,
+          0.0962,
+          0.75948,
+          0.05423
+        ]
+      },
+      "title": "Lemma 16.3 step 4: Text, pp. 174–175",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.3 step 4#1"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Maxwell.Free.erasing",
+        "module": "YM.Next.MAXWELL.AwayTeam",
+        "lines": [
+          74,
+          96
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Maxwell.Free.erasing"
+          },
+          "snippet": {
+            "text": "  have hi (u v) (i j : Axis) (he : i ≠ j) (p : (Model F).Field d) :\n      let k := Corners.quarter i j\n      (gear F).act d k.ortho (T u v p)=T (orients k u) (orients k v) ((gear F).act d k.ortho p) := by\n    intro k; rw [(gear_port F).signed,(gear_port F).signed]; exact H.polar k (Corners.proper i j he) u v p\n  have ha x u v : T u v (R x)=0 := by\n    let L : Ortho.Skew →ₗ[ℝ] Ortho.Skew →ₗ[ℝ] (Model F).Field d :=\n      { toFun s :=\n          { toFun t := T s t (R x)\n            map_add' h k := by rw [map_add]; rfl\n            map_smul' t k := by simp only [map_smul]; rfl }\n        map_add' s t := by ext1 u; rw [map_add]; rfl\n        map_smul' k t := by ext1 u; rw [map_smul]; rfl }\n    have he : L=0 := by\n      refine Corners.none L (fun a => LinearMap.congr_fun (H.alt a) _) ?_\n      intro i j u v he\n      let k := Corners.quarter i j\n      obtain ⟨p,hx⟩ := ((gear F).act 4 k.ortho).surjective x\n      have hh := hi u v i j he (R p)\n      have ht : (gear F).act d k.ortho (R p)=R x := by rw [(gear_laws F).filtered,hx]\n      change _= T (orients k u) (orients k v) ((gear F).act d k.ortho (R p)) at hh\n      rw [ht,show (gear F).act d k.ortho _ = _ from hr p u v i j he, ht] at hh\n      exact hh.symm\n    change L u v = _; rw [he]; rfl",
+            "line": 74,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/MAXWELL/AwayTeam.lean",
+            "fragment": "L74-L96"
+          },
+          "proof_context": {
+            "declaration": "YM.Maxwell.Free.erasing",
+            "lines": [
+              48,
+              118
+            ],
+            "conclusion": "`hi` gives signed covariance under quarter turns, `hr` the commutation, and `Corners.none` applied to the alternating bilinear map `L` forces `T u v (R x) = 0` for every weight-four `x`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Maxwell.Free.Corners.none",
+        "module": "YM.Next.MAXWELL.Quarters",
+        "lines": [
+          108,
+          155
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Maxwell.Free.Corners.none"
+          },
+          "snippet": {
+            "text": "theorem none {M : Type*} [AddCommGroup M] [Module ℝ M]\n    (T : Ortho.Skew →ₗ[ℝ] Ortho.Skew →ₗ[ℝ] M) (h : ∀ u,T u u=0) (hp : ∀ a b (u v : Ortho.Skew), a≠b →\n      T (orients (quarter a b) u) (orients (quarter a b) v)=T u v) : T=0 := by\n  have halt (u v) : T v u= - T u v := by\n    have he := h (u+v); simp only [map_add, LinearMap.add_apply, h, add_zero,zero_add] at he\n    exact eq_neg_of_add_eq_zero_left he\n  have hz {x : M} (hx : x= -x) : x=0 := by\n    apply (smul_right_injective M (by norm_num : (2:ℝ)≠0));\n    change (2:ℝ) • x = (2:ℝ) • 0; rw [two_smul,smul_zero]; nth_rw 1 [hx]; simp\n  have ht (a b c : Axis) (ha : a≠b) (hb : a≠c) : T (Ortho.plane a b) (Ortho.plane a c)=0 := by\n    by_cases hk : b=c\n    · subst c; exact h _\n    obtain ⟨d, hd, hv, hi⟩ : ∃ d : Axis,d≠a ∧ d≠b ∧ d≠c := by\n      exact (show ∀ i j k : Fin 4, ∃ l : Fin 4, l≠i ∧ l≠j ∧ l≠k from by decide) a b c\n    let s := quarter c d * quarter c d\n    have hs (i j) : orients s (Ortho.plane i j) = _ := bracket_orient s i j\n    apply hz\n    conv_lhs => rw [← show T (orients s (Ortho.plane a b)) (orients s (Ortho.plane a c)) = _ from commute_inv_apply T hp c d hi.symm a b a c]\n    simp only [hs]\n    simp [s, quarter,Equiv.swap_apply_def,hb,hd,hv,hi,hk,Ne.symm]\n  have hd (a b i l : Axis) (hab : a ≠ b) (hai : a≠i) (hal : a≠l) (hbi : b≠i) (hbl : b≠l) (hil : i≠l) :\n      T (Ortho.plane a b) (Ortho.plane i l)=0 := by\n    apply hz\n    conv_lhs => rw [← hp a i _ _ hai]\n    have heta : orients (quarter a i) (Ortho.plane a b)= -Ortho.plane i b := by rw [bracket_orient]; simp [quarter,Equiv.swap_apply_def,hab,hbi,Ne.symm]; exact neg_one_smul ℝ (Ortho.plane i b)\n    have heib : orients (quarter a i) (Ortho.plane i l)= Ortho.plane a l := by rw [bracket_orient]; simp [quarter,Equiv.swap_apply_def,hai,hal,hil,Ne.symm]\n    rw [heta,heib,map_neg,LinearMap.neg_apply]; congr 1\n    conv_lhs => rw [← hp b l _ _ hbl]\n    have Hta : orients (quarter b l) (Ortho.plane i b)= -Ortho.plane i l := by rw [bracket_orient]; simp [quarter,Equiv.swap_apply_def,hbi,hil,Ne.symm]; exact neg_one_smul ℝ (Ortho.plane i l)\n    have Htz : orients (quarter b l) (Ortho.plane a l)= Ortho.plane a b := by rw [bracket_orient]; simp [quarter,Equiv.swap_apply_def,hab,hal,hbl,Ne.symm]\n    rw [Hta,Htz,map_neg,LinearMap.neg_apply,halt (Ortho.plane a b), neg_neg]\n  have hh (a b : Axis) : Ortho.plane b a = -Ortho.plane a b := Subtype.ext (neg_sub _ _).symm\n  have hk (a b i l : Axis) : T (Ortho.plane a b) (Ortho.plane i l)=0 := by\n    have hu (a) : Ortho.plane a a=0 := Subtype.ext (sub_self _)\n    rcases eq_or_ne a b with he|he\n    · subst b; simp [hu]\n    rcases eq_or_ne i l with h1|h1\n    · subst l; simp [hu]\n    by_cases h' : a=i\n    · subst i; exact ht a b l he h1\n    by_cases h'' : a=l\n    · subst l; rw [hh a i]; simp only [map_neg,ht a b i he h1.symm,neg_zero]\n    by_cases hb : b=i\n    · subst i; rw [hh b a]; simp only [map_neg,LinearMap.neg_apply,ht b a l he.symm h1, neg_zero]\n    by_cases hl : b=l\n    · subst l; rw [hh b a,hh b i]; simp only [map_neg,LinearMap.neg_apply,ht b a i he.symm h1.symm,neg_zero]\n    exact hd a b i l he h' h'' hb hl h1\n  apply LinearMap.ext_on Spin.spans; rintro x ⟨p,rfl⟩; apply LinearMap.ext_on Spin.spans; rintro y ⟨q,rfl⟩; exact hk ..",
+            "line": 108,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/MAXWELL/Quarters.lean",
+            "fragment": "L108-L155"
+          },
+          "proof_context": {
+            "declaration": "YM.Maxwell.Free.Corners.none",
+            "lines": [
+              108,
+              155
+            ],
+            "conclusion": "An alternating bilinear map on skew matrices invariant under all quarter-turn orientations is zero (overlapping planes and disjoint planes handled separately)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Maxwell.Free.erasing",
+        "module": "YM.Next.MAXWELL.AwayTeam",
+        "lines": [
+          97,
+          100
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Maxwell.Free.erasing"
+          },
+          "snippet": {
+            "text": "  have hp u v a b : P u v (polStress G a b)=0 := by\n    calc\n      _ = address F d (T u v (R (original F a b))) := by rw [← brand_eval,address_rise,inertia]\n      _ = _ := by rw [ha,map_zero]",
+            "line": 97,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/MAXWELL/AwayTeam.lean",
+            "fragment": "L97-L100"
+          },
+          "proof_context": {
+            "declaration": "YM.Maxwell.Free.erasing",
+            "lines": [
+              48,
+              118
+            ],
+            "conclusion": "`hp` gives `P u v (polStress G a b)=0`, so the stress is included."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          174,
+          175
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

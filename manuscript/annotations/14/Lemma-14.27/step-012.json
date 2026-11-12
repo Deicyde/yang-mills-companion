@@ -1,0 +1,122 @@
+{
+  "id": "Lemma 14.27 step 12",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 153,
+        "rect": [
+          0.12026,
+          0.75459,
+          0.75948,
+          0.07134
+        ]
+      },
+      "title": "Lemma 14.27 step 12: Text, p. 153",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.27 step 12"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.improved",
+        "module": "YM.FullVolume.Moneys",
+        "lines": [
+          69,
+          78
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.improved"
+          },
+          "snippet": {
+            "text": "theorem improved {F:Trial C}{l:List Axis}(hF:Funded F)(hw:∀ N p x,Continuous (F N p x)) (x:Bid.Rowe C d)(hx:Coin C x)(u:Cutoffs→ℝ)(hu:Owed (Bid.upper C x - hops F l) u)(hL:Tendsto u mesh (𝓝 0)): Funded (hops F l):=by\n   obtain ⟨Z,hZ⟩:= cap T M B hp h V R hV a hf F l hF hw x hx u hu hL\n   let y:=display a x\n   have he:= hx.sub (Coin.from_bound (p:=y) M hZ)\n   have hg:= sweep M B V R hV a hf (x-y) he (fun i=> by unfold y display; dsimp only [Pi.sub_apply]; rw [map_sub, a.projected,sub_self])\n   have hy:= fixed_cost hg (flown (by norm_num)); have hh:= fixed_cost hu hL\n   have hx : Bid.upper C x= Bid.upper C y - -(Bid.upper C (x-y)):= by\n     rw [sub_neg_eq_add]; funext i j o; change C.O _ _ (d:=d) (x _) _= C.O _ _ (d:=d) (y _) _ + C.O _ _ (d:=d) (_-_) _; rw [show C.O _ _ (_-_) _=(C.O i j (d:=d) (x (i,j)) o)-(C.O i j (d:=d) (y (i,j)) o) from ((C.linearO _ _ _ _).mk' _).map_sub _ _]; abel\n   have hv:Funded (Bid.upper C x):=hx ▸ Funded.sub M (Funded.primaries M hp y hZ) hy.neg\n   simpa only [sub_sub_cancel] using! Funded.sub M hv hh",
+            "line": 69,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Moneys.lean",
+            "fragment": "L69-L78"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.improved",
+            "lines": [
+              69,
+              78
+            ],
+            "conclusion": "`cap` bounds `display a x`, so `Funded.primaries` bounds its roots, `sweep` and `fixed_cost` handle `x - y` and the matching residual, and `Funded.sub` gives `Funded (hops F l)`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.Funded.primaries",
+        "module": "YM.FullVolume.Rent",
+        "lines": [
+          120,
+          120
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.Funded.primaries"
+          },
+          "snippet": {
+            "text": "lemma primaries (hC:Extraction.Wcmain C) (v : Bid.Rowe C d) {Y:ℝ} (he:∀ᶠ i in mesh, ‖v i‖ ≤ Y) : Funded (Bid.upper C v):=by",
+            "line": 120,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Rent.lean",
+            "fragment": "L120-L120"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.Funded.primaries",
+            "lines": [
+              120,
+              128
+            ],
+            "conclusion": "A bounded row family has a root bound of order `a_m^(-d-1)` at each fine level."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          153
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

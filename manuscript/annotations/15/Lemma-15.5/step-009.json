@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 15.5 step 9",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] sets B = J(c^{-1})^P and the radius exponent 4P with P abstract, and B_v = X^{2|v|} has no max(1, ·) or empty-v case; these are differences of constants only.",
+  "subject": [
+    {
+      "location": {
+        "page": 168,
+        "rect": [
+          0.12026,
+          0.71292,
+          0.76194,
+          0.09264
+        ]
+      },
+      "title": "Lemma 15.5 step 9: Text, p. 168",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 15.5 step 9"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Phase.replicas",
+        "module": "YM.Next.PHASE.Seats",
+        "lines": [
+          123,
+          125
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Phase.replicas"
+          },
+          "snippet": {
+            "text": "  let B := J*(c⁻¹)^P\n  have hB : 0 < B := by unfold B; positivity\n  refine ⟨F,B,4*P,hB,fun r hr hr' m hm d hd w hw he hh hg => ?_⟩",
+            "line": 123,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/PHASE/Seats.lean",
+            "fragment": "L123-L125"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Phase.replicas",
+            "lines": [
+              119,
+              151
+            ],
+            "conclusion": "`replicas` sets `B := J*(c⁻¹)^P` and the radius exponent `4*P`, constants fixed before `v`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Phase.replicas",
+        "module": "YM.Next.PHASE.Seats",
+        "lines": [
+          129,
+          136
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Phase.replicas"
+          },
+          "snippet": {
+            "text": "  have ha : A^w.length ≤ Spread.radius B (4*P) w r := by\n    have hv : (C.S.a k)⁻¹ ≤ c⁻¹*(w.length/r)^4 := calc\n      _ ≤ (c*(r/w.length)^4)⁻¹ := inv_le_inv₀ (C.S.a_pos k) (by positivity) |>.mpr hA\n      _ = _ := by rw [mul_inv,← inv_pow, inv_div]\n    calc _ ≤ (J*(c⁻¹*(w.length/r)^4)^P)^w.length := by\n                  apply pow_le_pow_left₀ (by unfold A; have hh := C.S.a_pos k; positivity)\n                  exact mul_le_mul_of_nonneg_left (pow_le_pow_left₀ (by have hh := C.S.a_pos k; positivity) hv _) hJ.le\n         _ = _ := by unfold Spread.radius B; simp only [pow_mul,mul_pow]; ring",
+            "line": 129,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/PHASE/Seats.lean",
+            "fragment": "L129-L136"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Phase.replicas",
+            "lines": [
+              119,
+              151
+            ],
+            "conclusion": "`ha` shows `(J (a k)⁻¹^P)^|w| <= Spread.radius B (4P) w r`, the third relation of (F-repeat-scales)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Phase.point_bound",
+        "module": "YM.Next.PHASE.Passage",
+        "lines": [
+          187,
+          197
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Phase.point_bound"
+          },
+          "snippet": {
+            "text": "theorem point_bound (H : C.Makes) (f : Extraction.Order) (S : Table C.book) (ht : S.Smooth)\n    (he : f.PointLimits C S) (m k l b : ℕ) (hm : m≤k) (hk : k≤l) (hl : l≤b)\n    (x : Points n) (hc : x∈conf n) (v : Fin n → C.book.Token)\n    (hx : Gapped e (C.S.a m) (C.S.a l) x) (P : ℕ) (z : Fin P → E4)\n    (patterns : ∀ i : ι, ∃ j, Pattern (C.S.a m) (x (e (.inl i))) (z j))\n    (headroom : (P:ℝ)*(2*(5*C.S.a k)) < C.S.a m)\n    (side : (Fintype.card κ : ℝ)*(2*(3*C.S.a b)) < C.S.a l)\n    (A B : ℝ) (hB : 0 ≤ B)\n    (ha : ∀ i, f.late (Single C (v (e (.inl i))) A k))\n    (hf : ∀ j, f.late (Single C (v (e (.inr j))) B b)) :\n    ‖S.read x v‖ ≤ A ^ Fintype.card ι * B ^ Fintype.card κ := by",
+            "line": 187,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/PHASE/Passage.lean",
+            "fragment": "L187-L197"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Phase.point_bound",
+            "lines": [
+              187,
+              229
+            ],
+            "conclusion": "`point_bound` passes the lattice bound to the limit table at separated points, with no cutoff threshold depending on `q`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          168
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; a re-check of closeMatch records kept it; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

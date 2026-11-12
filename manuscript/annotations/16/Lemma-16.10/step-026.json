@@ -1,0 +1,193 @@
+{
+  "id": "Lemma 16.10 step 26",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 186,
+        "rect": [
+          0.12026,
+          0.49441,
+          0.75949,
+          0.05128
+        ]
+      },
+      "title": "Lemma 16.10 step 26: Text, p. 186",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.10 step 26",
+          "quads": [
+            [
+              0.63187,
+              0.49441,
+              0.87974,
+              0.49441,
+              0.87974,
+              0.51189,
+              0.63187,
+              0.51189
+            ],
+            [
+              0.12026,
+              0.5119,
+              0.87975,
+              0.5119,
+              0.87975,
+              0.52818,
+              0.12026,
+              0.52818
+            ],
+            [
+              0.12026,
+              0.5282,
+              0.60418,
+              0.5282,
+              0.60418,
+              0.54569,
+              0.12026,
+              0.54569
+            ]
+          ]
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Spin.relations",
+        "module": "YM.Spin.Shape",
+        "lines": [
+          25,
+          33
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Spin.relations"
+          },
+          "snippet": {
+            "text": "lemma relations (l r : I → I) (B C : I → Mat X) (h : Relations B l r) (hp : Relations C l r) :\n    Relations (fun i => effect (B i) (C i)) l r := by\n  intro i; ext1 x\n  change effect (B i) (C i) x=effect (B (l i)) (C (l i)) (effect (B (r i)) (C (r i)) x)-effect (B (r i)) (C (r i)) (effect (B (l i)) (C (l i)) x)\n  simp_rw [atAct] -- rhs comp rewrite\n  -- substitute only left\n  conv_lhs => rw [h i,hp i]\n  noncomm_ring\nomit [CompleteSpace X] in",
+            "line": 25,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Spin/Shape.lean",
+            "fragment": "L25-L33"
+          },
+          "proof_context": {
+            "declaration": "YM.Spin.relations",
+            "lines": [
+              25,
+              33
+            ],
+            "conclusion": "`relations` shows the relative generators `effect (B i) (C i)` satisfy the plane commutator relations `Relations` when `B` and `C` do."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Spin.restrict_rel",
+        "module": "YM.Spin.Close",
+        "lines": [
+          20,
+          25
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Spin.restrict_rel"
+          },
+          "snippet": {
+            "text": "lemma restrict_rel (l r : I → I) (D : I → R) (p : R) (h : p*p=p) (hv : ∀ i, Commute p (D i)) (hp : Relations D l r) :\n    Relations (fun i => D i*p) l r := by\n  intro i\n  dsimp only\n  have he a b : D a*p*(D b*p)=D a*D b*p := by rw [mul_assoc,← mul_assoc p (D b),(hv b).eq,mul_assoc (D b),h,mul_assoc]\n  rw [he,he,← sub_mul,← hp]",
+            "line": 20,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Spin/Close.lean",
+            "fragment": "L20-L25"
+          },
+          "proof_context": {
+            "declaration": "YM.Spin.restrict_rel",
+            "lines": [
+              20,
+              25
+            ],
+            "conclusion": "`restrict_rel` shows compressing by an idempotent `p` commuting with the generators keeps `Relations (fun i => D i * p)`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Spin.onto",
+        "module": "YM.Spin.Close",
+        "lines": [
+          49,
+          51
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Spin.onto"
+          },
+          "snippet": {
+            "text": "  have hh : ∀ᶠ n in atTop, ∀ i, ‖D i n * Q n‖ < 1/2 := by\n    apply eventually_all.mpr; intro i\n    have ht := ((h i).mul h').norm; rw [hp,norm_zero] at ht; exact ht.eventually (gt_mem_nhds (by norm_num))",
+            "line": 49,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Spin/Close.lean",
+            "fragment": "L49-L51"
+          },
+          "proof_context": {
+            "declaration": "YM.Spin.onto",
+            "lines": [
+              42,
+              70
+            ],
+            "conclusion": "`onto` shows the compressed operators `D i n * Q n → 0` using `d i * p = 0` and `Q n → p`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          186
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

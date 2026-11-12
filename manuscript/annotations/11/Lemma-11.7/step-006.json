@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 11.7 step 6",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "Lean carries the negative logarithm of the factor J_ax (det Q)^{-1/2} as the definition `thermal` and its positivity and log-determinant identity. No declaration integrates the Gaussian with covariance Q(v)^{-1}, and the vacuum-scalar bookkeeping is not stated.",
+  "subject": [
+    {
+      "location": {
+        "page": 57,
+        "rect": [
+          0.12026,
+          0.86017,
+          0.75995,
+          0.05423
+        ]
+      },
+      "title": "Lemma 11.7 step 6: Text, p. 57",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 11.7 step 6"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.tribute",
+        "module": "YM.Next.STATIONARY.Joint.HaarJac",
+        "lines": [
+          177,
+          202
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.tribute"
+          },
+          "snippet": {
+            "text": "theorem tribute : ∀ᶠ z : Link G c in 𝓝 0,\n    0 < (medals S t p R μ 1 (input G c z) (encamp F ρ z)).det ∧\n    let T := thermal F t p R ρ C\n    T (arm G c 1 z)=Precision.loop R (encamp F ρ z).1+bounty S p R μ t 1 (input G c z) (encamp F ρ z) := by\n  have hm : Tendsto (arm G c 1) (𝓝 0) (𝓝 0) := by simpa using (arm G c 1).continuous.tendsto 0\n  have hr : Tendsto ρ (𝓝 0) (𝓝 0) := h.1 ▸ h.2.1.continuousAt.tendsto\n  filter_upwards [camp_station h hb hp t,explosive S t hb root_customs (camp_thaw h) (by rw [encamp_zero h]; rfl),hm.eventually (hessian_pos hh hv h t),hm.eventually (hr.eventually (parcel_zero F hC))] with z hz he hx hf\n  let a := ρ (arm _ _ _ z)\n  let Gm := grenade μ (encamp F ρ z).1\n  let M := (hessian F t p R (arm G c 1 z) (ρ (arm G c 1 z)))\n  let P := medals S t p R μ 1 (input G c z) (encamp F ρ z)\n  let T := toll F C a\n  have hi : T^2 * P.det=M.det*Gm.det^2 := by\n    have hy := root_determines F (represent (arm G c 1 z)) a t hb hp hz (μ:=μ) he\n    have hu : ρ (arm _ _ _ z) = a := rfl\n    unfold T; rw [treasury F (arm G c 1 z) C hC a hf,sq_abs,show P.det=_ from hy]\n    unfold M; rw [hu,certified p R (arm G c 1 z) a t hz]\n    have heG : grenade μ (abode S F (represent (arm G c 1 z)) a).1=Gm := rfl\n    rw [heG]; ring\n  have hK : 0<Gm.det := (grenade_safe _ hg).det_pos\n  have ha : 0<T := toll_pos F hC hf\n  have hc : 0<M.det := hx\n  have hP : 0<P.det := pos_of_mul_pos_right (show 0<T^2*P.det from hi ▸ mul_pos hc (pow_pos hK _)) (by positivity)\n  refine ⟨hP,?_⟩; dsimp only\n  change Precision.loop R (encamp F ρ z).1+_*Real.log M.det - Real.log T = Precision.loop R (encamp F ρ z).1 + (_*Real.log P.det - Real.log Gm.det)\n  have hk := congr_arg Real.log hi; rw [Real.log_mul (pow_ne_zero _ ha.ne') hP.ne', Real.log_mul hc.ne' (pow_ne_zero _ hK.ne'), Real.log_pow, Real.log_pow] at hk; push_cast at hk; linarith",
+            "line": 177,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Joint/HaarJac.lean",
+            "fragment": "L177-L202"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.tribute",
+            "lines": [
+              177,
+              202
+            ],
+            "conclusion": "Near 0, `det medals > 0` and `thermal` equals `loop` plus the log-det of the medal matrix with the `toll` factor removed, so the log-determinant and J_ax terms assemble into the action."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Precision.thermal",
+        "module": "YM.PCalc.Loop",
+        "lines": [
+          46,
+          49
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Precision.thermal"
+          },
+          "snippet": {
+            "text": "def thermal (F : Forest S.ratio) (t : S.Choices) (p : Clip) (R : PathData G)\n    (ρ : fieldDir G c 1 → AxisChart G F) (A : ChartRatio G) (u : fieldDir G c 1) : ℝ :=\n    loop R (lifting F (represent u) (ρ u)) + (1/2) * Real.log (hessian F t p R u (ρ u)).det -\n        Real.log (∏ i : F.Free, A.J (ρ u i))",
+            "line": 46,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PCalc/Loop.lean",
+            "fragment": "L46-L49"
+          },
+          "proof_context": {
+            "declaration": "YM.Precision.thermal",
+            "lines": [
+              46,
+              49
+            ],
+            "conclusion": "`thermal` is the action `loop + 1/2 log det hessian - log ∏ J`, i.e. T(v)."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          57
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "id": "Lemma 11.4 step 16",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 49,
+        "rect": [
+          0.12026,
+          0.76315,
+          0.75948,
+          0.03713
+        ]
+      },
+      "title": "Lemma 11.4 step 16: Text, p. 49",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 11.4 step 16"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Axial.existence",
+        "module": "YM.Branch.Pick",
+        "lines": [
+          94,
+          96
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Axial.existence"
+          },
+          "snippet": {
+            "text": "    have he := faces_pins hj U (r:=r) (o:=o)\n    have ht : (layers r).card*f z ≤ faces (slab r o (l++[j])) U := le_trans (by simp [f,nsmul_eq_mul])\n      (le_trans (sum_le_sum (f:=fun _ => f z) fun i hi => h i hi) he)",
+            "line": 94,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Branch/Pick.lean",
+            "fragment": "L94-L96"
+          },
+          "proof_context": {
+            "declaration": "YM.Axial.existence",
+            "lines": [
+              80,
+              105
+            ],
+            "conclusion": "`faces_pins` and the minimality of `z` give `card (layers r) * f z ≤ faces (slab r o (l++[j]))`, i.e. `(2R+1)F(X_0) ≤ F(X)`, used in the induction bound."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Axial.eligible",
+        "module": "YM.Branch.Pick",
+        "lines": [
+          119,
+          134
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Axial.eligible"
+          },
+          "snippet": {
+            "text": "lemma eligible (P : RG.Patch) (U : CoverConfig G) (C : RG.KernelChoices) (hc : 16 ≤ C.axial_factor) (o : Lattice.Order) :\n    ∃ x : P.Points, (x,o)∈ P.eligible C U := by\n  let l := allAxes o\n  let R := P.radius\n  have he := existence l R 0 U ((List.nodup_finRange _).map o.injective) (center_box _)\n  have ha (i : Axis) : i ∈ l := List.mem_map.mpr ⟨_,List.mem_finRange _,o.apply_symm_apply i⟩\n  rw [show slab R 0 l = box R by ext i; simp only [slab_iff,ha,not_true,false_imp_iff,forall_const,and_true]] at he\n  obtain ⟨x,hx,H⟩ := he\n  refine ⟨⟨x,hx⟩,?_⟩\n  unfold RG.Patch.eligible\n  simp only [mem_filter,mem_univ,true_and, edge_cost,face_cost]\n  apply H.trans\n  rw [card_layers,show l.length=4 by simp [l,allAxes]]\n  push_cast\n  refine mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_right (by linarith) ?_) (faces_nonneg ..)\n  positivity",
+            "line": 119,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Branch/Pick.lean",
+            "fragment": "L119-L134"
+          },
+          "proof_context": {
+            "declaration": "YM.Axial.eligible",
+            "lines": [
+              119,
+              134
+            ],
+            "conclusion": "For `16 ≤ axial_factor` and each order `o`, `existence` with `l.length = 4` gives an eligible tag `(x,o)`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          49
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

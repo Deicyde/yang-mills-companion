@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 16.7 step 4",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] makes the same choice of B, normalized subsequence, limit properties and sign, and identifies the limit through the one-dimensional free kernel (`hT.one`), which is Lemma G1.1's content; the normalization `positive_strength` is abstract instead of the explicit ξ_k.",
+  "subject": [
+    {
+      "location": {
+        "page": 182,
+        "rect": [
+          0.12026,
+          0.23232,
+          0.76014,
+          0.08845
+        ]
+      },
+      "title": "Lemma 16.7 step 4: Text, p. 182",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.7 step 4"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.UVStress.produce_current",
+        "module": "YM.Next.UV_STRESS.Limit",
+        "lines": [
+          137,
+          144
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.UVStress.produce_current"
+          },
+          "snippet": {
+            "text": "  obtain ⟨⟨B,hB⟩,hn⟩ := exists_ne (0 : LinearMap.ker (currentDiv W H.spin ho))\n  have hx : B ≠ 0 := fun e => hn (Subtype.ext e)\n  have ht : B.val ≠ 0 := fun e => hx (Subtype.ext e)\n  obtain ⟨s,R,hr,Hr⟩ := subsector X B.val T.J ht hT.sign\n  let Y := narrow X s _ (fun k => positive_strength X (s k) ht hT.sign)\n  have hY := narrow_path X s _ (fun k => positive_strength X (s k) ht hT.sign) hp\n  have hS := narrow_stable X s _ (fun k => positive_strength X (s k) ht hT.sign) h\n  obtain ⟨v,hv,hF⟩ := on_axis Y H hW ho B hB a hV p hY hS R Hr",
+            "line": 137,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/UV_STRESS/Limit.lean",
+            "fragment": "L137-L144"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.UVStress.produce_current",
+            "lines": [
+              129,
+              167
+            ],
+            "conclusion": "A nonzero `B` is chosen in the kernel, `subsector` and `narrow` give a normalized subsequence `Y` with positive strengths, and `on_axis` shows the limit is centered with zero free divergence."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.UVStress.produce_current",
+        "module": "YM.Next.UV_STRESS.Limit",
+        "lines": [
+          145,
+          167
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.UVStress.produce_current"
+          },
+          "snippet": {
+            "text": "  let t : KernelSpace a.spin := ⟨T.J,hT.enters⟩\n  let j : LinearMap.ker (currentDiv T.W a.spin p) := ⟨t, (linear_cons _ _ p t).2 hT.origin⟩\n  have he : j ≠ 0 := fun e => hT.sign (congr_arg (fun (x : LinearMap.ker (currentDiv T.W a.spin p)) => x.val.val) e)\n  obtain ⟨c,hc⟩ := (finrank_eq_one_iff_of_nonzero' j he).1 hT.one ⟨v,hF⟩\n  have hc : c • T.J = R := (congr_arg (fun (x : LinearMap.ker (currentDiv T.W a.spin p)) => x.val.val) hc).trans hv\n  have hz := congr_arg norm hc; rw [norm_smul,hr,Real.norm_eq_abs] at hz\n  have hz : |c|=1 := mul_right_cancel₀ (norm_pos_iff.mpr hT.sign).ne' (hz.trans (one_mul _).symm)\n  suffices ht : ∃ J : KernelSpace H.spin, J.val ≠ 0 ∧ currentDiv W H.spin ho J = 0 ∧\n      Tendsto (balanced_J Y J.val) atTop (𝓝 T.J) by\n    obtain ⟨J,hJ,hj,HX⟩ := ht; refine ⟨J,Y,hJ,hj,hY,hS,fun i j => ?_⟩\n    refine (tendsto_pi_nhds.mp (tendsto_pi_nhds.mp HX i) j).congr fun k => ?_\n    apply (Y.U k 4).injective\n    change Y.U k 4 (balanced_J Y J k i j) = Y.U k 4 ((Y.U k 4).symm _); rw [LinearEquiv.apply_symm_apply,balanced_value]\n  change Tendsto (balanced_J Y B.val) atTop (𝓝 R) at Hr\n  rcases le_total 0 c with hh|hh\n  · rw [abs_of_nonneg hh] at hz; rw [hz,one_smul] at hc\n    exact ⟨B,ht,hB,hc ▸ Hr⟩\n  rw [abs_of_nonpos hh] at hz; rw [show c=-1 from neg_eq_iff_eq_neg.mp hz, neg_one_smul] at hc\n  refine ⟨-B,neg_ne_zero.mpr ht,by rw [map_neg, show currentDiv _ _ _ B=0 from hB,neg_zero],?_⟩\n  refine Tendsto.congr' ?_ (show Tendsto (fun k => -balanced_J Y B k) atTop (𝓝 T.J) from by\n    convert Hr.neg using 1\n    rw [← hc,neg_neg])\n  exact Eventually.of_forall fun k => by change -balanced_J Y _ k = balanced_J Y (-B.val) k; simp [balanced_J,labelScale]",
+            "line": 145,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/UV_STRESS/Limit.lean",
+            "fragment": "L145-L167"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.UVStress.produce_current",
+            "lines": [
+              129,
+              167
+            ],
+            "conclusion": "The limit lies in the one-dimensional kernel of the free divergence spanned by `T.J`, with norm one, so it is `±T.J`, and `J = B` or `-B` is chosen so that `balanced_J Y J → T.J`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          182
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; a re-check of closeMatch records kept it; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
+      }
+    }
+  }
+}

@@ -1,0 +1,159 @@
+{
+  "id": "Section 19 display 16",
+  "kind": "display",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The heights are the rates (b,a,c) = (theta_-,theta,theta_+), and the exponents agree. The Lean carries the bounds as `quota` for the label and `rootTest` for the difference, with `RateIs`/`RateLE` along a filter and `PriceAt` for uniformity, in place of M's norms and `preccurlyeq`.",
+  "subject": [
+    {
+      "location": {
+        "page": 226,
+        "rect": [
+          0.12026,
+          0.37602,
+          0.75948,
+          0.07321
+        ]
+      },
+      "title": "Display, p. 226",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Section 19 display 16"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.for_plot",
+        "module": "YM.OPE.Eye.Extract",
+        "lines": [
+          25,
+          27
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.for_plot"
+          },
+          "snippet": {
+            "text": "lemma for_plot [DecidableEq I] (i₀:I)(hG:G.Simple){W r D} (L': Package C W r D) (hk:Height C.S φ T k b)(hm:Height C.S φ T m c)(hj:Height C.S φ T j d) (hb:b<c)(hc:c<e)(hd:e<d)(t:ℕ)\n    (hX:extentWithin φ T (fun i=>C.S.gridPoint (j i) ∘ u i) e)(hY:Kept φ T e (fun i=>C.S.gridPoint (j i) ∘ u i)) :\n    ∃ A p : L→ℝ, ∃ Q:L→ C.label t, RateIs φ T p ((Z')-t*c) ∧ RateLE φ T A ((Z')-(t+1/16)*(c-b)) ∧ ∀ᶠ i in φ, Survival (C:=C) F (k i) (m i) (j i) (A i) (p i) x (u i) t (Q i) :=by",
+            "line": 25,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Eye/Extract.lean",
+            "fragment": "L25-L27"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.for_plot",
+            "lines": [
+              25,
+              32
+            ],
+            "conclusion": "`for_plot` gives labels `Q` with rate `p ~ Z' - t*c` for the label bound, rate `A <= Z' - (t+1/16)*(c-b)` for the difference, and `Survival` of the configuration eventually, with Z' = (sum d) c + 4 card I (c-a)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.funding",
+        "module": "YM.OPE.Prices.Circuit",
+        "lines": [
+          64,
+          66
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.funding"
+          },
+          "snippet": {
+            "text": "lemma funding (hk:Height C.S l T k b)(hm:Height C.S l T m a)(hj:Height C.S l T j c)(hT:Tendsto T l atTop)(he:b<a)(ht:a<c) (hΩ:∀ᶠ i in l, Push.GridApprox.room C.path.levels (k i) (m i) (lensScope C t)) :\n    ∃ g o : ι→ℝ, RateIs l T g ((Z')-t*a) ∧ RateLE l T o (-(X')) ∧\n       (∀ᶠ i in l,0<o i) ∧ ∀ᶠ i in l, PriceAt C (g i) (o i) t d s (k i) (m i) (j i):=by",
+            "line": 64,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Prices/Circuit.lean",
+            "fragment": "L64-L66"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.funding",
+            "lines": [
+              64,
+              87
+            ],
+            "conclusion": "`funding` gives `g` of rate `Z' - t*a` and `o` of rate at most `-X'` with `PriceAt C g o ...` eventually, where X' = (t+1/16)(a-b) - Z'."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.PriceAt",
+        "module": "YM.OPE.Prices.Circuit",
+        "lines": [
+          52,
+          56
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.PriceAt"
+          },
+          "snippet": {
+            "text": "structure PriceAt (C:Family G)(g o : ℝ)(n : ℕ) (d : I→ℕ)(s:(i:I)→ C.label (d i))(J m j:ℕ) : Prop where\n    quote (N p:ℕ)(hn:j<N)(hm:J ≤ N) : ∀ (r:I→Site (C.side j p)), (∀ i,loops C j p (r i) (m+1)=0) → Next.Rank.Edition.Spaced (C.path.levels.budget j).B r →\n       let V:= Cells.center C.S p hm 0; let f (i:I):=C.O N p (s i) ((C.S.toDepth hn.le p).embed (r i)); (∀ i, Cells.Interior (V.chamber 0) (f i))→ (∀ z:C.label n, Cells.Interior (V.chamber 0) (C.O N p z 0)) →\n       ∃ z:C.label n, let g': Config G (C.side N p)→ℂ:= (fun u=>∏ i,f i u)-C.O N p z 0;\n       Next.UVStress.quota C n m N p z ≤ g ∧ Cells.Interior (V.chamber 0) g' ∧ V.rootTest (C.beta N p) g' ≤ o",
+            "line": 52,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Prices/Circuit.lean",
+            "fragment": "L52-L56"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.PriceAt",
+            "lines": [
+              52,
+              63
+            ],
+            "conclusion": "`PriceAt` gives a label `z` with `quota <= g`, interior difference and `rootTest <= o` for all separated lattice configurations."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          226
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      }
+    }
+  }
+}

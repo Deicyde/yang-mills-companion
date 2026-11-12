@@ -1,0 +1,200 @@
+{
+  "id": "Lemma 11.4 step 17",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 49,
+        "rect": [
+          0.11962,
+          0.8003,
+          0.76357,
+          0.07134
+        ]
+      },
+      "title": "Lemma 11.4 step 17: Text, p. 49",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 11.4 step 17"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.StepData.chosen",
+        "module": "YM.RG.Block",
+        "lines": [
+          123,
+          136
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.StepData.chosen"
+          },
+          "snippet": {
+            "text": "theorem chosen (h : S.patch.Branches S.kernel G) (U : Config G f) : ∑ t, S.likelihood U t = 1 := by\n  let a (r : S.SitesChoice) := ∏ x, S.patch.frameMass S.kernel (expandAt (S.ratio.embed x) U) (r x)\n  let b (r : S.SitesChoice) (t : S.BondChoice) :=\n    ∏ e, S.patch.predictorMass S.kernel (S.connector U r e) (t e)\n  have ha : ∑ i, a i = 1 := by\n    unfold a\n    rw [← Fintype.prod_sum]\n    simp_rw [S.patch.frameMass_sum h]; simp\n  have hb (r) : ∑ i, b r i = 1 := by\n    unfold b\n    rw [← Fintype.prod_sum]; simp_rw [S.patch.predictorMass_sum]; simp\n  rw [Fintype.sum_prod_type]\n  change ∑ i, ∑ t, a i * b i t = _\n  simp_rw [← Finset.mul_sum, hb, mul_one]; exact ha",
+            "line": 123,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/RG/Block.lean",
+            "fragment": "L123-L136"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.StepData.chosen",
+            "lines": [
+              123,
+              136
+            ],
+            "conclusion": "`∑ t, S.likelihood U t = 1`, by multiplying the frame masses and predictor masses, each summing to one."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.StepData.density_total",
+        "module": "YM.RG.Block",
+        "lines": [
+          197,
+          201
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.StepData.density_total"
+          },
+          "snippet": {
+            "text": "theorem density_total (h : S.patch.Branches S.kernel G) (β : ℝ) (U : Config G f) : (∫ V : Config G c, S.density β U V ∂prior G c) = 1 := by\n  unfold density\n  rw [integral_finsetSum _]\n  · simp_rw [integral_const_mul, S.noise_mass, mul_one]; exact S.chosen h U\n  intro i _; exact (S.noise_integrable β _).const_mul _",
+            "line": 197,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/RG/Block.lean",
+            "fragment": "L197-L201"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.StepData.density_total",
+            "lines": [
+              197,
+              201
+            ],
+            "conclusion": "`∫ density β U V ∂prior = 1`, from `noise_mass` and `chosen`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.Patch.frameMass_sum",
+        "module": "YM.RG.Measurable",
+        "lines": [
+          127,
+          136
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.Patch.frameMass_sum"
+          },
+          "snippet": {
+            "text": "theorem frameMass_sum (h : P.Branches C G) (U : CoverConfig G) :\n    ∑ i, P.frameMass C U i = 1 := by\n  classical\n  by_cases ht : P.usesMin C U\n  · have hh : 0 < (Fintype.card P.FrameTag : ℝ) := by exact_mod_cast Fintype.card_pos\n    simp only [frameMass, if_pos ht, Finset.sum_const, Finset.card_univ, nsmul_eq_mul,\n      mul_inv_cancel₀ hh.ne']\n  simp_rw [frameMass, if_neg ht]\n  have hc : (P.eligible C U).card ≠ 0 := (Finset.card_pos.mpr (h.axial_exists U)).ne'\n  simp [hc]",
+            "line": 127,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/RG/Measurable.lean",
+            "fragment": "L127-L136"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.Patch.frameMass_sum",
+            "lines": [
+              127,
+              136
+            ],
+            "conclusion": "Frame masses sum to one."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.Patch.predictorMass_sum",
+        "module": "YM.RG.Measurable",
+        "lines": [
+          138,
+          144
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.Patch.predictorMass_sum"
+          },
+          "snippet": {
+            "text": "theorem predictorMass_sum (Y : P.Connector G) : ∑ i, P.predictorMass C Y i = 1 := by\n  classical\n  by_cases ht : P.usesBest C Y\n  · have hh : 0 < (Fintype.card P.Points : ℝ) := by exact_mod_cast Fintype.card_pos\n    simp only [predictorMass, if_pos ht, Finset.sum_const, Finset.card_univ, nsmul_eq_mul,\n      mul_inv_cancel₀ hh.ne']\n  simpa only [predictorMass, if_neg ht] using P.weight_sum",
+            "line": 138,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/RG/Measurable.lean",
+            "fragment": "L138-L144"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.Patch.predictorMass_sum",
+            "lines": [
+              138,
+              144
+            ],
+            "conclusion": "Predictor masses sum to one."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          49
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

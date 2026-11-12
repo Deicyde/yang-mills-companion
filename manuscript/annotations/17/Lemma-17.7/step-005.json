@@ -1,0 +1,201 @@
+{
+  "id": "Lemma 17.7 step 5",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "narrowMatch",
+  "note": "[L] bounds the integrand by C‖𝒜^{m+1}f‖_{L¹} without [M]'s factor 1/m!, which `expense` discards as at most 1, so the stated bound is weaker. The boundary limits and the common seminorm bound are as in [M].",
+  "subject": [
+    {
+      "location": {
+        "page": 199,
+        "rect": [
+          0.11962,
+          0.44362,
+          0.76012,
+          0.05424
+        ]
+      },
+      "title": "Lemma 17.7 step 5: Text, p. 199",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 17.7 step 5"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Boundary.Waves.expense",
+        "module": "YM.Shift.Breath",
+        "lines": [
+          68,
+          75
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Boundary.Waves.expense"
+          },
+          "snippet": {
+            "text": "lemma expense {v : Fin n → S.Union} (m : ℕ) {C : ℝ}\n    (hm : ∀ (y : Heights n) (k : ℝ), k ∈ Ioc 0 1 → broad y k → ∀ x, ‖F.restricted v y x‖ ≤ C*k⁻¹^m)\n    (y : Heights n) (hy : y∈sunrise n) (f : Joint n) {t : ℝ} (hr : t∈Ioc (0:ℝ) 1) :\n    ‖F.wind v m y f t‖ ≤ C*weight (moves (m+1) f) := by\n  have hF : ‖(m.factorial:ℂ)‖ = (m.factorial:ℝ) := by exact Complex.norm_natCast _\n  have he : ((m.factorial:ℝ))⁻¹ ≤ 1 := inv_le_one_of_one_le₀ (by exact_mod_cast Nat.factorial_pos m)\n  rw [wind,norm_mul,coal,norm_mul, Complex.norm_pow,norm_neg,Complex.norm_real,Real.norm_eq_abs,abs_of_nonneg hr.1.le, norm_inv,hF]\n  exact le_trans (mul_le_mul_of_nonneg_right (mul_le_of_le_one_right (pow_nonneg hr.1.le m) he) (norm_nonneg _))",
+            "line": 68,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Shift/Breath.lean",
+            "fragment": "L68-L75"
+          },
+          "proof_context": {
+            "declaration": "YM.Boundary.Waves.expense",
+            "lines": [
+              68,
+              76
+            ],
+            "conclusion": "`expense` bounds the remainder integrand `wind v m y f t` by `C * weight (moves (m+1) f)` for `t ∈ (0,1]`, discarding the factor `(m!)⁻¹ ≤ 1`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Boundary.Waves.storm",
+        "module": "YM.Shift.Osc",
+        "lines": [
+          38,
+          41
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Boundary.Waves.storm"
+          },
+          "snippet": {
+            "text": "lemma storm (h : F.Along) (p : F.Lines) (y) (hy : y∈sunrise n) (f : Joint n) : Tendsto (fun x => F.psi v x f)\n    (𝓝[east n] y) (𝓝 (F.desired v m y f)) := by\n  apply ((F.maintains v h _ hm f y hy).mono fun x t => bigger (n:=n) t).congr'\n  filter_upwards [self_mem_nhdsWithin] with x hx using F.meant h p _ _ hx f m",
+            "line": 38,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Shift/Osc.lean",
+            "fragment": "L38-L41"
+          },
+          "proof_context": {
+            "declaration": "YM.Boundary.Waves.storm",
+            "lines": [
+              38,
+              41
+            ],
+            "conclusion": "`storm` gives the ordered boundary limit of `psi v x f` as `x → y` in `east n`, equal to `desired v m y f`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Boundary.Waves.cost",
+        "module": "YM.Shift.Osc",
+        "lines": [
+          27,
+          27
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Boundary.Waves.cost"
+          },
+          "snippet": {
+            "text": "lemma cost (y) (hy : y∈sunrise n) (f : Joint n) : ‖F.desired v m y f‖ ≤ toll f C m := by",
+            "line": 27,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Shift/Osc.lean",
+            "fragment": "L27-L27"
+          },
+          "proof_context": {
+            "declaration": "YM.Boundary.Waves.cost",
+            "lines": [
+              27,
+              36
+            ],
+            "conclusion": "`cost` bounds `‖desired v m y f‖` by `toll f C m`, finitely many L¹ weights of `moves j f`: a common Schwartz seminorm bound."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.power",
+        "module": "YM.EveryPhase.Pages",
+        "lines": [
+          19,
+          21
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.power"
+          },
+          "snippet": {
+            "text": "theorem power (n : ℕ) (v : Fin n → S.Union) : ∃ m : ℕ, ∃ C₀ : ℝ, 0≤C₀ ∧\n    ∀ i, ∀ (y : Heights n) (k : ℝ), k∈Ioc 0 1 → broad y k → ∀ x,\n    ‖(L.contours i).waves.restricted v y x‖ ≤ C₀*k⁻¹^m := by",
+            "line": 19,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Pages.lean",
+            "fragment": "L19-L21"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.power",
+            "lines": [
+              19,
+              46
+            ],
+            "conclusion": "`power` makes the exponent `m` and the constant `C₀` uniform in the phase."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          199
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

@@ -1,0 +1,179 @@
+{
+  "id": "Lemma 16.10 step 11",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 185,
+        "rect": [
+          0.29232,
+          0.8903,
+          0.58742,
+          0.02042
+        ]
+      },
+      "title": "Lemma 16.10 step 11: Text, pp. 185–186",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.10 step 11#0"
+        }
+      }
+    },
+    {
+      "location": {
+        "page": 186,
+        "rect": [
+          0.12026,
+          0.0962,
+          0.2897,
+          0.02042
+        ]
+      },
+      "title": "Lemma 16.10 step 11: Text, pp. 185–186",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.10 step 11#1"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Ward.fills",
+        "module": "YM.Ward.Axis",
+        "lines": [
+          110,
+          128
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Ward.fills"
+          },
+          "snippet": {
+            "text": "private lemma fills (x : Points n) : x∈closure {x : Points n | arranged a x} := by\n  let v := points fun i : Fin n => (↑(i.val):ℝ) • basis a\n  let z := fun t : ℝ => x+t • v\n  have he : Tendsto z (𝓝[>] 0) (𝓝 x) := by\n    have h : Continuous z := continuous_const.add (continuous_id.smul continuous_const)\n    simpa [z] using (h.tendsto 0).mono_left (nhdsWithin_le_nhds (s := Ioi 0))\n  have hu : ∀ᶠ t in 𝓝[>] 0, ∀ i j, i≠j → z t i a≠ z t j a := by\n    apply eventually_all.mpr; intro i; apply eventually_all.mpr; intro j\n    by_cases h : i=j\n    · exact Eventually.of_forall fun _ hx => (hx h).elim\n    have hh : (i.val:ℝ)≠j.val := by exact_mod_cast (show i.val≠j.val from fun p => h (Fin.ext p))\n    by_cases hi : x i a=x j a\n    · filter_upwards [self_mem_nhdsWithin] with t ht Hh\n      have hr : t≠0 := LT.lt.ne' ht\n      simp [z,v,hi,hr]; exact fun hy => h (Fin.ext hy)\n    have hp := he.eventually (show ({x : Points n | x i a ≠ x j a} : Set _) ∈ _ from\n      (isOpen_ne_fun (by fun_prop : Continuous (fun x : Points n => x i a)) (by fun_prop)).mem_nhds hi)\n    exact hp.mono fun x h _ => h\n  apply mem_closure_of_tendsto he (hu.mono fun i hi => show arranged a (z i) from fun j k h => by_contra fun hg => hi j k hg h)",
+            "line": 110,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Ward/Axis.lean",
+            "fragment": "L110-L128"
+          },
+          "proof_context": {
+            "declaration": "YM.Ward.fills",
+            "lines": [
+              110,
+              128
+            ],
+            "conclusion": "`fills` shows every configuration is a limit of configurations `arranged a x`, with distinct coordinates on axis `a`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Ward.arranged",
+        "module": "YM.Ward.Axis",
+        "lines": [
+          16,
+          16
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Ward.arranged"
+          },
+          "snippet": {
+            "text": "abbrev arranged (x : Points n) := Injective (fun i : Fin n => x i a)",
+            "line": 16,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Ward/Axis.lean",
+            "fragment": "L16-L16"
+          },
+          "proof_context": {
+            "declaration": "YM.Ward.arranged",
+            "lines": [
+              16,
+              16
+            ],
+            "conclusion": "`arranged a x` says the `a`-coordinates of the points are pairwise distinct."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Ward.line",
+        "module": "YM.Ward.Axis",
+        "lines": [
+          86,
+          92
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Ward.line"
+          },
+          "snippet": {
+            "text": "lemma line (w : a≠b) (x : Points n) (h : arranged a x) (N : Finset (Fin n))\n    (H : ∀ i∉N, (∃ t : ℝ, x i=t • basis a) ∧ ∀ j∈ N, x j a < x i a) : ∃ y, Walk n x y ∧ y∈conf n ∧ onLine a y := by\n  induction N using Finset.strongInductionOn generalizing x with\n  | _ N ih =>\n    rcases N.eq_empty_or_nonempty with hv|hh\n    · subst N; exact ⟨x,.id _, also a h,fun i => (H i (by simp)).1⟩\n    obtain ⟨i,hi,hz⟩ := Finset.exists_min_image N (fun i => x i a) hh",
+            "line": 86,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Ward/Axis.lean",
+            "fragment": "L86-L92"
+          },
+          "proof_context": {
+            "declaration": "YM.Ward.line",
+            "lines": [
+              86,
+              108
+            ],
+            "conclusion": "`line` treats the points one at a time by induction on the finite set `N` of points not yet moved."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          185,
+          186
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

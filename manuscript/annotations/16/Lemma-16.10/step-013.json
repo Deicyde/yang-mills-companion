@@ -1,0 +1,154 @@
+{
+  "id": "Lemma 16.10 step 13",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 186,
+        "rect": [
+          0.12026,
+          0.13295,
+          0.76194,
+          0.0521
+        ]
+      },
+      "title": "Lemma 16.10 step 13: Text, p. 186",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.10 step 13",
+          "quads": [
+            [
+              0.44157,
+              0.13295,
+              0.87974,
+              0.13295,
+              0.87974,
+              0.15084,
+              0.44157,
+              0.15084
+            ],
+            [
+              0.12026,
+              0.15086,
+              0.8822,
+              0.15086,
+              0.8822,
+              0.16714,
+              0.12026,
+              0.16714
+            ],
+            [
+              0.12026,
+              0.16715,
+              0.74684,
+              0.16715,
+              0.74684,
+              0.18505,
+              0.12026,
+              0.18505
+            ]
+          ]
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Ward.pushes",
+        "module": "YM.Ward.Axis",
+        "lines": [
+          57,
+          74
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Ward.pushes"
+          },
+          "snippet": {
+            "text": "lemma pushes {x : Points n} {k : Fin n} (h : Earliest x a k) (w : b≠a) : ∃ y : Points n,\n    Walk n x y ∧ (∀ i≠k, x i=y i) ∧ Latest y a k ∧ (∃ t : ℝ, y k=t • basis a) := by\n  obtain ⟨T,hT⟩ := ta (fun i : Fin n => x i b)\n  let u := cast x k b (T-x k b)\n  have hi : Walk n x u := .bridge _ _ a _ _ (fun i s => Or.inl (still_first a b h w i))\n  have hx : Latest u b k := by\n    refine ⟨(still_first a b h w _).1,fun i h => ?_⟩\n    simp [u,near _ _ _ h,hT i]\n  obtain ⟨J,hJ⟩ := ta (fun i : Fin n => u i a)\n  let v := cast u k a (J-u k a)\n  have hv : Walk n u v := .bridge _ _ b a _ (fun i s => Or.inr (still_last b a hx w.symm i))\n  have hz : Latest v a k := by\n    refine ⟨(still_last b a hx w.symm _).1,fun i h => ?_⟩\n    simp [v,near _ _ _ h,hJ i]\n  obtain ⟨y,hy,he,hh,H,Hq⟩ := park1 a hz (Finset.univ.erase a) (by simp)\n  refine ⟨y,(hi.transit hv).transit hy,fun i hi => (near x _ _ hi _ _).symm.trans\n    ((near u _ _ hi _ _).symm.trans (hh i hi)), H,y k a, ?_⟩\n  ext i; by_cases h : i=a; subst i; simp; simp [Hq i (by simp [h]),h]",
+            "line": 57,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Ward/Axis.lean",
+            "fragment": "L57-L74"
+          },
+          "proof_context": {
+            "declaration": "YM.Ward.pushes",
+            "lines": [
+              57,
+              74
+            ],
+            "conclusion": "`pushes` moves an `Earliest` point along `b` beyond all others (`Latest u b k`), then along `a` beyond all others (`Latest v a k`), then parks it on the axis."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Ward.park1",
+        "module": "YM.Ward.Axis",
+        "lines": [
+          36,
+          53
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Ward.park1"
+          },
+          "snippet": {
+            "text": "lemma park1 {x : Points n} {k : Fin n} (h : Latest x a k) : ∀ s : Finset Axis,\n    a∉s → ∃ y : Points n, Walk n x y ∧ y k a=x k a ∧ (∀ i≠k, x i=y i) ∧\n      Latest y a k ∧ ∀ b∈s, y k b=0 := by\n  intro s ht\n  induction s using Finset.induction_on with\n  | empty => exact ⟨x,.id x,rfl,fun _ _ => rfl,h,by simp⟩\n  | @insert b s hb ih =>\n    obtain ⟨y,hy,he,hs,h',hh⟩ := ih (fun e => ht (Finset.mem_insert_of_mem e))\n    let v := -(y k b)\n    let z := cast y k b v\n    have hv : b≠a := by intro H; subst a; exact ht (by simp)\n    refine ⟨z,Walk.transit hy (Walk.bridge y k a b v fun i _ => Or.inr (still_last a b h' hv i)), by simp [z, Ne.symm hv,he],\n      fun i hi => (hs i hi).trans (near y _ _ hi _ _).symm, still_last a b h' hv v, ?_⟩\n    intro i hi\n    rcases Finset.mem_insert.mp hi with hi|hi\n    · subst i; simp [z,v]\n    have hv' : i≠b := fun h => hb (h ▸ hi)\n    simp [z,hv',hh i hi]",
+            "line": 36,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Ward/Axis.lean",
+            "fragment": "L36-L53"
+          },
+          "proof_context": {
+            "declaration": "YM.Ward.park1",
+            "lines": [
+              36,
+              53
+            ],
+            "conclusion": "`park1` sets the other coordinates of a `Latest` point to zero one at a time (`Finset` induction), staying `Latest` in axis `a`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          186
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

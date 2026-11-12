@@ -1,0 +1,201 @@
+{
+  "id": "Lemma 17.8 step 6",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "`pulse` is [M]'s π(E) (positivity is `pulse_positive`), and `up`, `weighted` carry the weight π(E)dμ; positivity of the pushforwards is by construction.",
+  "subject": [
+    {
+      "location": {
+        "page": 201,
+        "rect": [
+          0.12026,
+          0.74835,
+          0.75982,
+          0.0733
+        ]
+      },
+      "title": "Lemma 17.8 step 6: Text, p. 201",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 17.8 step 6"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.two_average",
+        "module": "YM.EveryPhase.Average",
+        "lines": [
+          149,
+          160
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.two_average"
+          },
+          "snippet": {
+            "text": "lemma two_average (x : Space3) (h : ∀ᵐ p ∂μ, 0 ≤ p timeAxis) (hp : ∀ᵐ p ∂ν, 0 ≤ p timeAxis) :\n    averaged (fun p => charFun μ p - charFun ν (-p)) x =\n      charFun ((weighted μ).map spatial) x + charFun ((weighted ν).map (fun p => -spatial p)) x := by\n  have he : charFun ((weighted ν).map (fun p => -spatial p)) x = charFun ((weighted ν).map spatial) (-x) := by\n    rw [charFun_apply,charFun_apply,integral_map (by fun_prop) (by fun_prop),\n      integral_map rest_cont.measurable.aemeasurable (by fun_prop)]; simp\n  rw [he,← one_average μ x h,← one_average ν (-x) hp]\n  unfold averaged\n  rw [← integral_add (intervalChar μ x) (intervalChar ν (-x))]\n  refine integral_congr_ae (ae_of_all _ fun p => ?_)\n  have hh (t) : -(position x t)=position (-x) (-t) := by apply Mink.ext_by <;> simp\n  simp only [oddTest]; rw [hh,hh,neg_neg]; ring",
+            "line": 149,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Average.lean",
+            "fragment": "L149-L160"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.two_average",
+            "lines": [
+              149,
+              160
+            ],
+            "conclusion": "The time average `averaged` of the odd part of `charFun μ p - charFun ν (-p)` is the sum of the Fourier transforms of the pushforwards of `weighted μ` under `spatial` and `weighted ν` under `-spatial`, with weight `up p = pulse (time p)`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.pulse_lower",
+        "module": "YM.EveryPhase.Average",
+        "lines": [
+          46,
+          59
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.pulse_lower"
+          },
+          "snippet": {
+            "text": "lemma pulse_lower {t : ℝ} (hx : t∈Icc (0:ℝ) 1) : t/Real.pi ≤ pulse t := by\n  have ht := hx.2\n  have hp := hx.1\n  calc\n    _ = ∫ x in (0:ℝ)..1, (2/Real.pi*t)*x := by\n      rw [intervalIntegral.integral_const_mul, integral_id]; ring\n    _ ≤ _ := by\n      apply intervalIntegral.integral_mono_on (by norm_num : (0:ℝ)≤1)\n        ((show Continuous (fun x : ℝ => (2/Real.pi*t)*x) from by fun_prop).intervalIntegrable ..)\n        ((show Continuous (fun u => Real.sin (t*u)) from by fun_prop).intervalIntegrable ..)\n      intro x h\n      have he := h.1\n      have hh : t*x ≤ Real.pi/2 := (mul_le_one₀ ht he h.2).trans (by linarith [Real.two_le_pi])\n      rw [mul_assoc]; exact Real.mul_le_sin (mul_nonneg hp he) hh",
+            "line": 46,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Average.lean",
+            "fragment": "L46-L59"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.pulse_lower",
+            "lines": [
+              46,
+              59
+            ],
+            "conclusion": "`pulse t = ∫_0^1 sin (t x) dx = (1-cos t)/t` satisfies `t/π ≤ pulse t` on `[0,1]`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.averaged_bound",
+        "module": "YM.EveryPhase.Light",
+        "lines": [
+          17,
+          25
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.averaged_bound"
+          },
+          "snippet": {
+            "text": "lemma averaged_bound (M : ℝ) (h : μ.real univ + ν.real univ ≤ M) (x : Space3) :\n    ‖averaged A x‖ ≤ M := by\n  have hh p : ‖A p‖ ≤ M := (norm_sub_le ..).trans ((add_le_add (norm_charFun_le _) (norm_charFun_le _)).trans h)\n  have ht t : ‖oddTest (fun t => A (position x t)) t‖ ≤ M := by\n    rw [oddTest,norm_div,norm_mul,Complex.norm_I,mul_one,show ‖(2:ℂ)‖=(2:ℝ) by simp,div_le_iff₀ (by positivity)]\n    exact (norm_sub_le ..).trans ((add_le_add (hh _) (hh _)).trans_eq (mul_two M).symm)\n  have hc := norm_integral_le_of_norm_le (μ:=volume.restrict (Ioc (0:ℝ) 1))\n    (integrable_const _) (ae_of_all _ ht)\n  unfold averaged; simpa using hc",
+            "line": 17,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Light.lean",
+            "fragment": "L17-L25"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.averaged_bound",
+            "lines": [
+              17,
+              25
+            ],
+            "conclusion": "`‖averaged A x‖ ≤ M` when the two total masses sum to at most `M`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.late",
+        "module": "YM.EveryPhase.Light",
+        "lines": [
+          208,
+          219
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.late"
+          },
+          "snippet": {
+            "text": "theorem late (w : SumOfWords S) (h : finite w) : ∃ R : ℝ, ∀ i, ∀ x : Space3, R < ‖x‖ →\n    averaged (delta (L.actors i) w) x=0 := by\n  obtain ⟨R,hR⟩ := distant _ _ (fin_reverse F.action.J h) h F.action.spin\n  refine ⟨R,fun i x hx => ?_⟩\n  have he t (ht : |t| ≤ 1) : delta (L.actors i) w (position x t)=0 := by\n    rw [comm_expect (L.cores i) F.sector.derivatives F.room.kernel.laws.toSymmetric F.phase.transport.injection]\n    have hh : spacelikeWords (reverseP (L.actors i).J w) (acted (L.actors i).spin (Poincare.translation (position x t)) w) := by\n      rw [L.spins,L.letters]; exact hR t ht x hx\n    rw [op_comm (L.actors i).operators (L.cores i).localPairs hh,sub_self]\n  refine setIntegral_eq_zero_of_forall_eq_zero (fun y hy => ?_)\n  have hp : |y| ≤ 1 := by rw [abs_of_nonneg hy.1.le]; exact hy.2\n  simp only [oddTest, he y hp, he (-y) (by simpa using hp), sub_self, zero_div]",
+            "line": 208,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Light.lean",
+            "fragment": "L208-L219"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.late",
+            "lines": [
+              208,
+              219
+            ],
+            "conclusion": "`averaged (delta ..) x = 0` for `R < ‖x‖`, so the time average is supported in the closed ball of radius `R`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          201
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

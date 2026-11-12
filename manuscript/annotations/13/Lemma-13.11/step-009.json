@@ -1,0 +1,145 @@
+{
+  "id": "Lemma 13.11 step 9",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "broadMatch",
+  "note": "[L] proves the covariance jointly for signed permutations and translations (`Moves s b`), so [M]'s translation claim is its special case with trivial permutation.",
+  "subject": [
+    {
+      "location": {
+        "page": 107,
+        "rect": [
+          0.12026,
+          0.27365,
+          0.75981,
+          0.03499
+        ]
+      },
+      "title": "Lemma 13.11 step 9: Text, p. 107",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 13.11 step 9",
+          "quads": [
+            [
+              0.3155,
+              0.27365,
+              0.88007,
+              0.27365,
+              0.88007,
+              0.29113,
+              0.3155,
+              0.29113
+            ],
+            [
+              0.12026,
+              0.29115,
+              0.22199,
+              0.29115,
+              0.22199,
+              0.30864,
+              0.12026,
+              0.30864
+            ]
+          ]
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.AnalyticBridge.VerifiedReset.Collection.Local.fittings",
+        "module": "YM.AnalyticBridge.VERIFIED_RESET_STEP.Trays",
+        "lines": [
+          137,
+          146
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.AnalyticBridge.VerifiedReset.Collection.Local.fittings"
+          },
+          "snippet": {
+            "text": "  · obtain ⟨e⟩ := h.transforms s b\n    let N := numbering (EKey n); let π := spins n e.ep s b; let u := (N.trans π).trans N.symm\n    have hN (i) : N (u i) = π (N i) := N.apply_symm_apply _\n    have hj (i) := (h.action (R:=R) (c:=c) g hn α Δ s b e).1 (N i)\n    let Y := ((shelves X R p).pours (fill X R c p v α Δ))\n    change Nonempty (Y.Moves s b)\n    refine ⟨⟨u,e.kp,fun i => ?_,fun i => ?_, e.forced_support, e.forced_inventory, e.forced_tests,fun i U => ?_, e.valuesK⟩⟩\n    · change (incoming X R p (N (u i))).site = _; exact hN i ▸ (hj i).1\n    · change (incoming X R p (N (u i))).support = _; exact hN i ▸ (hj i).2.1\n    change archive X R c v α Δ (N (u i)) U = _; exact hN i ▸ congr_fun (hj i).2.2 U",
+            "line": 137,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/VERIFIED_RESET_STEP/Trays.lean",
+            "fragment": "L137-L146"
+          },
+          "proof_context": {
+            "declaration": "YM.AnalyticBridge.VerifiedReset.Collection.Local.fittings",
+            "lines": [
+              133,
+              152
+            ],
+            "conclusion": "`fittings`: for every signed permutation `s` and translation `b`, the regular output addresses are reindexed with site, support and value `archive` transported by `Moves s b`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.AnalyticBridge.VerifiedReset.Collection.Local.fittings",
+        "module": "YM.AnalyticBridge.VERIFIED_RESET_STEP.Trays",
+        "lines": [
+          147,
+          152
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.AnalyticBridge.VerifiedReset.Collection.Local.fittings"
+          },
+          "snippet": {
+            "text": "  obtain ⟨e⟩ := h.transforms s b\n  let N := numbering (LKey n); let π := knots n e.ep s b; let u := (N.trans π).trans N.symm\n  have hN (i) : N (u i) = π (N i) := N.apply_symm_apply _\n  have hj (i) := (h.action (R:=R) (c:=c) g hn α Δ s b e).2 (N i)\n  exact ⟨u,fun i => by change soft X R p (N (u i)) = _; exact hN i ▸ (hj i).1,fun U i => by\n    change loses X R c p v α Δ (N (u i)) U = _; exact hN i ▸ congr_fun (hj i).2 U⟩",
+            "line": 147,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/VERIFIED_RESET_STEP/Trays.lean",
+            "fragment": "L147-L152"
+          },
+          "proof_context": {
+            "declaration": "YM.AnalyticBridge.VerifiedReset.Collection.Local.fittings",
+            "lines": [
+              133,
+              152
+            ],
+            "conclusion": "`fittings`: the same transport of supports and values `loses` for the forced output addresses."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          107
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
+      }
+    }
+  }
+}

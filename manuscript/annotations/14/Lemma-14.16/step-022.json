@@ -1,0 +1,84 @@
+{
+  "id": "Lemma 14.16 step 22",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "narrowMatch",
+  "note": "Lean proves the perturbation bound with the constant 1/2 where M claims 1/4, and in `coeffSize` rather than the l^1 norm; 1/2 suffices for invertibility with inverse bound 2.",
+  "subject": [
+    {
+      "location": {
+        "page": 141,
+        "rect": [
+          0.12026,
+          0.60145,
+          0.75948,
+          0.02284
+        ]
+      },
+      "title": "Lemma 14.16 step 22: Display, p. 141",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.16 step 22"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.MergeProof.cheaper",
+        "module": "YM.MergeProof.Marimba",
+        "lines": [
+          41,
+          45
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.MergeProof.cheaper"
+          },
+          "snippet": {
+            "text": "       have hp : F.coeffSize (i-T i) ≤ F.coeffSize i/2:=by\n           rw [hs]; apply (Size.finite F _ _).trans; let p:=sliver F\n           have hA(j:Motion.Tally F): F.coeffSize (chips F i j • Motion.patch F j.1 (z j.2-X j.2)) ≤ ‖chips F i j‖ * (orbitCost F*p):=by\n              rw [Size.smul]; exact mul_le_mul_of_nonneg_left ((patch_cost ..).trans (mul_le_mul_of_nonneg_left (h j.2) hc.le)) (norm_nonneg _)\n           apply le_trans (Finset.sum_le_sum (fun j _=> hA j)); rw [←Finset.sum_mul]; apply (mul_le_mul_of_nonneg_right (chipcost F i) (mul_nonneg hc.le (sliver_pos F).le)).trans_eq; unfold c sliver; unfold c at hc; field_simp",
+            "line": 41,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Marimba.lean",
+            "fragment": "L41-L45"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.cheaper",
+            "lines": [
+              35,
+              47
+            ],
+            "conclusion": "Under `size(axis i - X i) <= sliver`, the matrix `T = decor F X` satisfies `size(i - T i) <= size i / 2`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          141
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
+      }
+    }
+  }
+}

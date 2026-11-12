@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 19.10 step 1",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "broadMatch",
+  "note": "Both set T=-log r with alpha=1 and beta=upsilon=0 and pass from the rate to the r-power by a sequence argument (`refine_geometry`) and absorbing subpowers into eps; [L] also concludes injectivity of the point lists.",
+  "subject": [
+    {
+      "location": {
+        "page": 230,
+        "rect": [
+          0.12026,
+          0.26627,
+          0.76013,
+          0.1256
+        ]
+      },
+      "title": "Lemma 19.10 step 1: Text, p. 230",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 19.10 step 1"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Orbits.coefficient_separated",
+        "module": "YM.OPE.Orbits.Separated",
+        "lines": [
+          64,
+          70
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Orbits.coefficient_separated"
+          },
+          "snippet": {
+            "text": "lemma coefficient_separated (m:ℕ)(j:R.channels m): ∀ᶠ r:ℝ in 𝓝[>] 0,∀ (x':I→ E4)(o':E4), WithinRoom r M η x' o' → ‖R.coef m j x' v o'‖ ≤ r^((m:ℝ)-weight d-ε) := by\n   let P r (u:(I→ E4)× E4):= WithinRoom r M η u.1 u.2\n   let Q (r:ℝ)(u:(I→E4)× E4):=‖R.coef m j u.1 v u.2‖ ≤ r^((m:ℝ)-weight d-ε)\n   have hf:∀ᶠ t in 𝓝[>] (0:ℝ),∀ y:(I→E4)× E4, P t y→Q t y:=by\n       refine refine_geometry (P:=P) (Q:=Q) fun f ψ hψ hl hh=>?_ ; exact ⟨_,hψ,le_rfl,channel_prelim (r:=id) (K:=ℝ) (x:=fun s=>(f s).1) (o:=fun s=>(f s).2) U R h v hM hη hε (tendsto_id.mono_left hl) hh m j⟩\n   filter_upwards [hf] with t ht x' o' h using (ht ⟨x',o'⟩ h)\ninclude h",
+            "line": 64,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Orbits/Separated.lean",
+            "fragment": "L64-L70"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Orbits.coefficient_separated",
+            "lines": [
+              64,
+              70
+            ],
+            "conclusion": "`coefficient_separated` gives eventually as r goes to 0+, for WithinRoom configurations, `||R.coef m j x v o|| <= r^(m - weight d - eps)`, by `coefficient_rate` with a=1."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Orbits.quantitative_separated",
+        "module": "YM.OPE.Orbits.Separated",
+        "lines": [
+          71,
+          85
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Orbits.quantitative_separated"
+          },
+          "snippet": {
+            "text": "lemma quantitative_separated (D:ℕ)(hδ:0<δ) :∀ᶠ r:ℝ in 𝓝[>] 0,∀ (x:I→E4)(o:E4)(y:J→E4), WithinRoom r M η x o → ClearOf o y δ →\n   Injective (beside x y) ∧ Injective (beside (sole o) y) ∧\n      ‖algebraError U R x o v y w D‖≤ r^((D:ℝ)+1 - weight d-ε) ∧ ∀ t:Viewers U,‖formula U R x o v y w D t‖≤ r^((D:ℝ)+1-weight d-ε):=by\n    let P (r:ℝ) (z:(I→E4) × E4 × (J→E4)):= WithinRoom r M η z.1 z.2.1 ∧ ClearOf z.2.1 z.2.2 δ\n    let Q (r:ℝ)(z:(I→E4) × E4 × (J→E4)) := Injective (beside z.1 z.2.2) ∧ Injective (beside (sole z.2.1) z.2.2) ∧ ‖algebraError U R z.1 z.2.1 v z.2.2 w D‖ ≤ r^((D:ℝ)+1 - weight d-ε)\n    have hf:∀ᶠ r in 𝓝[>] (0:ℝ),∀ z,P r z→ Q r z:=by\n       refine refine_geometry fun f ψ hψ hl hh => ⟨_,hψ,le_rfl,?_⟩\n       let x(r:ℝ):= (f r).1; let o(r:ℝ):=(f r).2.1; let y(r:ℝ):=(f r).2.2\n       obtain ⟨hx,hk⟩:= room_regime (r:= id) (O:=o) (X:=x) (show Tendsto id ψ (𝓝[>]0) from tendsto_id.mono_left hl) hM hη (hh.mono fun _ hi=>hi.1)\n       have hT:=run_towards (φ:=ψ) (r:=id) (tendsto_id.mono_left hl)\n       obtain ⟨hq,hj⟩:= free_clear (Y:=y) (O:=o) hT hδ (hh.mono fun _ hi=>hi.2)\n       exact (clearance_both hT hx hk hj hq zero_lt_one le_rfl).2.and ((clearance_both hT hx hk hj hq zero_lt_one le_rfl).1.and (exterior_prelim (x:=x) (o:=o) (y:=y) (r:=id) U R h v w hM hη hε (tendsto_id.mono_left hl) (hh.mono fun i=>And.left) (hh.mono fun i=>And.right) D hδ))\n    filter_upwards [hf] with r hr x o y hx hy\n    obtain ⟨h₁,h₂,hc⟩:= hr (x,o,y) ⟨hx,hy⟩\n    exact ⟨h₁,h₂,hc, fun v'=> ((glance_contract U (by linarith only [hc,norm_nonneg (algebraError U R x o v y w D)])).1 hc v' |>.trans' ((congr_arg norm (formula_seen U R x o v y w D v' h₁ h₂)).symm.le))⟩",
+            "line": 71,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Orbits/Separated.lean",
+            "fragment": "L71-L85"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Orbits.quantitative_separated",
+            "lines": [
+              71,
+              85
+            ],
+            "conclusion": "`quantitative_separated` gives eventually the bounds r^(D+1-weight d-eps) on `algebraError` and `formula` in every viewer, by `algebra_rate` with a=1, b=c=0, and injectivity of the point lists."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          230
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

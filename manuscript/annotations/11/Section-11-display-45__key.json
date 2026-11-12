@@ -1,0 +1,120 @@
+{
+  "id": "Section 11 display 45",
+  "kind": "display",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] packages the weights upsilon and constants into `RatesPaid`/`Parcel`, takes jets along chart directions and holds for large x; its residual bound carries an extra factor t and no g^{-1}.",
+  "subject": [
+    {
+      "location": {
+        "page": 69,
+        "rect": [
+          0.12026,
+          0.84808,
+          0.75948,
+          0.06686
+        ]
+      },
+      "title": "Display, p. 69",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Section 11 display 45"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.AnalyticBridge.Covariance.fromTeller",
+        "module": "YM.AnalyticBridge.SECTOR_COVARIANCE_JETS.Sky",
+        "lines": [
+          62,
+          77
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.AnalyticBridge.Covariance.fromTeller"
+          },
+          "snippet": {
+            "text": "theorem fromTeller (P : Patch) (G : Gauge) (p : Teller G) (hB : P.Branches p.bind G) (k : ℕ) :\n    ∃ C r σ b η g : ℝ, 0<C ∧ 0<r ∧ 0<σ ∧ 0<b ∧ 0<η ∧ 0<g ∧ ∀ᶠ x : ℝ in atTop,\n      Sky G p P x C r k σ b η g := by\n  obtain ⟨C,r,d,η,hc,hr,hd,hη,h⟩ := trusting P G p hB k\n  obtain ⟨M,σ,b,g,hm,hC,hs,hu,hb,hg,H⟩ := aperture P G hd hc hη k\n  refine ⟨M,r,σ,b,η,g,hm,hr,hs,hb,hη,hg,?_⟩\n  filter_upwards [h,H] with x hx hz\n  obtain ⟨hp,hE⟩ := hz\n  refine ⟨hp,?_,?_⟩ <;> intro c f S T hS hT hv V t A F hA B hU\n  · obtain ⟨h1,h2,h3,h4,h5,h6⟩ := hx S T hS hT hv V t A F hA B hU\n    intro g H; exact ⟨reducePay h1 hu hC le_rfl, reducePay h2 hu hC le_rfl,h3,h4,fun z =>\n      (h5 z).trans (mul_le_mul_of_nonneg_right hC (sumSq_nn z)),h6⟩\n  obtain ⟨-,h1,h2,-,-,-⟩ := hx S T hS hT hv V t A F hA B hU\n  apply hE (front A F) (pilot T A F t x V) (panels A F) B _ ?_ h1 h2 (boards A F G hp)\n  · intro y hy; rw [← hS]; exact (terraced S G A F x _ hy).1\n  intro B; rw [pilot_eq]; unfold Matrix.IsSymm; rw [transpose_mul,transpose_transpose]",
+            "line": 62,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/SECTOR_COVARIANCE_JETS/Sky.lean",
+            "fragment": "L62-L77"
+          },
+          "proof_context": {
+            "declaration": "YM.AnalyticBridge.Covariance.fromTeller",
+            "lines": [
+              62,
+              77
+            ],
+            "conclusion": "`fromTeller` gives, for large x, `Sky`: `Installed` for the actual window covariance, with `Gapped`, `PosDef`, jets of A, its inverse, Gamma and their principal compressions, and the discrepancies at rate `rate (-b) (radiusB x)`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.AnalyticBridge.SectorAffine.Offset.prices",
+        "module": "YM.AnalyticBridge.SECTOR_AFFINE_JETS.Center",
+        "lines": [
+          115,
+          151
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.AnalyticBridge.SectorAffine.Offset.prices"
+          },
+          "snippet": {
+            "text": "theorem prices (G : Gauge) (P : Patch) (Pt : Teller G) (B : ℝ) (hB : 0<B) (q : Chi) (n : ℕ) (hP : P.Branches Pt.bind G) :\n    ∃ r d d' v M N η l : ℝ, 0<r ∧ 0<d ∧ 0<d' ∧ 0<v ∧ 0<M ∧ 0<N ∧ 0<η ∧ 0<l ∧\n    ∀ᶠ x : ℝ in atTop, 120 ≤ radiusB x ∧ ∀ {c f : Side} (S : StepData c f) (T : Tube G S), S.patch=P →\n    100*(1+radiusB x) ≤ c.val → Pt.Funds S T → ∀ (A : Stores S) (F : Forest S.ratio) (V : Config G c),\n    V∈eligible A G x → ∀ k : S.Choices,\n      (∀ z : PriceCoords G c, ‖z‖≤r → Estimate n d' v η l N A F T x V k z) ∧\n        Shift n x d v (B*fiery G x S.patch.L) M T F A V k q := by\n  obtain ⟨d,M,hd,hM,H⟩ := f0_cost G P Pt q hB hP n\n  obtain ⟨r,d',v,η,l,N,hr,hd',hv,hη,hl,hN,h'⟩ := estimates G P Pt hP n\n  let Q := 2^n*(M*N)\n  let A := 2^n*(Q*N)\n  let W := 2^n*(A*N)\n  let L := max (max M A) (max W Q)\n  have h₁ : M ≤ L := (le_max_left M A).trans (le_max_left ..)\n  have h₂ : A ≤ L := (le_max_right ..).trans (le_max_left ..)\n  have h₃ : W ≤ L := (le_max_left W Q).trans (le_max_right ..)\n  have h₄ : Q ≤ L := (le_max_right ..).trans (le_max_right ..)\n  let s := min d (d'/(n+1:ℕ)); have hs : 0<s := lt_min hd (by positivity)\n  have he : s+n*s ≤ d' := by\n    have he := mul_le_mul_of_nonneg_right (show s≤_ from min_le_right d (d'/(n+1:ℕ)))\n      (show 0 ≤ ((n+1:ℕ):ℝ) by positivity)\n    rw [div_mul_cancel₀ d' (by positivity)] at he\n    push_cast at he; linarith only [he]\n  refine ⟨r,s,d',v,L,N,η,l,hr,hs,hd',hv,hM.trans_le h₁,hN,hη,hl,?_⟩\n  filter_upwards [H,h',monitors G P.L] with x hx hp hh\n  refine ⟨hp.1,?_⟩\n  intro c f S T hT hF hP F F' V hV k\n  have ht : 0 ≤ fiery G x S.patch.L := temp_nonneg _\n  have h := hp.2 S T hT hF hP F F' V hV k\n  obtain ⟨hy,hL⟩ := hx S T hT hP hF F' F V hV k\n  refine ⟨h,⟨hy,(fun Y => Parcel.mono (hL Y) (min_le_left ..) (mul_le_mul_of_nonneg_right h₁ ht)),?_⟩⟩\n  intro Y t p\n  obtain ⟨ha,hb,hc⟩ := deliver hN hM hs.le ((le_add_of_nonneg_right (show 0≤n*s by positivity)).trans he)\n    (show n*s ≤ d' by linarith only [hs,he]) hh.1.le hh.2.1 hη (h 0 (by simpa using hr.le)).toKernelJets\n      ((hL Y).mono (min_le_left ..) le_rfl)\n  exact ⟨ha.mono le_rfl (mul_le_mul_of_nonneg_right h₄ ht),hb.mono le_rfl (mul_le_mul_of_nonneg_right h₂ ht),\n    hc.mono le_rfl (mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_right h₃ ht) (Real.exp_pos _).le)⟩",
+            "line": 115,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/SECTOR_AFFINE_JETS/Center.lean",
+            "fragment": "L115-L151"
+          },
+          "proof_context": {
+            "declaration": "YM.AnalyticBridge.SectorAffine.Offset.prices",
+            "lines": [
+              115,
+              151
+            ],
+            "conclusion": "`prices` gives the jets of the source and of the mean, bounded by `M*t`, and of the offset residual, bounded by `M*t*exp(-v*radiusB x)`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          69
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      }
+    }
+  }
+}

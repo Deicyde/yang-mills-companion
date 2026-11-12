@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 11.12 step 10",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] differentiates the product through `zip_rates`/`Bundle.scale` and keeps the exponentially small `storm` factor. The remaining bounds for `K` are the precision difference, and the weight and rate bookkeeping is packaged in `RatesPaid`.",
+  "subject": [
+    {
+      "location": {
+        "page": 70,
+        "rect": [
+          0.12026,
+          0.69899,
+          0.75948,
+          0.07134
+        ]
+      },
+      "title": "Lemma 11.12 step 10: Text, p. 70",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 11.12 step 10"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.AnalyticBridge.Covariance.residualInverse",
+        "module": "YM.AnalyticBridge.SECTOR_COVARIANCE_JETS.Vista",
+        "lines": [
+          105,
+          121
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.AnalyticBridge.Covariance.residualInverse"
+          },
+          "snippet": {
+            "text": "lemma residualInverse (h : RatesPaid p p σ C k (storm W A) B) (hc : 0≤C)\n    (hi : Gapped (obscure W A B) η) (hη : 0<η) (hh : RatesPaid p p σ V k (obscure W A) B) (hv : 0≤r)\n    (he : RatesPaid p p σ r k (action (obscure W A) 0) B) (hp : 0 ≤ d) (hd : d+k*d≤σ) :\n    RatesPaid p p d (tagPrice 1 k C r) k (action (obscure W A) 0-A) B := by\n  have hz := zip_rates h he hc hv hp hd\n  let F y := storm W A y*action (obscure W A) 0 y\n  have ht : RatesPaid p p d (tagPrice 1 k C r) k (fun y => (-1:ℝ)• F y) B := by\n    have ht := Bundle.scale hz (-1:ℝ); simpa only [abs_neg,abs_one,one_mul] using ht\n  refine Bundle.glue ht ?_\n  have hn : Neat (obscure W A) 0 B := by unfold Neat; simpa only [zero_smul,add_zero] using (debut hi).unit_det hη\n  filter_upwards [germ_valid hn hh.smooth.continuousAt] with y hy\n  unfold Neat at hy; rw [zero_smul,add_zero] at hy\n  change (-1:ℝ)•F y=action (obscure W A) 0 y-A y\n  unfold F; rw [invertOnly]\n  change (-1:ℝ)• ((A y*obscure W A y - 1) * _)=(obscure W A y)⁻¹-A y\n  rw [Matrix.sub_mul,Matrix.mul_assoc,Matrix.mul_nonsing_inv _ hy, Matrix.one_mul,Matrix.mul_one,\n    neg_smul,one_smul, neg_sub]",
+            "line": 105,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/SECTOR_COVARIANCE_JETS/Vista.lean",
+            "fragment": "L105-L121"
+          },
+          "proof_context": {
+            "declaration": "YM.AnalyticBridge.Covariance.residualInverse",
+            "lines": [
+              105,
+              121
+            ],
+            "conclusion": "`action (obscure W A) 0 - A` (the precision difference `Γ⁻¹-A`) equals `-(storm)·Γ⁻¹` and has `RatesPaid` jet bounds from the `storm` and inverse bounds."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.AnalyticBridge.Covariance.Installed",
+        "module": "YM.AnalyticBridge.SECTOR_COVARIANCE_JETS.Pan",
+        "lines": [
+          35,
+          35
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.AnalyticBridge.Covariance.Installed"
+          },
+          "snippet": {
+            "text": "  precision : RatesPaid p p d (Y*C) k (action (obscure W A) 0-A) B",
+            "line": 35,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/SECTOR_COVARIANCE_JETS/Pan.lean",
+            "fragment": "L35-L35"
+          },
+          "proof_context": {
+            "declaration": "YM.AnalyticBridge.Covariance.Installed",
+            "lines": [
+              25,
+              35
+            ],
+            "conclusion": "`precision`: `RatesPaid` jet bounds for `action (obscure W A) 0 - A` with factor `Y*C`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          70
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

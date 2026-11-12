@@ -19,6 +19,16 @@ other linked declaration (`relatedMatch`); one checked absence (`noMatch`) for a
 `no-match` or `not-formalized-not-needed`, whose search is recorded in the mapping; one record with
 an empty object for an item that links nothing.  Every record names all the item's regions.
 
+The unnumbered displays outside proofs are items of kind `display`, written like the numbered ones:
+one record of their key declarations together, a checked absence, or for a display with no
+completed verdict an empty object and the note "Not yet judged".  The steps of an item's proof are
+records of kind `proof_step` in the item's folder, `<item>/step-001.json`, ...: each end names the
+`lines` of a declaration with their snippet and `proof_context`, and a `noMatch` step names the
+declarations it was checked against, with their lines and no snippet (formal-companion
+docs/overlay.md section 7).  An item with a proof always has a folder.  The displays and steps come
+from data/manuscript-{displays,steps}.json, their -mapping.json files and
+data/manuscript-regions-steps.json.
+
 With `--index <decls.json>` (the full declaration index, scripts/lean/decls.py), it first rewrites
 data/linked-decls.json from the index, checked against data/decls.json.sha256.
 
@@ -137,6 +147,113 @@ def note_of(rec, short):
     return note
 
 
+# A display's or a step's relation -> its record's status.
+STEP_STATUS = {'exactMatch': 'formalized', 'closeMatch': 'formalized', 'broadMatch': 'formalized',
+               'hasPart': 'partial', 'narrowMatch': 'partial', 'relatedMatch': 'partial', 'noMatch': 'not_formalized'}
+
+
+def step_provenance(r):
+    v = r['verification']
+    if not v['complete']:
+        method = 'mapper and verifier agents disagreed; not yet judged'
+    elif v.get('judge'):
+        method = 'mapper and verifier agents, a judge ruled'
+        if v.get('ruling', '').startswith('search-'):
+            method += ' on the search'
+    else:
+        method = 'mapper and verifier agents, agreed'
+    for k, what in (('lead_sample', 'a sample check'), ('close_review', 'a re-check of closeMatch records')):
+        c = v.get(k)
+        if c:
+            method += f"; {what} {'changed it from ' + c['was'] if c['ruling'] != c['was'] else 'kept it'}"
+    method += '; lines of [L] read at the pin, not built'
+    return {'actor': 'agent', 'method': method, 'confirmed_by_human': False}
+
+
+def proof_kind(r, keys):
+    """The `proof` extension's kind: `direct` for an excerpt of a declaration's proof, `helper` for one
+    other declaration's statement, `chain` for several declarations, in the record's order."""
+    names = list(dict.fromkeys(e['decl'] for e in r['ends']))
+    if len(names) > 1:
+        return 'chain'
+    if names[0] not in keys and all(e['lines'][0] == e['proof_context']['lines'][0] for e in r['ends']):
+        return 'helper'
+    return 'direct'
+
+
+def proof_overlay(root, pdf, lean, pin, key_decls):
+    """The unnumbered displays outside proofs and the proof steps, from data/manuscript-{displays,steps}.json,
+    their -mapping.json files and data/manuscript-regions-steps.json.  `key_decls` maps an item to its
+    key declarations.  Returns ({path: record} of the display items, {item id: [step records in proof order]})."""
+    data = lambda n: json.load(open(os.path.join(root, 'data', n), encoding='utf-8'))
+    regions = data('manuscript-regions-steps.json')
+    if regions['pdf'] != pdf:
+        sys.exit('manuscript-regions-steps.json is of another PDF')
+    segments = {k: {t['id']: t for t in data(f'manuscript-{k}.json')[k]} for k in ('displays', 'steps')}
+    maps = {k: data(f'manuscript-{k}-mapping.json') for k in ('displays', 'steps')}
+    for k, m in maps.items():
+        if m['lean'] != lean or m['source_pin'] != pin or [r['id'] for r in m['records']] != list(segments[k]):
+            sys.exit(f'manuscript-{k}-mapping.json is of another pin, or incomplete')
+    texts = {**segments['displays'], **segments['steps']}
+
+    def end(e, snippet):
+        a, b = e['lines']
+        ext = {'declaration': {'id': e['decl']}}
+        if snippet:
+            ext['snippet'] = {'text': e['snippet'], 'line': a, 'truncated': False}
+        ext['destination'] = {'resolution': 'exact', 'href': f"{lean['repository']}/blob/{lean['version']}/{e['file']}",
+                              'fragment': f'L{a}-L{b}'}
+        if snippet:
+            ext['proof_context'] = {k: e['proof_context'][k] for k in ('declaration', 'lines', 'conclusion')}
+        location = {'declaration': e['decl'], 'module': e['file'][:-len('.lean')].replace('/', '.'), 'lines': [a, b]}
+        return {'type': 'lean', 'uri': lean['repository'], 'version': lean['version'], 'location': location,
+                'role': 'key', 'extensions': {NS: ext}}
+
+    def record(r, kind, title, extra=None):
+        regs = regions['regions'][r['id']]
+        subject = []
+        for n, g in enumerate(regs):
+            ext = {'region': f"{r['id']}#{n}" if len(regs) > 1 else r['id']}
+            if g.get('quads'):
+                ext['quads'] = g['quads']
+            subject.append({'location': {'page': g['page'], 'rect': g['rect']}, 'title': title, 'extensions': {NS: ext}})
+        ext = {'locator': {'physical': sorted({g['page'] for g in regs})}, 'provenance': step_provenance(r), **(extra or {})}
+        out = {'id': r['id'], 'kind': kind}
+        if r['relation']:
+            out.update(status=STEP_STATUS[r['relation']], relation=r['relation'])
+        note = ' '.join(sentences(r.get('note'))) if r['relation'] else 'Not yet judged.'
+        if note:  # an agreed exactMatch may carry none
+            out['note'] = note
+        absent = r['relation'] == 'noMatch'
+        out.update(subject=subject, object=[end(e, not absent) for e in r.get('ends', [])], extensions={NS: ext})
+        return out
+
+    displays = {}
+    for r in maps['displays']['records']:
+        d = texts[r['id']]
+        rec = record(r, 'display', d['title'])
+        key = 'noMatch' if r['relation'] == 'noMatch' else 'key' if len(rec['object']) > 1 else \
+            f"key__{rec['object'][0]['location']['declaration']}" if rec['object'] else None
+        name = file_name(f"{r['id']}__{key}" if key else r['id'], '.json')
+        displays[f"{d['section']['number']}/{name}"] = rec
+
+    steps = collections.defaultdict(list)
+    for r in maps['steps']['records']:
+        s = texts[r['id']]
+        pages = sorted({g['page'] for g in regions['regions'][r['id']]})
+        where = f'p. {pages[0]}' if len(pages) == 1 else f'pp. {pages[0]}–{pages[-1]}'
+        title = f"{r['id']}: {'Display' if s['kind'] == 'display' else 'Text'}, {where}"
+        extra = {'proof': {'kind': proof_kind(r, key_decls[r['item']])}} \
+            if r['relation'] and r['relation'] != 'noMatch' else None
+        steps[r['item']].append((s['step'], record(r, 'proof_step', title, extra)))
+    return displays, {k: [rec for _, rec in sorted(v, key=lambda x: x[0])] for k, v in steps.items()}
+
+
+def step_files(folder, step_records):
+    """`<item folder>/step-001.json`, ...: names that sort in the order of the proof."""
+    return {f'{folder}/step-{n:03d}.json': r for n, r in enumerate(step_records, 1)}
+
+
 def linked_decls(root, index_path):
     """Rewrite data/linked-decls.json: each declaration data/mapping.json names, from the full index."""
     want = open(os.path.join(root, 'data', 'decls.json.sha256')).read().split()[0]
@@ -218,6 +335,8 @@ def main():
         return {'type': 'lean', 'uri': lean['repository'], 'version': lean['version'],
                 'location': {'declaration': l['decl'], 'module': d['module']}, 'role': role, 'extensions': {NS: ext}}
 
+    key_decls = {rec['id']: {l['decl'] for l in rec['lean'] if l['role'] == 'key'} for rec in mapping['items']}
+    display_files, steps = proof_overlay(root, pdf, lean, pin, key_decls)
     out_dir = os.path.join(root, 'manuscript', 'annotations')
     if os.path.isdir(out_dir):
         shutil.rmtree(out_dir)
@@ -286,7 +405,7 @@ def main():
                                     ROLES.index(r['object'][0]['role']) if r['object'] and 'role' in r['object'][0] else -1,
                                     r['object'][0]['location']['declaration'] if r['object'] and 'location' in r['object'][0] else ''))
         folder = it['section']['number']
-        if len(records) == 1:
+        if len(records) == 1 and it['id'] not in steps:
             paths = [f"{folder}/{file_name(key_of(records[0], False), '.json')}"]
         else:
             sub = file_name(it['id'])
@@ -297,7 +416,9 @@ def main():
             if len({n.lower() for n in names}) != len(names):
                 sys.exit(f"{it['id']}: two records share a file name")
             paths = [f"{folder}/{sub}/{n}" for n in names]
-        for p, r in zip(paths, records):
+        proof = step_files(f"{folder}/{file_name(it['id'])}", steps.pop(it['id'], []))
+        counts['proof_steps'] += len(proof)
+        for p, r in list(zip(paths, records)) + list(proof.items()):
             if p.lower() in {q.lower() for q in files}:
                 sys.exit(f'two files named {p}')
             files[p] = r
@@ -305,6 +426,14 @@ def main():
             counts[f"relation.{r.get('relation', 'none')}"] += 1
             counts[f"ends.{r.get('relation', 'none')}"] += len(r['object'])
         counts['items'] += 1
+    if steps:
+        sys.exit(f'steps of items not in the overlay: {sorted(steps)}')
+    for p, r in display_files.items():
+        if p.lower() in {q.lower() for q in files}:
+            sys.exit(f'two files named {p}')
+        files[p] = r
+        counts['display_records'] += 1
+        counts[f"relation.{r.get('relation', 'none')}"] += 1
     with open(os.path.join(out_dir, '_defaults.json'), 'w', encoding='utf-8') as f:
         json.dump(defaults, f, indent=2, ensure_ascii=False)
         f.write('\n')

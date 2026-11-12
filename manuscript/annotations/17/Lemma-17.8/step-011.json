@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 17.8 step 11",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "Almost-everywhere validity comes from `proj_eq` on `L.almostEvery`; the limit s to infinity is in the next step.",
+  "subject": [
+    {
+      "location": {
+        "page": 202,
+        "rect": [
+          0.12026,
+          0.22829,
+          0.75948,
+          0.05717
+        ]
+      },
+      "title": "Lemma 17.8 step 11: Text, p. 202",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 17.8 step 11"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.uniform_heat",
+        "module": "YM.EveryPhase.Decay",
+        "lines": [
+          113,
+          170
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.uniform_heat"
+          },
+          "snippet": {
+            "text": "theorem uniform_heat (s : ℝ≥0) (hs : 0<s) : Continuous fun i =>\n    inner ℂ (stands (L.actors i).operators w) (bHeat (L.J i) s (stands (L.actors i).operators w)) := by\n  have hr : 0<(s:ℝ) := hs\n  simp_rw [fun i => bHeat_pair (L.links i) (L.cores i) s (stands (L.actors i).operators w)]\n  let g i := ∫ p, boltz s p ∂νletter L i w\n  suffices H : Continuous g from Complex.continuous_ofReal.comp H\n  obtain ⟨M,hM,hm⟩ := word_bound L w\n  -- use a bump in ALL E4 momenta, cone support makes Euclidean norm ≤ 2 p(timeAxis)\n  have he (ε : ℝ) (hε : 0 < ε) : ∃ f : F.α.space.X → ℝ, Continuous f ∧ ∀ i, dist (g i) (f i) < ε := by\n    have hp : Tendsto (fun x : ℝ => M * Real.exp (-(s:ℝ) * x)) atTop (𝓝 0) := by\n      have hx := Real.tendsto_exp_atBot.comp (tendsto_id.const_mul_atTop_of_neg (neg_lt_zero.mpr hr))\n      simpa using! hx.const_mul M\n    obtain ⟨N,hN,hx⟩ := ((hp.eventually (gt_mem_nhds hε)).and (eventually_gt_atTop (0:ℝ))).exists\n    have hn : 0 < N := hx\n    let B : ContDiffBump (0:E4) := ⟨2*N,3*N,by positivity,by linarith⟩\n    let F (p) := B p * boltz s p\n    have hF : HasCompactSupport F := B.hasCompactSupport.mul_right\n    let f : Probe E4 := (hF.comp_left (show Complex.ofReal 0=0 by simp)).toSchwartzMap\n      (Complex.ofRealCLM.contDiff.comp (B.contDiff.mul ((Real.contDiff_exp).comp (by fun_prop))))\n    have hB : Continuous F := by unfold F; exact B.continuous.mul (by unfold boltz; fun_prop)\n    have hw (i) : (∫ p, f p ∂νletter L i w).re=∫ p, F p ∂νletter L i w := by\n      change (∫ p, (↑(F p):ℂ) ∂νletter L i w).re=_\n      rw [integral_complex_ofReal, Complex.ofReal_re]\n    refine ⟨fun i => ∫ p, F p ∂νletter L i w,\n      (Complex.continuous_re.comp (test_cont L w f)).congr hw, fun i => ?_⟩\n    let μ := νletter L i w\n    have hh : ∀ᵐ p ∂μ, p ∈ cone := cave (L.cores i) _\n    have hv : ∀ᵐ p ∂μ, 0 ≤ time p := hh.mono fun p hp => (cone_self p|>.mp hp).1\n    let Q := Real.exp (-(s:ℝ)*N)\n    have hu : ∀ᵐ p ∂μ, ‖boltz s p-F p‖ ≤ Q := by\n      filter_upwards [hh] with p hp\n      have hw : 0 ≤ boltz s p := Real.exp_pos _ |>.le\n      by_cases H : p∈ Metric.closedBall (0:E4) (2*N)\n      · change ‖_ - (B p * boltz s p)‖ ≤ _\n        rw [B.one_of_mem_closedBall H,one_mul,sub_self,norm_zero]; exact (Real.exp_pos _).le\n      have hA : N ≤ time p := by\n        simp only [mem_closedBall_zero_iff, not_le] at H\n        have hc : ‖spatial p‖ ≤ time p := hp\n        have hg := Mink.squares p\n        by_contra! hf\n        nlinarith [norm_nonneg (spatial p)]\n      unfold F; rw [Real.norm_eq_abs]\n      apply le_trans (abs_of_nonneg (sub_nonneg.mpr (mul_le_of_le_one_left hw B.le_one))).le\n      apply (sub_le_self _ (mul_nonneg B.nonneg hw)).trans\n      exact Real.exp_le_exp.mpr (mul_le_mul_of_nonpos_left hA (neg_nonpos.mpr hr.le))\n    change dist (∫ p, boltz s p ∂μ) (∫ p, F p ∂μ)<ε\n    rw [dist_eq_norm, ← integral_sub (boltz_int μ hv s) (hB.integrable_of_hasCompactSupport hF)]\n    apply lt_of_le_of_lt (norm_integral_le_of_norm_le (integrable_const _) hu)\n    rw [integral_const,smul_eq_mul]; exact lt_of_le_of_lt (mul_le_mul_of_nonneg_right (hm i)\n      (Real.exp_pos _).le) hN\n  apply continuous_iff_continuousAt.mpr\n  intro i\n  apply Metric.tendsto_nhds.mpr; intro ε hε\n  obtain ⟨f,hf,h⟩ := he (ε/4) (by positivity)\n  filter_upwards [Metric.tendsto_nhds.mp (hf.tendsto i) (ε/4) (by positivity)] with x hx\n  have hu := h x; have hv := h i; rw [dist_comm] at hv\n  apply (dist_triangle _ (f x) _).trans_lt\n  linarith [dist_triangle (f x) (f i) (g i)]",
+            "line": 113,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Decay.lean",
+            "fragment": "L113-L170"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.uniform_heat",
+            "lines": [
+              113,
+              170
+            ],
+            "conclusion": "The heat pairing `i ↦ <A, bHeat s A>` is continuous on the character space, by approximating `boltz` with compactly supported cutoffs with error `exp(-sN)` times the mass."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.extends_decay",
+        "module": "YM.EveryPhase.Vacuum",
+        "lines": [
+          51,
+          78
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.extends_decay"
+          },
+          "snippet": {
+            "text": "theorem extends_decay (w : SumOfWords S) (h : finite w) : ∃ M : ℝ, 0≤M ∧ ∀ (s : ℝ≥0), 1 ≤ s → ∀ i,\n    let x := stands (L.actors i).operators w\n    let v := (L.actors i).operators.vacuum\n    let r := inner ℂ x (bHeat (L.J i) s x) - (↑(‖inner ℂ v x‖ ^ 2):ℂ)\n    0≤r ∧ r ≤ ↑(M*(s:ℝ)⁻¹^2) := by\n  haveI := F.phase.phase.decomposition.support\n  obtain ⟨M,hM,hm⟩ := inverse_square L w h\n  refine ⟨M,hM, fun t ht => ?_⟩\n  let p (i : F.α.space.X) := stands (L.actors i).operators w\n  let u (i : F.α.space.X) := ‖inner ℂ (L.actors i).operators.vacuum (p i)‖^2\n  let g (i : F.α.space.X) := inner ℂ (p i) (bHeat (L.J i) t (p i))-(u i:ℂ)\n  have he i : (L.actors i).operators.vacuum=stands (L.actors i).operators [(1,[])] := by\n    rw [stands_cons,one_smul]; simp only [stands, operator, LinearMap.zero_apply,ZeroMemClass.coe_zero,add_zero]; rfl\n  have hu : Continuous u := by unfold u; simp_rw [he]; exact (sum_pair L _ _).norm.pow _\n  have hg : Continuous g := (uniform_heat L w t (zero_lt_one.trans_le ht)).sub (Complex.continuous_ofReal.comp hu)\n  let A : ℂ := ↑(M*(t:ℝ)⁻¹^2)\n  have hp : g ⁻¹' Icc 0 A = univ := by\n    apply univ_of_closed (μ:=F.α.space.μ) _ (isClosed_Icc.preimage hg)\n    filter_upwards [L.almostEvery] with i hi\n    have hh : inner ℂ (p i) ((L.actors i).momentum.region zeroE (p i))=(u i:ℂ) := by\n      rw [proj_eq (L.links i) (L.cores i) hi, inner_smul_right]\n      have hk : inner ℂ (p i) (L.actors i).operators.vacuum =\n          (starRingEnd ℂ) (inner ℂ (L.actors i).operators.vacuum (p i)) := (inner_conj_symm _ _).symm\n      rw [hk,Complex.mul_conj,Complex.normSq_eq_norm_sq]\n    change 0 ≤ g i ∧ g i ≤ _\n    rw [show g i = inner ℂ (p i) ((bHeat (L.J i) t - (L.actors i).momentum.region zeroE) (p i)) by\n      rw [_root_.sub_apply,inner_sub_right,hh] ]; exact hm _ _ ht\n  exact fun i => (show g i ∈ Icc 0 A from (hp.symm ▸ (mem_univ i) : i∈g ⁻¹' Icc 0 A))",
+            "line": 51,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Vacuum.lean",
+            "fragment": "L51-L78"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.extends_decay",
+            "lines": [
+              51,
+              78
+            ],
+            "conclusion": "The vacuum-subtracted bound `0 ≤ <x, bHeat s x> - ‖<Ω,x>‖^2 ≤ M s^{-2}` holds for every `i`, since the set where it holds is closed and almost everywhere, hence all (`univ_of_closed`, full support)."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          202
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

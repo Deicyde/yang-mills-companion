@@ -1,0 +1,84 @@
+{
+  "id": "Lemma 13.13 step 6",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "Lean's representation density is an explicit exponential of beta, v and the activity sums, so continuity is by composition and there is no Haar-integral kernel with dominated convergence.",
+  "subject": [
+    {
+      "location": {
+        "page": 108,
+        "rect": [
+          0.12026,
+          0.82596,
+          0.75995,
+          0.08845
+        ]
+      },
+      "title": "Lemma 13.13 step 6: Text, p. 108",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 13.13 step 6"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Push.BetaTransport.FixedRepData.continuous_eval",
+        "module": "YM.Push.BETA_TRANSPORT.Curve",
+        "lines": [
+          93,
+          97
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Push.BetaTransport.FixedRepData.continuous_eval"
+          },
+          "snippet": {
+            "text": "lemma continuous_eval (hc : Curve P T s) (U : Config G n) : ContinuousOn (fun x => (T x).eval U) s := by\n  have ⟨ha,hb⟩ := h.continuous_activities (curve_stable hc) U\n  refine ContinuousOn.congr (((hc.v.mul (continuousOn_const (c:=(Fintype.card (Site n):ℝ))) |>.sub\n    (hc.beta.mul (continuousOn_const (c:=kinetic D A P U)) |>.add (continuousOn_const (c:=D.inChannels A P 0 U)))).sub ha).rexp.mul hb) (fun x hx => ?_)\n  rw [Rep.eval, h.exponent_eq hx,h.budget x hx]; rfl",
+            "line": 93,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/BETA_TRANSPORT/Curve.lean",
+            "fragment": "L93-L97"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.BetaTransport.FixedRepData.continuous_eval",
+            "lines": [
+              93,
+              97
+            ],
+            "conclusion": "Pointwise continuity of the density `eval U` along a Curve from continuity of beta, v and the activities."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          108
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
+      }
+    }
+  }
+}

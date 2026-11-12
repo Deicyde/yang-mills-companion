@@ -1,0 +1,258 @@
+{
+  "id": "Lemma 13.9 step 5",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] takes the side bound `20 < n.val` as a hypothesis where [M] derives it from L_p D_m >= 100(B_m+1). The vanishing first derivative of R_f is not stated for `rebate` separately; it follows from `rebate_regular` and `flat_critical`.",
+  "subject": [
+    {
+      "location": {
+        "page": 103,
+        "rect": [
+          0.11962,
+          0.86017,
+          0.76059,
+          0.05423
+        ]
+      },
+      "title": "Lemma 13.9 step 5: Text, pp. 103–104",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 13.9 step 5#0"
+        }
+      }
+    },
+    {
+      "location": {
+        "page": 104,
+        "rect": [
+          0.12026,
+          0.0962,
+          0.75948,
+          0.05316
+        ]
+      },
+      "title": "Lemma 13.9 step 5: Text, pp. 103–104",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 13.9 step 5#1"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.AnalyticBridge.VerifiedReset.Residual.rebate_vanish",
+        "module": "YM.AnalyticBridge.VERIFIED_RESET_STEP.Residual",
+        "lines": [
+          56,
+          63
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.AnalyticBridge.VerifiedReset.Residual.rebate_vanish"
+          },
+          "snippet": {
+            "text": "lemma rebate_vanish (h : Nonwrapping (expand d) d.site) (hn : 20 < n.val) : ∀ x y, IsAffineDirection d.site x →\n    IsAffineDirection d.site y → logHessian (rebate d f) x y = 0 := by\n  apply affine_zero (rebate_regular d hf); intro v\n  unfold rebate\n  have hl := LinearJet.hessian_curl hG hf (o:=d.site) (fun x hx => h x (Finset.mem_union_left _ hx)) (by omega : 4 ≤ n.val)\n    (positive_primitive v.positive) (positive_primitive v.positive)\n  rw [hessian_sub (reg_sub (reg_larger hf Finset.subset_union_left) (reg_const _)) (payout_regular d hf),\n    hessian_sub hf (reg_const _),hessian_zero,sub_zero,payout,counter_diag hG p d.site hn,projection_eq hG hf h,hl,sub_self]",
+            "line": 56,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/VERIFIED_RESET_STEP/Residual.lean",
+            "fragment": "L56-L63"
+          },
+          "proof_context": {
+            "declaration": "YM.AnalyticBridge.VerifiedReset.Residual.rebate_vanish",
+            "lines": [
+              56,
+              65
+            ],
+            "conclusion": "`rebate_vanish`: on a nonwrapping `expand d` with `20 < n.val`, `rebate d f = f - f 1 - payout d f` has zero log Hessian on pairs of affine directions, from the diagonal case via `affine_zero`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.AnalyticBridge.VerifiedReset.counter_diag",
+        "module": "YM.AnalyticBridge.VERIFIED_RESET_STEP.Lines",
+        "lines": [
+          70,
+          71
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.AnalyticBridge.VerifiedReset.counter_diag"
+          },
+          "snippet": {
+            "text": "lemma counter_diag (hG : G.Simple) (p : BudgetPoint) (o : Site n) (hn : 20 < n.val) (v : LinearJet G) (q : PlaqAxes → PlaqAxes → ℝ) :\n    logHessian (counter q o) (v.field o) (v.field o) = quad q v.positive v.positive := by",
+            "line": 70,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/VERIFIED_RESET_STEP/Lines.lean",
+            "fragment": "L70-L71"
+          },
+          "proof_context": {
+            "declaration": "YM.AnalyticBridge.VerifiedReset.counter_diag",
+            "lines": [
+              70,
+              73
+            ],
+            "conclusion": "`counter_diag`: for `20 < n.val` the diagonal Hessian of the clover polynomial `counter q o` is `quad q v.positive v.positive`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.AnalyticBridge.VerifiedReset.Residual.rebate_one",
+        "module": "YM.AnalyticBridge.VERIFIED_RESET_STEP.Residual",
+        "lines": [
+          54,
+          55
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.AnalyticBridge.VerifiedReset.Residual.rebate_one"
+          },
+          "snippet": {
+            "text": "@[simp] lemma rebate_one : rebate d f 1 = 0 := by simp [rebate,payout,counter,quad]\ninclude hG in",
+            "line": 54,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/VERIFIED_RESET_STEP/Residual.lean",
+            "fragment": "L54-L55"
+          },
+          "proof_context": {
+            "declaration": "YM.AnalyticBridge.VerifiedReset.Residual.rebate_one",
+            "lines": [
+              54,
+              55
+            ],
+            "conclusion": "`rebate_one`: `rebate d f 1 = 0`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.AnalyticBridge.VerifiedReset.Residual.rebate_regular",
+        "module": "YM.AnalyticBridge.VERIFIED_RESET_STEP.Residual",
+        "lines": [
+          51,
+          53
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.AnalyticBridge.VerifiedReset.Residual.rebate_regular"
+          },
+          "snippet": {
+            "text": "lemma rebate_regular : p.Regular (expand d) (rebate d f) :=\n    reg_sub (reg_sub (reg_larger hf Finset.subset_union_left) (reg_const _)) (payout_regular d hf)\nomit hf in",
+            "line": 51,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/VERIFIED_RESET_STEP/Residual.lean",
+            "fragment": "L51-L53"
+          },
+          "proof_context": {
+            "declaration": "YM.AnalyticBridge.VerifiedReset.Residual.rebate_regular",
+            "lines": [
+              51,
+              53
+            ],
+            "conclusion": "`rebate_regular`: `rebate d f` is regular on `expand d`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.AnalyticBridge.VerifiedReset.flat_critical",
+        "module": "YM.AnalyticBridge.VERIFIED_RESET_STEP.Jets",
+        "lines": [
+          48,
+          48
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.AnalyticBridge.VerifiedReset.flat_critical"
+          },
+          "snippet": {
+            "text": "lemma flat_critical (hG : G.Simple) {f : Pot G n} (h : p.Regular X f) : fderiv ℝ (germ f) 0 = 0 := by",
+            "line": 48,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/VERIFIED_RESET_STEP/Jets.lean",
+            "fragment": "L48-L48"
+          },
+          "proof_context": {
+            "declaration": "YM.AnalyticBridge.VerifiedReset.flat_critical",
+            "lines": [
+              48,
+              71
+            ],
+            "conclusion": "`flat_critical` applied to the regular `rebate d f` gives the vanishing of its first derivative at 1."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          103,
+          104
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

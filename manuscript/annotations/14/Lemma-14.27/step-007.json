@@ -1,0 +1,161 @@
+{
+  "id": "Lemma 14.27 step 7",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 153,
+        "rect": [
+          0.12026,
+          0.30733,
+          0.75995,
+          0.10556
+        ]
+      },
+      "title": "Lemma 14.27 step 7: Text, p. 153",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.27 step 7"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.cap",
+        "module": "YM.FullVolume.Moneys",
+        "lines": [
+          29,
+          37
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.cap"
+          },
+          "snippet": {
+            "text": "  have he : ∃ c:ℝ, 0≤c ∧ ∀ᶠ i in mesh, ‖L i (x i)‖ ≤ c:=by\n    let c := max 0 v+1\n    refine ⟨c,by unfold c; positivity,?_⟩\n    have hz:= hS _ _ hu hL\n    filter_upwards [hv,(hz.norm.eventually (ge_mem_nhds (show ‖(0:FullVolume.Size Y.amount)‖ < 1 by simp))),hops_solid (F:=F) (Eventually.of_forall (fun i=> hw _ _)) l] with i hi hj hW\n    have hg:=probe_sub T k i b l (Bid.upper C x) (hops F l) (fun s=> C.continuousO ..) hW\n    change ‖assay T k i b l (Bid.upper C x - hops F l)‖ ≤ _ at hj; unfold L; rw [probe_eq]; rw [hg] at hj\n    have hq:=norm_sub_norm_le (assay T k i b l (Bid.upper C x)) (assay T k i b l (hops F l))\n    unfold c; linarith only [hi,hj,hq,le_max_right 0 v]",
+            "line": 29,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Moneys.lean",
+            "fragment": "L29-L37"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.cap",
+            "lines": [
+              23,
+              65
+            ],
+            "conclusion": "The averaged tests `L i (x i)` of the coefficient family are bounded by a constant `c` eventually in the cutoff, from the funded primary and the vanishing difference."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.reserve_abs",
+        "module": "YM.FullVolume.Skein",
+        "lines": [
+          89,
+          91
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.reserve_abs"
+          },
+          "snippet": {
+            "text": "lemma reserve_abs (_ha:0<a)(ht:0<t) (p:Points (m+1)) {R b v r:ℝ} (hr:0<r) (hk : r ≤ a*t) (hh:a*t ≤ b) (f:Positions (m+1)→ℂ) (_hv:0 ≤ v)\n    (h:∀ x, dist (tag t x) p ≤ R → ‖f x‖ ≤ v) (x: Positions (m+1)) (hx: dist (tag t x) p ≤ R - l.length*b) :\n    ‖blurs a (l.map tick) (deltas t (l.map tick) f) x‖ ≤ (2/r)^l.length * v:=by",
+            "line": 89,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Skein.lean",
+            "fragment": "L89-L91"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.reserve_abs",
+            "lines": [
+              89,
+              101
+            ],
+            "conclusion": "Iterating the averaged difference along `l` is bounded by `(2/r)^l.length * v` times the sup of the test, where `r ≤ a*t`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.invites",
+        "module": "YM.FullVolume.Maintain",
+        "lines": [
+          104,
+          106
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.invites"
+          },
+          "snippet": {
+            "text": "lemma invites (k:ℕ): ∀ᶠ b:ℝ in 𝓝[>] 0,\n    (∀ (F:Trial C), Funded F → (∀ N p x,Continuous (F N p x)) → ∃ v:ℝ,∀ᶠ i in mesh, ‖assay T k i b l (hops F l)‖ ≤ v) ∧\n      ∀ (F:Trial C) (u:Cutoffs→ℝ), Owed F u → Tendsto u mesh (𝓝 0) → Tendsto (fun i=> assay T k i b l F) mesh (𝓝 0):=by",
+            "line": 104,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Maintain.lean",
+            "fragment": "L104-L106"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.invites",
+            "lines": [
+              104,
+              139
+            ],
+            "conclusion": "The average detector bounds funded differences and sends owed vanishing-root errors to zero."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          153
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "id": "Lemma 15.5 step 8",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 168,
+        "rect": [
+          0.12026,
+          0.68201,
+          0.75948,
+          0.0264
+        ]
+      },
+      "title": "Lemma 15.5 step 8: Display, p. 168",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 15.5 step 8"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Phase.travel_price",
+        "module": "YM.Next.PHASE.Trains",
+        "lines": [
+          273,
+          283
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Phase.travel_price"
+          },
+          "snippet": {
+            "text": "theorem travel_price {C : Family G} (H : C.Makes) (F : Order) (S : Table C.book) (hs : S.Hierarchy)\n    (he : F.PointLimits C S) {m k l b : ℕ} (hm : m≤k) (hk : k≤l) (hl : l≤b)\n    {w : C.book.Word} (h : Slab timeAxis d w) (hd : buffer timeAxis r d w) (hc : Covered C.S d m)\n    (v : Future C.book timeAxis) (hv : buffer timeAxis t e v.val) (q : ℕ)\n    (hp : C.S.a m < r) (hh : C.S.a l < t)\n    (headroom : (↑(2*w.length : ℕ):ℝ)*(2*(5*C.S.a k)) < C.S.a m)\n    (side : (↑(2*v.val.length : ℕ):ℝ)*(2*(3*C.S.a b)) < C.S.a l)\n    (A B : ℝ) (hB : 0 ≤ B)\n    (ha : ∀ i∈w, F.late (Single C i.2 A k))\n    (hf : ∀ j∈v.val, F.late (Single C j.2 B b)) :\n    ‖S.gram timeAxis (ride h v q).val (ride h v q).val‖ ≤ B ^ (2*v.val.length) * A ^ (w.length*(4*q)) := by",
+            "line": 273,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/PHASE/Trains.lean",
+            "fragment": "L273-L283"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Phase.travel_price",
+            "lines": [
+              273,
+              304
+            ],
+            "conclusion": "`travel_price` bounds the Gram norm of `ride h v q` by `B^(2*|v|) * A^(|w|*(4*q))` where `A` and `B` bound the main and exterior insertions."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Phase.replicas",
+        "module": "YM.Next.PHASE.Seats",
+        "lines": [
+          146,
+          151
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Phase.replicas"
+          },
+          "snippet": {
+            "text": "  refine ⟨X^(2*v.val.length),fun q => ?_⟩\n  apply (travel_price H f S hs h hk hl hb hh hg hd v ht₂ q (hm.2.1.trans (by linarith))\n    hsep hK hb₀ A X hX (fun i hi => hf k (hm.1.trans hk) i.2 (hw i hi).1 (hw i hi).2)\n    (fun i hi => hq b hb' i.2 (hW i hi).1 (hW i hi).2)).trans\n  rw [pow_mul A w.length]; exact mul_le_mul_of_nonneg_left (pow_le_pow_left₀\n    (pow_nonneg (by unfold A; have hh := C.S.a_pos k; positivity) _) ha _) (pow_nonneg hX _)",
+            "line": 146,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/PHASE/Seats.lean",
+            "fragment": "L146-L151"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Phase.replicas",
+            "lines": [
+              119,
+              151
+            ],
+            "conclusion": "`replicas` instantiates it with `B := X^(2*|v|)` and `A = J*(a k)⁻¹^P`, giving the bound `X^(2|v|) (J a_k^{-P})^{|w| 4q}` for every `q`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          168
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

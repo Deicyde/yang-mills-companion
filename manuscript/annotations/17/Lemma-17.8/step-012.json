@@ -1,0 +1,84 @@
+{
+  "id": "Lemma 17.8 step 12",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "`P = momentum.region zeroE` is Q_ξ and the vector is `stands operators w`; the displayed norm identity is `<Px,Px> = c`.",
+  "subject": [
+    {
+      "location": {
+        "page": 202,
+        "rect": [
+          0.12026,
+          0.29201,
+          0.75948,
+          0.02192
+        ]
+      },
+      "title": "Lemma 17.8 step 12: Display, p. 202",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 17.8 step 12"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.cluster_zero",
+        "module": "YM.EveryPhase.Vacuum",
+        "lines": [
+          88,
+          105
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.cluster_zero"
+          },
+          "snippet": {
+            "text": "  have hh : inner ℂ x (P x)=(c:ℂ) := by\n    obtain ⟨M,hM,H⟩ := extends_decay L w h\n    let g t := inner ℂ x (bHeat (L.J i) t x)-(c:ℂ)\n    have hg := (bHeat_limit (L.links i) (L.cores i) x)\n    have he : Tendsto g atTop (𝓝 (inner ℂ x (P x)-(c:ℂ))) := (tendsto_const_nhds.inner hg).sub tendsto_const_nhds\n    apply sub_eq_zero.mp; apply le_antisymm\n    · apply le_of_tendsto_of_tendsto he (g:=fun s : ℝ≥0 => (↑(M*(s:ℝ)⁻¹^2):ℂ))\n      · have hu : Tendsto (fun s : ℝ≥0 => ((s:ℝ)⁻¹ : ℝ)) atTop (𝓝 0) :=\n          tendsto_inv_atTop_zero.comp (NNReal.tendsto_coe_atTop.mpr tendsto_id)\n        simpa [Function.comp_def] using! Complex.continuous_ofReal.continuousAt.tendsto.comp ((hu.pow 2).const_mul M)\n      exact (eventually_ge_atTop (1:ℝ≥0)).mono fun s hs => (H s hs i).2\n    exact ge_of_tendsto he ((eventually_ge_atTop (1:ℝ≥0)).mono fun s hs => (H s hs i).1)\n  have hP : P.adjoint=P := (L.actors i).momentum.real zeroE_m\n  have hPx : P (P x)=P x := (L.actors i).momentum.idempotent zeroE_m x\n  have hv : P Ω=Ω := groundvac (L.links i) (L.cores i)\n  have hp : inner ℂ (P x) (P x)=(c:ℂ) := calc\n    _ = inner ℂ (P.adjoint x) (P x) := by rw [hP]\n    _ = _ := by rw [ContinuousLinearMap.adjoint_inner_left,hPx,hh]",
+            "line": 88,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Vacuum.lean",
+            "fragment": "L88-L105"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.cluster_zero",
+            "lines": [
+              80,
+              112
+            ],
+            "conclusion": "`<x, P x> = ‖<Ω,x>‖^2` by letting `s → ∞` in `extends_decay` (`bHeat_limit`), hence `<P x, P x> = ‖<Ω,x>‖^2` since `P` is a self-adjoint idempotent."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          202
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
+      }
+    }
+  }
+}

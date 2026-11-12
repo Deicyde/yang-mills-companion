@@ -1,0 +1,159 @@
+{
+  "id": "Section 14 display 7",
+  "kind": "display",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "The healthy indicators are the masks and the density rho_m is `Rep.eval = exp(exponent) * gas`; x_m(v)^circ is `F.core`.",
+  "subject": [
+    {
+      "location": {
+        "page": 128,
+        "rect": [
+          0.12026,
+          0.33949,
+          0.75948,
+          0.08809
+        ]
+      },
+      "title": "Display, p. 128",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Section 14 display 7"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Source.Coefficient.density",
+        "module": "YM.Source.Insertion",
+        "lines": [
+          48,
+          50
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Source.Coefficient.density"
+          },
+          "snippet": {
+            "text": "def density (o : Site n) (C : SectionData F) (R : Rep G n) (U : Config G n) : ℂ :=\n  (R.eval U : ℂ) * P.exponentialEntry o C R U +\n    ((Real.exp (R.exponent U)) : ℂ) * ∑' b, P.marked R b U",
+            "line": 48,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Source/Insertion.lean",
+            "fragment": "L48-L50"
+          },
+          "proof_context": {
+            "declaration": "YM.Source.Coefficient.density",
+            "lines": [
+              48,
+              50
+            ],
+            "conclusion": "`density = eval * exponentialEntry + exp (exponent) * sum over families b of marked terms`, the two summands of H_m(v)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Source.Coefficient.exponentialEntry",
+        "module": "YM.Source.Insertion",
+        "lines": [
+          37,
+          39
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Source.Coefficient.exponentialEntry"
+          },
+          "snippet": {
+            "text": "def exponentialEntry (o : Site n) (C : SectionData F) (R : Rep G n) (U : Config G n) : ℂ :=\n  P.x 0 + masked R.p.threshold (C.footprint o)\n    (C.places (F.scaled (R.p.threshold)⁻¹ (F.core P.x)) o) U + ∑' i, P.maskedTerm R i U",
+            "line": 37,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Source/Insertion.lean",
+            "fragment": "L37-L39"
+          },
+          "proof_context": {
+            "declaration": "YM.Source.Coefficient.exponentialEntry",
+            "lines": [
+              37,
+              39
+            ],
+            "conclusion": "The bracket x_0 + masked section of the core coordinate at the anchor + sum of masked regular remainders `maskedTerm`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Source.Coefficient.marked",
+        "module": "YM.Source.Insertion",
+        "lines": [
+          42,
+          45
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Source.Coefficient.marked"
+          },
+          "snippet": {
+            "text": "def marked (R : Rep G n) (b : Finset ℕ) (U : Config G n) : ℂ :=\n  if R.activities.admissible R.p U b then\n    ∑ i ∈ b, P.forced i U * ∏ j ∈ b.erase i, (R.activities.K j U : ℂ)\n  else 0",
+            "line": 42,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Source/Insertion.lean",
+            "fragment": "L42-L45"
+          },
+          "proof_context": {
+            "declaration": "YM.Source.Coefficient.marked",
+            "lines": [
+              42,
+              45
+            ],
+            "conclusion": "Over admissible (eligible) families b, the sum over i in b of `forced i` times the product of the other `K j`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          128
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      }
+    }
+  }
+}

@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 19.9 step 14",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "Same transfer to the final coefficients and tested remainder, with the errors for j <= D telescoped; [L] works with `checkReal` averages and a Reader, and does not state a Haar average over a rotation orbit.",
+  "subject": [
+    {
+      "location": {
+        "page": 229,
+        "rect": [
+          0.12026,
+          0.65033,
+          0.76156,
+          0.13977
+        ]
+      },
+      "title": "Lemma 19.9 step 14: Text, p. 229",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 19.9 step 14"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Orbits.fresh_bridge",
+        "module": "YM.OPE.Orbits.Fee",
+        "lines": [
+          45,
+          50
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Orbits.fresh_bridge"
+          },
+          "snippet": {
+            "text": "lemma fresh_bridge: RateLE φ A (fun i=> R.fresh n (x i) (o i) v - R.cutTest n H (Z i)) ((weight d-H-1)*a):=by\n    have hv:=bridge_averaged (v:=v) U R h hA hx hk ha H n; apply (pay_fixed hA ((R.knife n).restrictScalars ℝ) hv).congr; filter_upwards with i\n    let g:Labels S (fun _:Unit=>H):=sole (Z i); let c:=o i\n    have hh: checkReal P R.law R.continuum n (sole c) c g = checkReal P R.law R.continuum n (sole 0) 0 g:=by\n        apply Eq.trans ?_ (checkReal_transfer n R.law R.continuum _ _ _ c); rw [zero_add,(show (fun i:Unit=>sole (0:E4) i+c)=sole c from funext (fun _=>zero_add _))]\n    simp only [map_sub]; change _ - R.knife n (checkReal P R.law R.continuum n (sole c) c g) = _; rw [hh]; rfl",
+            "line": 45,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Orbits/Fee.lean",
+            "fragment": "L45-L50"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Orbits.fresh_bridge",
+            "lines": [
+              45,
+              50
+            ],
+            "conclusion": "`fresh_bridge` bounds `R.fresh n - R.cutTest n H` by the rate `(weight d-H-1)*a`, the averaged error."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Orbits.balance_rate",
+        "module": "YM.OPE.Orbits.Gain",
+        "lines": [
+          57,
+          72
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Orbits.balance_rate"
+          },
+          "snippet": {
+            "text": "lemma balance_rate (m:ℕ)(hba:b < a):RateLE φ A (fun i=>balance U (spectator U (z i)) R m (x i) (o i) v (y i) w) (weight d*a-(m+1:ℝ)*(a-b)+weight e*c) :=by\n    let q i:= shadowOld P m (x i) (o i) v; let W i:=discrepancy (spectator U (z i)) m (x i) (o i) v (q i) (y i) w\n    let L'(j:ℕ)(i:L):S.Field j→ₗ[ℂ] ℂ:=upon (spectator U (z i)) j (o i) (y i) w\n    let f (j:Fin (m+1))(i:L):=R.fresh j.val (x i) (o i) v\n    let E (j:Fin (m+1)) i:= L' (j.val:ℕ) i (R.cutTest j.val m (q i)- f j i)\n    have hid i(hi:Injective (beside (sole (o i)) (y i))): W i+ (∑ j:Fin (m+1), E j i)=balance U (spectator U (z i)) R m (x i) (o i) v (y i) w:=by\n        have he: W i=whole (spectator U (z i)) (x i) v (y i) w- L' m i (q i):=rfl\n        have hz:L' m i (q i) = ∑ j:Fin (m+1), L' _ i (R.cutTest j.val m (q i)):=by\n              have hu:= R.reconstruct m m (le_refl m) (q i); rw [(Q|>.arrival R.continuum.laws.toSymmetric R.lifts)] at hu; apply Eq.trans (congr_arg (L' m i) hu.symm) (by rw [map_sum]; unfold L'; exact Finset.sum_congr rfl (fun j hj=>upon_rise U R _ _ _ _ _ _ hi)) -- rw fails\n        rw [he,hz]; unfold balance E; simp_rw [map_sub,Finset.sum_sub_distrib]; change _ = whole _ _ _ _ _ - ∑ j,L' _ i (f j i); abel\n    let ξ:= weight d*a-(m+1:ℝ)*(a-b)+weight e*c\n    have hx2:= (clearance_both hA hx hk hp hy hba hc).1\n    have hf:=discrepancy_rate_old U R h hA z v w hx hk hp hy ha hb hba hc m\n    refine (hf.add (RateLE.sum hA (f:=E) (fun j hj=>?_)) hA).congr <| hx2.mono hid\n    have h':=(fresh_bridge (v:=v) U R h hA hx hk ha m j.val).neg.congr (Eventually.of_forall fun i=> (neg_sub (f j i) (R.cutTest _ m (q i)))) -- orientation rate neg.congr expects Eq?\n    exact (upon_field_cost U h hA z w hp hy hb hc j.val _ _ h').mono (by have hi : (j.val:ℝ) ≤ m+1:=(by exact_mod_cast j.isLt.le); linarith only [mul_le_mul_of_nonneg_right hi hb])",
+            "line": 57,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Orbits/Gain.lean",
+            "fragment": "L57-L72"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Orbits.balance_rate",
+            "lines": [
+              57,
+              72
+            ],
+            "conclusion": "`balance_rate` telescopes the truncated error into the discrepancy plus a sum over `j` of tested `fresh_bridge` errors, with rate `weight d*a-(m+1)*(a-b)+weight e*c`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Orbits.algebra_rate",
+        "module": "YM.OPE.Orbits.Separated",
+        "lines": [
+          30,
+          35
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Orbits.algebra_rate"
+          },
+          "snippet": {
+            "text": "lemma algebra_rate (m:ℕ): RateLE φ A (fun i=> algebraError U R (x i) (o i) v (y i) w m) (weight d*a-(m+1:ℝ)*(a-b)+weight e*c):=by\n   obtain ⟨h₁,h₂⟩:= clearance_both hA hx hk hp hy hba hc\n   let f(k:K)(v':Viewers U):= balance U (spectator U v') R m (x k) (o k) v (y k) w\n   have ht(v'):= balance_rate U R h hA v hx hk ha v' w hp hy hb hc m hba\n   intro s hs; filter_upwards [universalize (p:=fun k v'=> ‖f k v'‖ ≤ Real.exp (s*A k)) (fun v'=> ht v' s hs), h₂,h₁] with i he hi ho\n   exact (glance_contract U (Real.exp_nonneg _)).2 (fun t => by rw [see_algebra]; exacts [he t, hi, ho])",
+            "line": 30,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Orbits/Separated.lean",
+            "fragment": "L30-L35"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Orbits.algebra_rate",
+            "lines": [
+              30,
+              35
+            ],
+            "conclusion": "`algebra_rate` gives the final remainder rate for every viewer in the algebra."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          229
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

@@ -1,0 +1,161 @@
+{
+  "id": "Lemma 14.11 step 3",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 134,
+        "rect": [
+          0.12026,
+          0.25632,
+          0.76126,
+          0.07134
+        ]
+      },
+      "title": "Lemma 14.11 step 3: Text, p. 134",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.11 step 3"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Cells.Tiling.trip",
+        "module": "YM.Cells.Slide",
+        "lines": [
+          64,
+          86
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Cells.Tiling.trip"
+          },
+          "snippet": {
+            "text": "  let W (v : T.Cell) := if (T.omega v).flip b then F ∘ translate (-step b) else F ∘ translate (step b)\n  have hm := T.manyIntegral β (fun _ => F) fun _ => Hp\n  have ht : T.rootTest β F ^ Fintype.card T.Cell ≤ ∏ i : T.Cell, T.rootTest β (W i) := by\n    rw [T.powering,rootPower, ← moment_pull β 1 (step b) _ hm]\n    have hhx (U : Config G n) : T.fullAt (fun _ => F) (pull 1 (step b) U) = ∏ i, T.copy i (W i) U := by\n      rw [pull_one,fullAt]\n      apply Finset.prod_congr rfl\n      intro i _; rw [read_move];split <;> simp [W, *]\n    simp only [Function.comp_def, hhx]; exact L.inequality T W fun i => by unfold W; split; exacts [h,he]\n  let P := Equiv.ofBijective (T.mate 0 b) (Function.Involutive.bijective (T.mate_invol 0 b))\n  have hv (i): (T.omega (P i)).flip b = !(T.omega i).flip b := T.flip_here 0 b i\n  let w (i) := T.rootTest β (W i)\n  let ξ := T.rootTest β (F ∘ translate (-step b))*T.rootTest β (F ∘ translate (step b))\n  have hf : (∏ i:T.Cell, w i)^2=ξ^(Fintype.card T.Cell) := calc\n    _ = (∏ i:T.Cell,w i) * ∏ j:T.Cell,w (P j) := by rw [pow_two, Equiv.prod_comp]\n    _ = ∏ i:T.Cell, ξ := by\n      rw [← Finset.prod_mul_distrib]; apply Finset.prod_congr rfl; intro i _\n      cases H:(T.omega i).flip b <;> simp [W,hv,H,ξ,w,mul_comm]\n    _ = _ := by simp\n  haveI : Nonempty T.Cell := ⟨0⟩\n  apply le_of_pow_le_pow_left₀ (show 0<Fintype.card T.Cell from Fintype.card_pos).ne' (mul_nonneg (T.root_nonneg β _) (T.root_nonneg β _))\n  rw [← show (∏ i:T.Cell,w i)^2=_ from hf, ← pow_mul,pow_mul']\n  apply pow_le_pow_left₀ (pow_nonneg (T.root_nonneg ..) _) ht",
+            "line": 64,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Cells/Slide.lean",
+            "fragment": "L64-L86"
+          },
+          "proof_context": {
+            "declaration": "YM.Cells.Tiling.trip",
+            "lines": [
+              60,
+              86
+            ],
+            "conclusion": "The product of reflected copies is translated by one step so alternate cells carry shifts -1 and +1, then the chessboard inequality applies."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Cells.Tiling.max_end",
+        "module": "YM.Cells.Slide",
+        "lines": [
+          18,
+          38
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Cells.Tiling.max_end"
+          },
+          "snippet": {
+            "text": "private theorem max_end (g : ℕ → ℝ) (m : ℕ) (hn : ∀ i, i ≤ m → 0 ≤ g i) (A : ℝ)\n    (H : ∀ i, i+2 ≤ m → g (i+1)^2 ≤ g i*g (i+2)) (h : g 0 ≤ A) (he : g m≤A) : ∀ i ≤ m, g i ≤ A := by\n  -- strict increase propagates\n  have hv i (hp : i+1 ≤ m) (hr : g i < g (i+1)) : g (i+1) ≤ A := by\n    have he_idx (p : ℕ) (hr' : g p<g (p+1)) (hs : p+2≤m) : g (p+1)<g (p+2) := by\n      have hl := H p hs\n      have ha := hn p (by omega)\n      have hh := hn (p+2) hs\n      by_contra! hv\n      apply (not_le.mpr ?_ hl)\n      calc _ ≤ g p * g (p+1) := by gcongr\n           _ < _ := by nlinarith\n    have ht (q : ℕ) (hq : i≤q) (hz : q+1≤m) : g q<g (q+1) ∧ g (i+1) ≤ g (q+1) := by\n      induction q, hq using Nat.le_induction with\n      | base => exact ⟨hr,le_rfl⟩\n      | succ n hn ih => exact ⟨he_idx _ (ih (by omega)).1 hz,(ih (by omega)).2.trans (he_idx _ (ih (by omega)).1 hz).le⟩\n    have hs : g (i+1) ≤ g ((m-1)+1) := (ht _ (by omega) (by omega)).2\n    rw [show m-1+1=m by omega] at hs; exact hs.trans he\n  intro i hi; induction i with\n  | zero => exact h\n  | succ i ih => exact le_or_gt (g (i+1)) (g i) |>.elim (fun h => h.trans (ih (by omega))) (fun h => hv i hi h)",
+            "line": 18,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Cells/Slide.lean",
+            "fragment": "L18-L38"
+          },
+          "proof_context": {
+            "declaration": "YM.Cells.Tiling.max_end",
+            "lines": [
+              18,
+              38
+            ],
+            "conclusion": "A nonnegative sequence with g(i+1)^2 <= g(i) g(i+2) on a finite interval is bounded by the maximum of its endpoint values."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Cells.Tiling.pathway",
+        "module": "YM.Cells.Slide",
+        "lines": [
+          89,
+          101
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Cells.Tiling.pathway"
+          },
+          "snippet": {
+            "text": "theorem pathway (L : Seam G n β) (F : ℕ → Config G n → ℂ) (s : ℕ) (b : Axis)\n    (H : ∀ u ≤ s, Interior (T.chamber 0) (F u))\n    (h : ∀ u, u+1≤s → F (u+1)= F u ∘ translate (step b))\n    (A : ℝ) (hf : T.rootTest β (F 0) ≤ A) (hh : T.rootTest β (F s)≤A) : ∀ u ≤ s, T.rootTest β (F u) ≤ A := by\n  refine max_end (fun u => T.rootTest β (F u)) s (fun u _ => T.root_nonneg ..) A ?_ hf hh\n  intro i hi; set f := F (i+1); change T.rootTest β (F (i+1))^2 ≤ _\n  have hv : F (i+1) ∘ translate (-step b)=F i := by\n    rw [h i (by omega)]\n    funext U\n    have he : translate (step b) (translate (-step b) U)=U := by ext1 q; simp [translate]\n    exact congr_arg _ he\n  have hw := h (i+1) hi\n  rw [← hv,hw]; exact T.trip β L b (H _ (by omega)) (hv.symm ▸ H i (by omega)) (hw ▸ H (i+2) hi)",
+            "line": 89,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Cells/Slide.lean",
+            "fragment": "L89-L101"
+          },
+          "proof_context": {
+            "declaration": "YM.Cells.Tiling.pathway",
+            "lines": [
+              89,
+              101
+            ],
+            "conclusion": "Applies `trip` and `max_end` to the translates: all roots are at most A if both endpoints are."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          134
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

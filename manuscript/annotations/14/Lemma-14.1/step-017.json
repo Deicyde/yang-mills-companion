@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 14.1 step 17",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "The identification ℓ_i = ℓ^st_{J_{i+1}}, the oddness of the ratios and log ℓ_i → ∞ are carried. The vanishing of the displayed expression, the finitely many degrees and the unmarked attachment sum are not.",
+  "subject": [
+    {
+      "location": {
+        "page": 126,
+        "rect": [
+          0.11962,
+          0.0962,
+          0.76357,
+          0.08805
+        ]
+      },
+      "title": "Lemma 14.1 step 17: Text, p. 126",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.1 step 17"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.Calendar.Fits",
+        "module": "YM.RG.History",
+        "lines": [
+          99,
+          99
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.Calendar.Fits"
+          },
+          "snippet": {
+            "text": "  sameFactor m : S.factor (S.J (m+1)) = S.schedule.block m",
+            "line": 99,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/RG/History.lean",
+            "fragment": "L99-L99"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.Calendar.Fits",
+            "lines": [
+              97,
+              118
+            ],
+            "conclusion": "`sameFactor`: the block factor at level m is the stage ratio `factor (J (m+1))`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Planned.CalibratedMixedHistory.Bridge.reach",
+        "module": "YM.Planned.CALIBRATED_MIXED_HISTORY.Bridge",
+        "lines": [
+          29,
+          48
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Planned.CalibratedMixedHistory.Bridge.reach"
+          },
+          "snippet": {
+            "text": "lemma reach (H : Levels G) : Tendsto (fun j => ((H.S.block j).val:ℝ)) atTop atTop := by\n  let f := fun j : ℕ => (H.clock.J (j+1):ℝ)\n  have he : Tendsto f atTop atTop := tendsto_natCast_atTop_atTop.comp (H.fits.deep.comp (tendsto_add_atTop_nat 1))\n  have hx : Tendsto (fun j => f j^2*log 2) atTop atTop :=\n    ((tendsto_pow_atTop (n:=2) (by norm_num)).comp he).atTop_mul_const (Real.log_pos (by norm_num))\n  apply tendsto_atTop_mono _ (Real.tendsto_exp_atTop.comp hx)\n  intro i\n  let B := H.params (i+1)\n  let Q : ℝ := (H.S.block i).val\n  let X := 1 + B.paths + B.width⁻¹ + B.columns + B.clip.relaxation+B.supportExponent\n  have hp : 1 < Q := by unfold Q; exact_mod_cast lt_of_lt_of_le (by norm_num : 1 < (3:ℕ)) (H.S.block_large i)\n  have hh : log X / log Q ≤ (f i^2)⁻¹ := H.fits.logCost i\n  have hs : 2 ≤ X := by unfold X; linarith [B.paths_pos,B.width_pos,B.clip.radius_pos,B.columns_ge,B.price_pos, inv_pos.mpr B.width_pos]\n  change exp (f i^2*log 2) ≤ Q\n  conv_rhs => rw [← Real.exp_log (zero_lt_one.trans hp)]\n  apply exp_monotone\n  have h4 : 4 ≤ f i := by unfold f; exact_mod_cast H.clock.adm (i+1)\n  have hi : 0 < f i^2 := by positivity\n  apply le_trans (mul_le_mul_of_nonneg_left (log_le_log (by norm_num) hs) hi.le)\n  exact (mul_le_mul_of_nonneg_left ((div_le_iff₀ (Real.log_pos hp)).mp hh) hi.le).trans_eq (mul_inv_cancel_left₀ hi.ne' _)",
+            "line": 29,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Planned/CALIBRATED_MIXED_HISTORY/Bridge.lean",
+            "fragment": "L29-L48"
+          },
+          "proof_context": {
+            "declaration": "YM.Planned.CalibratedMixedHistory.Bridge.reach",
+            "lines": [
+              29,
+              48
+            ],
+            "conclusion": "The blocks tend to infinity, derived from `logCost`, which is stronger than log ℓ_i → ∞."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.Supply.Large",
+        "module": "YM.Price.Intent",
+        "lines": [
+          39,
+          41
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.Supply.Large"
+          },
+          "snippet": {
+            "text": "structure Large (p : Sheet G) (j : ℕ) (L : Side) : Prop where\n  odd : Odd L.val\n  size : 3 ≤ L.val",
+            "line": 39,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Price/Intent.lean",
+            "fragment": "L39-L41"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.Supply.Large",
+            "lines": [
+              39,
+              48
+            ],
+            "conclusion": "Stage ratios are odd and at least 3."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          126
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

@@ -1,0 +1,200 @@
+{
+  "id": "Lemma 11.11 step 5",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 66,
+        "rect": [
+          0.12026,
+          0.34851,
+          0.75949,
+          0.14865
+        ]
+      },
+      "title": "Lemma 11.11 step 5: Text, p. 66",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 11.11 step 5"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.E06.dropped_cost",
+        "module": "YM.Work.E06",
+        "lines": [
+          117,
+          147
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.E06.dropped_cost"
+          },
+          "snippet": {
+            "text": "private lemma dropped_cost (T : Tube G S) (A : Stores S) {x C w : ℝ}\n    {U : Config G f} {k : S.Choices} {V : Config G c} (p : A.Plot U k V x w)\n    (ht : 0 < fiery G x S.patch.L)\n    (E : LaneCounts T.up x (fiery G x S.patch.L) T.high C 1 S.ratio.parent) :\n    let t := fiery G x S.patch.L\n    ((droppedRows T A x t U).card : ℝ) * t ≤\n      cloudPrice T.high.relaxation * ∑ j ∈ A.swell U t, toll U j := by\n  intro t\n  let K := A.swell U t\n  let X := droppedRows T A x t U\n  let F (j : Cell f) := clouds j.1 T.high.relaxation (toll U j / t)\n  have sub : X ⊆ K.biUnion F := by\n    intro i hi\n    obtain ⟨hi, hd⟩ : i ∈ A.limit x ∧ ¬ PathData.kept T.high t i.1 U := mem_filter.mp hi\n    unfold PathData.kept at hd\n    push Not at hd\n    obtain ⟨j, hj⟩ := hd\n    obtain ⟨hh, hs⟩ := cloud_mem (T := T) (U := U) (i := i) (j := j) ht hj\n    exact mem_biUnion.mpr ⟨j, in_swell p ht.le (limit_reach hi (E.dropped U i.1 j hj)) hh, hs⟩\n  have ha : X.card ≤ ∑ j ∈ K, (F j).card := (card_le_card sub).trans card_biUnion_le\n  have hc : (X.card : ℝ) ≤ ∑ j ∈ K, ((F j).card : ℝ) := by exact_mod_cast ha\n  change (X.card : ℝ) * t ≤ cloudPrice T.high.relaxation * ∑ j ∈ K, _\n  refine le_trans (mul_le_mul_of_nonneg_right hc (show 0 ≤ t from ht.le)) ?_\n  rw [sum_mul, mul_sum]\n  apply sum_le_sum\n  intro j hj\n  have hu : t < toll U j := (mem_filter.mp (show j ∈ A.swell U t from hj)).2\n  have ht' : 0 < t := ht\n  refine (le_div_iff₀ ht').mp ?_\n  rw [mul_div_assoc]\n  exact cloud_size _ ((one_le_div ht').mpr hu.le) T.high.radius_pos.le",
+            "line": 117,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/E06.lean",
+            "fragment": "L117-L147"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.E06.dropped_cost",
+            "lines": [
+              117,
+              147
+            ],
+            "conclusion": "Every dropped row has a witness in `A.swell` within `R log(toll/t)` of it, so `card (droppedRows) * t <= cloudPrice * sum over swell of toll`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.E06.cloud_size",
+        "module": "YM.Work.E06",
+        "lines": [
+          77,
+          99
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.E06.cloud_size"
+          },
+          "snippet": {
+            "text": "private lemma cloud_size (a : Site f) {y R : ℝ} (hy : 1 ≤ y) (hr : 0 ≤ R) :\n    ((clouds a R y).card : ℝ) ≤ cloudPrice R * y := by\n  let r := Nat.floor (Real.log y * R)\n  have hf : (r : ℝ) ≤ Real.log y * R := Nat.floor_le (mul_nonneg (Real.log_nonneg hy) hr)\n  have he : (r : ℝ) + r + 1 ≤ (8*R+1) * Real.exp (Real.log y / 4) := by\n    have h := Real.add_one_le_exp (Real.log y / 4)\n    have h1 := mul_le_mul_of_nonneg_right h hr\n    nlinarith only [h, h1, hf, hr, Real.log_nonneg hy]\n  have hp : Real.exp (Real.log y / 4) ^ 4 = y := calc\n    _ = Real.exp (((4:ℕ):ℝ) * (Real.log y / 4)) := (Real.exp_nat_mul _ _).symm\n    _ = _ := by norm_num; rw [show (4:ℝ) * (Real.log y / 4) = Real.log y by ring,\n      Real.exp_log (lt_of_lt_of_le zero_lt_one hy)]\n  have hn : (clouds a R y).card ≤ ((r+r+1)^4) * Fintype.card PlaqAxes := by\n    unfold clouds\n    rw [card_product, card_univ]\n    apply Nat.mul_le_mul_right\n    simpa using Corona.halo_size ({a} : Support f) r\n  calc\n    ((clouds a R y).card : ℝ) ≤ ((r:ℝ) + r + 1)^4 * (Fintype.card PlaqAxes : ℝ) := by\n      exact_mod_cast hn\n    _ ≤ ((8*R+1) * Real.exp (Real.log y / 4))^4 * (Fintype.card PlaqAxes : ℝ) :=\n      mul_le_mul_of_nonneg_right (pow_le_pow_left₀ (by positivity) he 4) (Nat.cast_nonneg _)\n    _ = cloudPrice R * y := by rw [mul_pow, hp]; unfold cloudPrice; ring",
+            "line": 77,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/E06.lean",
+            "fragment": "L77-L99"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.E06.cloud_size",
+            "lines": [
+              77,
+              99
+            ],
+            "conclusion": "The number of sites within `R log y` of a point is at most `cloudPrice R * y` (the count `(1+R log y)^4 <= C y`)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Bid.LaneCounts",
+        "module": "YM.Bid.Energy",
+        "lines": [
+          80,
+          81
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Bid.LaneCounts"
+          },
+          "snippet": {
+            "text": "  keeps (V : Config G n) (i : Cell n) : PathData.kept c t i.1 V → ‖shorten T (till x) d V i‖ ≤ A*t\n  dropped (V : Config G n) (i : Site n) (j : Cell n) : t * Real.exp (separation i j.1/c.relaxation) < toll V j → separation (f i) (f j.1) ≤ radiusB x/50",
+            "line": 80,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Bid/Energy.lean",
+            "fragment": "L80-L81"
+          },
+          "proof_context": {
+            "declaration": "YM.Bid.LaneCounts",
+            "lines": [
+              74,
+              81
+            ],
+            "conclusion": "`dropped` puts every witness of a dropped row within `radiusB x/50` of the row's anchor."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.E06.dropped_bill",
+        "module": "YM.Work.E06",
+        "lines": [
+          168,
+          196
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.E06.dropped_bill"
+          },
+          "snippet": {
+            "text": "  have row (i : Cell f) (hi : i ∈ X) :\n      ∑ j, M i j * toll U j ≤ C * t + ∑ j ∈ K, M i j * toll U j := by\n    rw [← sum_sdiff (subset_univ K)]\n    apply add_le_add_left -- RHS and LHS add same ∑ j ∈ K\n    calc\n      _ ≤ ∑ j ∈ (univ \\ K), M i j * t := by\n        apply sum_le_sum\n        intro j hj\n        by_cases hm : M i j = 0\n        · simp [hm]\n        apply mul_le_mul_of_nonneg_left _ (E.attic ..)\n        by_contra! he\n        have hk : j ∈ K := in_swell p ht.le\n          (limit_reach (mem_filter.mp hi).1 (E.maps _ _ (lt_of_le_of_ne (E.attic i j) (Ne.symm hm)))) he\n        exact (mem_sdiff.mp hj).2 hk\n      _ ≤ C * t := by\n        rw [← sum_mul]\n        apply mul_le_mul_of_nonneg_right _ ht.le\n        exact le_trans (sum_le_sum_of_subset_of_nonneg (subset_univ _) (fun j _ _ => E.attic i j))\n          (E.finite i)\n  have count : (∑ _i ∈ X, C*t) ≤ C * (cloudPrice T.high.relaxation * ∑ j ∈ K, toll U j) := calc\n    _ = C * ((X.card : ℝ) * t) := by rw [sum_const, nsmul_eq_mul]; ring\n    _ ≤ _ := mul_le_mul_of_nonneg_left (dropped_cost T A p ht E) hc\n  calc\n    _ ≤ ∑ i ∈ X, (C*t + ∑ j ∈ K, M i j * toll U j) :=\n      sum_le_sum fun i hi => (E.valued i U).trans (row i hi)\n    _ ≤ C * (cloudPrice T.high.relaxation * ∑ j ∈ K, toll U j) + C * ∑ j ∈ K, toll U j := by\n      rw [sum_add_distrib]; exact add_le_add count column\n    _ = _ := by unfold K; ring",
+            "line": 168,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/E06.lean",
+            "fragment": "L168-L196"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.E06.dropped_bill",
+            "lines": [
+              149,
+              196
+            ],
+            "conclusion": "Row sums control endpoints with toll at most `t` by `C*t` per dropped row, and column sums control the swell part by `C` times the swell toll sum."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          66
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

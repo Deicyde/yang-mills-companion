@@ -1,0 +1,159 @@
+{
+  "id": "Section 12 display 4",
+  "kind": "display",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "The sums over i are `tsum`s (`atomSeries`), and the hypercubic average is over `Signed`, the signed axis permutations.",
+  "subject": [
+    {
+      "location": {
+        "page": 77,
+        "rect": [
+          0.12026,
+          0.68803,
+          0.75948,
+          0.1226
+        ]
+      },
+      "title": "Display, p. 77",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Section 12 display 4"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.PathData.principal",
+        "module": "YM.RG.PathActions",
+        "lines": [
+          236,
+          238
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.PathData.principal"
+          },
+          "snippet": {
+            "text": "def principal (c : Clip) (p : BudgetPoint) (β : ℝ) (U : Config G n) : ℝ :=\n  β * ((∑ f, R.baseTerm c p U f) + ∑ x : Site n,\n      (atomSeries R.cubic p U x + atomSeries R.quartic p U x)) + ∑ x, atomSeries R.loop p U x",
+            "line": 236,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/RG/PathActions.lean",
+            "fragment": "L236-L238"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.PathData.principal",
+            "lines": [
+              236,
+              238
+            ],
+            "conclusion": "`principal` is beta times the sum of `baseTerm` over faces plus the cubic and quartic atom series, plus the loop atom series without beta."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.PathData.inChannels",
+        "module": "YM.RG.PathActions",
+        "lines": [
+          241,
+          242
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.PathData.inChannels"
+          },
+          "snippet": {
+            "text": "def inChannels (c : Clip) (p : BudgetPoint) (β : ℝ) (U : Config G n) :=\n  (Fintype.card Signed : ℝ)⁻¹ * ∑ s : Signed, R.principal c p β (pull s 0 U)",
+            "line": 241,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/RG/PathActions.lean",
+            "fragment": "L241-L242"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.PathData.inChannels",
+            "lines": [
+              241,
+              242
+            ],
+            "conclusion": "`inChannels` averages `principal` over the signed channels `pull s 0 U`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.PathData.baseTerm",
+        "module": "YM.RG.PathActions",
+        "lines": [
+          221,
+          224
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.PathData.baseTerm"
+          },
+          "snippet": {
+            "text": "def baseTerm (c : Clip) (p : BudgetPoint) (U : Config G n) (x : Face (Per n)) : ℝ := by\n  classical\n  exact clipped c p.threshold (G.chord (faceValue U x)) +\n    (if kept c p.threshold x.1 U then ‖R.ell U x‖^2/2 else 0)",
+            "line": 221,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/RG/PathActions.lean",
+            "fragment": "L221-L224"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.PathData.baseTerm",
+            "lines": [
+              221,
+              224
+            ],
+            "conclusion": "`baseTerm` is the clipped chord plus the health-masked `‖ell‖^2/2` at a face."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          77
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      }
+    }
+  }
+}

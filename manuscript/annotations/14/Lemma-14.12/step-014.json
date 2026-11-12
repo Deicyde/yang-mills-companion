@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 14.12 step 14",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "[L] runs the same descending induction from level N but on a different quantity, the `Spent` budget `(divisor, gHat^2/2)`, not the attachment sum bounded by η_i with the split η_i/2 for marked and unmarked factors; the passage to the absolutely convergent limit is not part of it.",
+  "subject": [
+    {
+      "location": {
+        "page": 136,
+        "rect": [
+          0.12026,
+          0.31975,
+          0.75996,
+          0.14271
+        ]
+      },
+      "title": "Lemma 14.12 step 14: Text, p. 136",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.12 step 14"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extra.Multi.Unbilled.realizes",
+        "module": "YM.Extra.MULTISOURCE_BOUNDS.Trajectory",
+        "lines": [
+          263,
+          265
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extra.Multi.Unbilled.realizes"
+          },
+          "snippet": {
+            "text": "theorem realizes (hm : i ≤ m) (hn : m ≤ N) :\n    let w := rate C m t hot D r N\n    (∀ v,w v * ‖(L.sites m).units v‖ ≤ 1) ∧ Spent entire (L.sites m) w 0 (divisor C m) (gHat C m^2/2) := by",
+            "line": 263,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/MULTISOURCE_BOUNDS/Trajectory.lean",
+            "fragment": "L263-L265"
+          },
+          "proof_context": {
+            "declaration": "YM.Extra.Multi.Unbilled.realizes",
+            "lines": [
+              263,
+              289
+            ],
+            "conclusion": "At every level `i ≤ m ≤ N` the marker-rooted budget `Spent entire` with `(divisor C m, gHat C m^2/2)` holds."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extra.Multi.Unbilled.realizes",
+        "module": "YM.Extra.MULTISOURCE_BOUNDS.Trajectory",
+        "lines": [
+          266,
+          277
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extra.Multi.Unbilled.realizes"
+          },
+          "snippet": {
+            "text": "  induction hn using Nat.decreasingInduction with\n  | self =>\n    have hs := fun v => (hstart v).trans hm\n    have he i := (hprep.here N).atlas (D i) (admitted C N H (hs i))\n    obtain ⟨h1,h2⟩ := copied_price H (h.copy N hm le_rfl) hs le_rfl hr hc (fun i => (rate_pos hot (hr i)).le)\n      (fun i => rate_le hot (hr i)) (fun i => (he i).1) (hprep.here N).singletons\n    have hB := born_mixed H hprep hot hr hc hborn (h.active N hm le_rfl) hs (hμ N hm le_rfl) h.birth\n    refine ⟨h1, (h2.complete (h.active _ hm le_rfl) (fun i => (rate_pos hot (hr i)).le) (divisor_pos ..).le hB).mono\n      (fun i => (rate_pos hot (hr i)).le) (fun _ => le_rfl) (divisor_pos ..).le ?_ (fun _ h => h) (fun _ h => h)⟩\n    have he : gHat C N ≤ 1/4 := (hprep.here N).perturb\n    have ht := gHat_pos C N\n    nlinarith [mul_le_mul_of_nonneg_left (pow_le_pow_left₀ ht.le he 2) (sq_nonneg (gHat C N))]",
+            "line": 266,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/MULTISOURCE_BOUNDS/Trajectory.lean",
+            "fragment": "L266-L277"
+          },
+          "proof_context": {
+            "declaration": "YM.Extra.Multi.Unbilled.realizes",
+            "lines": [
+              263,
+              289
+            ],
+            "conclusion": "The base case at level `N` uses the birth data `born_mixed`, with no connected higher modes."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extra.Multi.Unbilled.realizes",
+        "module": "YM.Extra.MULTISOURCE_BOUNDS.Trajectory",
+        "lines": [
+          278,
+          289
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extra.Multi.Unbilled.realizes"
+          },
+          "snippet": {
+            "text": "  | of_succ m hn ih =>\n    have hs := fun v => (hstart v).trans hm\n    have he i := (hprep.here m).atlas (D i) (admitted C m H (hs i))\n    obtain ⟨h1,h2⟩ := copied_price H (h.copy m hm hn.le) hs hn.le hr hc (fun i => (rate_pos hot (hr i)).le)\n      (fun i => rate_le hot (hr i)) (fun i => (he i).1) (hprep.here m).singletons\n    have hM := rewind H hprep hot hr hG (h.raw m hm hn) (h.active m hm hn.le) hs hn (hsep m hm hn.le) (hμ m hm hn.le)\n      (ih (hm.trans (Nat.le_succ m))).2\n    refine ⟨h1, (h2.complete (h.active _ hm hn.le) (fun i => (rate_pos hot (hr i)).le) (divisor_pos ..).le hM).mono\n      (fun i => (rate_pos hot (hr i)).le) (fun _ => le_rfl) (divisor_pos ..).le ?_ (fun _ h => h) (fun _ h => h)⟩\n    have he : gHat C m ≤ 1/4 := (hprep.here m).perturb\n    have ht := gHat_pos C m\n    nlinarith [mul_le_mul_of_nonneg_left (pow_le_pow_left₀ ht.le he 2) (sq_nonneg (gHat C m))]",
+            "line": 278,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/MULTISOURCE_BOUNDS/Trajectory.lean",
+            "fragment": "L278-L289"
+          },
+          "proof_context": {
+            "declaration": "YM.Extra.Multi.Unbilled.realizes",
+            "lines": [
+              263,
+              289
+            ],
+            "conclusion": "Each descending step uses `copied_price`, `rewind` (radius enlargement by the covering estimate) and `Spent.complete` to pass the budget from level `m+1` to `m`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          136
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
+      }
+    }
+  }
+}

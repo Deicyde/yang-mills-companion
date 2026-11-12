@@ -1,0 +1,161 @@
+{
+  "id": "Theorem A step 8",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 35,
+        "rect": [
+          0.12026,
+          0.22503,
+          0.76294,
+          0.09139
+        ]
+      },
+      "title": "Theorem A step 8: Text, p. 35",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Theorem A step 8"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Integration.ManuscriptTraceTests.Tests",
+        "module": "YM.Integration.ManuscriptTraceTests",
+        "lines": [
+          62,
+          75
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Integration.ManuscriptTraceTests.Tests"
+          },
+          "snippet": {
+            "text": "structure Tests (F : Final C q S) (hG : G.Simple) : Prop where\n  centered (f : Test4) :\n    inner ℂ F.action.operators.vacuum (excitation F.action.operators (pinned F) f) = 0\n  identified (f : Test4) :\n    F.action.operators.field (pinned F) f =\n      F.action.operators.field (S.pin 4 (stressTrace F.sector.energy)) f -\n        (euclideanVEV S (selected F) (stressTrace F.sector.energy) * ∫ x, f x) •\n          LinearMap.id (R := ℂ)\n  shortDistance : EuclideanAsymptotic F (Trace.Verse.award G)\n  positive : 0 < Trace.Verse.award G\n  spectrum : ∃! μ, Trace.Target.HighEnergy F hG μ\n  wick : WickCountertests.{u} F\n  maxwell : MaxwellCountertests F\n  invariant : InvariantCountertests.{v} F",
+            "line": 62,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Integration/ManuscriptTraceTests.lean",
+            "fragment": "L62-L75"
+          },
+          "proof_context": {
+            "declaration": "YM.Integration.ManuscriptTraceTests.Tests",
+            "lines": [
+              62,
+              75
+            ],
+            "conclusion": "`Tests` (the `trace` field of `Independent.Core`, stated in `constructed`) gives vacuum centering, the operator identity, the `r^8 log^2` short-distance law, `0 < award G`, a unique `HighEnergy` spectral measure, and the Wick exclusion."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YangMills.constructed",
+        "module": "Construction",
+        "lines": [
+          25,
+          25
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YangMills.constructed"
+          },
+          "snippet": {
+            "text": "        Independent.Core.{u,v} (GaugeGroup.coreSimple hg) F L Q ∧",
+            "line": 25,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/Construction.lean",
+            "fragment": "L25-L25"
+          },
+          "proof_context": {
+            "declaration": "YangMills.constructed",
+            "lines": [
+              15,
+              40
+            ],
+            "conclusion": "`constructed` states `Independent.Core` for the same `F`, which contains `Tests`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YangMills.publicTrace",
+        "module": "TraceBridge",
+        "lines": [
+          35,
+          44
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YangMills.publicTrace"
+          },
+          "snippet": {
+            "text": "theorem publicTrace (hg : g.IsSimple) (H : Headline.TraceExclusions.{u,v} F) :\n    (hierarchy F Q).TraceTest := by\n  have ht : (hierarchy F Q).traceTwo = euclidean F := rfl\n  refine ⟨H.centered, (award_eq hg) ▸ H.positive, ?_, ?_⟩\n  · rw [ht,← award_eq hg]\n    exact H.shortDistance\n  · intro terms e\n    apply Wick.euclidean_excludes (F := F) H.shortDistance H.positive (nativeTerms terms)\n    filter_upwards [e] with r hr\n    exact (congrFun ht r).symm.trans (hr.trans (profile_eq terms r))",
+            "line": 35,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/TraceBridge.lean",
+            "fragment": "L35-L44"
+          },
+          "proof_context": {
+            "declaration": "YangMills.publicTrace",
+            "lines": [
+              35,
+              44
+            ],
+            "conclusion": "`publicTrace` turns `Headline.TraceExclusions F` into the hierarchy's `TraceTest` (Q6) with `award = 3 dim g / π^4`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          35
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "id": "Lemma 17.5 step 14",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 196,
+        "rect": [
+          0.11961,
+          0.69916,
+          0.76047,
+          0.05392
+        ]
+      },
+      "title": "Lemma 17.5 step 14: Text, p. 196",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 17.5 step 14"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extraction.Retain.bit",
+        "module": "YM.Phase.Detect",
+        "lines": [
+          22,
+          58
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extraction.Retain.bit"
+          },
+          "snippet": {
+            "text": "lemma bit (H : R.Out) (x : P.algebra) (t : ℝ) (ht : 0 ≤ t) (h : Tall P x t) (i : R.X) :\n    ‖R.character i x‖ ≤ t := by\n  classical\n  have ht' (j n) : R.character j (((star x*x)^n:P.algebra))=(↑(‖R.character j x‖^(2*n)):ℂ) := by\n    rw [map_pow,map_mul,map_star,pow_mul,Complex.ofReal_pow -- direction\n        ]\n    congr 1\n    change starRingEnd ℂ _ * _=_\n    rw [mul_comm, Complex.mul_conj,Complex.normSq_eq_norm_sq]\n  let f (i) := ‖R.character i x‖\n  have hg n : (∫ i, f i^(2*n) ∂R.μ) ≤ t^(2*n) := by\n    have he := h n; rw [← H.ground] at he\n    simp_rw [ht',integral_complex_ofReal,Complex.ofReal_re] at he; exact he\n  by_contra! hv\n  obtain ⟨p,hp,hv⟩ := exists_between hv\n  let Q := {x | p<f x}\n  have he : Continuous f := (H.weak x).norm\n  have hu : IsOpen Q := isOpen_lt continuous_const he\n  have ho := H.support; have h' := H.normalized\n  let c := R.μ.real Q\n  have hc : 0<c := by apply ENNReal.toReal_pos (mu_ne ho Q hu ⟨i,hv⟩) (measure_ne_top R.μ Q)\n  have hz := ht.trans_lt hp\n  have hf n : c ≤ ((t/p)^2)^n := by\n    let g (i) := f i ^ (2*n)\n    have hx : Integrable g R.μ := (he.pow _).integrable_of_hasCompactSupport (HasCompactSupport.of_compactSpace _)\n    rw [← pow_mul,div_pow]\n    refine (le_div_iff₀ (pow_pos hz _)).2 ?_\n    calc\n      _ = ∫ _ in Q,(p^(2*n):ℝ) ∂R.μ := by simp [c]\n      _ ≤ ∫ i in Q,g i ∂R.μ := setIntegral_mono_on (integrable_const _) hx.integrableOn hu.measurableSet fun j hj =>\n          pow_le_pow_left₀ hz.le (show p < f j from hj).le _\n      _ ≤ ∫ i, g i ∂R.μ := setIntegral_le_integral hx (ae_of_all _ fun i => pow_nonneg (norm_nonneg _) _)\n      _ ≤ t^(2*n) := hg n\n  have hq : t/p < 1 := div_lt_one hz |>.2 hp\n  have hx := div_nonneg ht hz.le\n  exact hc.not_ge (ge_of_tendsto' (tendsto_pow_atTop_nhds_zero_of_lt_one (sq_nonneg _) (by exact pow_lt_one₀ hx hq (by omega))) hf)\nwhere mu_ne (h : R.μ.IsOpenPosMeasure) (q : Set R.X) (a : IsOpen q) (b : q.Nonempty) : R.μ q≠0 := IsOpenPosMeasure.open_pos q a b",
+            "line": 22,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Phase/Detect.lean",
+            "fragment": "L22-L58"
+          },
+          "proof_context": {
+            "declaration": "YM.Extraction.Retain.bit",
+            "lines": [
+              22,
+              58
+            ],
+            "conclusion": "From `Tall` for all n and an open-positive probability measure, every character satisfies ||R.character i x|| <= t (open set of positive measure with ((t/p)^2)^n bound)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extraction.Retain.pair_near",
+        "module": "YM.Phase.Detect",
+        "lines": [
+          101,
+          117
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extraction.Retain.pair_near"
+          },
+          "snippet": {
+            "text": "lemma pair_near (hi : a.Out) {D : Table C.book} {v} (h : a.receives D v) k i c s u (hp : s<u) :\n    ‖D.expect [plant Y k i c s,plant Y k i c u]- free2 Y k i c s u‖ ≤\n      Y.gap k+ (‖Y.singleton k i c s‖+‖Y.singleton k i c u‖)*Y.gap k := by\n  have hb := bit P hi _ _ (Y.allowed k) (H.pair k i c s u hp) v\n  have hy (x) := one_near Y Q P a H hi h k i c x\n  let U := D.expect\n  let y t := plant Y k i c t\n  let j t := Y.singleton k i c t\n  rw [Δtwo,plus P a v,minus P a v,minus P a v,picky P a v,picky P a v,picky P a v,map_one] at hb\n  simp only [mul_one,atOne,pops P a h] at hb\n  let G (s t) := U [y s,y t]-j s*U [y t]-j t*U [y s]+(j t*j s-Y.cumulant k i c s t)\n  change ‖U _-_‖ ≤ _\n  rw [show U [y s,y u]- _= G s u + (j s*(U [y u]-j u)+j u*(U [y s]- j s)) from by unfold G; unfold free2; simp only [j]; ring]\n  rw [add_mul]\n  refine (norm_add_le ..).trans (add_le_add hb ((norm_add_le ..).trans ?_))\n  rw [norm_mul,norm_mul]; exact add_le_add (mul_le_mul_of_nonneg_left (hy u) (norm_nonneg _))\n    (mul_le_mul_of_nonneg_left (hy s) (norm_nonneg _))",
+            "line": 101,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Phase/Detect.lean",
+            "fragment": "L101-L117"
+          },
+          "proof_context": {
+            "declaration": "YM.Extraction.Retain.pair_near",
+            "lines": [
+              101,
+              117
+            ],
+            "conclusion": "The expansion of Delta2 gives |expect(uv) - free2| <= gap + (|s|+|u|) gap."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          196
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

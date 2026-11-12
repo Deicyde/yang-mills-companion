@@ -1,0 +1,180 @@
+{
+  "id": "Lemma 13.18 step 13",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "The conclusion (outputs and corrections converge in the common spaces) is `Sign` proved by `commute`. The Gaussian density convergence by dominated convergence, the rooted estimates and localization to five tori are not in these lines.",
+  "subject": [
+    {
+      "location": {
+        "page": 116,
+        "rect": [
+          0.12026,
+          0.82196,
+          0.75996,
+          0.08845
+        ]
+      },
+      "title": "Lemma 13.18 step 13: Text, pp. 116–117",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 13.18 step 13#0"
+        }
+      }
+    },
+    {
+      "location": {
+        "page": 117,
+        "rect": [
+          0.12026,
+          0.0962,
+          0.76013,
+          0.09139
+        ]
+      },
+      "title": "Lemma 13.18 step 13: Text, pp. 116–117",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 13.18 step 13#1"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVExtension.Roads.Unum.commute",
+        "module": "YM.UVExtension.Wren.Sand",
+        "lines": [
+          59,
+          64
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVExtension.Roads.Unum.commute"
+          },
+          "snippet": {
+            "text": "lemma commute : Camp.Sign S :=by\n    constructor; intro m n b x hp hB hX; obtain ⟨K,hK⟩:= tier (A:=A) U m; obtain ⟨J,hJ⟩:= tier (A:=A) U (m+1); obtain ⟨B,hp⟩:=eventually_atTop.mp hp\n    let j:=K+J+B+m+1; let t (i:ℕ):= i+j; have hm(i): m< t i:= by unfold t j; omega\n    have hV:Tendsto t atTop atTop:= tendsto_atTop_mono (f:=id) (fun i=> by unfold t; simp) tendsto_id\n    obtain ⟨he,hF⟩:= spell R h F U hV m n hm (hK _ _ t hV (fun i=>(hm i).le) (by unfold t j; omega)) (hJ _ _ t hV hm (by unfold t j; omega)) hG S b x (fun k=>hp (t k) (by unfold t j; omega)) hB hX\n    exact ⟨fairtail he, fairtail hF⟩",
+            "line": 59,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVExtension/Wren/Sand.lean",
+            "fragment": "L59-L64"
+          },
+          "proof_context": {
+            "declaration": "YM.UVExtension.Roads.Unum.commute",
+            "lines": [
+              59,
+              64
+            ],
+            "conclusion": "`Camp.Sign`: along the full cutoff sequence, convergent inputs give convergent scalar corrections and activity outputs of the step maps."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVExtension.Wren.Verso.won",
+        "module": "YM.UVExtension.Wren.Singer",
+        "lines": [
+          41,
+          50
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVExtension.Wren.Verso.won"
+          },
+          "snippet": {
+            "text": "lemma won (hv: ∃ t, Tendsto (fun i=>tuning P a b (x i)) v (𝓝 t)): Notes v P (drawer G n).reg (fun i=> (x i).1) ∧ Transit v (fun i=> (x i).2) :=by\n   obtain ⟨w,hv⟩:=hv; rw [nhds_prod_eq] at hv; have he:=hv.fst; have hh:=hv.snd\n   have hE i : (tuningE P (x i))= a • ((tuning P a b (x i)).1):= by unfold tuning; simp only [smul_smul,mul_inv_cancel₀ h.ne',one_smul]\n   have hK i: tuningK P (x i)= b • ((tuning P a b (x i)).2):=by unfold tuning; simp only [smul_smul,mul_inv_cancel₀ hi.ne',one_smul]\n   refine ⟨⟨fun i j=>?_ ,lacks (T:=a • w.1) (M:=ChimeE G P n) _ ((invests P _ P.supportExponent P.exponent_pos.le).2) ?_ ?_⟩, lacks (T:=b • w.2) (M:=ChimeK G P n) (fun i=> sheetK P (x i)) ((bids P _ P.supportExponent P.exponent_pos.le).2) ?_ ?_⟩\n   · obtain ⟨t,v,H⟩:=p i; exact H.regular.smooth j\n   · intro n; obtain ⟨a,b,H⟩:=p n; exact ⟨a,(Above.floorE P (Tabernacle.floor P (x n))).2 H.boundE⟩\n   · exact (he.const_smul a).congr' (Eventually.of_forall (fun i=> (hE i).symm))\n   · intro n; obtain ⟨a,b,H⟩:=p n; exact ⟨b,(Above.floorK P (Tabernacle.floor P (x n))).2 H.boundK⟩\n   exact (hh.const_smul b).congr' (Eventually.of_forall (fun i=> (hK i).symm))",
+            "line": 41,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVExtension/Wren/Singer.lean",
+            "fragment": "L41-L50"
+          },
+          "proof_context": {
+            "declaration": "YM.UVExtension.Wren.Verso.won",
+            "lines": [
+              41,
+              50
+            ],
+            "conclusion": "Convergence of the tuned data gives the `Notes` and `Transit` convergence of the activities and kernels."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVExtension.Wren.Verso.visible",
+        "module": "YM.UVExtension.Wren.Singer",
+        "lines": [
+          36,
+          40
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVExtension.Wren.Verso.visible"
+          },
+          "snippet": {
+            "text": "lemma visible (he: Notes v P (drawer G n).reg (fun i=> (x i).1)) (hq: Transit v (fun i=> (x i).2)): ∃ t, Tendsto (fun i=>tuning P a b (x i)) v (𝓝 t) :=by\n    obtain ⟨c,hc⟩:=start (show Transit v (fun i=> sheetE P (x i)) from he.invests) ((invests P _ P.supportExponent P.exponent_pos.le).1)\n    obtain ⟨g,hg⟩:= start (show Transit v (fun i=> sheetK P (x i)) from hq) ((bids P _ P.supportExponent P.exponent_pos.le).1)\n    exact ⟨_, (hc.const_smul a⁻¹).prodMk_nhds (hg.const_smul b⁻¹)⟩\ninclude h hi p",
+            "line": 36,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVExtension/Wren/Singer.lean",
+            "fragment": "L36-L40"
+          },
+          "proof_context": {
+            "declaration": "YM.UVExtension.Wren.Verso.visible",
+            "lines": [
+              36,
+              40
+            ],
+            "conclusion": "Converging `Notes`/`Transit` data give a convergent tuning."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          116,
+          117
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

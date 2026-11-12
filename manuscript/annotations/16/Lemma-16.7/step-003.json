@@ -1,0 +1,84 @@
+{
+  "id": "Lemma 16.7 step 3",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Onto and kernel dimension one are shown by the same limiting argument. [L] takes the Maxwell side data (onto, kernel of dimension one) from the hypothesis `FreeDiv`, where [M] gets dimensions three and two from the explicit divergence matrix.",
+  "subject": [
+    {
+      "location": {
+        "page": 182,
+        "rect": [
+          0.11962,
+          0.17806,
+          0.76059,
+          0.05423
+        ]
+      },
+      "title": "Lemma 16.7 step 3: Text, p. 182",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.7 step 3"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.UVStress.differential_rank",
+        "module": "YM.Next.UV_STRESS.Dimension",
+        "lines": [
+          180,
+          195
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.UVStress.differential_rank"
+          },
+          "snippet": {
+            "text": "  have hs := stays_onto (E:=KernelSpace a.spin) (Y:=Vectors a.spin) Z T₀ hf.onto (fun x => tendsto_subtype_rng.mpr (tendsto_pi_nhds.mpr (he x)))\n  obtain ⟨k,hk,hz⟩ := (ha.and hs).exists\n  unfold Z at hz; rw [dif_pos hk] at hz\n  let Y := centerEquiv a H hk.1 hk.2.2; let Q := moves hk.2.1\n  have hp : 0<X.r k := X.positive k\n  have hr : Surjective (currentDiv W H.spin ho) := by\n    intro y\n    obtain ⟨i,hi⟩ := hz (Q.symm (X.r k • y))\n    change Q.symm (X.r k • currentDiv W H.spin ho (Y i))=Q.symm _ at hi\n    exact ⟨Y i,smul_right_injective _ hp.ne' (Q.symm.injective hi)⟩\n  refine ⟨hr,?_⟩\n  have hb := LinearMap.finrank_range_add_finrank_ker T₀\n  have hl := LinearMap.finrank_range_add_finrank_ker (currentDiv W H.spin ho)\n  rw [LinearMap.range_eq_top.mpr hf.onto,finrank_top,hf.one,Y.finrank_eq,Q.finrank_eq] at hb\n  rw [LinearMap.range_eq_top.mpr hr,finrank_top] at hl\n  omega",
+            "line": 180,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/UV_STRESS/Dimension.lean",
+            "fragment": "L180-L195"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.UVStress.differential_rank",
+            "lines": [
+              165,
+              195
+            ],
+            "conclusion": "`stays_onto` transfers surjectivity from `T₀` to `Z k`, hence `currentDiv W H.spin ho` is `Surjective`, and `finrank_range_add_finrank_ker` with `hf.one` gives `finrank (ker) = 1`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          182
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
+      }
+    }
+  }
+}

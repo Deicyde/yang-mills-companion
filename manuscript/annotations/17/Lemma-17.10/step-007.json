@@ -1,0 +1,240 @@
+{
+  "id": "Lemma 17.10 step 7",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] takes the partial boundary along a sequence of ordered heights tending to 0 given by `Gallery`, not along all continuous partial boundaries. Spectators are extended from compact support by capping.",
+  "subject": [
+    {
+      "location": {
+        "page": 201,
+        "rect": [
+          0.11962,
+          0.31573,
+          0.76259,
+          0.10772
+        ]
+      },
+      "title": "Lemma 17.10 step 7: Text, p. 201",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 17.10 step 7"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.Stress.core_jump",
+        "module": "YM.EveryPhase.Through",
+        "lines": [
+          78,
+          126
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.Stress.core_jump"
+          },
+          "snippet": {
+            "text": "  have hX : ∀ᶠ s in 𝓝[>] (0:ℝ), DifferentiableOn ℂ (X s) A := by\n    filter_upwards [hM] with s hs\n    change DifferentiableOn ℂ (fun z => harbors Z K V T g k.succ p.1.1 (u z) (morn (t z) k s)-\n      harbors Z K V T g k.castSucc p.1.1 (u z) (eve (t z) k s)) A\n    apply DifferentiableOn.sub\n    · refine harbors_hol A hA _ _ _ _ hd.differentiableOn ?_ (fun i hi => (show J (s,i) from (hs i hi).1).1) K V T g hg w.hZ\n      dsimp only [morn,town,t]\n      fun_prop\n    refine harbors_hol A hA _ _ _ _ hd.differentiableOn ?_ (fun i hi => (show J (s,i) from (hs i hi).1).2.1) K V T g hg w.hZ\n    dsimp only [eve,town,t]; fun_prop\n  have hY : DifferentiableOn ℂ D A := by\n    let y := fun z => laid p.1.1 (u z)\n    have ha : MapsTo y A (tube (n+1)) := fun i hi => laid_inside _ (hp hi)\n    have hv : Differentiable ℂ y := (laid_hol _).comp hd\n    have he (v : Fin (n+1) → S.Union) : DifferentiableOn ℂ (fun z => Z.emit v (y z)) A :=\n      (w.hZ.hol (n+1) v).differentiableOn.comp hv.differentiableOn ha\n    dsimp only [D,taskC,t]; refine (he _).add (DifferentiableOn.fun_sum (fun b _ => ?_))\n    have hc : Differentiable ℂ (fun z => K.w b (fun a => y z (k,a))) := fun z =>\n      ((K.momentum b k (y z)).differentiableAt).comp z (hv z)\n    exact hc.differentiableOn.mul (he _)\n  have hz : (0:ℂ)∈A := self_subset_thickening hr' E ⟨0,⟨le_rfl,zero_le_one⟩,by simp⟩\n  have h₁ : (1:ℂ)∈A := self_subset_thickening hr' E ⟨1,⟨zero_le_one,le_rfl⟩,by simp⟩\n  have Hb (x) (hx : x∈A) : boundedHere X (𝓝[>] 0) x := by\n    obtain ⟨l,hl,hL⟩ := Metric.mem_nhds_iff.mp (hA.mem_nhds hx)\n    exact ⟨l,hl,M,hM.mono fun i hi z h => (hi z (hL h)).2⟩\n  have hv : ∃ᶠ z in 𝓝[≠] (0:ℂ), z∈A ∧ Tendsto (fun a => X a z) (𝓝[>] 0) (𝓝 (D z)) := by\n    let i (s : ℝ) := (s:ℂ)*I\n    have he : Continuous i := by unfold i; fun_prop\n    have hB : Tendsto i (𝓝[>] 0) (𝓝[≠] 0) := tendsto_nhdsWithin_iff.mpr ⟨by\n      simpa [i] using (he.tendsto 0).mono_left (nhdsWithin_le_nhds (s:=Ioi 0)),\n      (show ∀ᶠ s : ℝ in 𝓝[>] 0, 0<s from self_mem_nhdsWithin).mono (fun s hs => by simp [i,hs.ne'])⟩\n    intro H\n    obtain ⟨s,HH,hS⟩ := ((hB.eventually H).and ((hB.mono_right nhdsWithin_le_nhds).eventually (hA.mem_nhds hz))).exists\n    apply HH; refine ⟨hS,?_⟩\n    let x := place p.1.1 (fun k => (u (i s) k).im)\n    have hu : pureU x=u (i s) := by\n      funext a; apply Complex.ext <;> simp [pureU,x,u,i,place]\n    have hz : Boundary.trace x=p.1.1 := by funext a; simp [Boundary.trace,x,place]\n    have hC : t (i s)=pureDock x := by simp [pureDock,t,hz,hu]\n    have hm : x∈ordered (n+1) := by\n      intro i j hj; simp only [x,readings_place]; exact hp hS hj -- i shadow\n    unfold X D; rw [hC,task_pure Z K R P v k B w.hF w.hZ x hm]\n    refine pure_clock K T v x k hm B R w h g hg hr ?_\n    exact show g =ᶠ[𝓝 (Boundary.trace x k)] _ from hz.symm ▸ hk\n  have hh' := propagate_limit hA (hc.thickening r).isPreconnected hX hY Hb hz hv h₁\n  have ht : t 1=(p.1,0) := by\n    have hp : u 1=p.1.2 := by funext i; simp [u,add_comm]\n    simp [t,hp]\n  unfold X D at hh'; rw [ht] at hh'; exact hh'",
+            "line": 78,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Through.lean",
+            "fragment": "L78-L126"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.Stress.core_jump",
+            "lines": [
+              41,
+              126
+            ],
+            "conclusion": "The jump is holomorphic in ς on the neighbourhood, agrees with `taskC` at small imaginary ς (`pure_clock`), and `propagate_limit` extends the limit to ς = 1."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.Stress.partial_jump",
+        "module": "YM.EveryPhase.Decree",
+        "lines": [
+          77,
+          84
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.Stress.partial_jump"
+          },
+          "snippet": {
+            "text": "theorem partial_jump (K : Killing) (T : S.Stress) (v : Fin n → S.Tag) (k : Fin (n+1)) (B : S.Tag)\n    (R : S.Rotation) (w : Prospect F Z U P H T) (h : StressLaws U T P.deriv R.lie) (M : Joint (n+1)) (hM : HasCompactSupport ⇑M)\n    (g : Probe Space3) (hg : HasCompactSupport ⇑g) (hr : ∀ r, ((g r).re:ℂ)=g r) (f : Probe ℝ) (hf : HasCompactSupport ⇑f)\n    (y : Heights (n+1)) (hy : y∈east (n+1)) (he : (D (n+2)).Modified) (hA : atlases Z (hole k.succ y (y k)) k)\n    (hk : ∀ x∈tsupport M, Jury g f (x k)) :\n    let A := Bid.ink (hole k v B)\n    gavel W D K T A k.succ M g f y (y k)-gavel W D K T A k.castSucc M g f y (y k)=\n      mandate W D K R P v k B M y * ∫ x, f x := by",
+            "line": 77,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Decree.lean",
+            "fragment": "L77-L84"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.Stress.partial_jump",
+            "lines": [
+              77,
+              164
+            ],
+            "conclusion": "For compactly supported spectators and cutoff `g`, the difference of the two sides at height `y k` equals `mandate … * ∫ f`, where `mandate` contains the `K`-derivative term."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.Stress.verdict",
+        "module": "YM.EveryPhase.Decree",
+        "lines": [
+          208,
+          213
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.Stress.verdict"
+          },
+          "snippet": {
+            "text": "theorem verdict (K : Killing) (T : S.Stress) (v : Fin n → S.Tag) (k : Fin (n+1)) (B : S.Tag)\n    (R : S.Rotation) (w : Prospect F Z U P H T) (h : StressLaws U T P.deriv R.lie) (M : Joint (n+1)) (hM : HasCompactSupport ⇑M)\n    (g : Probe Space3) (hg : HasCompactSupport ⇑g) (hr : ∀ r, ((g r).re:ℂ)=g r) (f : Probe ℝ) (hf : HasCompactSupport ⇑f)\n    (ha : Gallery W Z) (hk : ∀ x∈tsupport M, Jury g f (x k)) :\n    let A := Bid.ink (hole k v B)\n    stamp W K T A k.succ M g f-stamp W K T A k.castSucc M g f=receives W K R P v k B M * ∫ x, f x := by",
+            "line": 208,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Decree.lean",
+            "fragment": "L208-L213"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.Stress.verdict",
+            "lines": [
+              208,
+              242
+            ],
+            "conclusion": "Along heights `y i → 0` from `Gallery`, the partial-boundary jump equals `receives … * ∫ f`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.Stress.local_action",
+        "module": "YM.EveryPhase.Charge",
+        "lines": [
+          143,
+          147
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.Stress.local_action"
+          },
+          "snippet": {
+            "text": "theorem local_action (K : Killing) (T : S.Stress) (B : S.Tag) (R : S.Rotation) (w : Prospect F Z U P H T)\n    (h : StressLaws U T P.deriv R.lie) (ha : Gallery W Z) (hQ : FieldCore W R H Q)\n    (m : Test4) {X : Set E4} (hX : IsCompact X) (hm : tsupport m ⊆ X)\n    (f : Probe ℝ) (hf : Season f) (c : Probe Space3) (hc : Reservation X f c) :\n    adjAction (Q:=Q) (Charge Q K T f c) (Q.operators.field (S.pin B.1 B.2) m) = action Q K R B m := by",
+            "line": 143,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Charge.lean",
+            "fragment": "L143-L147"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.Stress.local_action",
+            "lines": [
+              143,
+              177
+            ],
+            "conclusion": "`adjAction (Charge Q K T f c) (field (pin B) m) = action Q K R B m`, with the non-real part of the cutoff handled by locality (`localPairs`)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.Almanac",
+        "module": "YM.EveryPhase.Pack",
+        "lines": [
+          129,
+          132
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.Almanac"
+          },
+          "snippet": {
+            "text": "  baseC : chambers F.α.atPoint=F.α.leaps\n  baseS : HEq (spreads F.α.atPoint) F.α.slabs\n  baseB : contours F.α.atPoint=F.A\n  baseR : actors F.α.atPoint=F.action",
+            "line": 129,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Pack.lean",
+            "fragment": "L129-L132"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.Almanac",
+            "lines": [
+              117,
+              132
+            ],
+            "conclusion": "The fields `baseC`, `baseS`, `baseB`, `baseR` identify the data and the Wightman theory at `F.α.atPoint` with the selected ones."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          201
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

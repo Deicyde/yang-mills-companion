@@ -1,0 +1,84 @@
+{
+  "id": "Lemma 17.5 step 15",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "The first null inclusion and the bounds of `Funds` enter as hypotheses of `lift_detect`; the dimension count is done by surjectivity of the finite-dimensional map.",
+  "subject": [
+    {
+      "location": {
+        "page": 196,
+        "rect": [
+          0.12026,
+          0.75311,
+          0.76194,
+          0.06872
+        ]
+      },
+      "title": "Lemma 17.5 step 15: Text, p. 196",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 17.5 step 15"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extraction.Retain.lift_detect",
+        "module": "YM.Phase.Picks",
+        "lines": [
+          128,
+          158
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extraction.Retain.lift_detect"
+          },
+          "snippet": {
+            "text": "theorem lift_detect (hi : a.Out) {v} (h : a.receives D v) (hD : D.Symmetric) (hp : D.respects S) : D.null d=S.null d := by\n  let U k := X.basis.constr ℂ fun i => Y.later k i\n  have he k : S.project d ∘ₗ U k= X.basis.constr ℂ fun i => S.project _ (Y.later k i) := X.basis.ext fun i => by simp [U]\n  let f (k : ℕ) : (standard C).Field d→L[ℂ] (Fin X.amount → ℂ) := LinearMap.toContinuousLinearMap\n    ((LinearMap.pi (probe' (D := D) Y k)).comp ((D.project d).comp (U k)))\n  let F : (standard C).Field d →L[ℂ] (Fin X.amount→ℂ) := LinearMap.toContinuousLinearMap (LinearMap.pi (plot (X := X)))\n  have hg k i j : f k (X.basis i) j=probe' Y k j (D.project d (Y.later k i)) := by simp [f,U]\n  have hh i : Tendsto (fun n => f n (X.basis i)) atTop (𝓝 (F (X.basis i))) := by\n    refine tendsto_pi_nhds.mpr fun j => ?_\n    simp_rw [hg, show F (X.basis i) j=_ from plott j (X.basis i)]\n    exact result Y Q P a H hi h hD j i\n  have hx : Injective F := fun q p h => X.full (show _ from by\n    change (fun i => (X.row i).tests _ _ q)=fun i => (X.row i).tests _ _ p; simp_rw [← plott]; exact h)\n  obtain ⟨k,hk,Hk⟩ := (((converge X.basis _ _ hh).eventually (ContinuousLinearMap.isOpen_injective\n      |>.mem_nhds hx)).and Q.span).exists\n  change Injective (f k) at hk\n  suffices hv : Surjective (S.project d ∘ₗ U k) by\n    refine le_antisymm (fun i H' => ?_) (hp d)\n    obtain ⟨w,hw⟩ := hv (S.project _ i)\n    have ht : U k w - i ∈ D.null d := hp _ ((Submodule.Quotient.mk_eq_zero _).1 (show S.project d _=0 from\n      by rw [map_sub]; exact sub_eq_zero.mpr hw))\n    have he := (D.null d).add_mem ht H'\n    rw [sub_add_cancel] at he\n    apply (Submodule.Quotient.mk_eq_zero _).mp\n    change S.project d _=_\n    rw [← hw]; suffices w=0 by rw [this,map_zero]\n    apply hk; rw [map_zero]\n    change (LinearMap.pi (probe' Y k)) (D.project d (U k w))=0\n    rw [show D.project d (U k w)=0 from (Submodule.Quotient.mk_eq_zero _).mpr he,map_zero]\n  apply LinearMap.range_eq_top.mp; rw [eq_top_iff,← Hk,Submodule.span_le]; rintro _ ⟨i,rfl⟩\n  exact ⟨X.basis i,by simp [U]⟩",
+            "line": 128,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Phase/Picks.lean",
+            "fragment": "L128-L158"
+          },
+          "proof_context": {
+            "declaration": "YM.Extraction.Retain.lift_detect",
+            "lines": [
+              128,
+              158
+            ],
+            "conclusion": "The lift maps converge (`converge`) to the injective free row map `F`, so eventually `f k` is injective, hence `S.project d ∘ U k` is surjective and `D.null d = S.null d` using `hp : D.respects S`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          196
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
+      }
+    }
+  }
+}

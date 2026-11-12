@@ -1,0 +1,83 @@
+{
+  "id": "Lemma 16.4 step 3",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 176,
+        "rect": [
+          0.11962,
+          0.41599,
+          0.76012,
+          0.03719
+        ]
+      },
+      "title": "Lemma 16.4 step 3: Text, p. 176",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.4 step 3"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Rank.Price.shrink_min",
+        "module": "YM.Next.RANK.Matrices",
+        "lines": [
+          109,
+          120
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Rank.Price.shrink_min"
+          },
+          "snippet": {
+            "text": "lemma shrink_min (h : C.Makes) (hk : k≤N) (p : ℕ) : (shrink C k N p)⁻¹ ≤ 2*C.path.levels.clock.monitor k := by\n  let A := C.path.levels.clock; let B := A.hatBeta k; let t:= A.threshold k\n  have he : 0<t := (C.path.levels.budget k).threshold_pos\n  have hx : 0<B := lt_trans zero_lt_one (C.path.levels.fits.delayed k)\n  have hp : 0 < C.path.β N p k := Overlay.beta_positive h.wilson hk\n  have hc : C.path.β N p k ≤ 2*B := (h.wilson.represents N p k hk).band.2\n  calc\n    _ = t * Real.sqrt (C.path.β N p k) := by unfold shrink; simp only [inv_div,div_inv_eq_mul];rfl\n    _ ≤ t * (2 * Real.sqrt B) := by\n      apply mul_le_mul_of_nonneg_left _ he.le\n      nlinarith [Real.sqrt_nonneg B,Real.sq_sqrt hp.le,Real.sq_sqrt hx.le]\n    _ = _ := by",
+            "line": 109,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Matrices.lean",
+            "fragment": "L109-L120"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Rank.Price.shrink_min",
+            "lines": [
+              109,
+              122
+            ],
+            "conclusion": "`shrink_min` proves `(shrink C k N p)⁻¹ = threshold k * sqrt(β N p k) ≤ 2 * monitor k`, from `threshold = monitor/sqrt(hatBeta)` and the band bound `β ≤ 2*hatBeta`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          176
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled on the search; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
+      }
+    }
+  }
+}

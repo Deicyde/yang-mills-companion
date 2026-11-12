@@ -1,0 +1,200 @@
+{
+  "id": "Lemma 16.10 step 9",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 185,
+        "rect": [
+          0.12026,
+          0.69958,
+          0.76194,
+          0.13977
+        ]
+      },
+      "title": "Lemma 16.10 step 9: Text, p. 185",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.10 step 9"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.PDE.sure",
+        "module": "YM.Ward.PDE",
+        "lines": [
+          121,
+          141
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.PDE.sure"
+          },
+          "snippet": {
+            "text": "theorem sure {F} (hc : ∀ j : I, C (F j))\n    (h : ∀ j n t, 0<t → tower (law l r F j) n (t,0)=0)\n    (hh : ∀ j t, 0<t → F j (t,0)=0) (n : ℕ) (t : ℝ) (ht : 0<t) (j : I) :\n    tower (F j) n (t,0)=0 := by\n  induction n using Nat.strong_induction_on generalizing t j with\n  | h n ih =>\n    cases n with\n    | zero => exact hh j t ht\n    | succ n =>\n      let x := (t,(0:ℝ))\n      have he : tower (law l r F j) n x=tower (F (l j)) n x+tower (F (r j)) n x+tower (tangent (F j)) n x := by\n        unfold law; rw [addJet ((hc _).add (hc _)) (hc j).tangentC n (show x ∈ side from ht)]; dsimp only; rw [addJet (hc _) (hc _) n (show x∈side from ht)]\n      have hv : tangent (tower (F j) n) x=t • tower (F j) (n+1) x := by simp [tangent,x,tower_step]\n      have hy := h j n t ht\n      change tower (law l r F j) n x=0 at hy\n      rw [he, ih n n.lt_succ_self _ ht, ih n n.lt_succ_self _ ht,zero_add,zero_add] at hy\n      cases n with\n      | zero => exact (smul_eq_zero_iff_right ht.ne').mp (hv.symm.trans hy)\n      | succ n =>\n        rw [flow_step (hc j) n (show x∈side from ht), lean (hc j) n (fun t h => ih n (by omega) _ h _) t ht,smul_zero,sub_zero,hv] at hy\n        exact (smul_eq_zero_iff_right ht.ne').mp hy",
+            "line": 121,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Ward/PDE.lean",
+            "fragment": "L121-L141"
+          },
+          "proof_context": {
+            "declaration": "YM.PDE.sure",
+            "lines": [
+              121,
+              141
+            ],
+            "conclusion": "`sure` shows by strong induction on the order, for all labels `j` at once, that `tower (F j) n (t, 0) = 0` for every `n`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Analysis.blossoms",
+        "module": "YM.Ward.Ket",
+        "lines": [
+          76,
+          96
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Analysis.blossoms"
+          },
+          "snippet": {
+            "text": "theorem blossoms (h : ContDiff ℝ ∞ f) (A a : ℝ → ℂ) (ha : AnalyticAt ℝ a 0)\n    (hv : ∀ x t, inner ℂ (f x) (f t)=A (t-x)) (ht : ∀ n, iteratedDeriv n A 0=iteratedDeriv n a 0)\n    (x : ℝ) : AnalyticAt ℝ f x := by\n  obtain ⟨C,hc,ρ,r,Hb⟩ := center a 0 ha\n  apply builds f h (√C) (ρ/2) (by positivity) (by positivity) _ x\n  intro m x\n  unfold Power at *\n  apply (sq_le_sq₀ (norm_nonneg _) (by positivity)).1\n  have he : ‖iteratedDeriv m f x‖^2 ≤ C*(ρ^(m+m))⁻¹*((m+m).factorial:ℝ) := by\n    have he := congr_arg norm (bud f h x x A hv m m)\n    simp [inner_self_eq_norm_sq_to_K,ht] at he\n    rw [he]; exact Hb _\n  apply he.trans\n  have Hh : (m+m).factorial ≤ 2^(m+m)*m.factorial^2 := by\n    calc _ = (m+m).choose m * m.factorial * m.factorial := by rw [← Nat.choose_mul_factorial_mul_factorial (show m≤m+m by omega),Nat.add_sub_cancel_left]\n         _ ≤ _ := by rw [pow_two,← mul_assoc];gcongr; exact Nat.choose_le_two_pow ..\n  calc _ ≤ C * (ρ^(m+m))⁻¹ * (2^(m+m)*(m.factorial:ℝ)^2) := by gcongr; exact_mod_cast Hh\n       _ = _ := by\n        rw [mul_pow, mul_pow (√C),Real.sq_sqrt hc.le]\n        simp only [pow_add,div_pow, inv_div] -- simplified?\n        field_simp",
+            "line": 76,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Ward/Ket.lean",
+            "fragment": "L76-L96"
+          },
+          "proof_context": {
+            "declaration": "YM.Analysis.blossoms",
+            "lines": [
+              76,
+              96
+            ],
+            "conclusion": "`blossoms` bounds `‖iteratedDeriv m f x‖^2` by the Gram kernel's Cauchy estimate `C ρ^{-2m} (2m)! ≤ C (2/ρ)^{2m} (m!)^2` and concludes `f` analytic."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Analysis.builds",
+        "module": "YM.Ward.Rate",
+        "lines": [
+          93,
+          102
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Analysis.builds"
+          },
+          "snippet": {
+            "text": "theorem builds (h : ContDiff ℝ ∞ f) (C ρ : ℝ) (hC : 0<C) (hr : 0<ρ)\n    (hh : ∀ n x, ‖iteratedDeriv n f x‖ ≤ Power C ρ n) (x : ℝ) : AnalyticAt ℝ f x := by\n  let a := x-ρ/4\n  have hx : x∈ Ioo a (a+ρ/2) := by constructor <;> dsimp only [a] <;> linarith\n  let u : FormalMultilinearSeries ℝ ℝ E := fun n => Tensor.coeff f n a\n  have he := groups f h C ρ hC hr hh a x hx\n  have hu : AnalyticAt ℝ (fun y => u.sum (y-a)) x :=\n    ((FormalMultilinearSeries.analyticOnNhd (p := u) _ he.1).comp (f := fun y => y-a)\n      (analyticAt_id.sub analyticAt_const))\n  exact hu.congr ( (show ∀ᶠ y in 𝓝 x, y∈ Ioo a (a+ρ/2) from Ioo_mem_nhds hx.1 hx.2) |>.mono (fun i hi => (groups f h C ρ hC hr hh a i hi).2))",
+            "line": 93,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Ward/Rate.lean",
+            "fragment": "L93-L102"
+          },
+          "proof_context": {
+            "declaration": "YM.Analysis.builds",
+            "lines": [
+              93,
+              102
+            ],
+            "conclusion": "`builds` turns a bound `‖iteratedDeriv n f x‖ ≤ C ρ^{-n} n!` into analyticity by Taylor's remainder, uniformly in `x`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Ward.channel",
+        "module": "YM.Ward.Walk",
+        "lines": [
+          15,
+          28
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Ward.channel"
+          },
+          "snippet": {
+            "text": "lemma channel (P : W.Derivatives S) (Y : Collinear W T) (C : commutes W T) (x : Points n) (k b) (K : Ortho.Skew) (p : Fin n → S.Tag)\n    (s : ℝ) (hv : Earliest (cast x k b s) a k ∨ Latest (cast x k b s) a k) : AnalyticAt ℝ (angular W T p K ∘ cast x k b) s := by\n  let V := Classical.choice (realization H a)\n  have ha (i : Fin n → S.Tag) : ContDiffAt ℝ ω (disc i ∘ cast x k b) s := AnalyticAt.contDiffAt\n    (hv.elim (first_adv V H W T P Y C _ _ _ _ _) (last_adv V H W T P Y C _ _ _ _ _))\n  apply ContDiffAt.analyticAt\n  unfold Function.comp angular\n  apply ContDiffAt.sum\n  intro i hi; apply (ha _).add (ContDiffAt.sum _)\n  intro u hu\n  have he : ContDiffAt ℝ ω (cast x k b) s := contDiffAt_const.add (contDiffAt_id.smul contDiffAt_const)\n  exact ((factor i u K).contDiff.contDiffAt.comp s he).smul (ha _)\n\nomit H in",
+            "line": 15,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Ward/Walk.lean",
+            "fragment": "L15-L28"
+          },
+          "proof_context": {
+            "declaration": "YM.Ward.channel",
+            "lines": [
+              15,
+              28
+            ],
+            "conclusion": "`channel` shows `angular W T p K ∘ cast x k b` is analytic at points where the moving insertion is `Earliest` or `Latest`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          185
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

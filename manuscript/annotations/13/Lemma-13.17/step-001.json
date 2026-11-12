@@ -1,0 +1,201 @@
+{
+  "id": "Lemma 13.17 step 1",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "narrowMatch",
+  "note": "[L] has the closure, coordinate-vector and evaluation argument with constant (1-a/p)⁻¹c, which is 2c at a = p/2, and uniqueness as `sole`. But `recovery` requires 1 ≤ a, so with a = R/2 it covers only R ≥ 2, while [M] assumes R > 1.",
+  "subject": [
+    {
+      "location": {
+        "page": 114,
+        "rect": [
+          0.12026,
+          0.4006,
+          0.76014,
+          0.13977
+        ]
+      },
+      "title": "Lemma 13.17 step 1: Text, p. 114",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 13.17 step 1"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.Ray.Rebar.recovery",
+        "module": "YM.FullVolume.Ray.Anchor",
+        "lines": [
+          23,
+          57
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.Ray.Rebar.recovery"
+          },
+          "snippet": {
+            "text": "lemma recovery [CompleteSpace E] (h:Rebar p f c) {a:ℝ} (ha:1≤a) (hp:a<p) : Scout a f ((1-a/p)⁻¹*c):=by\n  have hr:=ha.trans_lt hp; have h':=zero_lt_one.trans hr; have hh:= zero_lt_one.trans_le ha\n  obtain ⟨L,hL,ht⟩:= linear_snapshot h hr\n  let X:=spans p; let Y:=(smear p).range\n  have hK : Y≤X:=Y.le_topologicalClosure\n  let q:Y→ₗ[ℝ] X:= Submodule.inclusion hK; have hu z: ‖q z‖≤1*‖z‖:= by rw [one_mul]; rfl\n  let V:= q.mkContinuous 1 hu; have hV:DenseRange V:=by\n    intro x; apply Metric.mem_closure_iff.2; intro ε he\n    obtain ⟨k,hk,hp⟩:= Metric.mem_closure_iff.1 (show x.val∈closure (Y:Set Wire) from x.property) ε he\n    exact ⟨_,⟨⟨k,hk⟩,rfl⟩,show dist x (V ⟨k,hk⟩) < ε from hp⟩\n  let P:= ContinuousLinearMap.extend L V\n  have hv : ‖P‖≤c := by\n    refine (opNorm_extend_le L (N:=1) hV (fun i=> by rw [NNReal.coe_one,one_mul]; exact le_rfl)).trans ?_\n    simpa\n  let d(i:ℕ):X:=⟨single i,speck hr i⟩; have hk i: ‖d i‖=1:= points i\n  let r:=a/p; have hy:0<r:= div_pos hh h'; have hr':r<1:= (div_lt_one h').mpr hp\n  let b i := r^i • P (d i)\n  have hc i: ‖b i‖ ≤ r^i*c := by\n    unfold b; rw [norm_smul, norm_pow,Real.norm_of_nonneg hy.le]; apply mul_le_mul_of_nonneg_left _ (pow_nonneg hy.le _)\n    refine (P.le_opNorm _).trans ?_; rwa [hk,mul_one]\n  have hs := (hasSum_geometric_of_norm_lt_one (ξ:=r) (by rw [Real.norm_of_nonneg hy.le]; exact hr')).mul_right c\n  refine ⟨ha,b,budget_mono (budget_loosen (f:=_) ⟨(fun i=>mul_nonneg (pow_nonneg hy.le i) h.nonneg),hs.summable,hs.tsum_eq.le⟩ le_rfl) (fun _=>norm_nonneg _) hc,?_⟩\n  intro x hx; let i:sun:= ⟨x,hx⟩; let h:=Finsupp.single i (1:ℝ); let y: Y:= (smear p).rangeRestrict h\n  have hm : IsClosed (X:Set Wire) := Y.isClosed_topologicalClosure\n  letI : CompleteSpace X:= hm.isComplete.completeSpace_coe\n  let v(j:ℕ):= (x/p)^j • d j; have hz : Summable v:= by\n    apply Summable.of_norm; dsimp only [v]; simp_rw [norm_smul,norm_pow,hk,mul_one]; exact summable_geometric_of_lt_one (norm_nonneg _) (radius hr i)\n  have he : P (V y)=f x:=by\n    unfold P; rw [ContinuousLinearMap.extend_eq L hV ((show Isometry V from fun _ _=> rfl).isUniformInducing),ht]; simp [trace,h,i] -- L y issue\n  have hh : ∑' i,v i=V y:=by\n    apply Subtype.ext\n    calc _ = _ := ((X.subtypeL.hasSum hz.hasSum).tsum_eq).symm\n         _ = _ := Eq.symm (show (V y).val=wire p i from start _ i)\n  rw [← he,← hh]; apply (P.hasSum hz.hasSum).congr_fun\n  intro i; unfold b v; simp_rw [map_smul, smul_smul,← mul_pow]; rw [show x/a*r=x/p from by unfold r; field_simp]",
+            "line": 23,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Ray/Anchor.lean",
+            "fragment": "L23-L57"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.Ray.Rebar.recovery",
+            "lines": [
+              23,
+              57
+            ],
+            "conclusion": "`Rebar p f c` (stencil bound) gives `Scout a f ((1-a/p)⁻¹*c)` for 1 ≤ a < p, by extending the linear map `linear_snapshot` to the closure `spans p`, showing the coordinate vectors lie in it (`speck`), and evaluating on one point."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.Ray.Rebar.linear_snapshot",
+        "module": "YM.FullVolume.Ray.Anchor",
+        "lines": [
+          9,
+          22
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.Ray.Rebar.linear_snapshot"
+          },
+          "snippet": {
+            "text": "lemma linear_snapshot (h:Rebar p f c) (hp:1<p) : ∃ L : (smear p).range →L[ℝ] E, ‖L‖≤ c ∧∀ w:Rung,L ((smear p).rangeRestrict w)= trace w f:=by\n  let P:=smear p; let F:Rung →ₗ[ℝ] E:= Finsupp.linearCombination ℝ (fun i:sun=> f i.val)\n  have hB (w:Rung):‖F w‖≤ c*‖P w‖ := by\n    rw [mul_comm]; apply h.beam w; intro i\n    have hh:(P w) i=trace w (fun x=>(x/p)^i):=by\n      unfold P smear trace; simp_rw [Finsupp.linearCombination_apply,Finsupp.sum,lp.coeFn_sum,Finset.sum_apply,lp.coeFn_smul,Pi.smul_apply,fil hp]\n    rw [← hh]; exact lp.norm_apply_le_norm (by simp) _ _\n  let g:= P.rangeRestrict\n  obtain ⟨b,hb⟩:= LinearMap.exists_rightInverse_of_surjective g (LinearMap.range_eq_top.mpr P.surjective_rangeRestrict)\n  have hh x: P (b x) = x.val:= congr_arg Subtype.val (DFunLike.congr_fun hb x)\n  let L:= F.comp b\n  have hk x: ‖L x‖≤ c*‖x‖ := (hB _).trans_eq (congr_arg (fun x'=>c*‖x'‖) (hh x))\n  refine ⟨L.mkContinuous c hk, LinearMap.mkContinuous_norm_le _ h.nonneg hk,?_⟩\n  intro w; change F (b (g w))=F w; have he:= hB (b (g w)-w); rw [map_sub,map_sub,hh] at he; rw [show (g w).val=P w from rfl, sub_self,norm_zero,mul_zero] at he; exact sub_eq_zero.mp (norm_le_zero_iff.mp he)",
+            "line": 9,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Ray/Anchor.lean",
+            "fragment": "L9-L22"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.Ray.Rebar.linear_snapshot",
+            "lines": [
+              9,
+              22
+            ],
+            "conclusion": "The stencil inequality `Rebar p f c` defines a linear map `L` on the span of the stencil sequences with `‖L‖ ≤ c` and `L w = trace w f`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.Ray.Rebar.speck",
+        "module": "YM.FullVolume.Ray.Rebar",
+        "lines": [
+          49,
+          72
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.Ray.Rebar.speck"
+          },
+          "snippet": {
+            "text": "lemma speck (n:ℕ) : single n ∈ spans p:=by\n  induction n using Nat.strong_induction_on with\n  | h n ih =>\n    suffices h: single n∈ closure (spans p:Set Wire) from by rw [IsClosed.closure_eq (show IsClosed (spans p : Set Wire) from (smear p).range.isClosed_topologicalClosure)] at h; exact h\n    apply Metric.mem_closure_iff.mpr\n    intro ε he\n    let t:= min (ε/2) 1 / 2; have ht:0<t:= half_pos (lt_min (half_pos he) zero_lt_one)\n    have h₁:t≤1:= (half_le_self ((lt_min (half_pos he) zero_lt_one).le)).trans (min_le_right ..)\n    have h₂:t<ε:= ((half_le_self ((lt_min (half_pos he) zero_lt_one).le)).trans (min_le_left ..)).trans_lt (half_lt_self he)\n    let s:sun:= ⟨t,⟨by linarith,h₁⟩⟩; let r:= s.val/p; have hp':= zero_lt_one.trans hp; have hr:0<r:= div_pos ht hp'; have h:=radius hp s\n    let w : Wire:= (r^n)⁻¹ • (wire p s-∑ i∈Finset.range n,r^i • single i)\n    refine ⟨w,(spans p).smul_mem _ ((spans p).sub_mem (holds hp s) ((spans p).sum_mem fun i hi=> (spans p).smul_mem _ (ih _ (Finset.mem_range.mp hi)))),?_⟩\n    rw [dist_eq_norm]; refine lt_of_le_of_lt (b:=t) (lp.norm_le_of_forall_le ht.le fun j=>?_) h₂\n    have hp₁: (∑ i∈ Finset.range n,r^i • single i:Wire) j=(if j<n then r^j else 0):=by\n      rw [lp.coeFn_sum,Finset.sum_apply]; simp only [lp.coeFn_smul, Pi.smul_apply,smul_eq_mul,single,lp.single_apply,Pi.single_apply]; simp\n    unfold w; rw [lp.coeFn_sub,Pi.sub_apply, lp.coeFn_smul, Pi.smul_apply,lp.coeFn_sub,Pi.sub_apply,hp₁]; rw [single,lp.single_apply,fil hp]\n    rcases lt_trichotomy j n with hj|hj|hj\n    · rw [if_pos hj,Pi.single_eq_of_ne (by omega),show s.val/p=r from rfl]; simp [ht.le]\n    · subst n; rw [if_neg (by omega), Pi.single_eq_same,show s.val/p=r from rfl]; simp [hr.ne',ht.le]\n    rw [if_neg (by omega), Pi.single_eq_of_ne (by omega), show s.val/p=r from rfl]; obtain ⟨d,hD⟩:= Nat.exists_eq_add_of_le (show n+1≤j from hj); subst j\n    rw [sub_zero,smul_eq_mul,pow_add,pow_succ]\n    have hx := pow_le_one₀ hr.le ((le_abs_self _).trans (Real.norm_eq_abs _ ▸ h.le)) (n:=d)\n    rw [Real.norm_eq_abs, show 0-(r^n)⁻¹*(r^n*r*r^d)= -(r*r^d) from by field_simp; ring,abs_neg,abs_of_nonneg (by positivity : 0≤ r*r^d)]\n    exact (mul_le_of_le_one_right hr.le hx).trans (show r≤ t from div_le_self ht.le hp.le)",
+            "line": 49,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Ray/Rebar.lean",
+            "fragment": "L49-L72"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.Ray.Rebar.speck",
+            "lines": [
+              49,
+              72
+            ],
+            "conclusion": "Every coordinate vector `single n` lies in the closure `spans p` of the stencil span, by the finite-difference approximation with mesh t → 0."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.Amp.sole",
+        "module": "YM.FullVolume.Amp.Drill",
+        "lines": [
+          28,
+          31
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.Amp.sole"
+          },
+          "snippet": {
+            "text": "lemma sole {P':ℕ→Y}(h:Tip P B)(hv:Tip P' B):P=P':=by\n  have ht: Tip (P-P') (0:ℝ→Y):=by\n    intro k; have hh:= (h k).sub (hv k); refine hh.congr_left fun x=>?_; simp [Pi.sub_apply, shell, smul_sub,sum_sub_distrib]\n  funext j; exact sub_eq_zero.mp (pace ht (n:=j+1) (isBigO_zero ..) j.lt_succ_self)",
+            "line": 28,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Amp/Drill.lean",
+            "fragment": "L28-L31"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.Amp.sole",
+            "lines": [
+              28,
+              31
+            ],
+            "conclusion": "Two expansions `Tip P B`, `Tip P' B` of the same function have equal coefficients, so the series is unique."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          114
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

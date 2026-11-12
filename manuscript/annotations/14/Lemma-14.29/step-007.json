@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 14.29 step 7",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "narrowMatch",
+  "note": "The separation for large T and the injectivity of the flipped list are present. [M] also sets g_j = 0 outside the tails so that the supremum bound holds for all N, p, T, j, but `Works.controls` states measurability and the bound only eventually (`f.late`).",
+  "subject": [
+    {
+      "location": {
+        "page": 156,
+        "rect": [
+          0.12026,
+          0.54062,
+          0.76293,
+          0.10556
+        ]
+      },
+      "title": "Lemma 14.29 step 7: Text, p. 156",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.29 step 7"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Push.GridApprox.covers",
+        "module": "YM.Push.GRID_APPROXIMATION.Cover",
+        "lines": [
+          84,
+          95
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Push.GridApprox.covers"
+          },
+          "snippet": {
+            "text": "lemma covers (H : C.Makes) (hx : Injective x) : (cover x Z D hz hd).Works h v x f := by\n  have hh : Injective (flipCover x) := (Signed.act_injective _).comp hx\n  constructor\n  · intro q t i\n    have ha := placed_free Z hz q\n    have hb := placed_free D hd q\n    unfold Extraction.Order.late at *\n    filter_upwards [ha,hb] with k hk hk'\n    filter_upwards [hk,hk'] with j hj hj'\n    dsimp only [cover,flashPlot]\n    exact ⟨Complex.continuous_re.measurable.comp (((hj _).1.subC (hj' _).1).meas), fun U =>\n      (Complex.abs_re_le_norm _).trans ((norm_sub_le ..).trans (add_le_add ((hj _).2 U).2 ((hj' _).2 U).2))⟩",
+            "line": 84,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/GRID_APPROXIMATION/Cover.lean",
+            "fragment": "L84-L95"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.GridApprox.covers",
+            "lines": [
+              84,
+              110
+            ],
+            "conclusion": "`covers` shows measurability and the bound `|plot| <= reserve` only along `f.late` (eventually in the ordered limits), with injectivity of `x` and of `flipCover x` as hypotheses."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Push.GridApprox.real_pair",
+        "module": "YM.Push.GRID_APPROXIMATION.Separation",
+        "lines": [
+          23,
+          40
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Push.GridApprox.real_pair"
+          },
+          "snippet": {
+            "text": "lemma real_pair {x : ι → Cover} {y : κ → Cover} (hx : Injective x) (hy : Injective y)\n    (i j : ℕ) (hij : i<j) : ∀ᶠ t : ℕ in atTop, Injective (Sum.elim (offset x t i) (offset y t j)) := by\n  have he (a : ι) (b : κ) : ∀ᶠ t : ℕ in atTop, offset x t i a ≠ offset y t j b := by\n    let n : ℤ := x a timeAxis - y b timeAxis\n    filter_upwards [eventually_gt_atTop n.natAbs] with t ht e\n    have hu : 0 ≤ (t:ℤ) := by omega\n    have hv : (i:ℤ)+1 ≤ (j:ℤ) := by omega\n    have hm : n < (t:ℤ) := by omega\n    have hh := congr_fun e timeAxis\n    change x a timeAxis + (t:ℤ)*i=y b timeAxis+(t:ℤ)*j at hh\n    unfold n at hm\n    linarith only [hm,hh,mul_le_mul_of_nonneg_left hv hu]\n  filter_upwards [eventually_all.mpr fun a => eventually_all.mpr (he a)] with t hh\n  rintro (a|a) (b|b) h\n  · exact congr_arg Sum.inl (hx (add_right_cancel h))\n  · exact (hh a b h).elim\n  · exact (hh b a h.symm).elim\n  exact congr_arg Sum.inr (hy (add_right_cancel h))",
+            "line": 23,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/GRID_APPROXIMATION/Separation.lean",
+            "fragment": "L23-L40"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.GridApprox.real_pair",
+            "lines": [
+              23,
+              40
+            ],
+            "conclusion": "`real_pair` shows that for `i < j` and `t` large the joint list `offset x t i` with `offset y t j` is injective, because the time coordinates differ by `t*(j-i)` plus a fixed difference."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          156
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

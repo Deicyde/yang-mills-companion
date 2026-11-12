@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 14.33 step 1",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The argument is the same: vertices tend to x, the interpolant is a convex combination, and continuity of the limit finishes. [L] states the conclusion as locally uniform convergence `Meets` on compacts of `NoHit`, derived from `Cluster` by a compactness argument, which is equivalent to the moving-point formulation.",
+  "subject": [
+    {
+      "location": {
+        "page": 160,
+        "rect": [
+          0.12026,
+          0.66573,
+          0.76294,
+          0.10556
+        ]
+      },
+      "title": "Lemma 14.33 step 1: Text, p. 160",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.33 step 1"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.held",
+        "module": "YM.FullVolume.Panes",
+        "lines": [
+          64,
+          77
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.held"
+          },
+          "snippet": {
+            "text": "theorem held {F:ℕ→Positions n→ℂ}{f:Points n→ℂ}(h:Cluster C e p n F f):\n    Meets (NoHit C.S p n) (fun i=> interpolated C.S (e i) (F (e i))) f:=by\n  refine ⟨h.1,fun K hx hK ε hε=>?_⟩\n  suffices H:∀ j:Vertex n, ∀ᶠ i in atTop, ∀ x∈K, dist (F (e i) (vertex x (C.S.a (e i)) j)) (f x)≤ε/2 from\n    (eventually_all.mpr H).mono (fun _ hi x hX=> (coinprice _ _ _ _ _ _ (fun i=>hi i _ hX)).trans_lt (half_lt_self hε))\n  intro j; by_contra! ht\n  choose s hs x hX hH using frequently_atTop.mp ht\n  obtain ⟨y,hy,w,hw,hW⟩:= hK.tendsto_subseq hX\n  let Y i:=x (w i); let g:=s ∘ w\n  have hg:Tendsto g atTop atTop:=tendsto_atTop_mono (fun i=>hs (w i)) hw.tendsto_atTop\n  let q i:= vertex (Y i) (C.S.a (e (g i))) j\n  have hh:Tendsto (fun i=> tag (C.S.a (e (g i))) (q i)) atTop (𝓝 y):= hW.congr_dist (squeeze_zero (fun _=>dist_nonneg) (fun i=>(dist_comm ..).trans_le (surrounds _ _ (C.S.a_pos _))) (by simpa using! (((C.S.shrinks.comp e.cofinal).comp hg).const_mul (2*(4*(n:ℝ)):ℝ))))\n  have hp:= (h.2 y (hx hy) q g hg hh).dist (((h.1.continuousAt ((nohitOpen ..).mem_nhds (hx hy))).tendsto).comp hW); rw [dist_self] at hp\n  obtain ⟨i,hi⟩:= (hp.eventually (ge_mem_nhds (half_pos hε))).exists; exact (hH (w i)).not_ge hi",
+            "line": 64,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Panes.lean",
+            "fragment": "L64-L77"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.held",
+            "lines": [
+              64,
+              77
+            ],
+            "conclusion": "From `Cluster` (convergence along moving lattice points tending to x in `NoHit`) the interpolants `interpolated` converge locally uniformly (`Meets`) to f, with vertices shown to tend to x by `surrounds`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.coinprice",
+        "module": "YM.FullVolume.Panes",
+        "lines": [
+          55,
+          62
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.coinprice"
+          },
+          "snippet": {
+            "text": "lemma coinprice (f : Points n→ℂ) (N:ℕ) (S:Schedule) (F : Positions n→ℂ)(x:Points n)(z:ℝ)(h:∀ i:Vertex n, dist (F (vertex x (S.a N) i)) (f x)≤z) :\n    dist (interpolated S N F x) (f x)≤z:=by\n  rw [dist_eq_norm]\n  let v:=vertex x (S.a N); let p:= mass x (S.a N)\n  have hp:= fun i:Vertex n=> mass_pos x (S.a_pos N) i\n  rw [show interpolated S N F x-f x=∑ i,p i • (F (v i)-f x) by simp only [smul_sub, Finset.sum_sub_distrib, ← Finset.sum_smul,p,sums,one_smul];rfl]\n  refine (norm_sum_le ..).trans ((Finset.sum_le_sum (g:=fun i=>p i*z) (fun i _=>?_)).trans_eq (by rw [← Finset.sum_mul, sums,one_mul]))\n  rw [norm_smul,Real.norm_of_nonneg (hp i), ← dist_eq_norm]; exact mul_le_mul_of_nonneg_left (h i) (hp i)",
+            "line": 55,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Panes.lean",
+            "fragment": "L55-L62"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.coinprice",
+            "lines": [
+              55,
+              62
+            ],
+            "conclusion": "The interpolant at x is a convex combination (`mass`, `sums`) of vertex values, so it is within z of f x if all vertex values are."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          160
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

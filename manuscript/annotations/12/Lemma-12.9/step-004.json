@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 12.9 step 4",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] states the ghost and vector traces separately and combines them (ghost minus half vector) only after taking the second t-derivative, so the t-dependent combination -4 casimir (k_2^2+t^2)/(kappa^2 |k+te_1|^2) is never written as one function.",
+  "subject": [
+    {
+      "location": {
+        "page": 85,
+        "rect": [
+          0.12026,
+          0.23482,
+          0.75948,
+          0.03629
+        ]
+      },
+      "title": "Lemma 12.9 step 4: Display, p. 85",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 12.9 step 4"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.waveOrb",
+        "module": "YM.Next.STATIONARY.OneLoop.Bubbles",
+        "lines": [
+          89,
+          93
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.waveOrb"
+          },
+          "snippet": {
+            "text": "lemma waveOrb : (fun t=> trace (haloC S (hurr (G:=G)) i t))=ᶠ[𝓝 0] fun t => (pebb k')⁻¹ * (laxa k' t)⁻¹ * (perL k')^2 * (-(G.casimir:ℂ)) := by\n  have ht := (laxa_green k').continuousAt.eventually_ne (show laxa k' 0≠0 by simpa only [laxa,zero_smul,add_zero] using laxa_nz hk)\n  filter_upwards [ht] with t ht\n  dsimp only [haloC,shone, stroll,panL,panT,Pi.zero_apply]; rw [hb,hx,hv,smul_zero,add_zero,smul_neg, ← neg_smul]\n  rw [troopTrace _ _ _ _ (laxa_nz hk) ht, braidSap,braidSap,loiterShift,shuntTrace,Matrix.mul_smul,Matrix.smul_mul, trace_smul,trace_smul,tintTrace b hS]; simp only [smul_eq_mul,laxa]; ring",
+            "line": 89,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/OneLoop/Bubbles.lean",
+            "fragment": "L89-L93"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.waveOrb",
+            "lines": [
+              89,
+              93
+            ],
+            "conclusion": "Ghost bubble trace `(pebb k)⁻¹ (laxa k t)⁻¹ (perL k)^2 (-casimir)` with `laxa k t = pebb (k + t e_1)`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.waveVec",
+        "module": "YM.Next.STATIONARY.OneLoop.Bubbles",
+        "lines": [
+          94,
+          98
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.waveVec"
+          },
+          "snippet": {
+            "text": "lemma waveVec : (fun t=> trace (haloC S (herr (G:=G)) i t))=ᶠ[𝓝 0] fun t => (pebb k')⁻¹ * (laxa k' t)⁻¹ * ((4*(perL k')^2-8*(t:ℂ)^2) * (-(G.casimir:ℂ))) := by\n  filter_upwards [(laxa_green k').continuousAt.eventually_ne (show laxa k' 0≠0 by simpa only [laxa,zero_smul,add_zero] using laxa_nz hk)] with t ht\n  dsimp only [haloC, shone, stroll,panL,panT,Pi.zero_apply]\n  rw [hb,hx,hv,smul_zero,add_zero,smul_neg,← neg_smul, braidVec,braidVec,loiterShift,troopTrace _ _ _ _ (laxa_nz hk) ht,flailTrace,plaidSurge,tintTrace _ hS]\n  rfl",
+            "line": 94,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/OneLoop/Bubbles.lean",
+            "fragment": "L94-L98"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.waveVec",
+            "lines": [
+              94,
+              98
+            ],
+            "conclusion": "Vector bubble trace `(pebb k)⁻¹ (laxa k t)⁻¹ ((4 (perL k)^2 - 8t^2)(-casimir))`; with `perL k ^2 = -4 k_2^2` the ghost minus half the vector is `-4 casimir (k_2^2+t^2)/(κ^2 |k+te_1|^2)`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.haloRate",
+        "module": "YM.Next.STATIONARY.OneLoop.Bubbles",
+        "lines": [
+          127,
+          141
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.haloRate"
+          },
+          "snippet": {
+            "text": "lemma haloRate (b : G.ColorIndex) (h : G.Simple) (i : ι) (hp : 0<flay (S.lens i)) (hS : S.boost i=step 0) (hv : S.mark i=(coord 1,b)) : flareY 2 (fun t=> (haloC S (hurr (G:=G)) i t).trace) -(1/2:ℂ)*flareY 2 (fun t=> (haloC S (herr (G:=G)) i t).trace)=2* (poleVec G (S.lens i):ℂ) := by\n  let k := S.lens i; let r := flay k; let x : ℂ := pebb k; let D := laxa k; let C := -(G.casimir:ℂ); let L := (perL k)^2\n  let U (t : ℝ) := x⁻¹ * L * C\n  let M (t : ℝ) := x⁻¹ * ((4*L-8*(t:ℂ)^2)*C)\n  have hU : (fun t=> (haloC S hurr i t).trace)=ᶠ[𝓝 0] U/D := (waveOrb b k hp i h hS hv rfl).trans (Eventually.of_forall fun t=>by unfold U D; rw [Pi.div_apply]; unfold x L C; ring)\n  have hV : (fun t=> (haloC S herr i t).trace)=ᶠ[𝓝 0] M /D := (waveVec b k hp i h hS hv rfl).trans (Eventually.of_forall fun t=> by unfold M D; rw [Pi.div_apply]; unfold x L C; ring)\n  have hz : x≠0 := laxa_nz hp; have ht : D 0=x := by unfold D laxa x; simp\n  have hh : D=fun t:ℝ => x+(2*(k 0:ℂ))*(t:ℂ)+ (1:ℂ)*(t:ℂ)^2 := by ext1 a; unfold D; rw [axa]; unfold x; ring\n  have hm : M=fun t:ℝ => x⁻¹*(4*L*C)+0*(t:ℂ)+(x⁻¹*(-8)*C)*(t:ℂ)^2 := by ext1 t; unfold M; ring\n  have he : AnalyticAt ℝ M 0 := analyticAt_const.mul ((analyticAt_const.sub (AnalyticAt.mul analyticAt_const ((Complex.ofRealCLM.analyticAt 0).pow 2))).mul analyticAt_const)\n  have hx : D 0≠0 := by rw [ht]; exact hz\n  rw [flare_tape hU, flare_tape hV, divCatch D U (laxa_green k) analyticAt_const hx, divCatch D M (laxa_green k) he hx]; rw [show flareY 1 D= _ from hh ▸ (binomialV ..).2,show flareY 2 D=_ from hh ▸ (binomialV ..).1]\n  rw [show flareY 2 M=_ from hm ▸ (binomialV ..).1,show flareY 1 M=_ from hm ▸ (binomialV ..).2,show flareY 2 U=0 from flare_oneZ _ (by decide), show flareY 1 U=0 from flare_oneZ _ (by decide),ht]\n  have he : perL k ^ 2=-4*(k 1:ℂ)^2 := by unfold perL tachy; linear_combination 4*(k 1:ℂ)^2 * Complex.I_mul_I\n  unfold U M C L x; rw [he,pebbFl]; unfold k poleVec; push_cast; field_simp [hp.ne']; ring",
+            "line": 127,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/OneLoop/Bubbles.lean",
+            "fragment": "L127-L141"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.haloRate",
+            "lines": [
+              127,
+              141
+            ],
+            "conclusion": "`haloRate` takes the t^2 coefficient of ghost minus half vector, with `perL k ^2 = -4 k_2^2`, and gets `2 * poleVec`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          85
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

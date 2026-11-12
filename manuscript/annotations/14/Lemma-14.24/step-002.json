@@ -1,0 +1,102 @@
+{
+  "id": "Lemma 14.24 step 2",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "Lean carries the loss over the growing number of steps by the abstract factor `spouse` (`(α+1)^count * bill(-3/4) s`) with `Tally.growth`, not by [M]'s explicit bound with `C_j`, `q_der` and `M^{1/8}`.",
+  "subject": [
+    {
+      "location": {
+        "page": 148,
+        "rect": [
+          0.12026,
+          0.84507,
+          0.75948,
+          0.05477
+        ]
+      },
+      "title": "Lemma 14.24 step 2: Text, pp. 148–149",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.24 step 2#0"
+        }
+      }
+    },
+    {
+      "location": {
+        "page": 149,
+        "rect": [
+          0.12026,
+          0.0962,
+          0.75948,
+          0.03547
+        ]
+      },
+      "title": "Lemma 14.24 step 2: Text, pp. 148–149",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.24 step 2#1"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Rank.Perch.covers",
+        "module": "YM.Next.RANK.Stepped",
+        "lines": [
+          154,
+          173
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Rank.Perch.covers"
+          },
+          "snippet": {
+            "text": "  have hs (i : ℕ) (p₀ : i≤ℓ) (H : h ≤ i) : settled Y P b X m hN q T p₀ := by\n    induction p₀ using Nat.decreasingInduction with\n    | self => exact hh\n    | of_succ j hj IH =>\n      have he := U j H hj (IH (H.trans (Nat.le_succ j)))\n      unfold settled; dsimp only\n      rw [Y.flow_step _ j (hj.trans_le ((before A b k).trans hN))]\n      let a₀ := spouse s q (ℓ-(j+1))\n      apply follows he\n      · have hp : ℓ-j=ℓ-(j+1)+1 := by omega\n        have ha : 0<a₀ := spouse_pos ..\n        change q.α*a₀+Perch.bill (1/2) s*a₀^2 ≤ spouse s q (ℓ-j)\n        have hb : Perch.bill (1/2) s*a₀ ≤ 1 := (mul_le_mul_of_nonneg_left (hv (j+1) (H.trans (Nat.le_succ j))) (show 0 ≤ Perch.bill (1/2) s from (Real.exp_pos _).le)).trans (by unfold Perch.bill; rw [← Real.exp_add]; apply Real.exp_le_one_iff.mpr; linarith only)\n        have hc : spouse s q (ℓ-j)=(q.α+1)*a₀ := by unfold a₀ spouse eager; rw [hp,pow_succ]; ring\n        rw [hc]; linarith only [mul_le_mul_of_nonneg_left hb ha.le]\n      apply (hq.force _ (hL _ (H.trans (Nat.le_succ j)) hj) _ (hL _ H (Nat.le_trans (Nat.le_succ j) hj))).trans\n      apply mul_le_mul_of_nonneg_right _ (Real.exp_pos _).le\n      calc\n        _ = spouse s q 0 := by rw [spouse,pow_zero,one_mul]\n        _ ≤ _ := partner q (Nat.zero_le _)",
+            "line": 154,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Stepped.lean",
+            "fragment": "L154-L173"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Rank.Perch.covers",
+            "lines": [
+              140,
+              176
+            ],
+            "conclusion": "`covers` iterates the one-step estimate by `Nat.decreasingInduction` over the `ℓ - h` levels from the middle level to the width level, tracking `spouse s q (ℓ-j)`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          148,
+          149
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
+      }
+    }
+  }
+}

@@ -1,0 +1,144 @@
+{
+  "id": "Lemma 16.10 step 25",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 186,
+        "rect": [
+          0.12026,
+          0.47689,
+          0.75948,
+          0.03499
+        ]
+      },
+      "title": "Lemma 16.10 step 25: Text, p. 186",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.10 step 25",
+          "quads": [
+            [
+              0.67536,
+              0.47689,
+              0.87974,
+              0.47689,
+              0.87974,
+              0.49437,
+              0.67536,
+              0.49437
+            ],
+            [
+              0.12026,
+              0.49438,
+              0.62586,
+              0.49438,
+              0.62586,
+              0.51188,
+              0.12026,
+              0.51188
+            ]
+          ]
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Spin.onto",
+        "module": "YM.Spin.Close",
+        "lines": [
+          42,
+          46
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Spin.onto"
+          },
+          "snippet": {
+            "text": "lemma onto [CompleteSpace R] (l r : I → I) (D : I → ℕ → R) (d : I → R) (h : ∀ i, Tendsto (D i) atTop (𝓝 (d i)))\n    (he : ∀ᶠ i in atTop, Relations (fun p => D p i) l r) (P : ℕ → R) (p : R) (hx : Tendsto P atTop (𝓝 p))\n    (hd : p*p=p) (hp : ∀ i, d i*p=0) (S : Subring R) (hs : IsClosed (S : Set R)) (hS : ∀ᶠ i in atTop, P i∈S)\n    (H : ∀ᶠ n in atTop, ∀ i, Commute (P n) (D i n)) : ∃ Q : ℕ → R, Tendsto Q atTop (𝓝 p) ∧\n    ∀ᶠ n in atTop, Q n∈S ∧ Q n*Q n=Q n ∧ ∀ i, Commute (Q n) (D i n) ∧ D i n*Q n=0 := by",
+            "line": 42,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Spin/Close.lean",
+            "fragment": "L42-L46"
+          },
+          "proof_context": {
+            "declaration": "YM.Spin.onto",
+            "lines": [
+              42,
+              70
+            ],
+            "conclusion": "`onto` gives idempotents `Q n → p` (`Q n * Q n = Q n`) in the closed subring `S`, each commuting with the relative generators `D i n`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Spin.stable",
+        "module": "YM.Spin.Isolates",
+        "lines": [
+          72,
+          98
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Spin.stable"
+          },
+          "snippet": {
+            "text": "lemma stable {z : R} (hz : defect z=0) (Z : ℕ → R) (ht : Tendsto Z atTop (𝓝 z)) : ∃ P : ℕ → R,\n    (∀ᶠ n in atTop, Tendsto (fun i : ℕ => φ^[i] (Z n)) atTop (𝓝 (P n)) ∧ defect (P n)=0) ∧ Tendsto P atTop (𝓝 z) := by\n  let A := ‖z‖+1\n  obtain ⟨C,hC⟩ := exists_gt (‖(1:R)‖+‖(2:R)‖*A)\n  have hc : 0 < C := by\n    have hv : 0<A := by dsimp only [A]; positivity\n    exact lt_of_le_of_lt (by positivity) hC\n  let E n := ‖defect (Z n)‖\n  have he : Tendsto E atTop (𝓝 0) := by\n    have hv := (ht.pow 2 |>.sub ht).norm\n    rw [show z^2-z=0 from hz,norm_zero] at hv; exact hv\n  have hh : Tendsto (fun i => C*(E i*2)) atTop (𝓝 0) := by simpa using ((he.mul_const (2:ℝ)).const_mul C)\n  have hy : ∀ᶠ i in atTop, ‖Z i‖+C*(E i*2) ≤ A := by\n    apply ((ht.norm.add hh).eventually (gt_mem_nhds (?_ : ‖z‖+0 < A))).mono (fun i hi => show _ from le_of_lt hi)\n    dsimp only [A]; linarith\n  have hp := (he.const_mul ‖(4:R)‖ |>.add_const ‖(3:R)‖ |>.mul he)\n  simp only [mul_zero,zero_add] at hp\n  let e (p : ℕ) (y : R) := Tendsto (fun i : ℕ => φ^[i] (Z p)) atTop (𝓝 y) ∧ defect y=0 ∧ ‖y-Z p‖ ≤ C*(E p*2)\n  have hE : ∀ᶠ i in atTop, ∃ y, e i y := (hy.and (hp.eventually (gt_mem_nhds\n    (by norm_num : (0:ℝ)<1/2)))).mono (fun i hi => rectify A C (E i) hC _ hi.1 le_rfl (le_of_lt hi.2) hc)\n  classical\n  let P (n : ℕ) := if h : ∃ y, e n y then h.choose else z\n  replace hE : ∀ᶠ i in atTop,e i (P i) := hE.mono fun i hi => by dsimp only [P]; rw [dif_pos hi];exact hi.choose_spec\n  refine ⟨P,hE.mono (fun i hi => ⟨hi.1,hi.2.1⟩),?_⟩\n  have hv : Tendsto (fun i => P i-Z i) atTop (𝓝 0) := tendsto_zero_iff_norm_tendsto_zero.mpr (squeeze_zero'\n    (Eventually.of_forall fun _ => norm_nonneg _) (hE.mono fun i hi => hi.2.2) hh)\n  simpa using hv.add ht",
+            "line": 72,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Spin/Isolates.lean",
+            "fragment": "L72-L98"
+          },
+          "proof_context": {
+            "declaration": "YM.Spin.stable",
+            "lines": [
+              72,
+              98
+            ],
+            "conclusion": "`stable` supplies the projections `P_k → P` as limits of the `φ`-iterates."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          186
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

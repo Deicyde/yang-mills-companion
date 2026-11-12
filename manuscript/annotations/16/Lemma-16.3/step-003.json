@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 16.3 step 3",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "[L] gets the quarter-turn commutation in one step from the reflection-product statement (`low_motion`), not through commutation with R^Max(R_y R_x) at two points.",
+  "subject": [
+    {
+      "location": {
+        "page": 174,
+        "rect": [
+          0.12026,
+          0.80591,
+          0.76194,
+          0.05424
+        ]
+      },
+      "title": "Lemma 16.3 step 3: Text, p. 174",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.3 step 3"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Maxwell.Free.erasing",
+        "module": "YM.Next.MAXWELL.AwayTeam",
+        "lines": [
+          62,
+          73
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Maxwell.Free.erasing"
+          },
+          "snippet": {
+            "text": "  have hr (p : (Model F).Field 4) (u v) (i j : Axis) (he : i≠j) :\n      let k := Corners.quarter i j\n      (gear F).act d k.ortho (T u v (R p)) = T u v ((gear F).act d k.ortho (R p)) := by\n    intro k; apply address_inj F d\n    let x := basis i + basis j\n    have hX : 0 < ‖x‖ := norm_pos_iff.mpr (show x≠0 from fun hh => by\n      have hy := congr_arg (fun u : E4 => u i) hh; simp [x,he] at hy)\n    have hp : address F d (R p) ∈ shellSector G 4 := by rw [address_rise]; exact address_in ..\n    have h := low_motion h hd (hw u v) (hs u v) i hX (v:=x) rfl hp\n    have hb : house (-‖x‖ • basis i)*house x=k.ortho := Corners.quarter_house i j he _ hX\n    dsimp only at h; rw [hb,show P u v (address F d (R p)) = _ from brand_eval ..,\n      ← paints_gear, ← paints_gear,show P u v (address F d ((gear F).act d k.ortho (R p)))=_ from brand_eval ..] at h; exact h",
+            "line": 62,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/MAXWELL/AwayTeam.lean",
+            "fragment": "L62-L73"
+          },
+          "proof_context": {
+            "declaration": "YM.Maxwell.Free.erasing",
+            "lines": [
+              48,
+              118
+            ],
+            "conclusion": "`hr` applies `low_motion` with `x = basis i + basis j` to get that `T u v` commutes with the quarter-turn action `act d k.ortho` on `R p`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Maxwell.Free.erasing",
+        "module": "YM.Next.MAXWELL.AwayTeam",
+        "lines": [
+          55,
+          61
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Maxwell.Free.erasing"
+          },
+          "snippet": {
+            "text": "  have hs u v : ∀ p∈ shellSector G 4, P u v p∈shellSector G 4 := by\n    intro p hp\n    let x := wrap F hp\n    obtain ⟨y,hy⟩ := ht u v x\n    have heq : address F d (R x)=p := by rw [show address F d (R x)= _ from address_rise ..,shed F hp]\n    rw [← heq,show P u v (address F d (R x)) = _ from brand_eval ..,← hy]\n    rw [show address F d (R y)=_ from address_rise ..]; exact address_in F _ _",
+            "line": 55,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/MAXWELL/AwayTeam.lean",
+            "fragment": "L55-L61"
+          },
+          "proof_context": {
+            "declaration": "YM.Maxwell.Free.erasing",
+            "lines": [
+              48,
+              118
+            ],
+            "conclusion": "`hs` shows the branded `T u v` preserves the weight-four shell sector, so `low_motion` applies."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          174
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; a sample check changed it from closeMatch; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
+      }
+    }
+  }
+}

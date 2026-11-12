@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 11.6 step 19",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "The inequality `(1+|z|)^r ≤ C_r prod (1+|z_a|)^r` and the sum with exponent two are in `absorbs` and `decay_cost`, and the resulting kernel row bound is `Donate` for `r ≤ j-2`. The Fourier contour shift, the common smaller strip for finitely many words and the pole-free principal term are not stated at these lines.",
+  "subject": [
+    {
+      "location": {
+        "page": 56,
+        "rect": [
+          0.12026,
+          0.50809,
+          0.75948,
+          0.09139
+        ]
+      },
+      "title": "Lemma 11.6 step 19: Text, p. 56",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 11.6 step 19"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Free.absorbs",
+        "module": "YM.Next.FREE_KERNELS.AliasWeights",
+        "lines": [
+          61,
+          66
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Free.absorbs"
+          },
+          "snippet": {
+            "text": "lemma absorbs (l : Site L) (t r : ℕ) : grade l ^ t * decay (r+t) l ≤ decay r l := by\n  rw [Nat.add_comm,decay_add, ← mul_assoc]\n  refine (mul_le_mul_of_nonneg_right ?_ (decay_pos _ r).le).trans (le_of_eq (one_mul _))\n  unfold decay\n  rw [← div_eq_mul_inv, div_le_one (pow_pos (mix_pos l) _)]\n  exact pow_le_pow_left₀ (grade_pos l).le (grade_le_mix l) t",
+            "line": 61,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/AliasWeights.lean",
+            "fragment": "L61-L66"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Free.absorbs",
+            "lines": [
+              61,
+              66
+            ],
+            "conclusion": "`grade l ^ t * decay (r+t) l ≤ decay r l`, from `grade l ≤ mix l = prod (1 + |z_a|)`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Free.decay_cost",
+        "module": "YM.Next.FREE_KERNELS.AliasWeights",
+        "lines": [
+          74,
+          91
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Free.decay_cost"
+          },
+          "snippet": {
+            "text": "lemma decay_cost : ∃ C : ℝ, 0<C ∧ ∀ L : Side, (∑ i : Site L, decay 2 i) ≤ C := by\n  let C := 1+∑' i, priceAxis i\n  have hc (i : ℤ) : 0 ≤ priceAxis i := by unfold priceAxis; positivity\n  have hC : 0<C := lt_of_lt_of_le one_pos (by unfold C; simp only [le_add_iff_nonneg_right]; exact tsum_nonneg hc)\n  refine ⟨C^4, pow_pos hC _, fun L => ?_⟩\n  have he (l : Site L) : decay 2 l=∏ i, priceAxis (lift l i) := by\n    simp [decay,mix,up,priceAxis,Finset.prod_pow]\n  have hf (L : Side) : Function.Injective (fun i : ZMod L.val => i.valMinAbs) := fun i j h => by\n    simpa using congr_arg (fun z : ℤ => (z : ZMod L.val)) h\n  have hb (L : Side) : (∑ i : ZMod L.val, priceAxis i.valMinAbs) ≤ C := calc\n    _ = ∑ x ∈ univ.image ZMod.valMinAbs, priceAxis x := (Finset.sum_image ((hf L).injOn)).symm\n    _ ≤ _ := (priceAxis_sum.sum_le_tsum _ fun i _ => hc i).trans (by unfold C; linarith)\n  simp_rw [he]\n  unfold lift Site Four\n  rw [← Fintype.prod_sum (κ:= fun _ : Axis => Per L) (fun _ x => priceAxis (ZMod.valMinAbs x))]\n  calc\n    _ ≤ ∏ _ : Axis, C := Finset.prod_le_prod (fun i _ => Finset.sum_nonneg fun j _ => hc _) (fun _ _ => hb L)\n    _ = _ := by simp [Axis]",
+            "line": 74,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/AliasWeights.lean",
+            "fragment": "L74-L91"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Free.decay_cost",
+            "lines": [
+              74,
+              91
+            ],
+            "conclusion": "`∑ l : Site L, decay 2 l ≤ C` uniformly in `L`: the remaining exponent two is summable."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Craft.Donate",
+        "module": "YM.Bid.Craft",
+        "lines": [
+          21,
+          22
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Craft.Donate"
+          },
+          "snippet": {
+            "text": "def Donate (T : Towers L) (α C : ℝ) (K : ℕ) := ∀ l : List Axis,l.length ≤ K →\n    (advanceC L T.A0 l).strip α (C/(L.val:ℝ)^(1+l.length)) ∧ (advanceC L T.T l).strip α (C/(L.val:ℝ)^(2+l.length))",
+            "line": 21,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Bid/Craft.lean",
+            "fragment": "L21-L22"
+          },
+          "proof_context": {
+            "declaration": "YM.Craft.Donate",
+            "lines": [
+              21,
+              22
+            ],
+            "conclusion": "`strip α (C / L^(1+length))` for difference words of length at most `K = j-2`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          56
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

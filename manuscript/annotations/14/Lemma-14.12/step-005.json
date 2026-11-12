@@ -1,0 +1,84 @@
+{
+  "id": "Lemma 14.12 step 5",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The Lean bound is for an abstract ratio `r` with `δ` and `μ` free and for the hot part of a mode, so `β̂_{i+1}^{|I|} ≤ exp(64 log β̂ cover/B)` is the case `r = β̂_{i+1}`, `δ = 64 μ log r / B` and `μ = 1`; the display itself is not stated.",
+  "subject": [
+    {
+      "location": {
+        "page": 135,
+        "rect": [
+          0.12026,
+          0.59824,
+          0.75948,
+          0.04357
+        ]
+      },
+      "title": "Lemma 14.12 step 5: Display, p. 135",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.12 step 5"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extra.Multi.toll_reset",
+        "module": "YM.Extra.MULTISOURCE_BOUNDS.Root",
+        "lines": [
+          268,
+          281
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extra.Multi.toll_reset"
+          },
+          "snippet": {
+            "text": "  have hR : (∏ i∈s, R i) ≤ Real.exp (δ*coverNumber B X) := by\n    have he : (∏ i∈s, R i) = r^(s∩hot).card * (r⁻¹)^(s\\hot).card := by\n      dsimp only [R]; rw [prod_ite]; congr 1 <;> (rw [prod_const]; congr 2)\n      ext; simp\n    rw [he,inv_pow,← div_eq_mul_inv]\n    rcases hs with hs | hs\n    · exact (div_le_one_of_le₀ (pow_le_pow_right₀ hr hs) (by positivity)).trans (Real.one_le_exp (by positivity))\n    apply (div_le_self (by positivity) (one_le_pow₀ hr)).trans\n    have hp : (B:ℝ)*(s∩hot).card ≤ 64*(coverNumber B X : ℝ)*μ := by exact_mod_cast hs\n    refine (pow_le_pow_left₀ (zero_le_one.trans hr) hg _).trans ?_\n    rw [← Real.exp_nat_mul]; apply Real.exp_monotone\n    have hμ : (0:ℝ)<μ := by exact_mod_cast hμ\n    rw [← mul_div_assoc]; apply (div_le_iff₀ (by positivity)).mpr\n    nlinarith only [mul_le_mul_of_nonneg_left hp hδ]",
+            "line": 268,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/MULTISOURCE_BOUNDS/Root.lean",
+            "fragment": "L268-L281"
+          },
+          "proof_context": {
+            "declaration": "YM.Extra.Multi.toll_reset",
+            "lines": [
+              260,
+              290
+            ],
+            "conclusion": "`∏ R i ≤ exp (δ*coverNumber B X)`, where `r^|s∩hot|` is bounded using `B*|s∩hot| ≤ 64*cover*μ` and `r ≤ exp (δB/(64μ))`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          135
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
+      }
+    }
+  }
+}

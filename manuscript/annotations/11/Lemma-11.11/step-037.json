@@ -1,0 +1,200 @@
+{
+  "id": "Lemma 11.11 step 37",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 68,
+        "rect": [
+          0.11962,
+          0.58265,
+          0.76258,
+          0.07134
+        ]
+      },
+      "title": "Lemma 11.11 step 37: Text, p. 68",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 11.11 step 37"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Fluctuations.bare",
+        "module": "YM.Next.FLUCTUATIONS.Bare",
+        "lines": [
+          101,
+          108
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Fluctuations.bare"
+          },
+          "snippet": {
+            "text": "  have hz (i : Cell c) (hi : i∈s) :\n      -l ≤ T.workL (till x) U Q V (temp x) i + T.workD (till x) V (temp x) i := by\n    obtain ⟨h1,h2⟩ := mem_sdiff.mp hi\n    obtain ⟨z,hV,hU⟩ := hInc i h1 h2\n    apply lower_cost T U V Q i (till x) A C t (temp x) (w x) g (by positivity) hM\n    intro j\n    obtain ⟨ha,h⟩ := hco c f S T hs hT k _ _ hB U V (w x) hg hw (i,j) z hU hV\n    exact ⟨ha,h _ (A*t) (by positivity) hM⟩",
+            "line": 101,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FLUCTUATIONS/Bare.lean",
+            "fragment": "L101-L108"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Fluctuations.bare",
+            "lines": [
+              64,
+              120
+            ],
+            "conclusion": "On each unhit anchor, `talll` per anchor is at least `-loss`, with `loss = 2(A t)(C h e) + (A t)(C (A t) e)` and `e = widen (till x) h tau`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Fluctuations.lower_cost",
+        "module": "YM.Next.FLUCTUATIONS.Bare",
+        "lines": [
+          25,
+          30
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Fluctuations.lower_cost"
+          },
+          "snippet": {
+            "text": "private lemma lower_cost (T : Tube G S) (U : Config G f) (V Q : Config G c) (x : Cell c) (R : ℕ)\n    (A C t s h e : ℝ) (hA : 0≤A*t)\n    (hm : ∀ i, ‖T.vision R s V i‖ ≤ A*t)\n    (he : ∀ i : Bool, ‖lGap T R U Q V (x,i)‖ ≤ C*h*e ∧\n      ‖dGap T R V (T.vision R s V) (x,i)‖ ≤ C*(A*t)*e) :\n    -(loss A C t h e) ≤ T.workL R U Q V s x + T.workD R V s x := by",
+            "line": 25,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FLUCTUATIONS/Bare.lean",
+            "fragment": "L25-L30"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Fluctuations.lower_cost",
+            "lines": [
+              25,
+              40
+            ],
+            "conclusion": "`-(loss A C t h e) <= workL + workD` from the gap bounds and `norm vision <= A*t`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Fluctuations.delayed",
+        "module": "YM.Next.FLUCTUATIONS.Bare",
+        "lines": [
+          42,
+          46
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Fluctuations.delayed"
+          },
+          "snippet": {
+            "text": "private lemma delayed (L : Side) (A C D τ N ε : ℝ) (hD : 0<D) (ht : 0<τ) (hε : 0<ε) :\n    let t (x : ℝ) := fiery G x L\n    let h := stitchCost G L D\n    let e x := widen (till x) (h x) τ\n    ∀ᶠ x : ℝ in atTop, N * (radiusB x:ℝ)^4 * loss A C (t x) (h x) (e x) ≤ ε*(t x)^2 := by",
+            "line": 42,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FLUCTUATIONS/Bare.lean",
+            "fragment": "L42-L46"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Fluctuations.delayed",
+            "lines": [
+              42,
+              59
+            ],
+            "conclusion": "For large `x`, `N * B^4 * loss <= eps * t^2`, as `B^n * widen -> 0` and `B^n * h * widen / t -> 0`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Fluctuations.local_gaps",
+        "module": "YM.Next.FLUCTUATIONS.Locality",
+        "lines": [
+          151,
+          155
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Fluctuations.local_gaps"
+          },
+          "snippet": {
+            "text": "lemma local_gaps (T : Tube G S) (hb : S.patch.Branches S.kernel G) (R D : ℕ)\n    (i : Twin c) (k : S.Choices) (U U' : Config G f) (V V' : Config G c)\n    (hu : AgreeNear S.ratio.parent i.1.1 D U U') (hv : AgreeNear id i.1.1 D V V')\n    (hR : 3*R+4+predReach S.patch ≤ D) :\n    lGap T R U (S.prediction U k) V i = lGap T R U' (S.prediction U' k) V' i ∧",
+            "line": 151,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FLUCTUATIONS/Locality.lean",
+            "fragment": "L151-L155"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Fluctuations.local_gaps",
+            "lines": [
+              151,
+              174
+            ],
+            "conclusion": "The gaps at an anchor depend only on the fields within `3R+4+predReach`, so extending by zero outside the neighbourhood does not change them."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          68
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

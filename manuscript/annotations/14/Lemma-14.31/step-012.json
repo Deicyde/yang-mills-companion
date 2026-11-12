@@ -1,0 +1,83 @@
+{
+  "id": "Lemma 14.31 step 12",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 159,
+        "rect": [
+          0.12026,
+          0.42044,
+          0.75948,
+          0.03333
+        ]
+      },
+      "title": "Lemma 14.31 step 12: Text, p. 159",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.31 step 12"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.Sever.touch",
+        "module": "YM.FullVolume.Fields.Flight",
+        "lines": [
+          10,
+          17
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.Sever.touch"
+          },
+          "snippet": {
+            "text": "lemma touch (f:ℂ→ℂ)(B S:ℝ)(hf:2<S)(h:DifferentiableOn ℂ f (Metric.ball 0 S))(hp:∀ z∈Metric.ball 0 S, ‖f z‖≤ B): ‖f 1-f 0‖ ≤ B/(S/2):=by\n    let t:=S/2; let M:= Metric.closedBall (0:ℂ) 1; have ht:0 < t:=by unfold t; linarith\n    have hu(z:ℂ)(hz:z∈M):Metric.closedBall z t ⊆ Metric.ball 0 S:=by\n       intro x hx; have h₁:= Metric.mem_closedBall.mp hz;have h₂:= Metric.mem_closedBall.mp hx; unfold M t at *; rw [Metric.mem_ball]; linarith only [hf,h₁,h₂,dist_triangle x z 0]\n    have hv M' (hM:M'∈ M) := hu M' hM (Metric.mem_closedBall_self ht.le)\n    have hD(z:ℂ)(hz:z∈ M): ‖deriv f z‖≤ B/t:=by\n       refine Complex.norm_deriv_le_of_forall_mem_sphere_norm_le ht ⟨h.mono ((Metric.ball_subset_closedBall).trans (hu _ hz)),h.continuousOn.mono (Metric.closure_ball_subset_closedBall.trans (hu _ hz))⟩ (fun z' hz'=> hp z' (hu z hz (Metric.sphere_subset_closedBall hz')))\n    simpa using! (Convex.norm_image_sub_le_of_norm_deriv_le (𝕜:=ℂ) (fun z (hz:z∈ M)=> (h z (hv _ hz)).differentiableAt (Metric.isOpen_ball.mem_nhds (hv _ hz))) hD (convex_closedBall 0 1) (x:=(0:ℂ)) (y:=1) (Metric.mem_closedBall_self zero_le_one) (by simp [M,Metric.mem_closedBall]))",
+            "line": 10,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Fields/Flight.lean",
+            "fragment": "L10-L17"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.Sever.touch",
+            "lines": [
+              10,
+              17
+            ],
+            "conclusion": "`touch` shows that for `f` differentiable on the ball of radius `S > 2` with `‖f‖ <= B` there, `‖f 1 - f 0‖ <= B/(S/2)`, by the Cauchy derivative estimate on circles of radius `S/2` about points of the segment [0,1]."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          159
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
+      }
+    }
+  }
+}

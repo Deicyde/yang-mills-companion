@@ -1,0 +1,122 @@
+{
+  "id": "Lemma 10.2 step 6",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 41,
+        "rect": [
+          0.11962,
+          0.34084,
+          0.76012,
+          0.05463
+        ]
+      },
+      "title": "Lemma 10.2 step 6: Text, p. 41",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 10.2 step 6"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.G03.glow_sums",
+        "module": "YM.Work.G03",
+        "lines": [
+          115,
+          126
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.G03.glow_sums"
+          },
+          "snippet": {
+            "text": "theorem glow_sums {A : Snap G d} (h : ∀ b, glow A b = 0) (x : Cover) {i j : Axis} (hi : i < j) :\n    ∑ k ∈ Finset.range (d-1), net (expand d A k) i j (castPos x) 1 = 0 := by\n  let b : Slot := ⟨route 0 x 1,⟨(i,j),hi⟩⟩\n  have he : b.offset = x := route_end ..\n  have hh := h b\n  unfold glow at hh\n  rw [he] at hh\n  change Exterior.linkSum _ _ (square i j) = 0 at hh\n  rw [square_sum] at hh\n  simp only [edge_sum, castPos_step] at hh\n  simp_rw [net, partial_eq_diff, Finset.sum_sub_distrib]\n  rw [← hh]; abel",
+            "line": 115,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/G03.lean",
+            "fragment": "L115-L126"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.G03.glow_sums",
+            "lines": [
+              115,
+              126
+            ],
+            "conclusion": "If all plaquette measurements `glow` vanish, then for every cover point x the sum over orders of `net (expand d A k) i j (castPos x) 1` is zero."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.G03.scale_net",
+        "module": "YM.Work.G03",
+        "lines": [
+          78,
+          79
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.G03.scale_net"
+          },
+          "snippet": {
+            "text": "theorem scale_net (A : Taylor G k) (i j : Axis) (x : E4) (t : ℝ) :\n    net A i j (t • x) t = t^k • net A i j x 1 := by rw [net, scale_partial, scale_partial, net, smul_sub]",
+            "line": 78,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/G03.lean",
+            "fragment": "L78-L79"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.G03.scale_net",
+            "lines": [
+              78,
+              79
+            ],
+            "conclusion": "`net A i j (t • x) t = t^k • net A i j x 1`: homogeneity of N."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          41
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

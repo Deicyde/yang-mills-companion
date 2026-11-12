@@ -1,0 +1,122 @@
+{
+  "id": "Lemma 14.2 step 9",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 127,
+        "rect": [
+          0.12026,
+          0.39942,
+          0.76293,
+          0.07428
+        ]
+      },
+      "title": "Lemma 14.2 step 9: Text, p. 127",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.2 step 9"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.Shoot.trajectory",
+        "module": "YM.Shoot.Race",
+        "lines": [
+          34,
+          53
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.Shoot.trajectory"
+          },
+          "snippet": {
+            "text": "  intro ε he\n  have hh' : Tendsto (fun m => ((A.J (m+1):ℝ)^2)⁻¹) atTop (𝓝 0) := by\n    have hz := H.levels.fits.deep.comp (tendsto_add_atTop_nat 1)\n    exact tendsto_inv_atTop_zero.comp ((tendsto_pow_atTop (n:=2) (by decide)).comp (tendsto_natCast_atTop_atTop.comp hz))\n  obtain ⟨j,hj⟩ := eventually_atTop.mp (hh'.eventually (ge_mem_nhds (half_pos he)))\n  have hu (i : ℕ) (hi : j ≤ i) : βCost H.levels i ≤ βCost H.levels j + (ε/2)*(H.S.scale i-H.S.scale j) := by\n    induction i,hi using Nat.le_induction with\n    | base => rw [sub_self,mul_zero,add_zero]\n    | succ i hi ih =>\n      have hg : 0 < Real.log (H.S.block i).val := Real.log_pos (by\n        have H0 := H.S.block_large i\n        exact_mod_cast (show 1 < (H.S.block i).val from lt_of_lt_of_le (by norm_num) H0))\n      have hy := (div_le_iff₀ hg).mp ((H.levels.fits.driftSmall i).trans (hj i hi))\n      rw [βCost,Schedule.scale_succ]; linarith\n  have hb := (H.S.divergent.const_mul_atTop (half_pos he)).eventually_ge_atTop (βCost H.levels j)\n  filter_upwards [eventually_ge_atTop j,hb] with i hi hz\n  intro N p hn\n  apply (hd N p i hn).trans ((hu i hi).trans ?_)\n  have hb : βCost H.levels j ≤ (ε/2)*H.S.scale i := hz\n  nlinarith [mul_nonneg he.le (scale_nn H.levels j)]",
+            "line": 34,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Shoot/Race.lean",
+            "fragment": "L34-L53"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.Shoot.trajectory",
+            "lines": [
+              23,
+              53
+            ],
+            "conclusion": "Splitting at a level j where `((J (m+1))^2)⁻¹` is small, `hu` bounds the tail of `βCost` by (ε/2)(scale i - scale j) via `driftSmall`, and the fixed part is absorbed as scale diverges, so |β N p i - hatBeta i| <= ε scale i eventually, uniformly in N >= i and p."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.History.Running",
+        "module": "YM.RG.History",
+        "lines": [
+          229,
+          230
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.History.Running"
+          },
+          "snippet": {
+            "text": "def Running := ∀ ε : ℝ, 0 < ε → ∀ᶠ m : ℕ in atTop, ∀ N p,\n    m ≤ N → |A.β N p m - A.levels.clock.hatBeta m| ≤ ε * A.S.scale m",
+            "line": 229,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/RG/History.lean",
+            "fragment": "L229-L230"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.History.Running",
+            "lines": [
+              229,
+              230
+            ],
+            "conclusion": "`Running`: for every ε > 0, eventually in m, for all N >= m and all p, |β N p m - hatBeta m| <= ε scale m."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          127
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

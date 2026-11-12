@@ -1,0 +1,201 @@
+{
+  "id": "Lemma 16.1 step 6",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] computes the pivots at the single reflected pair `pole` and 0 (separation the unit time vector), not at a general separation z, and the pivot is `gain j` times the Euclidean metric with the sign (-1)^j already absorbed in `center_diag`.",
+  "subject": [
+    {
+      "location": {
+        "page": 170,
+        "rect": [
+          0.12026,
+          0.47442,
+          0.76294,
+          0.12266
+        ]
+      },
+      "title": "Lemma 16.1 step 6: Text, p. 170",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.1 step 6"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Push.FiniteDetection.Kelvin.column",
+        "module": "YM.Push.FINITE_DETECTION.Centered",
+        "lines": [
+          138,
+          138
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Push.FiniteDetection.Kelvin.column"
+          },
+          "snippet": {
+            "text": "def column (Y : Shell G j) (i : ℕ) := ratio j i • asProbe (translated Y i)",
+            "line": 138,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/FINITE_DETECTION/Centered.lean",
+            "fragment": "L138-L138"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.FiniteDetection.Kelvin.column",
+            "lines": [
+              138,
+              138
+            ],
+            "conclusion": "`column Y i = ratio j i • asProbe (translated Y i)` with `ratio j i = gain j / gain i` is the tower whose order-`i` component is (s_j/s_i) times the Taylor term of the shifted probe."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Push.FiniteDetection.Kelvin.center_lower",
+        "module": "YM.Push.FINITE_DETECTION.Centered",
+        "lines": [
+          70,
+          73
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Push.FiniteDetection.Kelvin.center_lower"
+          },
+          "snippet": {
+            "text": "lemma center_lower (Y : Shell G j) (hl : l < j) : nth (centerField Y.val) l pole = 0 := by\n  have he (s) (hs : smoothAt s pole) a b := lower_term _ (Y.property.1.coeffSym a b) hs place_smooth place_pole hl\n  funext k m\n  simp only [coeff_center,he _ ((R_smooth pole_in).pow _),he _ (adjustCost_smooth _ _),Finset.sum_const_zero,sub_self,Pi.zero_apply]",
+            "line": 70,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/FINITE_DETECTION/Centered.lean",
+            "fragment": "L70-L73"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.FiniteDetection.Kelvin.center_lower",
+            "lines": [
+              70,
+              73
+            ],
+            "conclusion": "`center_lower` shows the Taylor terms of the centered field below order `j` vanish."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Push.FiniteDetection.Kelvin.pairCol_diag",
+        "module": "YM.Push.FINITE_DETECTION.Centered",
+        "lines": [
+          176,
+          176
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Push.FiniteDetection.Kelvin.pairCol_diag"
+          },
+          "snippet": {
+            "text": "lemma pairCol_diag (Y Z : Shell G j) : pairCol Y Z = gain j * frob Z.val Y.val := by",
+            "line": 176,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/FINITE_DETECTION/Centered.lean",
+            "fragment": "L176-L176"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.FiniteDetection.Kelvin.pairCol_diag",
+            "lines": [
+              176,
+              178
+            ],
+            "conclusion": "`pairCol_diag` shows the diagonal entry `pairCol Y Z = gain j * frob Z.val Y.val`, the pivot."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Push.FiniteDetection.Kelvin.pairCol_distinct",
+        "module": "YM.Push.FINITE_DETECTION.Centered",
+        "lines": [
+          182,
+          182
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Push.FiniteDetection.Kelvin.pairCol_distinct"
+          },
+          "snippet": {
+            "text": "lemma pairCol_distinct (Y : Shell G j) (Z : Shell G l) (hne : j≠l) : pairCol Y Z = 0 := by",
+            "line": 182,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/FINITE_DETECTION/Centered.lean",
+            "fragment": "L182-L182"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.FiniteDetection.Kelvin.pairCol_distinct",
+            "lines": [
+              182,
+              185
+            ],
+            "conclusion": "`pairCol_distinct` shows the entries between different orders vanish, with `pairCol_lower` and `pairCol_symmetric` removing the triangular parts."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          170
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

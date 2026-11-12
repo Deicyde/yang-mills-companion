@@ -1,0 +1,240 @@
+{
+  "id": "Lemma 17.5 step 4",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "Every sub-argument of the step has its Lean counterpart in the same order; the epsilon is `Covering.small`.",
+  "subject": [
+    {
+      "location": {
+        "page": 195,
+        "rect": [
+          0.12026,
+          0.7888,
+          0.76293,
+          0.07134
+        ]
+      },
+      "title": "Lemma 17.5 step 4: Text, p. 195",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 17.5 step 4"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OS.Grid.Covering.square",
+        "module": "YM.Phase.Square",
+        "lines": [
+          86,
+          116
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OS.Grid.Covering.square"
+          },
+          "snippet": {
+            "text": "lemma Covering.square (v : Fin n → C.book.Token) (x : Fin n → Cover) (p : distinct (Tag h v x))\n    (W : Covering h v x) (he : W.Works h v x f)\n    (H : Steady V) (Y : S.Hierarchy) (hx : Expects (S:=S) (f:=f) h v x) : 0 ≤ answer P (Tag h v x) p := by\n  let a := answer P (Tag h v x) p\n  have he' k q : 0 ≤ charge (q+1) (W.reserve k) (fun _ _ => a+W.small k) := by\n    let U t := fun i j => event (S:=S) h v x t i j+W.small k\n    apply ge_of_tendsto (charged atTop (q+1) U (fun i j hij => (estimates P h v x p H Y (i.val) (j.val) hij).add_const _))\n    have ht i j (hk : (i:Fin (q+1))<j) : ∀ᶠ t : ℕ in atTop,\n        (Tendsto (fun u : ℕ×ℕ=> bill h v x i j u.1 u.2 t+W.small k) f.fuse (𝓝 (U t i j))) ∧\n        f.late fun N l => ∫ w, W.plots k N l t i w * W.plots k N l t j w∂law G _ (C.beta N l) ≤ bill h v x i j N l t+W.small k := by\n      filter_upwards [hx _ _ (show i.val<j.val from hk),he.fillings k _ _ (show i.val<j.val from hk)] with t hc hh\n      refine ⟨hc.add_const _,?_⟩\n      unfold Extraction.Order.late at *; refine hh.mono fun r hr => hr.mono fun N hN => ?_\n      exact sub_le_iff_le_add'.1 ((abs_le.mp hN).2)\n    filter_upwards [eventually_all.mpr (fun i => eventually_all.mpr (fun j => eventually_all.mpr (ht i j)))] with t hp\n    let B (i : ℕ × ℕ) (p r : ℕ) := bill h v x p r i.1 i.2 t+W.small k\n    apply ge_of_tendsto (charged f.fuse (q+1) B (fun i j h => (hp i j h).1))\n    have heI : ∀ i (j : Fin (q+1)), ∀ _ : i<j, ∀ᶠ u in f.fuse, ∫ w, W.plots k u.1 u.2 t i w * W.plots k u.1 u.2 t j w∂law G _ (C.beta u.1 u.2) ≤ B u i j :=\n      fun i j hij => (hp i j hij).2\n    have hF (i : Fin (q+1)) : ∀ᶠ u in f.fuse, Measurable (W.plots k u.1 u.2 t i) ∧\n        ∀ y, |W.plots k u.1 u.2 t i y| ≤ W.reserve k := he.controls k t i\n    filter_upwards [eventually_all.mpr (fun i => eventually_all.mpr (fun j => eventually_all.mpr (heI i j))),eventually_all.mpr hF] with u hv hl\n    exact finite (law G _ (C.beta u.1 u.2)) (fun j : Fin (q+1) => W.plots k u.1 u.2 t j) (W.reserve k) hl (fun i j => B u i j) hv\n  have hh k : 0 ≤ a+W.small k := by\n    by_contra! ht\n    have hp := Tendsto.atTop_mul_const_of_neg ht tendsto_natCast_atTop_atTop\n    obtain ⟨n,hN⟩ := (hp.eventually (eventually_lt_atBot (-W.reserve k^2))).exists\n    have hz := he' k n; rw [att n] at hz\n    exact (mul_neg_of_pos_of_neg (by positivity) (show _ + (n:ℝ)*_ < 0 by linarith)).not_ge hz\n  have hu : Tendsto (fun k => a+W.small k) atTop (𝓝 a) := by simpa using W.grows.const_add a\n  exact ge_of_tendsto' hu hh",
+            "line": 86,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Phase/Square.lean",
+            "fragment": "L86-L116"
+          },
+          "proof_context": {
+            "declaration": "YM.OS.Grid.Covering.square",
+            "lines": [
+              86,
+              116
+            ],
+            "conclusion": "`square` gives `0 <= answer`: the ordered cutoff limits and T limit of `he'`, the bound `0 <= (q+1)(r^2 + q(a+small))` via `att`, then q to infinity and `small` to 0."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OS.Grid.estimates",
+        "module": "YM.Phase.Square",
+        "lines": [
+          56,
+          63
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OS.Grid.estimates"
+          },
+          "snippet": {
+            "text": "lemma estimates (v : Fin n → C.book.Token) (x : Fin n → Cover) (p : distinct (Tag h v x)) (H : Steady V) (Y : S.Hierarchy)\n    (i j : ℕ) (hp : i<j) : Tendsto (fun t => event (S:=S) h v x t i j) atTop (𝓝 (answer P (Tag h v x) p)) := by\n  let w := Tag h v x\n  have hx (w z : C.book.Word) (hv : distinct w) (hz : distinct z) := continuous_re.continuousAt.tendsto.comp (horizon P h H Y w z hv hz i j hp)\n  convert ((hx w w p p).sub (hx w (anti w) p (apart p))).sub ((hx (anti w) w (apart p) p).sub (hx (anti w) (anti w) (apart p) (apart p))) using 1\n  · rfl\n  unfold answer θ; simp only [pow_two,mul_sub,sub_mul]; congr 1\n  simp [inner_sub_right,w]; ring",
+            "line": 56,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Phase/Square.lean",
+            "fragment": "L56-L63"
+          },
+          "proof_context": {
+            "declaration": "YM.OS.Grid.estimates",
+            "lines": [
+              56,
+              63
+            ],
+            "conclusion": "`estimates` expands each pair into four separated moments whose signed sum tends to `answer`, by `horizon`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.B05.at_tag",
+        "module": "YM.Work.B05",
+        "lines": [
+          37,
+          43
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.B05.at_tag"
+          },
+          "snippet": {
+            "text": "  have hz := p.square A k v x hd he hs s.kernel (b v x k s.cutoff s.kernel s.generic hp hg)\n  have hy : 0 ≤ (inner ℂ V.omega0 (D.val (D.val V.omega0))).re := by\n    simp only [Grid.answer,pow_two] at hz; exact hz\n  have hx : (inner ℂ (D.val V.omega0) (D.val V.omega0)).re=‖D.val V.omega0‖^2 := inner_self_eq_norm_sq (𝕜 := ℂ) _\n  rw [← ContinuousLinearMap.adjoint_inner_right, hd',neg_apply,inner_neg_right, Complex.neg_re] at hx\n  have h0 : ‖D.val V.omega0‖=0 := by nlinarith\n  exact sub_eq_zero.mp (show D=0 from attains A (adjunction A hs s.kernel X.turns hc.motion) hs D (norm_eq_zero.mp h0))",
+            "line": 37,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/B05.lean",
+            "fragment": "L37-L43"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.B05.at_tag",
+            "lines": [
+              23,
+              43
+            ],
+            "conclusion": "From `0 <= answer` and `answer = -||D Omega||^2`, `D Omega = 0`, hence `D = 0` by `attains` (Omega separating)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.B05.real_depot",
+        "module": "YM.Work.B05",
+        "lines": [
+          48,
+          88
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.B05.real_depot"
+          },
+          "snippet": {
+            "text": "private lemma real_depot (t : Theme V A) (b : B04) (s : Seed C F S) (X : Spec.Algebra S)\n    (hc : Locals X s.kernel.spin) (hs : Steady V) (hY : Grill C F)\n    (p : Caps n) (v : C.book.Vector p) (hp : ∀ i, star (v i)=v i) :\n    EqOn (fun y => depot V A y p v)\n      (fun y => depot V A (reflectX y) p (fun i => C.book.mirrorGroup (p i) mir (v i))) (conf n) := by\n  classical\n  let u : Fin n → C.book.Token := fun i => ⟨p i,v i⟩\n  let P (x : Points n) := (depot V A x p v).val\n  let Q (x : Points n) := (depot V A x p (fun i => C.book.mirrorGroup _ mir (v i))).val\n  have hP : ContinuousOn P (conf n) := (t.steep n u).continuousOn\n  have hQ : ContinuousOn (Q ∘ reflectX) (conf n) := by\n    apply (t.steep n (C.book.move mir ∘ u)).continuousOn.comp _ (fun _ h => Points.move_in _ h)\n    let L := PiLp.continuousLinearEquiv 2 ℝ (fun _ : Fin n => E4)\n    exact (L.symm.continuous.comp (show Continuous (fun y : Points n => fun i => mir.ortho.motion (y i)) from\n      continuous_pi fun i => (mir.ortho.motion.continuous.comp (show Continuous (fun y : Points n => y i) from by fun_prop)))).continuousOn\n  let d := Finset.univ.sup p\n  choose k hk hG using hY d\n  have ht : Tendsto k atTop atTop := tendsto_atTop_mono hk tendsto_id\n  have h : EqOn P (Q ∘ reflectX) (generic n) := by\n    intro x hx\n    let c (i) := address (C.S.a (k i)) x\n    let a (i) := Order.grid C (k i) (c i)\n    have hA : Tendsto a atTop (𝓝 x) := (chosen (S:=C.S) x).comp ht\n    have he : ∀ᶠ i in atTop, a i ∈ generic n := hA.eventually ((genericOpen _).mem_nhds hx)\n    have hf := tendsto_nhdsWithin_iff.mpr ⟨hA,he.mono fun _ h => generic_conf _ h⟩\n    have hu := (hP x (generic_conf _ hx)).tendsto.comp hf\n    apply tendsto_nhds_unique (hu.congr' _) ((hQ x (generic_conf _ hx)).tendsto.comp hf)\n    filter_upwards [he] with i hi\n    obtain ⟨Y,hY'⟩ := hG i n u (fun j => Finset.le_sup (s:=Finset.univ) (f:=p) (Finset.mem_univ j)) hp (c i) hi\n    have h1 := generic_conf _ hi\n    have h2 := Points.move_in mir.ortho h1\n    have hg := at_tag t b s X hc hs u (k i) (c i) hp hi Y hY' ((realized ..).mpr h1)\n    have ha : Grid.anti (Grid.Tag (C:=C) (k i) u (c i)) = realize (C.book.move mir ∘ u) (reflectX (a i)) := by\n      unfold Grid.anti act realize\n      exact List.map_ofFn\n    simp only [comp_apply,P,Q,depot,dif_pos h1,dif_pos h2]\n    have hh : ∀ (w : C.book.Word) (z : distinct w), Grid.anti (Grid.Tag (C:=C) (k i) u (c i)) = w →\n        M A (realize u (a i)) ((realized ..).2 h1) = M A w z := fun _ _ h => by subst_vars; exact hg\n    exact congr_arg Subtype.val (hh _ ((realized ..).mpr h2) ha)\n  have hm : P =ᵐ[volume.restrict (conf n)] Q ∘ reflectX := ae_restrict_of_ae ((almostGeneric n).mono fun x hx => h hx)\n  exact fun y hy => Subtype.ext (Measure.eqOn_of_ae_eq hm hP hQ (by rw [(conf_open n).interior_eq]; exact subset_closure) hy)",
+            "line": 48,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/B05.lean",
+            "fragment": "L48-L88"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.B05.real_depot",
+            "lines": [
+              48,
+              88
+            ],
+            "conclusion": "Grid points are dense in generic points; continuity of the depot passes the identity from grid words to all real words."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.B05.answer",
+        "module": "YM.Work.B05",
+        "lines": [
+          96,
+          115
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.B05.answer"
+          },
+          "snippet": {
+            "text": "  obtain ⟨P,hP⟩ := t.array _ p x\n  obtain ⟨Q,hQ⟩ := t.array _ p (reflectX x)\n  have he : P = Q.compLinearMap (fun i => C.book.mirrorGroup (p i) mir) := by\n    apply MultilinearMap.pi_ext\n    intro j\n    apply MultilinearMap.ext_ring\n    simp only [MultilinearMap.compLinearMap_apply, hP, hQ]\n    refine real_depot t b s X hc hs hY p _ (fun i => ?_) hw\n    change star (Pi.single (j i) 1 : _ → ℂ) = Pi.single (j i) 1\n    ext m\n    by_cases hm : m=j i <;> simp [hm]\n  have h1 : realize (fun i => ⟨p i,v i⟩) x = w := Word.rebuilt w\n  have h2 : realize (L:=C.book) (fun i => ⟨p i,C.book.mirrorGroup (p i) mir (v i)⟩) (reflectX x)=Grid.anti (C:=C) w := by\n    refine Eq.trans ?_ (congr_arg (Grid.anti (C:=C)) h1)\n    unfold Grid.anti act realize; rw [List.map_ofFn]; rfl\n  have hg := DFunLike.congr_fun he v\n  simp only [hP,MultilinearMap.compLinearMap_apply,hQ,depot,dif_pos (show x ∈ conf _ from hw),dif_pos (show reflectX x ∈ conf _ from Points.move_in _ hw)] at hg\n  exact (show ∀ y z : C.book.Word, ∀ (hy : distinct y) (hz : distinct z), realize (L:=C.book) (fun i => ⟨p i,v i⟩) x=y →\n    realize (L:=C.book) (fun i => ⟨p i,C.book.mirrorGroup (p i) mir (v i)⟩) (reflectX x)=z → M A y hy=M A z hz from\n    fun _ _ _ _ h h' => by subst_vars; exact hg) _ _ _ _ h1 h2",
+            "line": 96,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/B05.lean",
+            "fragment": "L96-L115"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.B05.answer",
+            "lines": [
+              90,
+              115
+            ],
+            "conclusion": "Multilinearity of `t.array` extends from real to all coefficients and gives `M A w = M A (Grid.anti w)`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          195
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

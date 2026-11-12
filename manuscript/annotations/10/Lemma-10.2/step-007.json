@@ -1,0 +1,84 @@
+{
+  "id": "Lemma 10.2 step 7",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "broadMatch",
+  "note": "The Lean identity holds for every real t, while [M] states it for τ>0.",
+  "subject": [
+    {
+      "location": {
+        "page": 41,
+        "rect": [
+          0.12026,
+          0.39549,
+          0.75948,
+          0.04341
+        ]
+      },
+      "title": "Lemma 10.2 step 7: Display, p. 41",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 10.2 step 7"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.G03.top_term",
+        "module": "YM.Work.G03",
+        "lines": [
+          168,
+          173
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.G03.top_term"
+          },
+          "snippet": {
+            "text": "  let f (p : E4 × ℝ) := ∑ l ∈ Finset.range (k+1), p.2^(k-l) • net (A l) i j p.1 p.2\n  have he (t : ℝ) (y : Cover) : f (t • castPos y, t) = 0 := calc\n    _ = ∑ l ∈ Finset.range (k+1), t^k • net (A l) i j (castPos y) 1 := by\n      unfold f; apply Finset.sum_congr rfl\n      intro l hl; rw [scale_net, smul_smul, ← pow_add, Nat.sub_add_cancel (by simpa only [Finset.mem_range, Nat.lt_succ_iff] using hl)]\n    _ = 0 := by rw [← Finset.smul_sum, h y i j hij, smul_zero]",
+            "line": 168,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/G03.lean",
+            "fragment": "L168-L173"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.G03.top_term",
+            "lines": [
+              164,
+              185
+            ],
+            "conclusion": "`he`: the rescaled sum `f (t • castPos y, t) = ∑ t^(k-l) • net (A l) i j (t • castPos y) t` vanishes for every lattice point `y` and every real `t`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          41
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
+      }
+    }
+  }
+}

@@ -1,0 +1,240 @@
+{
+  "id": "Lemma 13.11 step 7",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] has gamma = e^kappa a + 2m, (2B+1)^4 gamma <= 1, the bound on the soft part and e^{-kappa}(e^gamma-1) <= w, and it raises the threshold for them in `late`. kappa_fus, the factor 1/1024 and (2B+1)^4 gamma <= 1/2 are not explicit: kappa and w are abstract.",
+  "subject": [
+    {
+      "location": {
+        "page": 107,
+        "rect": [
+          0.12026,
+          0.15206,
+          0.76294,
+          0.10513
+        ]
+      },
+      "title": "Lemma 13.11 step 7: Text, p. 107",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 13.11 step 7"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Progress.DirectedRecipe.Payments.Rates",
+        "module": "YM.Progress.DIRECTED_RECIPE.Tender",
+        "lines": [
+          33,
+          39
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Progress.DirectedRecipe.Payments.Rates"
+          },
+          "snippet": {
+            "text": "structure Rates (B : ℕ) (w a b κ : ℝ) : Prop where\n  heading : 0 ≤ κ\n  hard : 0 ≤ a\n  soft : 0 ≤ b\n  soft_limit : b ≤ 1\n  capital : (B+B+1:ℕ)^4 * inflation a b κ ≤ (1 : ℝ)\n  returns : Bid.quote κ (inflation a b κ) ≤ w",
+            "line": 33,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Progress/DIRECTED_RECIPE/Tender.lean",
+            "fragment": "L33-L39"
+          },
+          "proof_context": {
+            "declaration": "YM.Progress.DirectedRecipe.Payments.Rates",
+            "lines": [
+              33,
+              39
+            ],
+            "conclusion": "`Rates` requires `(2B+1)^4 * inflation ≤ 1`, the soft part `b ≤ 1`, and `Bid.quote κ inflation ≤ w`, i.e. e^{-κ}(e^γ - 1) ≤ w."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Progress.DirectedRecipe.Payments.inflation",
+        "module": "YM.Progress.DIRECTED_RECIPE.Tender",
+        "lines": [
+          32,
+          32
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Progress.DirectedRecipe.Payments.inflation"
+          },
+          "snippet": {
+            "text": "def inflation (a b κ : ℝ) := Real.exp κ * a + 2*b",
+            "line": 32,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Progress/DIRECTED_RECIPE/Tender.lean",
+            "fragment": "L32-L32"
+          },
+          "proof_context": {
+            "declaration": "YM.Progress.DirectedRecipe.Payments.inflation",
+            "lines": [
+              32,
+              32
+            ],
+            "conclusion": "`inflation a b κ = exp κ * a + 2*b`: the rooted forced total scaled by e^κ plus twice the logarithmic total."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.AnalyticBridge.VerifiedReset.Collection.Fees",
+        "module": "YM.AnalyticBridge.VERIFIED_RESET_STEP.Investor",
+        "lines": [
+          51,
+          51
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.AnalyticBridge.VerifiedReset.Collection.Fees"
+          },
+          "snippet": {
+            "text": "  hard : ∃ m κ, softNeed G p c σ C α H ≤ m ∧ Payments.Rates p.B γ w m κ",
+            "line": 51,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/VERIFIED_RESET_STEP/Investor.lean",
+            "fragment": "L51-L51"
+          },
+          "proof_context": {
+            "declaration": "YM.AnalyticBridge.VerifiedReset.Collection.Fees",
+            "lines": [
+              49,
+              51
+            ],
+            "conclusion": "`Fees.hard`: there are `m, κ` with `softNeed ≤ m` and `Payments.Rates p.B γ w m κ`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.AnalyticBridge.VerifiedReset.Time.late",
+        "module": "YM.AnalyticBridge.VERIFIED_RESET_STEP.Opening",
+        "lines": [
+          48,
+          49
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.AnalyticBridge.VerifiedReset.Time.late"
+          },
+          "snippet": {
+            "text": "lemma late (P : PostCost D) {F : ℕ → ℕ → Postage} (A : Scouts (F:=F)) (g : G.Simple) (j : ℕ) :\n    ∀ᶠ x in atTop, ∀ i, StepStages j i → shop P A j i x := by",
+            "line": 48,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/VERIFIED_RESET_STEP/Opening.lean",
+            "fragment": "L48-L49"
+          },
+          "proof_context": {
+            "declaration": "YM.AnalyticBridge.VerifiedReset.Time.late",
+            "lines": [
+              48,
+              59
+            ],
+            "conclusion": "`late`: eventually in the entry threshold x, the `Fees` (hence `Rates`) hold at every stage."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Bid.H02",
+        "module": "YM.Bid.Kitchen",
+        "lines": [
+          20,
+          21
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Bid.H02"
+          },
+          "snippet": {
+            "text": "def H02 : Prop := ∀ (G : Gauge) (n : Side) (X : Pipes G n) (d : Tap G n) (F : ℕ≃Pellet X) (δ u κ γ v : ℝ) (P : BudgetPoint),\n    quote κ γ≤v → X.Digests d P δ u → X.Buys d P κ γ → (fused F P d).KBound P v",
+            "line": 20,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Bid/Kitchen.lean",
+            "fragment": "L20-L21"
+          },
+          "proof_context": {
+            "declaration": "YM.Bid.H02",
+            "lines": [
+              20,
+              21
+            ],
+            "conclusion": "`H02`: under `Digests`, `Buys κ γ` and `quote κ γ ≤ v` the fused activities satisfy `KBound v`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          107
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

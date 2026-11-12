@@ -1,0 +1,145 @@
+{
+  "id": "Lemma 14.1 step 7",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The terminal point with the whole window in one stage and beyond earlier levels is carried. The compact sets of configurations, arities and comparison orders are absorbed into the abstract `readyHere`/`window`.",
+  "subject": [
+    {
+      "location": {
+        "page": 125,
+        "rect": [
+          0.12026,
+          0.63659,
+          0.76155,
+          0.08591
+        ]
+      },
+      "title": "Lemma 14.1 step 7: Text, p. 125",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.1 step 7",
+          "quads": [
+            [
+              0.12026,
+              0.63659,
+              0.88182,
+              0.63659,
+              0.88182,
+              0.70459,
+              0.12026,
+              0.70459
+            ],
+            [
+              0.12026,
+              0.70461,
+              0.74375,
+              0.70461,
+              0.74375,
+              0.7225,
+              0.12026,
+              0.7225
+            ]
+          ]
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.Supply.Paid",
+        "module": "YM.Price.Intent",
+        "lines": [
+          160,
+          162
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.Supply.Paid"
+          },
+          "snippet": {
+            "text": "  run (j : ℕ) : p.first ≤ j → ∃ k : ℕ,\n    B.readyHere j ≤ a.S.scale k ∧ B.window j (a.S.scale k) ≤ k ∧\n      ∀ i : ℕ, k-B.window j (a.S.scale k) ≤ i → i ≤ k+B.window j (a.S.scale k) → a.clock.J i=j",
+            "line": 160,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Price/Intent.lean",
+            "fragment": "L160-L162"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.Supply.Paid",
+            "lines": [
+              145,
+              162
+            ],
+            "conclusion": "For every j ≥ first there is k with `readyHere j ≤ scale k`, `window j (scale k) ≤ k`, and J i = j on all i within `window` of k."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.Supply.Wait.engine",
+        "module": "YM.PhysicalNext.RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP.Pane.Divisors",
+        "lines": [
+          118,
+          128
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.Supply.Wait.engine"
+          },
+          "snippet": {
+            "text": "  · intro j hj\n    obtain ⟨i,rfl⟩ := Nat.exists_eq_add_of_le hj\n    obtain ⟨k,hk,H⟩ := HB i\n    have hg : E.J k=i := H _ (by omega) (by omega)\n    have he := E.scaled_upper w k; rw [hg] at he\n    have ht := Hc i k hk (s k) (E.scaled_lower w k) he\n    refine ⟨k,?_,?_,?_⟩\n    · rw [show Levels.S _=A.schedule from rfl,e]; exact ht.1\n    · rw [show Levels.S _=A.schedule from rfl,e]; exact ht.2.trans (Nat.div_le_self ..)\n    rw [show Levels.S _=A.schedule from rfl,e]\n    intro a ha hh; change p.first+E.J a=_; exact congr_arg _ (H _ (by have := ht.2; omega) (hh.trans (Nat.add_le_add_left ht.2 _)))",
+            "line": 118,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Pane/Divisors.lean",
+            "fragment": "L118-L128"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.Supply.Wait.engine",
+            "lines": [
+              26,
+              135
+            ],
+            "conclusion": "The terminal k comes from `Program.exhaust` with c i ≤ k, so it lies beyond earlier requests, and J = i on [k-k/2, k+k/2]."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          125
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

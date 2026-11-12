@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 14.6 step 10",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "[L] proves the terminal map invertible by injectivity on a finite-dimensional space, propagating a zero upward through the level bounds, instead of writing it as a product of invertible L_m.",
+  "subject": [
+    {
+      "location": {
+        "page": 131,
+        "rect": [
+          0.12026,
+          0.85872,
+          0.75996,
+          0.05651
+        ]
+      },
+      "title": "Lemma 14.6 step 10: Text, p. 131",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.6 step 10"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Source.TransferData.Based",
+        "module": "YM.Source.Insertion",
+        "lines": [
+          107,
+          111
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Source.TransferData.Based"
+          },
+          "snippet": {
+            "text": "  unnormalized m : r ≤ m → m < N → ∀ v,\n    (T.entries m v).density 0 C (H.rep N p m) =\n      ((H.S.block m).val : ℂ)^d • (H.levels.clock.op m p).push (H.β N p (m+1))\n        ((T.entries (m+1) v).density 0 C (H.rep N p (m+1)))\n  reads v : (T.entries r v).x = T.terminal v",
+            "line": 107,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Source/Insertion.lean",
+            "fragment": "L107-L111"
+          },
+          "proof_context": {
+            "declaration": "YM.Source.TransferData.Based",
+            "lines": [
+              89,
+              114
+            ],
+            "conclusion": "`unnormalized` gives the density at level m as `block m ^ d` times the pushed density at m+1, and `reads` gives x_r(v) = `terminal v`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.G08.answer",
+        "module": "YM.Work.G08",
+        "lines": [
+          224,
+          240
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.G08.answer"
+          },
+          "snippet": {
+            "text": "  let Q : F.Coeff →ₗ[ℂ] F.Coeff :=\n    IsLinearMap.mk' (fun v => (P.inits k v).x) (hp.linear k le_rfl hp.ahead).1\n  have hQ : Injective Q := by\n    apply LinearMap.ker_eq_bot.mp\n    refine LinearMap.ker_eq_bot'.mpr ?_\n    intro v hv\n    have hzero (m : ℕ) (hkm : k ≤ m) (hm : m ≤ N) : (P.inits m v).x = 0 := by\n      induction m, hkm using Nat.le_induction with\n      | base => exact hv\n      | succ m hkm ih =>\n        have he := (hsteps m hkm hm v).1\n        rw [ih (m.le_succ.trans hm)] at he\n        apply size_separates F _\n        simpa [Labels.Frame.coeffSize] using he\n    exact ((hp.outfeet v).1.symm).trans (hzero N hp.ahead le_rfl)\n  let T : TransferData F H N p :=\n    ⟨P.inits, LinearEquiv.ofBijective Q ⟨hQ, LinearMap.injective_iff_surjective.mp hQ⟩⟩",
+            "line": 224,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/G08.lean",
+            "fragment": "L224-L240"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.G08.answer",
+            "lines": [
+              207,
+              258
+            ],
+            "conclusion": "The map `Q : v ↦ x_k(v)` is linear and injective, since a zero at the reference level forces a zero at every level up to the cutoff where x_N = v; hence bijective, and it is the `terminal` equivalence."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          131
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

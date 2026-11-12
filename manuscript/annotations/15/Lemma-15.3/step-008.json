@@ -1,0 +1,122 @@
+{
+  "id": "Lemma 15.3 step 8",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 165,
+        "rect": [
+          0.12026,
+          0.39632,
+          0.75992,
+          0.06673
+        ]
+      },
+      "title": "Lemma 15.3 step 8: Text, p. 165",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 15.3 step 8"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.D04.cost_limit",
+        "module": "YM.Work.D04",
+        "lines": [
+          167,
+          197
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.D04.cost_limit"
+          },
+          "snippet": {
+            "text": "private lemma cost_limit (T : YM.Bid.D01) (W : YM.Bid.D02) (h : C.Makes)\n    (c : CenterPort C F) (R : Bin S) {e : ℕ} (H : RelayBin C R F e)\n    {x : Rowe C e} (hx : dollar C F x) (i : Shot C.book) :\n    Tendsto (fun u => snapshots i e u (x u - (R e).step u (x u)) /\n      (1 + (↑‖(R e).step u (x u)‖ : ℂ))) F.fuse (𝓝 0) := by\n  let p : Rowe C e := fun u => (R e).step u (x u)\n  let a (j : ℕ × ℕ) := (1+‖p j‖)⁻¹\n  let b (j : ℕ × ℕ) := (↑(a j) : ℂ)\n  let z : Rowe C e := fun j => b j • (x j-p j)\n  have hn (j) : ‖b j‖ = (1+‖p j‖)⁻¹ := by\n    unfold b a\n    rw [Complex.norm_real, Real.norm_of_nonneg (by positivity)]\n  have hb (j) : ‖b j‖ ≤ 1 := by\n    rw [hn, ← one_div]\n    exact (div_le_one (by positivity)).mpr (by simp)\n  have ht : tight C F (d := e) (fun j => b j • p j) := by\n    refine ⟨1,?_⟩\n    apply (Order.fused F (fun j => ‖b j • p j‖ ≤ 1)).mp\n    refine Eventually.of_forall fun j => ?_\n    rw [norm_smul, hn, mul_comm, ← div_eq_mul_inv]\n    exact (div_le_one (by positivity)).mpr (by linarith)\n  have hz : dollar C F z := by\n    have he := dollar_sub (dollar_shrink hx b hb) (T C h e F _ ht)\n    simpa only [z, smul_sub] using he\n  have hk (j) : (R e).step j (z j) = 0 := by\n    simp only [z, p, map_smul, map_sub, (R e).projection, sub_self, smul_zero]\n  apply (marked_silent W h c R H z hk hz i).congr'\n  filter_upwards with j\n  rw [show z j=_ • (x j-p j) from rfl,map_smul,smul_eq_mul]\n  rw [div_eq_mul_inv,mul_comm, show b j = (↑((1+‖p j‖)⁻¹) : ℂ) from rfl,\n    Complex.ofReal_inv, Complex.ofReal_add, Complex.ofReal_one]",
+            "line": 167,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/D04.lean",
+            "fragment": "L167-L197"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.D04.cost_limit",
+            "lines": [
+              167,
+              197
+            ],
+            "conclusion": "`cost_limit` forms `z = (1+‖Π x‖)⁻¹ • (x - Π x)`, shows it admissible (`dollar_shrink` of `x` minus a `tight` bounded term via `dollar_sub`) and in `ker (R e).step`, and `marked_silent` gives `snapshots i e u (x - Π x)/(1+‖Π x‖) → 0` along `F.fuse`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Dash.Added",
+        "module": "YM.Dash.Limits",
+        "lines": [
+          67,
+          67
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Dash.Added"
+          },
+          "snippet": {
+            "text": "  costly : ∀ i,Tendsto (fun u => F i u (x u-p.step u (x u)) / (1+ (↑‖p.step u (x u)‖:ℂ))) ℱ (𝓝 0)",
+            "line": 67,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Dash/Limits.lean",
+            "fragment": "L67-L67"
+          },
+          "proof_context": {
+            "declaration": "YM.Dash.Added",
+            "lines": [
+              65,
+              67
+            ],
+            "conclusion": "`costly`: the limit of the normalized remainder readouts is 0, the form `brace` consumes."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          165
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

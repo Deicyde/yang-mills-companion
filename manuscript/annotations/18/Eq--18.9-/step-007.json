@@ -1,0 +1,162 @@
+{
+  "id": "Eq (18.9) step 7",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "The Lean treats the constant as a complex `c` with no reality claim, which the vanishing does not need.",
+  "subject": [
+    {
+      "location": {
+        "page": 213,
+        "rect": [
+          0.12026,
+          0.76763,
+          0.75948,
+          0.02155
+        ]
+      },
+      "title": "Eq (18.9) step 7: Text, p. 213",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Eq (18.9) step 7"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Trace.Over.shift_unit",
+        "module": "YM.TraceExtension.Chart.Nectar",
+        "lines": [
+          69,
+          72
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Trace.Over.shift_unit"
+          },
+          "snippet": {
+            "text": "lemma shift_unit (c:ℂ): Tendsto (ZoomValue J (BQ Z V) (c • S.unit 4)) atTop (𝓝 0):=by\n    let F:= Bel C.book; let h(k):= BQ Z V k* J.r k^(4:ℕ); have ht:=band_cost P ‹G.Simple› θ hb hz hq\n    have he:Tendsto (fun k=> h k • (c • F.unit 4)) atTop (𝓝 0):= by simpa only[zero_smul] using! ht.smul (show Tendsto (_root_.Function.const ℕ (c • F.unit 4)) atTop (𝓝 (c • F.unit 4)) from tendsto_const_nhds)\n    refine he.congr' ?_; filter_upwards [hq'.units 4] with k hk; unfold ZoomValue; let U:= J.U k 4; change _= U.symm (h k • (c • _)); apply U.injective; rw[LinearEquiv.apply_symm_apply,show U _=h k • U (c • F.unit 4) from (U.toLinearMap.restrictScalars ℝ).map_smul ..,map_smul]; exact congr_arg _ (congr_arg _ hk.2)",
+            "line": 69,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Chart/Nectar.lean",
+            "fragment": "L69-L72"
+          },
+          "proof_context": {
+            "declaration": "YM.Trace.Over.shift_unit",
+            "lines": [
+              69,
+              72
+            ],
+            "conclusion": "For any constant `c`, `ZoomValue J (BQ Z V) (c • S.unit 4)` tends to 0, the vanishing of the e_tr unit term."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Trace.Over.center_plus",
+        "module": "YM.TraceExtension.Chart.Nectar",
+        "lines": [
+          56,
+          59
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Trace.Over.center_plus"
+          },
+          "snippet": {
+            "text": "lemma center_plus(X:Spec.Algebra S) (T:Table C.book): ∃ c:ℂ, stressTrace (reCenter S X.energy)=TraceExtension.theta T X.energy+c • S.unit 4:=by\n    let v:= stressTrace X.energy; let f:=S.unit 4; refine ⟨euclideanVEV S T v- expectation S 4 v,?_⟩\n    have he: stressTrace (reCenter S X.energy)=centering S 4 v:=by unfold v stressTrace; rw [map_sum]; rfl\n    rw [he]; change centering S 4 v= v - _+ _; rw[value_center,sub_smul];abel",
+            "line": 56,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Chart/Nectar.lean",
+            "fragment": "L56-L59"
+          },
+          "proof_context": {
+            "declaration": "YM.Trace.Over.center_plus",
+            "lines": [
+              56,
+              59
+            ],
+            "conclusion": "`stressTrace (reCenter S X.energy) = theta T X.energy + c • S.unit 4` for some `c`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Trace.Over.july",
+        "module": "YM.TraceExtension.Chart.Nectar",
+        "lines": [
+          81,
+          84
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Trace.Over.july"
+          },
+          "snippet": {
+            "text": "    let v:= reCenter S X'.energy; let u:= TraceExtension.theta T X'.energy\n    have ht:= year_spec H' H h hJ hP ho v (Hσ ▸ flavor X' H' Hx) o hr hq'.approach hT'\n    obtain ⟨x,hx⟩:= center_plus X' T; have he:u=stressTrace v- x • S.unit 4:= by rw[show stressTrace v=u+_ from hx,add_sub_cancel_right]\n    have hM:= shift_unit P h θ hb hz hq H' hq' x; have hH:= ht.2.sub hM; rw [sub_zero] at hH; exact hH.congr (fun k=> by rw[trace_Year]; change _=ZoomValue _ _ u k; rw [he,zoom_sub])",
+            "line": 81,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Chart/Nectar.lean",
+            "fragment": "L81-L84"
+          },
+          "proof_context": {
+            "declaration": "YM.Trace.Over.july",
+            "lines": [
+              79,
+              84
+            ],
+            "conclusion": "Subtracting the unit term `x • S.unit 4` from the recentered trace, `july` obtains the limit `(4*d2 G) • OScale C.book` for `theta T X'.energy`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          213
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

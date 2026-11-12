@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 17.10 step 6",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L]'s Lipschitz estimate in the offset is uniform on a neighbourhood of the base dock point, which carries ς, not as a supremum over a compact L; `core_jump` passes from local to compact.",
+  "subject": [
+    {
+      "location": {
+        "page": 201,
+        "rect": [
+          0.12026,
+          0.28724,
+          0.75948,
+          0.02846
+        ]
+      },
+      "title": "Lemma 17.10 step 6: Display, p. 201",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 17.10 step 6"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.Stress.vertical",
+        "module": "YM.EveryPhase.Cross",
+        "lines": [
+          10,
+          23
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.Stress.vertical"
+          },
+          "snippet": {
+            "text": "lemma vertical {A : Type*} [TopologicalSpace A] {f g : A × ℝ → ℂ} {x : A} (M : ℝ)\n    (h : ∀ᶠ p in 𝓝 x ×ˢ 𝓝[>] 0, HasDerivAt (fun s => f (p.1,s)) (g p) p.2 ∧ ‖g p‖ ≤ M)\n    (hk : ∀ᶠ s : ℝ in 𝓝[>] 0, ContinuousAt (fun t => f (t,s)) x) :\n    ∃ y : ℂ, Tendsto f (𝓝 x ×ˢ 𝓝[>] 0) (𝓝 y) := by\n  obtain ⟨Z,hZ,W,hW,h⟩ := mem_prod_iff.mp h\n  obtain ⟨r,hr,hR⟩ := (nhdsGT_basis_Ioc 0).mem_iff.mp hW\n  let N := max 1 M\n  have hp : 0<N := lt_of_lt_of_le zero_lt_one (le_max_left _ _)\n  have he (z : A) (hz : z∈Z) (s t) (hs : s∈Ioc 0 r) (ht : t∈Ioc 0 r) :\n      dist (f (z,s)) (f (z,t)) ≤ N*|s-t| := by\n    have hv (i : ℝ) (hi : i∈Ioc 0 r) := h (show (z,i)∈Z ×ˢ W from ⟨hz,hR hi⟩)\n    rw [dist_eq_norm, ← Real.norm_eq_abs]\n    exact (convex_Ioc _ _).norm_image_sub_le_of_norm_hasDerivWithin_le (f:=fun s => f (z,s)) (f':=fun j => g (z,j))\n      (fun y hy => (hv y hy).1.hasDerivWithinAt) (fun y hy => (hv y hy).2.trans (le_max_right ..)) ht hs",
+            "line": 10,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Cross.lean",
+            "fragment": "L10-L23"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.Stress.vertical",
+            "lines": [
+              10,
+              44
+            ],
+            "conclusion": "A derivative bound `M` in the offset, locally uniform in the base point, gives `dist (f (z,s)) (f (z,t)) ≤ max 1 M * |s-t|` and hence the limit."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.Stress.harbors_speed",
+        "module": "YM.EveryPhase.Strip",
+        "lines": [
+          156,
+          161
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.Stress.harbors_speed"
+          },
+          "snippet": {
+            "text": "lemma harbors_speed (K : Killing) (j : Fin (n+1)) (v : Fin n → S.Union) (T : S.Stress)\n    (g : Probe Space3) (hg : HasCompactSupport ⇑g)\n    (hT : Table.Conserved P H T) (hu : U.Hierarchy) (hs : S.Symmetric) (hi : P.Inclusions S)\n    (hd : P.Derivatives U) (hF : F.Region U) (hZ : Z.FullBody F) (x : SpacePoints n) (u : Times n) (z : ℂ)\n    (h : hole j u z∈strict (n+1)) :\n    HasDerivAt (harbors Z K v T g j x u) (-I*docks Z K v T g j x u z) z := by",
+            "line": 156,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Strip.lean",
+            "fragment": "L156-L161"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.Stress.harbors_speed",
+            "lines": [
+              156,
+              192
+            ],
+            "conclusion": "`harbors` has derivative `-I * docks`, the gradient-cutoff term produced by conservation and integration by parts."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          201
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

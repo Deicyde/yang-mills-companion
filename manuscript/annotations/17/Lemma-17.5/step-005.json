@@ -1,0 +1,258 @@
+{
+  "id": "Lemma 17.5 step 5",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "The Lean follows the same route: simultaneous invariance on pairs, theta-conjugates, hyperplane reflections, and an orthogonal map as a short product of reflections.",
+  "subject": [
+    {
+      "location": {
+        "page": 195,
+        "rect": [
+          0.12026,
+          0.86017,
+          0.75949,
+          0.05423
+        ]
+      },
+      "title": "Lemma 17.5 step 5: Text, pp. 195–196",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 17.5 step 5#0"
+        }
+      }
+    },
+    {
+      "location": {
+        "page": 196,
+        "rect": [
+          0.12026,
+          0.0962,
+          0.75948,
+          0.05423
+        ]
+      },
+      "title": "Lemma 17.5 step 5: Text, pp. 195–196",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 17.5 step 5#1"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.B06.pair_orbit",
+        "module": "YM.Work.B06",
+        "lines": [
+          157,
+          193
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.B06.pair_orbit"
+          },
+          "snippet": {
+            "text": "private lemma pair_orbit (k : Ortho) (p x : Row.Core C.book) :\n    stage A [p,x] = stage A [orbit H T o k p, orbit H T o k x] := by\n  let t := timeAxis\n  let b := basis t\n  have hb : 0 < b t := by simp [b]\n  -- Need a common increasing time direction for same_up. Include equator;\n  -- when time coefficient is negative first compose with theta.\n  rcases lt_trichotomy 0 (Ortho.move k b t) with h|e|h\n  · exact same_up A st H T o k b hb h [p,x]\n  · let u := Ortho.move k⁻¹ b\n    have hu : u t = 0 := by\n      have h₁ := (Ortho.motion k).inner_map_map u b\n      change inner ℝ (Ortho.move k (Ortho.move k⁻¹ b)) (Ortho.move k b) = inner ℝ u b at h₁\n      rw [Ortho.move_inv, ← real_inner_comm u b] at h₁\n      change inner ℝ (basis t) _ = inner ℝ (basis t) _ at h₁\n      rw [basis_inner, basis_inner] at h₁\n      exact h₁.symm.trans e.symm\n    have he : 0 < (b+u) t := by simp [hu, hb]\n    have hv : 0 < Ortho.move k (b+u) t := by\n      rw [(show Ortho.move k (b+u) = Ortho.move k b + Ortho.move k u from\n        (Ortho.motion k).map_add ..)]\n      simp [u, e.symm, hb]\n    exact same_up A st H T o k (b+u) he hv [p,x]\n  have hv : 0 < Ortho.move (theta*k) b t := by\n    simp only [Ortho.move_mul, theta, Signed.mirrored, show timeAxis = t from rfl, if_true]\n    exact neg_pos.mpr h\n  have hf (x : Row.Core C.book) : m A (orbit H T o (theta*k) x) = m A (orbit H T o k x) := by\n    rw [← orbit_comp T H o law]\n    exact (theta_individual A T H o law B hr _).symm\n  calc\n    _ = stage A [orbit H T o (theta*k) p, orbit H T o (theta*k) x] :=\n      same_up A st H T o (theta*k) b hb hv [p,x]\n    _ = _ := pair_congr A (hf p) (hf x)\n\n-- Rotate a pair back; apply theta invariance to the second factor ONLY;\n-- rotate forward again. Avoid an auxiliary operator representing rotations.\ninclude law B st hr in",
+            "line": 157,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/B06.lean",
+            "fragment": "L157-L193"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.B06.pair_orbit",
+            "lines": [
+              157,
+              193
+            ],
+            "conclusion": "Two-factor vacuum entries `stage A [p,x]` are invariant under a simultaneous rotation `k`, along a ray with positive time before and after (`same_up`), composing with `theta` when the time coefficient is negative."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.B06.second_conjugate",
+        "module": "YM.Work.B06",
+        "lines": [
+          194,
+          214
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.B06.second_conjugate"
+          },
+          "snippet": {
+            "text": "private lemma second_conjugate (j : Ortho) (p x : Row.Core C.book) :\n    stage A [p,x] = stage A [p, orbit H T o (j*theta*j⁻¹) x] := by\n  let a := orbit H T o j⁻¹ p\n  let b := orbit H T o j⁻¹ x\n  let c := orbit H T o theta b\n  have ha : orbit H T o j a = orbit H T o 1 p := by\n    dsimp only [a]; rw [orbit_comp T H o law, mul_inv_cancel]\n  have hc : orbit H T o j c = orbit H T o (j*theta*j⁻¹) x := by\n    dsimp only [c, b]\n    rw [orbit_comp T H o law, orbit_comp T H o law]\n  calc\n    _ = stage A [a,b] := pair_orbit A T H o law B st hr j⁻¹ p x\n    _ = stage A [a,c] := pair_congr A rfl (theta_individual A T H o law B hr b)\n    _ = stage A [orbit H T o j a, orbit H T o j c] :=\n      pair_orbit A T H o law B st hr j a c\n    _ = _ := pair_congr A ((congr_arg (m A) ha).trans\n      (one_individual A T H o law B hr p).symm) (congr_arg (m A) hc)\n\n-- Pair stages separate individual M's. For the left test Word.reflect (not theta alone)\n-- is the adjoint test. Omega is separating by Ground.adjunction + Ground.attains.\ninclude B st T H o in",
+            "line": 194,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/B06.lean",
+            "fragment": "L194-L214"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.B06.second_conjugate",
+            "lines": [
+              194,
+              214
+            ],
+            "conclusion": "`stage A [p,x] = stage A [p, orbit (j*theta*j⁻¹) x]` by rotating the pair back, applying theta invariance to the second factor, rotating forward."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.B06.by_pairs",
+        "module": "YM.Work.B06",
+        "lines": [
+          215,
+          231
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.B06.by_pairs"
+          },
+          "snippet": {
+            "text": "private lemma by_pairs (x y : Row.Core C.book) (h : ∀ p : Row.Core C.book, stage A [p,x] = stage A [p,y]) :\n    m A x = m A y := by\n  let v := fun p : Row.Core C.book => (m A p).val V.omega0\n  let ref := fun p : Row.Core C.book =>\n    (⟨reflect p.val timeAxis, Word.reflects timeAxis p.property⟩ : Row.Core C.book)\n  have hf (p q : Row.Core C.book) : stage A [ref p,q] = inner ℂ (v p) (v q) := by\n    have hr : m A (ref p) = star (m A p) := (B.opposite p.val p.property _).symm\n    rw [pair_form, hr]\n    exact ContinuousLinearMap.adjoint_inner_right (m A p).val V.omega0 (v q)\n  have he (p : Row.Core C.book) : inner ℂ (v p) (v x - v y) = 0 := by\n    rw [inner_sub_right, ← hf, ← hf, h, sub_self]\n  have hh : v x - v y = 0 := inner_self_eq_zero (𝕜:=ℂ) |>.mp (by rw [inner_sub_left, he, he, sub_self])\n  apply sub_eq_zero.mp\n  apply attains A (adjunction A st H T o) st\n  exact hh\n\ninclude law B st hr in",
+            "line": 215,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/B06.lean",
+            "fragment": "L215-L231"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.B06.by_pairs",
+            "lines": [
+              215,
+              231
+            ],
+            "conclusion": "Equality of all pair entries `stage A [p,x]` and `stage A [p,y]` gives `m A x = m A y` because Omega is separating (`attains`)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.B06.theta_generates",
+        "module": "YM.Work.B06",
+        "lines": [
+          54,
+          73
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.B06.theta_generates"
+          },
+          "snippet": {
+            "text": "private lemma theta_generates (W : Ortho → Prop) (hi : W 1)\n    (hm : ∀ j k, W j → W k → W (j*k)) (hc : ∀ j : Ortho, W (j * theta * j⁻¹)) (k : Ortho) : W k := by\n  have single (v : E4) : ∃ J : Ortho, W J ∧ ∀ x, Ortho.move J x = hyper v x := by\n    rcases eq_or_ne v 0 with e|e\n    · subst v\n      exact ⟨1, hi, fun x => by rw [Ortho.move_one, hyper, reflection_orthogonal_apply,\n        reflection_singleton_apply]; simp⟩\n    obtain ⟨J,hJ⟩ := conj_hyper v e\n    exact ⟨_, hc J, hJ⟩\n  have chain (l : List E4) : ∃ J : Ortho, W J ∧ ∀ x, Ortho.move J x = (l.map hyper).prod x := by\n    induction l with\n    | nil => exact ⟨1,hi,fun x => (Ortho.move_one x)⟩\n    | cons v l ih =>\n      obtain ⟨A,hA,ha⟩ := single v\n      obtain ⟨B,hB,hb⟩ := ih\n      exact ⟨A*B, hm A B hA hB, fun x => by rw [Ortho.move_mul, hb, ha]; rfl⟩\n  obtain ⟨l, -, hl⟩ := (Ortho.motion k).reflections_generate_dim\n  obtain ⟨J, hJ, hf⟩ := chain l\n  have e : k = J := Ortho.ext _ _ (fun x => by rw [hf]; exact congr_arg (fun f : E4 ≃ₗᵢ[ℝ] E4 => f x) hl)\n  exact e.symm ▸ hJ",
+            "line": 54,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/B06.lean",
+            "fragment": "L54-L73"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.B06.theta_generates",
+            "lines": [
+              54,
+              73
+            ],
+            "conclusion": "A predicate on `Ortho` holding at 1, closed under products and under conjugates of `theta` holds at every `k`, since `k` is a product of hyperplane reflections (`reflections_generate_dim`) each conjugate to `theta`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.B06.answer",
+        "module": "YM.Work.B06",
+        "lines": [
+          238,
+          242
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.B06.answer"
+          },
+          "snippet": {
+            "text": "theorem answer : YM.Bid.B06 := by\n  intro G C S V A T P H o law B st hr k w h p\n  have hk := theta_generates (individually A T H o) (one_individual A T H o law B hr)\n    (product_individual A T H o law) (conjugate_individual A T H o law B st hr) k\n  exact hk (⟨w,h⟩ : Row.Core _)",
+            "line": 238,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/B06.lean",
+            "fragment": "L238-L242"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.B06.answer",
+            "lines": [
+              238,
+              242
+            ],
+            "conclusion": "`answer` combines these to give `M A w h = M A (rotate w T K) p`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          195,
+          196
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

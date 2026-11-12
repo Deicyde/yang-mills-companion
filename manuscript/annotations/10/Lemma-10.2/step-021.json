@@ -1,0 +1,122 @@
+{
+  "id": "Lemma 10.2 step 21",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 42,
+        "rect": [
+          0.11962,
+          0.25352,
+          0.76258,
+          0.03713
+        ]
+      },
+      "title": "Lemma 10.2 step 21: Text, p. 42",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 10.2 step 21"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Bid.Cumuli",
+        "module": "YM.Bid.Source",
+        "lines": [
+          48,
+          50
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Bid.Cumuli"
+          },
+          "snippet": {
+            "text": "def Cumuli (H : Hol G) (d : ℕ) (F : Labels.Frame G d) {m} (B : Fin m → Slot) (P : F.Index → Pose G m) : Prop :=\n    P 0=1 ∧ (∀ i u x, lumin (P i) (rotates u x)=lumin (P i) x) ∧ (∀ i x,star (lumin (P i) x)=lumin (P i) x) ∧\n        (∀ i, Projects H (F.basis i) (lumin (P i) ∘ mapped B)) ∧ ∀ i,lows (P i) (F.grades i).2",
+            "line": 48,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Bid/Source.lean",
+            "fragment": "L48-L50"
+          },
+          "proof_context": {
+            "declaration": "YM.Bid.Cumuli",
+            "lines": [
+              48,
+              50
+            ],
+            "conclusion": "`P 0 = 1`, each `P i` is invariant under `rotates`, real (`star`), and has every monomial of degree at least the grade (`lows`)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.G05.answer",
+        "module": "YM.Work.G05",
+        "lines": [
+          122,
+          139
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.G05.answer"
+          },
+          "snippet": {
+            "text": "  refine ⟨P, ?_, ?_, ?_, (fun i => recovery_projects hf hi hp _ _ (hP i)), fun i => ?_⟩\n  · unfold P; rw [F.starts_unit]; exact map_one _\n  · intro i u x\n    rw [hP, hP, Cast_blockTaylor hf u (hr u)]\n    have ht (y : Snap G d) : expand d (Cast u y) = colored u (expand d y) := by\n      funext j\n      by_cases hj : j < d-1 <;> simp [expand, colored, Cast, hj]\n    rw [ht]; exact (F.basis i).property.2 _ u\n  · intro i x\n    have hw : conjPol (F.basis i).val = (F.basis i).val :=\n      congr_arg (fun v : Label G d => v.val) (F.realForm i)\n    rw [hP, ← conj_value, hw]\n  apply lows_substitute\n  · intro j; apply lows_of_zero\n    rw [hQ, blockTaylor_zero, hz, expand_zero]; simp [coord]\n  intro a ha\n  have hq := ((pure_grade _ (F.basis i)).mp (F.pure i)) (MvPolynomial.mem_support_iff.mp ha)\n  rw [weight_slot] at hq; exact congr_arg Prod.snd hq.symm",
+            "line": 122,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/G05.lean",
+            "fragment": "L122-L139"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.G05.answer",
+            "lines": [
+              113,
+              139
+            ],
+            "conclusion": "These properties are proved for the polynomials `P i` built from the Taylor polynomial."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          42
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

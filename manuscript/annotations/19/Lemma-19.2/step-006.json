@@ -1,0 +1,161 @@
+{
+  "id": "Lemma 19.2 step 6",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 221,
+        "rect": [
+          0.11962,
+          0.62287,
+          0.76356,
+          0.09195
+        ]
+      },
+      "title": "Lemma 19.2 step 6: Text, p. 221",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 19.2 step 6"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Columns.step_expand",
+        "module": "YM.OPE.Columns.Cone",
+        "lines": [
+          124,
+          174
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Columns.step_expand"
+          },
+          "snippet": {
+            "text": "lemma step_expand (h : μ (x v) ≤ s * μ (P (x v))) (he : e < d) :\n    μ (y v) ≤ s₀ * μ (P (y v)) ∧ ((L).val:ℝ)^(d-e) * μ (P (x v)) ≤ s * μ (P (y v)) := by\n  have hs₀ := room hc i _ (H.levels.fits.stepSlow i)\n  have hs : 64*K^2 ≤ s := room hc (i+1) _ (Nat.le_add_right ..)\n  have hb' : s ≤ ((L).val:ℝ) := column_small hb\n  have hh' : (1:ℝ) ≤ (L).val := by exact_mod_cast (L).pos\n  obtain ⟨q,⟨c,hq⟩,hv,hε⟩ := hT.leads\n  let a:=x v; let b:= y v; let D:=vowel F L a; let Y:=μ (P D)\n  have hY: ((L).val:ℝ)^(d-e)*μ (P a) ≤ Y := vowel_expands F e L a\n  have hD : μ D ≤ 2*Y := calc\n    _ ≤ Y+ μ (D-P D) := size_triangle F D _\n    _ ≤ Y + ((L).val:ℝ)^(d-(e+1))* (s*μ (P a)) := add_le_add le_rfl\n        ((vowel_rest F e L a).trans (mul_le_mul_of_nonneg_left h (by positivity)))\n    _ ≤ Y + Y := by\n      apply add_le_add le_rfl\n      rw [← mul_assoc]; apply le_trans _ hY\n      apply mul_le_mul_of_nonneg_right _ (size_nonneg F _)\n      rw [show d-e = d-(e+1)+1 from by omega,pow_succ]; gcongr\n    _ = 2*Y := (two_mul _).symm\n  have hp : μ a ≤ s*Y := h.trans (mul_le_mul_of_nonneg_left (((size_vowel F L (P a)).1).trans_eq\n    (congr_arg μ (by\n      ext i; by_cases h : (F.grades i).1 ≤ e <;> simp [D, low_apply, vowel, h]))) (zero_le_one.trans (H.levels.params _).columns_ge))\n  have hk : 1 ≤ K := W.prices _; have hx := ε_small hb (i:=i); have hk₀ : 0 ≤ K := zero_le_one.trans hk\n  have hz : 0 ≤ Y := size_nonneg F _\n  have hu : 2*K * μ (b - q.map D) ≤ Y := calc\n      _ ≤ 2*K*(barunit L * μ (F.core a)) := mul_le_mul_of_nonneg_left (hε v) (by positivity)\n      _ ≤ 2*K*(barunit L * ((1+s)*Y)) := mul_le_mul_of_nonneg_left\n        (mul_le_mul_of_nonneg_left ((size_core F _).trans (hp.trans\n          (mul_le_mul_of_nonneg_right (le_add_of_nonneg_left zero_le_one) hz))) hx.1) (by positivity)\n      _ ≤ Y := by rw [← mul_assoc, ← mul_assoc];\n                  exact mul_le_of_le_one_left hz hx.2\n  have ht : Y ≤ 2*K * μ (P b) := by\n    have ht' : Y ≤ K* (μ (P b)+μ (b-q.map D)):= calc\n      _ ≤ K*μ (P (q.map D)) := low_le e hq (fun v=> (hv v).2) D\n      _ ≤ _ := by\n        apply mul_le_mul_of_nonneg_left _ hk₀; apply (size_triangle F _ (P b)).trans\n        rw [size_sub_rev F (P (q.map D)) (P b),← map_sub]\n        exact add_le_add le_rfl (size_low ..)\n    linarith only [hu,ht']\n  have hs' : μ (b-q.map D) ≤ K*Y:=\n    ((le_mul_of_one_le_left (size_nonneg F _) (show 1 ≤ 2*K from by linarith only [hk])).trans hu).trans\n      (le_mul_of_one_le_left hz hk)\n  have hs'' : μ b ≤ K*(2*Y) + K*Y :=\n    (size_triangle F b (q.map D)).trans (add_le_add ((hv D).1.trans (mul_le_mul_of_nonneg_left hD hk₀)) hs')\n  refine ⟨?_, hY.trans (ht.trans (mul_le_mul_of_nonneg_right ?_ (size_nonneg F _)))⟩\n  · have hx : (3*K)*(2*K) ≤ s₀ := by nlinarith only [hs₀,sq_nonneg K]\n    calc\n      _ ≤ 3*K*Y := hs''.trans_eq (by ring)\n      _ ≤ 3*K*(2*K*μ (P b)) := mul_le_mul_of_nonneg_left ht (by positivity)\n      _ ≤ _ := by rw [← mul_assoc]; exact mul_le_mul_of_nonneg_right hx (size_nonneg F _)\n  nlinarith only [hk,hs]",
+            "line": 124,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Columns/Cone.lean",
+            "fragment": "L124-L174"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Columns.step_expand",
+            "lines": [
+              124,
+              174
+            ],
+            "conclusion": "`D = vowel F L (x v)`, `mu D <= 2Y`, `Y <= 2K mu (P b)`, `mu b <= 3K Y`, then the two conclusions using `64K^2 <= s`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Columns.step_transverse",
+        "module": "YM.OPE.Columns.Cone",
+        "lines": [
+          176,
+          197
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Columns.step_transverse"
+          },
+          "snippet": {
+            "text": "lemma step_transverse (h : P (x v) = 0) :\n    μ (y v) ≤ s * (((L).val:ℝ)^(d-(e+1)) * μ (x v)) := by\n  let D := vowel F L (x v)\n  obtain ⟨q,hHead,hQ,hv⟩ := hT.leads -- do not shadow H\n  have ht : μ D ≤ ((L).val:ℝ)^(d-(e+1))*μ (x v) := by\n    have ht' := vowel_rest F e L (x v)\n    rw [vowel_low_zero F e h,sub_zero] at ht'; exact ht'\n  have hs : 64*K^2 ≤ s := room hc (i+1) _ (Nat.le_add_right ..)\n  have hk : 1 ≤ K := W.prices _\n  have hg := ε_small hb (i:=i)\n  have hz := (H.levels.params (i+1)).columns_ge\n  have hx : barunit L ≤ 1 := le_trans (le_mul_of_one_le_left hg.1 (by linarith only [hk] : 1 ≤ 2*K)) ((le_mul_of_one_le_right (show 0 ≤ 2*K*barunit L from mul_nonneg (by linarith only [hk]) hg.1) (show 1 ≤ 1+s by linarith only [hz])).trans hg.2)\n  have hw : μ (y v - q.map D) ≤ μ D := calc\n    _ ≤ barunit L*μ (F.core (x v)) := hv v\n    _ ≤ μ (F.core (x v)) := mul_le_of_le_one_left (size_nonneg F _) hx\n    _ ≤ μ (x v) := size_core F (x v)\n    _ ≤ _ := (size_vowel F L _).1\n  calc\n    _ ≤ K*μ D + μ D := (size_triangle F _ (q.map D)).trans (add_le_add (hQ D).1 hw)\n    _ ≤ s * μ D := by\n      rw [show K*μ D+μ D = (K+1)*μ D from by ring]; exact mul_le_mul_of_nonneg_right (by nlinarith only [hs,hk]) (size_nonneg F _)\n    _ ≤ _ := mul_le_mul_of_nonneg_left ht (zero_le_one.trans hz)",
+            "line": 176,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Columns/Cone.lean",
+            "fragment": "L176-L197"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Columns.step_transverse",
+            "lines": [
+              176,
+              197
+            ],
+            "conclusion": "With `P (x v) = 0`, `mu D <= L^(d-(e+1)) mu (x v)` and `mu (y v) <= (K+1) mu D <= s * mu D`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Columns.room",
+        "module": "YM.OPE.Columns.Cone",
+        "lines": [
+          98,
+          99
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Columns.room"
+          },
+          "snippet": {
+            "text": "lemma room (hc : roomCost H.levels W) (i j : ℕ) (h : j ≤ H.levels.clock.J i + 1) :\n    64* (W.K j)^2 ≤ (H.levels.params i).columns := by",
+            "line": 98,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Columns/Cone.lean",
+            "fragment": "L98-L99"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Columns.room",
+            "lines": [
+              98,
+              102
+            ],
+            "conclusion": "`64 * K^2 <= columns` for the admissible levels, the numerical room inequality."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          221
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

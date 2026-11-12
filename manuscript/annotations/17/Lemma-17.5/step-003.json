@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 17.5 step 3",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "The epsilon is carried by `W.small k` and the pair expectation Re<f_i f_j> by `bill`; the displayed inequality is the lattice-variance bound in this form.",
+  "subject": [
+    {
+      "location": {
+        "page": 195,
+        "rect": [
+          0.12026,
+          0.73852,
+          0.75948,
+          0.04829
+        ]
+      },
+      "title": "Lemma 17.5 step 3: Display, p. 195",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 17.5 step 3"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OS.Grid.finite",
+        "module": "YM.Phase.Square",
+        "lines": [
+          15,
+          18
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OS.Grid.finite"
+          },
+          "snippet": {
+            "text": "private lemma finite {X : Type*} [MeasurableSpace X] (μ : Measure X) [IsProbabilityMeasure μ] {n : ℕ} (x : Fin n → X → ℝ) (r : ℝ)\n    (h : ∀ i, Measurable (x i) ∧ ∀ q, |x i q| ≤ r) (A : Fin n → Fin n → ℝ) (hx : ∀ i j, i < j →\n      ∫ q,x i q*x j q∂μ ≤ A i j) :\n    0 ≤ ∑ i, ∑ j, (if i=j then r^2 else if i<j then A i j else A j i) := by",
+            "line": 15,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Phase/Square.lean",
+            "fragment": "L15-L18"
+          },
+          "proof_context": {
+            "declaration": "YM.OS.Grid.finite",
+            "lines": [
+              15,
+              34
+            ],
+            "conclusion": "`finite`: for bounded `x i` with `|x i| <= r` and pair bounds `∫ x i x j <= A i j`, `0 <= sum_{i,j} (if i=j then r^2 else A)`, i.e. 0 <= (q+1) r^2 + 2 sum_{i<j} A i j."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OS.Grid.Covering.square",
+        "module": "YM.Phase.Square",
+        "lines": [
+          90,
+          108
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OS.Grid.Covering.square"
+          },
+          "snippet": {
+            "text": "  have he' k q : 0 ≤ charge (q+1) (W.reserve k) (fun _ _ => a+W.small k) := by\n    let U t := fun i j => event (S:=S) h v x t i j+W.small k\n    apply ge_of_tendsto (charged atTop (q+1) U (fun i j hij => (estimates P h v x p H Y (i.val) (j.val) hij).add_const _))\n    have ht i j (hk : (i:Fin (q+1))<j) : ∀ᶠ t : ℕ in atTop,\n        (Tendsto (fun u : ℕ×ℕ=> bill h v x i j u.1 u.2 t+W.small k) f.fuse (𝓝 (U t i j))) ∧\n        f.late fun N l => ∫ w, W.plots k N l t i w * W.plots k N l t j w∂law G _ (C.beta N l) ≤ bill h v x i j N l t+W.small k := by\n      filter_upwards [hx _ _ (show i.val<j.val from hk),he.fillings k _ _ (show i.val<j.val from hk)] with t hc hh\n      refine ⟨hc.add_const _,?_⟩\n      unfold Extraction.Order.late at *; refine hh.mono fun r hr => hr.mono fun N hN => ?_\n      exact sub_le_iff_le_add'.1 ((abs_le.mp hN).2)\n    filter_upwards [eventually_all.mpr (fun i => eventually_all.mpr (fun j => eventually_all.mpr (ht i j)))] with t hp\n    let B (i : ℕ × ℕ) (p r : ℕ) := bill h v x p r i.1 i.2 t+W.small k\n    apply ge_of_tendsto (charged f.fuse (q+1) B (fun i j h => (hp i j h).1))\n    have heI : ∀ i (j : Fin (q+1)), ∀ _ : i<j, ∀ᶠ u in f.fuse, ∫ w, W.plots k u.1 u.2 t i w * W.plots k u.1 u.2 t j w∂law G _ (C.beta u.1 u.2) ≤ B u i j :=\n      fun i j hij => (hp i j hij).2\n    have hF (i : Fin (q+1)) : ∀ᶠ u in f.fuse, Measurable (W.plots k u.1 u.2 t i) ∧\n        ∀ y, |W.plots k u.1 u.2 t i y| ≤ W.reserve k := he.controls k t i\n    filter_upwards [eventually_all.mpr (fun i => eventually_all.mpr (fun j => eventually_all.mpr (heI i j))),eventually_all.mpr hF] with u hv hl\n    exact finite (law G _ (C.beta u.1 u.2)) (fun j : Fin (q+1) => W.plots k u.1 u.2 t j) (W.reserve k) hl (fun i j => B u i j) hv",
+            "line": 90,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Phase/Square.lean",
+            "fragment": "L90-L108"
+          },
+          "proof_context": {
+            "declaration": "YM.OS.Grid.Covering.square",
+            "lines": [
+              86,
+              116
+            ],
+            "conclusion": "`he'` applies `finite` to the cutoff plots with bound `bill + W.small k` (Re<f_i f_j> + eps) and reserve `W.reserve k` (R_eps), then passes to the limits."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          195
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

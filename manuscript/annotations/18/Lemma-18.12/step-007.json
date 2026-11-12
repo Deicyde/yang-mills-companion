@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 18.12 step 7",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "Both Cauchy data are shown supported at zero by `cauchy_point`, and `data_order` gives the order bound uniformly in `q`, `g`; the approximate unit is `atom ℝ`.",
+  "subject": [
+    {
+      "location": {
+        "page": 217,
+        "rect": [
+          0.12026,
+          0.46302,
+          0.75996,
+          0.05372
+        ]
+      },
+      "title": "Lemma 18.12 step 7: Text, p. 217",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 18.12 step 7"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.Photons.cauchy_point",
+        "module": "YM.TraceExtension.Fock.TimeData",
+        "lines": [
+          86,
+          88
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.Photons.cauchy_point"
+          },
+          "snippet": {
+            "text": "lemma cauchy_point (q : Wave n) (hq : tempered q d) (h : ∀ g, (∀ i, Remote (g i)) → paired_at q g=adjoint_at q g) (i : Fin n) (g : Fin n→ Probe E4)\n    (he : ∀ j, Remote (g j)) (b : ℕ) (f : Probe Space3) (hw : HasCompactSupport ⇑f) (hs : 0∉tsupport f) : data b q g i f=0 := by\n    let w := atom ℝ; let G k := update g i (separate f (timeJet b (w k)))",
+            "line": 86,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Fock/TimeData.lean",
+            "fragment": "L86-L88"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.Photons.cauchy_point",
+            "lines": [
+              86,
+              115
+            ],
+            "conclusion": "With the other slots `Remote`, the time-order-b data `data b q g i f` (b = 0, 1) vanishes for every f with compact support away from 0, obtained from test functions `separate f (timeJet b (atom k))` that are spacelike for large k."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.Photons.data_order",
+        "module": "YM.TraceExtension.Fock.Data",
+        "lines": [
+          101,
+          102
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.Photons.data_order"
+          },
+          "snippet": {
+            "text": "lemma data_order (n b d : ℕ) : ∃ ℓ : ℕ, ∀ (q : Wave n), tempered q d → ∀ (g : Fin n→ Probe E4) (i : Fin n), (∀ f : Probe Space3, HasCompactSupport ⇑f → 0∉tsupport f → data b q g i f=0) → ∀ f, finiteOrder f ℓ → data b q g i f=0 := by\n    let p := dataCost ((d+2)+(b+1))",
+            "line": 101,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Fock/Data.lean",
+            "fragment": "L101-L102"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.Photons.data_order",
+            "lines": [
+              101,
+              114
+            ],
+            "conclusion": "There is a single order `l` (depending on n, b, d only), such that for every tempered `q` and all g, i the data vanishing away from 0 forces `data` to vanish on all tests of finite order `l`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          217
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

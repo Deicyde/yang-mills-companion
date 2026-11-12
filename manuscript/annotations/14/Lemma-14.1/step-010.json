@@ -1,0 +1,145 @@
+{
+  "id": "Lemma 14.1 step 10",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The constant Q_j^cmp is the abstract `ticket` and the requirement is a late-entry bound in the scale s through `readyHere`.",
+  "subject": [
+    {
+      "location": {
+        "page": 125,
+        "rect": [
+          0.12026,
+          0.77345,
+          0.75948,
+          0.03592
+        ]
+      },
+      "title": "Lemma 14.1 step 10: Text, p. 125",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.1 step 10",
+          "quads": [
+            [
+              0.65639,
+              0.77345,
+              0.87974,
+              0.77345,
+              0.87974,
+              0.78911,
+              0.65639,
+              0.78911
+            ],
+            [
+              0.12026,
+              0.79054,
+              0.3681,
+              0.79054,
+              0.3681,
+              0.80936,
+              0.12026,
+              0.80936
+            ]
+          ]
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Rank.Ship.Account",
+        "module": "YM.Next.RANK.Voucher",
+        "lines": [
+          93,
+          94
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Rank.Ship.Account"
+          },
+          "snippet": {
+            "text": "def Account (P : Wait Z) (O : HaarBudget G) (b : ℝ) (j k : ℕ) := ∀ s : ℝ,P.readyHere j ≤ s →\n    ticket O (p.profile j) k ≤ amount Z k s ∧ benchCost Z b j s ≤ P.window j s",
+            "line": 93,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Voucher.lean",
+            "fragment": "L93-L94"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Rank.Ship.Account",
+            "lines": [
+              93,
+              94
+            ],
+            "conclusion": "`Account` requires `ticket ≤ amount Z k s = log P(preHat s)/(16k)` for `s ≥ readyHere j`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Rank.Ship.able",
+        "module": "YM.Next.RANK.Voucher",
+        "lines": [
+          84,
+          89
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Rank.Ship.able"
+          },
+          "snippet": {
+            "text": "lemma able (h : G.Simple) (k : ℕ) (hk : 0 < k) : Tendsto (amount Z k) atTop atTop := by\n  have hv : Tendsto (preHat Z) atTop atTop := Filter.tendsto_atTop_add_const_left _ _\n    (Tendsto.const_mul_atTop (Gauge.slopeConstant_pos h) tendsto_id)\n  have he := Real.tendsto_exp_atTop.comp ((tendsto_pow_atTop (n:=2) (by decide)).comp\n    (Real.tendsto_log_atTop.comp (Real.tendsto_log_atTop.comp hv)))\n  exact (Real.tendsto_log_atTop.comp he).atTop_div_const (by positivity : 0 < (16:ℝ)*k)",
+            "line": 84,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Voucher.lean",
+            "fragment": "L84-L89"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Rank.Ship.able",
+            "lines": [
+              84,
+              89
+            ],
+            "conclusion": "`amount Z k s → ∞`, so the bound holds beyond an entry."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          125
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

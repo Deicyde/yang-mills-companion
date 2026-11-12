@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 19.21 step 1",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The citations are applied at several places (`project_through` in `precision_project`, `Matchable.layer` in `outputs`, the telescope in `Funds.times`); no single lines state the set-up.",
+  "subject": [
+    {
+      "location": {
+        "page": 235,
+        "rect": [
+          0.12026,
+          0.68636,
+          0.75948,
+          0.03713
+        ]
+      },
+      "title": "Lemma 19.21 step 1: Text, p. 235",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 19.21 step 1"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Layers.precision_project",
+        "module": "YM.Contacts.Layers.Signed",
+        "lines": [
+          35,
+          42
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Layers.precision_project"
+          },
+          "snippet": {
+            "text": "lemma precision_project (h : Precision Z M φ T A u c e) (hf : Fits M φ w x A) (hx : x∈ A)\n   (hU : 0 ≤ u)(he : ∃ c,Fine M φ T A 1 c e) : Fine M φ T A u (c+maxFee M w+w*u) (statedProject M w x e) := by\n  apply Fine.field hT hx (p:=fun i=> M.project (x i) w (e i))\n  simp_rw [← M.project_through, add_sub_cancel_right]; refine RateLE.sum hT fun j hj=>?_\n  apply rate_linear (LinearMap.toContinuousLinearMap (Z.sector.derivatives.rise (show j.val ≤ w from Nat.le_of_lt_succ j.isLt))) hT\n    (f:=fun i=> M.row (x i) j (e i))\n  refine (Against.row M hT e h hU zero_le_one (hf.down (Nat.le_of_lt_succ j.isLt)) he).mono ?_\n  rw [mul_one]; exact add_le_add_right (Finset.single_le_sum (f:=fun j:Fin (w+1)=> probeFee M j) (fun j _=>Finset.sum_nonneg (f:=fun i:(M.tests j).probes=>(sigma i.val.letter:ℝ)) fun _ _=>Nat.cast_nonneg _) hj) _",
+            "line": 35,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Layers/Signed.lean",
+            "fragment": "L35-L42"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Layers.precision_project",
+            "lines": [
+              35,
+              42
+            ],
+            "conclusion": "Projecting a precision-controlled expression to degree `w` costs `maxFee + w*u` more, using the contact split `project_through`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Layers.Funds.outputs",
+        "module": "YM.Contacts.Layers.Signed",
+        "lines": [
+          47,
+          54
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Layers.Funds.outputs"
+          },
+          "snippet": {
+            "text": "lemma Funds.outputs (h : Funds Z M φ T A s c e) (hs : 0 ≤ s) (hv : s ≤ 1) (hp : Fits M φ w x A) : RateLE φ T (fun i=> M.row (x i) w (e i)) (c-w*s):= by\n  rcases hs.eq_or_lt with h'|hs\n  · subst s; simpa only [mul_zero, add_zero, sub_zero] using Against.row M hT e (h.tests hT H le_rfl le_rfl hv) le_rfl le_rfl hp h.loose -- dot order inspect\n  obtain ⟨g,hh,hq⟩:= (Matchable.layer hT H ha hs le_rfl hv hx h).replaces (c-w*s-probeFee M w)\n  have hw:= Against.row M hT (e-g) hq le_rfl zero_le_one hp (loose_diff h.loose ((hh.fine hT hx).increase_layer hv))\n  rw [mul_one,sub_add_cancel] at hw\n  refine (hw.add (hh.row hT hs.le w) hT).congr ?_\n  filter_upwards with i; simp",
+            "line": 47,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Layers/Signed.lean",
+            "fragment": "L47-L54"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Layers.Funds.outputs",
+            "lines": [
+              47,
+              54
+            ],
+            "conclusion": "The contact row bound uses the layer-matching lemma (`Matchable.layer`, power-separated tests) at `s > 0` and the direct test at `s = 0`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          235
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

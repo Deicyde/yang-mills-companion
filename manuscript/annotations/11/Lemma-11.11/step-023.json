@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 11.11 step 23",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "[L] carries the link comparison (`Cops`) and the chord split (`coarse_split`); the per-plaquette coefficient bound C l^{-2} and the averaging over straight paths are not in these lines.",
+  "subject": [
+    {
+      "location": {
+        "page": 67,
+        "rect": [
+          0.11962,
+          0.49261,
+          0.76258,
+          0.1256
+        ]
+      },
+      "title": "Lemma 11.11 step 23: Text, p. 67",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 11.11 step 23"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Bid.Cops",
+        "module": "YM.Bid.Energy",
+        "lines": [
+          44,
+          47
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Bid.Cops"
+          },
+          "snippet": {
+            "text": "def Cops {S : StepData c f} (U : Config G f) (V : Config G c) (Q : Config G c) (e : Bond f) (γ : ℝ) :=\n    let i:= S.ratio.parent e.1\n    G.chord (U e*(replica S.ratio V e)⁻¹) ≤ γ * port S i U +\n      if i=S.ratio.parent (e.1+Lattice.step e.2) then 0 else wire Q V (i,e.2)",
+            "line": 44,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Bid/Energy.lean",
+            "fragment": "L44-L47"
+          },
+          "proof_context": {
+            "declaration": "YM.Bid.Cops",
+            "lines": [
+              44,
+              47
+            ],
+            "conclusion": "A fine link differs from its replicated coarse link by at most `gamma * port S i U` plus the boundary mismatch `wire Q V (i, dir)` (nothing inside a block)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.E07.coarse_split",
+        "module": "YM.Work.E07.Local",
+        "lines": [
+          176,
+          183
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.E07.coarse_split"
+          },
+          "snippet": {
+            "text": "lemma coarse_split (H : MacroStore S G N) (hD : 0 ≤ D) (hW : 0 ≤ W)\n    (hp : Stores.Plot A U k V x W) (hB : 1 + N ≤ radiusB x) (p : Cell c)\n    (hi : p.1 ∈ A.dome (3 * radiusB x))\n    (hq : usable S U p.1 k → toll V p ≤ fuel (S.prediction U k) V p.1 p.2 +\n          D / (S.patch.L.val : ℝ)^2 * port S p.1 U) :\n    let u := fiery G x S.patch.L\n    toll V p ≤ macroSmall S.patch.J D S.patch.L W * u + macroExcess S D\n      (picked (A.swell U u) (toll U)) (picked A.aisles (wire (S.prediction U k) V)) p := by",
+            "line": 176,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/E07/Local.lean",
+            "fragment": "L176-L183"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.E07.coarse_split",
+            "lines": [
+              176,
+              210
+            ],
+            "conclusion": "`toll V p <= macroSmall * t + macroExcess`, splitting each fine toll into its part at most `t` and its excess, and each mismatch into its part at most `2*W*t` and its excess."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          67
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; a sample check changed it from exactMatch; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

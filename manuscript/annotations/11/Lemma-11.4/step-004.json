@@ -1,0 +1,83 @@
+{
+  "id": "Lemma 11.4 step 4",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 49,
+        "rect": [
+          0.12026,
+          0.12928,
+          0.75948,
+          0.03648
+        ]
+      },
+      "title": "Lemma 11.4 step 4: Display, p. 49",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 11.4 step 4"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Branch.min_iff",
+        "module": "YM.Branch.Center",
+        "lines": [
+          76,
+          88
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Branch.min_iff"
+          },
+          "snippet": {
+            "text": "  have hk (V : G.El) :\n      (G.repDim:ℝ)*2*(∑ i,w i*G.price (f i * V⁻¹)) = (∑ i, w i*‖G.mat (f i)‖^2)-‖m‖^2+‖m-G.mat V‖^2 := by\n    calc\n      _ = ∑ i, w i * ((G.repDim:ℝ)*(2*G.price (f i*V⁻¹))) := by\n        rw [Finset.mul_sum]; apply Finset.sum_congr rfl; intros; ring\n      _ = ∑ i, w i * ‖G.mat (f i)-G.mat V‖^2 := by simp only [price_diff]\n      _ = _ := by\n        simp only [norm_sub_sq_real, mul_add, mul_sub, Finset.sum_add_distrib, Finset.sum_sub_distrib]\n        rw [← Finset.sum_mul,hw]\n        unfold m\n        rw [sum_inner]; simp only [real_inner_smul_left, Finset.mul_sum, one_mul]\n        simp_rw [mul_left_comm (w _) 2]\n        abel",
+            "line": 76,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Branch/Center.lean",
+            "fragment": "L76-L88"
+          },
+          "proof_context": {
+            "declaration": "YM.Branch.min_iff",
+            "lines": [
+              72,
+              93
+            ],
+            "conclusion": "`repDim*2*∑ w i * price (f i * V⁻¹) = ∑ w i * ‖mat (f i)‖^2 - ‖m‖^2 + ‖m - mat V‖^2`, the expansion of the square."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          49
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
+      }
+    }
+  }
+}

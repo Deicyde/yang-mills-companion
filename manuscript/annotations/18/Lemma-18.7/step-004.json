@@ -1,0 +1,161 @@
+{
+  "id": "Lemma 18.7 step 4",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 215,
+        "rect": [
+          0.12026,
+          0.44374,
+          0.76194,
+          0.09085
+        ]
+      },
+      "title": "Lemma 18.7 step 4: Text, p. 215",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 18.7 step 4"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.Wick.euclidean_excludes",
+        "module": "YM.TraceExtension.Wick.Refute",
+        "lines": [
+          75,
+          80
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.Wick.euclidean_excludes"
+          },
+          "snippet": {
+            "text": "lemma euclidean_excludes (ht : EuclideanAsymptotic F A) (hA : 0<A) (t : Collection) :\n    ¬ euclidean F =ᶠ[past] atPoint t := by\n    intro h; apply hA.ne'\n    apply no_powerlog (real_profile t 0)\n    have he : Tendsto _ _ (𝓝 (A:ℂ).re) := (Complex.continuous_re.tendsto _).comp ht\n    apply he.congr'; filter_upwards [h] with i hi; rw [comp_apply]; rw [hi,Complex.real_smul, mul_re,ofReal_re,ofReal_im]; ring",
+            "line": 75,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Wick/Refute.lean",
+            "fragment": "L75-L80"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.Wick.euclidean_excludes",
+            "lines": [
+              75,
+              80
+            ],
+            "conclusion": "If `EuclideanAsymptotic F A` with `0 < A`, then `euclidean F` is not eventually equal on `𝓝[>] 0` to `atPoint t` for any finite collection `t`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.Wick.no_powerlog",
+        "module": "YM.TraceExtension.Wick.Log",
+        "lines": [
+          96,
+          108
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.Wick.no_powerlog"
+          },
+          "snippet": {
+            "text": "lemma no_powerlog {f : ℝ→ℝ} {A : ℝ} (hp : AtOrder f 0) (ht : Tendsto (fun s=> (s^8 * (Real.log s⁻¹)^2)*f s) past (𝓝 A)) : A=0 := by\n    obtain ⟨u,w,h⟩:=hp\n    apply board_limit w\n    have he : Tendsto life atTop past := tendsto_nhdsWithin_iff.mpr ⟨tendsto_pow_atTop_nhds_zero_of_lt_one (by norm_num) (by norm_num), Eventually.of_forall fun i=> by change 0<life i; unfold life; positivity⟩\n    have hh := ht.comp he\n    have hy (n) : share (life n)=act ⟨0,0⟩*P ⟨0,0⟩ n := by\n       rw [← singleValue]; simp [joint,tile]\n    have hv : Tendsto (fun n=> share (life n)) atTop (𝓝 0) := by\n        simp_rw [hy]; simpa only [mul_zero] using (negligible ⟨0,0⟩ (by norm_num [degree])).const_mul (act ⟨0,0⟩)\n    have hr : Tendsto (fun n=> share (life n)*(f-u) (life n)) atTop (𝓝 0) := by\n        apply ((isBigO_of_le atTop (f:=fun n=> share (life n)) (g:=fun n=> share (life n)) (fun _=> le_rfl)).mul (h.comp_tendsto he)).trans_tendsto\n        simpa only [tile,zpow_zero, Function.comp_apply,mul_one] using hv\n    have hq:= hh.sub hr; rw [sub_zero] at hq; apply hq.congr; intro n; change share _ * f _ - share _ * (f _- u _)=_; ring",
+            "line": 96,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Wick/Log.lean",
+            "fragment": "L96-L108"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.Wick.no_powerlog",
+            "lines": [
+              96,
+              108
+            ],
+            "conclusion": "If `f` is a finite power-log expansion with `AtOrder f 0` and `s^8 log(1/s)^2 f(s) → A`, then `A = 0`, by comparing the leading terms."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.Wick.real_profile",
+        "module": "YM.TraceExtension.Wick.Refute",
+        "lines": [
+          18,
+          22
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.Wick.real_profile"
+          },
+          "snippet": {
+            "text": "lemma real_profile (x : Collection) : Expands (fun p=>(atPoint x p).re) := by\n    induction x with\n    | nil => simp only [atPoint,List.map_nil,List.sum_nil,zero_re]; exact own board.zero_mem\n    | cons y l ih =>\n        simp only [atPoint,List.map_cons,List.sum_cons, add_re,mul_re,ofReal_re,ofReal_im,mul_zero,sub_zero]; exact Expands.plus (Expands.scale y.2.moments_expand y.1.re) ih",
+            "line": 18,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Wick/Refute.lean",
+            "fragment": "L18-L22"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.Wick.real_profile",
+            "lines": [
+              18,
+              22
+            ],
+            "conclusion": "The real part of `atPoint x` is `Expands`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          215
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

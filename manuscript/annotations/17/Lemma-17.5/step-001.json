@@ -1,0 +1,201 @@
+{
+  "id": "Lemma 17.5 step 1",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "Both displayed identities are the two Lean statements, the reflection one stated as `reflects` and the rotation one as `B06`.",
+  "subject": [
+    {
+      "location": {
+        "page": 195,
+        "rect": [
+          0.12026,
+          0.62421,
+          0.75948,
+          0.02296
+        ]
+      },
+      "title": "Lemma 17.5 step 1: Text, p. 195",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 17.5 step 1"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Org.Phase.reflects",
+        "module": "YM.Org.Phase",
+        "lines": [
+          19,
+          20
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Org.Phase.reflects"
+          },
+          "snippet": {
+            "text": "def reflects (V : Chamber S timeAxis) (A : Spread V) := ∀ w : C.book.Word, ∀ h : Word.distinct w,\n    M A w h=M A (Grid.anti w) (Grid.apart h)",
+            "line": 19,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Org/Phase.lean",
+            "fragment": "L19-L20"
+          },
+          "proof_context": {
+            "declaration": "YM.Org.Phase.reflects",
+            "lines": [
+              19,
+              20
+            ],
+            "conclusion": "`reflects` states `M A w h = M A (Grid.anti w)` for every distinct word, i.e. M^0(theta w) = M^0(w)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.B05.answer",
+        "module": "YM.Work.B05",
+        "lines": [
+          90,
+          115
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.B05.answer"
+          },
+          "snippet": {
+            "text": "theorem answer : Bid.B05 := by\n  intro b G C S F s hY X hc V A hs t w hw\n  let u := Word.tokens w\n  let p := fun i => (u i).1\n  let v : C.book.Vector p := fun i => (u i).2\n  let x := Word.positions w\n  obtain ⟨P,hP⟩ := t.array _ p x\n  obtain ⟨Q,hQ⟩ := t.array _ p (reflectX x)\n  have he : P = Q.compLinearMap (fun i => C.book.mirrorGroup (p i) mir) := by\n    apply MultilinearMap.pi_ext\n    intro j\n    apply MultilinearMap.ext_ring\n    simp only [MultilinearMap.compLinearMap_apply, hP, hQ]\n    refine real_depot t b s X hc hs hY p _ (fun i => ?_) hw\n    change star (Pi.single (j i) 1 : _ → ℂ) = Pi.single (j i) 1\n    ext m\n    by_cases hm : m=j i <;> simp [hm]\n  have h1 : realize (fun i => ⟨p i,v i⟩) x = w := Word.rebuilt w\n  have h2 : realize (L:=C.book) (fun i => ⟨p i,C.book.mirrorGroup (p i) mir (v i)⟩) (reflectX x)=Grid.anti (C:=C) w := by\n    refine Eq.trans ?_ (congr_arg (Grid.anti (C:=C)) h1)\n    unfold Grid.anti act realize; rw [List.map_ofFn]; rfl\n  have hg := DFunLike.congr_fun he v\n  simp only [hP,MultilinearMap.compLinearMap_apply,hQ,depot,dif_pos (show x ∈ conf _ from hw),dif_pos (show reflectX x ∈ conf _ from Points.move_in _ hw)] at hg\n  exact (show ∀ y z : C.book.Word, ∀ (hy : distinct y) (hz : distinct z), realize (L:=C.book) (fun i => ⟨p i,v i⟩) x=y →\n    realize (L:=C.book) (fun i => ⟨p i,C.book.mirrorGroup (p i) mir (v i)⟩) (reflectX x)=z → M A y hy=M A z hz from\n    fun _ _ _ _ h h' => by subst_vars; exact hg) _ _ _ _ h1 h2",
+            "line": 90,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/B05.lean",
+            "fragment": "L90-L115"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.B05.answer",
+            "lines": [
+              90,
+              115
+            ],
+            "conclusion": "`answer` proves `Phase.reflects V A` by the real-grid-word argument and the multilinear extension to all words."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Bid.B06",
+        "module": "YM.Bid.Phase",
+        "lines": [
+          68,
+          70
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Bid.B06"
+          },
+          "snippet": {
+            "text": "def B06 : Prop := ∀ {G : Gauge} {C : Family G} {S : Table C.book} (V : Chamber S timeAxis) (A : Spread V) (T : Rotation S)\n    (P : DiffPlan S) (H : S.Hierarchy), T.Oriented S → T.Laws P H.spin → Theme V A → Steady V → Phase.reflects (C:=C) V A →\n    ∀ K : Ortho, ∀ w,∀ h : distinct w, ∀ p, M A w h=M A (Ground.rotate w T K) p",
+            "line": 68,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Bid/Phase.lean",
+            "fragment": "L68-L70"
+          },
+          "proof_context": {
+            "declaration": "YM.Bid.B06",
+            "lines": [
+              68,
+              70
+            ],
+            "conclusion": "`B06` states `M A w h = M A (Ground.rotate w T K) p` for every orthogonal `K` and distinct word `w`, i.e. M^0(hw) = M^0(w)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.B06.answer",
+        "module": "YM.Work.B06",
+        "lines": [
+          238,
+          242
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.B06.answer"
+          },
+          "snippet": {
+            "text": "theorem answer : YM.Bid.B06 := by\n  intro G C S V A T P H o law B st hr k w h p\n  have hk := theta_generates (individually A T H o) (one_individual A T H o law B hr)\n    (product_individual A T H o law) (conjugate_individual A T H o law B st hr) k\n  exact hk (⟨w,h⟩ : Row.Core _)",
+            "line": 238,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/B06.lean",
+            "fragment": "L238-L242"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.B06.answer",
+            "lines": [
+              238,
+              242
+            ],
+            "conclusion": "`answer` proves the rotation invariance of `M` from `theta_generates` and the invariance under conjugates of `theta`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          195
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

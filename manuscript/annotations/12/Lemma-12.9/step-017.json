@@ -1,0 +1,161 @@
+{
+  "id": "Lemma 12.9 step 17",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 86,
+        "rect": [
+          0.11962,
+          0.0962,
+          0.76012,
+          0.04006
+        ]
+      },
+      "title": "Lemma 12.9 step 17: Text, p. 86",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 12.9 step 17"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.absoluteGeode",
+        "module": "YM.Next.STATIONARY.OneLoop.MomentumIntegral",
+        "lines": [
+          374,
+          391
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.absoluteGeode"
+          },
+          "snippet": {
+            "text": "  have ht' : ‖∫ x in I,(g x-H x)‖≤ D*(2*Real.pi^2+Real.pi^2) := by\n    let M x := D*(‖(x:Gaia)‖^3)⁻¹\n    let P x := D*μ^2*(‖(x:Gaia)‖^6)⁻¹\n    have hm v (hv : v∈I) : ‖g v-H v‖ ≤ M v+P v := by\n      rw [Real.norm_eq_abs,show g v-H v=_ from (Complex.sub_re (keelRay F b (exileE v)) (H v:ℂ)).symm]\n      exact (Complex.abs_re_le_norm _).trans ((hk _ (cradleFront _ (shell_on hv)) hv.1.le).trans_eq (by rw [div_eq_mul_inv,div_eq_mul_inv]; rfl))\n    have hx (n : ℕ) : IntegrableOn (fun x:Gaia=> (‖x‖^n)⁻¹) I volume := by simpa using geoS hμ (fun _=>1) continuous_const n\n    have hM : IntegrableOn M I volume := (hx 3).const_mul _; have hP : IntegrableOn P I volume := (hx 6).const_mul _\n    refine (norm_integral_le_of_norm_le (μ:=volume.restrict I) (g:=fun x=> M x+P x) (hM.add hP) ?_).trans ?_\n    · exact (ae_restrict_mem hI).mono fun i hi => hm i hi\n    rw [integral_add hM hP]; unfold M P I\n    rw [integral_const_mul,integral_const_mul,(peel_p μ hμ hp).1,(peel_p μ hμ hp).2]\n    rw [mul_add]; apply add_le_add\n    · refine mul_le_mul_of_nonneg_left ?_ hD; exact mul_le_of_le_one_right (by positivity) (by linarith)\n    calc\n     _ = D*Real.pi^2*(1-μ^2) := by field_simp\n     _ ≤ _ := mul_le_of_le_one_right (by positivity) (by nlinarith)\n  have he : (∫ x in boundsEarth,g x) = ((∫ x in L,g x)+(∫ x in I,g x))+(∫ x in Q,g x) := by",
+            "line": 374,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/OneLoop/MomentumIntegral.lean",
+            "fragment": "L374-L391"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.absoluteGeode",
+            "lines": [
+              346,
+              408
+            ],
+            "conclusion": "The shell error is at most `D (2π^2 + π^2)` using `peel_p` for the integrals of `κ^-3` and `μ^2 κ^-6`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.absoluteGeode",
+        "module": "YM.Next.STATIONARY.OneLoop.MomentumIntegral",
+        "lines": [
+          362,
+          367
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.absoluteGeode"
+          },
+          "snippet": {
+            "text": "  have hB1 : ‖∫ x in L,g x‖≤A*(Real.pi^2/2) := by\n    have hx x (he : x∈L) : ‖g x‖≤ A/μ^4 := by\n      exact (hE x (hl.trans hy he)).trans (div_le_div_of_nonneg_left hA (pow_pos hμ 4) (pow_le_pow_left₀ hμ.le (le_add_of_nonneg_left (norm_nonneg _)) 4))\n    refine (norm_setIntegral_le_of_norm_le_const ?_ hx).trans_eq ?_\n    · exact (isCompact_closedBall ..).measure_lt_top\n    unfold L; rw [solidGaia hμ.le]; field_simp",
+            "line": 362,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/OneLoop/MomentumIntegral.lean",
+            "fragment": "L362-L367"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.absoluteGeode",
+            "lines": [
+              346,
+              408
+            ],
+            "conclusion": "On `‖k‖ ≤ μ` the integral is at most `A π^2/2` (bound `A/μ^4`, volume `μ^4 π^2/2` by `solidGaia`)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.absoluteGeode",
+        "module": "YM.Next.STATIONARY.OneLoop.MomentumIntegral",
+        "lines": [
+          368,
+          373
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.absoluteGeode"
+          },
+          "snippet": {
+            "text": "  have hB2 : ‖∫ x in Q,g x‖ ≤ A*volume.real boundsEarth := by\n    have hx x (he : x∈Q) : ‖g x‖≤ A := by\n      have hh : 1≤‖x‖ := le_of_lt (lt_of_not_ge (fun h=> he.2 (by simpa [B] using h)))\n      exact (hE x he.1).trans (div_le_self hA (one_le_pow₀ (by linarith)))\n    have hh : Q ⊆ boundsEarth := fun _ ht=> ht.1\n    exact (norm_setIntegral_le_of_norm_le_const ((measure_mono hh).trans_lt (lt_top_iff_ne_top.2 earth_oaks)) hx).trans (mul_le_mul_of_nonneg_left (measureReal_mono hh earth_oaks) hA)",
+            "line": 368,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/OneLoop/MomentumIntegral.lean",
+            "fragment": "L368-L373"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.absoluteGeode",
+            "lines": [
+              346,
+              408
+            ],
+            "conclusion": "Outside the unit ball the integral is at most `A * volume boundsEarth`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          86
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
+      }
+    }
+  }
+}

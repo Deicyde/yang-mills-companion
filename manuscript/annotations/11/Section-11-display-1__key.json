@@ -1,0 +1,158 @@
+{
+  "id": "Section 11 display 1",
+  "kind": "display",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 47,
+        "rect": [
+          0.12026,
+          0.78664,
+          0.75948,
+          0.02569
+        ]
+      },
+      "title": "Display, p. 47",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Section 11 display 1"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.Patch.axial",
+        "module": "YM.RG.Patch",
+        "lines": [
+          102,
+          103
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.Patch.axial"
+          },
+          "snippet": {
+            "text": "def axial (U : CoverConfig G) (r : P.FrameTag) (x : P.Points) :=\n  travel U r.1.val (route r.1.val x.val r.2)",
+            "line": 102,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/RG/Patch.lean",
+            "fragment": "L102-L103"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.Patch.axial",
+            "lines": [
+              102,
+              103
+            ],
+            "conclusion": "`axial U (z,o) y` is the transport `travel U z (route z y o)` along the route from the tag point z to y that changes the axes in the order o, which is g_y^{z,o}."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.Patch.frame",
+        "module": "YM.RG.Patch",
+        "lines": [
+          153,
+          155
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.Patch.frame"
+          },
+          "snippet": {
+            "text": "def frame (C : KernelChoices) (U : CoverConfig G) (t : P.FrameTag) : P.Frame G := by\n  classical\n  exact if P.usesMin C U then P.selected U else fun x => (P.axial U t P.center)⁻¹ * P.axial U t x",
+            "line": 153,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/RG/Patch.lean",
+            "fragment": "L153-L155"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.Patch.frame",
+            "lines": [
+              153,
+              155
+            ],
+            "conclusion": "On the axial branch the frame is `(axial U t center)⁻¹ * axial U t x`, which is h_y^{z,o} = (g_0^{z,o})^{-1} g_y^{z,o} with the patch center as 0."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.Patch.axialCost",
+        "module": "YM.RG.Patch",
+        "lines": [
+          137,
+          141
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.Patch.axialCost"
+          },
+          "snippet": {
+            "text": "def axialCost (U : CoverConfig G) (t : P.FrameTag) :=\n  ∑ x : P.Points, ∑ i : Axis,\n    if h : x.val + step i ∈ P.sites then\n      G.chord (P.axial U t x * U (x.val,i) * (P.axial U t ⟨x.val + step i,h⟩)⁻¹)\n    else 0",
+            "line": 137,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/RG/Patch.lean",
+            "fragment": "L137-L141"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.Patch.axialCost",
+            "lines": [
+              137,
+              141
+            ],
+            "conclusion": "The summand `axial U t x * U (x,i) * (axial U t (x+step i))⁻¹` is the link coordinate U_{(y,a)}^{z,o} = g_y U(y,a) g_{y+e_a}^{-1}, taken over internal positive links."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          47
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      }
+    }
+  }
+}

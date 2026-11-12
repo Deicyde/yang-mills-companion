@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 12.9 step 6",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "The same coefficient `poleVec` is obtained, but through a quotient-rule formula for the second derivative (`divCatch`) instead of expanding the denominator as a power series in `t`.",
+  "subject": [
+    {
+      "location": {
+        "page": 85,
+        "rect": [
+          0.1198,
+          0.3263,
+          0.75994,
+          0.03531
+        ]
+      },
+      "title": "Lemma 12.9 step 6: Text, p. 85",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 12.9 step 6"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.haloRate",
+        "module": "YM.Next.STATIONARY.OneLoop.Bubbles",
+        "lines": [
+          138,
+          141
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.haloRate"
+          },
+          "snippet": {
+            "text": "  rw [flare_tape hU, flare_tape hV, divCatch D U (laxa_green k) analyticAt_const hx, divCatch D M (laxa_green k) he hx]; rw [show flareY 1 D= _ from hh ▸ (binomialV ..).2,show flareY 2 D=_ from hh ▸ (binomialV ..).1]\n  rw [show flareY 2 M=_ from hm ▸ (binomialV ..).1,show flareY 1 M=_ from hm ▸ (binomialV ..).2,show flareY 2 U=0 from flare_oneZ _ (by decide), show flareY 1 U=0 from flare_oneZ _ (by decide),ht]\n  have he : perL k ^ 2=-4*(k 1:ℂ)^2 := by unfold perL tachy; linear_combination 4*(k 1:ℂ)^2 * Complex.I_mul_I\n  unfold U M C L x; rw [he,pebbFl]; unfold k poleVec; push_cast; field_simp [hp.ne']; ring",
+            "line": 138,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/OneLoop/Bubbles.lean",
+            "fragment": "L138-L141"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.haloRate",
+            "lines": [
+              127,
+              141
+            ],
+            "conclusion": "The proof differentiates the quotient with `divCatch`, using `laxa k t = pebb k + 2 k_0 t + t^2` and `binomialV`, and ends at `poleVec` after `perL k ^2 = -4 k_1^2`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.axa",
+        "module": "YM.Next.STATIONARY.OneLoop.Bubbles",
+        "lines": [
+          79,
+          80
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.axa"
+          },
+          "snippet": {
+            "text": "lemma axa (x : Track) (t : ℝ) : laxa x t=pebb x+2*(t:ℂ)*(x 0:ℂ)+(t:ℂ)^2 := by\n  unfold laxa pebb; simp [Fin.sum_univ_succ]; ring",
+            "line": 79,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/OneLoop/Bubbles.lean",
+            "fragment": "L79-L80"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.axa",
+            "lines": [
+              79,
+              80
+            ],
+            "conclusion": "`laxa x t = pebb x + 2 t x_0 + t^2`, the denominator `|k+te_1|^2`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          85
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "id": "Lemma 10.2 step 22",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Agreement of the derivatives through order d at 0 of the composition with the scaled jet is the O(|X|^{d+1}) Taylor remainder in another encoding, by the same Taylor argument; the difference is only the form of the remainder statement.",
+  "subject": [
+    {
+      "location": {
+        "page": 42,
+        "rect": [
+          0.12026,
+          0.29067,
+          0.75948,
+          0.03713
+        ]
+      },
+      "title": "Lemma 10.2 step 22: Text, p. 42",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 10.2 step 22"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.G05.recovery_projects",
+        "module": "YM.Work.G05",
+        "lines": [
+          75,
+          100
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.G05.recovery_projects"
+          },
+          "snippet": {
+            "text": "  have hleft : (fun x => (lumin p ∘ mapped B) (H.links d J x)) = R ∘ (blockTaylor d f ∘ W) := by\n    funext x\n    change lumin p (mapped B (H.links d J x)) = _\n    rw [hw]; exact hv (W x)\n  have hright : (fun x => read (scaleJet J x) v.val) = R ∘ A := funext fun x => (racts v _).symm\n  have hc : ContDiffAt ℝ (d : WithTop ℕ∞) (blockTaylor d f ∘ W) 0 :=\n    (blockTaylor_contDiff d f _).comp_contDiffAt 0 hW\n  have ht : Tendsto A (𝓝 0) (𝓝 0) := by simpa only [h0] using hA.continuousAt.tendsto\n  have hg : f ∘ W =ᶠ[𝓝 0] A := ht.eventually he\n  have hj : ∀ k ≤ d, iteratedFDeriv ℝ k (blockTaylor d f ∘ W) 0 = iteratedFDeriv ℝ k A 0 := by\n    intro k hk\n    refine Eq.trans (b := iteratedFDeriv ℝ k (f ∘ W) 0) ?_ ((hg.iteratedFDeriv ℝ k).eq_of_nhds)\n    refine jets_comp hW hW (blockTaylor_contDiff d f _).contDiffAt ?_ rfl (fun _ _ => rfl) ?_ k hk\n    · rw [hz]; exact hf\n    · rw [hz]; exact blockTaylor_jets hf\n  have hi : (blockTaylor d f ∘ W) 0 = A 0 := by\n    simp only [comp_apply, hz, blockTaylor_zero]\n    have hu := hg.eq_of_nhds\n    rwa [comp_apply,hz] at hu\n  refine ⟨?_,?_,fun k hk => ?_⟩\n  · change ContDiffAt _ _ (fun x => (lumin p ∘ mapped B) (H.links d J x)) 0\n    rw [hleft]; exact hr.comp_contDiffAt 0 hc\n  · rw [hright]; exact hr.comp_contDiffAt 0 hA\n  · rw [hleft,hright]\n    unfold iteratedDeriv\n    rw [jets_comp hc hA hr.contDiffAt hr.contDiffAt hi hj (fun _ _ => rfl) k hk]",
+            "line": 75,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/G05.lean",
+            "fragment": "L75-L100"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.G05.recovery_projects",
+            "lines": [
+              47,
+              100
+            ],
+            "conclusion": "The Taylor polynomial of `f` composed with the scaled measurements `W` agrees with the scaled jet `A` through order d, derivatives of `blockTaylor d f ∘ W` and `A` at 0 coincide."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          42
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; a re-check of closeMatch records kept it; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
+      }
+    }
+  }
+}

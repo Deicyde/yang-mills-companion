@@ -1,0 +1,180 @@
+{
+  "id": "Lemma 12.10 step 3",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "[L] has the (0,1)-plane chords equal to `G.chord u`, health, evenness as the hypothesis `2 ∣ n.val` and the direct lower bound with nonnegative remaining terms; it bounds every other chord and every slot only by 4h <= threshold, so the claims that other plaquettes have chord zero and slots have norm at most h_pr <= 1/4 are not there.",
+  "subject": [
+    {
+      "location": {
+        "page": 87,
+        "rect": [
+          0.12026,
+          0.81833,
+          0.76244,
+          0.07482
+        ]
+      },
+      "title": "Lemma 12.10 step 3: Text, pp. 87–88",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 12.10 step 3#0"
+        }
+      }
+    },
+    {
+      "location": {
+        "page": 88,
+        "rect": [
+          0.12026,
+          0.0962,
+          0.75948,
+          0.04006
+        ]
+      },
+      "title": "Lemma 12.10 step 3: Text, pp. 87–88",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 12.10 step 3#1"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVNext.CouplingReset.direct_probe",
+        "module": "YM.UVNext.COUPLING_RESET.Probe",
+        "lines": [
+          70,
+          87
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVNext.CouplingReset.direct_probe"
+          },
+          "snippet": {
+            "text": "private lemma direct_probe (D : PathData G) (A : Clip) (P : BudgetPoint) (u : G.El) (he : 2 ∣ n.val)\n    (hf : ∀ p, G.chord (faceValue (stripe u he) p) ≤ P.threshold) (s : Signed) :\n    sites n * (A.direct * G.chord u ^ 2 / 2) ≤ ∑ p, D.baseTerm A P (pull s 0 (stripe u he)) p := by\n  let F (U : Config G n) p := A.direct * G.chord (faceValue U p) ^ 2 / 2\n  let U := stripe u he\n  let V := pull s 0 U\n  let σ := Equiv.ofBijective (Face.send s (0:Site n)) ⟨Face.injective_send s _,\n    Finite.injective_iff_surjective.mp (Face.injective_send s _)⟩\n  have hp p : G.chord (faceValue V p) = G.chord (faceValue U (σ p)) :=\n    Face.send_price U _ _ _ G.chord G.chord_inv (fun k g => G.chord_conj g k)\n  have hA := A.quadratic_pos\n  calc\n    sites n * _ = ∑ x : Site n, F U (x,plane) := by simp [F,U,stripe_plane,sites]\n    _ ≤ ∑ p, F U p := by\n      rw [Fintype.sum_prod_type]; exact Finset.sum_le_sum fun x _ => Finset.single_le_sum\n        (f := fun p => F U (x,p)) (fun p _ => by dsimp [F]; positivity) (Finset.mem_univ plane)\n    _ = ∑ p, F V p := (Fintype.sum_equiv σ (F V) (F U) (fun p => by simp [F,hp])).symm\n    _ ≤ _ := Finset.sum_le_sum fun p _ => base_lower (D:=D) A p ((hp p).trans_le (hf _))",
+            "line": 70,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/COUPLING_RESET/Probe.lean",
+            "fragment": "L70-L87"
+          },
+          "proof_context": {
+            "declaration": "YM.UVNext.CouplingReset.direct_probe",
+            "lines": [
+              70,
+              87
+            ],
+            "conclusion": "The summed direct plaquette term of every signed image `pull s 0 (stripe u he)` is at least `sites n * (A.direct * G.chord u ^ 2 / 2)`, using the (0,1)-plane plaquettes, nonnegativity of the other terms and invariance of the plaquette chords under signed permutations."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVNext.CouplingReset.stripe_plane",
+        "module": "YM.UVNext.COUPLING_RESET.Probe",
+        "lines": [
+          61,
+          68
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVNext.CouplingReset.stripe_plane"
+          },
+          "snippet": {
+            "text": "private lemma stripe_plane (u : G.El) (he : 2 ∣ n.val) (x : Site n) :\n    G.chord (faceValue (stripe u he) (x,plane)) = G.chord u := by\n  let v := ZMod.castHom he (ZMod 2) (x 1)\n  have hy : ∀ v : ZMod 2, v ≠ 0 → v+1=0 := by decide\n  have h1 : ZMod.cast (1:ZMod n.val) = (1:ZMod 2) := map_one (ZMod.castHom he _)\n  by_cases hv : v = 0\n  · simp [faceValue, square, plane, travel,stripe,map_add, h1, show (ZMod.cast (x 1) : ZMod 2) = 0 from hv]\n  simp [faceValue, square, plane, travel,stripe,map_add,h1,show (ZMod.cast (x 1) : ZMod 2) ≠ 0 from hv, show ZMod.cast (x 1)+1 = (0:ZMod 2) from hy v hv,G.chord_inv]",
+            "line": 61,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/COUPLING_RESET/Probe.lean",
+            "fragment": "L61-L68"
+          },
+          "proof_context": {
+            "declaration": "YM.UVNext.CouplingReset.stripe_plane",
+            "lines": [
+              61,
+              68
+            ],
+            "conclusion": "Every (0,1) plaquette of `stripe u he` has chord `G.chord u`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVNext.CouplingReset.sensor",
+        "module": "YM.UVNext.COUPLING_RESET.Probe",
+        "lines": [
+          107,
+          114
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVNext.CouplingReset.sensor"
+          },
+          "snippet": {
+            "text": "  let U := stripe u he\n  have hf p : G.chord (faceValue U p) ≤ 4*h := by\n    have hb (i) : G.chord (U i) ≤ h := by unfold U stripe; split <;> simp [*]\n    simpa [faceValue,square] using Next.Fluctuations.travel_chord U (square p.2.val.1 p.2.val.2) p.1 h hb\n  have hz : 4*h ≤ P.threshold := by\n    have hle := mul_le_mul_of_nonneg_right (show t ≤ 1/4 from (min_le_left ..).trans (min_le_right ..)) hP.le\n    dsimp [h]; linarith\n  refine ⟨U, flags_empty (fun p => (hf p).trans hz), ?_⟩",
+            "line": 107,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/COUPLING_RESET/Probe.lean",
+            "fragment": "L107-L114"
+          },
+          "proof_context": {
+            "declaration": "YM.UVNext.CouplingReset.sensor",
+            "lines": [
+              96,
+              142
+            ],
+            "conclusion": "Every plaquette chord of `stripe u he` is at most `4*h <= P.threshold`, so `flags P.threshold U = ∅` (everywhere healthy)."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          87,
+          88
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

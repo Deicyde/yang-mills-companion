@@ -1,0 +1,201 @@
+{
+  "id": "Lemma 10.3 step 2",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "The section bound follows by the same product rule, but [L] proves the global bound (10.6) by continuity on the compact configuration space instead of unit-modulus matrix entries, a different argument for part of the step.",
+  "subject": [
+    {
+      "location": {
+        "page": 43,
+        "rect": [
+          0.12026,
+          0.43417,
+          0.76194,
+          0.12266
+        ]
+      },
+      "title": "Lemma 10.3 step 2: Text, p. 43",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 10.3 step 2"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.G07.paid_lumin",
+        "module": "YM.Work.G07",
+        "lines": [
+          64,
+          65
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.G07.paid_lumin"
+          },
+          "snippet": {
+            "text": "theorem paid_lumin {m : ℕ} (p : Pose G m) (B : Fin m → Slot)\n    (h : ∀ i, (B i).stencil ⊆ S) (hp : lows p j) : Rate k P S j 0 (lumin p ∘ mapped B) := by",
+            "line": 64,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/G07.lean",
+            "fragment": "L64-L65"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.G07.paid_lumin",
+            "lines": [
+              64,
+              77
+            ],
+            "conclusion": "A slot polynomial with at least j factors per monomial satisfies `Rate k P S j 0`, by the product rule through `paid_sum` and `paid_prod`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.G07.answer",
+        "module": "YM.Work.G07",
+        "lines": [
+          79,
+          102
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.G07.answer"
+          },
+          "snippet": {
+            "text": "theorem answer : YM.Bid.G07 := by\n  classical\n  intro G H d F T hs hp k P\n  have he (i : F.Index) : Rate k P T.stencil (F.grades i).2 0 (T.evaluate (Pi.single i 1)) := by\n    obtain ⟨m,B,hB,p,hp,hi⟩ := hp i\n    rw [hp]; exact paid_lumin p B hB hi\n  unfold Rate at he\n  choose c hc hx using he\n  refine ⟨∑ i, c i, ?_⟩\n  intro b hb hk n o i\n  let u := T.places (Pi.single i 1) o\n  have ht := b.threshold_pos.le\n  have h : LeftBound k (b.dirBound o) (Healthy b.threshold (T.footprint o))\n      (b.threshold^0) (c i * b.threshold^(F.grades i).2) u := hx i b hk n o\n  refine ⟨⟨T.placed_local o _, (T.continuous_places _ o).measurable,\n    T.placed_invariant hs o _,fun U _ => ?_,fun U _ A l hl => ?_⟩, ?_⟩\n  · have Hz : ContDiff ℝ ∞ (fun v => u (increment U v)) := h.smooth [] (Nat.zero_le _) U\n    exact (Hz.of_le (m:=(b.order : ℕ∞)) (WithTop.coe_le_coe.mpr le_top)).contDiffAt\n  · exact h.smooth.has (hl.le.trans hb.le) U A\n  refine ⟨mul_nonneg (Finset.sum_nonneg fun i _ => hc i) (pow_nonneg ht _),fun U hU l hl hD => ?_⟩\n  apply (h.bound l (hl.trans hb.le) hD U hU).trans\n  simp only [pow_zero, one_pow, mul_one]\n  exact mul_le_mul_of_nonneg_right (Finset.single_le_sum (fun u _ => hc u) (Finset.mem_univ i))\n    (pow_nonneg ht _)",
+            "line": 79,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/G07.lean",
+            "fragment": "L79-L102"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.G07.answer",
+            "lines": [
+              79,
+              102
+            ],
+            "conclusion": "Each basis column is local, measurable, gauge invariant and smooth, with the credit bound c·t^{k_i} for a constant summed over the basis."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Foundations.full_value_bound",
+        "module": "YM.Next.FOUNDATIONS.Primary",
+        "lines": [
+          147,
+          151
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Foundations.full_value_bound"
+          },
+          "snippet": {
+            "text": "theorem full_value_bound (d : ℕ) :\n    ∃ c : ℝ, 1 ≤ c ∧ ∀ i : ((Labels.frames G).level d).Index,\n      (∀ U : CoverConfig G, ‖(localSection G d).evaluate (Pi.single i 1) U‖ ≤ c) ∧\n      (∀ n : Side, ∀ o : Site n, ∀ U : Config G n,\n        ‖(localSection G d).places (Pi.single i 1) o U‖ ≤ c) := by",
+            "line": 147,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FOUNDATIONS/Primary.lean",
+            "fragment": "L147-L151"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Foundations.full_value_bound",
+            "lines": [
+              147,
+              163
+            ],
+            "conclusion": "One constant c ≥ 1 bounds every column of `localSection G d` on the cover and on every placed configuration."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Foundations.priced",
+        "module": "YM.Next.FOUNDATIONS.Primary",
+        "lines": [
+          133,
+          135
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Foundations.priced"
+          },
+          "snippet": {
+            "text": "theorem priced {d k P D : ℕ} (h : d ≤ D) (hk : k ≤ D) (hp : P ≤ D) :\n    Bid.Credit (localSection G d) k P (price G D) := by\n  have hC : Bid.Credit (localSection G d) k P (basePrice G (d,k,P)) :=",
+            "line": 133,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FOUNDATIONS/Primary.lean",
+            "fragment": "L133-L135"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Foundations.priced",
+            "lines": [
+              133,
+              142
+            ],
+            "conclusion": "One constant `price G D` serves every d, k, P ≤ D, so the constants can be taken nondecreasing."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          43
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; a re-check of closeMatch records changed it from closeMatch; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

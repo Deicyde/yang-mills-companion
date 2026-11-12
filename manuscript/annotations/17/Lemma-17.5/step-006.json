@@ -1,0 +1,201 @@
+{
+  "id": "Lemma 17.5 step 6",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "Same facts; [L] additionally takes `reflects` and `Steady V` as hypotheses, and continuity in xi is stated through `Out.weak`.",
+  "subject": [
+    {
+      "location": {
+        "page": 196,
+        "rect": [
+          0.12026,
+          0.15046,
+          0.76193,
+          0.0513
+        ]
+      },
+      "title": "Lemma 17.5 step 6: Text, p. 196",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 17.5 step 6"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.B07.answer",
+        "module": "YM.Work.B07",
+        "lines": [
+          119,
+          124
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.B07.answer"
+          },
+          "snippet": {
+            "text": "theorem answer : YM.Bid.B07 := by\n  intro b G C S V A P X H u h hv hf hP\n  have ht i := state_turns P h i X (b V A X.turns X.derivatives H u.motion u.spots h hv hf)\n  exact ⟨state P h,⟨fun i => state_receives P h i hv, state_basic P h,\n    fun i => state_spin P h i X H u (ht i) hf, state_translation P h,state_rel P h,ht,\n    fun i => state_smooth P h i hP⟩⟩",
+            "line": 119,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/B07.lean",
+            "fragment": "L119-L124"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.B07.answer",
+            "lines": [
+              119,
+              124
+            ],
+            "conclusion": "Each phase table `state P h i` (character evaluation) satisfies `receives`, `Basic`, `Homogeneous`, `respects S`, orientation `ht` and `Smooth`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.B07.state_basic",
+        "module": "YM.Work.B07",
+        "lines": [
+          31,
+          48
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.B07.state_basic"
+          },
+          "snippet": {
+            "text": "lemma state_basic : (state P h i).Basic where\n  same {n} r {x} hx v := by\n    rw [state_read P h i _ (Points.rearrange_in _ hx),state_read P h i _ hx]\n    congr 1\n    apply h.changes\n    let f := fun j => (x j,v j)\n    have hf : Injective f := fun _ _ e => (show Injective x.ofLp from hx) (congr_arg Prod.fst e)\n    change List.Perm (List.ofFn (f ∘ r)) (List.ofFn f)\n    refine (List.perm_ext_iff_of_nodup (List.nodup_ofFn.mpr (hf.comp r.injective))\n      (List.nodup_ofFn.mpr hf)).mpr (fun a => ?_)\n    simp only [List.mem_ofFn,Function.comp_apply]\n    exact ⟨fun ⟨j,e⟩ => ⟨r j,e⟩,fun ⟨j,e⟩ => ⟨r.symm j,by rw [Equiv.apply_symm_apply]; exact e⟩⟩\n  trivial f x := by\n    rw [state_read P h i f (by change Injective x.ofLp; exact Function.injective_of_subsingleton _)]\n    have he (hx : distinct (realize f x)) : M A (realize f x) hx = 1 := (show M A (realize f x) hx = M A [] _ by congr 1).trans h.vacant\n    rw [he,map_one]\n  unital hx d v := by\n    rw [state_read P h i _ hx,state_read P h i _ (Points.tail_in hx), h.unital _ _ _ hx]",
+            "line": 31,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/B07.lean",
+            "fragment": "L31-L48"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.B07.state_basic",
+            "lines": [
+              31,
+              48
+            ],
+            "conclusion": "Permutation, unit and trivial-word identities of the phase table, by character evaluation."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.B07.state_rel",
+        "module": "YM.Work.B07",
+        "lines": [
+          56,
+          67
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.B07.state_rel"
+          },
+          "snippet": {
+            "text": "lemma state_rel : (state P h i).respects S := by\n  intro d v hv\n  rw [(state P h i).criterion]\n  intro n B x hx\n  rw [front_eq,state_value]\n  let t := vals B (0 : C.book.Ref d)\n  have he : depot V A x _ (vals B v) = depot V A x _ t := h.pins _ _ _ _ _ (fun j => by\n    refine Fin.cases ?_ (fun _ => rfl) j\n    change S.project d v = S.project d 0\n    rw [map_zero]; exact (Submodule.Quotient.mk_eq_zero _).mpr hv)\n  rw [he,← state_value P h i]\n  exact MultilinearMap.map_coord_zero _ 0 rfl",
+            "line": 56,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/B07.lean",
+            "fragment": "L56-L67"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.B07.state_rel",
+            "lines": [
+              56,
+              67
+            ],
+            "conclusion": "`respects S`, the null-space inclusion for the phase table."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OS.Ground.resolution",
+        "module": "YM.Ground.Spectrum",
+        "lines": [
+          127,
+          140
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OS.Ground.resolution"
+          },
+          "snippet": {
+            "text": "theorem resolution (R : Table.Rotation S) (h : R.Oriented S) (s : S.Hierarchy)\n    (u : ℕ→ P.algebra) (hu : DenseRange u) : ∃ W : P.Resolution, W.Out := by\n  classical\n  have H : Steady V := fun x i => inert V s R h _ _\n  have ab := adjunction P H s R h\n  haveI : IsClosed (P.algebra : Set V.VacuumOp) := isClosed_closure\n  letI : CommCStarAlgebra P.algebra := {\n    (StarSubalgebra.cstarAlgebra P.algebra) with mul_comm := ab }\n  let D : Hilbert := { space := V.D }\n  obtain ⟨A,t⟩ := receives_ D (show P.algebra →⋆ₐ[ℂ] D.Op from P.algebra.subtype) V.omega0 (nil_norm V.GNS s.laws) u hu\n    (fun i => attains P ab H i)\n  let U : P.Resolution := { X := A.X, metric := A.m, sets := A.b, borel := A.borel, compact := A.compact, μ := A.μ,\n                            character := A.character }\n  exact ⟨U, ab, t.normalized,t.support,t.onto,t.values,t.weak,t.ground⟩",
+            "line": 127,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Ground/Spectrum.lean",
+            "fragment": "L127-L140"
+          },
+          "proof_context": {
+            "declaration": "YM.OS.Ground.resolution",
+            "lines": [
+              127,
+              140
+            ],
+            "conclusion": "Characters are continuous and weakly continuous (`values`, `weak`), so S^xi(w) is continuous in xi."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          196
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

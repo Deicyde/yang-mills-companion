@@ -1,0 +1,122 @@
+{
+  "id": "Lemma 11.11 step 9",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 66,
+        "rect": [
+          0.12026,
+          0.6204,
+          0.75948,
+          0.03753
+        ]
+      },
+      "title": "Lemma 11.11 step 9: Text, p. 66",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 11.11 step 9"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.E06.noise_pay",
+        "module": "YM.Work.E06",
+        "lines": [
+          369,
+          387
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.E06.noise_pay"
+          },
+          "snippet": {
+            "text": "  have elem (i : Bond c) (hi : i ∈ A.aisles) : a / 8 * wire Q V i ^ 2 ≤ T.workI (till x) Q V (temp x) i := by\n    let n := wire Q V i\n    let v := T.Mw (till x) (temp x) V i\n    have ha := Real.sqrt_nonneg a\n    have hn : 0 ≤ n := G.chord_nonneg _\n    have he : w*t ≤ n := (p.drive i (fun hd =>\n      disjoint_left.mp hd (aisle_at_home hi _) (by simp [pinPos]))).1 hi\n    have hv : ‖v‖ ≤ Real.sqrt a/2 * n := calc\n      _ ≤ C * t := H i\n      _ ≤ Real.sqrt a/2 * w * t := mul_le_mul_of_nonneg_right space ht\n      _ = Real.sqrt a/2 * (w*t) := by ring\n      _ ≤ Real.sqrt a/2 * n := mul_le_mul_of_nonneg_left he (by positivity)\n    refine le_trans ?_ (square_noise T Q V x i)\n    change a / 8 * n^2 ≤ (Real.sqrt a * n - ‖v‖)^2 / 2\n    have eq : (Real.sqrt a * n / 2)^2 / 2 = a / 8 * n^2 := by\n      rw [div_pow, mul_pow, Real.sq_sqrt (show 0 ≤ a from S.kernel.penalty_pos.le)]\n      ring\n    rw [← eq]; apply div_le_div_of_nonneg_right _ (by norm_num)\n    exact pow_le_pow_left₀ (by positivity) (by linarith only [hv]) 2",
+            "line": 369,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/E06.lean",
+            "fragment": "L369-L387"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.E06.noise_pay",
+            "lines": [
+              359,
+              393
+            ],
+            "conclusion": "On a listed noise bond `w*t <= wire`, `norm (Mw) <= C*t <= sqrt pen/2 * wire` once `C <= sqrt pen/2 * w`, so the square inequality gives `pen/8 * wire^2 <= workI`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.E06.answer",
+        "module": "YM.Work.E06",
+        "lines": [
+          439,
+          440
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.E06.answer"
+          },
+          "snippet": {
+            "text": "  · have hw' : C ≤ r*w := by rw [mul_comm]; exact (div_le_iff₀ hr).mp hw\n    exact noise_pay T A p ht.le hM.hot (by rw [H.knobs]; exact hw')",
+            "line": 439,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/E06.lean",
+            "fragment": "L439-L440"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.E06.answer",
+            "lines": [
+              413,
+              440
+            ],
+            "conclusion": "`W` is chosen large enough that `C <= sqrt penalty / 2 * w`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          66
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

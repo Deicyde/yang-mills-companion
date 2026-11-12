@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 14.7 step 2",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "The unit identity, Z^{-1}u_d = a_N^d 1 and insertion one are in [L], but the unit identity enters as a field of `Based` (from the `units` hypothesis of the G08 input), and the density computation a_m^d ρ_m with its induction is not in these lines.",
+  "subject": [
+    {
+      "location": {
+        "page": 132,
+        "rect": [
+          0.12026,
+          0.32053,
+          0.76293,
+          0.08992
+        ]
+      },
+      "title": "Lemma 14.7 step 2: Text, p. 132",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.7 step 2"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Source.TransferData.Based",
+        "module": "YM.Source.Insertion",
+        "lines": [
+          112,
+          112
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Source.TransferData.Based"
+          },
+          "snippet": {
+            "text": "  unit_coord m : r ≤ m → m ≤ N → (T.entries m (unitVec F H N)).x = unitVec F H m",
+            "line": 112,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Source/Insertion.lean",
+            "fragment": "L112-L112"
+          },
+          "proof_context": {
+            "declaration": "YM.Source.TransferData.Based",
+            "lines": [
+              89,
+              114
+            ],
+            "conclusion": "`unit_coord`: x_m of the level-N unit is the level-m unit for r ≤ m ≤ N."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Source.TransferData.origin_unit",
+        "module": "YM.Source.Insertion",
+        "lines": [
+          121,
+          130
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Source.TransferData.origin_unit"
+          },
+          "snippet": {
+            "text": "theorem origin_unit {A : Hol G} {C : SectionData F} (h : C.Sound A) (r : ℕ) (hb : T.Based A C r)\n    (b : Site (H.S.side N p)) : T.cylinder C (unitVec F H r) b = 1 := by\n  have he : T.terminal.symm (unitVec F H r) = unitVec F H N := calc\n    _ = T.terminal.symm (T.terminal (unitVec F H N)) := congr_arg _\n      (((hb.unit_coord r le_rfl hb.ref).symm).trans (hb.reads _))\n    _ = _ := T.terminal.symm_apply_apply _\n  rw [cylinder,he,initial,unitVec,map_smul,F.scaled_unit]\n  funext U\n  rw [Pi.smul_apply, SectionData.places, C.eval_linear.map_smul]\n  simp [h.unit, (H.S.a_pos N).ne']",
+            "line": 121,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Source/Insertion.lean",
+            "fragment": "L121-L130"
+          },
+          "proof_context": {
+            "declaration": "YM.Source.TransferData.origin_unit",
+            "lines": [
+              121,
+              130
+            ],
+            "conclusion": "With `reads`, `terminal.symm` sends the reference unit to the level-N unit, and factor scaling gives cylinder value 1 at every site."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          132
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

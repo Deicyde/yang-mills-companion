@@ -1,0 +1,240 @@
+{
+  "id": "Lemma 18.1 step 1",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "[L] deletes the unit through the Euclidean `use_unit` and the uniqueness of boundary profiles, and obtains the same operator identity and centering.",
+  "subject": [
+    {
+      "location": {
+        "page": 203,
+        "rect": [
+          0.12026,
+          0.36633,
+          0.76294,
+          0.14271
+        ]
+      },
+      "title": "Lemma 18.1 step 1: Text, p. 203",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 18.1 step 1"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.Identity.erase_unit",
+        "module": "YM.TraceExtension.Link.Identity",
+        "lines": [
+          80,
+          85
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.Identity.erase_unit"
+          },
+          "snippet": {
+            "text": "lemma erase_unit (i:Fin (n+1))(d:ℕ)(v:Fin (n+1)→S.Union)(t:Fin (n+1)→Test4)(hv:v i=S.pin d (S.unit d)):\n    F.A.world.W (n+1) v (Joint.materialize _ t)= (∫ x:E4,t i x)* F.A.world.W n (v ∘ i.succAbove) (Joint.materialize n (t ∘ i.succAbove)):=by\n    let h:=F.realization.chosen; let p: Heights (n+1):=fun i=>(i.val:ℝ)\n    have he:p∈east _:=fun i j hi=> by simpa only [p,Nat.cast_lt] using (show i.val<j.val from hi)\n    have hz:= h.emerges.profile _ v p he (Joint.materialize _ t)\n    refine tendsto_nhds_unique hz ?_; exact ((h.emerges.profile _ (v∘i.succAbove) _ (east_tear i p he) (Joint.materialize n (t∘i.succAbove))).const_mul _).congr' ((show ∀ᶠ s:ℝ in 𝓝[>] 0,0 < s from self_mem_nhdsWithin).mono fun j hj=> (slopes_unit F i d v t hv p he j hj).symm)",
+            "line": 80,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Link/Identity.lean",
+            "fragment": "L80-L85"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.Identity.erase_unit",
+            "lines": [
+              80,
+              85
+            ],
+            "conclusion": "Deleting a unit label at slot `i` from the boundary correlation gives `(∫ t i) *` the correlation without it (boundary profiles are unique)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.Identity.expect_unit",
+        "module": "YM.TraceExtension.Link.Identity",
+        "lines": [
+          117,
+          124
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.Identity.expect_unit"
+          },
+          "snippet": {
+            "text": "lemma expect_unit (u v:Sentence S)(p: Test4) : F.A.world.expect (u++(S.pin d (S.unit d),p)::v)= (∫ x,p x) * F.A.world.expect (u++v):=by\n    let W:=F.A.world; let g:= S.pin d (S.unit d); obtain ⟨i,hI⟩:= spell u v (g,p); let n:=(u++v).length; let y:Fin n → Letter S:=(u++v).get; let K:=i.insertNth (α:=fun _=>Letter S) (g,p) y\n    have he:K i=(g,p):=Fin.insertNth_apply_same ..\n    rw[← show List.ofFn K= _ from hI,surf_get,(congr_arg F.A.world.expect (List.ofFn_get (u++v))).symm]\n    change _= (∫ x,p x)* W.expect (List.ofFn y)\n    rw[surf_get]; let L:=Prod.fst ∘ K; let R:=Prod.snd ∘ K;\n    have ht : K ∘ i.succAbove=y:= funext fun j=> Fin.insertNth_apply_succAbove ..\n    have hh:= erase_unit F i d L R (congr_arg Prod.fst he); simp_rw [show R i=p from congr_arg Prod.snd he,show L ∘ i.succAbove=Prod.fst ∘ y from ht ▸ rfl,show R ∘ i.succAbove=Prod.snd ∘ y from ht ▸ rfl] at hh; exact hh",
+            "line": 117,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Link/Identity.lean",
+            "fragment": "L117-L124"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.Identity.expect_unit",
+            "lines": [
+              117,
+              124
+            ],
+            "conclusion": "`expect (u ++ (unit, p) :: v) = (∫ p) * expect (u ++ v)` for word vectors."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.Identity.op_unit",
+        "module": "YM.TraceExtension.Link.Identity",
+        "lines": [
+          134,
+          157
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.Identity.op_unit"
+          },
+          "snippet": {
+            "text": "lemma op_unit (v:Test4)(d:ℕ) :\n    F.action.operators.field (S.pin d (S.unit d)) v= (∫ x,v x) • (LinearMap.id (R:=ℂ)):=by\n   let W:=F.action.operators; let ψ:=F.A.world; let J:=F.action.J; let p:= (S.pin d (S.unit d),v); have H:= F.realization.qt; let c:=∫ x,v x\n   let D:=W.domain\n   have hx(i j:Sentence S): inner ℂ (W.evaluates i) (W.evaluates (p::j))=inner ℂ (W.evaluates i) (c • W.evaluates j):=by\n      rw[inner_smul_right]; change inner ℂ (W.vector i) (W.vector (p::j))=c*inner ℂ (W.vector i) (W.vector j)\n      rw [W.general _ H.meets _ H.adj,W.general _ H.meets _ H.adj]; exact expect_unit F (Sentence.rev J i) j v\n   have hspan : Submodule.span ℂ (range W.evaluates)=⊤:=vectors_span W H.total\n   have hm(j:Sentence S): W.evaluates (p::j)=c • W.evaluates j:=by\n       refine ext_inner_left ℂ fun x=>?_\n       have he:x∈Submodule.span ℂ (range W.evaluates):=hspan ▸ Submodule.mem_top\n       induction he using Submodule.span_induction with\n       | mem w h=> rcases h with ⟨i,rfl⟩; exact hx i j\n       | zero => simp\n       | add x y _ _ h1 h2=>simp only[inner_add_left,h1,h2]\n       | smul x y _ h=>simp only[inner_smul_left,h]\n   ext1 i\n   change W.field _ _ i= (c • LinearMap.id (R:=ℂ): D →ₗ[ℂ] D) i\n   have he:i∈ Submodule.span ℂ (range W.evaluates):=hspan ▸ Submodule.mem_top\n   induction he using Submodule.span_induction with\n   | mem x h=> rcases h with ⟨j,rfl⟩; exact hm j\n   | zero=> rw[map_zero,map_zero]\n   | add x y _ _ hx hy=> rw[map_add,hx,hy,map_add]\n   | smul a x _ hx=>rw[map_smul,hx,map_smul]",
+            "line": 134,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Link/Identity.lean",
+            "fragment": "L134-L157"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.Identity.op_unit",
+            "lines": [
+              134,
+              157
+            ],
+            "conclusion": "The unit label acts on the common domain as `(∫ v) • id` (by `expect_unit` and density of word vectors)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.Identity.center_field",
+        "module": "YM.TraceExtension.Link.Identity",
+        "lines": [
+          158,
+          161
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.Identity.center_field"
+          },
+          "snippet": {
+            "text": "lemma center_field (v : Test4) :\n    F.action.operators.field (pinned F) v = F.action.operators.field (S.pin 4 (stressTrace F.sector.energy)) v -\n        (euclideanVEV S (selected F) (stressTrace F.sector.energy) * ∫ x,v x) • LinearMap.id (R:=ℂ):=by\n    unfold pinned center theta centerIn; rw [map_sub,map_sub]; rw [map_smul,map_smul]; simp only [LinearMap.sub_apply, LinearMap.smul_apply,op_unit, smul_smul]",
+            "line": 158,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Link/Identity.lean",
+            "fragment": "L158-L161"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.Identity.center_field",
+            "lines": [
+              158,
+              161
+            ],
+            "conclusion": "`field (pinned F) v = field (pin 4 stressTrace) v - (euclideanVEV * ∫ v) • id`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.vev_boundary",
+        "module": "YM.TraceExtension.WilsonTrace",
+        "lines": [
+          16,
+          41
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.vev_boundary"
+          },
+          "snippet": {
+            "text": "lemma vev_boundary (X : Boundary.Wightman S) {R : Rotation S} {rs : S.RealSpin}\n    (H : T.Hierarchy) (hs : T.respects S) {A : Contour S} (hw : A.From T)\n    (hr : X.Realizes (W := A.world) R rs) {d : ℕ} (v : S.Field d) (f : Probe E4) :\n    inner ℂ X.operators.vacuum (excitation X.operators (S.pin d (centerIn S T v)) f) = 0 := by\n    let b := centerIn S T v\n    let w : Fin 1 → S.Union := fun _ => S.pin d b\n    have ht : euclideanVEV S T b = 0 := centerIn_vac hs H v\n    have he (x : SpacePoints 1) : EqOn (fun z => A.waves.F 1 z x w) 0 (strict 1) := by\n        apply Next.BOUNDARY.ordered_eq _ _ (hw.heat.hol _ _ _)\n          (show DifferentiableOn ℂ (fun _ : Times 1 => (0:ℂ)) _ from differentiableOn_const _)\n        intro y hy\n        let Z : Fin 1 → S.Tag := fun _ => ⟨d,b⟩\n        exact (hw.heat.roots 1 Z x y hy).trans ((vev_coordinates H.translations ..).trans ht)\n    let s := [(S.pin d b,f)]\n    change inner ℂ _ (X.operators.vector s)=_\n    rw [hr.meets]; unfold Surface.expect\n    let q : Fin 1 → Probe E4 := fun i => (s.get i).2; let t := Joint.materialize 1 q\n    change A.world.W 1 (fun i => (s.get i).1) t=_\n    rw [show (fun i : Fin 1 => (s.get i).1)=w by funext i; rw [Subsingleton.elim i 0]; rfl]\n    have hh : (0:Heights 1) ∈ east 1 := fun i j hj => False.elim (ne_of_lt hj (Subsingleton.elim i j))\n    refine tendsto_nhds_unique (hw.emerges.profile 1 w _ hh t) (tendsto_const_nhds.congr' ?_)\n    filter_upwards [self_mem_nhdsWithin] with ε hε\n    unfold Waves.atSlopes\n    have hz (x : Points 1) : A.waves.restricted w (ε • 0) x=0 :=\n        he (trace x) (on_profile x _ ε hε hh)\n    simp only [hz,zero_mul,integral_zero]",
+            "line": 16,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/WilsonTrace.lean",
+            "fragment": "L16-L41"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.vev_boundary",
+            "lines": [
+              16,
+              41
+            ],
+            "conclusion": "A zero Euclidean one-point function (`centerIn_vac`) continues to zero and gives zero vacuum expectation of the boundary field."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          203
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

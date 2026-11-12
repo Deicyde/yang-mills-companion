@@ -1,0 +1,106 @@
+{
+  "id": "Lemma 16.2 step 15",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "The polynomial-wave argument (degree below k, negative homogeneity) has no direct counterpart; `ranging` replaces it by the radial-derivative induction ending at `payment`.",
+  "subject": [
+    {
+      "location": {
+        "page": 173,
+        "rect": [
+          0.12026,
+          0.50642,
+          0.75949,
+          0.03418
+        ]
+      },
+      "title": "Lemma 16.2 step 15: Text, p. 173",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.2 step 15",
+          "quads": [
+            [
+              0.27518,
+              0.50642,
+              0.87975,
+              0.50642,
+              0.87975,
+              0.52348,
+              0.27518,
+              0.52348
+            ],
+            [
+              0.12026,
+              0.52351,
+              0.17989,
+              0.52351,
+              0.17989,
+              0.5406,
+              0.12026,
+              0.5406
+            ]
+          ]
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Maxwell.Free.ranging",
+        "module": "YM.Next.MAXWELL.Flavor",
+        "lines": [
+          145,
+          165
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Maxwell.Free.ranging"
+          },
+          "snippet": {
+            "text": "lemma ranging (p : Flavor j) (l : ℕ) (H : ∀ (z:E4), z≠0 → ∀ q : Flavor l, fare c p q z=0) : p=0 := by\n  induction l with\n  | zero => exact payment c H\n  | succ l ih =>\n    apply ih\n    intro x hx q\n    let P := flavor j c p\n    let Q := flavor l c q\n    have he := K_right_D P Q (x := x) (y := 0) hx x\n    have hp := kernel_pole P Q\n    have hw := pole_power hp hx\n    rw [← consecutive x q c, K,sub_zero,show legKernel _ _ x=0 from H _ hx _] at he\n    let L := fun y : E4 => x-y\n    have hf : HasFDerivAt L (-(ContinuousLinearMap.id ℝ E4)) 0 := by\n      convert! ((hasFDerivAt_id (0:E4) (𝕜:=ℝ)).const_sub x) using 1\n    have hl : L 0=x := sub_zero _\n    have hh : DifferentiableAt ℝ (legKernel P Q) (L 0) := by rw [hl]; exact (kernel_smooth P Q hx).differentiableAt (by simp)\n    change fderiv ℝ (legKernel P Q ∘ L) 0 x=0 at he\n    rw [fderiv_comp _ hh hf.differentiableAt,hf.fderiv,hl,ContinuousLinearMap.comp_apply] at he\n    change fderiv ℝ (legKernel P Q) x (-x)=0 at he; rw [map_neg,neg_eq_zero] at he; change D x _ x=_ at he; rw [hw] at he\n    exact (smul_eq_zero.mp he).resolve_left (neg_ne_zero.mpr (by positivity))",
+            "line": 145,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/MAXWELL/Flavor.lean",
+            "fragment": "L145-L165"
+          },
+          "proof_context": {
+            "declaration": "YM.Maxwell.Free.ranging",
+            "lines": [
+              145,
+              165
+            ],
+            "conclusion": "The same induction ends in `payment`, where the order-zero kernel gives zero."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          173
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
+      }
+    }
+  }
+}

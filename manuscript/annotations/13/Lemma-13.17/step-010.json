@@ -1,0 +1,218 @@
+{
+  "id": "Lemma 13.17 step 10",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 114,
+        "rect": [
+          0.12026,
+          0.87434,
+          0.76013,
+          0.04006
+        ]
+      },
+      "title": "Lemma 13.17 step 10: Text, pp. 114–115",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 13.17 step 10#0"
+        }
+      }
+    },
+    {
+      "location": {
+        "page": 115,
+        "rect": [
+          0.11818,
+          0.0962,
+          0.76157,
+          0.03713
+        ]
+      },
+      "title": "Lemma 13.17 step 10: Text, pp. 114–115",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 13.17 step 10#1"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.Amp.spelled",
+        "module": "YM.FullVolume.Amp.Pin",
+        "lines": [
+          64,
+          68
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.Amp.spelled"
+          },
+          "snippet": {
+            "text": "  simp_rw [face,smul_sum,smul_comm (signed ..)]\n  rw [sum_comm,sum_range_succ,sum_eq_zero, zero_add]; swap\n  · intro j hj; rw [←smul_sum]; suffices hp : (∑ T∈s.powerset, _ • f (x+t • (x'+leanW s u r T)+(j:ℝ) • t • spine s u r T))=0 by rw [hp,smul_zero]\n    simpa only [smul_add,add_assoc,smul_comm t] using (vacant s u (fun z=> f (x+t • z)) x' r hu (mem_range.mp hj))\n  simp [hat]; rw [snow s u _ x x']; apply sum_congr rfl; intro T h; rw [← diagonal s u r he T h]; simp only [smul_add,add_assoc,smul_comm t]",
+            "line": 64,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Amp/Pin.lean",
+            "fragment": "L64-L68"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.Amp.spelled",
+            "lines": [
+              63,
+              68
+            ],
+            "conclusion": "Expands each pure difference as a sum over its points j ≤ n (`face`), kills the points j < n by `vacant`, and identifies the j = n point with the left side by `diagonal`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.Amp.vacant",
+        "module": "YM.FullVolume.Amp.Pin",
+        "lines": [
+          46,
+          56
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.Amp.vacant"
+          },
+          "snippet": {
+            "text": "lemma vacant {j:ℕ}(hj:j<s.card) : (∑ T∈s.powerset,signed s T • f (x+ leanW s u r T+(j:ℝ) • spine s u r T))=0:=by\n  obtain ⟨a,ha,h⟩:= hu j hj\n  let H(T:Finset I):= f (x+leanW s u r T +(j:ℝ) • spine s u r T)\n  have hh t (ht:t∈(s.erase a|>.powerset)): H (insert a t)=H t:=by\n    have hV:a∉t:= fun h=> notMem_erase _ _ (mem_powerset.mp ht h)\n    unfold H leanW spine; rw [sum_insert hV,sum_insert hV,h, smul_add]; simp only [neg_smul]; congr 1; abel\n  change (∑ T∈ _, _ • H T)=0\n  have hp : (∑ T∈ s.powerset,signed s T • H T)= ∑ T∈(s.erase a).powerset,signed (s.erase a) T • (H (insert a T)-H T):=by simpa only [insert_erase ha] using unfoldP (s.erase a) H (notMem_erase a s)\n  exact hp.trans (sum_eq_zero fun t ht=> by rw [hh t ht,sub_self,smul_zero])\nomit hu\ninclude he",
+            "line": 46,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Amp/Pin.lean",
+            "fragment": "L46-L56"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.Amp.vacant",
+            "lines": [
+              46,
+              56
+            ],
+            "conclusion": "For j < n the signed sum over T of f at the j-th point vanishes, by pairing T with T∪{a} where r a = j."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.Amp.diagonal",
+        "module": "YM.FullVolume.Amp.Pin",
+        "lines": [
+          57,
+          61
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.Amp.diagonal"
+          },
+          "snippet": {
+            "text": "lemma diagonal (T:Finset I) (ht:T∈s.powerset): leanW s u r T+(s.card:ℝ) • spine s u r T=∑ i∈T,u i:= by\n  unfold spine leanW; rw [Finset.smul_sum,← sum_add_distrib]; apply sum_congr rfl; intro i hi\n  have hp := sub_ne_zero_of_ne ((Nat.cast_lt.mpr (he i (mem_powerset.mp ht hi)): (r i:ℝ)<s.card).ne')\n  unfold stiff; rw [← add_smul,add_comm,← sub_eq_add_neg,smul_smul,mul_inv_cancel₀ hp,one_smul]\ninclude hu",
+            "line": 57,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Amp/Pin.lean",
+            "fragment": "L57-L61"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.Amp.diagonal",
+            "lines": [
+              57,
+              61
+            ],
+            "conclusion": "`leanW T + n • spine T = ∑_{i∈T} u i`, i.e. each h_i has coefficient one at the point j = n."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.Amp.Often.blocks",
+        "module": "YM.FullVolume.Amp.Fish",
+        "lines": [
+          45,
+          47
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.Amp.Often.blocks"
+          },
+          "snippet": {
+            "text": "lemma blocks (s:Finset I)(u:I→X)(x':X)(K:I→ℕ)(hb:∀ i∈s,K i < s.card)(hr: ∀ i,i<s.card→∃ j∈s,K j=i): (fun t:ℝ=> block s (fun i=>t • u i) f (x+t • x'))=O[𝓝 0] fun t=>t^s.card:=by\n  simp_rw [spelled s u f x K hb hr]\n  exact .sum (A:=fun T t=> signed s T • (fwdDiff (t • spine s u K T))^[s.card] f (x+t • (x'+leanW s u K T))) fun T _=> (L.reveal ..).const_smul_left _",
+            "line": 45,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Amp/Fish.lean",
+            "fragment": "L45-L47"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.Amp.Often.blocks",
+            "lines": [
+              45,
+              47
+            ],
+            "conclusion": "Every mixed n-th difference `block s (t•u) f (x+t•x')` is O(t^n)."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          114,
+          115
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 19.14 step 3",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean proves the direct bound by induction through the abstract `Supply`/`Meets` bookkeeping and the error bound by a separate induction (`nShot_rate`, `chain`), taking any gap `γ` below all `forfeit` values; the minimum is taken in `admit_nesting` (`Finite.exists_min`). The no-proper-internal-vertex coincidence is `empty_gain`.",
+  "subject": [
+    {
+      "location": {
+        "page": 231,
+        "rect": [
+          0.11936,
+          0.67104,
+          0.76384,
+          0.05502
+        ]
+      },
+      "title": "Lemma 19.14 step 3: Text, p. 231",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 19.14 step 3"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Nesting.Fusion.tariff",
+        "module": "YM.OPE.Nesting.Fusion",
+        "lines": [
+          97,
+          104
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Nesting.Fusion.tariff"
+          },
+          "snippet": {
+            "text": "lemma tariff (t:Tree) (u:ℝ)(a:t.Inner→ℝ)(z:Envelope L t)(v:t.Leaf→S.Tag)(hg:Regular l T t u a z):\n   let k:= V t u a (wages v); Supply U l T z (t.topAge u a) k (Menu.raw z v) ∧ Meets U R l T z (Tree.center z) (t.topAge u a) k (Menu.raw z v) := by\n      induction t generalizing u with\n      | bud => let ht:=bud_supply U hT h u v z a\n               exact ⟨ht,Supply.achieves U R h hT hg.nonneg (hg.extent hT) hg.vanish ht⟩\n      | fork n f ih => let h₁(j:Fin n):= ih j (a (Sum.inl ())) _ _ (childWages j v) (hg.inside j)\n                       let ht:=supplies U R hT v hg (fun j=>(h₁ j).1) (fun j=>(h₁ j).2)\n                       exact ⟨ht,Supply.achieves U R h hT hg.nonneg (hg.extent hT) hg.vanish ht⟩",
+            "line": 97,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Nesting/Fusion.lean",
+            "fragment": "L97-L104"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Nesting.Fusion.tariff",
+            "lines": [
+              97,
+              104
+            ],
+            "conclusion": "By induction on the tree, the direct coefficient of degree `m` at a regular geometry has rate at most `Tree.cost 0 a (wages v) - m * a root` (`Meets.output`)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Nesting.Composite.echo_sized",
+        "module": "YM.OPE.Nesting.NestRates",
+        "lines": [
+          66,
+          69
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Nesting.Composite.echo_sized"
+          },
+          "snippet": {
+            "text": "lemma echo_sized {n:ℕ}{f:Fin n→Tree}{z:Envelope L (fork n f)}{v:(fork n f).Leaf→S.Tag}\n       {D:(fork n f).Inner→ℕ}{a:(fork n f).Inner→ℝ}{κ:ℝ} {m:ℕ}(c:R.channels m) (hu:gapBelow (fork n f) a D γ) (hg:Regular l T (fork n f) κ a z) : echoRate (l:=l) (T:=T) (a:=a) (κ:=κ) (z:=z) (D:=D) U R v c ∧ echoErr (γ:=γ) (l:=l) (T:=T) (a:=a) (κ:=κ) (z:=z) (D:=D) U R v c:=by\n     have hv j(p):= nShot_rate U R h hT γ hh (childWages j v) (gapAll_below (hu j)) (hg.inside j) p\n     exact ⟨price_nested U R hg v c h hT (fun i u=>(hv i u).1),chain U R h hT hg v c hu hh (fun i u=>(hv i u).1) (fun i u=>(hv i u).2)⟩",
+            "line": 66,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Nesting/NestRates.lean",
+            "fragment": "L66-L69"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Nesting.Composite.echo_sized",
+            "lines": [
+              66,
+              71
+            ],
+            "conclusion": "The error between the direct coefficient and the stacked finite iteration `stacked` has rate at most the same rate minus `γ`, for any `γ` with `gapBelow`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Nesting.Tree.forfeit",
+        "module": "YM.OPE.Nesting.Actual",
+        "lines": [
+          32,
+          33
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Nesting.Tree.forfeit"
+          },
+          "snippet": {
+            "text": "def forfeit (α:(fork n f).Inner→ℝ)(D:(fork n f).Inner→ℕ)(p:(fork n f).Inner):ℝ:= ((D p+1:ℕ):ℝ)*((fork n f).step 0 α p)\ninclude h",
+            "line": 32,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Nesting/Actual.lean",
+            "fragment": "L32-L33"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Nesting.Tree.forfeit",
+            "lines": [
+              32,
+              33
+            ],
+            "conclusion": "`forfeit a D p = (D p + 1) * step 0 a p` is the per-vertex gain `(D_v+1)(a_v - a_par)`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          231
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

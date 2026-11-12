@@ -1,0 +1,83 @@
+{
+  "id": "Lemma 16.10 step 28",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 186,
+        "rect": [
+          0.42589,
+          0.54572,
+          0.41959,
+          0.01709
+        ]
+      },
+      "title": "Lemma 16.10 step 28: Text, p. 186",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.10 step 28"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Spin.realize",
+        "module": "YM.Spin.Shape",
+        "lines": [
+          77,
+          93
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Spin.realize"
+          },
+          "snippet": {
+            "text": "lemma realize (B : ℕ → I → Mat X) (C : I → Mat X) (l r : I → I) (hb : ∀ i, Tendsto (fun n => B n i) atTop (𝓝 (C i)))\n    (hf : ∀ᶠ n in atTop, Relations (B n) l r) (hc : Relations C l r) (p : List ℝ) (hA : Works p C) (S : AddSubgroup (Mat X))\n    (h : 1∈S) (hs : IsClosed (S : Set (Mat X))) (ht : ∀ᶠ i in atTop, Tracks S p C (B i)) : ∀ᶠ i in atTop,\n    ∃ f : Mat X, IsUnit f ∧ f∈S ∧ ∀ j, B i j*f = f*C j := by\n  let D j n := effect (B n j) (C j)\n  have he j := (cont (C j)).continuousAt (x := C j) |>.tendsto.comp (hb j)\n  have hv : ∀ᶠ i in atTop, Relations (flip D i) l r := hf.mono (fun i hi => relations _ _ _ _ hi hc)\n  obtain ⟨Q,hQ,hy⟩ := onto _ _ D _ he hv _ _ (wave_c p (flip B) C C hb) hA.idempotent hA.kills (preserves S)\n    (closed S hs) (ht.mono (fun i hi => hi.1)) (ht.mono (fun i hi => hi.2))\n  let f n := Q n 1\n  have hp : Tendsto f atTop (𝓝 1) := by\n    rw [← hA.fixes]\n    exact ((ContinuousLinearMap.apply ℂ (Mat X) (1 : Mat X)).continuous.tendsto _).comp hQ\n  filter_upwards [hy, hp.eventually (Units.isOpen.mem_nhds isUnit_one)] with i hi hw\n  refine ⟨f i,hw, (show MapsTo (Q i) S S from hi.1) h,fun j => sub_eq_zero.mp ?_⟩\n  change effect _ _ ((Q i) 1)=0\n  exact congr_arg (fun A : End X => A 1) (hi.2.2 j).2",
+            "line": 77,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Spin/Shape.lean",
+            "fragment": "L77-L93"
+          },
+          "proof_context": {
+            "declaration": "YM.Spin.realize",
+            "lines": [
+              77,
+              93
+            ],
+            "conclusion": "`realize` takes `f = Q n 1 → 1`, so eventually `IsUnit f`, `f ∈ S` and `B i j * f = f * C j` for all `j`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          186
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
+      }
+    }
+  }
+}

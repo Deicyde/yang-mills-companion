@@ -1,0 +1,122 @@
+{
+  "id": "Lemma 16.2 step 20",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 173,
+        "rect": [
+          0.12026,
+          0.57484,
+          0.76293,
+          0.10262
+        ]
+      },
+      "title": "Lemma 16.2 step 20: Text, p. 173",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.2 step 20"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Maxwell.Free.scenes_gone",
+        "module": "YM.Next.MAXWELL.Scenes",
+        "lines": [
+          70,
+          90
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Maxwell.Free.scenes_gone"
+          },
+          "snippet": {
+            "text": "lemma scenes_gone (t : Vector d (Model F)) : (∀ s : Scene (Model F) d, s.lens t=0) ↔ quiet F t := by\n  constructor\n  · intro v n a p x hx\n    obtain ⟨b,hb⟩ := exists_ne a\n    obtain ⟨y,hy,hA,h⟩ := to_scanner hx b\n    let f := diagram p (t a)\n    have hh (m) (B : Fin m → Points n) : iteratedFDeriv ℝ m f y B=0 := v ⟨n,p,b,a,hb.symm,y,hy,hA,m,B⟩\n    have hg : f =ᶠ[𝓝 y] 0 := by\n      obtain ⟨P,r,hP⟩ := lenses F p _ y hy\n      have hw : Tendsto (fun z : Points n => z-y) (𝓝 y) (𝓝 0) := by\n        simpa only [id_eq,sub_self] using (tendsto_id (x:=𝓝 y)).sub (tendsto_const_nhds (x:=y))\n      filter_upwards [hw.eventually (Metric.eball_mem_nhds _ hP.r_pos)] with z hz\n      change z-y ∈ Metric.eball _ _ at hz\n      have hl := hP.hasSum_iteratedFDeriv hz\n      change HasSum (fun i => ((↑(i.factorial):ℝ)⁻¹) • iteratedFDeriv ℝ i f y fun _=> z - y) _ at hl\n      simp_rw [hh,smul_zero,add_sub_cancel] at hl\n      exact hl.unique hasSum_zero\n    exact ((lenses F p _).mono h).eqOn_zero_of_preconnected_of_eventuallyEq_zero (convex_segment .. |>.isPreconnected) (left_mem_segment ..) hg (right_mem_segment ..)\n  intro H s\n  have h : diagram s.v (t s.b)=ᶠ[𝓝 s.x] 0 := (show EqOn _ _ (conf s.n) from fun x hx => H _ _ _ _ hx).eventuallyEq_of_mem ((conf_open _).mem_nhds s.strict)\n  unfold Scene.lens; rw [(h.iteratedFDeriv ℝ s.m).eq_of_nhds, iteratedFDeriv_zero]; rfl",
+            "line": 70,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/MAXWELL/Scenes.lean",
+            "fragment": "L70-L90"
+          },
+          "proof_context": {
+            "declaration": "YM.Maxwell.Free.scenes_gone",
+            "lines": [
+              70,
+              90
+            ],
+            "conclusion": "If all jet derivatives (scene lenses) vanish at points of the testing lines, the diagram vanishes near them by analyticity (`lenses`) and, continued along the segment in `conf`, on all of `conf n`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Maxwell.Free.to_scanner",
+        "module": "YM.Next.MAXWELL.Scenes",
+        "lines": [
+          49,
+          68
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Maxwell.Free.to_scanner"
+          },
+          "snippet": {
+            "text": "private lemma to_scanner {x : Points n} (hx : x∈conf _) (a : Axis) : ∃ y∈conf n,onLine a y ∧ segment ℝ y x ⊆ conf _ := by\n  obtain ⟨p,hp,hA⟩ := tiesAway (fun i => x i a)\n  let y := points fun i => p i • basis a\n  have he : y∈conf n := fun i j h => hp (smul_left_injective ℝ (show basis a≠0 from norm_ne_zero_iff.mp (by simp)) h)\n  refine ⟨y,he,fun i => ⟨p i,rfl⟩,?_⟩\n  rintro z ⟨u,t,hu,hW,h,rfl⟩\n  by_cases ho : u=0\n  · rw [ho,zero_add] at h; rw [ho,h,zero_smul,one_smul,zero_add]; exact hx\n  by_cases hv : t=0\n  · rw [hv,add_zero] at h; rw [hv,h,zero_smul,one_smul,add_zero]; exact he\n  have hh (i : Fin n) : (u • y+t • x) i a = u*p i+t*x i a := by simp [y]\n  intro i j hi\n  have ht : (u • y+t • x) i a=(u • y+t • x) j a := congr_arg (fun x : E4 => x a) hi\n  rw [hh,hh] at ht\n  rcases lt_trichotomy (x i a) (x j a) with H|H|H\n  · have h := hA i j H\n    exact ((add_lt_add_of_lt_of_le (mul_lt_mul_of_pos_left h (lt_of_le_of_ne hu (Ne.symm ho))) (mul_le_mul_of_nonneg_left H.le hW)).ne ht).elim\n  · rw [H] at ht; exact hp (mul_left_cancel₀ ho (add_right_cancel ht))\n  have h := hA j i H\n  exact ((add_lt_add_of_lt_of_le (mul_lt_mul_of_pos_left h (lt_of_le_of_ne hu (Ne.symm ho))) (mul_le_mul_of_nonneg_left H.le hW)).ne ht.symm).elim",
+            "line": 49,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/MAXWELL/Scenes.lean",
+            "fragment": "L49-L68"
+          },
+          "proof_context": {
+            "declaration": "YM.Maxwell.Free.to_scanner",
+            "lines": [
+              49,
+              68
+            ],
+            "conclusion": "Every separated configuration has a line configuration with distinct ordered line coordinates whose segment to it stays separated."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          173
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

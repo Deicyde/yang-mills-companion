@@ -1,0 +1,141 @@
+{
+  "id": "Lemma 14.12 step 10",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "narrowMatch",
+  "note": "[M] claims covering number at least R/(2B_i+1) and the factor e^{-R/(2B_i+1)}; [L] proves only `separation ≤ cover*(4M+2) + 2M`, giving the weaker factor `exp(1 - R/(4M+2))`. The occupancy is a general `μ` in [L] rather than one.",
+  "subject": [
+    {
+      "location": {
+        "page": 135,
+        "rect": [
+          0.12026,
+          0.85446,
+          0.76293,
+          0.05423
+        ]
+      },
+      "title": "Lemma 14.12 step 10: Text, pp. 135–136",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.12 step 10#0"
+        }
+      }
+    },
+    {
+      "location": {
+        "page": 136,
+        "rect": [
+          0.12026,
+          0.0962,
+          0.75982,
+          0.03753
+        ]
+      },
+      "title": "Lemma 14.12 step 10: Text, pp. 135–136",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.12 step 10#1"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extra.Multi.root_hit",
+        "module": "YM.Extra.MULTISOURCE_BOUNDS.Root",
+        "lines": [
+          161,
+          164
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extra.Multi.root_hit"
+          },
+          "snippet": {
+            "text": "theorem root_hit {a c : ℝ} {mode : ι → Finset V} {X : ι → Support n} {f : ι → ℝ}\n    (hh : Occupancy o μ) (hf : ∀ i, 0 ≤ f i) (hc : 0 ≤ c)\n    (pins : ∀ i, 0<f i → ∃ v∈mode i, o v∈X i)\n    (cost : Rooted mode X M (a+1) f c) : Ac.Hit X M f a ((μ:ℝ)*siteFactor M*c) := by",
+            "line": 161,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/MULTISOURCE_BOUNDS/Root.lean",
+            "fragment": "L161-L164"
+          },
+          "proof_context": {
+            "declaration": "YM.Extra.Multi.root_hit",
+            "lines": [
+              161,
+              199
+            ],
+            "conclusion": "A `Rooted` bound with support exponent `a+1` gives the site-hit bound `Ac.Hit X M f a (μ*siteFactor M*c)` for markers pinned in their supports, with occupancy `μ`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extra.Multi.root_hit",
+        "module": "YM.Extra.MULTISOURCE_BOUNDS.Root",
+        "lines": [
+          169,
+          183
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extra.Multi.root_hit"
+          },
+          "snippet": {
+            "text": "  let k (y : Site n) := Real.exp (1-(separation y x : ℝ)/(4*(M:ℝ)+2))\n  let p (v : V) (i : ι) := if v ∈ mode i then Real.exp ((a+1)*coverNumber M (X i)) * f i else 0\n  calc\n    _ ≤ ∑ i∈s, ∑ v, k (o v)*p v i := sum_le_sum fun i _ => by\n      by_cases h : x∈X i ∧ 0<f i\n      · obtain ⟨v,hv,hw⟩ := pins i h.2\n        apply le_trans ?_ (single_le_sum (f:=fun v => k (o v)*p v i)\n          (fun v _ => mul_nonneg (Real.exp_pos _).le ((cost v).1 i)) (mem_univ v))\n        rw [if_pos h.1,show p v i = _ from if_pos hv,mul_comm (f i),← mul_assoc]\n        refine mul_le_mul_of_nonneg_right ?_ (hf i)\n        rw [show k (o v)=_ from rfl, ← Real.exp_add, Real.exp_le_exp]\n        have he : (separation (o v) x : ℝ) ≤ coverNumber M (X i) * (4*(M:ℝ)+2)+2*(M:ℝ) := by\n          exact_mod_cast Corona.extent _ _ hw h.1\n        have hp : 0 < (4*(M:ℝ)+2) := by positivity\n        field_simp; nlinarith",
+            "line": 169,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/MULTISOURCE_BOUNDS/Root.lean",
+            "fragment": "L169-L183"
+          },
+          "proof_context": {
+            "declaration": "YM.Extra.Multi.root_hit",
+            "lines": [
+              161,
+              199
+            ],
+            "conclusion": "A support containing a marker and the site `x` has `separation ≤ coverNumber*(4M+2) + 2M` (`Corona.extent`), so the reserved unit of exponent gives the factor `exp(1 - separation/(4M+2))`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          135,
+          136
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
+      }
+    }
+  }
+}

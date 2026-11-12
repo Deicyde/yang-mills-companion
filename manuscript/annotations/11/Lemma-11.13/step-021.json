@@ -1,0 +1,84 @@
+{
+  "id": "Lemma 11.13 step 21",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "[L] bounds by `(E x)^r`, with E of any prescribed polynomial rate built from exp(-H x ε) and H a square root of the monitor, instead of the explicit amplitude ε_w^2 for exponent 2τ_w, so it bounds a different quantity.",
+  "subject": [
+    {
+      "location": {
+        "page": 75,
+        "rect": [
+          0.11962,
+          0.37673,
+          0.76012,
+          0.0374
+        ]
+      },
+      "title": "Lemma 11.13 step 21: Text, p. 75",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 11.13 step 21"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.ConnectedActivityE6.Coat.alarm_bills",
+        "module": "YM.AnalyticNext.CONNECTED_ACTIVITY_JETS_E6.ResponsePrice",
+        "lines": [
+          65,
+          112
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.ConnectedActivityE6.Coat.alarm_bills"
+          },
+          "snippet": {
+            "text": "lemma alarm_bills (P : Teller G) (L : Side) {η r Q Y ξ : ℝ} (k : ℝ) (hξ : 0<ξ) :\n    ∃ E, Rate G L k E ∧ ∀ᶠ x : ℝ in atTop,\n    0≤ E x ∧ ∀ (c f : Side) (S : StepData c f) (T : Tube G S) (F : Forest S.ratio)\n     (X : Coat T F), X.x=x → S.patch.L=L → Rotator P L η r Q Y X → ∀ R : Rep G f, Intake P T X.x R →\n       ∀ v : Finset (WarningAt c f), X.dice.real (X.catastrophe ξ R.beta v) ≤ (E x)^v.card := by\n  let p := Delay.fineMonitor G L\n  let H (x : ℝ) := p x ^ ((1:ℝ)/2)\n  let B x := radiusB x; let ε := ξ/4\n  let u := Census.tubularPrice G L; let W := warning_count L\n  let M := payE η r Q u; let V (x : ℝ) := Animals.ballCost (2*B x)\n  let E (x : ℝ) := (V x:ℝ)* (u:ℝ)*2*Real.exp (-H x*ε)\n  have hp : Rate G L k (fun x=>Real.exp (-H x*ε)) := by\n    refine (Rate.monitor_cutoff (show 0< ε by unfold ε; positivity) (show (0:ℝ) < 1/2 by norm_num)).congr\n      (Eventually.of_forall (fun x => ?_))\n    exact congr_arg Real.exp (show -H x*ε=-ε*H x by ring)\n  have he := Census.width_rate G L 2 0; simp only [add_zero] at he\n  refine ⟨E,(by convert (((he.mul_right u).mul_right 2).mul hp) using 1\n                linarith),?_⟩\n  obtain ⟨A,hA,h⟩ := width_bound G L 2 0\n  simp only [add_zero] at h\n  have hε : 0<ε := by unfold ε; positivity\n  filter_upwards [Delay.monitor_pays G L 4 (show 0≤ A*(W:ℝ) by positivity) (show (0:ℝ)<1/2 by norm_num),\n    Delay.monitor_pays G L 0 (show 0≤ |M|/ε by positivity) zero_lt_one] with x hx hy\n  have hf : V x ≤ A*Delay.bill G L x^4 := h _\n  have hv : 0 < H x := by unfold H; exact Real.rpow_pos_of_pos (Delay.monitor_pos ..) _\n  refine ⟨(by unfold E; positivity),?_⟩; intro c f S T F X hg hL hR R hr v\n  subst x\n  let x := X.x\n  have ht : H X.x*H X.x=p X.x := by unfold H; rw [← Real.rpow_add (Delay.monitor_pos ..)]; norm_num; rfl\n  unfold dice catastrophe\n  unfold E; rw [show -H X.x*ε=-(ε*H X.x) by ring]\n  refine Poll.shattered _ _ _ hR.fullC.posSemidef (fun v => (le_abs_self _).trans\n    (Control.top (hR.scale.mate X.shutter) hR.full.prices.le v)) (by unfold u; rw [← hL]; exact entering S) (p:=u) (m:=W)\n      (by unfold W; rw [← hL]; exact staffed S) v (2*X.B) (by positivity) ?_\n  have hm : M/2 ≤ ε*p X.x := by\n    rw [pow_zero,mul_one,Real.rpow_one] at hy\n    have he := (div_le_iff₀ hε).mp hy\n    have hv : 0 ≤ p X.x := (Delay.monitor_pos ..).le\n    nlinarith [mul_nonneg hε.le hv, le_abs_self M]\n  have hz : ε*H X.x *((V X.x:ℝ)*W) ≤ ε*p X.x := by\n    have hp : (V X.x:ℝ)*W ≤ H X.x := (mul_le_mul_of_nonneg_right hf (Nat.cast_nonneg W)).trans\n      ((le_of_eq (by ring : A*Delay.bill G L X.x^4 * (W:ℝ) = A*(W:ℝ)*Delay.bill G L X.x^4)).trans hx)\n    rw [← ht]; refine (mul_le_mul_of_nonneg_left hp (by positivity : 0 ≤ ε*H X.x)).trans_eq (by ring)\n  apply (add_le_add hm hz).trans\n  have hp := charge_area S X.x T R hr\n  change Delay.fineMonitor G S.patch.L X.x /2 ≤ X.t*(gStep R.beta)⁻¹ at hp\n  rw [hL] at hp\n  unfold ε p; nlinarith only [mul_le_mul_of_nonneg_left hp hξ.le]",
+            "line": 65,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/ResponsePrice.lean",
+            "fragment": "L65-L112"
+          },
+          "proof_context": {
+            "declaration": "YM.ConnectedActivityE6.Coat.alarm_bills",
+            "lines": [
+              65,
+              112
+            ],
+            "conclusion": "`alarm_bills` gives a rate `E x = ballCost(2B) * u * 2 * exp (-H x * ε)` with `X.dice.real (X.catastrophe ξ β v) ≤ (E x)^v.card`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          75
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; a re-check of closeMatch records changed it from closeMatch; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
+      }
+    }
+  }
+}

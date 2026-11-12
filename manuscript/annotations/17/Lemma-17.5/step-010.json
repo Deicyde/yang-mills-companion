@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 17.5 step 10",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "Inclusions, derivatives, stress laws and E7 are carried; the integrability of separated-support integrals is not in these lines (it is the first part of `RPSmear` in B08), and the buffered-slab route of the stress shell is replaced by `has_evaluator`.",
+  "subject": [
+    {
+      "location": {
+        "page": 196,
+        "rect": [
+          0.12026,
+          0.37255,
+          0.76289,
+          0.0684
+        ]
+      },
+      "title": "Lemma 17.5 step 10: Text, p. 196",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 17.5 step 10"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.B09.answer",
+        "module": "YM.Work.B09",
+        "lines": [
+          12,
+          15
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.B09.answer"
+          },
+          "snippet": {
+            "text": "theorem answer : YM.Bid.B09 := by\n  intro G C S V A P R H hl _ _ hA hP p hg i\n  obtain ⟨φ, he⟩ := has_evaluator hP (hg.threads i)\n  exact ⟨he.inclusions H hl.injection, he.derivatives hA, he.flux hA H hl.charges⟩",
+            "line": 12,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/B09.lean",
+            "fragment": "L12-L15"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.B09.answer",
+            "lines": [
+              12,
+              15
+            ],
+            "conclusion": "Each phase table satisfies `Inclusions`, `Derivatives` and `StressLaws`, via a continuous evaluator `has_evaluator`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.B11.answer",
+        "module": "YM.Work.B11",
+        "lines": [
+          75,
+          89
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.B11.answer"
+          },
+          "snippet": {
+            "text": "theorem answer : YM.Bid.B11 := by\n  intro G C S V A P X _ h _ p H i n d v\n  let t : Fin n → C.book.Token := fun j => ⟨d j,v j⟩\n  obtain ⟨D,hD⟩ : ∃ D, ∀ j, d j ≤ D := (eventually_all.mpr fun j => eventually_ge_atTop (d j)).exists\n  obtain ⟨R,hR⟩ : ∃ R, ∀ j, ‖v j‖ ≤ R := (eventually_all.mpr fun j => eventually_ge_atTop ‖v j‖).exists\n  obtain ⟨K,B,hK,hb⟩ := phase_cap P h D R\n  refine ⟨B*n,K^n*(n:ℝ)^(B*n),by positivity,fun r hr hr' x hs => ?_⟩\n  have hw : constrained D R (realize t x) := by\n    intro u hu\n    obtain ⟨j,rfl⟩ := List.mem_ofFn.mp hu\n    exact ⟨hD j,hR j⟩\n  have he := hb i (p i) (H.threads i) _ hw r hr hr' (realized_spaced t hs)\n  rwa [Table.readAt, show (p i).read x t = _ from (p i).read_eq x d v,\n    Spread.radius, show (realize t x).length = n from List.length_ofFn, div_eq_mul_inv,\n    mul_pow, ← mul_assoc] at he",
+            "line": 75,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/B11.lean",
+            "fragment": "L75-L89"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.B11.answer",
+            "lines": [
+              75,
+              89
+            ],
+            "conclusion": "`OneCap (p i)`: each phase table has the polynomial cap bound |S^xi| <= C r^-A, from the operator norm bound `phase_cap`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.B10.answer",
+        "module": "YM.Work.B10",
+        "lines": [
+          95,
+          105
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.B10.answer"
+          },
+          "snippet": {
+            "text": "theorem answer : YM.Bid.B10 := by\n  intro G L S T P hR hs hp _ h hT n d v j\n  let q : Fin n → L.Token := fun i => ⟨d i,v i⟩\n  let w : Fin n → S.Tag := S.classTokens ∘ q\n  obtain ⟨A,C,hC,H⟩ := capped_tags P h hs hp.toSymmetric hT w j\n  refine ⟨A,C,hC,fun r hr hr' x hx => ?_⟩\n  have he : (fun y => T.value d y v) =ᶠ[𝓝 x] fun y => S.useAt T y w := by\n    filter_upwards [(conf_open _).mem_nhds (spaced_conf hr hx)] with y hy\n    exact (S.at_project T hp.toSymmetric hR hy q).symm\n  rw [(he.iteratedFDeriv ℝ j).eq_of_nhds]\n  exact H r hr hr' x hx",
+            "line": 95,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/B10.lean",
+            "fragment": "L95-L105"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.B10.answer",
+            "lines": [
+              95,
+              105
+            ],
+            "conclusion": "`OneCap` upgrades to `Capped`, the bounds for derivative labels (E7)."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          196
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

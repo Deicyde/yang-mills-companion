@@ -1,0 +1,161 @@
+{
+  "id": "Lemma 16.10 step 17",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 186,
+        "rect": [
+          0.12026,
+          0.2531,
+          0.75995,
+          0.10261
+        ]
+      },
+      "title": "Lemma 16.10 step 17: Text, p. 186",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.10 step 17"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Bid.A08",
+        "module": "YM.Bid.Angular",
+        "lines": [
+          76,
+          78
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Bid.A08"
+          },
+          "snippet": {
+            "text": "def A08 : Prop := ∀ {G : Gauge} {L : Register G} {S : Table L} (H : S.Hierarchy) (V : DiffPlan S),\n    V.Inclusions S → V.Derivatives S → V.Orientation H.spin → ∀ (Y : Ward.SpinRows S),\n    (∀ n (x : Points n), x∈conf n → Still V Y x) → Hyper H.spin V Y → erases H.spin V → Brackets Y",
+            "line": 76,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Bid/Angular.lean",
+            "fragment": "L76-L78"
+          },
+          "proof_context": {
+            "declaration": "YM.Bid.A08",
+            "lines": [
+              76,
+              78
+            ],
+            "conclusion": "`A08` states that a `Y` with `Still V Y` on `conf`, `Hyper` and `erases` satisfies `Brackets Y`, i.e. `[Y_u, Y_v] = Y_{[u,v]}`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.A08.answer",
+        "module": "YM.Work.A08",
+        "lines": [
+          232,
+          247
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.A08.answer"
+          },
+          "snippet": {
+            "text": "theorem answer : YM.Bid.A08 := by\n  intro G L S H V hincl hV _ Y hY h her\n  obtain ⟨N, hN⟩ := her\n  have hlarge (d : ℕ) (hd : N ≤ d) : defect Y d = 0 :=\n    hN d hd (defect Y d) (defect_winds h d)\n      fun m _ hx u v w => defect_ward H hV (hY m) hx u v w\n  intro d u v\n  rw [← sub_eq_zero]\n  change defect Y d u v = 0\n  apply LinearMap.ext\n  intro w\n  -- Inject this cap into one of the large caps.\n  have hd : d ≤ max d N := le_max_left d N\n  apply V.inject H.laws.toSymmetric hincl hd\n  rw [← defect_rise h hd u v w, hlarge _ (le_max_right d N)]\n  simp",
+            "line": 232,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/A08.lean",
+            "fragment": "L232-L247"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.A08.answer",
+            "lines": [
+              232,
+              247
+            ],
+            "conclusion": "`answer` shows the defect vanishes in large degrees by `defect_ward` (vanishing correlation sums) and the erasure test, then in all lower degrees by injective inclusions (`V.inject`, `defect_rise`)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Bid.A07",
+        "module": "YM.Bid.Angular",
+        "lines": [
+          70,
+          72
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Bid.A07"
+          },
+          "snippet": {
+            "text": "def A07 : Prop := ∀ {G : Gauge} {C : Family G} {S : Table C.book} (H : S.Hierarchy) (V : DiffPlan S),\n    V.Inclusions S → V.Derivatives S → V.Orientation H.spin → ∀ (R : MaxwellData C) (J : S.Stress), ActLaw V R.T J H.spin R.hT.spin →\n    erases H.spin V",
+            "line": 70,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Bid/Angular.lean",
+            "fragment": "L70-L72"
+          },
+          "proof_context": {
+            "declaration": "YM.Bid.A07",
+            "lines": [
+              70,
+              72
+            ],
+            "conclusion": "`A07` gives `erases H.spin V`, the finite free tests that are injective on the defect space in large degree."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          186
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

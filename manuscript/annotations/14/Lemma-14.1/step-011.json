@@ -1,0 +1,145 @@
+{
+  "id": "Lemma 14.1 step 11",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "The sublinear total interval length and the one-step coupling formula are carried; the resulting bound β̂_i ∈ [β̂_t/2, β̂_t] on the interval (the third requirement) is not stated.",
+  "subject": [
+    {
+      "location": {
+        "page": 125,
+        "rect": [
+          0.12026,
+          0.79056,
+          0.76156,
+          0.03419
+        ]
+      },
+      "title": "Lemma 14.1 step 11: Text, p. 125",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.1 step 11",
+          "quads": [
+            [
+              0.37436,
+              0.79056,
+              0.88182,
+              0.79056,
+              0.88182,
+              0.80764,
+              0.37436,
+              0.80764
+            ],
+            [
+              0.12026,
+              0.80939,
+              0.37255,
+              0.80939,
+              0.37255,
+              0.82475,
+              0.12026,
+              0.82475
+            ]
+          ]
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Rank.Ship.honoured",
+        "module": "YM.Next.RANK.Voucher",
+        "lines": [
+          104,
+          112
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Rank.Ship.honoured"
+          },
+          "snippet": {
+            "text": "  let P' : Wait Z := {\n    minLength := P.minLength\n    readyHere := fun j => max (P.readyHere j) (v j)\n    window := fun j s => P.window j s+z j s\n    sublin j := by\n      have ht : Tendsto (fun s => (z j s:ℝ)/s) atTop (𝓝 0) := by\n        have he := tendsto_finsetSum (D j) (fun i _ => accommodate Z (b i) j h (hb i))\n        simpa [z,Finset.sum_div] using! he\n      simpa [add_div] using! (P.sublin j).add ht }",
+            "line": 104,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Voucher.lean",
+            "fragment": "L104-L112"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Rank.Ship.honoured",
+            "lines": [
+              96,
+              115
+            ],
+            "conclusion": "The total requested window `P.window j s + Σ benchCost` is o(s)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stock.consumes",
+        "module": "YM.Overlay.Schedule",
+        "lines": [
+          113,
+          114
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stock.consumes"
+          },
+          "snippet": {
+            "text": "  have hi (i : ℕ) : a.clock.hatBeta (i+1) = a.clock.hatBeta i+G.slopeConstant* Real.log (a.S.block i).val := by\n    unfold Calendar.hatBeta; rw [Schedule.scale_succ]; unfold Levels.S; ring",
+            "line": 113,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Overlay/Schedule.lean",
+            "fragment": "L113-L114"
+          },
+          "proof_context": {
+            "declaration": "YM.Stock.consumes",
+            "lines": [
+              111,
+              129
+            ],
+            "conclusion": "`hatBeta (i+1) = hatBeta i + slope * log (block i)`: one level changes the coupling by `slope * log` of the block."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          125
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

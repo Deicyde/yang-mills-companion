@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 11.5 step 26",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "[L] proves the two normal equations `Inputs` (with the transfer conditions) for the explicit alias columns of `duo` in `tangent`, rather than deriving them from the normal equations of the covariance recursion with a gradient matched to the rooted predictor.",
+  "subject": [
+    {
+      "location": {
+        "page": 53,
+        "rect": [
+          0.12026,
+          0.4041,
+          0.76194,
+          0.03396
+        ]
+      },
+      "title": "Lemma 11.5 step 26: Text, p. 53",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 11.5 step 26"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Free.Flight.tangent",
+        "module": "YM.Next.FREE_KERNELS.Primal",
+        "lines": [
+          63,
+          67
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Free.Flight.tangent"
+          },
+          "snippet": {
+            "text": "lemma tangent :\n    let k := K.penalty; let W := pulse k P.wing; let W' := pulse k P.land; let S := visit P K hc\n    let V := duo k P; let A := installed (P.visitRatio hc) V.A0; let T := installed (P.visitRatio hc) V.T\n    Inputs S A ((record W).acts f) ((record W').acts c) ∧\n      T.transpose * d 1 f = d 1 c * mean S ∧ T*((record W').acts c)*d 1 c=(record W).acts f*d 1 f*A := by",
+            "line": 63,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/Primal.lean",
+            "fragment": "L63-L67"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Free.Flight.tangent",
+            "lines": [
+              63,
+              118
+            ],
+            "conclusion": "The explicit alias columns `A0` and `T` of `duo` satisfy `Inputs` (the two normal equations) and the two transfer conditions for the unmodified metrics `pulse`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Precision.Inputs",
+        "module": "YM.PREC.TreeMatch",
+        "lines": [
+          76,
+          79
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Precision.Inputs"
+          },
+          "snippet": {
+            "text": "structure Inputs (S : StepData c f) (W : Matrix (Body 1 f) (Body 1 c) ℝ) (H : Matrix (Body 2 f) (Body 2 f) ℝ)\n    (H' : Matrix (Body 2 c) (Body 2 c) ℝ) : Prop where\n  primal : K H*W=(mean S).transpose*K H'\n  dual : mean S*W=1-S.kernel.penalty⁻¹ • K H'",
+            "line": 76,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PREC/TreeMatch.lean",
+            "fragment": "L76-L79"
+          },
+          "proof_context": {
+            "declaration": "YM.Precision.Inputs",
+            "lines": [
+              76,
+              79
+            ],
+            "conclusion": "`Inputs` states `K H W = (mean S)ᵀ K H'` and `mean S * W = 1 - k⁻¹ K H'`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          53
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

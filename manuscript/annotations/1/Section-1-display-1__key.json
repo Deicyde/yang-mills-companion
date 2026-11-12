@@ -1,0 +1,314 @@
+{
+  "id": "Section 1 display 1",
+  "kind": "display",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 3,
+        "rect": [
+          0.12026,
+          0.59419,
+          0.75948,
+          0.10028
+        ]
+      },
+      "title": "Display, p. 3",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Section 1 display 1"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YangMills.plaquette",
+        "module": "PublicWilson",
+        "lines": [
+          20,
+          23
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YangMills.plaquette"
+          },
+          "snippet": {
+            "text": "def plaquette {g : GaugeGroup} {l : ℕ+} (U : Configuration g l) (x : Site l)\n    (i j : Axis) : g.image :=\n  U (x,i) * (U (x + Pi.single i 1,j) *\n    ((U (x + Pi.single j 1,i))⁻¹ * (U (x,j))⁻¹))",
+            "line": 20,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/PublicWilson.lean",
+            "fragment": "L20-L23"
+          },
+          "proof_context": {
+            "declaration": "YangMills.plaquette",
+            "lines": [
+              20,
+              23
+            ],
+            "conclusion": "`plaquette` is the ordered product `U(x,i) U(x+e_i,j) U(x+e_j,i)^-1 U(x,j)^-1`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YangMills.wilsonEnergy",
+        "module": "PublicWilson",
+        "lines": [
+          25,
+          27
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YangMills.wilsonEnergy"
+          },
+          "snippet": {
+            "text": "def wilsonEnergy {g : GaugeGroup} {l : ℕ+} (U : Configuration g l) : ℝ :=\n  ∑ p : Site l × Directions,\n    (1 - ((plaquette U p.1 p.2.val.1 p.2.val.2).val.val.trace).re / ((g.n+1 : ℕ) : ℝ))",
+            "line": 25,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/PublicWilson.lean",
+            "fragment": "L25-L27"
+          },
+          "proof_context": {
+            "declaration": "YangMills.wilsonEnergy",
+            "lines": [
+              25,
+              27
+            ],
+            "conclusion": "`wilsonEnergy` sums `1 - Re tr(plaquette)/(n+1)` over sites and axis pairs `i<j`, with `n+1 = n_G`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YangMills.wilsonLaw",
+        "module": "PublicWilson",
+        "lines": [
+          29,
+          33
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YangMills.wilsonLaw"
+          },
+          "snippet": {
+            "text": "def wilsonLaw (g : GaugeGroup) (l : ℕ+) (β : ℝ) (haar : Measure g.image) :\n    Measure (Configuration g l) :=\n  let prior : Measure (Configuration g l) := Measure.pi fun _ => haar\n  let density := fun U : Configuration g l => Real.exp (-β * wilsonEnergy U)\n  prior.withDensity fun U => ENNReal.ofReal (density U / ∫ V, density V ∂prior)",
+            "line": 29,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/PublicWilson.lean",
+            "fragment": "L29-L33"
+          },
+          "proof_context": {
+            "declaration": "YangMills.wilsonLaw",
+            "lines": [
+              29,
+              33
+            ],
+            "conclusion": "`wilsonLaw` is the product Haar prior with density `exp(-β E)` divided by its integral."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Lattice.faceValue",
+        "module": "YM.Lattice.Faces",
+        "lines": [
+          47,
+          47
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Lattice.faceValue"
+          },
+          "snippet": {
+            "text": "def faceValue (U : Links R K) (p : Face R) := travel U p.1 (square p.2.val.1 p.2.val.2)",
+            "line": 47,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Lattice/Faces.lean",
+            "fragment": "L47-L47"
+          },
+          "proof_context": {
+            "declaration": "YM.Lattice.faceValue",
+            "lines": [
+              47,
+              47
+            ],
+            "conclusion": "Internally, `faceValue` is the plaquette holonomy `travel` along `square a b`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Gauge.price",
+        "module": "YM.Gauge.MatrixGroup",
+        "lines": [
+          112,
+          112
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Gauge.price"
+          },
+          "snippet": {
+            "text": "def price (u : G.El) : ℝ := 1 - (G.mat u).trace.re / G.repDim",
+            "line": 112,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Gauge/MatrixGroup.lean",
+            "fragment": "L112-L112"
+          },
+          "proof_context": {
+            "declaration": "YM.Gauge.price",
+            "lines": [
+              112,
+              112
+            ],
+            "conclusion": "`price u = 1 - Re tr(u)/repDim`, the plaquette term."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Wilson.energy",
+        "module": "YM.Wilson.Law",
+        "lines": [
+          29,
+          29
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Wilson.energy"
+          },
+          "snippet": {
+            "text": "def energy (U : Config G n) : ℝ := ∑ p : Face (Per n), G.price (faceValue U p)",
+            "line": 29,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Wilson/Law.lean",
+            "fragment": "L29-L29"
+          },
+          "proof_context": {
+            "declaration": "YM.Wilson.energy",
+            "lines": [
+              29,
+              29
+            ],
+            "conclusion": "`energy` sums `price (faceValue U p)` over the faces (site, a<b) of the torus."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Wilson.law",
+        "module": "YM.Wilson.Law",
+        "lines": [
+          87,
+          87
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Wilson.law"
+          },
+          "snippet": {
+            "text": "def law (G : Gauge) (n : Side) (β : ℝ) : Measure (Config G n) := (prior G n).withDensity (weight β)",
+            "line": 87,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Wilson/Law.lean",
+            "fragment": "L87-L87"
+          },
+          "proof_context": {
+            "declaration": "YM.Wilson.law",
+            "lines": [
+              87,
+              87
+            ],
+            "conclusion": "`law` is the Haar product prior reweighted by the normalized weight `exp(-β energy)/Z`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          3
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      }
+    }
+  }
+}

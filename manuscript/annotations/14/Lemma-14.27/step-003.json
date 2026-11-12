@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 14.27 step 3",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean bounds the inverse in coefficient size by `exp (columnLogs N)` and then by `exp(ε scale N)` for every ε; the constant C_e and the operator norm of Z^{-1} are not printed.",
+  "subject": [
+    {
+      "location": {
+        "page": 152,
+        "rect": [
+          0.12026,
+          0.86538,
+          0.75948,
+          0.04919
+        ]
+      },
+      "title": "Lemma 14.27 step 3: Display, p. 152",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.27 step 3"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.D01.terminal_ball",
+        "module": "YM.Work.D01",
+        "lines": [
+          108,
+          113
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.D01.terminal_ball"
+          },
+          "snippet": {
+            "text": "  have hb : Z.coeffSize (T.terminal.symm x) ≤ Real.exp (columnLogs C.path.levels N) * Z.coeffSize x := by\n    have hk : Z.coeffSize (T.entries N (T.terminal.symm x)).x ≤ _ :=\n      back_budget C h (p := p) x hr le_rfl\n    rw [show (T.entries N (T.terminal.symm x)).x = T.terminal.symm x from\n      (h.calibrated d N p hr).bare_coord _] at hk\n    exact hk",
+            "line": 108,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/D01.lean",
+            "fragment": "L108-L113"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.D01.terminal_ball",
+            "lines": [
+              92,
+              125
+            ],
+            "conclusion": "The inverse of the terminal isomorphism is bounded by `exp (columnLogs N)` times the coefficient size, and `terminal_ball` makes this at most `exp (ε * scale N)` for every ε, so bounded coefficient families are subpower."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.Coin.from_bound",
+        "module": "YM.FullVolume.Sluggish",
+        "lines": [
+          150,
+          153
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.Coin.from_bound"
+          },
+          "snippet": {
+            "text": "lemma from_bound (h:C.Makes) {A:ℝ} (hp:∀ᶠ i in mesh, ‖p i‖ ≤ A) : Coin C p:=by\n  intro ε he\n  filter_upwards [deepen.eventually (Work.D01.terminal_ball C h _ A ε he),hp] with i hi hu\n  exact hi _ _ hu",
+            "line": 150,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Sluggish.lean",
+            "fragment": "L150-L153"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.Coin.from_bound",
+            "lines": [
+              150,
+              153
+            ],
+            "conclusion": "A family bounded eventually by a constant is `Coin`, i.e. admissible, by `terminal_ball`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          152
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

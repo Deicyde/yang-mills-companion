@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 11.12 step 3",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The lower bound is on the active-price index set, so the all-frozen vacuity and identity padding for inactive links are not separate Lean steps; the bound is eventual in x with eta depending on the patch and teller.",
+  "subject": [
+    {
+      "location": {
+        "page": 70,
+        "rect": [
+          0.12026,
+          0.20578,
+          0.76243,
+          0.05423
+        ]
+      },
+      "title": "Lemma 11.12 step 3: Text, p. 70",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 11.12 step 3"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.SectorChange.Gap.not_flat",
+        "module": "YM.SectorNext.GAUSSIAN_SECTOR_CHANGE.Gap",
+        "lines": [
+          242,
+          246
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.SectorChange.Gap.not_flat"
+          },
+          "snippet": {
+            "text": "theorem not_flat (G : Gauge) (P : Patch) (Pt : Teller G) (hS : P.Branches Pt.bind G) :\n    ∃ η : ℝ, 0 < η ∧ ∀ᶠ x : ℝ in atTop, ∀ {c f : Side} (S : StepData c f) (T : Tube G S),\n    S.patch=P → 100*(1+radiusB x) ≤ c.val → Pt.Funds S T →\n    ∀ (A : Stores S) (F : Forest S.ratio) (k:S.Choices) (V : Config G c), A.flags=RG.flags (temp x) V →\n    ∀ a : Prices G (Active A x F), η*(a ⬝ᵥ a) ≤ a ⬝ᵥ (Rows.gram T x V k (shots S x) A F *ᵥ a) := by",
+            "line": 242,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/SectorNext/GAUSSIAN_SECTOR_CHANGE/Gap.lean",
+            "fragment": "L242-L246"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.SectorChange.Gap.not_flat",
+            "lines": [
+              242,
+              264
+            ],
+            "conclusion": "For large `x`, on all active prices `η*(a ⬝ᵥ a) ≤ a ⬝ᵥ (Rows.gram ... *ᵥ a)`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.AnalyticBridge.Covariance.Trust",
+        "module": "YM.AnalyticBridge.SECTOR_COVARIANCE_JETS.Deposit",
+        "lines": [
+          49,
+          58
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.AnalyticBridge.Covariance.Trust"
+          },
+          "snippet": {
+            "text": "def Trust (G : Gauge) (p : Teller G) (P : Patch) (x C r : ℝ) (k : ℕ) (σ η : ℝ) :=\n  ∀ {c f : Side} (S : StepData c f) (T : Tube G S), S.patch=P → p.Funds S T →\n    100*(1+radiusB x) ≤ c.val → ∀ (V : Config G c) (t:S.Choices) (A : Stores S) (F : Forest S.ratio),\n      A.flags=RG.flags (temp x) V → ∀ B : Directions G c, ‖B‖ ≤ r →\n        let g := front (G:=G) A F (x:=x); let H := pilot T A F t x V;\n        RatesPaid (down S) g σ C k (scroll T A F t x V) B ∧\n          RatesPaid g g σ C k H B ∧ Gapped (H B) η ∧ (H B).PosDef ∧\n          (∀ z, z ⬝ᵥ (H B *ᵥ z) ≤ C * sumSq z) ∧\n          ∀ (i : Bond c) (s : Signed), curb (shots S x) A F x s (.inr i) →\n            ContDiffAt ℝ ω (fun y => G.mat (Press.workQ V s t i y)) (B,0)",
+            "line": 49,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/SECTOR_COVARIANCE_JETS/Deposit.lean",
+            "fragment": "L49-L58"
+          },
+          "proof_context": {
+            "declaration": "YM.AnalyticBridge.Covariance.Trust",
+            "lines": [
+              49,
+              58
+            ],
+            "conclusion": "`Trust` records `Gapped (H B) η` and `PosDef` for the pilot matrix `H B`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          70
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

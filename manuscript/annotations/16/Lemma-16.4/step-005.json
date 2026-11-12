@@ -1,0 +1,84 @@
+{
+  "id": "Lemma 16.4 step 5",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "Boundedness on cutoff tails and the unit, conjugation and signed (mirror) laws are in `w_right`; the inverse estimate with explicit `K_{k,d}`, the factor 2 for the readout error and the injectivity argument are not stated.",
+  "subject": [
+    {
+      "location": {
+        "page": 176,
+        "rect": [
+          0.11962,
+          0.54497,
+          0.76357,
+          0.13977
+        ]
+      },
+      "title": "Lemma 16.4 step 5: Text, p. 176",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.4 step 5"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.MergeProof.East.w_right",
+        "module": "YM.MergeProof.East.Pint",
+        "lines": [
+          46,
+          66
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.MergeProof.East.w_right"
+          },
+          "snippet": {
+            "text": "lemma w_right (F:Extraction.Order)(h: (S).RealSpin)(b:ℝ)(hp:Poised P B H O J n z k L) :\n    let Y:=wok C D k b aux L\n    (∃ M:ℝ,F.late fun N p=> ‖Y.atCut (N,p)‖ ≤ M)∧F.late fun N p=>\n       Y.atCut (N,p) ⟨0,Nat.succ_pos D⟩ ((S).unit 0)= C.book.scalar 0 ∧\n       (∀ i x,Y.atCut (N,p) i ((S).conj h i x)=star (Y.atCut (N,p) i x))∧\n       ∀ i s x,Y.atCut (N,p) i ((S).mirror h i s x)=C.book.mirrorGroup i s (Y.atCut (N,p) i x) :=by\n    intro Y\n    have he(i:Fin (D+1)): C.ref i ≤ k :=hp.early _ (Nat.le_of_lt_succ i.isLt)\n    let μ:= Next.Rank.Station.mag A b k\n    have hh(i:Fin (D+1)) (x) :∃ M:ℝ,∀ l:ℕ×ℕ,k<l.1 → ‖Y.atCut l i x‖≤M:=by\n       obtain ⟨w,hw⟩:= sun H (he i) μ (ladder C i x); refine ⟨w,fun l hl=>?_⟩; exact hw _ _ _ hl.le (hp.charts l.1 l.2 hl i).1\n    choose S' ht ht' using fun i:Fin (D+1)=> many_clm (fun l:ℕ×ℕ=>k<l.1) (fun l=> Y.atCut l i) (hh i)\n    have hz:F.late fun N _=>k<N:= by unfold Extraction.Order.late; exact Eventually.of_forall fun i=> F.mesh.cofinal.eventually (eventually_gt_atTop _)\n    refine ⟨⟨∑ i,S' i,hz.mono fun i he=>he.mono fun j h=> (pi_norm_le_iff_of_nonneg (Finset.sum_nonneg fun i _=> ht i)).2 fun y=> (ht' y (F.mesh j,F.per i) h).trans (Finset.single_le_sum (fun i _=>ht i) (Finset.mem_univ _))⟩,?_⟩\n    refine hz.mono fun i he'=>he'.mono fun j hk=> ?_\n    let K:=F.mesh j; let β:= F.per i\n    let d0:Fin (D+1):=⟨0,Nat.succ_pos D⟩\n    refine ⟨?_,fun u x=> ?_,fun u s x=>?_⟩\n    · change ladd C μ k K β 0 (L K β d0) (ladder C 0 ((S).unit 0))=_; rw [ladder_unit]; exact pure_start H (he d0) (Nat.le_of_lt hk) _ _ (hp.charts K β hk d0).1\n    · change ladd C μ k K β _ _ (ladder C _ ((Cells.standard C).conj h _ _))= star _; rw [ladder_conj]; exact purer H (he u) (Nat.le_of_lt hk) _ _ (hp.charts K β hk u).1 _\n    change ladd C μ k K β _ _ (ladder C _ ((Cells.standard C).mirror h _ _ _))=_; rw [ladder_spin];exact rider H (he u) (Nat.le_of_lt hk) _ _ (hp.charts K β hk u).1 (hp.charts K β hk u).2 s _",
+            "line": 46,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/East/Pint.lean",
+            "fragment": "L46-L66"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.East.w_right",
+            "lines": [
+              46,
+              66
+            ],
+            "conclusion": "`w_right` shows the cut maps of `wok` are bounded in operator norm on tails (`F.late`), send the unit to the scalar `0`, commute with conjugation (`star`) and with the mirror group."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          176
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
+      }
+    }
+  }
+}

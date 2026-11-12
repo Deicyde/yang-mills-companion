@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 16.9 step 8",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean takes the same constants (δ=1, u=1 or ≤150, ω=-150 or -300) but states only the final exponent bound -101 and never the explicit values -146 and -221.5, which sit inside the `linarith` step.",
+  "subject": [
+    {
+      "location": {
+        "page": 184,
+        "rect": [
+          0.11962,
+          0.54797,
+          0.76258,
+          0.03736
+        ]
+      },
+      "title": "Lemma 16.9 step 8: Text, p. 184",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.9 step 8"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.exterior_size",
+        "module": "YM.Next.ROTATIONS.Vanishing",
+        "lines": [
+          83,
+          91
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.exterior_size"
+          },
+          "snippet": {
+            "text": "  let u := if d=l then (1:ℝ) else -(1+w l)+1\n  let X := jar w d f e\n  have hX : ∀ᶠ n in atTop, fits (V d) B A (X n) := hy.mono fun n hn j => (hn.2.1 j).indicator (cove_m ..)\n  let T := due w d (-3000)\n  have hT : Budget u (fun n => integral (ν (V d) B) (T n)) := line_cost V H l _ B hB hl.1 hl.2 hu d (fun i => 1+w i) hW 1 (-3000) (by norm_num) (by norm_num) _ hG\n  have hY n : Integrable (T n) (ν (V d) B) := cost_int V d B _ (fuel_pos ..) _ _\n  have ht : u≤150 := by\n    have he : -150 ≤ w l := chart_here ..; unfold u; split_ifs <;> linarith\n  have hp : Budget (-101) (fun n => cross (V d) B A (X n)) := by",
+            "line": 83,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Vanishing.lean",
+            "fragment": "L83-L91"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.exterior_size",
+            "lines": [
+              68,
+              120
+            ],
+            "conclusion": "`u = 1` if `d=l`, else `-(1+w l)+1`, with `u≤150` since `-150≤w l` (`chart_here`); the line budget `hT` comes from `line_cost`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.exterior_size",
+        "module": "YM.Next.ROTATIONS.Vanishing",
+        "lines": [
+          110,
+          115
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.exterior_size"
+          },
+          "snippet": {
+            "text": "    let z := due w d (w d)\n    obtain ⟨M,hM,hN⟩ := shear_size w d f e hj hf (-3000) (by linarith [(hk d).1])\n    have hF : Budget 1 (fun n => integral (ν (V d) A) (z n)) := point_cost V H d A _ Finset.univ (Finset.mem_univ _) (spar_both d b hc) (fun i _ => hg i) (fun i _ => hA i) (fun i => 1+w i) (fun i _ => hW i) (w d) (hw d) _ hG 1 (by norm_num)\n    refine (balanced_mul (V d) B A X hX u 1 T z hY (fun n => cost_int V d A _ (fuel_pos ..) _ _) hT hF (3+w d) M hM (fun n p H => ⟨due_nn _ _ _ _ p H,due_nn _ _ _ _ p H,hN n p H⟩)).rise ?_\n    rw [show w d= _ from chart_away a b l d hd hc]; unfold u at *\n    split_ifs with h <;> simp only [h, if_true, if_false] at ht <;> linarith",
+            "line": 110,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Vanishing.lean",
+            "fragment": "L110-L115"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.exterior_size",
+            "lines": [
+              68,
+              120
+            ],
+            "conclusion": "For `d≠b` the exponents `3+w d+(u+1)/2` are closed by `linarith` to the target `Budget (-101)`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          184
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
+      }
+    }
+  }
+}

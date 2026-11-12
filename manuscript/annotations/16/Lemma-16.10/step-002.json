@@ -1,0 +1,239 @@
+{
+  "id": "Lemma 16.10 step 2",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 185,
+        "rect": [
+          0.11962,
+          0.20598,
+          0.76257,
+          0.07134
+        ]
+      },
+      "title": "Lemma 16.10 step 2: Text, p. 185",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.10 step 2"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Bid.Hyper",
+        "module": "YM.Bid.Angular",
+        "lines": [
+          16,
+          20
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Bid.Hyper"
+          },
+          "snippet": {
+            "text": "structure Hyper (H : S.RealSpin) (P : DiffPlan S) (D : Ward.SpinRows S) : Prop where\n  real d u v : S.conj H d (D d u v) = D d u (S.conj H d v)\n  inter d e (h : d ≤ e) u v : D e u (P.rise h v) = P.rise h (D d u v)\n  unity d u : D d u (S.unit d)=0\n  hex d (g : Signed) u v : S.mirror H d g (D d u v) = D d (orients g u) (S.mirror H d g v)",
+            "line": 16,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Bid/Angular.lean",
+            "fragment": "L16-L20"
+          },
+          "proof_context": {
+            "declaration": "YM.Bid.Hyper",
+            "lines": [
+              16,
+              20
+            ],
+            "conclusion": "`Hyper` says the angular charge `Y` is real (`real`), respects inclusions (`inter`), kills units (`unity`) and is covariant under signed permutations (`hex`)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.A01.angular_hyper",
+        "module": "YM.Work.A01",
+        "lines": [
+          78,
+          112
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.A01.angular_hyper"
+          },
+          "snippet": {
+            "text": "theorem angular_hyper (hr : W.Inclusions S) (hd : W.Derivatives S) (hp : Pre h W J p Y) :\n    Bid.Hyper h.spin W Y := by\n  constructor\n  · intro d u v\n    apply ext_against_real h.laws.toSymmetric h.spin\n    intro n q x hx\n    obtain ⟨χ,hχ⟩ := exists_window x hx\n    have ht := real_eval h.laws.toSymmetric h.spin hx (Fin.cons ⟨_,Y d u v⟩ q)\n    rw [comp_cons, show realTag h.spin ⟨_,Y d u v⟩=⟨_,S.conj h.spin d (Y d u v)⟩ from rfl] at ht\n    rw [ht, ← hp.raw.rotation hx q hχ u, ← hp.raw.rotation hx _ hχ u,\n      ← flux_spin, ← flux_spin, flux_real h.laws.toSymmetric h.spin J hp.tensor.real hx hχ]\n  · intro d e w u v\n    apply S.field_ext h.laws.toSymmetric\n    intro n q x hx\n    obtain ⟨χ, hχ⟩ := exists_window x hx\n    rw [hr.kernels w _ hx, ← hp.raw.rotation hx q hχ u e, ← hp.raw.rotation hx q hχ u d,\n      ← flux_spin, ← flux_spin, flux_inclusion h.laws.toSymmetric hx W hr J hχ]\n  · intro d u\n    apply S.field_ext h.laws.toSymmetric\n    intro n q x hx\n    obtain ⟨χ, hχ⟩ := exists_window x hx\n    rw [← front_eval q x _ 0, map_zero, ← hp.raw.rotation hx q hχ u, ← flux_spin]\n    exact flux_unit h.laws h.smooth W hd J hp.tensor (orbital u (x 0)) (smooth_orbital _ _)\n      (killing_orbital _ _) hx q χ hχ d\n  · intro d k u v\n    apply ext_against_mirror h.laws.toSymmetric h.spin k\n    intro n q x hx\n    obtain ⟨χ, hχ⟩ := exists_window x hx\n    have hb := mirror_eval h.laws.toSymmetric h.spin hx (Fin.cons ⟨_,Y d u v⟩ q) k\n    rw [comp_cons, show mirrorTag h.spin k ⟨_,Y d u v⟩=⟨_,S.mirror h.spin d k (Y d u v)⟩ from rfl] at hb\n    rw [hb, ← hp.raw.rotation hx q hχ u d,\n      ← hp.raw.rotation (Points.move_in _ hx) _ (window_move _ hχ) (Org.orients k u),\n      ← flux_spin, ← flux_spin]\n    exact (flux_mirror h.laws.toSymmetric h.spin J hp.symmetric k hx hχ\n      (orbital u (x 0)) (orbital (Org.orients k u) (Ortho.move k.ortho (x 0))) (move_rotation k u (x 0)) q v).symm",
+            "line": 78,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/A01.lean",
+            "fragment": "L78-L112"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.A01.angular_hyper",
+            "lines": [
+              78,
+              112
+            ],
+            "conclusion": "`angular_hyper` proves `Hyper` for `Y` by testing against exterior words and using injectivity of responses."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Climb.ColorLaw",
+        "module": "YM.Climb.Cells",
+        "lines": [
+          89,
+          91
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Climb.ColorLaw"
+          },
+          "snippet": {
+            "text": "structure ColorLaw (p : Parts S) (X : DiffPlan S) (H : S.RealSpin) : Prop where\n  sight d : leaves p d ∈ Colors X H d\n  incl d e (h : d≤e) i v : p e i (X.rise h v)= X.rise (Nat.succ_le_succ h) (p d i v)",
+            "line": 89,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Climb/Cells.lean",
+            "fragment": "L89-L91"
+          },
+          "proof_context": {
+            "declaration": "YM.Climb.ColorLaw",
+            "lines": [
+              89,
+              91
+            ],
+            "conclusion": "`ColorLaw` says the translation charges `p` lie in `Colors` (real, unit-killing, vector covariant) and respect inclusions (`incl`)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.A01.translation_color",
+        "module": "YM.Work.A01",
+        "lines": [
+          27,
+          76
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.A01.translation_color"
+          },
+          "snippet": {
+            "text": "theorem translation_color (hr : W.Inclusions S) (hd : W.Derivatives S) (hp : Pre h W J p Y) :\n    ColorLaw p W h.spin := by\n  have hi (d e : ℕ) (w : d ≤ e) (i : Axis) (v) : p e i (W.rise w v)=W.rise (Nat.succ_le_succ w) (p d i v) := by\n    apply S.field_ext h.laws.toSymmetric\n    intro n q x hx\n    obtain ⟨χ, hχ⟩ := exists_window x hx\n    rw [hr.kernels _ _ hx, ← hp.raw.translation hx q hχ i e, ← hp.raw.translation hx q hχ i d,\n      ← flux_translation, ← flux_translation, flux_inclusion h.laws.toSymmetric hx W hr J hχ]\n  have hu (d i) : p d i (S.unit d) = 0 := by\n    apply S.field_ext h.laws.toSymmetric\n    intro n q x hx\n    obtain ⟨χ, hχ⟩ := exists_window x hx\n    rw [← front_eval q x _ 0, map_zero, ← hp.raw.translation hx q hχ i d, ← flux_translation]\n    exact flux_unit h.laws h.smooth W hd J hp.tensor _ (fun _ => contDiff_const) (killing_const _) hx q χ hχ d\n  refine ⟨fun d => ⟨fun i => ⟨hu d i, fun a w v => ⟨_, (hi a d w i v).symm⟩⟩, ?_, ?_⟩, hi⟩\n  · intro i k v\n    change S.mirror h.spin (d+1) k (p d i v) =\n      ∑ j : Axis, (↑(k.matrix j i):ℂ) • p d j (S.mirror h.spin d k v)\n    rw [eps_column]\n    apply ext_against_mirror h.laws.toSymmetric h.spin k\n    intro n q x hx\n    obtain ⟨χ, hχ⟩ := exists_window x hx\n    have hb := mirror_eval h.laws.toSymmetric h.spin hx (Fin.cons ⟨_,p d i v⟩ q) k\n    rw [comp_cons, show mirrorTag h.spin k ⟨_,p d i v⟩=⟨_,S.mirror h.spin (d+1) k (p d i v)⟩ from rfl] at hb\n    rw [hb]\n    let φ := shifted k.ortho χ\n    let B := S.mirror h.spin d k v\n    change _ = S.useAt S _ (Fin.cons ⟨d+1,(eps k i:ℂ) • p d (k.perm i) B⟩ _)\n    have hw := hp.raw.translation (Points.move_in k.ortho hx) (mirrorTag h.spin k ∘ q)\n      (window_move k.ortho hχ) (k.perm i) d B\n    calc\n      _ = flux J χ (fun _ => basis i) x q v := by\n        rw [flux_translation, hp.raw.translation hx q hχ i d v]\n      _ = flux J φ (fun _ => eps k i • basis (k.perm i)) (Points.move k.ortho x)\n          (mirrorTag h.spin k ∘ q) B :=\n        (flux_mirror h.laws.toSymmetric h.spin J hp.symmetric k hx hχ _ _\n          (fun _ => (move_basis k i).symm) q v).symm\n      _ = (eps k i:ℂ) * shellGrad S J φ (k.perm i) (Points.move k.ortho x)\n            (mirrorTag h.spin k ∘ q) B := by\n        rw [flux_scale J φ (fun _ => basis (k.perm i)), flux_translation]\n      _ = _ := by rw [← front_eval _ _ _ ((eps k i:ℂ) • _), map_smul, front_eval, ← hw]; rfl\n  · intro i v\n    change S.conj h.spin (d+1) (p d i v) = p d i (S.conj h.spin d v)\n    apply ext_against_real h.laws.toSymmetric h.spin\n    intro n q x hx\n    obtain ⟨χ,hχ⟩ := exists_window x hx\n    have ht := real_eval h.laws.toSymmetric h.spin hx (Fin.cons ⟨_,p d i v⟩ q)\n    rw [comp_cons, show realTag h.spin ⟨_,p d i v⟩=⟨_,S.conj h.spin (d+1) (p d i v)⟩ from rfl] at ht\n    rw [ht, ← hp.raw.translation hx q hχ i d, ← hp.raw.translation hx _ hχ i d,\n      ← flux_translation, ← flux_translation, flux_real h.laws.toSymmetric h.spin J hp.tensor.real hx hχ]",
+            "line": 27,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/A01.lean",
+            "fragment": "L27-L76"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.A01.translation_color",
+            "lines": [
+              27,
+              76
+            ],
+            "conclusion": "`translation_color` proves `ColorLaw p W` for the raw translation charges."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.A02.deriv_center",
+        "module": "YM.Work.A02",
+        "lines": [
+          201,
+          211
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.A02.deriv_center"
+          },
+          "snippet": {
+            "text": "lemma deriv_center (x : Points (n+1)) (v : Ortho.Skew) (c b : Axis) (y : E4) (t : ℝ) :\n    HasDerivAt (fun u => M4.move v.val (y - Ward.cast x 0 b u 0) c) (-(v.val c b)) t := by\n  have hk := (Ward.factor (n := n+1) 0 c v).hasFDerivAt.comp_hasDerivAt t\n    (Ward.moves x 0 b t)\n  rw [Ward.fac, if_pos rfl] at hk\n  simp_rw [center_eq]\n  simpa only [zero_sub] using! (hasDerivAt_const t (M4.move v.val y c)).sub hk\n\n\n\ninclude h hd",
+            "line": 201,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/A02.lean",
+            "fragment": "L201-L211"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.A02.deriv_center",
+            "lines": [
+              201,
+              211
+            ],
+            "conclusion": "`deriv_center` differentiates the centered coefficient `K(y - x_0)` along the motion of `x_0`, giving the term `-K_{cb}`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          185
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

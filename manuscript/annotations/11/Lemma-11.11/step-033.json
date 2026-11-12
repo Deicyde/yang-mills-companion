@@ -1,0 +1,161 @@
+{
+  "id": "Lemma 11.11 step 33",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 68,
+        "rect": [
+          0.12026,
+          0.31013,
+          0.76243,
+          0.12267
+        ]
+      },
+      "title": "Lemma 11.11 step 33: Text, p. 68",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 11.11 step 33"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.E08.unhit_local",
+        "module": "YM.Work.E08",
+        "lines": [
+          150,
+          157
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.E08.unhit_local"
+          },
+          "snippet": {
+            "text": "lemma unhit_local (hplot : Plot A U k V x w) (hp : p ∈ A.outs x)\n    (hunhit : p ∉ A.hit U (S.prediction U k) V x)\n    (ht : fiery G x S.patch.L/2 ≤ largeT G x S.patch.L)\n    (hw : 2*w*fiery G x S.patch.L ≤ largeT G x S.patch.L) :\n    (∀ b : Cell f, separation p.1 (S.ratio.parent b.1) ≤ 4*radiusB x/5 →\n      toll U b ≤ largeT G x S.patch.L) ∧\n    (∀ b : Bond c, separation p.1 b.1 ≤ 4*radiusB x/5 →\n      wire (S.prediction U k) V b ≤ largeT G x S.patch.L) := by",
+            "line": 150,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/E08.lean",
+            "fragment": "L150-L157"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.E08.unhit_local",
+            "lines": [
+              150,
+              184
+            ],
+            "conclusion": "Off the hit set, all fine tolls and mismatch wires within `4B/5` are at most `largeT`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.E08.axial_patch",
+        "module": "YM.Work.E08",
+        "lines": [
+          82,
+          88
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.E08.axial_patch"
+          },
+          "snippet": {
+            "text": "lemma axial_patch (o : Site n) (U : Config G n) (d r : ℕ) (hdr : d + 1 ≤ r)\n    (hsize : 2*r < n.val) (q : ℝ) (hq : 0 ≤ q)\n    (hface : ∀ y : Site n, separation o y ≤ r → ∀ p : PlaqAxes, toll U (y,p) ≤ q) :\n    ∃ z : Site n → G.El, ∀ b : Bond n, separation o b.1 ≤ d →\n      G.chord (Lattice.gauge z U b) ≤\n        16*(2*(r:ℝ)+1)^5 * (Fintype.card PlaqAxes:ℝ) * q := by\n  let l := allAxes (1:Lattice.Order)",
+            "line": 82,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/E08.lean",
+            "fragment": "L82-L88"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.E08.axial_patch",
+            "lines": [
+              82,
+              135
+            ],
+            "conclusion": "An axial gauge on a radius-`r` cube bounds every link chord by `16*(2r+1)^5*card * q` from the plaquette bound `q`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.E08.stitches_of_shell",
+        "module": "YM.Work.E08",
+        "lines": [
+          317,
+          340
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.E08.stitches_of_shell"
+          },
+          "snippet": {
+            "text": "  have he : G.chord (U b*(R b)⁻¹) ≤ (D*K+1)*a := by\n    have he := HD c f S hb hL hj hsize (by omega) F U hslice V b k (huse y hy)\n    apply he.trans\n    have hw' : wire Q V (y,b.2) ≤ a := by\n      apply hnoise; change separation p.1 y ≤ 4*B/5; omega\n    have hw'' : (if y=S.ratio.parent (b.1+step b.2) then 0 else wire Q V (y,b.2)) ≤ a := by\n      split <;> assumption\n    apply (add_le_add (mul_le_mul_of_nonneg_left (hport y hy) hD.le)\n      hw'').trans_eq\n    ring\n  let g := z∘S.ratio.parent\n  have hc : G.chord (gauge g R b) ≤ t0 := by\n    change G.chord (gauge (constantGauge z S.ratio) (replica S.ratio V) b) ≤ t0\n    rw [copied _ S.patch.odd_side V z]\n    unfold replica; split\n    · rw [G.chord_one]; exact ht0\n    exact hzV _ h\n  have hh : gauge g U b = (g b.1*(U b*(R b)⁻¹)*(g b.1)⁻¹)*gauge g R b := by\n    unfold Lattice.gauge; group\n  change G.chord (gauge g U b) ≤ _\n  rw [hh]\n  apply (G.chord_triangle _ _).trans\n  rw [G.chord_conj]\n  exact (add_le_add he hc).trans htotal",
+            "line": 317,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/E08.lean",
+            "fragment": "L317-L340"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.E08.stitches_of_shell",
+            "lines": [
+              207,
+              340
+            ],
+            "conclusion": "A fine link is compared with its replicated coarse link (`E02`) and the block-constant gauge `z o parent`, so both fields are small in the common gauge."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          68
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

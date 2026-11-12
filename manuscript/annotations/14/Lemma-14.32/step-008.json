@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 14.32 step 8",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Both show that the first difference converges to a continuous limit using the Taylor estimate and the convergence of the endpoint values. [L] proves pointwise Cauchy at each point and then obtains the locally uniform statement from equicontinuity with `growFrom`, where [M] proves uniform Cauchy directly.",
+  "subject": [
+    {
+      "location": {
+        "page": 160,
+        "rect": [
+          0.12026,
+          0.3517,
+          0.76195,
+          0.07048
+        ]
+      },
+      "title": "Lemma 14.32 step 8: Text, p. 160",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.32 step 8"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.from_previous",
+        "module": "YM.FullVolume.Tuned",
+        "lines": [
+          72,
+          73
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.from_previous"
+          },
+          "snippet": {
+            "text": "lemma from_previous {f : Points n→ℂ}(h:Tuned C e p v l f) (a:MotionIndex n) : ∃ g,Tuned C e p v (a::l) g:=by\n  apply growFrom (nohitOpen ..) (circulating M e p v (a::l)) univ dense_univ",
+            "line": 72,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Tuned.lean",
+            "fragment": "L72-L73"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.from_previous",
+            "lines": [
+              72,
+              125
+            ],
+            "conclusion": "If `Tuned C e p v l f` then for each axis a there is g with `Tuned C e p v (a::l) g`, obtained by `growFrom` with `circulating`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.from_previous",
+        "module": "YM.FullVolume.Tuned",
+        "lines": [
+          101,
+          125
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.from_previous"
+          },
+          "snippet": {
+            "text": "  let W (i : ℕ):= (k i)⁻¹ • (F i (z i)- F i (Y i))\n  have hP := Metric.cauchySeq_iff.mp (((hg.inv₀ hp.ne').smul (hW.sub hY)).cauchySeq) (ε/2) (half_pos hε)\n  obtain ⟨L,hL⟩:=hP\n  have heq : ∀ᶠ i in atTop, dist (W i) (D i) ≤ ε/4:=by\n    filter_upwards [hh.eventually (mem_interior_iff_mem_nhds.mp hT),e.cofinal.eventually (step_upper C.S hp), e.cofinal.eventually H] with i hi h hp'\n    have hk: q ≤ k i ∧ k i ≤ 2*q := h.2\n    have h0:0<k i:=hp.trans_le hk.1\n    have hq: ‖F i (z i)- F i (Y i)- k i • D i‖≤ B*(k i)^2:=by\n      have hv:= hp' (Y i) (z i) hi (show dist (tag (s i) (z i)) (tag (s i) (Y i)) ≤ r from (he i).trans_le (by linarith only [hk.2,hr',hr]))\n      dsimp only at hv\n      rw [show dist _ _ = k i from he i, taggedN,add_sub_cancel_left,map_smul,loyal] at hv -- anchor z unfolding\n      exact hv\n    rw [dist_eq_norm,show W i-D i= (k i)⁻¹ • (F i (z i)-F i (Y i)-k i • D i) by rw [smul_sub,inv_smul_smul₀ h0.ne'],\n      norm_smul,Real.norm_of_nonneg (inv_pos.mpr h0).le]\n    calc\n      _ ≤ _ := mul_le_mul_of_nonneg_left hq (inv_pos.mpr h0).le\n      _ = B*k i:=by field_simp\n      _ ≤ ε/4:=by\n        have hev:= (le_div_iff₀' (by positivity : 0<8*(B+1))).1 hb'; nlinarith only [hev, hp,hk.2,hB,mul_le_mul_of_nonneg_left hk.2 hB]\n  obtain ⟨j,hj⟩:= eventually_atTop.mp ((eventually_ge_atTop L).and heq)\n  refine ⟨j,fun m hm n hn=>?_⟩\n  change dist (D m) (D n)< _\n  obtain ⟨he,hM⟩:=hj m hm; obtain ⟨hf,hN⟩:=hj n hn\n  have h:= hL m he n hf; change dist (W m) (W n)< _ at h; rw [dist_comm] at hM\n  linarith [dist_triangle (D m) (W m) (W n),dist_triangle (D m) (W n) (D n)]",
+            "line": 101,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Tuned.lean",
+            "fragment": "L101-L125"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.from_previous",
+            "lines": [
+              72,
+              125
+            ],
+            "conclusion": "The difference quotients at the fixed point x are Cauchy, since they are within eps/4 of the lattice differences by the Taylor bound and the endpoint values converge by `returns`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          160
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
+      }
+    }
+  }
+}

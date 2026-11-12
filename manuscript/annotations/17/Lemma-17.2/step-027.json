@@ -1,0 +1,162 @@
+{
+  "id": "Lemma 17.2 step 27",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The two corrections are `bake m (s fuel d n)` at the head `i` and `bake N (1 fuel a' n)` at `j` (`forwards`), bounded by `paid_bill` and, for the `j` correction, by `far_gain` (`C λ^(-2kα')|p_j|^(2k)`); the other axes cost at most `fuel (K*card)` by `sum_cash`, and the first term is bounded through `far_pay`.",
+  "subject": [
+    {
+      "location": {
+        "page": 191,
+        "rect": [
+          0.12026,
+          0.71523,
+          0.76014,
+          0.10848
+        ]
+      },
+      "title": "Lemma 17.2 step 27: Text, p. 191",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 17.2 step 27"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.forwards",
+        "module": "YM.Next.ROTATIONS.Walk",
+        "lines": [
+          87,
+          89
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.forwards"
+          },
+          "snippet": {
+            "text": "  obtain ⟨g,hG,gp,gf,gm⟩ := paid_bill m s hs (w i) d hW (f i)\n  let L := update w i d\n  let F := update f i g",
+            "line": 87,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Walk.lean",
+            "fragment": "L87-L89"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.forwards",
+            "lines": [
+              70,
+              148
+            ],
+            "conclusion": "`paid_bill` gives a fixed even nonnegative profile `g` with `‖bake m (s*fuel d n) (bill (w i) n (f i))‖ ≤ bill d n g`, and the head `i` is replaced by `g`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.paid_bill",
+        "module": "YM.Next.ROTATIONS.Charge",
+        "lines": [
+          48,
+          50
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.paid_bill"
+          },
+          "snippet": {
+            "text": "lemma paid_bill (m : ℕ) (s : ℝ) (hs : 1≤s) (x d : ℝ) (hx : x≤d) (f : Profile) :\n    ∃ g : Profile, Far g ∧ Plus g ∧ Reflects false g ∧ ∀ᶠ n in atTop,\n      ∀ p : ℝ, ‖bake m (s*fuel d n) (bill x n f) p‖ ≤ bill d n g p := by",
+            "line": 48,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Charge.lean",
+            "fragment": "L48-L50"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.paid_bill",
+            "lines": [
+              48,
+              67
+            ],
+            "conclusion": "The correction at radius `s*fuel d n` of a profile at width `fuel x n` with `x ≤ d` is bounded by a fixed `Far`, `Plus`, even profile at width `fuel d n`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.far_pay",
+        "module": "YM.Next.ROTATIONS.Charge",
+        "lines": [
+          103,
+          110
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.far_pay"
+          },
+          "snippet": {
+            "text": "lemma far_pay (A : Weight L) (h : ℕ → Profile) (Q : Finset Axis) (f : Grouping) (w : Axis → ℝ)\n    (hs : ∀ᶠ n in atTop, ∀ p : E4, 0 ≤ p i → 0 ≤ Reel i (h n) p) (K : ℝ)\n    (hj : ∀ j∈Q, -K ≤ w j) (j : Axis) (hi : j∈Q) (he : j≠i) (k : ℕ) (a : ℝ)\n    (hp : ∀ᶠ n in atTop, Integrable (fun p : E4 => Reel i (h n) p * ‖p j‖^(2*k)) (ν V A))\n    (ht : Budget a (fun n => ∫ p : E4, Reel i (h n) p * ‖p j‖^(2*k) ∂ν V A))\n    (g : Profile) (hg : Far g) (u : ℝ) (hu : 0≤u) :\n    Budget (-u*(2*k:ℕ)+K*((Q.erase i).erase j).card+a)\n      (fun n => pay (ν V A) i Q (h n) (update (mails w f n) j (bill u n g))) := by",
+            "line": 103,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Charge.lean",
+            "fragment": "L103-L110"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.far_pay",
+            "lines": [
+              103,
+              129
+            ],
+            "conclusion": "For `Far g` the response with `g` at width `fuel u n` in axis `j` has `Budget (-u*(2k) + K*card + a)`."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          191
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

@@ -1,0 +1,201 @@
+{
+  "id": "Lemma 16.10 step 5",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The Lean limits (`A05`) carry the Lighthouse constant `κ ≠ 0` (`R.T.κ`) on the free side where [M]'s display `(G-charge-limits)` has none, and hold along scaling sequences `X`. The proportionality `p = c ∂` and the equality of the constants across degrees are the same.",
+  "subject": [
+    {
+      "location": {
+        "page": 185,
+        "rect": [
+          0.12026,
+          0.34577,
+          0.75996,
+          0.12266
+        ]
+      },
+      "title": "Lemma 16.10 step 5: Text, p. 185",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.10 step 5"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Climb.fixed_kernel",
+        "module": "YM.Climb.Peaks",
+        "lines": [
+          66,
+          80
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Climb.fixed_kernel"
+          },
+          "snippet": {
+            "text": "lemma fixed_kernel (P : Select L d) {V : Scaling S} {h a} (Z : Subs P V)\n    (W : DiffPlan S) (K : DiffPlan (Bel L)) (hx : V.Align W K h a (d+1)) (H : Ens P K a) (X Y : Parts S)\n    (hp : ColorLaw X W h) (hq : ColorLaw Y W h) (he : leaves X d ≠ 0) (hu : Tendsto Z.moves atTop (𝓝 P.reads))\n    (hw : ∀ᶠ i in atTop, Z.moves i (V.aisle i d (leaves X d))=0 ∧ Z.moves i (V.aisle i d (leaves Y d))=0) :\n    ∃ c : ℝ, leaves Y d=c • leaves X d := by\n  have hx' : ∀ᶠ i in atTop,∀ y ∈ Colors K a d, Z.moves i y=0 → y ≠ 0 → ∀ z∈ Colors K a d,Z.moves i z=0 → ∃ c : ℝ,z=c • y :=\n    survive (M:=V0 L d) (R:=Fin P.m→ℂ) (Colors K a d) P.reads Z.moves hu (leaves K.deriv d) H.vec H.nz  (fun x hx => H.identifies x hx)\n  obtain ⟨i,hi,hX,hY⟩ := (hx'.and hw).exists\n  let T := V.aisle i d\n  have ht : T (leaves X d) ∈ Colors K a d := V.toColor hx (hp.sight _) (Nat.lt_succ_self _) i\n  obtain ⟨c,hc⟩ := hi _ ht hX (show T (leaves X d)≠0 from fun e => he (V.aisle_ext i d (e.trans T.map_zero.symm))) _\n    (V.toColor hx (hq.sight _) (Nat.lt_succ_self _) i) hY\n  exact ⟨c,V.aisle_ext i d (hc.trans (map_smul T _ _).symm)⟩\n\n/-- Each d uses one setup of P.Selections, enough rows with rescaling. ColorLaw Persists. -/",
+            "line": 66,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Climb/Peaks.lean",
+            "fragment": "L66-L80"
+          },
+          "proof_context": {
+            "declaration": "YM.Climb.fixed_kernel",
+            "lines": [
+              66,
+              80
+            ],
+            "conclusion": "`fixed_kernel` shows that the mixed kernel of the finite tests, near the free matrix, has dimension at most one, so `leaves Y d = c • leaves X d`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Climb.extends_form",
+        "module": "YM.Climb.Peaks",
+        "lines": [
+          98,
+          111
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Climb.extends_form"
+          },
+          "snippet": {
+            "text": "lemma extends_form (W : DiffPlan S) (K : DiffPlan (Bel L)) (H : S.Hierarchy) {a} (P : Parts S) (hw : W.Inclusions S) (hv : ColorLaw W.deriv W H.spin) (he : ColorLaw P W H.spin)\n    (hp : ∃ D,∀ d≥D, concentrated W K H.spin a P d ∧ leaves W.deriv d≠0 ∧ leaves P d≠0) : ∃ c : ℝ, c≠0 ∧ ∀ d, leaves P d=c • leaves W.deriv d := by\n  obtain ⟨D, hD⟩ := hp\n  have hh d (h : D≤d) : ∃ c : ℝ, c≠0 ∧ leaves P d=c • leaves W.deriv d := by\n    obtain ⟨⟨V,Y,Z,H1,H2,H3,H4⟩,H5,H6⟩ := hD d h\n    obtain ⟨c,hc⟩ := fixed_kernel Y Z _ _ H1 H2 _ _ hv he H5 H3 H4\n    exact ⟨c,fun e => H6 (hc.trans (by subst c; ext j k; simp)),hc⟩\n  obtain ⟨c,hc,Ht⟩ := hh D le_rfl\n  refine ⟨c,hc,fun d => ?_⟩\n  rcases le_total D d with h|h\n  · obtain ⟨p,ht,hp⟩ := hh d h\n    have he' : p=c := (smul_left_injective ℝ (hD D le_rfl).2.1) ((over_peak W H hw hv he h p hp).symm.trans Ht)\n    exact he' ▸ hp\n  exact over_peak W H hw hv he h c Ht",
+            "line": 98,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Climb/Peaks.lean",
+            "fragment": "L98-L111"
+          },
+          "proof_context": {
+            "declaration": "YM.Climb.extends_form",
+            "lines": [
+              98,
+              111
+            ],
+            "conclusion": "`extends_form` takes the constant from a large degree, makes it equal across degrees (injectivity of `leaves W.deriv d`) and `over_peak` brings it down to lower degrees: `leaves P d = c • leaves W.deriv d` for all `d`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Climb.over_peak",
+        "module": "YM.Climb.Peaks",
+        "lines": [
+          87,
+          96
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Climb.over_peak"
+          },
+          "snippet": {
+            "text": "lemma over_peak (W : DiffPlan S) (h : S.Hierarchy) (hp : W.Inclusions S) {X Y : Parts S} (hx : ColorLaw X W h.spin)\n    (hy : ColorLaw Y W h.spin) {d D} (hw : d ≤ D) (c : ℝ) (he : leaves Y D=c • leaves X D) : leaves Y d=c • leaves X d := by\n  ext1 i; ext1 u\n  apply W.inject h.laws.toSymmetric hp (Nat.succ_le_succ hw)\n  have hL := congr_arg (fun g : Vector D S => g i (W.rise hw u)) he\n  change Y D i (W.rise hw u)=c • X D i (W.rise hw u) at hL\n  rw [hx.incl _ D hw,hy.incl _ D hw] at hL\n  change _= W.rise _ (c • X d i u)\n  have ht := (W.rise (Nat.succ_le_succ hw)).restrictScalars ℝ |>.map_smul c (X d i u)\n  exact hL.trans ht.symm",
+            "line": 87,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Climb/Peaks.lean",
+            "fragment": "L87-L96"
+          },
+          "proof_context": {
+            "declaration": "YM.Climb.over_peak",
+            "lines": [
+              87,
+              96
+            ],
+            "conclusion": "`over_peak` transfers `leaves Y D = c • leaves X D` to every lower degree `d ≤ D` using inclusions."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Bid.A05",
+        "module": "YM.Bid.Angular",
+        "lines": [
+          55,
+          59
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Bid.A05"
+          },
+          "snippet": {
+            "text": "def A05 : Prop := ∀ {G : Gauge} {C : Family G} {S : Table C.book} (H : S.Hierarchy) (V : DiffPlan S),\n    V.Inclusions S → V.Derivatives S → ∀ (R : MaxwellData C) (J : S.Stress) (d : ℕ)  (p : Climb.Parts S) (Y : Ward.SpinRows S),\n    Pre H V J p Y →\n    Watches J R.T H.spin R.hT.spin V (fun X => (ConLap X p d ((R.T.κ:ℝ) • R.T.W.deriv) (fun i => X.r i/X.xi i)) ∧\n      ∀ j : Spin.Ind, Tendsto (fun i => (X.xi i)⁻¹ • (Spin.transport Y (X.U i d) j)) atTop (𝓝 (R.T.κ • Spin.leaf R.T.K.lie d j)))",
+            "line": 55,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Bid/Angular.lean",
+            "fragment": "L55-L59"
+          },
+          "proof_context": {
+            "declaration": "YM.Bid.A05",
+            "lines": [
+              55,
+              59
+            ],
+            "conclusion": "`A05` states the rescaled limits: `(r/ξ) · aisle (leaves p d) → κ • leaves deriv d` and `ξ⁻¹ • transport Y → κ • leaf lie`, along scaling sequences."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          185
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "id": "Lemma 19.7 step 7",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "Existence of k_* from the 2/3 decay and log S_k = o(T) are there; the minimality-based estimates s_{k*}/s_k -> 1 and log Xi_m = o(s_m) are not stated separately.",
+  "subject": [
+    {
+      "location": {
+        "page": 226,
+        "rect": [
+          0.11961,
+          0.0962,
+          0.76359,
+          0.10849
+        ]
+      },
+      "title": "Lemma 19.7 step 7: Text, p. 226",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 19.7 step 7"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stock.Tabs.mayOpen",
+        "module": "YM.Overlay.Prior",
+        "lines": [
+          36,
+          58
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stock.Tabs.mayOpen"
+          },
+          "snippet": {
+            "text": "lemma mayOpen (h : Tabs a) (m : ℕ) : ∃ b, opens a s m b := by\n  by_cases hs : 0≤s\n  · have hu i : a.S.a (i+1)* (a.clock.coverSize (i+1):ℝ)^ (2:ℕ) ≤\n        ((2:ℝ)/3)*(a.S.a i * (a.clock.coverSize i:ℝ)^ (2:ℕ)) := by\n      have hb : (a.clock.coverSize (i+1):ℝ)^ (2:ℕ) ≤ 2*(a.clock.coverSize i:ℝ)^ (2:ℕ) := by exact_mod_cast h.grows i\n      rw [a.S.a_step]\n      have ha := a.S.a_pos i\n      apply le_trans (mul_le_mul (b:=a.S.a i/3) ?_ hb (by positivity) (by positivity)) (by ring_nf; rfl)\n      gcongr; exact_mod_cast a.S.block_large i\n    let f (i : ℕ) := a.S.a i * ((a.clock.coverSize i:ℝ)^ (2:ℕ))\n    have hv i : f i ≤ f 0*((2:ℝ)/3)^i := by\n      induction i with\n      | zero => simp\n      | succ i ih => apply (hu i).trans; apply (mul_le_mul_of_nonneg_left ih (by positivity : 0≤(2:ℝ)/3)).trans_eq; ring\n    have ht : Tendsto (fun i : ℕ => s*f i) atTop (𝓝 0) := by\n      have he : Tendsto f atTop (𝓝 0) := squeeze_zero (fun i => mul_nonneg (a.S.a_pos i).le (sq_nonneg _)) hv (by\n        simpa only [mul_zero] using (tendsto_pow_atTop_nhds_zero_of_lt_one (r:= (2:ℝ)/3) (by norm_num) (by norm_num)).const_mul (f 0))\n      simpa only [mul_zero] using he.const_mul s\n    obtain ⟨i,H,he⟩ := ((eventually_ge_atTop m).and (ht.eventually (ge_mem_nhds\n       (a.S.a_pos m)))).exists\n    refine ⟨i,H,(le_div_iff₀ (a.S.a_pos _)).2 (le_trans (le_of_eq ?_) (show s*f i≤_ from he))⟩\n    unfold f; ring\n  refine ⟨m,le_rfl,(mul_nonpos_of_nonpos_of_nonneg (le_of_not_ge hs) (by positivity)).trans (div_nonneg (a.S.a_pos m).le (a.S.a_pos m).le)⟩",
+            "line": 36,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Overlay/Prior.lean",
+            "fragment": "L36-L58"
+          },
+          "proof_context": {
+            "declaration": "YM.Stock.Tabs.mayOpen",
+            "lines": [
+              36,
+              58
+            ],
+            "conclusion": "`mayOpen` shows some level opens (`opens`: s*coverSize^2 <= a_i/a_j) because a_i*coverSize_i^2 decreases by at least the factor 2/3 per step."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.stock_price",
+        "module": "YM.OPE.Prices.Stock",
+        "lines": [
+          57,
+          57
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.stock_price"
+          },
+          "snippet": {
+            "text": "lemma stock_price (hG:G.Simple) (h:Height C.S l T m a)(hT:Tendsto T l atTop) : RateLE l T (fun i=> stakes C (m i) (J (m i))) 0 :=by",
+            "line": 57,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Prices/Stock.lean",
+            "fragment": "L57-L57"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.stock_price",
+            "lines": [
+              57,
+              68
+            ],
+            "conclusion": "`stock_price` gives `RateLE` of `stakes C (m i) (J (m i))` by 0, i.e. log S_k = o(T) along the sequence."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          226
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

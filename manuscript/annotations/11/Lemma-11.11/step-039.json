@@ -1,0 +1,122 @@
+{
+  "id": "Lemma 11.11 step 39",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 68,
+        "rect": [
+          0.12026,
+          0.77377,
+          0.76194,
+          0.05423
+        ]
+      },
+      "title": "Lemma 11.11 step 39: Text, p. 68",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 11.11 step 39"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.E09.assemble",
+        "module": "YM.Work.E09",
+        "lines": [
+          87,
+          111
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.E09.assemble"
+          },
+          "snippet": {
+            "text": "    m/2*t^2*A.shares ≤ A.assessed T x U Q V := by\n  let D := A.spend U Q V x\n  have h₁ := fine_budget A T U V x m d cF Q t ht hu hm hf hd hF a\n  have h₂ := noise_budget A T U Q V x m C W t hw hlist ht hu hm hi hC a'\n  have h₃ := coarse_budget A T V x m B δ t hs hx hB ht hst hc e\n  have h₄ : (A.flags.card:ℝ) ≤ 4 *\n      (((A.tides V x (temp x) \\ A.tides V x δ).card:ℝ) + K*(D.shares:ℝ)) := by\n    exact_mod_cast flags_budget A V Q U x δ hx K b\n  have hn : 0 ≤ A.talln T x V := sum_nonneg (fun i _ =>\n    div_nonneg (sq_nonneg _) (by norm_num))\n  have heq : talll T x U Q V (A.outs x \\ A.hit U Q V x) + talll T x U Q V (A.hit U Q V x) =\n      talll T x U Q V (A.outs x) :=\n    sum_sdiff (show A.hit U Q V x ⊆ A.outs x from filter_subset ..)\n  have hflags := mul_le_mul_of_nonneg_left h₄ (mul_nonneg hm (sq_nonneg t))\n  have hy := mul_le_mul_of_nonneg_right hspend (show 0 ≤ ((D.shares):ℝ) by positivity)\n  have hz : B*temp x^4*(A.outs x).card ≤ m/4*t^2*A.shares := by\n    have h : ((A.outs x).card:ℝ) ≤ K*(radiusB x:ℝ)^4*A.shares := by exact_mod_cast b.ours\n    linarith only [mul_le_mul_of_nonneg_left h (mul_nonneg hB (show 0 ≤ temp x^4 by positivity)),\n      mul_le_mul_of_nonneg_right herr (show 0 ≤ (A.shares:ℝ) by positivity)]\n  have hnot : ((A.spend U Q V x).shares:ℝ) = (D.costs.card:ℝ) + D.aisles.card := by\n    simp [shares, D, spend]\n  dsimp only [D] at *\n  rw [hnot] at g hflags hy\n  simp only [assessed, shares, Nat.cast_add] at g' hz ⊢\n  linarith only [h₁,h₂,h₃, hflags, hn, heq, hz, hy, g, g']",
+            "line": 87,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/E09.lean",
+            "fragment": "L87-L111"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.E09.assemble",
+            "lines": [
+              69,
+              111
+            ],
+            "conclusion": "Adding the fine, noise and coarse budgets, `talln >= 0`, the lapse bound and the bare bound `g'` leaves `m/2*t^2*A.shares <= A.assessed`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Bid.Belly",
+        "module": "YM.Bid.Energy",
+        "lines": [
+          142,
+          144
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Bid.Belly"
+          },
+          "snippet": {
+            "text": "def Belly (P : Teller G) (L : Side) (W : ℝ) := ∀ ε : ℝ, 0 < ε → P.Serves L W fun S T _ A x U k V =>\n    let Q := S.prediction U k\n    talll T x U Q V (A.outs x \\ A.hit U Q V x) ≥ -(ε*fiery G x L^2*A.shares)",
+            "line": 142,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Bid/Energy.lean",
+            "fragment": "L142-L144"
+          },
+          "proof_context": {
+            "declaration": "YM.Bid.Belly",
+            "lines": [
+              142,
+              144
+            ],
+            "conclusion": "`talll` over the unhit outputs is at least `-(eps*fiery^2*shares)`, the `a t^2 |A|/4` residual (with `eps = m/4`)."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          68
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

@@ -1,0 +1,232 @@
+{
+  "id": "Lemma 16.10 step 14",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 186,
+        "rect": [
+          0.12026,
+          0.16716,
+          0.75948,
+          0.05171
+        ]
+      },
+      "title": "Lemma 16.10 step 14: Text, p. 186",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.10 step 14",
+          "quads": [
+            [
+              0.75308,
+              0.16716,
+              0.87974,
+              0.16716,
+              0.87974,
+              0.18506,
+              0.75308,
+              0.18506
+            ],
+            [
+              0.12026,
+              0.18507,
+              0.87974,
+              0.18507,
+              0.87974,
+              0.20136,
+              0.12026,
+              0.20136
+            ],
+            [
+              0.12026,
+              0.20137,
+              0.42259,
+              0.20137,
+              0.42259,
+              0.21887,
+              0.12026,
+              0.21887
+            ]
+          ]
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Ward.Walk",
+        "module": "YM.Ward.Walk",
+        "lines": [
+          75,
+          78
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Ward.Walk"
+          },
+          "snippet": {
+            "text": "inductive Walk (n : ℕ) : Points n → Points n → Prop\n| id (x : Points n) : Walk n x x\n| bridge (x : Points n) (i a b s) (h : ∀ t∈uIcc 0 s, Earliest (cast x i b t) a i ∨ Latest (cast x i b t) a i) : Walk n x (cast x i b s)\n| transit {x y z} : Walk n x y → Walk n y z → Walk n x z",
+            "line": 75,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Ward/Walk.lean",
+            "fragment": "L75-L78"
+          },
+          "proof_context": {
+            "declaration": "YM.Ward.Walk",
+            "lines": [
+              75,
+              78
+            ],
+            "conclusion": "`Walk.bridge` allows a segment `cast x i b t` only if the moving point is `Earliest` or `Latest` in some axis `a` throughout."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Ward.still_first",
+        "module": "YM.Ward.Axis",
+        "lines": [
+          29,
+          31
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Ward.still_first"
+          },
+          "snippet": {
+            "text": "lemma still_first {x : Points n} {k : Fin n} (h : Earliest x a k) (w : b≠a) (s : ℝ) : Earliest (cast x k b s) a k := by\n  have he (j) (hj : j≠k) : cast x k b s k a < cast x k b s j a := by simp [atCast,near x k j hj,w.symm,h.2 j hj]\n  exact ⟨suffices_dist a h.1 (fun i hi => (near x k i hi b s).symm) (fun i hi => (he i hi).ne'),he⟩",
+            "line": 29,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Ward/Axis.lean",
+            "fragment": "L29-L31"
+          },
+          "proof_context": {
+            "declaration": "YM.Ward.still_first",
+            "lines": [
+              29,
+              31
+            ],
+            "conclusion": "`still_first` shows a point earliest in axis `a` stays earliest while moved along `b ≠ a`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Ward.still_last",
+        "module": "YM.Ward.Axis",
+        "lines": [
+          32,
+          34
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Ward.still_last"
+          },
+          "snippet": {
+            "text": "lemma still_last {x : Points n} {k : Fin n} (h : Latest x a k) (w : b≠a) (s : ℝ) : Latest (cast x k b s) a k := by\n  have he (j) (hj : j≠k) : cast x k b s j a < cast x k b s k a := by simp [atCast,near x k j hj,w.symm,h.2 j hj]\n  exact ⟨suffices_dist a h.1 (fun i hi => (near x k i hi b s).symm) (fun i hi => (he i hi).ne),he⟩",
+            "line": 32,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Ward/Axis.lean",
+            "fragment": "L32-L34"
+          },
+          "proof_context": {
+            "declaration": "YM.Ward.still_last",
+            "lines": [
+              32,
+              34
+            ],
+            "conclusion": "`still_last` shows a point latest in axis `a` stays latest while moved along `b ≠ a`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Ward.channel",
+        "module": "YM.Ward.Walk",
+        "lines": [
+          15,
+          28
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Ward.channel"
+          },
+          "snippet": {
+            "text": "lemma channel (P : W.Derivatives S) (Y : Collinear W T) (C : commutes W T) (x : Points n) (k b) (K : Ortho.Skew) (p : Fin n → S.Tag)\n    (s : ℝ) (hv : Earliest (cast x k b s) a k ∨ Latest (cast x k b s) a k) : AnalyticAt ℝ (angular W T p K ∘ cast x k b) s := by\n  let V := Classical.choice (realization H a)\n  have ha (i : Fin n → S.Tag) : ContDiffAt ℝ ω (disc i ∘ cast x k b) s := AnalyticAt.contDiffAt\n    (hv.elim (first_adv V H W T P Y C _ _ _ _ _) (last_adv V H W T P Y C _ _ _ _ _))\n  apply ContDiffAt.analyticAt\n  unfold Function.comp angular\n  apply ContDiffAt.sum\n  intro i hi; apply (ha _).add (ContDiffAt.sum _)\n  intro u hu\n  have he : ContDiffAt ℝ ω (cast x k b) s := contDiffAt_const.add (contDiffAt_id.smul contDiffAt_const)\n  exact ((factor i u K).contDiff.contDiffAt.comp s he).smul (ha _)\n\nomit H in",
+            "line": 15,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Ward/Walk.lean",
+            "fragment": "L15-L28"
+          },
+          "proof_context": {
+            "declaration": "YM.Ward.channel",
+            "lines": [
+              15,
+              28
+            ],
+            "conclusion": "`channel` gives analyticity of the angular sums along such a segment."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          186
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

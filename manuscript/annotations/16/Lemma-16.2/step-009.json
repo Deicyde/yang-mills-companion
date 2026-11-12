@@ -1,0 +1,122 @@
+{
+  "id": "Lemma 16.2 step 9",
+  "kind": "proof_step",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 173,
+        "rect": [
+          0.12026,
+          0.26397,
+          0.76194,
+          0.12267
+        ]
+      },
+      "title": "Lemma 16.2 step 9: Text, p. 173",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.2 step 9"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Maxwell.Free.cluster_clear",
+        "module": "YM.Next.MAXWELL.Rumbles",
+        "lines": [
+          92,
+          105
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Maxwell.Free.cluster_clear"
+          },
+          "snippet": {
+            "text": "lemma cluster_clear {P : WickPol G} (hp : P∈shelf G j) (h : P∈ghost G d) (p : Flavor k) (q : Flavor l)\n    (hk : l<k) (hd : k+l+4 ≤ d) {z : E4} (hz : z≠0) : circulate j p q (G:=G) z P∈ghost G d := by\n  intro n v x hv hx\n  let M := 8+k+l+j+j+1\n  let R := 4+k+j\n  let C' := circulate (G:=G) j p q\n  let V := Fin.cons (α:=fun _ => WickPol G) P v\n  have hp' : Deep R M (fun z => bookend x (x 0+z) V (team G p q)) (fun z => moment G x (Fin.cons (α:=fun _ => WickPol G) (C' z P) v)) := by\n    unfold team; simp_rw [map_sum]\n    have he z : moment G x (Fin.cons (α:=fun _ => WickPol G) (C' z P) v)=∑ i, moment G x (Fin.cons (α:=fun _ => WickPol G) (bit q i * singleBite j (flavor k i p) z P) v) := by\n      rw [show Fin.cons (α:=fun _ => WickPol G) (C' z P) v=update (Fin.cons (α:=fun _ => WickPol G) P v) 0 (circulate j p q z P) from (Fin.update_cons_zero ..).symm,circulate_eval,MultilinearMap.map_update_sum];\n      exact Finset.sum_congr rfl fun i _ => congr_arg _ (Fin.update_cons_zero ..)\n    simp_rw [he]; exact Deep.sum _ _ _ (fun i hi => vertex hx _ _ hk P hp v M (by unfold M; omega))\n  apply hp'.clear _ (by unfold R; omega) (show z∈away from hz)",
+            "line": 92,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/MAXWELL/Rumbles.lean",
+            "fragment": "L92-L105"
+          },
+          "proof_context": {
+            "declaration": "YM.Maxwell.Free.cluster_clear",
+            "lines": [
+              92,
+              122
+            ],
+            "conclusion": "If `P∈ghost G d` and `l<k`, `k+l+4≤d`, then the collision `circulate j p q z P` is in `ghost G d`, by expanding to order `M`, then `Deep.clear`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Maxwell.Free.Deep.clear",
+        "module": "YM.Next.MAXWELL.Silt",
+        "lines": [
+          98,
+          106
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Maxwell.Free.Deep.clear"
+          },
+          "snippet": {
+            "text": "lemma Deep.clear (H : Deep r s f h) (hv : locallyEq f 0) (hr : 2 ≤ r) : EqOn h 0 away := by\n  obtain ⟨W,he,hh⟩ := H.silts\n  have hs : Clears (r-2) (-h) := by\n    apply sum_peel s W he (Echoes.congr (Echoes.neg hh) ?_ fun _ _ => rfl)\n    intro x hx; filter_upwards [hv x hx] with t ht; simp only [Pi.neg_apply,Pi.sub_apply,ht, Pi.zero_apply, zero_sub,neg_neg]\n  apply clears_faint H.pole hr\n  obtain ⟨A,hA,ht⟩ := hs\n  refine ⟨-A,hA.neg,fun x hx => ?_⟩\n  have hm := ht x hx; simp only [Pi.neg_apply,smul_neg] at hm; rw [Pi.neg_apply,← hm,neg_neg]",
+            "line": 98,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/MAXWELL/Silt.lean",
+            "fragment": "L98-L106"
+          },
+          "proof_context": {
+            "declaration": "YM.Maxwell.Free.Deep.clear",
+            "lines": [
+              98,
+              106
+            ],
+            "conclusion": "A `Deep` expansion whose function vanishes locally has an order-`r` pole part that vanishes off the origin."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          173
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
+      }
+    }
+  }
+}

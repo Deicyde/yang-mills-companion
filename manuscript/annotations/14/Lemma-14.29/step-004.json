@@ -1,0 +1,84 @@
+{
+  "id": "Lemma 14.29 step 4",
+  "kind": "proof_step",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "The order of the two eventualities (large t, then large periods avoiding wrapping) is there. The remark that only the roots and not the supremum bounds occur on the right is not visible: `expense` is built from the caps and errors of the figures.",
+  "subject": [
+    {
+      "location": {
+        "page": 156,
+        "rect": [
+          0.12026,
+          0.38619,
+          0.75948,
+          0.05424
+        ]
+      },
+      "title": "Lemma 14.29 step 4: Text, p. 156",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.29 step 4"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Push.GridApprox.spent_shifts",
+        "module": "YM.Push.GRID_APPROXIMATION.Separation",
+        "lines": [
+          59,
+          70
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Push.GridApprox.spent_shifts"
+          },
+          "snippet": {
+            "text": "lemma spent_shifts {h : ℕ} {v : ι → C.book.Token} {w : κ → C.book.Token}\n    (Z : ∀ i, Figures C (v i) h) (D : ∀ i, Figures C (w i) h)\n    {f : Extraction.Order} (H : C.Makes) (hz : ∀ i, (Z i).Gives f) (hd : ∀ i, (D i).Gives f) (q)\n    {x : ι → Cover} {y : κ → Cover} (hx : Injective x) (hy : Injective y) (i j : ℕ) (hij : i<j) :\n    ∀ᶠ t : ℕ in atTop, f.late fun N p =>\n      ‖moment (C.beta N p) (placed Z (offset x t i) q N p * placed D (offset y t j) q N p)-\n        moment (C.beta N p) (literal h v (offset x t i) N p * literal h w (offset y t j) N p)‖ ≤ expense (combined Z D) q := by\n  have he := spent_pair Z H D hz hd q\n  unfold Extraction.Order.late at *\n  filter_upwards [real_pair hx hy i j hij] with t ht\n  filter_upwards [he,f.per.cofinal.eventually (wrap_late C.S h _ ht)] with k hk hp\n  filter_upwards [hk] with a ha using ha _ _ hp",
+            "line": 59,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/GRID_APPROXIMATION/Separation.lean",
+            "fragment": "L59-L70"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.GridApprox.spent_shifts",
+            "lines": [
+              59,
+              70
+            ],
+            "conclusion": "`spent_shifts` shows that for large `t` the shifted placements are injective after wrapping (`wrap_late`), and then the moment error is at most `expense`, eventually in `t` and then late in the ordered limits."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          156
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
+      }
+    }
+  }
+}
