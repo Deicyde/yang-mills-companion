@@ -8,15 +8,17 @@ changes since 2013) are dropped.
 
 ## Sources
 
-- [M]: `~/ym-companion/src/manuscript/` (`main.tex`, `macros.tex`, `part1/*.tex`, `part2/*.tex`)
+Paths are relative to the workspace that holds this repository as `repo/`.
+
+- [M]: `src/manuscript/` (`main.tex`, `macros.tex`, `part1/*.tex`, `part2/*.tex`)
   at `1a47ac9`. Macros are in `macros.tex`; read them when a symbol matters.
-- [L]: `~/ym-companion/lean/` at `3456e5e`. Not built. Read the source; trust the Lean statement
+- [L]: `lean/` at `3456e5e`. Not built. Read the source; trust the Lean statement
   over its docstring.
 - [M]'s own map of [L], evidence of where to look and never of what is true:
   `src/data/key-statements.tsv`, `src/data/declaration-units.tsv`, `src/outline/units/*.md`,
   `src/glossary.md`, `src/statement.md`.
-- Tool: `python3 ~/ym-companion/repo/scripts/mapping/tool.py help` (`batch`, `item`, `tex`,
-  `decl`, `search`, `keys`, `exists`, `check`). Use `grep -rn` in `~/ym-companion/lean/YM` freely.
+- Tool: `python3 repo/scripts/mapping/tool.py help` (`batch`, `item`, `tex`,
+  `decl`, `search`, `keys`, `exists`, `check`). Use `grep -rn` in `lean/YM` freely.
 
 ## Rules
 
@@ -115,5 +117,5 @@ A `no-match` item that has partial or related declarations links them with `hasP
 }
 ```
 
-Run `python3 ~/ym-companion/repo/scripts/mapping/tool.py check <file>` and fix every error before
+Run `python3 repo/scripts/mapping/tool.py check <file>` and fix every error before
 you finish.

@@ -2,7 +2,8 @@
 """Campaign numbers for the report: agents, disagreements, judge rulings, findings."""
 import json, os, glob, collections
 
-HOME = os.path.expanduser('~/ym-companion')
+# The workspace holding repo/, src/, lean/, scratch/ and out/: $YM_WORK, else this repository's parent.
+HOME = os.environ.get('YM_WORK') or os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 S = f'{HOME}/scratch'
 bs = json.load(open(f'{HOME}/repo/data/batches.json'))['batches']
 m = json.load(open(f'{HOME}/repo/data/mapping.json'))

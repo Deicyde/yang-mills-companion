@@ -6,8 +6,10 @@ is never split. Batches do not cross a section; a section is cut into ceil(n/12)
 nearly equal size at group boundaries.
 """
 import json, math, os
+# The workspace holding repo/, src/, lean/, scratch/ and out/: $YM_WORK, else this repository's parent.
+HOME = os.environ.get('YM_WORK') or os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
-REPO = os.path.expanduser('~/ym-companion/repo')
+REPO = f'{HOME}/repo'
 TARGET = 12
 
 items = json.load(open(f'{REPO}/data/items.json'))['items']

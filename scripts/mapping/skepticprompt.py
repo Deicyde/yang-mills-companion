@@ -4,7 +4,8 @@
 Prints one line per rendered prompt: <item> <n> <prompt path>.
 """
 import json, os, re, sys
-HOME = os.path.expanduser('~/ym-companion')
+# The workspace holding repo/, src/, lean/, scratch/ and out/: $YM_WORK, else this repository's parent.
+HOME = os.environ.get('YM_WORK') or os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 S = f'{HOME}/scratch'
 FINDINGS = {'weaker', 'missing-hypothesis', 'differs', 'no-match'}
 t = open(f'{S}/prompts/skeptic.md').read()

@@ -9,8 +9,10 @@ overlap (or both have none). For `no-match` and `not-formalized-not-needed`, whi
 declarations, the status alone decides.
 """
 import json, os, sys
+# The workspace holding repo/, src/, lean/, scratch/ and out/: $YM_WORK, else this repository's parent.
+HOME = os.environ.get('YM_WORK') or os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
-S = os.path.expanduser('~/ym-companion/scratch')
+S = f'{HOME}/scratch'
 
 
 def load(kind, b):
@@ -36,7 +38,7 @@ def compare(b):
     if m is None or v is None:
         print(f'{b}: missing ' + ' '.join(k for k, x in (('map', m), ('verify', v)) if x is None))
         return None
-    ids = json.load(open(os.path.expanduser('~/ym-companion/repo/data/batches.json')))
+    ids = json.load(open(f'{HOME}/repo/data/batches.json'))
     ids = next(x['items'] for x in ids['batches'] if x['id'] == b)
     res = {}
     for i in ids:

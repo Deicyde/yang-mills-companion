@@ -2,7 +2,8 @@
 """Write the computed parts of out/REPORT-2.md (numbers, finding lists) to stdout as markdown."""
 import json, os, glob, collections
 
-HOME = os.path.expanduser('~/ym-companion')
+# The workspace holding repo/, src/, lean/, scratch/ and out/: $YM_WORK, else this repository's parent.
+HOME = os.environ.get('YM_WORK') or os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 S = f'{HOME}/scratch'
 m = json.load(open(f'{HOME}/repo/data/mapping.json'))
 items = m['items']

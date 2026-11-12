@@ -13,7 +13,8 @@
 """
 import json, os, re, sys
 
-HOME = os.path.expanduser('~/ym-companion')
+# The workspace holding repo/, src/, lean/, scratch/ and out/: $YM_WORK, else this repository's parent.
+HOME = os.environ.get('YM_WORK') or os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 REPO = f'{HOME}/repo'
 LEAN = f'{HOME}/lean'
 SRC = f'{HOME}/src/manuscript'

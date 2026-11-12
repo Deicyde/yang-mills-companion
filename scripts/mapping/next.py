@@ -2,7 +2,8 @@
 """List campaign tasks not yet launched (per scratch/agents.log), most urgent first:
 judges, then skeptics, then mapper/verifier pairs in batch order."""
 import json, os, glob, re, subprocess, sys
-HOME = os.path.expanduser('~/ym-companion')
+# The workspace holding repo/, src/, lean/, scratch/ and out/: $YM_WORK, else this repository's parent.
+HOME = os.environ.get('YM_WORK') or os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 S = f'{HOME}/scratch'
 launched = {tuple(l.split()[:2]) for l in open(f'{S}/agents.log') if l.strip()}
 bs = [b['id'] for b in json.load(open(f'{HOME}/repo/data/batches.json'))['batches']]

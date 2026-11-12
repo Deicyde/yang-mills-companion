@@ -12,7 +12,8 @@ becomes `unclear` (contested). The finding is then `unconfirmed`.
 """
 import json, os, re
 
-HOME = os.path.expanduser('~/ym-companion')
+# The workspace holding repo/, src/, lean/, scratch/ and out/: $YM_WORK, else this repository's parent.
+HOME = os.environ.get('YM_WORK') or os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 S = f'{HOME}/scratch'
 REPO = f'{HOME}/repo'
 LEAN_PIN = open(f'{HOME}/out/LEAN_PIN').read().split()[0]
