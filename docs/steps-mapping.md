@@ -91,6 +91,9 @@ Rules:
 
 Each end is one contiguous range of one declaration:
 - `decl`: the fully qualified name, as `stool.py range` prints it (it must resolve exactly);
+- `file`: only for a name declared in two files (`stool.py src` prints "also declared at"): the
+  file of the declaration you mean, e.g. `Solution.lean` rather than the `sorry` placeholder in
+  `Challenge.lean`;
 - `lines`: `[first, last]`, inside that declaration's range, as narrow as the fact: the `have`
   line(s) or the statement lines through `:=`, not the whole proof;
 - `conclusion`: one sentence saying what fact these lines establish, in mathematical terms with
@@ -100,7 +103,9 @@ Each end is one contiguous range of one declaration:
   them to be read.
 
 Use one end per range; several ends when the step is carried in several places. Put the most
-direct one first.
+direct one first. [L] often states a result or definition twice, an internal form (`YM.*`) and a
+public form (`YangMills.*`, in `Public*.lean`, `ChallengeSpec.lean` and similar): when both carry
+the record, give an end for each.
 
 For `noMatch`, the ends name the declarations you checked the step against (the key proof, the
 helpers you read), with `lines` their full range or omitted, and no conclusion; `searched` lists
@@ -143,7 +148,10 @@ Notes are one or two sentences, in your own words, premises before conclusions, 
 
 ## Economy
 
-Tokens cost money. Combine lookups into one shell call (several `stool.py src` or `grep` commands
+Economy never means a shallower search. Read every key declaration in full and the helpers each
+step needs; a `noMatch` needs the key proofs read and at least two greps for the step's own
+symbols or constants, listed in `searched`. Save tokens only in how you look: combine lookups
+into one shell call (several `stool.py src` or `grep` commands
 joined by `;`), read line ranges rather than whole files, and do not reread what you have read.
 Write the output file once, when every record is decided (keep the records in your working notes
 until then), and fix errors with small edits rather than rewriting the file.

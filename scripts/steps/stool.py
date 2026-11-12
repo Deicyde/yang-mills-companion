@@ -161,6 +161,12 @@ def cmd_check(path):
                 errs.append(f'{rid}: no such declaration (fully qualified, from stool.py range): {n}')
                 continue
             f, a, b = R[n]
+            if e.get('file') and e['file'] != f:
+                alt = [d for d in ranges()['dups'].get(n, []) if d[0] == e['file']]
+                if not alt:
+                    errs.append(f'{rid}: {n} is not declared in {e["file"]}')
+                    continue
+                f, a, b = alt[0]
             ln = e.get('lines')
             if rel == 'noMatch' and ln is None:
                 continue

@@ -35,7 +35,8 @@ def slug(rid):
 
 def main(work):
     S = f'{work}/scratch/steps2'
-    R = json.load(open(f'{S}/ranges.json'))['ranges']
+    RJ = json.load(open(f'{S}/ranges.json'))
+    R, D = RJ['ranges'], RJ['dups']
     src_cache = {}
 
     def src(f):
@@ -45,6 +46,8 @@ def main(work):
 
     def end(e, rel):
         f, a, b = R[e['decl']]
+        if e.get('file') and e['file'] != f:
+            f, a, b = next(d for d in D.get(e['decl'], []) if d[0] == e['file'])
         lines = e.get('lines') or [a, b]
         out = {'decl': e['decl'], 'file': f, 'lines': lines,
                'url': f'{REPO_URL}/blob/{PIN}/{f}#L{lines[0]}-L{lines[1]}'}
@@ -102,7 +105,8 @@ def main(work):
                 if rel == 'noMatch':
                     rec['searched'] = pick.get('searched')
                 rec['confidence'] = pick.get('confidence')
-                te = pick.get('text_error') or (m or {}).get('text_error') or (v or {}).get('text_error')
+                # a judge keeps only the claims it checked; on agreement either agent's claim counts
+                te = j.get('text_error') if j else (m.get('text_error') or (v or {}).get('text_error'))
                 if te:
                     sk = []
                     for k in (1, 2):
