@@ -32,7 +32,7 @@ def main():
         for d in c['decls']:
             if d not in decls or d not in linked:
                 errors.append(f"{rec['id']}: {d} is not a linked declaration")
-        lines.append(f"- **{rec['id']}**: `{' '.join(c['quote'].split())}`. {c['readme']}")
+        lines.append(f"- **{rec['id']}** (`{' '.join(c['quote'].split())}`): {c['readme']}")
     print('\n'.join(lines))
     if errors:
         sys.exit('\n'.join(errors))
