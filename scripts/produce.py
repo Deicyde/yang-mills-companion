@@ -243,6 +243,8 @@ def proof_overlay(root, pdf, lean, pin, key_decls):
         pages = sorted({g['page'] for g in regions['regions'][r['id']]})
         where = f'p. {pages[0]}' if len(pages) == 1 else f'pp. {pages[0]}–{pages[-1]}'
         title = f"{r['id']}: {'Display' if s['kind'] == 'display' else 'Text'}, {where}"
+        if not r['relation']:  # a step prints its relation, and an exact one none: say that this one has none yet
+            title += ', not yet judged'
         extra = {'proof': {'kind': proof_kind(r, key_decls[r['item']])}} \
             if r['relation'] and r['relation'] != 'noMatch' else None
         steps[r['item']].append((s['step'], record(r, 'proof_step', title, extra)))
