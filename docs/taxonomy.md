@@ -35,7 +35,7 @@ changes since 2013) are dropped.
 | `exact` | A declaration states the item: same hypotheses and conclusion, same constants, up to notation, encoding (ℕ/ℝ casts, `Finset` sums, bundled structures) and junk values. | no |
 | `close` | Same claim with differences a reader should know (a normalization, a closed vs open range, an unfolded definition, the item's constants named abstractly in [L] where [M] says "some constant"), and no direction of strength. | no |
 | `stronger` | [L] proves more than [M] prints: weaker hypotheses or a stronger conclusion. | no |
-| `parts` | No single declaration states the item, but listed key declarations each state one of its claims, and together they state all of it. | no |
+| `parts` | No single declaration states the item, but listed key declarations each state one of its claims, and together they state all of it. If any claim of the item has no counterpart, the status is `no-match` (or `weaker`), never `parts`; a claim that follows from [L] only by an argument [L] does not write (more than unfolding definitions or a one-line step) has no counterpart. | no |
 | `inlined` | A step (usually a display inside a proof) that has no standalone declaration but is proved inside a named declaration's proof. Give that declaration and the `file:line` range of the step. | no |
 | `definition-match` | A definition that agrees with [L]'s. | no |
 | `definition-close` | A definition that agrees up to differences a reader should know (an equivalent but differently packaged condition, a normalization). | no |

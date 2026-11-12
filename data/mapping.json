@@ -8,16 +8,16 @@
  "provenance": "machine: mapper and verifier agents per batch, a judge on disagreement, two skeptics per claimed finding; no person reviewed",
  "counts": {
   "stronger": 5,
-  "exact": 24,
-  "definition-match": 43,
-  "parts": 14,
-  "definition-close": 11,
+  "exact": 36,
+  "definition-match": 48,
+  "parts": 23,
+  "definition-close": 12,
   "close": 16,
-  "inlined": 1,
+  "inlined": 2,
   "not-formalized-not-needed": 3,
-  "weaker": 2,
-  "not yet judged": 336,
-  "no-match": 3
+  "weaker": 6,
+  "no-match": 8,
+  "not yet judged": 299
  },
  "items": [
   {
@@ -6118,483 +6118,2297 @@
   },
   {
    "id": "Definition 11.1",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YM.RG.Patch.axial",
+     "role": "key",
+     "where": "YM/RG/Patch.lean:102-103",
+     "note": "g_y^{z,o} = travel along the route from z to y that changes the axes in the order o (Order = Perm Axis, the 24 elements of S_4); tag (z,o) in B_R x S_4.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.RG.Patch.frame",
+     "role": "key",
+     "where": "YM/RG/Patch.lean:153-156",
+     "note": "On the axial branch the frame is (axial t center)^-1 * axial t x, i.e. h_y = (g_0)^-1 g_y.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.RG.Patch.axialCost",
+     "role": "key",
+     "where": "YM/RG/Patch.lean:137-141",
+     "note": "Link coordinates U_(y,a)^{z,o} = g_y U(y,a) (g_{y+e_a})^-1, summed in chord over internal positive links.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.RG.Patch",
+     "role": "support",
+     "where": "YM/RG/Patch.lean:29-34",
+     "note": "radius (J+3)L = R and the site box B_R.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.RG.Patch.FrameTag",
+     "role": "support",
+     "where": "YM/RG/Patch.lean:100",
+     "note": "Tags (z,o) in B_R x S_4.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Frame, normalization and link coordinates agree with Patch.axial, Patch.frame (second branch) and the summand of Patch.axialCost, with R = (J+3)L as the patch radius and the center at 0. The closing sentence about finite alternatives is motivation.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S11-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-match",
+    "verifier": "definition-match",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Definition 11.2",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YM.RG.Patch.usesMin",
+     "role": "key",
+     "where": "YM/RG/Patch.lean:108-110",
+     "note": "First-branch test: chord of via(axial(center,l)) U x y k below frame_cut for all x,y,l,k (the route matrix T^{o0}_{xy;o} < delta_fr).",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.RG.Patch.score",
+     "role": "key",
+     "where": "YM/RG/Patch.lean:114-115",
+     "note": "Average over x,y in the patch and the 24 orders of price(h_x T(x->y;l) h_y^-1); matches the 1/(24|B_R|^2) sum.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.RG.Patch.minimizing",
+     "role": "key",
+     "where": "YM/RG/Patch.lean:121-122",
+     "note": "Minimizer with h center = 1 (h_0 = 1).",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.RG.Patch.eligible",
+     "role": "key",
+     "where": "YM/RG/Patch.lean:143-146",
+     "note": "Second branch: axialCost <= axial_factor (2 radius + 1) facesum.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.RG.Patch.facesum",
+     "role": "support",
+     "where": "YM/RG/Patch.lean:131-135",
+     "note": "Plaquette chord sum over internal plaquettes.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.RG.Patch.frameMass",
+     "role": "key",
+     "where": "YM/RG/Patch.lean:148-151",
+     "note": "Equal mass over all tags on the minimizing branch, over eligible tags on the axial branch.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.RG.Patch.frame",
+     "role": "key",
+     "where": "YM/RG/Patch.lean:153-156",
+     "note": "The chosen frame on each branch (selected minimizer or normalized axial frame).",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.RG.KernelChoices",
+     "role": "support",
+     "where": "YM/RG/Patch.lean:37-45",
+     "note": "frame_cut = delta_fr and axial_factor = a_ax are fields.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.RG.Patch.selected",
+     "role": "key",
+     "where": "YM/RG/Patch.lean:129",
+     "note": "The chosen minimizer; unique under Branches.",
+     "from_verifier": true,
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.RG.Patch.axialCost",
+     "role": "support",
+     "where": "YM/RG/Patch.lean:137-141",
+     "note": "Sum of link chords over internal positive links.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The two branches, their tests, the minimized objective, the eligibility inequality and the tag masses coincide once delta_fr and a_ax are the KernelChoices fields.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S11-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-match",
+    "verifier": "definition-match",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Definition 11.3",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YM.RG.Patch.weight",
+     "role": "key",
+     "where": "YM/RG/Patch.lean:87-90",
+     "note": "w^av: J-fold convolution of the uniform weight on the centered L-block.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.RG.Patch.bondCost",
+     "role": "key",
+     "where": "YM/RG/Patch.lean:159",
+     "note": "sum_z w_z price(Y_z u^-1).",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.RG.Patch.best",
+     "role": "key",
+     "where": "YM/RG/Patch.lean:169",
+     "note": "A minimizer of bondCost (chosen); unique on the branch by Lemma 11.4.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.RG.Patch.usesBest",
+     "role": "key",
+     "where": "YM/RG/Patch.lean:171",
+     "note": "Minimum below predictor_cut = eps_pred.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.RG.Patch.predict",
+     "role": "key",
+     "where": "YM/RG/Patch.lean:173-175",
+     "note": "Q^pred = argmin on the branch, else Y_{e,z}.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.RG.Patch.predictorMass",
+     "role": "key",
+     "where": "YM/RG/Patch.lean:177-179",
+     "note": "Uniform mass on the patch points on the minimizing branch, w_z otherwise.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.RG.StepData.likelihood",
+     "role": "key",
+     "where": "YM/RG/Block.lean:57-60",
+     "note": "Product of frame masses and predictor masses is the joint tag probability lambda^tag.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.RG.StepData.connector",
+     "role": "support",
+     "where": "YM/RG/Block.lean:39-42",
+     "note": "The framed connector Y_{e,z}.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.RG.StepData.density",
+     "role": "support",
+     "where": "YM/RG/Block.lean:77-78",
+     "note": "Sum over tags of likelihood times the noise, the summands of the block kernel.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Predictor argmin, branch test, tag masses on both branches and the product with the frame masses agree. Lean's best is a chosen minimizer, which equals the argmin where Lemma 11.4 gives uniqueness.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S11-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-match",
+    "verifier": "definition-match",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Lemma 11.4",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.Axial.viable",
+     "role": "key",
+     "where": "YM/Branch/Pick.lean:136-142",
+     "note": "For every penalty there are KernelChoices with axial_factor 16 such that every patch satisfies Branches: unique frame minimizer on usesMin, unique predictor minimizer on usesBest, eligible axial tags nonempty.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.RG.frame_unique",
+     "role": "key",
+     "where": "YM/Branch/Uniform.lean:18-64",
+     "note": "Uniqueness of the frame minimizer for every frame_cut <= delta, every patch (volume uniform cutoff). Uses Gauge.nearest_approximate.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.RG.predictor_unique",
+     "role": "key",
+     "where": "YM/Branch/Uniform.lean:58-64",
+     "note": "Uniqueness of the predictor minimizer for predictor_cut <= delta.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Axial.eligible",
+     "role": "key",
+     "where": "YM/Branch/Pick.lean:119-134",
+     "note": "For any axial factor >= 16 and every order o some tag (x,o) is eligible.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.RG.StepData.chosen",
+     "role": "key",
+     "where": "YM/RG/Block.lean:123-136",
+     "note": "Sum over all tags of the product of frame and predictor masses is 1.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.RG.StepData.density_total",
+     "role": "key",
+     "where": "YM/RG/Block.lean:197-201",
+     "note": "Integral of the block density over V against the probability Haar prior is 1 (also as IsKernel.total via isKernel).",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.RG.Patch.Branches",
+     "role": "support",
+     "where": "YM/RG/Patch.lean:182-185",
+     "note": "Hypothesis of chosen and density_total; discharged by Axial.viable.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.RG.Patch.frameMass_sum",
+     "role": "key",
+     "where": "YM/RG/Measurable.lean:127-137",
+     "note": "Frame masses sum to one under Branches.",
+     "from_verifier": true,
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.RG.Patch.predictorMass_sum",
+     "role": "key",
+     "where": "YM/RG/Measurable.lean:138-147",
+     "note": "Predictor masses sum to one.",
+     "from_verifier": true,
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.RG.StepData.isKernel",
+     "role": "attributed",
+     "where": "YM/RG/Block.lean:203-208",
+     "note": "Bundles positivity, measurability, boundedness and total mass 1.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "No single declaration states the lemma. Uniqueness and nonempty eligibility come from Axial.viable (and the stronger frame_unique, predictor_unique, Axial.eligible), the tag sum from StepData.chosen and the kernel normalization from StepData.density_total, which assume Branches (supplied by Axial.viable). L's uniqueness holds for all cutoffs below a threshold and eligibility for any factor >= 16.",
+   "confidence": "high",
+   "relation": "hasPart",
    "verification": {
     "batch": "S11-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "parts",
+    "verifier": "parts",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (11.1)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.Gauge.nearest_approximate",
+     "role": "key",
+     "where": "YM/Gauge/Nearest.lean:172-184",
+     "note": "For every eps > 0 there is delta such that for X,Y within delta of 1 and nearest group points u,v, ||mat u - mat v - P_lie(X-Y)|| <= eps ||X-Y|| in the Frobenius norm.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Branch.align",
+     "role": "helper",
+     "where": "YM/Branch/Synchronize.lean:232-274",
+     "note": "Applies nearest_approximate with eps = 1/4 inside the proof of frame uniqueness.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The nearest-point projection onto G is unique near 1, and Lean's Nearest relation near 1 is that projection; P_g is the starProjection onto the Lie algebra. The estimate and its smallness ball (depending on eps only) are the same.",
+   "step": "YM.Gauge.nearest_approximate (YM/Gauge/Nearest.lean:172-184), the lemma that states it; used in YM.Branch.align (YM/Branch/Synchronize.lean:232-272) inside the proof of YM.RG.frame_unique",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S11-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "exact",
+    "verifier": "exact",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (11.2)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.Next.Free.Train.D_feedback",
+     "role": "key",
+     "where": "YM/Next/FREE_KERNELS/Feed.lean:154-156",
+     "note": "levelD k (hop P v) a p = slide P a (levelD k v a) p + k^-1: one step of the covariance recursion.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Next.Free.Train.levelD",
+     "role": "support",
+     "where": "YM/Next/FREE_KERNELS/Feed.lean:133-135",
+     "note": "c_a for a history; the empty history gives 1/divisor 1 p = 1/lambda(p).",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Next.Free.slide",
+     "role": "support",
+     "where": "YM/Next/FREE_KERNELS/Feed.lean:64",
+     "note": "L^-2 sum over aliases of yen(pullLine) times the function.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Next.Free.pullLine",
+     "role": "support",
+     "where": "YM/Next/FREE_KERNELS/Feed.lean:25",
+     "note": "massFilter * rail: b_ell^j times r_ell((.)_a); yen gives b^{2j} r(theta_a) r(-theta_a).",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Next.Free.feed_top",
+     "role": "support",
+     "where": "YM/Next/FREE_KERNELS/Feed.lean:111",
+     "note": "Initial value: levelD of the empty history is 1/divisor = lambda^{-1}.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "With kappa = blockpenalty, slide gives ell^-2 times the alias sum of b_ell^{2j} r_ell r_ell c_a at (p+2 pi z)/ell, and the recursion is stated as an identity for all histories; the starting value is 1/lambda.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S11-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "exact",
+    "verifier": "exact",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (11.3)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.Next.Free.Flight.rebased",
+     "role": "key",
+     "where": "YM/Next/FREE_KERNELS/Eject.lean:144-181",
+     "note": "amend*(pledge_c - T^T pledge_f T - k^-1 d1 d1^T)*amend = d2^T (rollFunds) d2 on tori c,f with f = c L; pledge = H^-1, amend = H, rollFunds = D_c^T (F0 + zeta I - zeta_j S0^T S0) D_c.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Next.Free.pledge",
+     "role": "support",
+     "where": "YM/Next/FREE_KERNELS/Amend.lean:30",
+     "note": "H^-1 = (H^0)^-1 + zeta (d2 (H^0)^-1)^T d2 (H^0)^-1.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Next.Free.amend",
+     "role": "support",
+     "where": "YM/Next/FREE_KERNELS/Amend.lean:31",
+     "note": "H, as the inverse of pledge.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Craft.defect",
+     "role": "support",
+     "where": "YM/Bid/Craft.lean:27-28",
+     "note": "Same expression stated on Bed metrics and inverses.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Next.Free.check_bleep",
+     "role": "key",
+     "where": "YM/Next/FREE_KERNELS/Rack.lean:57-58",
+     "note": "The same identity as the predicate Bleeps for any beds Defined as the explicit metrics.",
+     "from_verifier": true,
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Craft.Bleeps",
+     "role": "support",
+     "where": "YM/Bid/Craft.lean:32",
+     "note": "defect = d2^T B d2 for a three-form kernel B.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Same identity: H_c, H_f^-1 are amend and pledge of the incoming and outgoing histories, T the installed transfer, and the right side is d2^T W3 d2 with W3 = rollFunds. Lean needs the stage indices >= 4 and the amendment coefficients >= 0, which are standing in [M].",
+   "confidence": "medium",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S11-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "exact",
+    "verifier": "exact",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Lemma 11.5",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.Precision.action",
+     "role": "key",
+     "where": "YM/PREC/TreeMatch.lean:93-103",
+     "note": "T^T K(H) T + kappa P^T P = K(H') with T the tree interpolation and P = 1 - probe*T (Q W0 - I): the first display, given the normal equations Inputs.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Next.Free.pledges",
+     "role": "key",
+     "where": "YM/Next/FREE_KERNELS/Priced.lean:67-93",
+     "note": "Catalog: for every history Train and clip with direct coefficient <= gamma, Floor (H(0)=1, H = c I + rho^T rho via roots, H >= eta I, inverse, symmetry) and uniform strip bounds; also strips for the hop kernels.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Next.Free.Flight.frontier",
+     "role": "key",
+     "where": "YM/Next/FREE_KERNELS/Eject.lean:99-140",
+     "note": "Strip bound and funds (three-form defect factor >= eta I) once m B <= L^2, with output amendment coefficient l >= C.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Next.Free.Flight.rebased",
+     "role": "key",
+     "where": "YM/Next/FREE_KERNELS/Eject.lean:144-181",
+     "note": "The adjacent defect factorization through d2.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Next.Free.relayT",
+     "role": "key",
+     "where": "YM/FullVolume/Train/Miracles.lean:98-118",
+     "note": "Horizon with uniform strip bounds (Suffices) whose metric, inverse, roots, A0 (W0) and T converge entrywise as N goes to infinity (Amplify).",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Next.Free.Retort.Fleet.narrower",
+     "role": "key",
+     "where": "YM/FullVolume/Train/Mast.lean:47-60",
+     "note": "Entrywise convergence plus a uniform strip bound gives convergence in the smaller exponentially weighted norm.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Precision.Floor",
+     "role": "support",
+     "where": "YM/PREC/Stacks.lean:61-68",
+     "note": "Structure with starts (H(0)=1), roots (full^T full = metric), uniform (H >= eta).",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Precision.Towers.Diagonal",
+     "role": "support",
+     "where": "YM/PREC/Stacks.lean:82-86",
+     "note": "Carries Inputs, the normal equations behind the energy identity.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Next.Free.Amplify",
+     "role": "support",
+     "where": "YM/FullVolume/Train/Miracles.lean:21-26",
+     "note": "Existence of N-limits of all arrays.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Next.Free.retained_support",
+     "role": "key",
+     "where": "YM/Next/FREE_KERNELS/Rack.lean:134-145",
+     "note": "Under Credit (clip.direct <= gamma, block >= b) gives horizons for all N,m with Rack: strips and decay, Floor (H(0)=I, H >= eta, H = c_dir I + roots^T roots), Diagonal (inputs of action) and the three-form kernel with Reaches P eta.",
+     "from_verifier": true,
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Craft.Rack",
+     "role": "support",
+     "where": "YM/Bid/Craft.lean:63-74",
+     "note": "Fields covers, traces (Floor), crosses (Diagonal), creak (Bleeps with Reaches).",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Next.Free.Credit",
+     "role": "support",
+     "where": "YM/Next/FREE_KERNELS/Rack.lean:87-88",
+     "note": "The history hypotheses c_dir <= gamma and ratio threshold.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Next.Free.stellar",
+     "role": "support",
+     "where": "YM/FullVolume/Train/Miracles.lean:28-41",
+     "note": "Convergence of the metric data.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Next.Free.Retort.Fleet",
+     "role": "support",
+     "where": "YM/FullVolume/Train/Mast.lean:11-14",
+     "note": "Convergence criterion: coefficientwise convergence plus a uniform exponential strip bound.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The energy identity is Precision.action, the floors (H(0)=I, H - c_dir I = rho^T rho, positivity) are Floor inside the Catalog of pledges, W3 >= c I is Flight.frontier under m B <= L^2, the defect is rebased, and the N-limits with uniform strips come from relayT and Fleet.narrower. In L the lower bound is H >= eta I and the clip bound c <= gamma are independent constants rather than literally H >= 2 gamma; one may shrink gamma to min(gamma, eta/2).",
+   "confidence": "medium",
+   "relation": "hasPart",
    "verification": {
     "batch": "S11-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "parts",
+    "verifier": "parts",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (11.4)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.Next.Free.Train.smooth_upper",
+     "role": "key",
+     "where": "YM/Next/FREE_KERNELS/Train.lean:169-184",
+     "note": "For every history v of index j and p in the strip cube (|Re p| < 5pi/4, |Im p| < pi/4), |f((p+2 pi z)/M)| <= C decay j z = C prod (1+|z_a|)^-j, with C depending on j only.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Next.Free.Train.smooth_lower",
+     "role": "key",
+     "where": "YM/Next/FREE_KERNELS/Train.lean:186-196",
+     "note": "For real p in the enlarged cube, |f(p/M)| >= c_j > 0.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Next.Free.Train.smooth",
+     "role": "support",
+     "where": "YM/Next/FREE_KERNELS/Train.lean:36",
+     "note": "f = b_M^j times the extra products for stage increases (area M)^j * extra.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The upper alias bound and the real lower bound are two lemmas about the cumulative filter Train.smooth with a fixed strip width pi/4 for [M]'s eta.",
+   "step": "YM.Next.Free.Train.smooth_upper (YM/Next/FREE_KERNELS/Train.lean:169-184) and YM.Next.Free.Train.smooth_lower (YM/Next/FREE_KERNELS/Train.lean:186-196), the lemmas that state it",
+   "confidence": "high",
+   "relation": "hasPart",
    "verification": {
     "batch": "S11-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "parts",
+    "verifier": "parts",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (11.5)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.Next.Free.relayT",
+     "role": "key",
+     "where": "YM/FullVolume/Train/Miracles.lean:98-118",
+     "note": "Gives a horizon T with T.Suffices K (uniform strip bounds) and Amplify T: entrywise N-limits of metric (H), inverse (H^-1), roots (rho), A0 (W0) and T at each fixed m.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Next.Free.Retort.Fleet.narrower",
+     "role": "key",
+     "where": "YM/FullVolume/Train/Mast.lean:47-60",
+     "note": "Entrywise convergence plus an eventual uniform strip bound of width sigma gives sum_z exp(beta |z|) |S_N - F| -> 0 for every beta < sigma: the c'-norm convergence for each index pair.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Next.Free.Retort.Fleet",
+     "role": "support",
+     "where": "YM/FullVolume/Train/Mast.lean:11-14",
+     "note": "Convergence plus positive width plus eventual strip bound; built directly from Amplify and Suffices.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Next.Free.Amplify",
+     "role": "support",
+     "where": "YM/FullVolume/Train/Miracles.lean:21-26",
+     "note": "Packages the N-limits (Loom) of the five arrays.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Precision.Horizon.Suffices",
+     "role": "support",
+     "where": "YM/PREC/Stacks.lean:132-139",
+     "note": "Uniform strip bounds: rows (Bed.covered: metric, inverse, roots) and costs (Towers.Deep: A0 and T).",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Precision.Bed.covered",
+     "role": "support",
+     "where": "YM/PREC/Stacks.lean:53-54",
+     "note": "Strip bounds for diagonal, metric, inverse, roots, dual.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Precision.Towers.Deep",
+     "role": "support",
+     "where": "YM/PREC/Stacks.lean:111-114",
+     "note": "Strip bounds for A0 and T (empty difference word).",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "relayT supplies entrywise N-limits of all five arrays together with uniform strip bounds (Suffices), and narrower upgrades exactly such data to convergence in every smaller exponential weight; the display is this composition, with the max over the finitely many index pairs, and is not stated as one declaration.",
+   "step": "YM.Next.Free.relayT (YM/FullVolume/Train/Miracles.lean:98-118) composed with YM.Next.Free.Retort.Fleet.narrower (YM/FullVolume/Train/Mast.lean:47-60)",
+   "confidence": "high",
+   "relation": "hasPart",
    "verification": {
     "batch": "S11-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "parts",
+    "verifier": "close",
+    "agreed": false,
+    "judge": "parts",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Lemma 11.6",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "weaker",
+   "lean": [
+    {
+     "decl": "YM.Bid.Scene",
+     "role": "key",
+     "where": "YM/Bid/Station.lean:102-106",
+     "note": "Volume-independent eta with PriceGap (Q >= eta I) and a Critical branch (rho 0 = 0, analytic, D_z tested = 0) with Guessed (derivative at 0 = installed free interpolation A0).",
+     "relation": "narrowMatch"
+    },
+    {
+     "decl": "YM.Integrated.stationary_scene",
+     "role": "key",
+     "where": "YM/Integrated.lean:229-232",
+     "note": "Proves Scene for every G, L, j, K and a > 0.",
+     "relation": "narrowMatch"
+    },
+    {
+     "decl": "YM.Next.Free.pledges",
+     "role": "key",
+     "where": "YM/Next/FREE_KERNELS/Priced.lean:67-93",
+     "note": "Catalog whose HopQuote gives Donate: strip bounds C/L^(1+|u|) for differences of A0 (W0) up to |u| <= j-2, which covers r <= d.",
+     "relation": "narrowMatch"
+    },
+    {
+     "decl": "YM.Craft.Donate",
+     "role": "support",
+     "where": "YM/Bid/Craft.lean:21-23",
+     "note": "The exponentially weighted l1 bound on derivatives of W0; pointwise and sup-norm bounds follow by bounding one term and by summing.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Next.Free.Train.smooth_zero",
+     "role": "key",
+     "where": "YM/Next/FREE_KERNELS/Train.lean:80-82",
+     "note": "Cumulative averaging symbol equals 1 at zero (with area_zero and Flight.filter_zero for the box filter).",
+     "relation": "narrowMatch"
+    },
+    {
+     "decl": "YM.Next.Free.Train.area_zero",
+     "role": "support",
+     "where": "YM/Next/FREE_KERNELS/Train.lean:77",
+     "note": "Box filter is 1 at zero.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Next.Free.Flight.vanishing_box",
+     "role": "key",
+     "where": "YM/Next/FREE_KERNELS/ZeroAlias.lean:30-43",
+     "note": "massFilter = area^J takes the value 0 at every nonzero alias of momentum 0; no order of vanishing is stated.",
+     "relation": "narrowMatch"
+    },
+    {
+     "decl": "YM.Next.Free.massFilter",
+     "role": "support",
+     "where": "YM/Next/FREE_KERNELS/Feed.lean:23",
+     "note": "area L p ^ J, the averaging symbol.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Push.Uniform.Receipt.throughout",
+     "role": "helper",
+     "where": "YM/Push/STATIONARY_UNIFORM/ImplicitRadius.lean:179-215",
+     "note": "Single analytic graph with g 0 = 0, the unique gradient zero on a volume-independent ball.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Precision.Critical",
+     "role": "support",
+     "where": "YM/PCalc/Chart.lean:88-95",
+     "note": "Stationary analytic branch through 0.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Precision.Guessed",
+     "role": "support",
+     "where": "YM/PCalc/Chart.lean:97-98",
+     "note": "Dz(0) equals the free interpolation.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Precision.PriceGap",
+     "role": "support",
+     "where": "YM/PCalc/Chart.lean:100-101",
+     "note": "Q >= eta I.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The stationary branch, volume-independent coercivity, Dz(0) as the free interpolation, the kernel and sup-norm bounds (from the strip bounds of Donate) and the value one at zero are in L. M also prints that the averaging symbol vanishes to order at least j at every nonzero alias, while vanishing_box states only that massFilter is zero there, and no declaration states an order of vanishing (searched analyticOrderAt, iteratedDeriv, orderAt, massFilter lemmas).",
+   "searched": [
+    "grep analyticOrderAt|iteratedDeriv|orderAt|vanish in YM",
+    "massFilter lemmas: filter_zero, vanishing_box, bills, bills_firm, massFilter_even, filter_silver, mass_up"
+   ],
+   "confidence": "medium",
+   "finding": {
+    "claim": "weaker",
+    "confirmed": true,
+    "skeptic_notes": [
+     "[M] prints that the averaging symbol (b_l^j, which is massFilter P p = area P.L p ^ P.J with order_cut : 4 <= J) \"vanishes to order at least j at every nonzero alias\". [L] states only `vanishing_box : massFilter P.patch (aliasAt 0 l)=0` for l != 0. The fact that area itself vanishes there (hv) appears only inside that proof, and no declaration states an order of vanishing or the vanishing of derivatives below order J. Getting order >= J from the J-th power needs an unwritten Leibniz or analyticity argument, so this claim has no counterpart beyond order one. The finding stands as weaker, and it is not a typo: the proof (B-section.tex:343) argues the order deliberately.",
+     "[M] prints that the averaging symbol equals one at zero and 'vanishes to order at least j at every nonzero alias'. [L] has filter_zero (massFilter P.patch 0=1) and vanishing_box (l≠0 → massFilter P.patch (aliasAt 0 l)=0), with massFilter := area P.L p ^ P.J; the nearest quantitative statement, Flight.bills, bounds ‖massFilter (aliasAt p l)‖ ≤ C·decay j l = C·(mix l)^(-j) on a fixed cube, which is decay in the alias index l, not a factor |p|^j as p→0. No declaration states an order of vanishing; deriving it from the J-th power form and analyticity of area is an argument [L] does not write, so the item is weaker in that clause. Not a typo: the remaining clauses are as claimed."
+    ]
+   },
+   "relation": "narrowMatch",
    "verification": {
     "batch": "S11-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "parts",
+    "verifier": "weaker",
+    "agreed": false,
+    "judge": "weaker",
+    "source": "judge",
+    "skeptics": [
+     {
+      "refuted": false,
+      "status": "weaker",
+      "reason": "[M] prints that the averaging symbol (b_l^j, which is massFilter P p = area P.L p ^ P.J with order_cut : 4 <= J) \"vanishes to order at least j at every nonzero alias\". [L] states only `vanishing_box : massFilter P.patch (aliasAt 0 l)=0` for l != 0. The fact that area itself vanishes there (hv) appears only inside that proof, and no declaration states an order of vanishing or the vanishing of derivatives below order J. Getting order >= J from the J-th power needs an unwritten Leibniz or analyticity argument, so this claim has no counterpart beyond order one. The finding stands as weaker, and it is not a typo: the proof (B-section.tex:343) argues the order deliberately."
+     },
+     {
+      "refuted": false,
+      "status": "weaker",
+      "reason": "[M] prints that the averaging symbol equals one at zero and 'vanishes to order at least j at every nonzero alias'. [L] has filter_zero (massFilter P.patch 0=1) and vanishing_box (l≠0 → massFilter P.patch (aliasAt 0 l)=0), with massFilter := area P.L p ^ P.J; the nearest quantitative statement, Flight.bills, bounds ‖massFilter (aliasAt p l)‖ ≤ C·decay j l = C·(mix l)^(-j) on a fixed cube, which is decay in the alias index l, not a factor |p|^j as p→0. No declaration states an order of vanishing; deriving it from the J-th power form and analyticity of area is an argument [L] does not write, so the item is weaker in that clause. Not a typo: the remaining clauses are as claimed."
+     }
+    ],
+    "claimed": "weaker",
+    "finding": "confirmed",
+    "complete": true
    }
   },
   {
    "id": "Lemma 11.7",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "no-match",
+   "lean": [
+    {
+     "decl": "YM.Stationary.treasury",
+     "role": "key",
+     "where": "YM/Next/STATIONARY/Joint/HaarJac.lean:63-115",
+     "note": "toll F P y = |det D(saver F y)(y)| at an axial point: J_ax = |det Ds|.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Work.F05.toll_pos",
+     "role": "key",
+     "where": "YM/Work/F05/Measure.lean:37-38",
+     "note": "toll is positive on the chart parcel; with LocalRatio.anchored (J 0 = 1) toll at 0 unfolds to 1, giving J_ax > 0 and J_ax(0) = 1.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Stationary.carries",
+     "role": "key",
+     "where": "YM/Next/STATIONARY/Joint/Regulator.lean:527-533",
+     "note": "indexX * stood = 1, where indexX is the derivative of rocket = -frameLog(shield^-1 shield(e^w .)) and stood is fine gauge insertion: X R = I.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Stationary.commandment",
+     "role": "key",
+     "where": "YM/Next/STATIONARY/Joint/Completion.lean:384-452",
+     "note": "(pawns F V y).det^2 = 1 for the matrix pasting gauge insertion and free-edge increments: det(R,I)^2 = 1.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Work.F05.hessian_pos",
+     "role": "key",
+     "where": "YM/Work/F05/Graphs.lean:75-79",
+     "note": "Only the determinant of the stationary Hessian is positive near zero.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Stationary.tribute",
+     "role": "support",
+     "where": "YM/Next/STATIONARY/Joint/HaarJac.lean:177-202",
+     "note": "Rewrites thermal (= T) through the completed joint Hessian and the gauge Hessian; an identity of log terms, not a Gaussian integral.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Precision.thermal",
+     "role": "support",
+     "where": "YM/PCalc/Loop.lean:46-49",
+     "note": "Definition of T as loop + 1/2 log det hessian - log prod J.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "[L] states J_ax = |det Ds| > 0, J_ax(0) = 1, X R = I (carries) and det(R,I)^2 = 1. It has no statement that the stationary Gaussian integral has field-dependent factor e^{-T(v)}, and for Q(v) it proves only a positive determinant near zero, not positivity of the form.",
+   "searched": [
+    "both agents' searches",
+    "grep indexX, rocket, stood, carries, count_ammo in YM/Next/STATIONARY/Joint/Regulator.lean",
+    "grep thermal uses across YM for an integral identity",
+    "Work/F05/Calculus.lean bend_det_pos (PosDef only at the base point)"
+   ],
+   "confidence": "medium",
+   "finding": {
+    "claim": "no-match",
+    "confirmed": false
+   },
+   "relation": "noMatch",
    "verification": {
     "batch": "S11-2",
-    "mapper": null,
-    "verifier": null,
+    "mapper": "weaker",
+    "verifier": "no-match",
+    "agreed": false,
+    "judge": "no-match",
+    "source": "judge",
+    "skeptics": [],
+    "claimed": "no-match",
+    "finding": "skeptics pending",
     "complete": false
    }
   },
   {
    "id": "Lemma 11.8",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "no-match",
+   "lean": [
+    {
+     "decl": "YM.WilsonBulk.uniform_backing",
+     "role": "support",
+     "where": "YM/WilsonBulk/Spectral/Backing.lean:54-66",
+     "note": "An undifferentiated strip-norm bound, uniform in the step, on the inverse of the completed joint form; closest to the r = 0 inverse bound but in a different norm.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Stationary.Jam.rebounds",
+     "role": "support",
+     "where": "YM/Next/STATIONARY/OneLoop/Weights.lean:125-155",
+     "note": "Generic two-jet bound on an inverse matrix with polynomial C + A C^2 + (2A^2C^3 + C^2A), the shape of Q_r, for an abstract analytic family; not applied to A_mu in the item's norms.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Stationary.terrain_min",
+     "role": "support",
+     "where": "YM/Next/STATIONARY/Spectral/RealGap.lean:484-491",
+     "note": "The lower half of the mass-floor inequality used in the proof.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "[M] prints a trace-norm bound on P_mu^3, block-norm bounds on D^r P_mu, dual-to-primal and mu^2-scaled block bounds on D^r(A_mu^{-1}) by Q_r(C^ins) for r <= 2, and insertion bounds. [L] has none of these as statements; uniform_backing gives only an undifferentiated strip bound on the joint inverse.",
+   "searched": [
+    "both agents' searches",
+    "grep for Q_r-type polynomials (2*A^2*C^3) in lean/YM, finding Jam.rebounds / inverseBill",
+    "grep traceNorm, nuclear, cube of the regulator in YM/Next/STATIONARY"
+   ],
+   "confidence": "medium",
+   "finding": {
+    "claim": "no-match",
+    "confirmed": false
+   },
+   "relation": "noMatch",
    "verification": {
     "batch": "S11-2",
-    "mapper": null,
-    "verifier": null,
+    "mapper": "weaker",
+    "verifier": "no-match",
+    "agreed": false,
+    "judge": "no-match",
+    "source": "judge",
+    "skeptics": [],
+    "claimed": "no-match",
+    "finding": "skeptics pending",
     "complete": false
    }
   },
   {
    "id": "Eq (11.6)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "weaker",
+   "lean": [
+    {
+     "decl": "YM.Stationary.terrain_min",
+     "role": "key",
+     "where": "YM/Next/STATIONARY/Spectral/RealGap.lean:484-491",
+     "note": "For x >= 0 and mu > 0: 2^-10 (x+mu^2) <= x + mu^2 (mu^2 (x+mu^2)^-1)^9, with the same case split as [M]. Private lemma.",
+     "relation": "narrowMatch"
+    },
+    {
+     "decl": "YM.Stationary.throne_pays",
+     "role": "support",
+     "where": "YM/Next/STATIONARY/Spectral/RealGap.lean:492-499",
+     "note": "Uses the lower bound at the symbol with pebWeight p mu = shadeK p ^2 + mu^2.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "[L] states the lower inequality only. The upper inequality x + mu^2 (mu^2/(x+mu^2))^9 <= x + mu^2 is not a declaration; the closest is YM.Stationary.terrain_min.",
+   "step": "YM.Stationary.terrain_min (YM/Next/STATIONARY/Spectral/RealGap.lean:484-491), lower half; the display sits in the proof of Lemma 11.8",
+   "confidence": "high",
+   "finding": {
+    "claim": "weaker",
+    "confirmed": true,
+    "skeptic_notes": [
+     "[M] prints the two-sided chain 2^{-10}(x+mu^2) <= x+mu^2(mu^2/(x+mu^2))^9 <= x+mu^2 for x>=0. [L]'s terrain_min (x>=0, 0<mu) concludes only `(1/(2^10):ℝ)*(x+μ^2) ≤ x+μ^2*(μ^2*(x+μ^2)⁻¹)^9`, and its uses (throne_pays, throne_floor, dais_floor) are lower bounds only; no declaration bounds throne/satin above by pebWeight (the only upper bound, satin_prices, gives ‖satin μ p‖ ≤ μ^2*2^9 on a strip, a different constant). The upper inequality is elementary but unwritten in [L], so the claim stands; it is a deliberate extra claim in [M], not a typo.",
+     "[M] prints the two-sided bound 2^{-10}(x+mu^2) <= x+mu^2(mu^2/(x+mu^2))^9 <= x+mu^2 for x>=0. [L]'s terrain_min (private, h : 0<=x, he : 0<mu) concludes only `(1/(2^10):ℝ)*(x+μ^2) ≤ x+μ^2*(μ^2*(x+μ^2)⁻¹)^9`; its consumers throne_pays and throne_floor transport only that lower bound, and the only upper estimate on the satin term, satin_prices, gives `‖satin μ p‖ ≤ μ^2*2^9` on a strip, not the bound by x+mu^2. The upper inequality is elementary and true, so it is not a typo, but no declaration in [L] states it, and the claim stands."
+    ]
+   },
+   "relation": "narrowMatch",
    "verification": {
     "batch": "S11-2",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "weaker",
+    "verifier": "weaker",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "skeptics": [
+     {
+      "refuted": false,
+      "status": "weaker",
+      "reason": "[M] prints the two-sided chain 2^{-10}(x+mu^2) <= x+mu^2(mu^2/(x+mu^2))^9 <= x+mu^2 for x>=0. [L]'s terrain_min (x>=0, 0<mu) concludes only `(1/(2^10):ℝ)*(x+μ^2) ≤ x+μ^2*(μ^2*(x+μ^2)⁻¹)^9`, and its uses (throne_pays, throne_floor, dais_floor) are lower bounds only; no declaration bounds throne/satin above by pebWeight (the only upper bound, satin_prices, gives ‖satin μ p‖ ≤ μ^2*2^9 on a strip, a different constant). The upper inequality is elementary but unwritten in [L], so the claim stands; it is a deliberate extra claim in [M], not a typo."
+     },
+     {
+      "refuted": false,
+      "status": "weaker",
+      "reason": "[M] prints the two-sided bound 2^{-10}(x+mu^2) <= x+mu^2(mu^2/(x+mu^2))^9 <= x+mu^2 for x>=0. [L]'s terrain_min (private, h : 0<=x, he : 0<mu) concludes only `(1/(2^10):ℝ)*(x+μ^2) ≤ x+μ^2*(μ^2*(x+μ^2)⁻¹)^9`; its consumers throne_pays and throne_floor transport only that lower bound, and the only upper estimate on the satin term, satin_prices, gives `‖satin μ p‖ ≤ μ^2*2^9` on a strip, not the bound by x+mu^2. The upper inequality is elementary and true, so it is not a typo, but no declaration in [L] states it, and the claim stands."
+     }
+    ],
+    "claimed": "weaker",
+    "finding": "confirmed",
+    "complete": true
    }
   },
   {
    "id": "Lemma 11.9",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "no-match",
+   "lean": [
+    {
+     "decl": "YM.Stationary.triumph4",
+     "role": "support",
+     "where": "YM/Next/STATIONARY/Joint/FourPoint.lean:288-322",
+     "note": "D^4 of the stationary function equals the quartic vertex minus three cubic pairings through the completed inverse; the identity behind the D^4 bound, without the bound.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Stationary.radiant",
+     "role": "support",
+     "where": "YM/Next/STATIONARY/Joint/FourPoint.lean:202-216",
+     "note": "For H D = 0 and N = H + L^T L, <H u, v> = <H u, N^{-1} H v>; an algebraic analogue of b_1 G b_2 = b_{1,ax} Q^{-1} b_{2,ax}.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Stationary.setWest",
+     "role": "support",
+     "where": "YM/Next/STATIONARY/Shape/VertexWeights.lean:357-382",
+     "note": "Order-3 and order-4 texts of the central term with weights a + inch(L) l and b + inch(L) r, the shape of the C_3, C_4 bounds, not stated for the Wilson-difference vertex entries.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Stationary.launch",
+     "role": "support",
+     "where": "YM/Next/STATIONARY/Shape/Scaled.lean:270-310",
+     "note": "Main term agrees with Wilson as jets through order 4.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "[M] prints momentum orders 3, 2, 1 for V_2, V_3, V_4, the bounds C_3 <= a_3 + l^{-1}a_3' and C_4 <= c_4 + l^{-1}c_4', |D^4 S_stat| <= C_4 + 3C_3^2 E and b_1 G b_2 = b_{1,ax} Q^{-1} b_{2,ax}. [L] has the D^4 identity (triumph4), an algebraic pairing identity (radiant) and expansion bounds of the same shape (setWest), but none of the printed claims as a statement.",
+   "searched": [
+    "both agents' searches",
+    "read FourPoint.lean radiant/triumph4 and VertexWeights.lean setWest in full"
+   ],
+   "confidence": "medium",
+   "finding": {
+    "claim": "no-match",
+    "confirmed": false
+   },
+   "relation": "noMatch",
    "verification": {
     "batch": "S11-2",
-    "mapper": null,
-    "verifier": null,
+    "mapper": "no-match",
+    "verifier": "no-match",
+    "agreed": false,
+    "judge": "no-match",
+    "source": "judge",
+    "skeptics": [],
+    "claimed": "no-match",
+    "finding": "skeptics pending",
     "complete": false
    }
   },
   {
    "id": "Lemma 11.10",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "weaker",
+   "lean": [
+    {
+     "decl": "YM.Stationary.drift_tip",
+     "role": "key",
+     "where": "YM/Next/STATIONARY/Films/LeadingRay.lean:789-835",
+     "note": "For simple gauge group and screened data, alphaPay (twice the real t^2 coefficient on the axis ray) of the profitable change cue vanishes for each colour index; this is alpha_b(Y^con) = 0.",
+     "relation": "narrowMatch"
+    },
+    {
+     "decl": "YM.Stationary.changeCue",
+     "role": "support",
+     "where": "YM/Next/STATIONARY/Films/RankColor.lean:87",
+     "note": "Half the full minus contact-removed log determinant film: the contact difference Y^con.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Stationary.alphaPay",
+     "role": "support",
+     "where": "YM/Next/STATIONARY/Films/LeadingRay.lean:699",
+     "note": "alpha payment: 2 Re of the t^2 tip coefficient on axis 0.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Stationary.profitable",
+     "role": "support",
+     "where": "YM/Next/STATIONARY/Loops/Fourier.lean:453",
+     "note": "Picture of a diagonal entry of an award, with factor 1/2.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "[L] proves the vanishing of the t^2 coefficient (alpha_b = 0) of the diagonal contact entry, under hypotheses on the post card and screening. It does not state that the first penalty derivative has momentum order two, that b vanishes at zero and c is analytic, or the O(t^3) form of Y^con_ii(t e1); closest is YM.Stationary.drift_tip.",
+   "confidence": "medium",
+   "finding": {
+    "claim": "weaker",
+    "confirmed": true,
+    "skeptic_notes": [
+     "[M] prints four claims: the penalty derivative a=-K_c has momentum order two, b vanishes at zero and c is analytic, Y^con_ii(te1)=O(t^3), and alpha_b(Y^con)=0. drift_tip concludes only `alphaPay i (profitable (changeCue D K.penalty M))=0`. The O(t^3) bound appears only as the internal step `have hf : Rays 3 F` in drift_tip's proof (line 812). The other claims are helpers: tax_ray gives `Rays 2` of taxTone, star_analytic gives analyticity of the c-trace, and star_low gives `Rays 1` for the b-trace only under a Ward hypothesis hX, which is discharged inside drift_tip's proof through alpha_night and stamp_here. No declaration states the O(t^3) bound or the unconditional vanishing of b, so `parts` fails and the finding stands.",
+     "[M] prints four claims: the first penalty derivative has momentum order two, b vanishes at zero, c is analytic, and Y^con_ii(te1)=O(t^3) with alpha_b(Y^con)=0. drift_tip concludes only `alphaPay i (profitable (changeCue D K.penalty M))=0`. The claim is partly wrong: tax_ray (`Rays 2` of taxTone), star_low (`Rays 1` of the b trace, under a Ward hypothesis) and star_analytic state the first three ingredients for the hatchTrace kernels. But the O(t^3) bound appears only as the internal step `have hf : Rays 3 F` in drift_tip's proof (line 812), and no declaration states it, so the status stays weaker (alpha_b=0 is less than O(t^3)) rather than parts; it is not a typo."
+    ]
+   },
+   "relation": "narrowMatch",
    "verification": {
     "batch": "S11-2",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "weaker",
+    "verifier": "weaker",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "skeptics": [
+     {
+      "refuted": false,
+      "status": "weaker",
+      "reason": "[M] prints four claims: the penalty derivative a=-K_c has momentum order two, b vanishes at zero and c is analytic, Y^con_ii(te1)=O(t^3), and alpha_b(Y^con)=0. drift_tip concludes only `alphaPay i (profitable (changeCue D K.penalty M))=0`. The O(t^3) bound appears only as the internal step `have hf : Rays 3 F` in drift_tip's proof (line 812). The other claims are helpers: tax_ray gives `Rays 2` of taxTone, star_analytic gives analyticity of the c-trace, and star_low gives `Rays 1` for the b-trace only under a Ward hypothesis hX, which is discharged inside drift_tip's proof through alpha_night and stamp_here. No declaration states the O(t^3) bound or the unconditional vanishing of b, so `parts` fails and the finding stands."
+     },
+     {
+      "refuted": false,
+      "status": "weaker",
+      "reason": "[M] prints four claims: the first penalty derivative has momentum order two, b vanishes at zero, c is analytic, and Y^con_ii(te1)=O(t^3) with alpha_b(Y^con)=0. drift_tip concludes only `alphaPay i (profitable (changeCue D K.penalty M))=0`. The claim is partly wrong: tax_ray (`Rays 2` of taxTone), star_low (`Rays 1` of the b trace, under a Ward hypothesis) and star_analytic state the first three ingredients for the hatchTrace kernels. But the O(t^3) bound appears only as the internal step `have hf : Rays 3 F` in drift_tip's proof (line 812), and no declaration states it, so the status stays weaker (alpha_b=0 is less than O(t^3)) rather than parts; it is not a typo."
+     }
+    ],
+    "claimed": "weaker",
+    "finding": "confirmed",
+    "complete": true
    }
   },
   {
    "id": "Eq (11.7)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.Next.Fluctuations.roll_l",
+     "role": "key",
+     "where": "YM/Next/FLUCTUATIONS/Linear.lean:89-137",
+     "note": "unzip(flatF)(xLin a) + unzip(flatI)(zLin a b) - xLin b = 0 for all fine and coarse log fields: M_f^* X_f^lin + M_n^* Z^lin = X_c^lin.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Precision.Towers.Roll",
+     "role": "support",
+     "where": "YM/PREC/Stacks.lean:88-97",
+     "note": "The free interpolation identities (n, orthogonal) that roll_l takes as hypothesis, which [M] cites as the source of the display.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "roll_l states the vector identity itself for the flat full kernels, under the Roll identities and path attachment that [M] invokes as the free interpolation identities.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S11-2",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "exact",
+    "verifier": "close",
+    "agreed": false,
+    "judge": "exact",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Eq (11.8)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.Pressure.Tube.locates",
+     "role": "key",
+     "where": "YM/Pressure/Rows.lean:145-163",
+     "note": "Sum of workF + workI + workC + workN + workL + workD equals sum of crown (up) + monetary (penalty) - sum of crown (down): the six local rows sum to K_f + penalty/2 chord^2 - K_c, for the truncated transported matrices.",
+     "relation": "exactMatch"
+    }
+   ],
+   "note": "Rows E_f, E_n, E_c, E_N, E_L, E_D correspond to workF, workI, workC, workN, workL, workD; K_f, K_c are the crown terms and the penalty row is monetary.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S11-2",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "exact",
+    "verifier": "exact",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Lemma 11.11",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.Next.Fluctuations.grants",
+     "role": "key",
+     "where": "YM/Next/FLUCTUATIONS/Grants.lean:24",
+     "note": "For every teller P (stage path bounds, interpolation, penalty), Teller.Grants P holds unconditionally.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Integrated.pressure_grants",
+     "role": "key",
+     "where": "YM/Integrated.lean:222",
+     "note": "The theorem from which grants is derived.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Pressure.Teller.Grants",
+     "role": "support",
+     "where": "YM/Pressure/Seeds.lean:129-131",
+     "note": "There is i such that for every L >= i, eventually in W, there is kappa > 0 with cash: eventually in x, for steps with coarse side >= 100(1+radiusB x), every forest, store and plot, kappa fiery^2 |A| <= assessed energy; this fixes the order of choices.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Pressure.Stores.Plot",
+     "role": "support",
+     "where": "YM/Pressure/Seeds.lean:51-58",
+     "note": "The consistency conditions on the selection (chord thresholds t/4, t/2, W t, 2W t, flags, positive frame mass).",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Pressure.Stores.assessed",
+     "role": "support",
+     "where": "YM/Pressure/Seeds.lean:85",
+     "note": "The local energy E_A as a sum of the six rows over anchors in the 2B neighbourhood.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Pressure.Testing.notation_ticket",
+     "role": "attributed",
+     "where": "YM/Pressure/Seeds.lean:166-181",
+     "note": "The per-step form with kappa renamed mu and t_{m+1}.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Pressure.Teller.cash",
+     "role": "support",
+     "where": "YM/Pressure/Seeds.lean:124-125",
+     "note": "The energy bound, over every funded tube, forest, selection with consistent flags and sector.",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Quantifier order (L large, then W, then kappa, then large coupling), the period bound n_tor >= 100(B+1) with B = radiusB x, and uniformity in the forest and selection all agree. [L] abstracts the stage path bounds as a Teller and requires P.Funds on the tube; [M] fixes them as standing data.",
+   "confidence": "medium",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S11-2",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "exact",
+    "verifier": "exact",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (11.9)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YM.Next.SectorChange.Schur.per",
+     "role": "key",
+     "where": "YM/SectorNext/GAUSSIAN_SECTOR_CHANGE/Windows.lean:67-68",
+     "note": "P_ji = indicator(j in window of i) times the (i-th column of the inverse of the principal compression to the window of i)_j; zero if i is not in its window.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Next.SectorChange.Schur.clouded",
+     "role": "key",
+     "where": "YM/SectorNext/GAUSSIAN_SECTOR_CHANGE/Windows.lean:70",
+     "note": "Gamma = (P + P^T)/2.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Next.SectorChange.fog",
+     "role": "key",
+     "where": "YM/SectorNext/GAUSSIAN_SECTOR_CHANGE/Chosen.lean:69",
+     "note": "Gamma for the sector Gram matrix with the sector windows (panels).",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Next.SectorChange.meanLog",
+     "role": "key",
+     "where": "YM/SectorNext/GAUSSIAN_SECTOR_CHANGE/Chosen.lean:72-74",
+     "note": "m_Y = -P^T b for the sector source b (blame).",
+     "relation": "exactMatch"
+    }
+   ],
+   "note": "The definitions agree; [L] takes the window system abstractly (panels) and sets P_ji = 0 when i is not in its own window.",
+   "confidence": "medium",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S11-2",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-match",
+    "verifier": "definition-match",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Lemma 11.12",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.AnalyticBridge.Covariance.fromTeller",
+     "role": "key",
+     "where": "YM/AnalyticBridge/SECTOR_COVARIANCE_JETS/Sky.lean:62-77",
+     "note": "For fixed patch and Teller, constants such that for large x, every funded period >= 100(1+radiusB x), sector and direction: Trust (pilot A gapped, PosDef, jets) and Installed (window covariance gapped, PosDef, jets of A, A^-1, principal compressions, Gamma and its compressions, and the discrepancies with factor rate(-b)(radiusB x)).",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.AnalyticBridge.SectorAffine.Offset.prices",
+     "role": "key",
+     "where": "YM/AnalyticBridge/SECTOR_AFFINE_JETS/Center.lean:115-150",
+     "note": "Via Offset.Shift.steps: jets of the source b and the mean bounded by M t, and of the offset residual by M t exp(-v radiusB x).",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.AnalyticBridge.Covariance.Installed",
+     "role": "support",
+     "where": "YM/AnalyticBridge/SECTOR_COVARIANCE_JETS/Pan.lean:25-35",
+     "note": "Fields lens/second (Vista, incl. thin principal compressions), mist, unmask, spray, gap, definite, precision.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.AnalyticBridge.SectorAffine.Offset.Shift",
+     "role": "support",
+     "where": "YM/AnalyticBridge/SECTOR_AFFINE_JETS/Center.lean:52-62",
+     "note": "Packages the mean and residual jet bounds.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "fromTeller gives the lower bounds (as gaps), the exponential jet bounds for A, A^{-1}, Gamma and their principal compressions, and the e^{-cB} discrepancy bounds; Offset.prices gives the mean bound C t and the residual bound, with an extra factor t. The weights upsilon_i^r and the constants are packaged in RatesPaid/Parcel rather than written out.",
+   "confidence": "low",
+   "relation": "hasPart",
    "verification": {
     "batch": "S11-2",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "parts",
+    "verifier": "close",
+    "agreed": false,
+    "judge": "parts",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Lemma 11.13",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "no-match",
+   "lean": [
+    {
+     "decl": "YM.PhysicalNext.Repeat.Daisy.Herd",
+     "role": "key",
+     "where": "YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Daisy/Charm.lean:48-55",
+     "note": "Integrable majorant of the transported molecule integrand through order j with integral at most B times the fare product; produced by Daisy.timing with B = |p x| of rate zero.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.PhysicalNext.Repeat.Daisy.timing",
+     "role": "support",
+     "where": "YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Daisy/Charm.lean:58-90",
+     "note": "Constructs Herd for large L and x, with the prefactor of scale rate zero.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.ConnectedActivityE6.Target.Invoices",
+     "role": "key",
+     "where": "YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/Issue.lean:73-88",
+     "note": "vapors: warning probability dice(catastrophe v) <= E^|v| for simultaneous warnings, with E abstract.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.AnalyticBridge.Sharp.Tags.uses",
+     "role": "key",
+     "where": "YM/AnalyticBridge/SHARP_NORMALIZED_TAIL/Tags.lean:97-111",
+     "note": "Tag averages over pairwise disjoint supports factorize; the tag half of the last claim.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Next.Fluctuations.Sector.peel",
+     "role": "support",
+     "where": "YM/Next/FLUCTUATIONS/Sector.lean:229-240",
+     "note": "Extracts exp(-beta kappa t^2 |A|) from sector integrals given the local energy bound.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "[L] has the molecule majorant (Herd), a warning bound E^r (Invoices) and tag factorization (Tags.uses). It does not state the seed-envelope bound prod a_i <= e^{-kappa'_B beta t^2 |A|}, the value majorant for components with A_c nonempty carrying (1+s_A)^d e^{-kappa'_B beta t^2|A|}, or factorization over Haar coordinates.",
+   "searched": [
+    "both agents' searches",
+    "read Daisy/Charm.lean Herd and timing, Issue.lean Invoices, Sector.lean peel"
+   ],
+   "confidence": "low",
+   "finding": {
+    "claim": "no-match",
+    "confirmed": false
+   },
+   "relation": "noMatch",
    "verification": {
     "batch": "S11-2",
-    "mapper": null,
-    "verifier": null,
+    "mapper": "no-match",
+    "verifier": "unclear",
+    "agreed": false,
+    "judge": "no-match",
+    "source": "judge",
+    "skeptics": [],
+    "claimed": "no-match",
+    "finding": "skeptics pending",
     "complete": false
    }
   },
   {
    "id": "Definition 12.1",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YM.RG.Slot",
+     "role": "key",
+     "where": "YM/RG/PathActions.lean:37-40",
+     "note": "slot = walk gamma and plaquette orientation p",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.RG.Slot.eval",
+     "role": "key",
+     "where": "YM/RG/PathActions.lean:52-53",
+     "note": "value Ad(U_gamma) proj_g (u-u^-1)/2 of the plaquette at the walk end; length is walk length + 4 (Slot.length, line 50)",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.RG.Atom",
+     "role": "key",
+     "where": "YM/RG/PathActions.lean:84-105",
+     "note": "k slots with real colour coefficients; length, magnitude, Invariant, footprint and health-masked placed are in the namespace",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.RG.PathData",
+     "role": "key",
+     "where": "YM/RG/PathActions.lean:150-154",
+     "note": "rows (r_{p i}, slot) and atoms for k=2,3,4",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.RG.PathData.ell",
+     "role": "key",
+     "where": "YM/RG/PathActions.lean:187-190",
+     "note": "L_p^path = sum_i r_{p i} F_{p i}",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Gauge.curvature",
+     "role": "support",
+     "where": "YM/Gauge/Colors.lean:173",
+     "note": "proj of (u-u^-1)/2",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.RG.Slot.length",
+     "role": "key",
+     "where": "YM/RG/PathActions.lean:50",
+     "note": "walk length + 4",
+     "from_verifier": true,
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.RG.Slot.atSite",
+     "role": "key",
+     "where": "YM/RG/PathActions.lean:55-56",
+     "from_verifier": true,
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.RG.Atom.length",
+     "role": "key",
+     "where": "YM/RG/PathActions.lean:91",
+     "from_verifier": true,
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.RG.Atom.magnitude",
+     "role": "key",
+     "where": "YM/RG/PathActions.lean:93",
+     "from_verifier": true,
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.RG.Atom.Invariant",
+     "role": "key",
+     "where": "YM/RG/PathActions.lean:99",
+     "from_verifier": true,
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.RG.Atom.placed",
+     "role": "key",
+     "where": "YM/RG/PathActions.lean:107-108",
+     "note": "atom masked by health on its footprint",
+     "from_verifier": true,
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Lattice.travel",
+     "role": "support",
+     "where": "YM/Lattice/Path.lean:105",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Slot, Atom and PathData package the slot, its length and value, L^path, the atoms with their lengths and absolute-coefficient sums, the footprint and the health mask in the same form as [M]. Transport of the curvature is by Ad of the walk product.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S12-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-match",
+    "verifier": "definition-match",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Definition 12.2",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-close",
+   "lean": [
+    {
+     "decl": "YM.RG.Clip",
+     "role": "key",
+     "where": "YM/RG/PathActions.lean:138-146",
+     "note": "c_dir, c_lin, relaxation radius with 0<c_dir, 0<c_lin, c_lin<c_dir/16",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.RG.PathData.clipped",
+     "role": "key",
+     "where": "YM/RG/PathActions.lean:218-219",
+     "note": "clip_t(u)",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.RG.PathData.kept",
+     "role": "key",
+     "where": "YM/RG/PathActions.lean:210-211",
+     "note": "the health indicator chi^hlth_{m,x}",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.RG.PathData.baseTerm",
+     "role": "key",
+     "where": "YM/RG/PathActions.lean:221-224",
+     "note": "clip + 1/2 chi |L^path|^2 at a face",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.RG.PathData.principal",
+     "role": "key",
+     "where": "YM/RG/PathActions.lean:236-238",
+     "note": "the raw action with beta on the base and cubic/quartic terms, no beta on the loop atoms",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.RG.PathData.inChannels",
+     "role": "key",
+     "where": "YM/RG/PathActions.lean:241-242",
+     "note": "average over signed axis permutations of the raw action",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.RG.PathData.atomSeries",
+     "role": "support",
+     "where": "YM/RG/PathActions.lean:226-227",
+     "note": "placed atom series",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.RG.Atom.placed",
+     "role": "support",
+     "where": "YM/RG/PathActions.lean:107-108",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The clip, health indicator, raw action and symmetrization agree term by term. The Clip structure encodes 0<16c_lin<c_dir but not [M]'s bound c_dir <= min(gamma_{J_m},1), which [L] imposes elsewhere, so the definition is more general than printed.",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S12-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-close",
+    "verifier": "definition-close",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Lemma 12.3",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "weaker",
+   "lean": [
+    {
+     "decl": "YM.Precision.Kin.Planned",
+     "role": "key",
+     "where": "YM/PCalc/Loop.lean:93-115",
+     "note": "field cap: for every N and m<=N, (path N m).Bounds at the stage clip, width, path amplitude and loop cap; path N m carries no p or beta index",
+     "relation": "narrowMatch"
+    },
+    {
+     "decl": "YM.UVNext.PricedKernels.Installed",
+     "role": "key",
+     "where": "YM/UVNext/PRICED_KERNELS/Assembly.lean:85-90",
+     "note": "field uses: Bounds at every 0<sigma<=width, C>=paths, loop bound >= loopCap, i.e. only at narrower widths",
+     "relation": "narrowMatch"
+    },
+    {
+     "decl": "YM.RG.PathData.Bounds",
+     "role": "support",
+     "where": "YM/RG/PathActions.lean:173-185",
+     "note": "weighted row, loop, cubic and quartic sums as SumBudget (bound plus Summable)",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Next.Scheduling.narrower",
+     "role": "helper",
+     "where": "YM/Next/SCHEDULE/Continuing.lean:37-38",
+     "note": "Bounds at width a imply Bounds at any width b<=a with larger amplitude and loop bound",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Planned.cap gives the row, loop and cubic/quartic weighted sums with summability for the chosen arrays, which carry no p or beta index, for every N and m<=N. [M]'s last claim, the same bounds at a larger width w'>w^path with A'>=A^path, is absent: Installed.uses, Scheduling.narrower and geared all move only to widths below the stage width.",
+   "confidence": "medium",
+   "finding": {
+    "claim": "weaker",
+    "confirmed": true,
+    "skeptic_notes": [
+     "[M] prints the row/loop/cubic/quartic weighted bounds at w^path_{J_m} with A^path and Lambda^loop_m, plus 'The same bounds hold at w'_{J_m} > w^path_{J_m} > 0 with A' >= A^path', and its proof (C-section.tex:377-416) actually puts A'=A^path and proves the bounds at w' first. [L]'s Planned.cap gives only `(M.path N m).Bounds j.clip j.width j.paths (a.clock.loopCap m)`, and Installed.uses only moves to `σ ≤ i.width` with `i.paths ≤ C`, by narrower (which needs `b ≤ a`). The wider bounds in [L] are hypotheses on intermediate arrays (nextPath/topPath at q.widths.emits/launch, Escrow.emitted for blank-loop classical arrays in the unused Progeny), and they hold only with `q.width i ≤ q.emits j i`, non-strict, so the chosen arrays never get a bound at a strictly larger width. The extra claim is a real statement used in the proof, not a typo.",
+     "[M] prints the row, loop and cubic/quartic weighted bounds at w^path with A^path and Lambda^loop for every N and m<=N, and also that the same bounds hold at a larger width w'>w^path with A'>=A^path, uniformly in N; its proof says it chooses w^path<w' and bounds the series at w'. [L]'s Planned.cap gives only `(M.path N m).Bounds j.clip j.width j.paths (a.clock.loopCap m)`, and every other bound on the chosen arrays moves down in width: Installed.uses requires `σ ≤ i.width`, narrower requires `hb : b ≤ a`, and Stationary.launch requires `τ≤σ`. No declaration states Bounds for M.path N m (or Q N m) at a width above (a.params m).width, so the larger-width claim has no counterpart. The proof spells that claim out on purpose, so it is not a typo."
+    ]
+   },
+   "relation": "narrowMatch",
    "verification": {
     "batch": "S12-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "close",
+    "verifier": "weaker",
+    "agreed": false,
+    "judge": "weaker",
+    "source": "judge",
+    "skeptics": [
+     {
+      "refuted": false,
+      "status": "weaker",
+      "reason": "[M] prints the row/loop/cubic/quartic weighted bounds at w^path_{J_m} with A^path and Lambda^loop_m, plus 'The same bounds hold at w'_{J_m} > w^path_{J_m} > 0 with A' >= A^path', and its proof (C-section.tex:377-416) actually puts A'=A^path and proves the bounds at w' first. [L]'s Planned.cap gives only `(M.path N m).Bounds j.clip j.width j.paths (a.clock.loopCap m)`, and Installed.uses only moves to `σ ≤ i.width` with `i.paths ≤ C`, by narrower (which needs `b ≤ a`). The wider bounds in [L] are hypotheses on intermediate arrays (nextPath/topPath at q.widths.emits/launch, Escrow.emitted for blank-loop classical arrays in the unused Progeny), and they hold only with `q.width i ≤ q.emits j i`, non-strict, so the chosen arrays never get a bound at a strictly larger width. The extra claim is a real statement used in the proof, not a typo."
+     },
+     {
+      "refuted": false,
+      "status": "weaker",
+      "reason": "[M] prints the row, loop and cubic/quartic weighted bounds at w^path with A^path and Lambda^loop for every N and m<=N, and also that the same bounds hold at a larger width w'>w^path with A'>=A^path, uniformly in N; its proof says it chooses w^path<w' and bounds the series at w'. [L]'s Planned.cap gives only `(M.path N m).Bounds j.clip j.width j.paths (a.clock.loopCap m)`, and every other bound on the chosen arrays moves down in width: Installed.uses requires `σ ≤ i.width`, narrower requires `hb : b ≤ a`, and Stationary.launch requires `τ≤σ`. No declaration states Bounds for M.path N m (or Q N m) at a width above (a.params m).width, so the larger-width claim has no counterpart. The proof spells that claim out on purpose, so it is not a typo."
+     }
+    ],
+    "claimed": "weaker",
+    "finding": "confirmed",
+    "complete": true
    }
   },
   {
    "id": "Lemma 12.4",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.Precision.Kin.Planned",
+     "role": "key",
+     "where": "YM/PCalc/Loop.lean:93-115",
+     "note": "cap gives Bounds with clip (a.params m).clip for the chosen arrays at every N, m<=N, hence the fields metric, loop_normal, symTerms, loopTerms",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.RG.PathData.metric_zero",
+     "role": "key",
+     "where": "YM/RG/PathActions.lean:161-162",
+     "note": "c_dir delta_{qr} + sum_p s_{pq} s_{pr} = delta_{qr} with s = symbol0",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.RG.PathData.loop_jets",
+     "role": "key",
+     "where": "YM/RG/PathActions.lean:167-169",
+     "note": "zeroth and first offset-difference moments of the two-leg coefficients vanish for each orientation pair and colour pair, componentwise in the axis",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.RG.PathData.Bounds",
+     "role": "support",
+     "where": "YM/RG/PathActions.lean:173-185",
+     "note": "fields metric, loop_normal, symTerms and loopTerms (real Summable, i.e. absolute convergence)",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.RG.PathData.symbol0",
+     "role": "support",
+     "where": "YM/RG/PathActions.lean:158-159",
+     "note": "s_{pq}: row coefficients summed by target orientation",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "metric_zero and loop_jets are the two displays once symbol0 and loop_coeff are unfolded, the vector moment vanishing componentwise, and Bounds adds real summability, which is absolute convergence. Planned.cap asserts these for the chosen arrays with c_dir of stage J_m.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S12-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "exact",
+    "verifier": "exact",
+    "agreed": false,
+    "judge": "exact",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Lemma 12.5",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.Stationary.allleg",
+     "role": "key",
+     "where": "YM/Next/STATIONARY/Lift/ManyLegs.lean:533-549",
+     "note": "arity t+1>=3: Contractible f with strip bound A gives g with strip bound eta, A*K and f = curl of g",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Stationary.bothleg",
+     "role": "key",
+     "where": "YM/Next/STATIONARY/Lift/ManyLegs.lean:571-637",
+     "note": "arity 2: f vanishing to order s+2 along rays gives g vanishing to order s, eta,K chosen before s",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Stationary.Contractible",
+     "role": "support",
+     "where": "YM/Next/STATIONARY/Lift/ManyLegs.lean:515-516",
+     "note": "transversality in every leg",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Stationary.fromCurl",
+     "role": "support",
+     "where": "YM/Next/STATIONARY/Lift/ManyLegs.lean:435-436",
+     "note": "delta_0...delta_{k-1} g",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "allleg gives the k>=3 case and bothleg the k=2 case, each with eta<=sigma and K depending only on arity and sigma. Transversality and the identity f = delta...delta g are stated at real momenta only, which for analytic f and g is equivalent to [M]'s identity on the strip. Exponential decay of Fourier coefficients is the Vane part of Firm.",
+   "confidence": "medium",
+   "relation": "hasPart",
    "verification": {
     "batch": "S12-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "parts",
+    "verifier": "parts",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Lemma 12.6",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "no-match",
+   "lean": [
+    {
+     "decl": "YM.Stationary.triumph3",
+     "role": "key",
+     "where": "YM/Next/STATIONARY/Joint/FourPoint.lean:281-287",
+     "note": "D^3 of the stationary action equals D^3 of the fine action on the lifted legs (Wv)^3",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Stationary.triumph4",
+     "role": "key",
+     "where": "YM/Next/STATIONARY/Joint/FourPoint.lean:288-322",
+     "note": "D^4 of the stationary action = D^4 S[(Wv)^4] minus three B Q^-1 B terms, with the gauge-completed inverse commonM^-1 in place of the axial Q^-1; needs mu>0 and PriceGap",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Stationary.pennies",
+     "role": "key",
+     "where": "YM/Next/STATIONARY/Shape/Exchange.lean:390-405",
+     "note": "kernel strip bounds C/6 and (D+3 C E C)/24",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Stationary.exchangeYield",
+     "role": "key",
+     "where": "YM/Next/STATIONARY/Shape/Exchange.lean:407-416",
+     "note": "same bounds for the stationary action victory",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Stationary.assembly",
+     "role": "key",
+     "where": "YM/Next/STATIONARY/Shape/ClassicalMatch.lean:561-595",
+     "note": "cubic and quartic atom families with bounds M*C making the action agree to Rays 5 (degree four)",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Precision.ClassicalMatch",
+     "role": "key",
+     "where": "YM/PCalc/Chart.lean:108-109",
+     "note": "jets of the tested action along the branch equal those of mainTerm through order 4",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Precision.Kin.Planned",
+     "role": "attributed",
+     "where": "YM/PCalc/Loop.lean:93-115",
+     "note": "field classicalPart",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Stationary.transition_cap",
+     "role": "key",
+     "where": "YM/Next/STATIONARY/Level/Transition.lean:93-182",
+     "note": "output array Y has Bounds and ClassicalMatch through jet order 4; bound M = 1+(a+1)/6+((c+1)+3(a+1)E(a+1))/24 appears in the proof",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Stationary.Transition",
+     "role": "support",
+     "where": "YM/Next/STATIONARY/Level/Transition.lean:86-91",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Stationary.extra_curves",
+     "role": "attributed",
+     "where": "YM/Next/STATIONARY/Shape/SoftTransfers.lean:59-100",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Lean has the D^3 and D^4 identities, the C_3/6 and (C_4+3C_3^2E)/24 kernel bounds and the agreement through degree four with bounded arrays. [M]'s last sentence, that the degree-r fine-minus-Wilson vertex has momentum order 5-r for r=2,3,4, has no stating declaration; the closest are top_Wilson (Rays 3 for the Wilson-minus-quadratic part, r=2) and the Rays 3 hypotheses of assembly and orbit_gate. triumph4 uses the completed inverse rather than Q^-1, equal by [M]'s Lemma B5.",
+   "searched": [
+    "Rays/JetWall with orders 2,3,4 in YM/Next/STATIONARY/{Shape,Lift,Level,Joint,Loops,OneLoop}",
+    "grep 'iteratedFDeriv ℝ 3/4' for the stationary derivative identities",
+    "tool.py search classical",
+    "keys K-III.7.14/15/17/23 and outline III-7 steps 2-3",
+    "ClassicalMatch, Kin.Planned.classicalPart"
+   ],
+   "confidence": "low",
+   "finding": {
+    "claim": "no-match",
+    "confirmed": false
+   },
+   "relation": "noMatch",
    "verification": {
     "batch": "S12-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "no-match",
+    "verifier": "no-match",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "skeptics": [
+     {
+      "refuted": false,
+      "status": "no-match",
+      "reason": "[M]'s last sentence asserts that the degree-r fine-minus-Wilson vertex has momentum order 5-r for r=2,3,4. [L]'s only order statements in this chain are YM.Stationary.Rays, defined as `(fun t => f (t • x)) =O[cutRay] (fun t => t^s)`, which scales the field amplitude and so measures jet (Taylor-degree) order of the whole function, not momentum order of a fixed-degree vertex; top_Wilson concludes `Rays 3 (WilsonQ G m - inputSeries u p)` and assembly/orbit_gate take `Rays 3` hypotheses and conclude `Rays 5`, i.e. agreement through degree four. No declaration states momentum vanishing orders 3,2,1 for the degree-2,3,4 differences, so the identities, kernel bounds and matching are in [L] but the momentum-order claim is not, and the claim stands. It is a substantive statement, not a typo."
+     },
+     {
+      "refuted": true,
+      "status": "parts",
+      "reason": "The claim's finding is that nothing in [L] states [M]'s last sentence, that the degree-r fine-minus-Wilson vertex has momentum order 5-r for r=2,3,4. YM.Stationary.greyson states exactly this: under the bed, floor, strip and attachment hypotheses it concludes `∀ i, i>0 → i≤3 → Drinkable i m (fun i => intended p R - WilsonQ G (m i)) (4-i) s M`. Drinkable gives a degree-(i+1) Taylor picture Q, Recorded against intended-minus-Wilson, with `Rays (4-i) (Q i j ∘ axes)`, i.e. vanishing to order 4-i in momentum, which is 5-r for r=i+1. The companion lemma whiteWilson gives Wilson's orders 3-k (=4-r), as in [M]'s proof, and setWest uses both through voile G 2 2 and voile G 3 1. The other claims (the D^3/D^4 identities in triumph3/triumph4, with the completed inverse that [M] identifies with Q^-1 via Lemma B5; the C_3/6 and (C_4+3C_3^2E)/24 bounds in pennies/exchangeYield; the degree-four agreement in assembly/transition_cap) are conceded by the claim, so the item is covered in parts."
+     }
+    ],
+    "claimed": "no-match",
+    "finding": "unconfirmed",
+    "complete": true
    }
   },
   {
    "id": "Eq (12.1)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.Stationary.tribute",
+     "role": "key",
+     "where": "YM/Next/STATIONARY/Joint/HaarJac.lean:177-202",
+     "note": "thermal = loop + 1/2 log det medals - log det grenade near 0",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Precision.thermal",
+     "role": "support",
+     "where": "YM/PCalc/Loop.lean:46-49",
+     "note": "T = loop + 1/2 log det axial Hessian - log of the Haar chart ratio",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Stationary.bounty",
+     "role": "support",
+     "where": "YM/Next/STATIONARY/Joint/HaarJac.lean:166-168",
+     "note": "1/2 log det C_mu - log det G_mu",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The display is the conclusion of Lemma 12.7, stated for coarse fields in a neighbourhood of zero.",
+   "step": "YM.Stationary.tribute (YM/Next/STATIONARY/Joint/HaarJac.lean:177-202), the lemma that states it",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S12-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "exact",
+    "verifier": "exact",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Lemma 12.7",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.Stationary.tribute",
+     "role": "key",
+     "where": "YM/Next/STATIONARY/Joint/HaarJac.lean:177-202",
+     "note": "eventually near 0: det medals>0 and thermal = loop + bounty",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Precision.thermal",
+     "role": "support",
+     "where": "YM/PCalc/Loop.lean:46-49",
+     "note": "T(v)",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Stationary.bounty",
+     "role": "support",
+     "where": "YM/Next/STATIONARY/Joint/HaarJac.lean:166-168",
+     "note": "1/2 log det C_mu - log det G_mu",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Stationary.medals",
+     "role": "support",
+     "where": "YM/Next/STATIONARY/Joint/Completion.lean:59",
+     "note": "completed Hessian C_mu",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Stationary.grenade",
+     "role": "support",
+     "where": "YM/Next/STATIONARY/Joint/Regulator.lean:338",
+     "note": "G_mu",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The hypotheses of tribute (Critical branch, PriceGap positive Hessian, Branches, path Bounds, mu>0, LocalRatio chart) are the stationary-branch, Hessian and Haar-chart inputs [M] takes from its Lemmas B3-B4 and Definitions D01, D04. The conclusion is the display, with det C_mu>0 added.",
+   "confidence": "medium",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S12-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "exact",
+    "verifier": "exact",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Lemma 12.8",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.Stationary.quoting",
+     "role": "key",
+     "where": "YM/Next/STATIONARY/Loops/HessianMatch.lean:67-77",
+     "note": "bounds |alphaPay(profitable medalCue) - alphaPay(profitable rankCue)| by a stage-data constant biteCost(reserveCost ...)",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Stationary.pole_reduced",
+     "role": "key",
+     "where": "YM/Next/STATIONARY/Loops/HessianMatch.lean:719-724",
+     "note": "alphaPay of the auxiliary fine cue rankCue equals alphaPay of the fine Taylor kernel picture, i.e. alpha_b(Y_mu)",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Stationary.alphaPay",
+     "role": "support",
+     "where": "YM/Next/STATIONARY/Films/LeadingRay.lean:699",
+     "note": "the alpha_b extraction",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "quoting bounds the block-side coefficient against the auxiliary fine determinant's coefficient by a constant from stage data only, and pole_reduced identifies that fine coefficient with alpha_b of the Taylor kernel; the triangle step joining them is a one-line chain, and [L] states both over sequences of volumes tending to infinity rather than at each odd ell.",
+   "confidence": "medium",
+   "relation": "hasPart",
    "verification": {
     "batch": "S12-2",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "parts",
+    "verifier": "close",
+    "agreed": false,
+    "judge": "parts",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Lemma 12.9",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.Stationary.transition_cap",
+     "role": "key",
+     "where": "YM/Next/STATIONARY/Level/Transition.lean:93-95",
+     "note": "for simple G, constant d and Transition clause |alpha + slopeConstant*log L| + 1 <= d, conditional on HorizCalc",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Stationary.pouring",
+     "role": "key",
+     "where": "YM/Next/STATIONARY/FullPlanned.lean:17-52",
+     "note": "proves Fluent G (HorizCalc for all parameters) for every simple gauge group",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Stationary.Transition",
+     "role": "support",
+     "where": "YM/Next/STATIONARY/Level/Transition.lean:86-90",
+     "note": "the conclusion shape with the +1 bound",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Stationary.HorizCalc",
+     "role": "support",
+     "where": "YM/Next/STATIONARY/Level/Transition.lean:20-23",
+     "note": "fine-kernel bound |alphaPay Y + slope log L| <= D for odd large L",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "transition_cap gives the bound (with +1, stronger) only under HorizCalc, and pouring discharges HorizCalc for every simple G; no declaration combines them, and [L] quantifies over sequences of volumes and Scud hypotheses.",
+   "confidence": "medium",
+   "relation": "hasPart",
    "verification": {
     "batch": "S12-2",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "parts",
+    "verifier": "close",
+    "agreed": false,
+    "judge": "parts",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Eq (12.2)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.Stationary.poleVec",
+     "role": "key",
+     "where": "YM/Next/STATIONARY/OneLoop/Bubbles.lean:125",
+     "note": "4*casimir*(k_2^2/|k|^6 - 4 k_2^2 k_1^2/|k|^8 - |k|^-4), with k_1,k_2 the coordinates 0,1",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Stationary.haloRate",
+     "role": "key",
+     "where": "YM/Next/STATIONARY/OneLoop/Bubbles.lean:127-141",
+     "note": "ghost bubble minus half vector bubble has second t-derivative 2*poleVec, i.e. quadratic coefficient poleVec after the factor 2 of alpha extraction",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Gauge.slopeConstant",
+     "role": "support",
+     "where": "YM/Gauge/Colors.lean:184",
+     "note": "11*casimir/(24 pi^2)",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The coefficient formula is the same up to index naming (axis 0 and 1 for e_1, e_2); haloRate states that the bubble combination equals it.",
+   "step": "YM.Stationary.haloRate, YM/Next/STATIONARY/OneLoop/Bubbles.lean:127-141 (formula defined as YM.Stationary.poleVec, Bubbles.lean:125)",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S12-2",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "exact",
+    "verifier": "exact",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (12.3)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.Stationary.astronomy",
+     "role": "key",
+     "where": "YM/Next/STATIONARY/OneLoop/Bubbles.lean:278-290",
+     "note": "for simple G, constants A, D >= 0 such that for all regulated families the diagonal bubble integrand satisfies both Waves1 and Waves2, uniformly in mu",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Stationary.Waves1",
+     "role": "support",
+     "where": "YM/Next/STATIONARY/OneLoop/Bubbles.lean:276",
+     "note": "||F k|| <= A/(|k|+mu)^4 on the cube",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Stationary.Waves2",
+     "role": "support",
+     "where": "YM/Next/STATIONARY/OneLoop/Bubbles.lean:277",
+     "note": "||F k - poleVec k|| <= C/|k|^3 + C mu^2/|k|^6 for mu <= |k|",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Stationary.keelRay",
+     "role": "support",
+     "where": "YM/Next/STATIONARY/OneLoop/Bubbles.lean:155",
+     "note": "the integrand k_{mu,b} of alpha_b",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Stationary.Rally.register",
+     "role": "helper",
+     "where": "YM/Next/STATIONARY/OneLoop/Bubbles.lean:186-190",
+     "note": "first bound",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Stationary.Rally.shell",
+     "role": "helper",
+     "where": "YM/Next/STATIONARY/OneLoop/Bubbles.lean:191-232",
+     "note": "second bound",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Both bounds hold with the same shape, on the cube [-pi,pi]^4 and with mu <= |k| for the second; [L] states them for the complex integrand norm, [M] for its modulus.",
+   "step": "YM.Stationary.astronomy, YM/Next/STATIONARY/OneLoop/Bubbles.lean:278-290",
+   "confidence": "medium",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S12-2",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "exact",
+    "verifier": "exact",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (12.4)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.Stationary.poleSpin",
+     "role": "key",
+     "where": "YM/Next/STATIONARY/OneLoop/MomentumIntegral.lean:326-341",
+     "note": "(2 pi)^-4 times the integral of poleVec over the shell mu < |k| <= 1 equals -slopeConstant*log mu^-1 for 0 < mu <= 1",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Stationary.polar_m",
+     "role": "support",
+     "where": "YM/Next/STATIONARY/OneLoop/MomentumIntegral.lean:200",
+     "note": "shell integral of |k|^-4 is 2 pi^2 log mu^-1",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Stationary.joy_two",
+     "role": "support",
+     "where": "YM/Next/STATIONARY/OneLoop/MomentumIntegral.lean:270",
+     "note": "angular mean 1/4 for k_2^2/|k|^2",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Stationary.joy_heights",
+     "role": "support",
+     "where": "YM/Next/STATIONARY/OneLoop/MomentumIntegral.lean:292",
+     "note": "angular mean 1/24 for k_2^2 k_1^2/|k|^4",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Gauge.slopeConstant",
+     "role": "support",
+     "where": "YM/Gauge/Colors.lean:184",
+     "note": "11*casimir/(24*pi^2)",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "poleSpin states the final equality with cartWeight = (2 pi)^-4; the middle line (1/4 - 1/6 - 1) is carried out inside its proof through joy_two, joy_heights and polar_m.",
+   "step": "YM.Stationary.poleSpin, YM/Next/STATIONARY/OneLoop/MomentumIntegral.lean:326-341",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S12-2",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "exact",
+    "verifier": "exact",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Lemma 12.10",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.UVNext.CouplingReset.advance",
+     "role": "key",
+     "where": "YM/UVNext/COUPLING_RESET/Advance.lean:175-189",
+     "note": "along a continuous input curve produces a continuous output curve d with Move (including |u.beta - v.beta - alpha| <= 1, i.e. |Delta_u| <= 1) at every parameter",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.AnalyticBridge.VerifiedReset.Return.reset",
+     "role": "key",
+     "where": "YM/AnalyticBridge/VERIFIED_RESET_STEP/Advance.lean:65-90",
+     "note": "public form from Prereset inputs: continuous output curve, Move, and u = beta_out - predictor with |u| <= width",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Input.Directed.links",
+     "role": "key",
+     "where": "YM/PCalc/Band.lean:57-66",
+     "note": "from Move and the kinetic bound |alpha + slope log L| + 1 <= drift gives the drift bound |beta_fine - beta_coarse - slope log L| <= drift, i.e. |e_u| <= d_j + 1 <= omega",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Input.Directed.Move",
+     "role": "support",
+     "where": "YM/PCalc/Band.lean:49-55",
+     "note": "structure with field delta: |u.beta - v.beta - alpha| <= 1",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Input.Directed.Move.δ",
+     "role": "key",
+     "where": "YM/PCalc/Band.lean:55",
+     "note": "|u.beta - v.beta - alpha| <= 1, i.e. |Delta_u| <= 1",
+     "from_verifier": true,
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Precision.Kin.Planned",
+     "role": "key",
+     "where": "YM/PCalc/Loop.lean:93-122",
+     "note": "field kinetic: |alpha + slope*log(block m)| + 1 <= drift, the d_j + 1 <= omega bound",
+     "from_verifier": true,
+     "relation": "hasPart"
+    }
+   ],
+   "note": "The |Delta_u| <= 1 and continuity claims come from advance and reset, and the e_u bound d_j + 1 <= omega follows from Move.delta together with the kinetic field via links; no single declaration states the lemma with the decomposition beta_u = beta'_u - slope log l + e_u. [L] works with Rep structures and a Directed datum rather than explicit families from Lemma 12.5.",
+   "confidence": "medium",
+   "relation": "hasPart",
    "verification": {
     "batch": "S12-2",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "parts",
+    "verifier": "parts",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (12.5)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "inlined",
+   "lean": [
+    {
+     "decl": "YM.UVNext.CouplingReset.Prereset.value_income",
+     "role": "key",
+     "where": "YM/UVNext/COUPLING_RESET/Regular.lean:86",
+     "note": "unfolds contrast and vacuumError and rewrites with flat and emit to express the log ratio through the beta, alpha, loop and additive terms",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.UVNext.CouplingReset.Prereset.flat",
+     "role": "helper",
+     "where": "YM/UVNext/COUPLING_RESET/Regular.lean:63-72",
+     "note": "value of log H(1)",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.UVNext.CouplingReset.Prereset",
+     "role": "support",
+     "where": "YM/UVNext/COUPLING_RESET/Regular.lean:53-59",
+     "note": "field emit is the representation identity for H(V) with alpha on secondTerm only",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The display has no standalone lemma; line 86 derives the log contrast from the emit identity, whose alpha multiplies secondTerm and whose additive sums match E^pre, as in [M]. Template.contrast_eq is a different decomposition with the full coupling on the kinetic leg and does not match the display.",
+   "step": "YM.UVNext.CouplingReset.Prereset.value_income, YM/UVNext/COUPLING_RESET/Regular.lean:86",
+   "confidence": "medium",
+   "relation": "relatedMatch",
    "verification": {
     "batch": "S12-2",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "inlined",
+    "verifier": "close",
+    "agreed": false,
+    "judge": "inlined",
+    "source": "judge",
+    "complete": true
    }
   },
   {
