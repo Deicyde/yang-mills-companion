@@ -40,13 +40,20 @@ def load(kind, b):
         return None
 
 
+NORM = {'definition-match': 'exact', 'definition-close': 'close'}
+
+
+def same_status(a, c):
+    return NORM.get(a['status'], a['status']) == NORM.get(c['status'], c['status'])
+
+
 def keys(i):
     return sorted({l['decl'] for l in i.get('lean', []) if l.get('role') == 'key'})
 
 
 def agree(a, c):
     ka, kc = set(keys(a)), set(keys(c))
-    return a['status'] == c['status'] and (not (ka or kc) or bool(ka & kc))
+    return same_status(a, c) and (not (ka or kc) or bool(ka & kc))
 
 
 def unite(a, c):

@@ -4,7 +4,7 @@
   compare.py <batch>...   prints one line per item: AGREE or DISAGREE with the reason,
                           and writes scratch/compare/<batch>.json
 
-Two outputs agree on an item when they give the same status and their key declarations
+Two outputs agree on an item when they give the same status (definition-match counting as exact, definition-close as close) and their key declarations
 overlap (or both have none). For `no-match` and `not-formalized-not-needed`, which have no key
 declarations, the status alone decides.
 """
@@ -18,6 +18,13 @@ def load(kind, b):
     if not os.path.exists(p):
         return None
     return {i['id']: i for i in json.load(open(p))['items']}
+
+
+NORM = {'definition-match': 'exact', 'definition-close': 'close'}
+
+
+def same_status(a, c):
+    return NORM.get(a['status'], a['status']) == NORM.get(c['status'], c['status'])
 
 
 def keys(i):
@@ -38,7 +45,7 @@ def compare(b):
             res[i] = {'agree': False, 'why': 'missing in ' + ('mapper' if a is None else 'verifier')}
             continue
         why = []
-        if a['status'] != c['status']:
+        if not same_status(a, c):
             why.append(f"status {a['status']} vs {c['status']}")
         ka, kc = set(keys(a)), set(keys(c))
         if (ka or kc) and not (ka & kc):

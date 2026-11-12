@@ -7,28 +7,69 @@
  "taxonomy": "docs/taxonomy.md",
  "provenance": "machine: mapper and verifier agents per batch, a judge on disagreement, two skeptics per claimed finding; no person reviewed",
  "counts": {
-  "not yet judged": 422,
-  "exact": 6,
-  "definition-match": 15,
-  "stronger": 2,
-  "parts": 4,
-  "close": 5,
+  "stronger": 3,
+  "exact": 13,
+  "definition-match": 18,
+  "parts": 5,
+  "definition-close": 4,
+  "close": 8,
+  "inlined": 1,
+  "not yet judged": 402,
   "no-match": 3,
   "weaker": 1
  },
  "items": [
   {
    "id": "Eq (1.1)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "stronger",
+   "lean": [
+    {
+     "decl": "YM.Pert.Asymptotics.zeroUp_bound",
+     "role": "key",
+     "where": "YM/Pert/Asymptotics/RawAxis.lean:15-30",
+     "note": "For a family with C.Makes and every eps>0, eventually in m, for all N>=m and all p, |beta(N,p,m)/scale m - 2 b0| < eps; at m=N, beta(N,p,N) is Family.beta N p and scale N is log(1/mesh N), which is exactly (1.1) uniformly in p.",
+     "relation": "broadMatch"
+    },
+    {
+     "decl": "YM.Family.beta",
+     "role": "support",
+     "where": "YM/Source/Construction.lean:38",
+     "note": "beta N p := path.beta N p N, the bare coupling at level N, which wilsonFamily exports as its beta.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Pert.Asymptotics.b0_normalizes",
+     "role": "support",
+     "where": "YM/Pert/Asymptotics/RawAxis.lean:14",
+     "note": "2*b0 = slopeConstant, with b0 = 11 casimir/(48 pi^2) as in [M].",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YangMills.regular",
+     "role": "support",
+     "where": "HierarchyBridge.lean:16-25",
+     "note": "Proves WilsonRegularity.running with slope 2*b0 by applying zeroUp_bound at m=N, though its statement keeps the slope existential.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YangMills.WilsonRegularity",
+     "role": "support",
+     "where": "ChallengeSpec.lean:12-14",
+     "note": "running field is the epsilon-form of the limit with an existential positive slope.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "[M] attributes (1.1) to the construction, and zeroUp_bound proves the value 2 b0 for every constructed family uniformly in p, at all levels m<=N and not only at m=N, so [L] proves more than [M] prints; the public WilsonRegularity only keeps an existential slope, which [M] itself says is all Theorem A needs.",
+   "confidence": "high",
+   "relation": "broadMatch",
    "verification": {
     "batch": "S01-1",
     "mapper": "stronger",
     "verifier": "weaker",
     "agreed": false,
-    "complete": false
+    "judge": "stronger",
+    "source": "judge",
+    "complete": true
    }
   },
   {
@@ -362,30 +403,159 @@
   },
   {
    "id": "Eq (2.2)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YangMills.WilsonFamily.mesh",
+     "role": "key",
+     "where": "PublicWilson.lean:50",
+     "note": "a_N = D_N^{-1}",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YangMills.WilsonFamily.place",
+     "role": "key",
+     "where": "PublicWilson.lean:51-52",
+     "note": "hat y = a_N (valMinAbs of y^a), valMinAbs lying in (-s/2, s/2]",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YangMills.WilsonFamily.finiteMoment",
+     "role": "key",
+     "where": "PublicWilson.lean:54-57",
+     "note": "integrates against wilsonLaw g (period p * denominator N) (beta N p) haar, which is mu_{N,p}; the measure has no standalone declaration",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YangMills.WilsonFamily",
+     "role": "support",
+     "where": "PublicWilson.lean:37-47",
+     "note": "strictly increasing positive period and denominator sequences, real couplings, token type and complex insertions, as in [M]",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YangMills.wilsonLaw",
+     "role": "support",
+     "where": "PublicWilson.lean:29-35",
+     "note": "mu_{s,beta} with the probability Haar measure as a parameter",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Schedule.a",
+     "role": "support",
+     "where": "YM/Lattice/Scale.lean:99",
+     "note": "internal mesh on the specialized Schedule",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Schedule.place",
+     "role": "support",
+     "where": "YM/Lattice/Scale.lean:167",
+     "note": "internal placement",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Family.omega",
+     "role": "support",
+     "where": "YM/Source/Construction.lean:40",
+     "note": "internal expectation at coupling C.beta N p",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The public YangMills.WilsonFamily has exactly [M]'s generality (strictly increasing positive L_p and D_N, real beta_{N,p}), and over it mesh and place state a_N and hat y verbatim. mu_{N,p} is not a standalone declaration but appears as the wilsonLaw at side L_p D_N and coupling beta_{N,p} inside finiteMoment.",
+   "confidence": "high",
+   "relation": "hasPart",
    "verification": {
     "batch": "S02-1",
     "mapper": "parts",
     "verifier": "close",
     "agreed": false,
-    "complete": false
+    "judge": "parts",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Definition 2.3",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-close",
+   "lean": [
+    {
+     "decl": "YangMills.WilsonFamily.finiteMoment",
+     "role": "key",
+     "where": "PublicWilson.lean:54-58",
+     "note": "the point correlation: integral of the product of insertions against mu_{N,p}",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YangMills.WilsonFamily.smear",
+     "role": "key",
+     "where": "PublicWilson.lean:79-83",
+     "note": "a_N^{4n} sum_y f(hat y) moment(v;y), with f a separated test function",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YangMills.WilsonFamily.place",
+     "role": "support",
+     "where": "PublicWilson.lean:51-52",
+     "note": "hat y",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YangMills.WilsonFamily.separated",
+     "role": "support",
+     "where": "PublicWilson.lean:59-72",
+     "note": "open set of injective point configurations on which tests live",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Extraction.Order.smears",
+     "role": "key",
+     "where": "YM/Extraction/Limits.lean:26-27",
+     "note": "internal version, tests YM.Test n",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Family.numeric",
+     "role": "support",
+     "where": "YM/Extraction/LatticeFamily.lean:68",
+     "note": "internal finite moment",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Family.seen",
+     "role": "support",
+     "where": "YM/Extraction/LatticeFamily.lean:26",
+     "note": "insertion I_{N,p}(v,y;U) = Family.O",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Extraction.Order.cells",
+     "role": "support",
+     "where": "YM/Extraction/Limits.lean:24",
+     "note": "y-hat from Schedule.place",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Family.omega",
+     "role": "support",
+     "where": "YM/Source/Construction.lean:40",
+     "note": "mu_{N,p}",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The moment and the Riemann sum have the printed form. M lets f be any function on (R^4)^n, while Lean's smear takes a smooth compactly supported test function on the open set of pairwise distinct points (YM.Test n for the internal version).",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S02-1",
     "mapper": "definition-close",
     "verifier": "close",
-    "agreed": false,
-    "complete": false
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
@@ -980,132 +1150,578 @@
   },
   {
    "id": "Eq (3.10)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YM.RG.PathData.inChannels",
+     "role": "key",
+     "where": "YM/RG/PathActions.lean:241-243",
+     "note": "average over the signed permutations (Signed, translation 0) of the principal action; this is the h-average in the second line",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.RG.PathData.principal",
+     "role": "key",
+     "where": "YM/RG/PathActions.lean:236-239",
+     "note": "beta*(sum of base terms + cubic + quartic atom series) + loop atom series: the raw action",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.RG.PathData.baseTerm",
+     "role": "support",
+     "where": "YM/RG/PathActions.lean:221-224",
+     "note": "clip of the chord plus the kept-indicator times |ell|^2/2",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.RG.PathData.clipped",
+     "role": "support",
+     "where": "YM/RG/PathActions.lean:218-219",
+     "note": "clip_t(r): c_dir r^2/2 for r<=t, c_lin t r otherwise",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.RG.PathData.kept",
+     "role": "support",
+     "where": "YM/RG/PathActions.lean:210-211",
+     "note": "the health indicator chi^hlth_{m,x}",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.RG.PathData.ell",
+     "role": "support",
+     "where": "YM/RG/PathActions.lean:190",
+     "note": "L^path as a series of row coefficients times transported curvature",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.RG.PathData.atomSeries",
+     "role": "support",
+     "where": "YM/RG/PathActions.lean:226-227",
+     "note": "the a^(q) sums; each term is masked by the health of its footprint (Atom.placed)",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The raw action is beta times clip plus half the kept-indicated |L^path|^2 over faces, beta times the cubic and quartic atoms, plus the beta-independent loop atoms, averaged over the signed permutation group; [L] has the same terms, with the health indicator of the combined support realized as masking on the atom footprint.",
+   "confidence": "medium",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S03-2",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-match",
+    "verifier": "definition-match",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (3.11)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-close",
+   "lean": [
+    {
+     "decl": "YM.RG.Rep",
+     "role": "key",
+     "where": "YM/RG/History.lean:165-171",
+     "note": "fields beta, v, activities (regular and forced addresses with E, K); also path, clip and budget point p",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.RG.Activities",
+     "role": "support",
+     "where": "YM/RG/Activities.lean:62-66",
+     "note": "the two activity families indexed by N",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.RG.RegularAddress",
+     "role": "support",
+     "where": "YM/RG/Activities.lean:37-40",
+     "note": "site (anchor o_i) and support X_i with anchor membership",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.RG.ForcedAddress",
+     "role": "support",
+     "where": "YM/RG/Activities.lean:42-48",
+     "note": "support Y_i, nonempty inventory I_i inside it, extra test",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The tuple (beta, v, regular data, forced data) is the content of Rep.beta, Rep.v and Rep.activities; [L]'s Rep also carries the path data, the clip and the budget point as fields, which [M] fixes beforehand as level data.",
+   "confidence": "high",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S03-2",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-close",
+    "verifier": "close",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Definition 3.2",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YM.RG.Rep.eval",
+     "role": "key",
+     "where": "YM/RG/History.lean:176-179",
+     "note": "exp(v*|sites| - inChannels - additive) times the forced gas",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.RG.Rep.exponent",
+     "role": "support",
+     "where": "YM/RG/History.lean:176-177",
+     "note": "the exponent v|Lambda| - action - sum of healthy-masked E_i",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.RG.Activities.gas",
+     "role": "support",
+     "where": "YM/RG/Activities.lean:129",
+     "note": "tsum over finite index sets of gasOccurrence",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.RG.Activities.gasOccurrence",
+     "role": "support",
+     "where": "YM/RG/Activities.lean:125-128",
+     "note": "product of K_i over a family that is admissible: pairwise disjoint supports and inventories covering the flags",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.RG.Activities.additive",
+     "role": "support",
+     "where": "YM/RG/Activities.lean:132",
+     "note": "sum of E_i masked to healthy configurations (regularOccurrence)",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.RG.Activities.admissible",
+     "role": "support",
+     "where": "YM/RG/Activities.lean:114-116",
+     "note": "pairwise disjoint supports and union of inventories equal to the flags",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.RG.PathData.inChannels",
+     "role": "support",
+     "where": "YM/RG/PathActions.lean:241-243",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The density is the exponential of v|Lambda| minus the path action minus the healthy-masked regular sum, times the sum over finite families with pairwise disjoint supports whose inventories union to the flag set of the product of K_i; [L] defines the same expression, with the nonempty-inventory condition carried by the ForcedAddress structure.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S03-2",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-match",
+    "verifier": "definition-match",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Definition 3.3",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-close",
+   "lean": [
+    {
+     "decl": "YM.RG.BudgetPoint.supBounds",
+     "role": "key",
+     "where": "YM/RG/Masks.lean:164-166",
+     "note": "all left-derivative lists of length <= order, on healthy U, in directions with dirBound, have norm <= c",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.RG.BudgetPoint.dirBound",
+     "role": "support",
+     "where": "YM/RG/Masks.lean:141-142",
+     "note": "|A_e| <= t(1+dist(e^-,o))^power",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.RG.leftDerivs",
+     "role": "support",
+     "where": "YM/RG/Masks.lean:120-122",
+     "note": "iterated left derivative D^L_{A_1}...D^L_{A_q}",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "[M] defines the seminorm as the supremum of the iterated left derivatives over healthy U and directions bounded by t_m(1+dist)^varpi; [L] has no function for it and states only the predicate that a number c bounds all of those derivatives (supBounds), with order = frak q_{J_m} and power = varpi_{J_m} taken from the budget point.",
+   "confidence": "high",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S03-2",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-close",
+    "verifier": "definition-close",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Definition 3.4",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-close",
+   "lean": [
+    {
+     "decl": "YM.RG.Activities.EBound",
+     "role": "key",
+     "where": "YM/RG/Activities.lean:98-100",
+     "note": "majorants b_i with supBounds, and for every site x the anchored sum of mass(support, b_i) is a SumBudget",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.RG.Activities.KBound",
+     "role": "key",
+     "where": "YM/RG/Activities.lean:102-104",
+     "note": "sup bounds on K_i and, for every site x, the sum over supports containing x of mass(support, b_i) is a SumBudget",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.RG.BudgetPoint.mass",
+     "role": "support",
+     "where": "YM/RG/Masks.lean:144",
+     "note": "exp(sigma * cover_B(P)) * c",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "[M] defines E_m and K_m as suprema over x of weighted sums of chosen majorants; [L] has no named quantities and states the sums as the predicate that for every x the sum is summable, nonnegative and at most a budget, with majorants existentially quantified.",
+   "confidence": "high",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S03-2",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-close",
+    "verifier": "definition-close",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (3.12)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.RG.Activities.EBound",
+     "role": "key",
+     "where": "YM/RG/Activities.lean:98-100",
+     "note": "majorants b_i with supBounds (b_i >= ||E_i||_m) and, for every x, the anchored weighted sum is a SumBudget (nonnegative, summable, <= budget): E_m <= budget",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.RG.Activities.KBound",
+     "role": "key",
+     "where": "YM/RG/Activities.lean:102-104",
+     "note": "majorants b_i >= sup|K_i| with every covering weighted sum a SumBudget: K_m <= budget",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.RG.Activities.Valid",
+     "role": "key",
+     "where": "YM/RG/Activities.lean:106-111",
+     "note": "fields boundE and boundK impose the two caps with budgets delta, w",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.RG.Rep.Lawful",
+     "role": "support",
+     "where": "YM/RG/History.lean:181-183",
+     "note": "field labels : Valid with delta, w",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.RG.Shoot.Lives",
+     "role": "support",
+     "where": "YM/Shoot/Criteria.lean:74-80",
+     "note": "membership in A_{N,m,p}; field valid is Lawful with allowance m and forcedAllowance m",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.RG.History.Conv",
+     "role": "support",
+     "where": "YM/RG/History.lean:213-219",
+     "note": "field good: the same Lawful instance on each level of a history",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.RG.Calendar.allowance",
+     "role": "support",
+     "where": "YM/RG/History.lean:84",
+     "note": "hatCoupling^(11/5) = hatBeta^(-11/10) = epsilon^reg_m",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.RG.Calendar.forcedAllowance",
+     "role": "support",
+     "where": "YM/RG/History.lean:85",
+     "note": "exp(-monitor^(1/5)) = epsilon^for_m with monitor = M^cut_m",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Membership in the class (Lives) includes Lawful, whose Valid field gives boundE and boundK: majorants with convergent weighted sums at most allowance m = refbeta_m^(-11/10) and forcedAllowance m = exp(-(M^cut_m)^(1/5)), which are the two caps.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S03-2",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "exact",
+    "verifier": "exact",
+    "agreed": false,
+    "judge": "exact",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Theorem 3.5",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "close",
+   "lean": [
+    {
+     "decl": "YM.Input.Directed.Program",
+     "role": "key",
+     "where": "YM/PCalc/Band.lean:65-72",
+     "note": "field advances: for m<N, l<=u and a continuous curve Q of class members with couplings in band(m+1), a continuous curve T of class members with Move to Q at every point",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.RG.Shoot.Recipe.Issues",
+     "role": "key",
+     "where": "YM/Shoot/Criteria.lean:99-106",
+     "note": "field advances with Lives and Relays in place of Move",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.RG.Shoot.Recipe.Relays",
+     "role": "support",
+     "where": "YM/Shoot/Criteria.lean:88-91",
+     "note": "density identity eval = push at v.beta, drift |beta' - beta - slope log L_m| <= params(m+1).drift, and the relation next",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Input.Directed.Move",
+     "role": "support",
+     "where": "YM/PCalc/Band.lean:49-55",
+     "note": "the relation R used in Program",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Input.Directed.supplies",
+     "role": "support",
+     "where": "YM/PCalc/Band.lean:74-77",
+     "note": "Program gives Issues at every N,p",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.RG.Shoot.Curve",
+     "role": "support",
+     "where": "YM/Shoot/Criteria.lean:51-57",
+     "note": "continuity of a curve of representations",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.RG.Shoot.Lives",
+     "role": "support",
+     "where": "YM/Shoot/Criteria.lean:74-80",
+     "note": "membership in A_{N,m,p}",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.PhysicalNext.Repeat.Roost.Factor.worksNow",
+     "role": "attributed",
+     "where": "YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Roost/Foundry.lean:59",
+     "note": "proves Program for the Directed datum of any Alloy carrying a Factor, from G.Simple",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.PhysicalNext.Repeat.Legato.R2I.RG05Joint.allFactorWithTreasuryPeriod",
+     "role": "attributed",
+     "where": "YM/Integration/RG05Preconstruction/PeriodClock.lean:29-34",
+     "note": "constructs such an Alloy and Factor from G.Simple: the chosen construction",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Progress.DirectedRecipe.programs",
+     "role": "attributed",
+     "where": "YM/Progress/DIRECTED_RECIPE/Bands.lean:141-155",
+     "note": "general proof of Program from Paid, Regime, Origins and Invoices data",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Since [M] states the step for classes it constructs (Lemmas D1, D2), and [L] constructs a Directed datum with a Factor (allFactorWithTreasuryPeriod) whose Program is proved by Factor.worksNow, the hypotheses of programs are supplied by the construction; the remaining differences are that the step is the advances field of Program/Issues for an existentially chosen construction, R is Move/Relays, and the drift bound is the abstract params(m+1).drift.",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S03-2",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "close",
+    "verifier": "missing-hypothesis",
+    "agreed": false,
+    "judge": "close",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Eq (3.13)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "close",
+   "lean": [
+    {
+     "decl": "YM.Input.Directed.Program",
+     "role": "key",
+     "where": "YM/PCalc/Band.lean:65-68",
+     "note": "field begins: a continuous curve F on band N with (F beta).beta = beta, Lives and Starter",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.RG.Shoot.Recipe.Issues",
+     "role": "key",
+     "where": "YM/Shoot/Criteria.lean:99-101",
+     "note": "field initial, the same statement",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.RG.Shoot.Recipe.Starter",
+     "role": "key",
+     "where": "YM/Shoot/Criteria.lean:93-96",
+     "note": "v = 0, eval = bare beta, and the recipe's first predicate (the class I_{N,p})",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Wilson.bare",
+     "role": "support",
+     "where": "YM/Wilson/Law.lean:58",
+     "note": "bare beta U = exp(-beta * energy U)",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.PhysicalNext.Repeat.Roost.Factor.worksNow",
+     "role": "attributed",
+     "where": "YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Roost/Foundry.lean:59",
+     "note": "Program, hence begins, for the constructed datum",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.WilsonStartup.Start.evaluates",
+     "role": "attributed",
+     "where": "YM/Extra/WILSON_STARTUP/Gas.lean:96-103",
+     "note": "the startup construction evaluates to the bare Wilson weight",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The Wilson curve with coupling beta, zero vacuum scalar and density exp(-beta E^W) over B_N is the begins/initial field, proved for the constructed datum through Factor.worksNow; it is a field of a structure for an existentially chosen construction rather than a standalone theorem, and I_{N,p} is Lives plus the recipe's first predicate.",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S03-2",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "close",
+    "verifier": "missing-hypothesis",
+    "agreed": false,
+    "judge": "close",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Theorem 3.6",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "close",
+   "lean": [
+    {
+     "decl": "YM.RG.History.Selected",
+     "role": "key",
+     "where": "YM/RG/History.lean:234-240",
+     "note": "starts (v = 0, eval = bare at level N), represents (Conv with band), steps (Transfer), reaches (beta_0 = bar), running",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Input.Directed.holding",
+     "role": "key",
+     "where": "YM/PCalc/Band.lean:92-110",
+     "note": "for simple G and a Program, a trajectory that Stays, is Selected, and has Move between consecutive levels",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.RG.Shoot.Recipe.races",
+     "role": "key",
+     "where": "YM/Shoot/Race.lean:67-82",
+     "note": "shooting: Issues at every N,p and Drifting give a Selected history",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.UVExtension.Orchard.selected",
+     "role": "key",
+     "where": "YM/UVExtension/Orchard/Racks.lean:37",
+     "note": "the Selected history of the actual construction, built with Factor.worksNow",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.RG.History.Transfer",
+     "role": "support",
+     "where": "YM/RG/History.lean:223-227",
+     "note": "density equals the push at beta_{m+1}, plus the drift bound",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.RG.History.Running",
+     "role": "support",
+     "where": "YM/RG/History.lean:229-230",
+     "note": "eventually |beta - hatBeta m| <= eps * scale m uniformly in N >= m and p",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.RG.Shoot.trajectory",
+     "role": "helper",
+     "where": "YM/Shoot/Race.lean:23-47",
+     "note": "derives Running from beta_0 = bar and Transfer",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "For simple G and the constructed Program, [L] gives a Selected history with beta_0 = bar, couplings in B_m, density equal to the push at beta_{m+1} and the running law; the start is eval = bare beta with v = 0 rather than equality with rho^W, and Running is stated against bar + slope s_m, equivalent to [M]'s form since s_m tends to infinity.",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S03-2",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "close",
+    "verifier": "missing-hypothesis",
+    "agreed": false,
+    "judge": "close",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Eq (3.14)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "inlined",
+   "lean": [
+    {
+     "decl": "YM.RG.Shoot.trajectory",
+     "role": "key",
+     "where": "YM/Shoot/Race.lean:26-33",
+     "note": "inner claim hd: |beta N p i - hatBeta i| <= betaCost i, with betaCost i = sum of params(j+1).drift for j<i, by induction from beta_0 = bar and the Transfer drift bound",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.RG.History.Transfer",
+     "role": "helper",
+     "where": "YM/RG/History.lean:223-227",
+     "note": "the one-step drift bound being summed",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Summing the per-step drift from beta_0 = bar and hatBeta_{m+1} - hatBeta_m = kappa log L_m gives the displayed bound; in [L] this is the local induction hd inside the proof of trajectory (the private betaCost is the sum of the stage drifts omega^RG_{J_{i+1}}), used there to derive Running.",
+   "step": "YM.RG.Shoot.trajectory: have hd, YM/Shoot/Race.lean:26-33",
+   "confidence": "high",
+   "relation": "relatedMatch",
    "verification": {
     "batch": "S03-2",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "inlined",
+    "verifier": "inlined",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
@@ -1116,8 +1732,9 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S03-3",
-    "mapper": null,
-    "verifier": null,
+    "mapper": "no-match",
+    "verifier": "exact",
+    "agreed": false,
     "complete": false
    }
   },
@@ -1129,8 +1746,9 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S03-3",
-    "mapper": null,
-    "verifier": null,
+    "mapper": "no-match",
+    "verifier": "close",
+    "agreed": false,
     "complete": false
    }
   },
@@ -1142,8 +1760,9 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S03-3",
-    "mapper": null,
-    "verifier": null,
+    "mapper": "no-match",
+    "verifier": "close",
+    "agreed": false,
     "complete": false
    }
   },
@@ -1155,100 +1774,361 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S03-3",
-    "mapper": null,
-    "verifier": null,
+    "mapper": "definition-close",
+    "verifier": "definition-match",
+    "agreed": false,
     "complete": false
    }
   },
   {
    "id": "Eq (3.16)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.Source.partConnection",
+     "role": "key",
+     "where": "YM/Source/Local.lean:34-36",
+     "note": "Coefficient h * A^{<=d}_a(h(y+t e_a)) of the link ODE.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Source.SolvesLink",
+     "role": "key",
+     "where": "YM/Source/Local.lean:39-40",
+     "note": "u(0)=1 and u'(t)=u(t) A(t) (right multiplication).",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Source.Hol.links",
+     "role": "key",
+     "where": "YM/Source/Local.lean:62",
+     "note": "The test holonomy u(1) at spacing h; Hol.solves ties the flow to partConnection.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Source.potential",
+     "role": "support",
+     "where": "YM/Source/Local.lean:31-32",
+     "note": "A^{<=d}: components with k+2<=d, i.e. j in range (d-1).",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Source.SolvesLink.unique",
+     "role": "support",
+     "where": "YM/Source/Local.lean:42-52",
+     "note": "Uniqueness of the solution, so the choice of Hol does not matter.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Source.Hol.exists_ode",
+     "role": "support",
+     "where": "YM/Source/ODE.lean:162",
+     "note": "existence of a flow",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Lean's Hol carries a flow solving the same right-multiplication ODE with potential equal to the sum of components k+2<=d, evaluated at the scaled position h(y+t e_a); uniqueness makes the test holonomy unambiguous.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S03-3",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "exact",
+    "verifier": "exact",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (3.17)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.Source.Projects",
+     "role": "key",
+     "where": "YM/Source/Local.lean:85-90",
+     "note": "For every jet J, derivatives of order k<=d at h=0 of F(links d J h) equal those of read(scaleJet J h) p; plus smoothness at 0.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Source.SectionData.Sound.projects",
+     "role": "key",
+     "where": "YM/Source/Local.lean:147",
+     "note": "The soundness field applying Projects to C.evaluate c for every coefficient vector c.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Source.scaleJet",
+     "role": "support",
+     "where": "YM/Source/Local.lean:82",
+     "note": "Jet dilation (h^{k+2} A_k).",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Push.Mark.commissioned",
+     "role": "attributed",
+     "where": "YM/Push/RELAY_MARK/Assembly.lean:30-34",
+     "note": "Existence of sections with the portfolio properties for every d (existence part of Lemma A.1).",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Source.SectionData.Sound",
+     "role": "key",
+     "where": "YM/Source/Local.lean:140-147",
+     "note": "field projects states the equality for every label c",
+     "from_verifier": true,
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Next.Foundations.sound",
+     "role": "support",
+     "where": "YM/Next/FOUNDATIONS/Primary.lean:103",
+     "note": "the chosen local section is Sound",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Projects with F = C.evaluate c at the origin states the Taylor normalization for q<=d with the dilated jet; Sound.projects makes it hold for every c in V_d. The existence of such sections is supplied separately (commissioned, Work.G06.answer).",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S03-3",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "exact",
+    "verifier": "exact",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (3.18)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.Source.TransferData.Based.encode",
+     "role": "key",
+     "where": "YM/Source/Insertion.lean:105-106",
+     "note": "At level N the marked density equals a_N^d times the unmarked density times the normalized initial section; the a_N^d cancels the a_N^{-d} inside initial.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Source.initial",
+     "role": "support",
+     "where": "YM/Source/Insertion.lean:77-79",
+     "note": "a_N^{-d} times the section applied to the t_N^{-1}-scaled coefficients.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Source.TransferData.Based.bare_coord",
+     "role": "support",
+     "where": "YM/Source/Insertion.lean:103",
+     "note": "x_N(v)=v.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.RG.Rep.eval",
+     "role": "support",
+     "where": "YM/RG/History.lean:179",
+     "note": "the density rho(U)",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Unfolding initial, the density of entries N v equals eval(U) * places(scaled t_N^{-1} v)(0;U) exactly. [L] states this as a field of Based (the realized transfer) rather than a definition of H^ins, with the same content.",
+   "confidence": "medium",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S03-3",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "exact",
+    "verifier": "exact",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (3.19)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.Source.TransferData.Based.unnormalized",
+     "role": "key",
+     "where": "YM/Source/Insertion.lean:107-110",
+     "note": "For r<=m<N, density at level m equals block_m^d times the push at coupling beta_{N,p,m+1} of the density at level m+1.",
+     "relation": "exactMatch"
+    }
+   ],
+   "note": "block_m is the lattice ratio ell_m=a_m/a_{m+1}, the push-forward is the block map at beta_{N,p,m+1}, and the range ref(d)<=m<N is the Based reference level r.",
+   "confidence": "medium",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S03-3",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "exact",
+    "verifier": "exact",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (3.20)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.Source.Coefficient.maskedTerm",
+     "role": "key",
+     "where": "YM/Source/Insertion.lean:35",
+     "note": "Regular remainder term, masked to the healthy event of its support (R^reg_{m,i} with the indicator).",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Source.Coefficient.marked",
+     "role": "key",
+     "where": "YM/Source/Insertion.lean:41-46",
+     "note": "Forced remainder sum over admissible (disjoint, exact flag cover) sets b of sum_i Q_i prod K_j.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.RG.Rep.exponent",
+     "role": "support",
+     "where": "YM/RG/History.lean:176-177",
+     "note": "v|Lambda| minus path action minus additive regular activities: the exponential prefactor of R^for.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Source.Coefficient.density",
+     "role": "key",
+     "where": "YM/Source/Insertion.lean:48-52",
+     "note": "assembles the regular remainder (tsum of maskedTerm) and exp(exponent)*tsum of marked",
+     "from_verifier": true,
+     "relation": "exactMatch"
+    }
+   ],
+   "note": "R^reg is the tsum of maskedTerm (the Lean sum is over all i, with a healthy indicator on the support); R^for is exp(Rep.exponent) times the sum of marked over admissible sets; [L]'s exponent unfolds to v|Lambda| - path action - additive E_i.",
+   "confidence": "medium",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S03-3",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "exact",
+    "verifier": "exact",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (3.21)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.Source.Coefficient.density",
+     "role": "key",
+     "where": "YM/Source/Insertion.lean:48-51",
+     "note": "Definition of the marked density: eval*exponentialEntry + exp(exponent) * sum_b marked.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Source.Coefficient.exponentialEntry",
+     "role": "key",
+     "where": "YM/Source/Insertion.lean:37-40",
+     "note": "x_0 + masked section of the t^{-1}-scaled core + sum of masked regular remainders.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.RG.Rep.eval",
+     "role": "support",
+     "where": "YM/RG/History.lean:179",
+     "note": "The unmarked density rho_m(U).",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Source.TransferData.Based",
+     "role": "support",
+     "where": "YM/Source/Insertion.lean:89-114",
+     "note": "encode and unnormalized tie these densities to the marked evolution",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Coefficient.density is the right side verbatim: rho times (x_0 + healthy-masked section of the scaled non-unit part + masked regular remainders) plus the forced term. Its equality with the transferred H^ins is the Based fields encode and unnormalized.",
+   "confidence": "medium",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S03-3",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "exact",
+    "verifier": "exact",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Definition 3.10",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YM.Family.O",
+     "role": "key",
+     "where": "YM/Source/Construction.lean:42",
+     "note": "The renormalized insertion at cutoff (N,p) for a label.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Source.TransferData.cylinder",
+     "role": "key",
+     "where": "YM/Source/Insertion.lean:87",
+     "note": "initial applied to terminal.symm v, i.e. Z^{-1} c.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Source.initial",
+     "role": "key",
+     "where": "YM/Source/Insertion.lean:77-79",
+     "note": "a_N^{-d} times the section applied to the t_N^{-1}-scaled input.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Source.TransferData.origin_unit",
+     "role": "key",
+     "where": "YM/Source/Insertion.lean:121-130",
+     "note": "The coefficient a_ref^d * 1 (unitVec) gives insertion one.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Labels.Frame.scaled",
+     "role": "support",
+     "where": "YM/Labels/Reference.lean:58-60",
+     "note": "Factor-count scaling t^{k_i} on basis vector i.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Family.constant",
+     "role": "key",
+     "where": "YM/Source/Construction.lean:100-102",
+     "note": "the unit coefficient refUnit d = a_{ref d}^d * 1 gives insertion 1 for ref d <= N",
+     "from_verifier": true,
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Source.unitVec",
+     "role": "support",
+     "where": "YM/Source/Insertion.lean:82",
+     "note": "a_m^d times the unit",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "O N p v o = cylinder = a_N^{-d} P_d[scaled t_N^{-1} (terminal^{-1} v)](o), with terminal playing Z_{N,p,d}; scaled counts factors (second grade). The unit statement is origin_unit for unitVec at the reference level.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S03-3",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "definition-match",
+    "verifier": "definition-match",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
@@ -1259,7 +2139,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S04-1",
-    "mapper": null,
+    "mapper": "exact",
     "verifier": null,
     "complete": false
    }
@@ -1272,7 +2152,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S04-1",
-    "mapper": null,
+    "mapper": "stronger",
     "verifier": null,
     "complete": false
    }
@@ -1285,7 +2165,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S04-1",
-    "mapper": null,
+    "mapper": "definition-match",
     "verifier": null,
     "complete": false
    }
@@ -1298,7 +2178,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S04-1",
-    "mapper": null,
+    "mapper": "definition-match",
     "verifier": null,
     "complete": false
    }
@@ -1311,7 +2191,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S04-1",
-    "mapper": null,
+    "mapper": "definition-match",
     "verifier": null,
     "complete": false
    }
@@ -1324,7 +2204,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S04-1",
-    "mapper": null,
+    "mapper": "definition-match",
     "verifier": null,
     "complete": false
    }
@@ -1337,7 +2217,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S04-1",
-    "mapper": null,
+    "mapper": "stronger",
     "verifier": null,
     "complete": false
    }
@@ -1350,7 +2230,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S04-1",
-    "mapper": null,
+    "mapper": "not-formalized-not-needed",
     "verifier": null,
     "complete": false
    }
@@ -1363,7 +2243,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S04-1",
-    "mapper": null,
+    "mapper": "definition-close",
     "verifier": null,
     "complete": false
    }
@@ -1376,7 +2256,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S04-1",
-    "mapper": null,
+    "mapper": "definition-close",
     "verifier": null,
     "complete": false
    }
@@ -1389,7 +2269,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S04-1",
-    "mapper": null,
+    "mapper": "close",
     "verifier": null,
     "complete": false
    }
@@ -2915,7 +3795,11 @@
    "confidence": "low",
    "finding": {
     "claim": "no-match",
-    "confirmed": false
+    "confirmed": true,
+    "skeptic_notes": [
+     "[M] closes Lemma 13.4 with a rooted bound for the physical expansion: if (2B+1)^4 sup_x sum_{a: x in Z_a} v_a <= eta, then R(W_0) = max{R_reg(W_0) at sigma+3, e^{r_j beta'_u t^2} R_for(W_0) at sigma+2} <= v_0 e^{eta n_0}. Boulevard.lays concludes only `Collection.Local ... (turnFee B*(betaF^wanting + betaF^(-(7/16))))` with `Cash.armK` as the forced Hit total, plus the identity `push = earlyValue ...`. Nothing in it concerns an extra factor W_0 or a rooted sum. The only nearby results are generic overlap-gas lemmas on abstract families: Ac.all_pack (private, gives `film ... <= exp(coverNumber M Y)` with eta=1), Copse.sapT/flights (`Ac.Hit X B f (a+delta) gamma`, `ballCost B*gamma <= delta`, giving `worth m B delta Y`), Flux.anchor_tag and Trees.root_at. They take exponentially weighted Hit hypotheses and say nothing about the regular/forced split, the sigma+3/sigma+2 exponents or the e^{r_j beta' t^2} factor, so none states the item's last clause. The outline itself says the conversion of rooted bounds to the outgoing E/K norms 'remains unwritten' (III-10.md:273). This is not a typo.",
+     "[M] prints, besides the representation, absolute convergence and the bounds E_{sigma+3} <= C_j b^{-7/16}, K_{sigma+2} <= C_j e^{-r_j beta' t^2}, a rooted bound: for W_0 with (2B+1)^4 sup_x sum_{a: x in Z_a} v_a <= eta, R(W_0)=max{R_reg, e^{r_j beta' t^2} R_for} <= v_0 e^{eta n_0}. Boulevard.lays concludes only `Collection.Local ... (turnFee B*(betaF^wanting + betaF^(-(7/16)))) (Cash.armK ...)` and the identity `push = earlyValue ...`; Collection.Local's fields (smooth, family, transforms, cheap, expensive) carry no extra-factor or rooted statement. The only rooted tree bounds are generic: the private Ac.all_pack (`film X D Y ... <= exp (coverNumber M Y)` under `(M+M+1)^4*γ <= 1`, no factor v_0, exponent one not eta), Trees.root_at (per-size `b * q^m`) and Trees.trees_afford (`currency B δ Y * degreePrice^m`); none is stated for the local-expansion gas with the combined regular/forced rooted sum, so the rooted claim is missing and the claim stands."
+    ]
    },
    "relation": "noMatch",
    "verification": {
@@ -2925,10 +3809,21 @@
     "agreed": false,
     "judge": "no-match",
     "source": "judge",
-    "skeptics": [],
+    "skeptics": [
+     {
+      "refuted": false,
+      "status": "no-match",
+      "reason": "[M] closes Lemma 13.4 with a rooted bound for the physical expansion: if (2B+1)^4 sup_x sum_{a: x in Z_a} v_a <= eta, then R(W_0) = max{R_reg(W_0) at sigma+3, e^{r_j beta'_u t^2} R_for(W_0) at sigma+2} <= v_0 e^{eta n_0}. Boulevard.lays concludes only `Collection.Local ... (turnFee B*(betaF^wanting + betaF^(-(7/16))))` with `Cash.armK` as the forced Hit total, plus the identity `push = earlyValue ...`. Nothing in it concerns an extra factor W_0 or a rooted sum. The only nearby results are generic overlap-gas lemmas on abstract families: Ac.all_pack (private, gives `film ... <= exp(coverNumber M Y)` with eta=1), Copse.sapT/flights (`Ac.Hit X B f (a+delta) gamma`, `ballCost B*gamma <= delta`, giving `worth m B delta Y`), Flux.anchor_tag and Trees.root_at. They take exponentially weighted Hit hypotheses and say nothing about the regular/forced split, the sigma+3/sigma+2 exponents or the e^{r_j beta' t^2} factor, so none states the item's last clause. The outline itself says the conversion of rooted bounds to the outgoing E/K norms 'remains unwritten' (III-10.md:273). This is not a typo."
+     },
+     {
+      "refuted": false,
+      "status": "no-match",
+      "reason": "[M] prints, besides the representation, absolute convergence and the bounds E_{sigma+3} <= C_j b^{-7/16}, K_{sigma+2} <= C_j e^{-r_j beta' t^2}, a rooted bound: for W_0 with (2B+1)^4 sup_x sum_{a: x in Z_a} v_a <= eta, R(W_0)=max{R_reg, e^{r_j beta' t^2} R_for} <= v_0 e^{eta n_0}. Boulevard.lays concludes only `Collection.Local ... (turnFee B*(betaF^wanting + betaF^(-(7/16)))) (Cash.armK ...)` and the identity `push = earlyValue ...`; Collection.Local's fields (smooth, family, transforms, cheap, expensive) carry no extra-factor or rooted statement. The only rooted tree bounds are generic: the private Ac.all_pack (`film X D Y ... <= exp (coverNumber M Y)` under `(M+M+1)^4*γ <= 1`, no factor v_0, exponent one not eta), Trees.root_at (per-size `b * q^m`) and Trees.trees_afford (`currency B δ Y * degreePrice^m`); none is stated for the local-expansion gas with the combined regular/forced rooted sum, so the rooted claim is missing and the claim stands."
+     }
+    ],
     "claimed": "no-match",
-    "finding": "skeptics pending",
-    "complete": false
+    "finding": "confirmed",
+    "complete": true
    }
   },
   {
@@ -2970,7 +3865,11 @@
    "confidence": "low",
    "finding": {
     "claim": "no-match",
-    "confirmed": false
+    "confirmed": true,
+    "skeptic_notes": [
+     "[M] gives a table of per-factor integrated majorants inside the proof of Lemma 13.4: P_j beta'_u g^3 for the stationary-action remainder, P_j(t_{m+1}+g) for the centered determinant remainder, P_j(t_{m+1}+g)^2 for the Haar-Jacobian remainder, P_j Lambda^loop (t+g) g for loop variation, and so on, each at most P'_j b^{-1/2}. [L]'s timing only proves the assembled molecule majorant ('∃ Ξ : Utopia H i ..., Herd H Ξ A (|p x|) l' with 'Rate G L (-(1/2)) q'). stanzaReady prices the cubic, quartic and loop path terms by 'sine p R.cubic (-β)', which is the classical curvature vertex and not the Taylor remainder after the stationary quadratic part. capital prices endpoint receipts. Nearby rate lemmas such as Coat.retreat (rate -1), Coat.annulus (rate -3/2, stated 'BEFORE any pricing of determinant or Gaussian correction') and Itinerary.quoted (a beta cost per vertex for the log/determinant correction) are packaged in [L]'s own rate bookkeeping, and none of them states a row of the table as printed, so the no-match finding stands.",
+     "[M] prints, inside the proof of Lemma 13.4, a row-by-row table of integrated majorants: stationary-action remainder P_j beta'_u g^3 <= P'_j b^{-1/2}, centered determinant remainder P_j(t_{m+1}+g), Haar-Jacobian remainder P_j(t_{m+1}+g)^2, loop variation P_j Lambda^loop (t+g) g, etc. [L]'s timing concludes only an aggregate molecule majorant via rate calculus ('Rate G L (-(1/2)) q ∧ Rate G L 0 p ... Herd H Ξ A (|p x|) l'), stanzaReady bounds cubic/quartic/loop path terms with exponents -β, -1 (sine p R.cubic (-β) ...), capital gives per-jump receipt constants, and the determinant/Haar-Jacobian lemmas (YM.Stationary.tribute, Pendant.lean jets) give positivity, identities and jet costs, not the P_j(t+g) or P_j(t+g)^2 rates. No declaration, structure field or proof step states the table's rows, so the no-match stands; nothing indicates a typo."
+    ]
    },
    "relation": "noMatch",
    "verification": {
@@ -2980,10 +3879,21 @@
     "agreed": false,
     "judge": "no-match",
     "source": "judge",
-    "skeptics": [],
+    "skeptics": [
+     {
+      "refuted": false,
+      "status": "no-match",
+      "reason": "[M] gives a table of per-factor integrated majorants inside the proof of Lemma 13.4: P_j beta'_u g^3 for the stationary-action remainder, P_j(t_{m+1}+g) for the centered determinant remainder, P_j(t_{m+1}+g)^2 for the Haar-Jacobian remainder, P_j Lambda^loop (t+g) g for loop variation, and so on, each at most P'_j b^{-1/2}. [L]'s timing only proves the assembled molecule majorant ('∃ Ξ : Utopia H i ..., Herd H Ξ A (|p x|) l' with 'Rate G L (-(1/2)) q'). stanzaReady prices the cubic, quartic and loop path terms by 'sine p R.cubic (-β)', which is the classical curvature vertex and not the Taylor remainder after the stationary quadratic part. capital prices endpoint receipts. Nearby rate lemmas such as Coat.retreat (rate -1), Coat.annulus (rate -3/2, stated 'BEFORE any pricing of determinant or Gaussian correction') and Itinerary.quoted (a beta cost per vertex for the log/determinant correction) are packaged in [L]'s own rate bookkeeping, and none of them states a row of the table as printed, so the no-match finding stands."
+     },
+     {
+      "refuted": false,
+      "status": "no-match",
+      "reason": "[M] prints, inside the proof of Lemma 13.4, a row-by-row table of integrated majorants: stationary-action remainder P_j beta'_u g^3 <= P'_j b^{-1/2}, centered determinant remainder P_j(t_{m+1}+g), Haar-Jacobian remainder P_j(t_{m+1}+g)^2, loop variation P_j Lambda^loop (t+g) g, etc. [L]'s timing concludes only an aggregate molecule majorant via rate calculus ('Rate G L (-(1/2)) q ∧ Rate G L 0 p ... Herd H Ξ A (|p x|) l'), stanzaReady bounds cubic/quartic/loop path terms with exponents -β, -1 (sine p R.cubic (-β) ...), capital gives per-jump receipt constants, and the determinant/Haar-Jacobian lemmas (YM.Stationary.tribute, Pendant.lean jets) give positivity, identities and jet costs, not the P_j(t+g) or P_j(t+g)^2 rates. No declaration, structure field or proof step states the table's rows, so the no-match stands; nothing indicates a typo."
+     }
+    ],
     "claimed": "no-match",
-    "finding": "skeptics pending",
-    "complete": false
+    "finding": "confirmed",
+    "complete": true
    }
   },
   {
@@ -3084,7 +3994,11 @@
    "confidence": "medium",
    "finding": {
     "claim": "weaker",
-    "confirmed": false
+    "confirmed": true,
+    "skeptic_notes": [
+     "[M] prints E(P) <= (V_j/l_m) eps^reg and E(R) <= omega^inh (rate -1/2) eps^reg for the anchored derivative sums over all addresses of T_i, plus the identity and weighted comparisons on the whole input curve; its proof treats the complementary class d_i^3 >= l_m explicitly. pressings concludes Houses ... (C'/L*incomingE) (|e s|*incomingE), whose remains field gives regularity of glyph for all i but the sup bound only under `coverNumber B.B (plate H i).support ≤ B.B → B.supBounds ... (glyph ...) (s i)`, and no continuity or difference statement along the input curve. No hypothesis in pressings or in Cash/Plays forces coverNumber <= B.B, and the downstream users (Beam.estate/shines) route the large-cover (`tired`) terms through separate Captain markPhi bounds, which confirms that [L] does not prove the remainder bound at all supports. The claim stands as weaker; it is a real scope difference, not a typo.",
+     "[M] prints E(P) <= (V_j/l_m) eps^reg and E(R) <= omega^inh eps^reg (rate -1/2) at every address of T_i, and its proof treats large supports (cover_B > B) separately to get that bound. It also claims T=P+R and weighted comparisons/continuity on the whole input curve. [L]'s pressings concludes Houses with c=C'/L*incomingE and c'=|e s|*incomingE, Rate -(1/2), but Houses.remains gives the glyph sup bound only under `coverNumber B.B (plate H i).support <= B.B -> B.supBounds ... (glyph ...) (s i)`. Beam.estate uses it only on non-`tired` addresses, where `shall` gives cover <= B, and bounds tired addresses by a separate Captain markPhi budget. Neither Houses nor BudgetPoint.Regular (locality, Borel, gauge invariance, smoothness at healthy U) states continuity in the coupling along the input curve, so the claim stands as weaker."
+    ]
    },
    "relation": "narrowMatch",
    "verification": {
@@ -3093,10 +4007,21 @@
     "verifier": "weaker",
     "agreed": true,
     "source": "mapper+verifier",
-    "skeptics": [],
+    "skeptics": [
+     {
+      "refuted": false,
+      "status": "weaker",
+      "reason": "[M] prints E(P) <= (V_j/l_m) eps^reg and E(R) <= omega^inh (rate -1/2) eps^reg for the anchored derivative sums over all addresses of T_i, plus the identity and weighted comparisons on the whole input curve; its proof treats the complementary class d_i^3 >= l_m explicitly. pressings concludes Houses ... (C'/L*incomingE) (|e s|*incomingE), whose remains field gives regularity of glyph for all i but the sup bound only under `coverNumber B.B (plate H i).support ≤ B.B → B.supBounds ... (glyph ...) (s i)`, and no continuity or difference statement along the input curve. No hypothesis in pressings or in Cash/Plays forces coverNumber <= B.B, and the downstream users (Beam.estate/shines) route the large-cover (`tired`) terms through separate Captain markPhi bounds, which confirms that [L] does not prove the remainder bound at all supports. The claim stands as weaker; it is a real scope difference, not a typo."
+     },
+     {
+      "refuted": false,
+      "status": "weaker",
+      "reason": "[M] prints E(P) <= (V_j/l_m) eps^reg and E(R) <= omega^inh eps^reg (rate -1/2) at every address of T_i, and its proof treats large supports (cover_B > B) separately to get that bound. It also claims T=P+R and weighted comparisons/continuity on the whole input curve. [L]'s pressings concludes Houses with c=C'/L*incomingE and c'=|e s|*incomingE, Rate -(1/2), but Houses.remains gives the glyph sup bound only under `coverNumber B.B (plate H i).support <= B.B -> B.supBounds ... (glyph ...) (s i)`. Beam.estate uses it only on non-`tired` addresses, where `shall` gives cover <= B, and bounds tired addresses by a separate Captain markPhi budget. Neither Houses nor BudgetPoint.Regular (locality, Borel, gauge invariance, smoothness at healthy U) states continuity in the coupling along the input curve, so the claim stands as weaker."
+     }
+    ],
     "claimed": "weaker",
-    "finding": "skeptics pending",
-    "complete": false
+    "finding": "confirmed",
+    "complete": true
    }
   },
   {
@@ -6442,7 +7367,11 @@
    "confidence": "medium",
    "finding": {
     "claim": "no-match",
-    "confirmed": false
+    "confirmed": true,
+    "skeptic_notes": [
+     "[M] prints a subsequence with stable frames, levels n_i,k_i -> infinity and (18.1), then sup_{x in K}|S_n(U_i A^{(i)}; r_i x^{(i)}) - S^Max_n(A;x)| -> 0 at lattice-rounded points, the same for fixed jets and translation-shell fluxes, and phase-uniformity for n_ar=2. [L] gives the subsequence and StarPath via pays_sky, and Scribe (reached through gang/Gallery) has `grows : Tendsto (BQ Z V) atTop atTop` and `clock : Tendsto (fun i=>LogZoom J i/BQ Z V i) atTop (𝓝 G.slopeConstant⁻¹)`. travels_jet goes further than the claim says: it compares jets uniformly on compacts for inputs `v k i -> x i`, so varying inputs A^{(i)} -> A are covered, at unrounded points r_k y. Still, no declaration states the comparison at the rounded points r_i x^{(i)}, a shell-flux limit along the scaling, or a statement uniform over phases, so the claim stands as no-match with a corrected list of missing parts.",
+     "[M] prints, along one subsequence of any positive null sequence, sup_{x in K}|S_{n_ar}(U_i(d)A^{(i)}; r_i x^{(i)}) - M_{n_ar}(A;x)| -> 0 at lattice-rounded points x^{(i)} in r_i^{-1}a_{n_i}Z^4 with varying inputs A^{(i)} -> A, the same for fixed jets and translation-shell fluxes, and phase-uniformity for n_ar=2. [L]'s pays_sky gives `∃ f, StrictMono f ∧ ∃ X:Scaling S, X.r=s ∘ f ∧ StarPath F a X hs 𝓛`, and comparison_jets gives `X.jets N d m R`, i.e. `‖iteratedFDeriv ℝ j (fun y => disc (p.pins k ∘ v) (p.r k • y)) x - iteratedFDeriv ℝ j (disc v) x‖ ≤ ε` for fixed tags v and x in `window R n`; the Scaling structure carries no levels n_i, so there are no rounded points, no varying inputs, no shell-flux comparison along the scaling and no phase-uniform two-point statement. The nearby lattice objects (Wheel.inspection, StressFlux.Matching.rounded_tendsto, the shell-flux lemmas in Plateau/Shell) compare lattice readings with the continuum table S or work inside S, not the scaled S with the Maxwell correlations, so the claim stands."
+    ]
    },
    "relation": "noMatch",
    "verification": {
@@ -6452,10 +7381,21 @@
     "agreed": false,
     "judge": "no-match",
     "source": "judge",
-    "skeptics": [],
+    "skeptics": [
+     {
+      "refuted": false,
+      "status": "no-match",
+      "reason": "[M] prints a subsequence with stable frames, levels n_i,k_i -> infinity and (18.1), then sup_{x in K}|S_n(U_i A^{(i)}; r_i x^{(i)}) - S^Max_n(A;x)| -> 0 at lattice-rounded points, the same for fixed jets and translation-shell fluxes, and phase-uniformity for n_ar=2. [L] gives the subsequence and StarPath via pays_sky, and Scribe (reached through gang/Gallery) has `grows : Tendsto (BQ Z V) atTop atTop` and `clock : Tendsto (fun i=>LogZoom J i/BQ Z V i) atTop (𝓝 G.slopeConstant⁻¹)`. travels_jet goes further than the claim says: it compares jets uniformly on compacts for inputs `v k i -> x i`, so varying inputs A^{(i)} -> A are covered, at unrounded points r_k y. Still, no declaration states the comparison at the rounded points r_i x^{(i)}, a shell-flux limit along the scaling, or a statement uniform over phases, so the claim stands as no-match with a corrected list of missing parts."
+     },
+     {
+      "refuted": false,
+      "status": "no-match",
+      "reason": "[M] prints, along one subsequence of any positive null sequence, sup_{x in K}|S_{n_ar}(U_i(d)A^{(i)}; r_i x^{(i)}) - M_{n_ar}(A;x)| -> 0 at lattice-rounded points x^{(i)} in r_i^{-1}a_{n_i}Z^4 with varying inputs A^{(i)} -> A, the same for fixed jets and translation-shell fluxes, and phase-uniformity for n_ar=2. [L]'s pays_sky gives `∃ f, StrictMono f ∧ ∃ X:Scaling S, X.r=s ∘ f ∧ StarPath F a X hs 𝓛`, and comparison_jets gives `X.jets N d m R`, i.e. `‖iteratedFDeriv ℝ j (fun y => disc (p.pins k ∘ v) (p.r k • y)) x - iteratedFDeriv ℝ j (disc v) x‖ ≤ ε` for fixed tags v and x in `window R n`; the Scaling structure carries no levels n_i, so there are no rounded points, no varying inputs, no shell-flux comparison along the scaling and no phase-uniform two-point statement. The nearby lattice objects (Wheel.inspection, StressFlux.Matching.rounded_tendsto, the shell-flux lemmas in Plateau/Shell) compare lattice readings with the continuum table S or work inside S, not the scaled S with the Maxwell correlations, so the claim stands."
+     }
+    ],
     "claimed": "no-match",
-    "finding": "skeptics pending",
-    "complete": false
+    "finding": "confirmed",
+    "complete": true
    }
   },
   {
