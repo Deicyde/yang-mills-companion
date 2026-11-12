@@ -1,0 +1,41 @@
+% Position markers for the unnumbered displays and the proof steps of [M], \input after
+% regionmarks.tex.  New code, on regionmarks.tex's \rm@savepos.  steps/marks.py writes the macros
+% below into a scratch copy of the source; none of them adds a node in vertical mode, and in
+% horizontal mode each adds only zero-size whatsits, which are no break points, are skipped by
+% hyphenation and keep \spacefactor (zref's \@bsphack/\@esphack).  layoutcheck.py compares the
+% rebuilt PDF with the committed one word by word.
+%
+%   \rmnext{k}  before an unnumbered display: names its markers (adds no node)
+%   k:pre       after the line before the display, whose last space it removes as the display
+%               would (horizontal mode, and not on the empty list after a display)
+%   \rmafterdisp{k} in the .aux: the display opens such an empty list
+%   k:end       after the box of the display (equation*, and the alignments, whose last row is
+%               followed by a \noalign; not multline*)
+%   \rmS{k}     k:s, where a prose step or sentence starts; in vertical mode it is held and placed
+%               when the paragraph begins (para/begin, before the indent box)
+%   \rmE{k}     k:e, where a prose step or sentence ends (horizontal mode)
+\makeatletter
+\gdef\rm@key{}
+\gdef\rm@ukey{}
+\def\rmnext#1{\gdef\rm@key{#1}}
+\def\rm@ubegin{\ifx\rm@key\@empty\else
+  \global\let\rm@ukey\rm@key\gdef\rm@key{}%
+  \ifhmode\ifnum\lastnodetype=\m@ne
+    \if@filesw\immediate\write\@auxout{\string\rmafterdisp{\rm@ukey}}\fi
+  \else\unskip\vadjust{\rm@savepos{\rm@ukey:pre}}\fi\fi\fi}
+\def\rm@uend{\ifx\rm@ukey\@empty\else\rm@savepos{\rm@ukey:end}\gdef\rm@ukey{}\fi}
+\AddToHook{env/equation*/begin}{\rm@ubegin}
+\AddToHook{env/align*/begin}{\rm@ubegin}
+\AddToHook{env/gather*/begin}{\rm@ubegin}
+\AddToHook{env/multline*/begin}{\rm@ubegin}
+\AddToHook{env/equation*/end}{\ifx\rm@ukey\@empty\else\vadjust{\rm@uend}\fi}
+\AddToHook{env/multline*/after}{\gdef\rm@ukey{}}
+% regionmarks.tex's \black@, with the end marker of an unnumbered alignment
+\def\black@#1{\rm@orig@black{#1}\ifmeasuring@\else\ifrm@split\else
+  \noalign{\rm@dend\ifrm@num\rm@savepos{eq:\the\rm@eqk:post}\fi\rm@uend}\fi\fi}
+% prose steps and sentences
+\gdef\rm@pend{}
+\def\rmS#1{\ifvmode\gdef\rm@pend{#1}\else\rm@savepos{#1:s}\fi}
+\def\rmE#1{\ifhmode\rm@savepos{#1:e}\fi}
+\AddToHook{para/begin}{\ifx\rm@pend\@empty\else\rm@savepos{\rm@pend:s}\gdef\rm@pend{}\fi}
+\makeatother
