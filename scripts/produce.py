@@ -12,8 +12,10 @@ statement), and writes
   manuscript/annotations/_defaults.json                 the PDF and the repository at the pin
   manuscript/annotations/<section>/<item>__<role>__<declaration>.json
   manuscript/annotations/<section>/<item>/<role>__<declaration>.json   (an item with several records)
+  manuscript/annotations/<section>/<item>/key.json      (the record of several key declarations)
 
-One record per (item, linked declaration); one checked absence (`noMatch`) for an item judged
+One record per item for its key declarations together, carrying the item's relation, and one per
+other linked declaration (`relatedMatch`); one checked absence (`noMatch`) for an item judged
 `no-match` or `not-formalized-not-needed`, whose search is recorded in the mapping; one record with
 an empty object for an item that links nothing.  Every record names all the item's regions.
 
@@ -102,9 +104,18 @@ def provenance(rec):
     v = rec['verification']
     method = 'mapper and verifier agents, agreed' if v['agreed'] else 'mapper and verifier agents, a judge ruled'
     f = rec.get('finding')
-    if f:
+    c = v.get('corrected') if (v.get('corrected') or {}).get('kind') == 'rejudged' else None
+    if f and c:
+        method += '; claimed finding withdrawn on review' if f.get('withdrawn') else \
+            '; finding re-confirmed by two new skeptics after review' if f.get('confirmed') else \
+            '; revised finding not re-confirmed after review'
+    elif f:
         method += '; finding confirmed by two skeptics' if f.get('confirmed') else \
             '; claimed finding contested by two skeptics' if f.get('refuted') else '; claimed finding refuted by two skeptics'
+    if c:
+        method += '; re-judged after an independent review'
+    elif v.get('corrected'):
+        method += '; note revised after an independent review'
     method += '; statements of [L] read at the pin, not built'
     return {'actor': 'agent', 'method': method, 'confirmed_by_human': False}
 
@@ -225,7 +236,8 @@ def main():
         ext = {'locator': {'physical': pages}, 'provenance': provenance(rec)}
         f = rec.get('finding') or {}
         if f.get('confirmed'):
-            ext['verdicts'] = [{'verdict': 'deviation', 'summary': VERDICT_SUMMARY[f['claim']],
+            summary = VERDICT_SUMMARY[f['claim']] + (f" [M] prints `{f['quote']}`." if f.get('quote') else '')
+            ext['verdicts'] = [{'verdict': 'deviation', 'summary': summary,
                                 'evidence': f.get('skeptic_notes', []),
                                 'provenance': {'actor': 'agent', 'method': 'two skeptics, each reading the LaTeX of [M] '
                                                'and the source of [L], failed to refute it', 'confirmed_by_human': False}}]
@@ -239,11 +251,16 @@ def main():
         for l in rec['lean']:  # a declaration linked twice keeps its first, key-most link
             if l['decl'] not in seen or (l['role'] == 'key' and seen[l['decl']]['role'] != 'key'):
                 seen[l['decl']] = l
-        for l in seen.values():
+        # the key links form one record: the item's relation holds between the item and all its key
+        # declarations together; every other link is a record of its own
+        keys = sorted((l for l in seen.values() if l['role'] == 'key'), key=lambda l: l['decl'])
+        groups = ([keys] if keys else []) + [[l] for l in seen.values() if l['role'] != 'key']
+        for g in groups:
             r = dict(base)
-            if complete and l.get('relation'):
-                r['relation'] = l['relation']
-            records.append(dict(r, subject=subject, object=[lean_end(l, l['role'])], extensions={NS: dict(ext)}))
+            if complete and g[0].get('relation'):
+                r['relation'] = g[0]['relation']
+            records.append(dict(r, subject=subject, object=[lean_end(l, l['role']) for l in g],
+                                extensions={NS: dict(ext)}))
         if complete and rec['status'] in ('no-match', 'not-formalized-not-needed'):
             if not rec.get('searched'):
                 sys.exit(f"{rec['id']}: a checked absence with no recorded search")
@@ -263,7 +280,7 @@ def main():
             if r.get('relation') == 'noMatch':
                 return 'noMatch' if in_item else f"{it['id']}__noMatch"
             o = r['object'][0]
-            rest = f"{o['role']}__{o['location']['declaration']}"
+            rest = f"{o['role']}__{o['location']['declaration']}" if len(r['object']) == 1 else o['role']
             return rest if in_item else f"{it['id']}__{rest}"
         records.sort(key=lambda r: (r.get('relation') != 'noMatch',
                                     ROLES.index(r['object'][0]['role']) if r['object'] and 'role' in r['object'][0] else -1,
@@ -286,6 +303,7 @@ def main():
             files[p] = r
             counts['records'] += 1
             counts[f"relation.{r.get('relation', 'none')}"] += 1
+            counts[f"ends.{r.get('relation', 'none')}"] += len(r['object'])
         counts['items'] += 1
     with open(os.path.join(out_dir, '_defaults.json'), 'w', encoding='utf-8') as f:
         json.dump(defaults, f, indent=2, ensure_ascii=False)

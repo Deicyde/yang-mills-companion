@@ -1,0 +1,154 @@
+{
+  "id": "Lemma 14.6",
+  "kind": "lemma",
+  "status": "formalized",
+  "note": "All four displayed identities are fields of Based, and invertibility of the terminal map is in G08.answer. The differences: the existence is conditional on PerBlock (the one-step estimates), and Z is not exhibited as the product L_r...L_{N-1}.",
+  "relation": "closeMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 131,
+        "rect": [
+          0.11894,
+          0.37237,
+          0.76287,
+          0.12848
+        ]
+      },
+      "title": "Lemma 14.6 (Reference normalization)",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.6"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extra.Histories.Issue.press",
+        "module": "YM.Extra.SOURCE_HISTORIES.Issue"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extra.Histories.Issue.press",
+            "kind": "theorem"
+          },
+          "snippet": {
+            "text": "theorem press (hp : H.Selected) (h : Budget H.levels C W) (hr : ∀ d, d+3 ≤ H.levels.clock.J (r d))\n    (hc : PerBlock H C r) : ∃ T, Printed H W C Y r T := by",
+            "line": 73,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/SOURCE_HISTORIES/Issue.lean",
+            "fragment": "L73"
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Family.Makes",
+        "module": "YM.Source.Construction"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Family.Makes",
+            "kind": "structure"
+          },
+          "snippet": {
+            "text": "structure Makes : Prop where\n  wilson : C.path.Selected\n  sections (d : ℕ) : (C.localSection d).Sound C.params\n  stages (d : ℕ) :\n    d+3 ≤ C.path.levels.clock.J (C.ref d) ∧\n    ∀ m, C.ref d ≤ m → d+1 ≤ (C.path.levels.params m).order ∧ d ≤ (C.path.levels.params m).power\n  places (d N p : ℕ) : C.ref d ≤ N → ∀ x ∈ (C.localSection d).stencil,\n    ∀ i : Axis, 20*((x i).natAbs + 1) ≤ (C.side N p).val\n  /-- Section actually gives canonical mask test-size (cf eq:psect).\n  Charge this constant before L. -/\n  priced (d N p : ℕ) : C.ref d ≤ N →\n    let P := C.path.levels.budget N\n    let F := C.labels.level d\n    let D := C.localSection d\n    ∀ o : Site (C.side N p), ∀ i : F.Index,\n      P.Regular (D.footprint o) (D.places (Pi.single i 1) o) ∧\n      P.supBounds o (D.footprint o) (D.places (Pi.single i 1) o) ((C.path.levels.params N).columns *\n        P.threshold^(F.grades i).2)\n  calibrated (d N p : ℕ) : C.ref d ≤ N → (C.factory d N p).Based C.params (C.localSection d) (C.ref d)",
+            "line": 44,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Source/Construction.lean",
+            "fragment": "L44"
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Source.TransferData.Based",
+        "module": "YM.Source.Insertion"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Source.TransferData.Based",
+            "kind": "structure"
+          },
+          "snippet": {
+            "text": "structure Based (A : Hol G) (C : SectionData F) (r : ℕ) : Prop where\n  ref : r ≤ N\n  format : ∀ m, r ≤ m → m ≤ N → ∀ v, (T.entries m v).Format 0 A (H.rep N p m)\n  cap : ∀ m, r ≤ m → m ≤ N → ∀ v,\n    (T.entries m v).remBound 0 (H.rep N p m) (Real.sqrt (H.levels.clock.forcedAllowance m))\n      ((H.levels.params m).columns * F.coeffSize (F.core (T.entries m v).x))\n  back : ∀ m, r ≤ m → m < N → ∀ v,\n    F.coeffSize (T.entries (m+1) v).x ≤ (H.levels.params (m+1)).columns * F.coeffSize (T.entries m v).x\n  front : ∀ m, r ≤ m → m < N → ∀ v,\n    F.coeffSize (T.entries m v).x ≤ (H.levels.params (m+1)).columns * ((H.S.block m).val : ℝ)^d *\n      F.coeffSize (T.entries (m+1) v).x\n  linear : ∀ m, r ≤ m → m ≤ N →\n    IsLinearMap ℂ (fun v => (T.entries m v).x) ∧ IsLinearMap ℂ (fun v => (T.entries m v).regular) ∧\n    IsLinearMap ℂ (fun v => (T.entries m v).forced) ∧ ∀ v, (T.entries m v).support = (T.entries m 0).support\n  bare_coord v : (T.entries N v).x = v\n  bare_germ v : (T.entries N v).regular = 0\n  encode v U : (T.entries N v).density 0 C (H.rep N p N) U =\n    ((H.S.a N : ℂ)^d) * ((H.rep N p N).eval U : ℂ) * initial C H N p v 0 U\n  unnormalized m : r ≤ m → m < N → ∀ v,\n    (T.entries m v).density 0 C (H.rep N p m) =\n      ((H.S.block m).val : ℂ)^d • (H.levels.clock.op m p).push (H.β N p (m+1))\n        ((T.entries (m+1) v).density 0 C (H.rep N p (m+1)))\n  reads v : (T.entries r v).x = T.terminal v\n  unit_coord m : r ≤ m → m ≤ N → (T.entries m (unitVec F H N)).x = unitVec F H m\n  realForm v : T.terminal (star v) = star (T.terminal v)\n  orients (k : Signed) v : T.terminal (F.act k.ortho v) = F.act k.ortho (T.terminal v)",
+            "line": 89,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Source/Insertion.lean",
+            "fragment": "L89"
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.G08.answer",
+        "module": "YM.Work.G08"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.G08.answer",
+            "kind": "theorem"
+          },
+          "snippet": {
+            "text": "theorem answer : YM.Bid.G08 := by",
+            "line": 207,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/G08.lean",
+            "fragment": "L207"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          131
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; statements of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      }
+    }
+  }
+}

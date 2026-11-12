@@ -1,0 +1,126 @@
+{
+  "id": "Definition 6.5",
+  "kind": "definition",
+  "status": "formalized",
+  "note": "Fourier identity with Euclidean pairing, E on the complement of the closed forward cone equal to zero, and fixed vectors in C Omega agree in both formulations.",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 27,
+        "rect": [
+          0.11962,
+          0.21275,
+          0.76011,
+          0.08621
+        ]
+      },
+      "title": "Definition 6.5 (W0. Spectrum and vacuum)",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Definition 6.5"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Boundary.Wightman.Realizes",
+        "module": "YM.Fields.System"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Boundary.Wightman.Realizes",
+            "kind": "structure"
+          },
+          "snippet": {
+            "text": "structure Wightman.Realizes {W : Surface S} (R : Wightman S) (V : S.Rotation) (h : S.RealSpin) : Prop where\n  induced : starRead R.J h\n  letters : R.spin.Descends V h\n  total : R.operators.Total\n  adj : R.operators.sharpPair R.J\n  meets : R.operators.realizes W\n  localPairs : R.operators.commutes\n  faithful : R.operators.notLost\n  covariance : Symmetries R.spin R.action\n  spectral : R.action.orbit.Spectrum R.momentum\n  forward : R.momentum.region Mink.coneᶜ = 0\n  unique (v : R.operators.H) : (∀ x, R.action.orbit.translation x v=v) → ∃ z : ℂ, z • R.operators.vacuum=v",
+            "line": 124,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Fields/System.lean",
+            "fragment": "L124"
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Spectral.Orbit.Spectrum",
+        "module": "YM.Spectral.Frequencies"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Spectral.Orbit.Spectrum",
+            "kind": "def"
+          },
+          "snippet": {
+            "text": "def Spectrum (P : PVM H X) : Prop := ∀ x : H, ∀ b : X,\n    charFun (P.diagonal x) b = inner ℂ x (T.translation b x)",
+            "line": 67,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Spectral/Frequencies.lean",
+            "fragment": "L67"
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YangMills.WightmanTheory.W0",
+        "module": "PublicTheory"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YangMills.WightmanTheory.W0",
+            "kind": "structure"
+          },
+          "snippet": {
+            "text": "structure W0 (theory : WightmanTheory H Labels) : Prop where\n  spectralRepresentation : ∀ state : H.carrier, ∀ momentum : Spacetime,\n    charFun (theory.energyMomentum.diagonal state) momentum =\n      inner ℂ state (theory.translations.operator momentum state)\n  positiveEnergy :\n    theory.energyMomentum.projection forwardConeᶜ = 0\n  uniqueVacuum (state : H.carrier) :\n    (∀ x, theory.translations.operator x state = state) →\n      ∃ scalar : ℂ, scalar • theory.fields.vacuum.1 = state",
+            "line": 270,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/PublicTheory.lean",
+            "fragment": "L270"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          27
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; statements of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      }
+    }
+  }
+}

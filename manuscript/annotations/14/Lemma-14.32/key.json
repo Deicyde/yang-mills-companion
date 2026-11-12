@@ -1,0 +1,126 @@
+{
+  "id": "Lemma 14.32",
+  "kind": "lemma",
+  "status": "formalized",
+  "note": "Same claim; [L] expresses the uniform-in-K, N >= N_0 statement as Cluster (convergence along arbitrary moving lattice points tending to x in NoHit, with continuity), from which the uniform form follows by a compactness argument, and the limit is ContDiffOn infinity on NoHit.",
+  "relation": "closeMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 159,
+        "rect": [
+          0.11891,
+          0.6194,
+          0.76083,
+          0.10122
+        ]
+      },
+      "title": "Lemma 14.32 (Lattice-point convergence)",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.32"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.PositionsUV",
+        "module": "YM.FullVolume.Profiles"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.PositionsUV",
+            "kind": "def"
+          },
+          "snippet": {
+            "text": "def PositionsUV (C : Family G) (e : Extraction.Sequence) :=\n  ∀ (p n : ℕ) (v : Fin n → C.book.Token),\n   ∃ f : Points n → ℂ, ContDiffOn ℝ ∞ f (NoHit C.S p n) ∧\n     (∀ t : Test n, suitable C.S p t → Tendsto (fun j => Order.smears C (e j) p v t) atTop (𝓝 (t.applyTo f))) ∧\n     ∀ l : List (Reach n),\n       let F N := squall (C.S.a N) l (lifted C N p v)\n       let g := derive f (l.map Reach.where_)\n       Cluster C e p n F g ∧\n       Meets (NoHit C.S p n) (fun j => interpolated C.S (e j) (F (e j))) g ∧\n       ∀ t : Test n, suitable C.S p t →\n         Integrable (fun x : Points n => t x * g x) ∧\n         Tendsto (fun j => sumOn F C.S p (e j) t) atTop (𝓝 (t.applyTo g))",
+            "line": 25,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Profiles.lean",
+            "fragment": "L25"
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.positioned",
+        "module": "YM.FullVolume.Profiles"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.positioned",
+            "kind": "theorem"
+          },
+          "snippet": {
+            "text": "theorem positioned (M:FixedBounds C) (h:Purchased C e) : PositionsUV C e:=by",
+            "line": 42,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Profiles.lean",
+            "fragment": "L42"
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.PhysicalNext.Repeat.Legato.Campaign.realUV",
+        "module": "YM.FullVolume.Fields.Filled"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.PhysicalNext.Repeat.Legato.Campaign.realUV",
+            "kind": "theorem"
+          },
+          "snippet": {
+            "text": "theorem realUV : PositionsUV R.family Extraction.Sequence.full:= FullVolume.positioned _ (FullVolume.genuine R T.gains.SimpleR) (purchased H W he)",
+            "line": 45,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Fields/Filled.lean",
+            "fragment": "L45"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          159
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; statements of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      }
+    }
+  }
+}

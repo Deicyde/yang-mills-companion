@@ -1,0 +1,98 @@
+{
+  "id": "Definition 6.7",
+  "kind": "definition",
+  "status": "formalized",
+  "note": "The public formulation agrees with [M] clause by clause; the internal one has translations acting trivially on labels, which the public one does not assume.",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 27,
+        "rect": [
+          0.12026,
+          0.39265,
+          0.76013,
+          0.06515
+        ]
+      },
+      "title": "Definition 6.7 (W2. Covariance)",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Definition 6.7"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Boundary.Symmetries",
+        "module": "YM.Fields.System"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Boundary.Symmetries",
+            "kind": "structure"
+          },
+          "snippet": {
+            "text": "structure Symmetries (X : Spins S) {F : Fields S} (V : Action F.H) : Prop where\n  domain (p : Poincare) : Set.MapsTo (V.V p) (F.domain : Set F.H) F.domain\n  vacuum (p : Poincare) : V.V p F.vacuum=F.vacuum\n  covariance (p : Poincare) (x : S.Union) (f : Test4) (a : F.domain) : V.V p (F.field x f a).val =\n    (F.field (X.rail p.Λ x) (Joint.push p f) (⟨V.V p a.val, domain p a.property⟩ : F.domain)).val",
+            "line": 111,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Fields/System.lean",
+            "fragment": "L111"
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YangMills.WightmanTheory.W2",
+        "module": "PublicTheory"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YangMills.WightmanTheory.W2",
+            "kind": "structure"
+          },
+          "snippet": {
+            "text": "structure W2 (theory : WightmanTheory H Labels) : Prop where\n  labelIdentity (label : Labels.carrier) :\n    theory.poincare.onLabels 1 label = label\n  labelComposition (g h : theory.poincare.Symmetry)\n      (label : Labels.carrier) :\n    theory.poincare.onLabels (g * h) label =\n      theory.poincare.onLabels g (theory.poincare.onLabels h label)\n  domainInvariant (g : theory.poincare.Symmetry) :\n    Set.MapsTo (theory.poincare.onStates g)\n      (theory.fields.domain : Set H.carrier) theory.fields.domain\n  vacuumInvariant (g : theory.poincare.Symmetry) :\n    theory.poincare.onStates g theory.fields.vacuum.1 =\n      theory.fields.vacuum.1\n  fieldCovariance (g : theory.poincare.Symmetry)\n      (label : Labels.carrier) (test : TestFunction)\n      (state : theory.fields.domain) :\n    theory.poincare.onStates g (theory.fields.field label test state).1 =\n      (theory.fields.field (theory.poincare.onLabels g label)\n        (theory.poincare.onTests g test)\n        ⟨theory.poincare.onStates g state.1,\n          domainInvariant g state.2⟩).1",
+            "line": 287,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/PublicTheory.lean",
+            "fragment": "L287"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          27
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; statements of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      }
+    }
+  }
+}

@@ -2,7 +2,7 @@
   "id": "Eq (14.36)",
   "kind": "equation",
   "status": "not_formalized",
-  "note": "Finding: [M] writes the operator identity T^{n1+l}XT^{n2-l}-T^{n1}XT^{n2}=T^{n1}(T^lX-XT^l)T^{n2-l} and splits it into the two (1-T^l) terms. [L] proves the same displacement bound by a different route (Holder.finite_lip, entire interpolation in the exponent), so the displayed identity is never written; closest is Holder.finite_lip.",
+  "note": "Finding: [L] bounds the change of the cyclic trace when one insertion moves by m sites by interpolating the exponents analytically and applying the Cauchy derivative bound (`Holder.finite_lip`, which `Extraction.Difference.primitive` uses), so no declaration or proof step writes the commutator identity or the (1 − T^l) factorization.",
   "relation": "relatedMatch",
   "subject": [
     {
@@ -62,13 +62,13 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; finding confirmed by two skeptics; statements of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; finding confirmed by two skeptics; note revised after an independent review; statements of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "verdicts": [
         {
           "verdict": "deviation",
-          "summary": "[L] states no counterpart of what [M] prints.",
+          "summary": "[L] states no counterpart of what [M] prints. [M] prints `=T^{n_1^{\\rm sl}}(T^lX-XT^l)T^{n_2^{\\rm sl}-l}`.",
           "evidence": [
             "Inside the proof of Lemma 14.17, [M] prints the operator identity T^{n1+l}XT^{n2-l}-T^{n1}XT^{n2}=T^{n1}(T^lX-XT^l)T^{n2-l}=-T^{n1}(1-T^l)XT^{n2-l}+T^{n1}X(1-T^l)T^{n2-l}, an intermediate step of [M]'s own spectral argument (followed by ||(1-T^l)T^n||<=l/(n+1)). [L] proves the enclosing Lemma 14.17 by a different route: stepTotal -> primitive -> Slice organized -> TimeKernel.passage -> Holder.finite_lip, whose proof interpolates the exponent analytically (F x = total h b (W x) via leap), bounds |F| on a disc by `estimation`, and applies the Cauchy derivative bound `Complex.norm_deriv_le_of_forall_mem_sphere_norm_le` to get `<= cost X b p N / r * m`. No declaration or proof step in [L] writes the telescoping/commutator identity or the (1-T^l) splitting, so the display has no counterpart; it is not a typo, and although elementary algebra it is a mathematical step [M] asserts, not notation.",
             "[M] writes the operator identity T^{n1+l}XT^{n2-l}-T^{n1}XT^{n2}=T^{n1}(T^lX-XT^l)T^{n2-l}=-T^{n1}(1-T^l)XT^{n2-l}+T^{n1}X(1-T^l)T^{n2-l} and bounds each (1-T^l)T^n spectrally. [L] bounds the displacement differently: finite_lip takes a complex derivative of F(x)=total h b (W x) on a disc of radius r (Cauchy estimate, norm_deriv_le_of_forall_mem_sphere_norm_le) and applies the mean value inequality, with TimeKernel.passage and Extraction.Difference.primitive/stepTotal built on it. No declaration states or proves the commutator split or the (1-T^l) factorization, so the printed identity has no counterpart; it is not a typo in [M]."

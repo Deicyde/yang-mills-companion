@@ -1,0 +1,238 @@
+{
+  "id": "Definition 3.9",
+  "kind": "definition",
+  "status": "formalized",
+  "note": "Label G d with a Frame is V_d with the same radial condition, weights, bidegrees, invariance, bihomogeneous basis and conjugation. The coefficient space Frame.Coeff carries the sup norm, and the l1 coeffSize is only an auxiliary size used in estimates, so the mapper's norm difference does not hold.",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 17,
+        "rect": [
+          0.11962,
+          0.38123,
+          0.76357,
+          0.16813
+        ]
+      },
+      "title": "Definition 3.9 (Polynomial labels)",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Definition 3.9"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Labels.Jet",
+        "module": "YM.Labels.Polynomial"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Labels.Jet",
+            "kind": "abbrev"
+          },
+          "snippet": {
+            "text": "abbrev Jet (G : Gauge) := (j : ℕ) → Taylor G j",
+            "line": 28,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Labels/Polynomial.lean",
+            "fragment": "L28"
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Labels.Label",
+        "module": "YM.Labels.Polynomial"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Labels.Label",
+            "kind": "abbrev"
+          },
+          "snippet": {
+            "text": "abbrev Label (G : Gauge) (d : ℕ) := ↥(localFields G d)",
+            "line": 112,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Labels/Polynomial.lean",
+            "fragment": "L112"
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Labels.Pol",
+        "module": "YM.Labels.Polynomial"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Labels.Pol",
+            "kind": "abbrev"
+          },
+          "snippet": {
+            "text": "abbrev Pol (G : Gauge) := MvPolynomial (Key G) ℂ",
+            "line": 29,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Labels/Polynomial.lean",
+            "fragment": "L29"
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Labels.bidegree",
+        "module": "YM.Labels.Polynomial"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Labels.bidegree",
+            "kind": "def"
+          },
+          "snippet": {
+            "text": "def bidegree (k : Key G) : ℕ × ℕ := (generation k, 1)",
+            "line": 53,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Labels/Polynomial.lean",
+            "fragment": "L53"
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Labels.invariantSpace",
+        "module": "YM.Labels.Polynomial"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Labels.invariantSpace",
+            "kind": "def"
+          },
+          "snippet": {
+            "text": "def invariantSpace (G : Gauge) : Submodule ℂ (Pol G) where\n  carrier := {p | ∀ A : Jet G, ∀ u, read (colored u A) p = read A p}\n  zero_mem' := by simp\n  smul_mem' z p h A u := by rw [map_smul, h A u, map_smul]\n  add_mem' {p q} hp hq A u := by rw [map_add, hp A u, hq A u, map_add]",
+            "line": 103,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Labels/Polynomial.lean",
+            "fragment": "L103"
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Labels.limited",
+        "module": "YM.Labels.Polynomial"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Labels.limited",
+            "kind": "def"
+          },
+          "snippet": {
+            "text": "def limited (G : Gauge) (d : ℕ) : Submodule ℂ (Pol G) :=\n  MvPolynomial.restrictSupport ℂ {b | height b ≤ d}",
+            "line": 60,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Labels/Polynomial.lean",
+            "fragment": "L60"
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Labels.radial",
+        "module": "YM.Labels.Jet"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Labels.radial",
+            "kind": "def"
+          },
+          "snippet": {
+            "text": "def radial (G : Gauge) (j : ℕ) : Submodule ℝ (Raw G j) where\n  carrier := {A | (∀ i : Axis, Tensor.Sym (A i)) ∧ ∀ z : E4, ∑ i : Axis, z i • Tensor.diagonal (A i) z = 0}\n  zero_mem' := by simp [Tensor.Sym,Tensor.diagonal]\n  add_mem' := by\n    rintro x y ⟨H,H'⟩ ⟨K,K'⟩\n    refine ⟨fun i s r ↦ ?_,fun z ↦ ?_⟩\n    · simp [H i s r, K i s r]\n    simp only [Tensor.diagonal] at H' K' ⊢\n    simp [smul_add, Finset.sum_add_distrib, H', K']\n  smul_mem' := by\n    rintro c y ⟨H,H'⟩\n    refine ⟨fun i s r ↦ ?_,fun z ↦ ?_⟩\n    · simp [H i s r]\n    simp only [Tensor.diagonal] at H' ⊢\n    simp_rw [Pi.smul_apply, smul_apply, smul_comm _ c, ← Finset.smul_sum,\n      H', smul_zero]",
+            "line": 22,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Labels/Jet.lean",
+            "fragment": "L22"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          17
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; statements of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      }
+    }
+  }
+}

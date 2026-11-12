@@ -1,0 +1,126 @@
+{
+  "id": "Definition 2.2",
+  "kind": "definition",
+  "status": "formalized",
+  "note": "Lean builds the law on the torus Z/nZ with side n a positive integer, the product probability Haar prior on positive links and the density exp(-beta E)/Z with real beta and E the sum of price over plaquettes with a<b. The plaquette product order agrees with M.",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 10,
+        "rect": [
+          0.12026,
+          0.47216,
+          0.76013,
+          0.19322
+        ]
+      },
+      "title": "Definition 2.2 (Wilson measure)",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Definition 2.2"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Wilson.energy",
+        "module": "YM.Wilson.Law"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Wilson.energy",
+            "kind": "def"
+          },
+          "snippet": {
+            "text": "def energy (U : Config G n) : ℝ := ∑ p : Face (Per n), G.price (faceValue U p)",
+            "line": 29,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Wilson/Law.lean",
+            "fragment": "L29"
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Wilson.law",
+        "module": "YM.Wilson.Law"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Wilson.law",
+            "kind": "def"
+          },
+          "snippet": {
+            "text": "def law (G : Gauge) (n : Side) (β : ℝ) : Measure (Config G n) := (prior G n).withDensity (weight β)",
+            "line": 87,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Wilson/Law.lean",
+            "fragment": "L87"
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YangMills.wilsonLaw",
+        "module": "PublicWilson"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YangMills.wilsonLaw",
+            "kind": "def"
+          },
+          "snippet": {
+            "text": "def wilsonLaw (g : GaugeGroup) (l : ℕ+) (β : ℝ) (haar : Measure g.image) :\n    Measure (Configuration g l) :=\n  let prior : Measure (Configuration g l) := Measure.pi fun _ => haar\n  let density := fun U : Configuration g l => Real.exp (-β * wilsonEnergy U)\n  prior.withDensity fun U => ENNReal.ofReal (density U / ∫ V, density V ∂prior)",
+            "line": 29,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/PublicWilson.lean",
+            "fragment": "L29"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          10
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; statements of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      }
+    }
+  }
+}

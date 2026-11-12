@@ -1,0 +1,210 @@
+{
+  "id": "Lemma 17.8",
+  "kind": "lemma",
+  "status": "formalized",
+  "note": "Isometry, translation intertwining, uniqueness of J, surjectivity, both vacuum lines and the scalar characterization each have a declaration. The heat intertwining J e^{-sH} = E_s J is not a standalone statement: [L] defines bHeat = J^* E_s J, so it follows from J being unitary in one step, as in the Theorem 6.15 case.",
+  "relation": "hasPart",
+  "subject": [
+    {
+      "location": {
+        "page": 198,
+        "rect": [
+          0.11912,
+          0.17016,
+          0.76305,
+          0.12018
+        ]
+      },
+      "title": "Lemma 17.8 (OS comparison and irreducibility)",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 17.8"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.Completed",
+        "module": "YM.EveryPhase.Extension"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.Completed",
+            "kind": "structure"
+          },
+          "snippet": {
+            "text": "structure Completed (F : Final C f S) (L : Almanac F) : Prop where\n  isTheory (i) : (L.actors i).Realizes (W:=(L.contours i).world) F.sector.turns F.room.kernel.spin\n  into_onto (i) : Surjective (L.J i)\n  euclid (i) : (L.chambers i).UniqueHeat\n  mink (i) (x : (L.actors i).operators.H) : (L.actors i).momentum.region zeroE x=x ↔\n    ∃ z : ℂ, z • (L.actors i).operators.vacuum=x\n  light (A : SumOfWords S) (h : finite A) : ∃ M : ℝ, 0 ≤ M ∧ ∀ i u, u∈Ioc (0:ℝ) 1 →\n    (νletter L i A).real (lowE u) ≤ M*u^2\n  heat (A : SumOfWords S) (h : finite A) : ∃ M : ℝ, 0 ≤ M ∧ ∀ i, ∀ s ≥ (1:ℝ≥0),\n    let x := stands (L.actors i).operators A\n    let P := (L.actors i).momentum.region zeroE\n    let r := inner ℂ x ((bHeat (L.J i) s-P) x)\n    0 ≤ r ∧ r ≤ ↑(M*(s:ℝ)⁻¹^2)\n  commutant (i) (B) : member (L.actors i) B ↔ ∃ a : ℂ, B=a • ContinuousLinearMap.id ℂ _\n  continued_stress (i) : Stress.Force S (F.α.ensemble i) (L.contours i) F.sector.turns F.sector.derivatives\n    F.room.kernel.spin (L.actors i) F.sector.energy\n  depends (n : ℕ) (v : Fin n → S.Union) (g : Joint n) : Continuous fun i => (L.contours i).world.W n v g\n  at_words (v : C.book.Word) (hv : Word.distinct v) : (∫ i,\n    (F.α.ensemble i).expect v ∂F.α.space.μ) = S.expect v\n  at_boundary (n : ℕ) (v : Fin n → S.Union) (g : Joint n) :\n    (∫ i, (L.contours i).world.W n v g ∂F.α.space.μ)=F.B.world.W n v g",
+            "line": 51,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Extension.lean",
+            "fragment": "L51"
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.boundary_zero_energy",
+        "module": "YM.EveryPhase.Vacuum"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.boundary_zero_energy",
+            "kind": "lemma"
+          },
+          "snippet": {
+            "text": "lemma boundary_zero_energy (i) (x : (L.actors i).operators.H) :\n    (L.actors i).momentum.region zeroE x=x ↔ ∃ z : ℂ, z • (L.actors i).operators.vacuum=x := by",
+            "line": 158,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Vacuum.lean",
+            "fragment": "L158"
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.every",
+        "module": "YM.EveryPhase.Vacuum"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.every",
+            "kind": "theorem"
+          },
+          "snippet": {
+            "text": "theorem every (i : F.α.space.X) : (L.chambers i).UniqueHeat := by",
+            "line": 146,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Vacuum.lean",
+            "fragment": "L146"
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.irreducible",
+        "module": "YM.EveryPhase.Irreducible"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.irreducible",
+            "kind": "theorem"
+          },
+          "snippet": {
+            "text": "theorem irreducible (i) (B) : weaklyCentral (L.actors i) B ↔\n    ∃ a : ℂ, B=a • ContinuousLinearMap.id ℂ _ := by",
+            "line": 207,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Irreducible.lean",
+            "fragment": "L207"
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.onto",
+        "module": "YM.EveryPhase.Surjective"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.onto",
+            "kind": "lemma"
+          },
+          "snippet": {
+            "text": "lemma onto (H : Attachment X V J) (h : Show.Reveals R X.spin X.J Y W)\n    (hs : T.Symmetric) (hp : T.Smooth) (hr : T.respects S) (ht : Bid.Hull Y.bits Y.lift X.J)\n    (hi : Y.lift.NonTangentialFree W) : Surjective J := by",
+            "line": 178,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Surjective.lean",
+            "fragment": "L178"
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.precise",
+        "module": "YM.EveryPhase.Irreducible"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.precise",
+            "kind": "theorem"
+          },
+          "snippet": {
+            "text": "theorem precise (h : FieldCore W R s X) (B) : weaklyCentral X B ↔ ∀ p f (u v : X.operators.domain),\n    let T := X.operators.denselyDefined p f\n    ∃ (he : u.val ∈ T.adjoint.domain), inner ℂ (T.adjoint (⟨u.val,he⟩)) (B v.val)=\n      inner ℂ u.val (B ((X.operators.field p f v).val)) := by",
+            "line": 195,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Irreducible.lean",
+            "fragment": "L195"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          198
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; statements of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      }
+    }
+  }
+}

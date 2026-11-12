@@ -1,0 +1,182 @@
+{
+  "id": "Definition 19.12",
+  "kind": "definition",
+  "status": "formalized",
+  "note": "The tree is a finite rooted Tree with an inner root; the conditions on scales, geometry, W_v, q_v, Q and e_D correspond one to one to Accept, toll and nestPrice, with q (here m) a real parameter in toll.",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 231,
+        "rect": [
+          0.12026,
+          0.0962,
+          0.76294,
+          0.15445
+        ]
+      },
+      "title": "Definition 19.12 (Nested geometry and rates)",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Definition 19.12"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Nesting.Accept",
+        "module": "YM.OPE.Nesting.Quantified"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Nesting.Accept",
+            "kind": "structure"
+          },
+          "snippet": {
+            "text": "structure Accept {t:Tree} (r M η:ℝ)(s:t.Inner→ℝ)(z:t.Plot): Prop where\n      levels : t.Tapered r 1 s\n      relative : t.Relative M η s z\n      scale : t.current s = r",
+            "line": 15,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Nesting/Quantified.lean",
+            "fragment": "L15"
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Nesting.Tree.Relative",
+        "module": "YM.OPE.Nesting.Grove"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Nesting.Tree.Relative",
+            "kind": "def"
+          },
+          "snippet": {
+            "text": "def Relative (M η:ℝ): (t:Tree)→ (t.Inner→ℝ)→(t.Positions→E4)→Prop\n | bud,_,_=> True\n | fork n f,s,z=> (∀ v, ‖z v-z (fork n f|>.topSeat)‖ ≤ M*s (Sum.inl ())) ∧\n   (∀ i j k e, i≠j→ η * s (Sum.inl ()) ≤ ‖childPlace i z k - childPlace j z e‖) ∧\n   ∀ i:Fin n, Relative M η (f i) (childAge i s) (childPlace i z)",
+            "line": 99,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Nesting/Grove.lean",
+            "fragment": "L99"
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Nesting.Tree.Tapered",
+        "module": "YM.OPE.Nesting.Geometry"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Nesting.Tree.Tapered",
+            "kind": "def"
+          },
+          "snippet": {
+            "text": "def Tapered : (t:Tree) → ℝ → ℝ→ (t.Inner→ℝ)→Prop\n | bud,_,_,_=> True\n | fork n f,h,β,s=> 0 < s (.inl ()) ∧ s (.inl ()) ≤ h ∧ ∀ i, Tapered (f i) (s (.inl ()) * β) β (childAge i s)",
+            "line": 21,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Nesting/Geometry.lean",
+            "fragment": "L21"
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Nesting.Tree.nestPrice",
+        "module": "YM.OPE.Nesting.Weights"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Nesting.Tree.nestPrice",
+            "kind": "def"
+          },
+          "snippet": {
+            "text": "def nestPrice (s:(fork n f).Inner→ℝ)(D:(fork n f).Inner→ℕ):ℝ :=\n      ∑ v:Σ i:Fin n,(f i).Inner, ((fork n f).ratios 1 s (Sum.inr v))^(D (Sum.inr v)+1)",
+            "line": 102,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Nesting/Weights.lean",
+            "fragment": "L102"
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Nesting.Tree.toll",
+        "module": "YM.OPE.Nesting.Actual"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Nesting.Tree.toll",
+            "kind": "def"
+          },
+          "snippet": {
+            "text": "def toll (w:(fork n f).Leaf→ℝ) (ε m:ℝ) (s:(fork n f).Inner→ℝ):=\n   (s (.inl ()))^(m-(∑ i,w i)-ε) * ∏ p:Σ i,(f i).Inner, ((fork n f).ratios 1 s (.inr p))^(-(fork n f).headSum w (.inr p)-ε)",
+            "line": 18,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Nesting/Actual.lean",
+            "fragment": "L18"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          231
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; statements of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      }
+    }
+  }
+}

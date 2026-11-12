@@ -2,7 +2,7 @@
   "id": "Lemma 16.3",
   "kind": "lemma",
   "status": "partial",
-  "note": "Finding: [L] proves that all Ward sums separate B_d for d>=4 (the type of erases only gives an existential threshold); the claim that finitely many sums separate B_d is not stated for B_d, only generically in finite_rows and used inside transfer.",
+  "note": "Finding: `Maxwell.Free.erasing` concludes `Org.erases`, which says there is some n such that for all d ≥ n a `Org.Winds` family with all Ward sums zero vanishes; the threshold 4 appears only in its proof. Selection of finitely many separating rows is `Work.A07.finite_rows`, a generic linear-algebra lemma used inside `Work.A07.transfer`, and it is never stated for B_d.",
   "relation": "narrowMatch",
   "subject": [
     {
@@ -62,16 +62,16 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, a judge ruled; finding confirmed by two skeptics; statements of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, a judge ruled; finding re-confirmed by two new skeptics after review; re-judged after an independent review; statements of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "verdicts": [
         {
           "verdict": "deviation",
-          "summary": "[L] proves less than [M] prints.",
+          "summary": "[L] proves less than [M] prints. [M] prints `For every $d\\ge4$, finitely many sums`.",
           "evidence": [
-            "[M] prints: for every d>=4, finitely many Ward sums sum_i S_n(u_1,..,Delta(K,L)u_i,..,u_n;x) separate B_d. [L]'s erasing (h : G.Simple) states `erases (hierarchy F).spin (scheme F)`, which unfolds to `∃ n, ∀ d ≥ n, ∀ T, Winds .. d T → (all row sums vanish) → T = 0`: the threshold 4 appears only inside the proof (`refine ⟨4,?_⟩`) and is lost in the statement, and the conclusion is separation by all sums, not by finitely many. Finite selection exists only generically (finite_rows, with finiteDimensional_internal) and is applied inside transfer, not stated for B_d; no declaration states the item with d>=4, so the finding stands (weaker range), and it is not a typo in [M].",
-            "[M] prints: for every d>=4, finitely many sums (16.x) separate B_d. [L]'s erasing has type `erases ...`, i.e. `∃ n, ∀ d ≥ n, ∀ T, Winds ... → (all row sums = 0) → T = 0`; n=4 appears only in the proof (`refine ⟨4,?_⟩`), not the statement, and the conclusion is separation by all sums, with no finite subfamily. Finiteness is only the generic finite_rows (used inside transfer, A07.lean:258) and no declaration states it for B_d, so the claim stands; not a typo in [M]."
+            "`Org.erases` (Org/Input.lean:149-152) says only that there is some n such that, for every d ≥ n, a `Winds` family (Input.lean:141-146, matching B_d) with all Ward sums zero is zero. `Maxwell.Free.erasing` (Next/MAXWELL/AwayTeam.lean:48) concludes `erases`, and 4 appears only inside its proof (`refine ⟨4,?_⟩`, :49). Finite selection is the generic `Work.A07.finite_rows` (Work/A07.lean:27), used only inside `transfer` (:258), so 'for every d ≥ 4, finitely many sums separate B_d' is not stated.",
+            "`Org.erases` (Org/Input.lean:149-152) is ∃ n, ∀ d ≥ n, and the value 4 enters only in the proof of `Maxwell.Free.erasing` (`refine ⟨4,?_⟩`, Next/MAXWELL/AwayTeam.lean:48-49). The lemmas with explicit hd : 4 ≤ d (Born.lean:51, Racers.lean:32,57, Magnitude.lean:142) are ingredients and state no separation. No declaration picks finitely many separating sums for B_d."
           ],
           "provenance": {
             "actor": "agent",

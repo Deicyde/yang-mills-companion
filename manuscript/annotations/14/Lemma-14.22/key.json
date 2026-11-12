@@ -1,0 +1,98 @@
+{
+  "id": "Lemma 14.22",
+  "kind": "lemma",
+  "status": "formalized",
+  "note": "[L] gives full rank for every pair x != y and every basis using only two-point rows with basis second labels; [M] asks for existence of rows at generic configurations, including one-point rows, so [L] is more general. Injectivity on a space of dimension q_d is the rank statement.",
+  "relation": "broadMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 145,
+        "rect": [
+          0.1191,
+          0.23784,
+          0.76063,
+          0.05717
+        ]
+      },
+      "title": "Lemma 14.22 (Free test rows)",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 14.22"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extra.FD.scanner_inj",
+        "module": "YM.Extra.FREE_DETECTOR_ALGEBRA.Columns"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extra.FD.scanner_inj",
+            "kind": "theorem"
+          },
+          "snippet": {
+            "text": "theorem scanner_inj (d : ℕ) (b : Module.Basis ι ℂ (W d)) (x y : E4) (hx : x≠y) :\n    Injective (fun v : W d => fun i => readsTwo F d x y v (b i)) := by",
+            "line": 104,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/FREE_DETECTOR_ALGEBRA/Columns.lean",
+            "fragment": "L104"
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extra.FD.vane",
+        "module": "YM.Extra.FREE_DETECTOR_ALGEBRA.Vane"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extra.FD.vane",
+            "kind": "def"
+          },
+          "snippet": {
+            "text": "def vane (B : RStage F d) (x y : E4) (he : couple x y∈generic _) : Cells.Columns C S d where\n  dim := B.m\n  H := table_spin C.labels\n  basis := B.b\n  realBasis := B.real_i\n  initial := B.unit_\n  amount := B.m+1\n  row i := colPair _ i x y he\n  full := by\n    let z (i : Fin (B.m+1)) := colPair _ i x y he\n    have hc (p) (i) : (z i).tests (freeTable F) B.b p=readsTwo F d x y p (B.b i) := by\n      rw [scan_used]; apply congr_arg ((freeTable F).useAt (freeTable F) (couple x y)); ext1 j; fin_cases j <;> rfl\n    change Injective fun p i => (z i).tests (freeTable F) B.b p\n    simp_rw [hc]; exact scanner_inj F d B.b x y (pair_ne _ _ (generic_conf _ he))",
+            "line": 25,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/FREE_DETECTOR_ALGEBRA/Vane.lean",
+            "fragment": "L25"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          145
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; statements of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      }
+    }
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "id": "Eq (15.1)",
+  "kind": "equation",
+  "status": "partial",
+  "note": "Finding: `Extraction.RawLimits` gives S continuous on the generic set and, through `Extraction.Order.VolumePoints`, ‖P_p(x;v) − S(x;v)‖ < ε uniformly on compact K ⊆ generic n, with the P_p only continuous; `Org.Arrives.serves` then produces a table T, smooth on Conf_n and equal to S at generic points, with the same limits. No declaration states convergence of any derivative ∂_l f_{P(k),v}, nor convergence on compact subsets of Conf_n off the generic set.",
+  "relation": "relatedMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 161,
+        "rect": [
+          0.12026,
+          0.82677,
+          0.76155,
+          0.02311
+        ]
+      },
+      "title": "Equation (15.1)",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Eq (15.1)"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Table.Smooth",
+        "module": "YM.Euclid.Table"
+      },
+      "role": "support",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Table.Smooth",
+            "kind": "structure"
+          },
+          "snippet": {
+            "text": "structure Smooth : Prop where\n  on_conf {n : ℕ} (d : Caps n) (v : L.Vector d) : ContDiffOn ℝ ∞ (fun x => S.value d x v) (conf n)",
+            "line": 88,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Euclid/Table.lean",
+            "fragment": "L88"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          161
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; finding confirmed by two skeptics; note revised after an independent review; statements of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "verdicts": [
+        {
+          "verdict": "deviation",
+          "summary": "[L] proves less than [M] prints. [M] prints `\\partial_{\\boldsymbol l}f_{P(k),v}\\longrightarrow \\partial_{\\boldsymbol l}S_n(v;\\cdot) \\quad\\text{locally uniformly on }\\Conf{n}`.",
+          "evidence": [
+            "[M] prints S_n(v;.) in C^infty(Conf_n) and convergence of every derivative d_l f_{P(k),v} to d_l S_n locally uniformly on Conf_n. [L] gives smoothness on conf n of a table T (Table.Smooth: ContDiffOn R inf ... (conf n)) via Arrives.serves/Cleaner, and RawLimits.volume = VolumePoints only states value convergence ||(P (f.per i)).read x v - S.read x v|| < eps on compact K with K subset generic n (all coordinate projections injective, strictly smaller than conf n), with the P p only ContinuousOn Cyclic. No declaration in Extraction/, Dash/ or Org/ states convergence of derivatives of the finite-volume tables or their smoothness, so the smoothness half matches but the convergence half is weaker (derivative order 0 only, and on generic rather than Conf_n); not a typo.",
+            "M prints S_n in C^infty(Conf_n) and convergence of every derivative d_l f_{P(k),v} to d_l S_n, locally uniformly on Conf_n. L's RawLimits has only `regular : ContinuousOn ... (generic n)` and `volume : VolumePoints`, which is value-level (`‖(P (f.per i)).read x v - S.read x v‖ < ε` on compact K ⊆ generic n); smoothness is obtained only for a replacement table T via Dash.awake (matchReg + T.Smooth) and Arrives.serves, agreeing with S only on generic points, and no declaration states derivative convergence of the P tables. M's proof (Arzela-Ascoli with equicontinuity from derivative bounds, diagonalizing over derivative lists) is not written in L, so this is not a typo but a real gap."
+          ],
+          "provenance": {
+            "actor": "agent",
+            "method": "two skeptics, each reading the LaTeX of [M] and the source of [L], failed to refute it",
+            "confirmed_by_human": false
+          }
+        }
+      ]
+    }
+  }
+}

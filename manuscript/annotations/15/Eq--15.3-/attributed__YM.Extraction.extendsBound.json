@@ -2,7 +2,7 @@
   "id": "Eq (15.3)",
   "kind": "equation",
   "status": "not_formalized",
-  "note": "Finding: [M] bounds every derivative of f_{p,v} on a compact set uniformly in p >= p0 by B(v,l,r). [L] bounds only values (extendsBound, Bound.volume) and obtains equicontinuity from the Lipschitz input, and the Extraction directory has no derivative of the volume kernels, so the bound for l != 0 is missing.",
+  "note": "Finding: `Extraction.Bound.volume` bounds the lattice values on compact K ⊆ Conf_n, the private `Extraction.extendsBound` passes this to the volume tables at single generic points, and `Extraction.volume_oscillates` derives equicontinuity from `Extraction.TransferLip`. No declaration differentiates the volume kernels f_{p,v} or bounds their derivatives.",
   "relation": "relatedMatch",
   "subject": [
     {
@@ -10,9 +10,9 @@
         "page": 162,
         "rect": [
           0.12026,
-          0.27444,
+          0.27728,
           0.76155,
-          0.0327
+          0.02986
         ]
       },
       "title": "Equation (15.3)",
@@ -63,13 +63,13 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, a judge ruled; finding confirmed by two skeptics; statements of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, a judge ruled; finding confirmed by two skeptics; note revised after an independent review; statements of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "verdicts": [
         {
           "verdict": "deviation",
-          "summary": "[L] states no counterpart of what [M] prints.",
+          "summary": "[L] states no counterpart of what [M] prints. [M] prints `\\sup_{p\\ge p_0}\\sup_{x\\in K'}|\\partial_{\\boldsymbol l}f_{p,v}(x)| \\le B(v,\\boldsymbol l,r)`.",
           "evidence": [
             "[M] prints sup_{p>=p0} sup_{x in K'} |partial_l f_{p,v}(x)| <= B(v,l,r) for every derivative list l. In [L], Bound.volume bounds only values, 'norm (lifted C N p v b) <= D', and extendsBound concludes only 'eventually norm ((P (f.per i)).read x v) <= D' at a point. Equicontinuity (volume_oscillates) comes from TransferLip, not from a derivative bound. Order.Meshes gives the volume kernels P p only 'ContinuousOn ... (Cyclic C.S p n)', so [L] never differentiates them. Smoothness of the limit S comes later, from distributional derivatives (Dash/Quot, Dash.awake, RawLimits.ready). The l != 0 bound therefore has no counterpart in [L]. This is not a typo: the proof's argument is built on it ('One more derivative bounds variation').",
             "[M] prints sup_{p>=p0} sup_{x in K'} |d_l f_{p,v}(x)| <= B(v,l,r) for every derivative list l. [L]'s Bound has only value fields (cyclic, volume: ||lifted ...|| <= D); extendsBound gives a pointwise value bound and volume_oscillates gives uniform equicontinuity of values from the TransferLip hypothesis, and first_surface extracts only continuous limits (RawLimits.regular is ContinuousOn). No derivative bound on lattice kernels or on f_{p,v} exists in YM/Extraction; smoothness of the limit (Table.Smooth) is taken as a hypothesis in later lemmas, not derived. So the derivative bound for l != 0 has no counterpart; not a typo."

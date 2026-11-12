@@ -1,0 +1,85 @@
+{
+  "id": "Eq (14.36)",
+  "kind": "equation",
+  "status": "not_formalized",
+  "note": "Finding: [L] bounds the change of the cyclic trace when one insertion moves by m sites by interpolating the exponents analytically and applying the Cauchy derivative bound (`Holder.finite_lip`, which `Extraction.Difference.primitive` uses), so no declaration or proof step writes the commutator identity or the (1 − T^l) factorization.",
+  "relation": "relatedMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 142,
+        "rect": [
+          0.12026,
+          0.41714,
+          0.76155,
+          0.04899
+        ]
+      },
+      "title": "Equation (14.36)",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Eq (14.36)"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extraction.Difference.primitive",
+        "module": "YM.Extraction.Difference"
+      },
+      "role": "support",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extraction.Difference.primitive",
+            "kind": "theorem"
+          },
+          "snippet": {
+            "text": "theorem primitive {C : Family G} (h : C.Makes) (a : Axis) (v : Fin (m+1) → C.book.Token)\n    (hV : C.sufficient N v) {D} (hD : D≤N)\n    (d : ℕ) (hr : d=(C.S.toDepth hD p).count.val)\n    (c : Fin (m+1) → ℝ) (hm : 0 < m) (x : Fin (m+1) → Site (C.side N p))\n    (r : ℝ) (ht : 0<r) (he : ∀ i j, i≠j → (2*d:ℝ)+ 2*r < ((x j a-x i a).val:ℝ))\n    (H : ∀ (i : Fin (m+1)) (w : C.book.Token), w=v i ∨ w=C.book.reflectedToken a (v i) →\n      Interior ((center C.S p hD (x i)).chamber 0) (C.seen w (x i)) ∧\n      (center C.S p hD (x i)).rootTest (C.beta N p) (C.seen w (x i)) ≤ c i)\n    (u : Fin (m+1)) (ℓ : ℕ) (hℓ : (ℓ:ℝ) ≤ r) :\n    ‖C.numeric N p v (update x u (x u+offset a (ℓ:Per (C.side N p))))-C.numeric N p v x‖ ≤ (∏ i, c i)/r*(ℓ:ℝ) := by",
+            "line": 90,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extraction/Difference.lean",
+            "fragment": "L90"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          142
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; finding confirmed by two skeptics; note revised after an independent review; statements of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "verdicts": [
+        {
+          "verdict": "deviation",
+          "summary": "[L] states no counterpart of what [M] prints. [M] prints `=T^{n_1^{\\rm sl}}(T^lX-XT^l)T^{n_2^{\\rm sl}-l}`.",
+          "evidence": [
+            "Inside the proof of Lemma 14.17, [M] prints the operator identity T^{n1+l}XT^{n2-l}-T^{n1}XT^{n2}=T^{n1}(T^lX-XT^l)T^{n2-l}=-T^{n1}(1-T^l)XT^{n2-l}+T^{n1}X(1-T^l)T^{n2-l}, an intermediate step of [M]'s own spectral argument (followed by ||(1-T^l)T^n||<=l/(n+1)). [L] proves the enclosing Lemma 14.17 by a different route: stepTotal -> primitive -> Slice organized -> TimeKernel.passage -> Holder.finite_lip, whose proof interpolates the exponent analytically (F x = total h b (W x) via leap), bounds |F| on a disc by `estimation`, and applies the Cauchy derivative bound `Complex.norm_deriv_le_of_forall_mem_sphere_norm_le` to get `<= cost X b p N / r * m`. No declaration or proof step in [L] writes the telescoping/commutator identity or the (1-T^l) splitting, so the display has no counterpart; it is not a typo, and although elementary algebra it is a mathematical step [M] asserts, not notation.",
+            "[M] writes the operator identity T^{n1+l}XT^{n2-l}-T^{n1}XT^{n2}=T^{n1}(T^lX-XT^l)T^{n2-l}=-T^{n1}(1-T^l)XT^{n2-l}+T^{n1}X(1-T^l)T^{n2-l} and bounds each (1-T^l)T^n spectrally. [L] bounds the displacement differently: finite_lip takes a complex derivative of F(x)=total h b (W x) on a disc of radius r (Cauchy estimate, norm_deriv_le_of_forall_mem_sphere_norm_le) and applies the mean value inequality, with TimeKernel.passage and Extraction.Difference.primitive/stepTotal built on it. No declaration states or proves the commutator split or the (1-T^l) factorization, so the printed identity has no counterpart; it is not a typo in [M]."
+          ],
+          "provenance": {
+            "actor": "agent",
+            "method": "two skeptics, each reading the LaTeX of [M] and the source of [L], failed to refute it",
+            "confirmed_by_human": false
+          }
+        }
+      ]
+    }
+  }
+}
