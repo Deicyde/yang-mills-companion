@@ -7,19 +7,20 @@
  "taxonomy": "docs/taxonomy.md",
  "provenance": "machine: mapper and verifier agents per batch, a judge on disagreement, two skeptics per claimed finding; no person reviewed",
  "counts": {
-  "stronger": 12,
-  "exact": 47,
-  "definition-match": 56,
-  "parts": 45,
-  "definition-close": 23,
-  "close": 46,
-  "inlined": 7,
-  "not-formalized-not-needed": 4,
-  "weaker": 10,
-  "no-match": 12,
+  "stronger": 15,
+  "exact": 51,
+  "definition-match": 58,
+  "parts": 47,
+  "definition-close": 24,
+  "close": 59,
+  "inlined": 9,
+  "not-formalized-not-needed": 5,
+  "weaker": 12,
+  "no-match": 15,
   "unclear": 4,
-  "differs": 3,
-  "not yet judged": 189
+  "differs": 5,
+  "missing-hypothesis": 2,
+  "not yet judged": 152
  },
  "items": [
   {
@@ -14893,16 +14894,48 @@
   },
   {
    "id": "Eq (14.39)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YM.Cells.SampleRow.tests",
+     "role": "key",
+     "where": "YM/Cells/Corrected.lean:34-36",
+     "note": "Entry of row i at the variable x: correlation on the table S of x first and the optional (at most one) second label a basis element, at the row's generic configuration.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Cells.Columns",
+     "role": "support",
+     "where": "YM/Cells/Corrected.lean:38-46",
+     "note": "Bundles the real basis with unit first and the rows; the field full says the matrix map is injective.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Extra.FD.colPair",
+     "role": "support",
+     "where": "YM/Extra/FREE_DETECTOR_ALGEBRA/Columns.lean:123-130",
+     "note": "Two-point rows at a generic pair.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Extra.FD.readsTwo",
+     "role": "support",
+     "where": "YM/Extra/FREE_DETECTOR_ALGEBRA/Columns.lean:86-86",
+     "note": "Free two-point pairing used by the two-point rows.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "G_ij is the free Maxwell correlation of the j-th basis label with row i's optional basis spectator at the row's configuration, which is SampleRow.tests on the standard table with Columns' real basis. [L] allows one- and two-point rows exactly as [M] does, so only the table being a parameter differs.",
+   "confidence": "medium",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S14-6",
     "mapper": "definition-close",
     "verifier": "definition-match",
     "agreed": false,
-    "complete": false
+    "judge": "definition-match",
+    "source": "judge",
+    "complete": true
    }
   },
   {
@@ -14961,30 +14994,122 @@
   },
   {
    "id": "Eq (14.40)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-close",
+   "lean": [
+    {
+     "decl": "YM.Cells.Columns.Trials.subtract1",
+     "role": "key",
+     "where": "YM/Cells/Corrected.lean:90-90",
+     "note": "R_{s} = F_s - G_s.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Cells.Columns.Trials.subtract2",
+     "role": "key",
+     "where": "YM/Cells/Corrected.lean:92-92",
+     "note": "R_{s,t} = (F_s-G_s)(F_t-G_t) - (G_st - G_s G_t), which equals F1F2 - G1 R2 - G2 R1 - G12.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Push.Corrected.Tests.single",
+     "role": "key",
+     "where": "YM/Push/CORRECTED_COLUMNS/Program.lean:104-105",
+     "note": "Singleton coefficient of the corrected pattern equals letter minus its one-point moment.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Push.Corrected.Tests.pairs",
+     "role": "key",
+     "where": "YM/Push/CORRECTED_COLUMNS/Program.lean:106-108",
+     "note": "Pair coefficient equals the product of the singleton errors minus the connected pair moment.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Cells.Columns.Trials.weigh",
+     "role": "support",
+     "where": "YM/Cells/Corrected.lean:88-88",
+     "note": "The row insertion F^row.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Cells.Columns.Trials.cumulant",
+     "role": "support",
+     "where": "YM/Cells/Corrected.lean:84-87",
+     "note": "Connected pair moment G_12 - G_1 G_2.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Expanding the recursion for I = {s} and I = {s,t} gives exactly subtract1 and subtract2, and [M] says only singleton and pair errors occur. The recursion for larger I is not written in [L], and the mapper's cylinder is the closed form of the generating product (14.41), not this recursion.",
+   "confidence": "high",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S14-6",
     "mapper": "definition-close",
     "verifier": "definition-close",
     "agreed": false,
-    "complete": false
+    "judge": "definition-close",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Eq (14.41)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "definition-match",
+   "lean": [
+    {
+     "decl": "YM.Next.Rank.Read.cylinder",
+     "role": "key",
+     "where": "YM/Next/RANK/Finite.lean:99-99",
+     "note": "Poly.pass(-D) * bareP a x: exp(-D) times prod(1+z_i a_i) in the square-zero veil algebra; with D = cumulants it is the generating product for any arity.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Push.Corrected.Marks.adjusted",
+     "role": "key",
+     "where": "YM/Push/CORRECTED_COLUMNS/Polynomial.lean:119-119",
+     "note": "adjusted L f = exp(-L) * prod(1+z_i f_i) for any finite mark set.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Push.Corrected.Tests.pattern",
+     "role": "key",
+     "where": "YM/Push/CORRECTED_COLUMNS/Program.lean:101-102",
+     "note": "adjusted with the singleton-and-pair cumulant and the row letters; its parts are the c_I.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Next.Rank.Read.cumulants",
+     "role": "support",
+     "where": "YM/Next/RANK/Finite.lean:226-226",
+     "note": "Logarithm of the Maxwell moment profile, C^Max.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Next.Rank.Read.bareP",
+     "role": "support",
+     "where": "YM/Next/RANK/Finite.lean:97-97",
+     "note": "prod(1+z_i F_i).",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Push.Corrected.Tests.cumulant",
+     "role": "support",
+     "where": "YM/Push/CORRECTED_COLUMNS/Program.lean:64-67",
+     "note": "C^Max truncated to singletons and the connected pair.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The generating product with the square-zero marks is the same object as [M]'s, with C^Max the logarithm of the Maxwell profile in cylinder/cumulants for general arity. The Push form truncates C^Max to one and two marks, which is [M]'s case for the rank comparison.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S14-6",
     "mapper": "definition-match",
     "verifier": "definition-close",
     "agreed": false,
-    "complete": false
+    "judge": "definition-match",
+    "source": "judge",
+    "complete": true
    }
   },
   {
@@ -15057,16 +15182,40 @@
   },
   {
    "id": "Eq (14.43)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "not-formalized-not-needed",
+   "lean": [
+    {
+     "decl": "YM.Next.Rank.Atlas.Period",
+     "role": "attributed",
+     "where": "YM/Next/RANK/Presenter.lean:62-69",
+     "note": "Middle-level comparison error is consumed as the fixed power bill(-31/32) s.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Next.Rank.Atlas.crushed",
+     "role": "attributed",
+     "where": "YM/Next/RANK/Presenter.lean:87-120",
+     "note": "Proves Arrangements with the fixed bound; no explicit E_t^G.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "E_t^G is a definition of a bound whose only use is to be below a fixed negative power of M after entry; the resulting bound bill(-31/32) s is what [L] states in Lemma 14.23's counterpart. [L] has no expression M^{-b}+C M^q(beta^{-delta}+e^{-cB}).",
+   "searched": [
+    "grep for beta^{-delta}/exp(-c B) error budgets in YM/Next/RANK",
+    "grep 31/32 across lean/YM",
+    "YM.Next.Rank.Presenter, Memorandum, Stepped",
+    "outline unit III-11"
+   ],
+   "confidence": "medium",
+   "relation": "noMatch",
    "verification": {
     "batch": "S14-6",
     "mapper": "no-match",
     "verifier": "not-formalized-not-needed",
     "agreed": false,
-    "complete": false
+    "judge": "not-formalized-not-needed",
+    "source": "judge",
+    "complete": true
    }
   },
   {
@@ -15140,16 +15289,56 @@
   },
   {
    "id": "Eq (14.44)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "close",
+   "lean": [
+    {
+     "decl": "YM.Next.Rank.Tapes.grant",
+     "role": "key",
+     "where": "YM/Next/RANK/Festoon.lean:46-50",
+     "note": "u + grant2 + ((c+u)*u + u*c) with u the one-factor error, grant2 the two-factor error and c = capZ the polynomial bound.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Next.Rank.Tapes.console",
+     "role": "key",
+     "where": "YM/Next/RANK/Festoon.lean:57-125",
+     "note": "Proves the connected pair error is at most grant.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Next.Rank.Tapes.grant₁",
+     "role": "support",
+     "where": "YM/Next/RANK/Combing.lean:51-51",
+     "note": "T.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Next.Rank.Tapes.grant₂",
+     "role": "support",
+     "where": "YM/Next/RANK/Combing.lean:52-52",
+     "note": "Z.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Next.Rank.Tapes.capZ",
+     "role": "support",
+     "where": "YM/Next/RANK/Cabal.lean:38-38",
+     "note": "U.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The bound's shape, the subtraction of the one-point product and the role of T, Z, U agree. [L] fixes T, Z, U as explicit functions of its parameters, while [M] takes them as given bounds. The verifier's crushed does not state this expression.",
+   "step": "YM.Next.Rank.Tapes.console (Festoon.lean:57-125)",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S14-6",
     "mapper": "exact",
     "verifier": "differs",
     "agreed": false,
-    "complete": false
+    "judge": "close",
+    "source": "judge",
+    "complete": true
    }
   },
   {
@@ -15230,16 +15419,64 @@
   },
   {
    "id": "Eq (14.45)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "differs",
+   "lean": [
+    {
+     "decl": "YM.Next.Rank.Perch.on_time",
+     "role": "key",
+     "where": "YM/Next/RANK/Stepped.lean:81-91",
+     "note": "Eventually in s, Tally holds, i.e. eager^(more L s) * bill(-3/4) s <= bill(-1/2) s.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Next.Rank.Perch.Tally",
+     "role": "key",
+     "where": "YM/Next/RANK/Stepped.lean:55-58",
+     "note": "growth: spouse(more L s) <= bill(-1/2) s, the loss over the v_t steps absorbed into the M^{-3/4} start.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Next.Rank.Peak.cardTest",
+     "role": "support",
+     "where": "YM/Next/RANK/Possible.lean:23-25",
+     "note": "Bounds the total step count (height + surplus) by half of hatBeta.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "[M] bounds the per-step constant over all h_t+v_t+2 steps at once by M^{1/64}; [L] bounds the growth over the v_t steps only, by a fixed power M^{1/4}, and treats the first steps inside Peak.launched. Neither inequality implies the other, but both serve to keep the iterated source below M^{-1/2}.",
+   "step": "YM.Next.Rank.Perch.covers (Stepped.lean:140-190)",
+   "confidence": "medium",
+   "finding": {
+    "claim": "differs",
+    "confirmed": true,
+    "skeptic_notes": [
+     "[M] prints C_j^{h_t(b)+v_t+2} <= M^{(b+6)/j^2} B_t^{10/j^2} <= M^{1/64}, a bound on the per-step constant over all h_t+v_t+2 steps with an exponent tending to zero in j. [L]'s Tally.growth reads `spouse s P (more L s) ≤ Perch.bill (-1/2) s`, with spouse s P c = (α+1)^c * exp(-3/4 boil s) and more L s = ceil(log(ceil(log s^2)^10)/log L) (the v_t steps), i.e. (α+1)^{v_t} <= M^{1/4} where M = exp((log log s)^2); on_time proves it eventually in s, and covers uses it to keep the iterate below M^{-1/2}, while the first h_t steps are handled inside Peak.launched with no step-count power. No declaration in [L] bounds a constant over h_t+v_t+2 steps or uses M^{1/64} (grep for 1/64 finds nothing in Next/RANK); the two inequalities have different exponents and step counts and neither implies the other, so the claim stands.",
+     "[M] prints C_j^{h_t(b)+v_t+2} <= M^{(b+6)/j^2} B_t^{10/j^2} <= M^{1/64}, a single constant-power bound over all h_t+v_t+2 steps. [L] proves in short_step/on_time only (more L s)*log(eager P) <= (1/4)*boil s, i.e. growth over the `more` (v_t) steps by a fixed power, stored as Tally.growth: spouse s P (more L s) <= bill(-1/2) s; the h_t steps and the +2 are not in this bound, and no declaration states the printed all-steps C_j^{h+v+2} <= M^{1/64}. Neither bound implies the other, so the claim stands; it is a different formulation, not a typo in [M]."
+    ]
+   },
+   "relation": "relatedMatch",
    "verification": {
     "batch": "S14-6",
     "mapper": "close",
     "verifier": "differs",
     "agreed": false,
-    "complete": false
+    "judge": "differs",
+    "source": "judge",
+    "skeptics": [
+     {
+      "refuted": false,
+      "status": "differs",
+      "reason": "[M] prints C_j^{h_t(b)+v_t+2} <= M^{(b+6)/j^2} B_t^{10/j^2} <= M^{1/64}, a bound on the per-step constant over all h_t+v_t+2 steps with an exponent tending to zero in j. [L]'s Tally.growth reads `spouse s P (more L s) ≤ Perch.bill (-1/2) s`, with spouse s P c = (α+1)^c * exp(-3/4 boil s) and more L s = ceil(log(ceil(log s^2)^10)/log L) (the v_t steps), i.e. (α+1)^{v_t} <= M^{1/4} where M = exp((log log s)^2); on_time proves it eventually in s, and covers uses it to keep the iterate below M^{-1/2}, while the first h_t steps are handled inside Peak.launched with no step-count power. No declaration in [L] bounds a constant over h_t+v_t+2 steps or uses M^{1/64} (grep for 1/64 finds nothing in Next/RANK); the two inequalities have different exponents and step counts and neither implies the other, so the claim stands."
+     },
+     {
+      "refuted": false,
+      "status": "differs",
+      "reason": "[M] prints C_j^{h_t(b)+v_t+2} <= M^{(b+6)/j^2} B_t^{10/j^2} <= M^{1/64}, a single constant-power bound over all h_t+v_t+2 steps. [L] proves in short_step/on_time only (more L s)*log(eager P) <= (1/4)*boil s, i.e. growth over the `more` (v_t) steps by a fixed power, stored as Tally.growth: spouse s P (more L s) <= bill(-1/2) s; the h_t steps and the +2 are not in this bound, and no declaration states the printed all-steps C_j^{h+v+2} <= M^{1/64}. Neither bound implies the other, so the claim stands; it is a different formulation, not a typo in [M]."
+     }
+    ],
+    "claimed": "differs",
+    "finding": "confirmed",
+    "complete": true
    }
   },
   {
@@ -15276,406 +15513,1460 @@
   },
   {
    "id": "Eq (14.47)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "close",
+   "lean": [
+    {
+     "decl": "YM.Next.Rank.Perch.covers",
+     "role": "key",
+     "where": "YM/Next/RANK/Stepped.lean:140-190",
+     "note": "Backward induction over the steps keeping the Notice bound alpha^(l-i) bill(-3/4) s at most bill(-1/2) s.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Next.Rank.Perch.Tally",
+     "role": "key",
+     "where": "YM/Next/RANK/Stepped.lean:55-58",
+     "note": "growth: spouse(v_t steps) <= bill(-1/2) s.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Next.Rank.Perch.spouse",
+     "role": "support",
+     "where": "YM/Next/RANK/Stepped.lean:47-47",
+     "note": "(alpha+1)^count * bill(-3/4) s = C^{l-i} M^{-3/4}.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The chain a_i <= C^{l-i} M^{-3/4} <= M^{-1/2} is what covers iterates with spouse. [M] additionally bounds a_l by the loss factors times E_t^G at most M^{-3/4}, which [L] takes as the initial bound from launched instead.",
+   "step": "YM.Next.Rank.Perch.covers (Stepped.lean:140-190)",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S14-6",
     "mapper": "inlined",
     "verifier": "close",
     "agreed": false,
-    "complete": false
+    "judge": "close",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Lemma 14.25",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "close",
+   "lean": [
+    {
+     "decl": "YM.PhysicalNext.InteractingRank.Soft.coupon",
+     "role": "key",
+     "where": "YM/PhysicalNext/AFTERNOON_INTERACTING_RANK_COMPARISON/Soft/Denarii.lean:90-123",
+     "note": "with ticket <= pot (Allocated) and bank, the root test over the tile cells of every nonempty mode of the invoice is at most exp(-pot), pot = log monitor/(16 M), on the actual (Ferm) representation",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.PhysicalNext.InteractingRank.Soft.s_postage",
+     "role": "helper",
+     "where": "YM/PhysicalNext/AFTERNOON_INTERACTING_RANK_COMPARISON/Soft/Denarii.lean:49-85",
+     "note": "root test <= exp(protection - 4 dim log g / V) / r^|s| from the Notice source bound",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.PhysicalNext.InteractingRank.Soft.denture",
+     "role": "helper",
+     "where": "YM/PhysicalNext/AFTERNOON_INTERACTING_RANK_COMPARISON/Soft/Denarii.lean:27-43",
+     "note": "ratio estimate (14.48) for the complete positive density, absorbing the exponent discrepancy delta",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Next.Rank.Ship.pot",
+     "role": "support",
+     "where": "YM/Next/RANK/Allowance.lean:26-28",
+     "note": "u_t = log(cutoff size)/(16n); allowance exp(2 pot), budget exp(-pot)",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Next.Rank.Ship.rebate",
+     "role": "support",
+     "where": "YM/Next/RANK/Allowance.lean:98-125",
+     "note": "same conclusion under Settled (a Lawful representation), which the Denarii docstring says is not available for the actual density",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "With the source bound as a Notice hypothesis and the allowance alpha_t = exp(2u_t), coupon bounds the |C^tile|-th root of the moment, i.e. e^{q} alpha^{-|I|} after absorbing |I| >= 1, by exp(-u_t); [L] states the root form with q^cmp fixed to pot, where [M] prints the unrooted product bound.",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S14-7",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "close",
+    "verifier": "close",
+    "agreed": false,
+    "judge": "close",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Eq (14.48)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.Next.Rank.determinant",
+     "role": "key",
+     "where": "YM/Next/RANK/Determinant.lean:240-274",
+     "note": "z|int F| / int eval <= exp(V protection - 4 dim log g) under z|F| <= exp(exponent + V X), beta g^2 = 1, g <= threshold, Lawful, side > 1",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.PhysicalNext.InteractingRank.Soft.denture",
+     "role": "key",
+     "where": "YM/PhysicalNext/AFTERNOON_INTERACTING_RANK_COMPARISON/Soft/Denarii.lean:27-43",
+     "note": "same ratio bound for the actual representation after the clipped comparison, absorbing delta",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Next.Rank.protection",
+     "role": "support",
+     "where": "YM/Next/RANK/Determinant.lean:225-228",
+     "note": "P(P,X,g) = 2 exCost + 6 + beta baseBudget + X + 3 ent - 4 log s_H",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "protection = 2 exCost + 6 + beta*baseBudget + X + 3 ent - 4 log s_H is [M]'s P(P,X,g); the hypotheses g = beta^-1/2 <= t_k, admissibility and the Haar-ball constants s_H, b_H are [L]'s beta g^2 = 1, Lawful and HaarBudget.",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S14-7",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "exact",
+    "verifier": "exact",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (14.49)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "close",
+   "lean": [
+    {
+     "decl": "YM.Next.Rank.Station.ticket",
+     "role": "key",
+     "where": "YM/Next/RANK/StationMeter.lean:41-44",
+     "note": "2(1+(8A+1)) + 6 + 6(c_dir+A^2)/2 + (1+m) + 3 ent - 4 log small + 1",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Next.Rank.Ship.Allocated",
+     "role": "support",
+     "where": "YM/Next/RANK/Allowance.lean:46-48",
+     "note": "requires ticket <= pot, i.e. Q^cmp <= log size/(16n)",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Next.Rank.Ship.bank",
+     "role": "support",
+     "where": "YM/Next/RANK/Allowance.lean:40",
+     "note": "protection - 4 dim log g / V <= ticket",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Next.Rank.Station.affordable",
+     "role": "support",
+     "where": "YM/Next/RANK/StationMeter.lean:119-123",
+     "note": "protection - 4 dim log g/cells <= ticket eventually: the per-cell bound the constant must dominate",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The terms of the right side agree with [L]'s ticket (ent = 3h, 6 = card PlaqAxes), but [L] takes the stage constant equal to ticket and bounds the per-cell exponent by it, where [M] allows any Q^cmp at least that sum.",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S14-7",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "close",
+    "verifier": "close",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Lemma 14.26",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "close",
+   "lean": [
+    {
+     "decl": "YM.PhysicalNext.InteractingRank.Soft.v_obtain_purchases",
+     "role": "key",
+     "where": "YM/PhysicalNext/AFTERNOON_INTERACTING_RANK_COMPARISON/Soft/Supra.lean:177-222",
+     "note": "from Offers_ builds trials with Travels_ and Market.Purchases",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Next.Rank.Market.Purchases",
+     "role": "support",
+     "where": "YM/Next/RANK/Bought.lean:68-87",
+     "note": "scale = a_k monitor^b, strictly decreasing, real lifts bounded in N,p with lift 0 = refUnit, tested points converge, generic, interior insertions and root test of every nonempty mode <= gap -> 0",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.PhysicalNext.InteractingRank.Soft.wheeled",
+     "role": "support",
+     "where": "YM/PhysicalNext/AFTERNOON_INTERACTING_RANK_COMPARISON/Soft/Star.lean:68-69",
+     "note": "chains v_paid_factory, v_culminates, v_pay_all into v_obtain_purchases from s_provisions; used by YM.MergeProof.Accent.warrant",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.PhysicalNext.InteractingRank.Soft.coupon",
+     "role": "helper",
+     "where": "YM/PhysicalNext/AFTERNOON_INTERACTING_RANK_COMPARISON/Soft/Denarii.lean:90-123",
+     "note": "the per-mode root bound at M = 2",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Purchases gives the radii r_nu = a_t M^b decreasing to zero, bounded real lifts common to the rows with b_1 = u_d, generic interior insertions and a root bound gamma_nu = exp(-pot) -> 0 on the corrected (dialed) coefficients, which equal R_I; [L] takes the source and window inputs (Offers_, from s_provisions) as hypotheses that [M] proves in Lemmas 14.24-14.25, and states the bound for the dialed cumulant rather than naming R_I.",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S14-7",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "close",
+    "verifier": "unclear",
+    "agreed": false,
+    "judge": "close",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Eq (14.50)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "close",
+   "lean": [
+    {
+     "decl": "YM.PhysicalNext.InteractingRank.Soft.coupon",
+     "role": "key",
+     "where": "YM/PhysicalNext/AFTERNOON_INTERACTING_RANK_COMPARISON/Soft/Denarii.lean:90-123",
+     "note": "Lemma 14.25 in root form, applied with M = 2",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.PhysicalNext.InteractingRank.Soft.v_obtain_purchases",
+     "role": "helper",
+     "where": "YM/PhysicalNext/AFTERNOON_INTERACTING_RANK_COMPARISON/Soft/Supra.lean:177-222",
+     "note": "applies coupon at each chosen depth",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The display is Lemma 14.25 at arity 2; coupon states it, in the root form exp(-pot) with pot = log M/32, and v_obtain_purchases applies it with M = 2.",
+   "step": "YM.PhysicalNext.InteractingRank.Soft.coupon (Denarii.lean:90-123), applied in YM.PhysicalNext.InteractingRank.Soft.v_obtain_purchases at Supra.lean:220-222",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S14-7",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "inlined",
+    "verifier": "close",
+    "agreed": false,
+    "judge": "close",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Lemma 14.27",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.FullVolume.genuine",
+     "role": "key",
+     "where": "YM/FullVolume/Literal.lean:62",
+     "note": "FixedBounds R.family for the standing Run and simple G",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.FullVolume.FixedBounds",
+     "role": "support",
+     "where": "YM/FullVolume/Discrete.lean:50-53",
+     "note": "for every n, v, l and r > 0 there is B with, eventually in N, for all p and all x with torus separation >= r, |gKernel C v l N p x| <= B",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.FullVolume.funding",
+     "role": "helper",
+     "where": "YM/FullVolume/Literal.lean:42-61",
+     "note": "distributes the differences among the slots and bounds the moment by chessboard",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.PhysicalNext.Repeat.Legato.Run.financed",
+     "role": "helper",
+     "where": "YM/FullVolume/Literal.lean:23-34",
+     "note": "root bound of each differentiated insertion",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.FullVolume.improved",
+     "role": "helper",
+     "where": "YM/FullVolume/Moneys.lean:69-78",
+     "note": "the projected-coefficient argument passing root bounds to differences",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "gKernel is the normalized iterated difference of the lattice moment and spaceout is torus separation at least r, so FixedBounds is the displayed bound with B and N_0 independent of p; genuine proves it for the standing construction.",
+   "confidence": "medium",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S14-7",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "close",
+    "verifier": "unclear",
+    "agreed": false,
+    "judge": "exact",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Eq (14.51)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "close",
+   "lean": [
+    {
+     "decl": "YM.FullVolume.trained",
+     "role": "key",
+     "where": "YM/FullVolume/Lit.lean:51-91",
+     "note": "for large k and small b there is Z with ||step x|| <= Z ||probe (step x)|| eventually in the mesh, all x",
+     "relation": "closeMatch"
+    }
+   ],
+   "note": "step is the projection Pi and probe the averaged detector P, so the bound is [M]'s ||c^pr|| <= C_det ||P c^pr|| with C_det = Z independent of N,p; [L] assumes VitalRank (the short-distance rank comparison, Lemma 14.26's content) as a hypothesis.",
+   "step": "YM.FullVolume.trained (Lit.lean:51-91), which states it; used in Lemma 14.27 via YM.FullVolume.cap",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S14-7",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "close",
+    "verifier": "close",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Lemma 14.28",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "missing-hypothesis",
+   "lean": [
+    {
+     "decl": "YM.Push.GridApprox.Candidates.provided",
+     "role": "key",
+     "where": "YM/Push/GRID_APPROXIMATION/Candidates.lean:150-183",
+     "note": "from Supplies, measurable real plots with sup bound cap q, interior, root distance err q -> 0 to the insertion, eventually",
+     "relation": "narrowMatch"
+    },
+    {
+     "decl": "YM.Push.GridApprox.paints",
+     "role": "key",
+     "where": "YM/Push/GRID_APPROXIMATION/Palette.lean:157-170",
+     "note": "the same for every basis label of degree d",
+     "relation": "narrowMatch"
+    },
+    {
+     "decl": "YM.Push.GridApprox.Supplies",
+     "role": "support",
+     "where": "YM/Push/GRID_APPROXIMATION/Candidates.lean:107-112",
+     "note": "bounded real fine coefficients with a Joint.Receipt signed many-source bound at every M",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Push.GridApprox.Figures",
+     "role": "support",
+     "where": "YM/Push/GRID_APPROXIMATION/Picture.lean:37-56",
+     "note": "approximant data",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "[L] builds the bounded real approximants (pulled back through backTo) only under Supplies, which no declaration proves; it appears only as the AtMaterials fields grid/grill of the unconstructed structures Crewed and Estimates, whereas [M] states no such hypothesis and constructs the trial coefficients in the proof. Missing hypothesis: Supplies; closest declaration Candidates.provided.",
+   "confidence": "medium",
+   "finding": {
+    "claim": "missing-hypothesis",
+    "confirmed": false
+   },
+   "relation": "narrowMatch",
    "verification": {
     "batch": "S14-7",
-    "mapper": null,
-    "verifier": null,
+    "mapper": "missing-hypothesis",
+    "verifier": "unclear",
+    "agreed": false,
+    "judge": "missing-hypothesis",
+    "source": "judge",
+    "skeptics": [],
+    "claimed": "missing-hypothesis",
+    "finding": "skeptics pending",
     "complete": false
    }
   },
   {
    "id": "Eq (14.52)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "no-match",
+   "lean": [
+    {
+     "decl": "YM.Work.G09.cone_cost",
+     "role": "support",
+     "where": "YM/Work/G09.lean:183-208",
+     "note": "generic cone estimate 32(1+columns)^2 coeffSize <= cost for a Duet",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Work.G09.cost_finest",
+     "role": "support",
+     "where": "YM/Work/G09.lean:210-222",
+     "note": "cost <= 2(1+columns) w at the finest level",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "[M] prints for the level-h trial coefficients 32(1+S_h)^2|e_j - J_h e_j|_1 <= R_h <= 2(1+S_h) and |e_j - J_h e_j|_1 <= 1/(16(1+S_h)) <= 1/4; [L]'s Lemma 14.28 takes its coefficients from Supplies and never forms J_h, and cone_cost/cost_finest are the generic cone inequalities with the same numerics, not this coordinate-matrix bound.",
+   "searched": [
+    "grep -rnE '32 ?\\* ?\\(1 ?\\+' lean/YM (Work/G09, FullVolume/Dusk/*, MergeProof/Biscuit, UVExtension, Pert/Spatial, Push/CUTOFF_PROJECTORS)",
+    "grep -rnE '16 ?\\* ?\\(1 ?\\+' lean/YM (Next/WARD_BIN/Flush, OPE, TraceExtension)",
+    "Push/GRID_APPROXIMATION: Candidates, Palette, Produce, Picture, Estimate, Roll, Match",
+    "src/outline grep 'bounded coarse|coarse approximation'"
+   ],
+   "confidence": "medium",
+   "finding": {
+    "claim": "no-match",
+    "confirmed": false
+   },
+   "relation": "noMatch",
    "verification": {
     "batch": "S14-7",
-    "mapper": null,
-    "verifier": null,
+    "mapper": "no-match",
+    "verifier": "unclear",
+    "agreed": false,
+    "judge": "no-match",
+    "source": "judge",
+    "skeptics": [],
+    "claimed": "no-match",
+    "finding": "skeptics pending",
     "complete": false
    }
   },
   {
    "id": "Eq (14.53)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "no-match",
+   "lean": [
+    {
+     "decl": "YM.Push.GridApprox.Joint.cost",
+     "role": "support",
+     "where": "YM/Push/GRID_APPROXIMATION/Estimate.lean:54-55",
+     "note": "error numerator of the Supplies route, divided by the marker radius W",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Push.GridApprox.Candidates.provided",
+     "role": "support",
+     "where": "YM/Push/GRID_APPROXIMATION/Candidates.lean:150-183",
+     "note": "root error cost/W -> 0 under Supplies",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "[M] prints ||B' - O(c)|| <= C e^{sum log C_{J_{i+1}}}(1+C_{J_h}) e^{-(s_h-s_m)/8} for the recombined pullback; [L] gets the root error cost/W -> 0 from the Supplies hypothesis and no declaration has the level-product prefactor with decay in s_h - s_m.",
+   "searched": [
+    "grep -rnE '\\) ?/ ?8\\)' lean/YM with exp/scale (Bid/Loan.gainChart, Push/RELAY_DIFFERENCE/Estimate, TraceExtension)",
+    "grep gainChart in Push/GRID_APPROXIMATION",
+    "Push/GRID_APPROXIMATION: Candidates, Estimate, Joint, Roll, Birth, Match",
+    "grep Supplies|MixAt|AtMaterials across lean/YM"
+   ],
+   "confidence": "medium",
+   "finding": {
+    "claim": "no-match",
+    "confirmed": false
+   },
+   "relation": "noMatch",
    "verification": {
     "batch": "S14-7",
-    "mapper": null,
-    "verifier": null,
+    "mapper": "no-match",
+    "verifier": "unclear",
+    "agreed": false,
+    "judge": "no-match",
+    "source": "judge",
+    "skeptics": [],
+    "claimed": "no-match",
+    "finding": "skeptics pending",
     "complete": false
    }
   },
   {
    "id": "Lemma 14.29",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "missing-hypothesis",
+   "lean": [
+    {
+     "decl": "YM.Push.GridApprox.plots",
+     "role": "key",
+     "where": "YM/Push/GRID_APPROXIMATION/Produce.lean:78-85",
+     "note": "from MixAt, PlotBounds: a Covering with Works for every generic real word of degree <= d",
+     "relation": "narrowMatch"
+    },
+    {
+     "decl": "YM.Push.GridApprox.covers",
+     "role": "key",
+     "where": "YM/Push/GRID_APPROXIMATION/Cover.lean:84-110",
+     "note": "bounded measurable real plots and, for i < j, eventually in t, |<g_i g_j> - Re bill| <= small k -> 0",
+     "relation": "narrowMatch"
+    },
+    {
+     "decl": "YM.Push.GridApprox.MixAt",
+     "role": "support",
+     "where": "YM/Push/GRID_APPROXIMATION/Produce.lean:38-39",
+     "note": "Supplies for every nonzero label of degree <= d at grid h",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Next.BOUNDARY.PlotBounds",
+     "role": "support",
+     "where": "YM/Next/BOUNDARY/Synchronize.lean:208-211",
+     "note": "statement quantified over words",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.OS.Grid.Covering.Works",
+     "role": "support",
+     "where": "YM/Phase/Approx.lean:71-74",
+     "note": "conclusion shape",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "plots gives the bounded real word approximations with correlation error tending to zero, eventually in T and the ordered limits, but only under MixAt (Supplies for every label up to degree d), which no declaration proves; [M] states Lemma 14.29 unconditionally. Missing hypothesis: MixAt; closest declaration plots.",
+   "confidence": "medium",
+   "finding": {
+    "claim": "missing-hypothesis",
+    "confirmed": false
+   },
+   "relation": "narrowMatch",
    "verification": {
     "batch": "S14-7",
-    "mapper": null,
-    "verifier": null,
+    "mapper": "close",
+    "verifier": "unclear",
+    "agreed": false,
+    "judge": "missing-hypothesis",
+    "source": "judge",
+    "skeptics": [],
+    "claimed": "missing-hypothesis",
+    "finding": "skeptics pending",
     "complete": false
    }
   },
   {
    "id": "Eq (14.54)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "stronger",
+   "lean": [
+    {
+     "decl": "YM.Push.GridApprox.tariff",
+     "role": "key",
+     "where": "YM/Push/GRID_APPROXIMATION/Telescope.lean:34-84",
+     "note": "roots of O_i <= c_i and of Z_i - O_i <= e_i at injective anchors give |moment prod Z - moment prod O| <= prod(e_i + c_i) - prod c_i",
+     "relation": "broadMatch"
+    }
+   ],
+   "note": "With c_i = C and e_i = delta, tariff gives (C+delta)^n - C^n, which is at most [M]'s n delta (C+delta)^{n-1}; [L] allows per-factor constants and does not write the final elementary inequality.",
+   "confidence": "medium",
+   "relation": "broadMatch",
    "verification": {
     "batch": "S14-7",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "stronger",
+    "verifier": "unclear",
+    "agreed": false,
+    "judge": "stronger",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Eq (14.55)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "inlined",
+   "lean": [
+    {
+     "decl": "YM.FullVolume.Retreat.reply",
+     "role": "key",
+     "where": "YM/FullVolume/Fields/Ivy.lean:23-27",
+     "note": "the proof cancels the common factor exp(-scalar) between numerator and scalar-free partition integral (mul_div_mul_left), which is the displayed cancellation of the vacuum factor.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.FullVolume.Retreat.mid",
+     "role": "support",
+     "where": "YM/FullVolume/Fields/Ivy.lean:22",
+     "note": "the normalized ratio: integral of the mode part of toll over lack.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.FullVolume.Retreat.toll",
+     "role": "support",
+     "where": "YM/FullVolume/Fields/Ivy.lean:13",
+     "note": "the exp(-scalar)-weighted restored field, the numerator density.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The display is a ratio whose vacuum factor has cancelled; [L] has no standalone statement of it and proves the cancellation inside Retreat.reply, with the healthy-indicator energy packed in the representation data.",
+   "step": "YM.FullVolume.Retreat.reply, YM/FullVolume/Fields/Ivy.lean:23-27",
+   "confidence": "medium",
+   "relation": "relatedMatch",
    "verification": {
     "batch": "S14-8",
     "mapper": "inlined",
-    "verifier": null,
-    "complete": false
+    "verifier": "close",
+    "agreed": false,
+    "judge": "inlined",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Eq (14.56)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "close",
+   "lean": [
+    {
+     "decl": "YM.FullVolume.Retreat.mid",
+     "role": "key",
+     "where": "YM/FullVolume/Fields/Ivy.lean:22",
+     "note": "mode-i part of the integral of toll R P F over the scalar-free partition integral lack, for arbitrary P and F.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.FullVolume.Sever.Cresting",
+     "role": "support",
+     "where": "YM/FullVolume/Fields/Peat.lean:24",
+     "note": "the same quantity with the Wilson partition in the denominator, instantiated at the singleton data.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.FullVolume.Retreat.reply",
+     "role": "support",
+     "where": "YM/FullVolume/Fields/Ivy.lean:23-27",
+     "note": "mid equals the Wilson-normalized stamp.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "mid has the shape of C_{N,p,m} (higher modes zero, scalar-free denominator), but it is stated for arbitrary densities P, F and a Poly-valued mode part rather than as a definition at the singleton-only data H^0, which Cresting supplies.",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S14-8",
     "mapper": "definition-match",
-    "verifier": null,
-    "complete": false
+    "verifier": "close",
+    "agreed": false,
+    "judge": "close",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Eq (14.57)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.PhysicalNext.Repeat.Legato.Bandage.Rising.latter",
+     "role": "key",
+     "where": "YM/FullVolume/Fields/Timber.lean:58-68",
+     "note": "CauchySeq in n of Cresting at fixed level j >= k, r.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.FullVolume.Retreat.Confluence.laven",
+     "role": "helper",
+     "where": "YM/FullVolume/Fields/Ivy.lean:37-41",
+     "note": "ratio of Cauchy numerator and denominator bounded below is Cauchy",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Cauchy property of the normalized integral along the cutoffs, for the abstract Rising family of histories that stands for the cutoff sequence.",
+   "confidence": "medium",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S14-8",
     "mapper": "exact",
-    "verifier": null,
-    "complete": false
+    "verifier": "exact",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Lemma 14.30",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.PhysicalNext.Repeat.Legato.Bandage.Rising.hail",
+     "role": "key",
+     "where": "YM/FullVolume/Fields/Capital.lean:57-63",
+     "note": "the density-side data indexX and the singleton functions Ktone are Confluence (Cauchy) as the cutoff grows, at fixed level.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.PhysicalNext.Repeat.Legato.Bandage.Rising.latter",
+     "role": "key",
+     "where": "YM/FullVolume/Fields/Timber.lean:58-68",
+     "note": "the normalized integrals are Cauchy in n.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.FullVolume.Retreat.lingers",
+     "role": "key",
+     "where": "YM/FullVolume/Fields/Till.lean:20-24",
+     "note": "positive lower bound till A.levels m p on the scalar-free partition integral for N >= m.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.FullVolume.Retreat.tills",
+     "role": "support",
+     "where": "YM/FullVolume/Fields/Till.lean:19",
+     "note": "till is positive.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.FullVolume.Retreat.Confluence.laven",
+     "role": "support",
+     "where": "YM/FullVolume/Fields/Ivy.lean:37-41",
+     "note": "Cauchy numerator and lower-bounded denominator give a Cauchy quotient.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The three claims (density and singleton functions Cauchy, normalized integrals Cauchy, positive lower bound depending on p,m) each have a declaration: hail, latter, and lingers with tills; [L] states them for the abstract Rising family under its structural hypotheses.",
+   "confidence": "medium",
+   "relation": "hasPart",
    "verification": {
     "batch": "S14-8",
     "mapper": "parts",
-    "verifier": null,
-    "complete": false
+    "verifier": "close",
+    "agreed": false,
+    "judge": "parts",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Eq (14.58)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "differs",
+   "lean": [
+    {
+     "decl": "YM.MergeProof.Matric.Gear.spends",
+     "role": "key",
+     "where": "YM/FullVolume/Mark/Sages.lean:66",
+     "note": "qualitative downward propagation: Cauchy at level k and eventual exact relations p' i n = T(p'(i+1) n) give Cauchy at every level v >= k.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.PhysicalNext.Repeat.Legato.Bandage.Branch.stays",
+     "role": "support",
+     "where": "YM/FullVolume/Gables/Master.lean:50-53",
+     "note": "uses winds, hence Gear.spends, to get Cauchy coefficients at each level m >= r.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "[M] prints the quantitative cross-cutoff bound d_m <= 2^{1-(h-m)} + sum 2^{-(i-m)} delta_i; [L] iterates down from a remote level by a qualitative induction (Gear.spends) with no distance d_m, no 2^{-(i-m)} factor and no delta_i, so neither statement implies the other, and the Cauchy conclusion the bound serves is proved.",
+   "step": "YM.PhysicalNext.Repeat.Legato.Bandage.Branch.stays, YM/FullVolume/Gables/Master.lean:50-53, through YM.MergeProof.Matric.Gear.spends",
+   "confidence": "medium",
+   "finding": {
+    "claim": "differs",
+    "confirmed": true,
+    "skeptic_notes": [
+     "[M] prints, inside the proof of Lemma 14.30, the cross-cutoff bound d_m(N,N') <= 2^{1-(h-m)} + sum_{i=m}^{h-1} 2^{-(i-m)} delta_i(N,N'). [L] proves the enclosing Cauchy conclusion by a different route: private Gear.shawls iterates d' levels down from a remote level to get a TwoFold reference sequence V with `Within (W i n) (V n) (2 * (1/2:ℝ)^d')` eventually (this matches [M]'s 2^{1-(h-m)} term, so the claim's 'no 2^{-...} factor' is slightly off), and Gear.voyages combines that with V's Cauchy property by the triangle inequality; Gear.spends only propagates Cauchy coefficients qualitatively via succor. No declaration states a distance between two cutoffs bounded by a weighted sum of per-level discrepancies delta_i; that display is an intermediate step of [M]'s own argument, [L] reaches the enclosing statement by another route, and neither statement implies the other, so `differs` stands. This is not a typo: [M] describes a different proof structure.",
+     "[M] prints, as an intermediate step inside the proof of Lemma 14.30, the quantitative bound d_m(N,N') <= 2^{1-(h-m)} + sum_{i=m}^{h-1} 2^{-(i-m)} delta_i(N,N'). [L]'s Gear.spends proves only the qualitative statement 'CauchySeq (p' k) and the recursion relation p' i n = ... (p' (i+1) n) eventually imply CauchySeq (p' v) for v >= k', by Nat.le_induction using succor (NearX, coefficient-size bound b); there is no distance d_m, no 2^{-(i-m)} weight and no delta_i, and no declaration in lean/YM states or proves the display. The enclosing Cauchy conclusion is proved (Branch.stays) by a different route, but the display itself is [M]'s own step that neither statement implies, so the claim stands; not a typo."
+    ]
+   },
+   "relation": "relatedMatch",
    "verification": {
     "batch": "S14-8",
     "mapper": "differs",
-    "verifier": null,
-    "complete": false
+    "verifier": "no-match",
+    "agreed": false,
+    "judge": "differs",
+    "source": "judge",
+    "skeptics": [
+     {
+      "refuted": false,
+      "status": "differs",
+      "reason": "[M] prints, inside the proof of Lemma 14.30, the cross-cutoff bound d_m(N,N') <= 2^{1-(h-m)} + sum_{i=m}^{h-1} 2^{-(i-m)} delta_i(N,N'). [L] proves the enclosing Cauchy conclusion by a different route: private Gear.shawls iterates d' levels down from a remote level to get a TwoFold reference sequence V with `Within (W i n) (V n) (2 * (1/2:ℝ)^d')` eventually (this matches [M]'s 2^{1-(h-m)} term, so the claim's 'no 2^{-...} factor' is slightly off), and Gear.voyages combines that with V's Cauchy property by the triangle inequality; Gear.spends only propagates Cauchy coefficients qualitatively via succor. No declaration states a distance between two cutoffs bounded by a weighted sum of per-level discrepancies delta_i; that display is an intermediate step of [M]'s own argument, [L] reaches the enclosing statement by another route, and neither statement implies the other, so `differs` stands. This is not a typo: [M] describes a different proof structure."
+     },
+     {
+      "refuted": false,
+      "status": "differs",
+      "reason": "[M] prints, as an intermediate step inside the proof of Lemma 14.30, the quantitative bound d_m(N,N') <= 2^{1-(h-m)} + sum_{i=m}^{h-1} 2^{-(i-m)} delta_i(N,N'). [L]'s Gear.spends proves only the qualitative statement 'CauchySeq (p' k) and the recursion relation p' i n = ... (p' (i+1) n) eventually imply CauchySeq (p' v) for v >= k', by Nat.le_induction using succor (NearX, coefficient-size bound b); there is no distance d_m, no 2^{-(i-m)} weight and no delta_i, and no declaration in lean/YM states or proves the display. The enclosing Cauchy conclusion is proved (Branch.stays) by a different route, but the display itself is [M]'s own step that neither statement implies, so the claim stands; not a typo."
+     }
+    ],
+    "claimed": "differs",
+    "finding": "confirmed",
+    "complete": true
    }
   },
   {
    "id": "Eq (14.59)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "close",
+   "lean": [
+    {
+     "decl": "YM.FullVolume.Sever.echoes",
+     "role": "key",
+     "where": "YM/FullVolume/Fields/Peat.lean:41-64",
+     "note": "norm of pilot minus Cresting at level j is at most refreeze/(brisk(B_j)/2) with brisk u = exp(u/64).",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.FullVolume.Sever.brisk",
+     "role": "support",
+     "where": "YM/FullVolume/Fields/Sever.lean:16",
+     "note": "brisk u = exp(u/64).",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "refreeze/(exp(B_j/64)/2) equals 2F_0 e^{-B_j/64}, with pilot as M_N and Cresting as C_{N,p,j}; [L] proves it for a given level j with hypotheses k<j<N, 2<brisk and abstract inputs, whereas [M] asserts existence of m_0 and a threshold in N for all m >= m_0.",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S14-8",
     "mapper": "close",
-    "verifier": null,
-    "complete": false
+    "verifier": "exact",
+    "agreed": false,
+    "judge": "close",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Lemma 14.31",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "close",
+   "lean": [
+    {
+     "decl": "YM.FullVolume.Sever.echoes",
+     "role": "key",
+     "where": "YM/FullVolume/Fields/Peat.lean:41-64",
+     "note": "stopping estimate at level j with constant refreeze fixed by the base level k and the weights.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.FullVolume.Sever.refreeze",
+     "role": "support",
+     "where": "YM/FullVolume/Fields/Flight.lean:28",
+     "note": "the constant F_0.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.PhysicalNext.Repeat.Legato.Bandage.Rising.arrives",
+     "role": "support",
+     "where": "YM/FullVolume/Fields/Timber.lean:74-103",
+     "note": "consumer: picks j with refreeze/(brisk j/2) small and applies echoes for large n.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "echoes bounds |M_N - C_{N,p,j}| by F_0/(e^{B_j/64}/2) with F_0 depending only on the base level, weights and bounds x,y, not on j or N, for j above the base level with 2 < e^{B_j/64} and the Ponds/Rising hypotheses; the m_0 and the N-threshold of [M] appear as hypotheses (j>k, brisk>2, large n) and abstract inputs rather than as existentials.",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S14-8",
     "mapper": "close",
-    "verifier": null,
-    "complete": false
+    "verifier": "close",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (14.60)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "close",
+   "lean": [
+    {
+     "decl": "YM.FullVolume.Sever.refreeze",
+     "role": "key",
+     "where": "YM/FullVolume/Fields/Flight.lean:28",
+     "note": "exp(card(Site) * Vac.treasury A k + card V * (x + y + 2)) / Poly.toll s t, with toll s t = product of s i over the mode t.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.Vac.treasury",
+     "role": "support",
+     "where": "YM/Vac/Treasury.lean:29",
+     "note": "the vacuum-ratio exponent q_{k_0} per site.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Same shape: |Lambda| q_{k_0} is card Site * treasury, s_0^reg + s_0^for is x + y, the 2 is 2*1 per label, and the denominator is the product of weights over the mode (all labels when the mode is full); x,y,s are abstract parameters in [L] rather than named suprema.",
+   "step": "YM.FullVolume.Sever.refreeze, YM/FullVolume/Fields/Flight.lean:28",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S14-8",
     "mapper": "close",
-    "verifier": null,
-    "complete": false
+    "verifier": "definition-close",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Lemma 14.32",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "close",
+   "lean": [
+    {
+     "decl": "YM.FullVolume.PositionsUV",
+     "role": "key",
+     "where": "YM/FullVolume/Profiles.lean:25-36",
+     "note": "for all p,n,v exists f ContDiffOn infinity on NoHit with, for every difference list l, Cluster convergence of squall differences of the lifted lattice moment to derive f.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.FullVolume.positioned",
+     "role": "key",
+     "where": "YM/FullVolume/Profiles.lean:42-47",
+     "note": "proves PositionsUV from FixedBounds and Purchased (Cauchy at common-grid points).",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.PhysicalNext.Repeat.Legato.Campaign.realUV",
+     "role": "key",
+     "where": "YM/FullVolume/Fields/Filled.lean:45",
+     "note": "PositionsUV for the reference family along the full sequence, without extra hypotheses beyond the campaign data.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.FullVolume.Cluster",
+     "role": "support",
+     "where": "YM/FullVolume/Strings.lean:55-58",
+     "note": "convergence along sequences of lattice points whose physical positions tend to x in NoHit; continuity of the limit.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.FullVolume.reachable",
+     "role": "support",
+     "where": "YM/FullVolume/Strings.lean:90-93",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.FullVolume.Tuned",
+     "role": "support",
+     "where": "YM/FullVolume/Tuned.lean:19",
+     "note": "uniform-on-compacts convergence (Extraction.Meets).",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Same claim; [L] expresses the uniform-in-K, N >= N_0 statement as Cluster (convergence along arbitrary moving lattice points tending to x in NoHit, with continuity), from which the uniform form follows by a compactness argument, and the limit is ContDiffOn infinity on NoHit.",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S14-8",
     "mapper": "close",
-    "verifier": null,
-    "complete": false
+    "verifier": "close",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Eq (14.61)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "inlined",
+   "lean": [
+    {
+     "decl": "YM.FullVolume.from_previous",
+     "role": "key",
+     "where": "YM/FullVolume/Tuned.lean:72-125",
+     "note": "hq: the Taylor-type bound |F(z)-F(Y)-k D| <= B k^2 at lattice points, divided by k, gives |W-D| <= B k with W the difference quotient over the fixed interval and D the next lattice difference; used to prove the differences are Cauchy.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.FullVolume.FixedBounds.taylor",
+     "role": "helper",
+     "where": "YM/FullVolume/Region.lean:58-75",
+     "note": "uniform quadratic Taylor inequality for lattice kernels away from coincidence",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The discrete Taylor comparison between the difference quotient over a fixed interval and the first lattice difference is proved inside from_previous with constant B*k instead of the printed (1/2)B h; the use (Cauchy of the next difference) is the same.",
+   "step": "YM.FullVolume.from_previous, YM/FullVolume/Tuned.lean:108-119",
+   "confidence": "medium",
+   "relation": "relatedMatch",
    "verification": {
     "batch": "S14-8",
     "mapper": "inlined",
-    "verifier": null,
-    "complete": false
+    "verifier": "inlined",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Lemma 14.33",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "close",
+   "lean": [
+    {
+     "decl": "YM.FullVolume.PositionsUV",
+     "role": "key",
+     "where": "YM/FullVolume/Profiles.lean:25-36",
+     "note": "Meets of the interpolants of the differences to the derivative of f, integrability of t*g, and convergence of the smeared sums sumOn for every suitable test, for every difference list.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.FullVolume.held",
+     "role": "key",
+     "where": "YM/FullVolume/Panes.lean:64-80",
+     "note": "Cluster (convergence along moving lattice points tending to x) implies Meets for the interpolants.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.PhysicalNext.Repeat.Legato.Campaign.realUV",
+     "role": "key",
+     "where": "YM/FullVolume/Fields/Filled.lean:45",
+     "note": "PositionsUV for the reference family along the full sequence.",
+     "relation": "closeMatch"
+    },
+    {
+     "decl": "YM.FullVolume.pudding",
+     "role": "helper",
+     "where": "YM/FullVolume/Smears.lean:49",
+     "note": "integrability and smeared-sum convergence from Cluster.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.FullVolume.sumOn",
+     "role": "support",
+     "where": "YM/FullVolume/Smears.lean:22-23",
+     "note": "a_N^{4n} times the sum of t at tagged lattice points times F N.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "[L] states the moving-point claim as Meets (uniform convergence on compacts of NoHit) and derives it from Cluster in held by a compactness argument, and test admissibility is `suitable`; the content matches [M]'s x_N -> x formulation, along an extraction sequence, but not by unfolding alone.",
+   "confidence": "medium",
+   "relation": "closeMatch",
    "verification": {
     "batch": "S14-8",
     "mapper": "close",
-    "verifier": null,
-    "complete": false
+    "verifier": "exact",
+    "agreed": false,
+    "judge": "close",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Eq (15.1)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "weaker",
+   "lean": [
+    {
+     "decl": "YM.Extraction.RawLimits",
+     "role": "key",
+     "where": "YM/Extraction/Lipschitz.lean:156-160",
+     "note": "S continuous on generic configurations; volume field gives P p -> S locally uniformly (values only) on compact generic sets.",
+     "relation": "narrowMatch"
+    },
+    {
+     "decl": "YM.Extraction.Order.VolumePoints",
+     "role": "key",
+     "where": "YM/Extraction/Limits.lean:64-66",
+     "note": "locally uniform convergence of the values (P (per i)).read x v to S.read x v, no derivatives.",
+     "relation": "narrowMatch"
+    },
+    {
+     "decl": "YM.Org.Arrives.serves",
+     "role": "key",
+     "where": "YM/Org/Input.lean:101-109",
+     "note": "supplies a separate smooth table T equal to S on generic points with RawLimits for T; this is the only smoothness claim.",
+     "relation": "narrowMatch"
+    },
+    {
+     "decl": "YM.Org.Cleaner",
+     "role": "support",
+     "where": "YM/Org/Input.lean:90-96",
+     "note": "smooth : T.Smooth, a ContDiffOn of every value on conf n.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Extraction.volume_oscillates",
+     "role": "attributed",
+     "where": "YM/Extraction/Lipschitz.lean:116-138",
+     "note": "equicontinuity of the values P p on generic compacts, not of derivatives.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Dash.awake",
+     "role": "support",
+     "where": "YM/Dash/Slew.lean:26-58",
+     "note": "smooth representative from distributional derivative labels",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "M prints that S_n is C^infty on Conf_n and that every derivative of f_{P(k),v} converges locally uniformly to the derivative of S_n. L gets smoothness only for a separate table T that agrees with the extracted S on generic points (Arrives.serves, Cleaner.smooth), and the volume tables P_p are only continuous with value-level locally uniform convergence (RawLimits.volume). No L declaration states convergence of derivatives of the finite-volume kernels, nor smoothness of P_p; the closest declaration is RawLimits.",
+   "step": "Lemma 15.1 (display inside its statement)",
+   "searched": [
+    "tool.py keys/search for RawLimits, Extraction, Cleaner",
+    "grep TendstoLocallyUniformlyOn/TendstoUniformlyOn with deriv across all of YM (hits only in FullVolume/UVExtension for spacing or analytic-parameter limits, not volume kernels)",
+    "grep iteratedFDeriv/ContDiffOn in YM/Extraction, Dash, Euclid, Org",
+    "outline unit IV-1 (Props IV.1.1, IV.1.3: raw limits are continuity only; smoothness via distributional derivatives)"
+   ],
+   "confidence": "medium",
+   "finding": {
+    "claim": "weaker",
+    "confirmed": true,
+    "skeptic_notes": [
+     "[M] prints S_n(v;.) in C^infty(Conf_n) and convergence of every derivative d_l f_{P(k),v} to d_l S_n locally uniformly on Conf_n. [L] gives smoothness on conf n of a table T (Table.Smooth: ContDiffOn R inf ... (conf n)) via Arrives.serves/Cleaner, and RawLimits.volume = VolumePoints only states value convergence ||(P (f.per i)).read x v - S.read x v|| < eps on compact K with K subset generic n (all coordinate projections injective, strictly smaller than conf n), with the P p only ContinuousOn Cyclic. No declaration in Extraction/, Dash/ or Org/ states convergence of derivatives of the finite-volume tables or their smoothness, so the smoothness half matches but the convergence half is weaker (derivative order 0 only, and on generic rather than Conf_n); not a typo.",
+     "M prints S_n in C^infty(Conf_n) and convergence of every derivative d_l f_{P(k),v} to d_l S_n, locally uniformly on Conf_n. L's RawLimits has only `regular : ContinuousOn ... (generic n)` and `volume : VolumePoints`, which is value-level (`‖(P (f.per i)).read x v - S.read x v‖ < ε` on compact K ⊆ generic n); smoothness is obtained only for a replacement table T via Dash.awake (matchReg + T.Smooth) and Arrives.serves, agreeing with S only on generic points, and no declaration states derivative convergence of the P tables. M's proof (Arzela-Ascoli with equicontinuity from derivative bounds, diagonalizing over derivative lists) is not written in L, so this is not a typo but a real gap."
+    ]
+   },
+   "relation": "narrowMatch",
    "verification": {
     "batch": "S15-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "weaker",
+    "verifier": "weaker",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "skeptics": [
+     {
+      "refuted": false,
+      "status": "weaker",
+      "reason": "[M] prints S_n(v;.) in C^infty(Conf_n) and convergence of every derivative d_l f_{P(k),v} to d_l S_n locally uniformly on Conf_n. [L] gives smoothness on conf n of a table T (Table.Smooth: ContDiffOn R inf ... (conf n)) via Arrives.serves/Cleaner, and RawLimits.volume = VolumePoints only states value convergence ||(P (f.per i)).read x v - S.read x v|| < eps on compact K with K subset generic n (all coordinate projections injective, strictly smaller than conf n), with the P p only ContinuousOn Cyclic. No declaration in Extraction/, Dash/ or Org/ states convergence of derivatives of the finite-volume tables or their smoothness, so the smoothness half matches but the convergence half is weaker (derivative order 0 only, and on generic rather than Conf_n); not a typo."
+     },
+     {
+      "refuted": false,
+      "status": "weaker",
+      "reason": "M prints S_n in C^infty(Conf_n) and convergence of every derivative d_l f_{P(k),v} to d_l S_n, locally uniformly on Conf_n. L's RawLimits has only `regular : ContinuousOn ... (generic n)` and `volume : VolumePoints`, which is value-level (`‖(P (f.per i)).read x v - S.read x v‖ < ε` on compact K ⊆ generic n); smoothness is obtained only for a replacement table T via Dash.awake (matchReg + T.Smooth) and Arrives.serves, agreeing with S only on generic points, and no declaration states derivative convergence of the P tables. M's proof (Arzela-Ascoli with equicontinuity from derivative bounds, diagonalizing over derivative lists) is not written in L, so this is not a typo but a real gap."
+     }
+    ],
+    "claimed": "weaker",
+    "finding": "confirmed",
+    "complete": true
    }
   },
   {
    "id": "Eq (15.2)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "exact",
+   "lean": [
+    {
+     "decl": "YM.Extraction.Order.Ordered",
+     "role": "key",
+     "where": "YM/Extraction/Limits.lean:32-35",
+     "note": "mesh limit at each admissible period then volume limit of the smeared lattice correlations equals the integral of the test against S.read.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Extraction.RawLimits",
+     "role": "key",
+     "where": "YM/Extraction/Lipschitz.lean:156-160",
+     "note": "integral field is f.Ordered C S.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Extraction.Order.smears",
+     "role": "support",
+     "where": "YM/Extraction/Limits.lean:26-27",
+     "note": "lattice smear a^(4n) sum t * numeric.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Extraction.Order.limits",
+     "role": "support",
+     "where": "YM/Extraction/Orders.lean:61-64",
+     "note": "iterated limit with eventual admissibility of the test support.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Extraction.Order.upon",
+     "role": "key",
+     "where": "YM/Extraction/Limits.lean:39",
+     "note": "persistence under further refinement.",
+     "relation": "exactMatch"
+    },
+    {
+     "decl": "YM.Extraction.crops",
+     "role": "support",
+     "where": "YM/Extraction/Held.lean:136-137",
+     "note": "existence of the extraction",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Both state that, along the extraction, the inner mesh limit exists at each admissible period and the outer volume limit equals the integral of the smooth compactly supported test against the limiting kernel; L's test has compact support in Conf_n and admissibility is support inside the fundamental domain, matching M.",
+   "step": "Lemma 15.1 (display inside its statement)",
+   "confidence": "high",
+   "relation": "exactMatch",
    "verification": {
     "batch": "S15-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "exact",
+    "verifier": "exact",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Lemma 15.1",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "weaker",
+   "lean": [
+    {
+     "decl": "YM.Extraction.crops",
+     "role": "key",
+     "where": "YM/Extraction/Held.lean:136-137",
+     "note": "from centered bounds, a refinement and tables S, P with RawLimits.",
+     "relation": "narrowMatch"
+    },
+    {
+     "decl": "YM.Extraction.first_surface",
+     "role": "key",
+     "where": "YM/Extraction/Lipschitz.lean:166-184",
+     "note": "diagonal Arzela-Ascoli extraction: strictly increasing refinement, S, P_p.",
+     "relation": "narrowMatch"
+    },
+    {
+     "decl": "YM.Extraction.RawLimits",
+     "role": "key",
+     "where": "YM/Extraction/Lipschitz.lean:156-160",
+     "note": "continuity, locally uniform volume convergence of values, ordered integral convergence.",
+     "relation": "narrowMatch"
+    },
+    {
+     "decl": "YM.Extraction.copy_down",
+     "role": "key",
+     "where": "YM/Extraction/Lipschitz.lean:162-164",
+     "note": "persistence under further refinement.",
+     "relation": "narrowMatch"
+    },
+    {
+     "decl": "YM.Org.Arrives.serves",
+     "role": "key",
+     "where": "YM/Org/Input.lean:101-109",
+     "note": "smooth table T matching S on generic points, with RawLimits for T.",
+     "relation": "narrowMatch"
+    },
+    {
+     "decl": "YM.Extraction.no_wrap_hit",
+     "role": "support",
+     "where": "YM/Extraction/Patch.lean:47",
+     "note": "with Patch.room gives eventual NoHit for compact subsets of conf.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Extraction.RawLimits.ready",
+     "role": "support",
+     "where": "YM/Extraction/Lipschitz.lean:194-202",
+     "note": "promotes RawLimits to a smooth table equal on generic points",
+     "from_verifier": true,
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The extraction of a refinement and table S, the ordered convergence of smears to the integral, and persistence under refinement are in L (crops, first_surface, RawLimits, copy_down), and eventual inclusion of compact sets in NoHit follows from room and no_wrap_hit. M also prints that S_n is C^infty and that all derivatives of f_{P(k),v} converge locally uniformly; L proves only value-level convergence of P_p to S on generic compacts, and smoothness only for a distinct table T equal to S on generic points. Missing: derivative convergence for the finite-volume kernels.",
+   "searched": [
+    "same as Eq (15.1)",
+    "outline units IV-1 and II-1",
+    "grep NoHit/room in YM/Extraction"
+   ],
+   "confidence": "medium",
+   "finding": {
+    "claim": "weaker",
+    "confirmed": false
+   },
+   "relation": "narrowMatch",
    "verification": {
     "batch": "S15-1",
-    "mapper": null,
-    "verifier": null,
+    "mapper": "weaker",
+    "verifier": "weaker",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "skeptics": [],
+    "claimed": "weaker",
+    "finding": "skeptics pending",
     "complete": false
    }
   },
   {
    "id": "Eq (15.3)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "no-match",
+   "lean": [
+    {
+     "decl": "YM.Extraction.extendsBound",
+     "role": "attributed",
+     "where": "YM/Extraction/Lipschitz.lean:140-153",
+     "note": "eventual uniform bound on the values (P (per i)).read x v at a generic point, the l = 0 case only",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Extraction.Bound",
+     "role": "support",
+     "where": "YM/Extraction/Integrate.lean:25-30",
+     "note": "lattice value bounds on compacts, no derivatives",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Extraction.volume_oscillates",
+     "role": "attributed",
+     "where": "YM/Extraction/Lipschitz.lean:116-138",
+     "note": "equicontinuity of the volume tables on generic compacts, replacing the derivative bound",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "[M] bounds every derivative of f_{p,v} on a compact set uniformly in p >= p0 by B(v,l,r). [L] bounds only values (extendsBound, Bound.volume) and obtains equicontinuity from the Lipschitz input, and the Extraction directory has no derivative of the volume kernels, so the bound for l != 0 is missing.",
+   "searched": [
+    "grep deriv/Deriv in YM/Extraction (no relevant hit)",
+    "tool.py exists/decl on extendsBound, Bound, volume_oscillates",
+    "read first_surface and RawLimits in YM/Extraction/Lipschitz.lean"
+   ],
+   "confidence": "medium",
+   "finding": {
+    "claim": "no-match",
+    "confirmed": false
+   },
+   "relation": "noMatch",
    "verification": {
     "batch": "S15-1",
-    "mapper": null,
-    "verifier": null,
+    "mapper": "no-match",
+    "verifier": "weaker",
+    "agreed": false,
+    "judge": "no-match",
+    "source": "judge",
+    "skeptics": [],
+    "claimed": "no-match",
+    "finding": "skeptics pending",
     "complete": false
    }
   },
   {
    "id": "Eq (15.4)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "stronger",
+   "lean": [
+    {
+     "decl": "YM.Cells.Seam",
+     "role": "key",
+     "where": "YM/Cells/Certificate.lean:14-19",
+     "note": "inequality field: norm of the moment of the product of copies of interior functions is at most the product of rootTest",
+     "relation": "broadMatch"
+    },
+    {
+     "decl": "YM.Cells.Tiling.tiles",
+     "role": "key",
+     "where": "YM/Cells/Chess.lean:80-81",
+     "note": "same bound in rootPower form under reflection positivity of all band cuts",
+     "relation": "broadMatch"
+    },
+    {
+     "decl": "YM.Cells.laws",
+     "role": "key",
+     "where": "YM/Cells/Certificate.lean:21-24",
+     "note": "Seam holds for every beta >= 0",
+     "relation": "broadMatch"
+    },
+    {
+     "decl": "YM.Cells.seamless",
+     "role": "support",
+     "where": "YM/Cells/Packing.lean:81-84",
+     "note": "Seam at the family's side and coupling",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Cells.Tiling.rootTest",
+     "role": "support",
+     "where": "YM/Cells/Tiling.lean:226-227",
+     "note": "the root ||F||_T: card^-1 power of the moment of the product of copies",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "Both bound the moment of the product of copies of interior functions, one per cell, by the product of chessboard roots. [L] proves it for an arbitrary Tiling and any beta >= 0, a larger range than [M]'s aligned bond tilings at the family couplings.",
+   "confidence": "medium",
+   "relation": "broadMatch",
    "verification": {
     "batch": "S15-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "stronger",
+    "verifier": "exact",
+    "agreed": false,
+    "judge": "stronger",
+    "source": "judge",
+    "complete": true
    }
   },
   {
    "id": "Eq (15.5)",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "stronger",
+   "lean": [
+    {
+     "decl": "YM.Extraction.Lease.take",
+     "role": "key",
+     "where": "YM/Lane/Lease.lean:57-124",
+     "note": "from the rents hypothesis, gain: for separated lattice points the moment with one error slot and spectators is at most A*y(N,p).",
+     "relation": "broadMatch"
+    },
+    {
+     "decl": "YM.Extraction.Lease.gain",
+     "role": "support",
+     "where": "YM/Lane/Lease.lean:54-55",
+     "note": "conclusion form with constant A depending on n, tokens, slot and delta.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Extraction.Lease.rents",
+     "role": "support",
+     "where": "YM/Lane/Lease.lean:20-22",
+     "note": "smallness of the error as root bounds on translated link tilings with relative margin 8(j+1).",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Extraction.Lease.featuring",
+     "role": "support",
+     "where": "YM/Lane/Lease.lean:51-52",
+     "note": "moment of the product with the error at slot u and C.seen observables elsewhere.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "M's bound on the expectation with one small error and spectators, uniform for toroidal separation >= delta, is take's gain statement. L needs only the rents condition, not that eta tends to 0 uniformly in p, and takes C.Makes and CenteredBook as the standing centered estimates, so L is slightly stronger.",
+   "confidence": "high",
+   "relation": "broadMatch",
    "verification": {
     "batch": "S15-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "stronger",
+    "verifier": "stronger",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
    "id": "Lemma 15.2",
-   "status": null,
-   "relation": null,
-   "lean": [],
-   "note": "Not yet judged",
+   "status": "parts",
+   "lean": [
+    {
+     "decl": "YM.Extraction.Lease.take",
+     "role": "key",
+     "where": "YM/Lane/Lease.lean:57-124",
+     "note": "the bound C(v,delta) eta_{N,p} for separated points, eventually along the ordered tails.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Work.D02.answer",
+     "role": "key",
+     "where": "YM/Work/D02.lean:24-84",
+     "note": "with gain and y -> 0, every smeared correlation with one error slot and a fixed test tends to 0 along F.fuse.",
+     "relation": "hasPart"
+    },
+    {
+     "decl": "YM.Bid.D02",
+     "role": "support",
+     "where": "YM/Bid/Drops.lean:57-58",
+     "note": "statement proved by D02.answer.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Extraction.Lease.rents",
+     "role": "support",
+     "where": "YM/Lane/Lease.lean:20-22",
+     "note": "L's form of Definition E2-small.",
+     "relation": "relatedMatch"
+    },
+    {
+     "decl": "YM.Extraction.Lease.gain",
+     "role": "support",
+     "where": "YM/Lane/Lease.lean:54-55",
+     "note": "conclusion of take.",
+     "relation": "relatedMatch"
+    }
+   ],
+   "note": "The pointwise bound is Lease.take, and the consequence that the smear against a fixed separated test tends to zero is Work.D02.answer applied to gain with eta -> 0. L phrases smallness through rents (root bounds on translated link tilings with the same margin) and does not need the uniform-in-p decay of eta for the bound.",
+   "confidence": "medium",
+   "relation": "hasPart",
    "verification": {
     "batch": "S15-1",
-    "mapper": null,
-    "verifier": null,
-    "complete": false
+    "mapper": "parts",
+    "verifier": "parts",
+    "agreed": true,
+    "source": "mapper+verifier",
+    "complete": true
    }
   },
   {
@@ -15686,7 +16977,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S15-2",
-    "mapper": null,
+    "mapper": "close",
     "verifier": null,
     "complete": false
    }
@@ -15699,7 +16990,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S15-2",
-    "mapper": null,
+    "mapper": "parts",
     "verifier": null,
     "complete": false
    }
@@ -15712,7 +17003,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S15-2",
-    "mapper": null,
+    "mapper": "close",
     "verifier": null,
     "complete": false
    }
@@ -15725,7 +17016,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S15-2",
-    "mapper": null,
+    "mapper": "close",
     "verifier": null,
     "complete": false
    }
@@ -15738,7 +17029,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S15-2",
-    "mapper": null,
+    "mapper": "no-match",
     "verifier": null,
     "complete": false
    }
@@ -15751,7 +17042,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S15-2",
-    "mapper": null,
+    "mapper": "close",
     "verifier": null,
     "complete": false
    }
@@ -15764,7 +17055,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S15-2",
-    "mapper": null,
+    "mapper": "close",
     "verifier": null,
     "complete": false
    }
@@ -15777,7 +17068,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S15-2",
-    "mapper": null,
+    "mapper": "close",
     "verifier": null,
     "complete": false
    }
@@ -15790,7 +17081,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S15-2",
-    "mapper": null,
+    "mapper": "close",
     "verifier": null,
     "complete": false
    }
@@ -15803,7 +17094,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S15-2",
-    "mapper": null,
+    "mapper": "exact",
     "verifier": null,
     "complete": false
    }
@@ -15816,7 +17107,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S15-2",
-    "mapper": null,
+    "mapper": "close",
     "verifier": null,
     "complete": false
    }
@@ -15829,7 +17120,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S15-2",
-    "mapper": null,
+    "mapper": "parts",
     "verifier": null,
     "complete": false
    }
@@ -15842,7 +17133,7 @@
    "note": "Not yet judged",
    "verification": {
     "batch": "S15-2",
-    "mapper": null,
+    "mapper": "inlined",
     "verifier": null,
     "complete": false
    }
