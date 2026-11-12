@@ -23,7 +23,7 @@ def head_start(lines, i):
     j = i
     while j > 0:
         prev = lines[j - 1].strip()
-        if prev.startswith('@[') or prev.startswith('--'):
+        if (prev.startswith('@[') and not KEYWORD.match(prev)) or prev.startswith('--'):
             j -= 1
         elif prev.endswith('-/'):
             k = j - 1
@@ -59,6 +59,7 @@ def main(decls_path, lean, out):
             b = stop  # 1-based last candidate line
             while b > a and (not lines[b - 1].strip() or lines[b - 1].strip().startswith('--')):
                 b -= 1
+            b = max(a, b)
             rng = [file, a, b]
             if r.get('duplicate') or r['name'] in ranges:
                 dups[r['name']].append(rng)
