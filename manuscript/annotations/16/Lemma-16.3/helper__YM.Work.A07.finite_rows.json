@@ -1,0 +1,85 @@
+{
+  "id": "Lemma 16.3",
+  "kind": "lemma",
+  "status": "partial",
+  "note": "Finding: [L] proves that all Ward sums separate B_d for d>=4 (the type of erases only gives an existential threshold); the claim that finitely many sums separate B_d is not stated for B_d, only generically in finite_rows and used inside transfer.",
+  "relation": "relatedMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 174,
+        "rect": [
+          0.11932,
+          0.62551,
+          0.76249,
+          0.09772
+        ]
+      },
+      "title": "Lemma 16.3 (Finite internal Ward tests)",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.3"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.A07.finite_rows",
+        "module": "YM.Work.A07"
+      },
+      "role": "helper",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.A07.finite_rows",
+            "kind": "theorem"
+          },
+          "snippet": {
+            "text": "theorem finite_rows {I E F : Type*} [AddCommGroup E] [Module ℝ E]\n    [FiniteDimensional ℝ E] [AddCommGroup F] [Module ℝ F]\n    (f : I → E →ₗ[ℝ] F) (h : ∀ x : E, (∀ i, f i x = 0) → x = 0) :\n    ∃ s : Finset I, Injective (LinearMap.pi (fun i : s => f i.1)) := by",
+            "line": 27,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/A07.lean",
+            "fragment": "L27"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          174
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; finding confirmed by two skeptics; statements of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "verdicts": [
+        {
+          "verdict": "deviation",
+          "summary": "[L] proves less than [M] prints.",
+          "evidence": [
+            "[M] prints: for every d>=4, finitely many Ward sums sum_i S_n(u_1,..,Delta(K,L)u_i,..,u_n;x) separate B_d. [L]'s erasing (h : G.Simple) states `erases (hierarchy F).spin (scheme F)`, which unfolds to `∃ n, ∀ d ≥ n, ∀ T, Winds .. d T → (all row sums vanish) → T = 0`: the threshold 4 appears only inside the proof (`refine ⟨4,?_⟩`) and is lost in the statement, and the conclusion is separation by all sums, not by finitely many. Finite selection exists only generically (finite_rows, with finiteDimensional_internal) and is applied inside transfer, not stated for B_d; no declaration states the item with d>=4, so the finding stands (weaker range), and it is not a typo in [M].",
+            "[M] prints: for every d>=4, finitely many sums (16.x) separate B_d. [L]'s erasing has type `erases ...`, i.e. `∃ n, ∀ d ≥ n, ∀ T, Winds ... → (all row sums = 0) → T = 0`; n=4 appears only in the proof (`refine ⟨4,?_⟩`), not the statement, and the conclusion is separation by all sums, with no finite subfamily. Finiteness is only the generic finite_rows (used inside transfer, A07.lean:258) and no declaration states it for B_d, so the claim stands; not a typo in [M]."
+          ],
+          "provenance": {
+            "actor": "agent",
+            "method": "two skeptics, each reading the LaTeX of [M] and the source of [L], failed to refute it",
+            "confirmed_by_human": false
+          }
+        }
+      ]
+    }
+  }
+}

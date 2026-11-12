@@ -1,0 +1,85 @@
+{
+  "id": "Lemma 16.12",
+  "kind": "lemma",
+  "status": "partial",
+  "note": "Finding: Both operator-norm limits hold in [L], but the derivative limit is per Track scaling and the rotation limit is selected per d; [M]'s single stable sequence along which both hold for every d, a, K has no declaration.",
+  "relation": "relatedMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 187,
+        "rect": [
+          0.11885,
+          0.49843,
+          0.76332,
+          0.11691
+        ]
+      },
+      "title": "Lemma 16.12 (Transported infinitesimal actions)",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.12"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Spin.Tilt",
+        "module": "YM.Spin.Sheets"
+      },
+      "role": "support",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Spin.Tilt",
+            "kind": "structure"
+          },
+          "snippet": {
+            "text": "structure Tilt (A : S.RealSpin) (a : (comparator L).RealSpin) (D : SpinRows S) (d : ℕ) (U : ℕ → change S d) (z : List ℝ) : Prop where\n  preserves (n : ℕ) : realH A a (U n)\n  converges (i : Ind) : Tendsto (fun n => transport D (U n) i) atTop (𝓝 (attach P d i))\n  infinitesimal : rel D\n  optic : rel P.lie\n  marks : Works z (attach P d)\n  tracks : ∀ᶠ n : ℕ in atTop, Tracks (fine a d) z (attach P d) (transport D (U n))",
+            "line": 116,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Spin/Sheets.lean",
+            "fragment": "L116"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          187
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; finding confirmed by two skeptics; statements of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "verdicts": [
+        {
+          "verdict": "deviation",
+          "summary": "[L] proves less than [M] prints.",
+          "evidence": [
+            "[M] prints that along the single stable sequence of Proposition 16.x (prop:SC), for every fixed d,a,K, both r_k(U^{d+1})^{-1} d_a U^d -> d_a^Max and (U^d)^{-1} L_d(K) U^d -> L_d^Max(K) in operator norm. In [L], A04/A05 are `Watches` statements: the derivative limit (ConLap) and the raw charge limit `(X.xi i)⁻¹ • transport Y (X.U i d) j -> κ • leaf K.lie d j` hold for any scaling X satisfying `Track X V T J H a n d k B` beyond thresholds depending on d, and the normalized rotation limit for c⁻¹•Y is only produced in Commission.lens (`∀ d, ∃ U w, Spin.Tilt ... (c⁻¹ • I.Y) d U w`), which `station`'s private `services` proves by a fresh `selects` of a scaling Q for each d and uses c/Q.xi -> κ derived on that Q. No declaration states both limits along one fixed stable X (YM.Next.UVStress.Stable) for all d; getting that would need focused_track tails plus the currencies argument re-run on X, which [L] does not write, so the claim stands and it is not a typo.",
+            "[M] prints: along the single stable sequence of Prop SC, for every fixed d,a,K, both r_k(F_{d+1})^{-1} d_a F_d -> d_a^Max and F_d^{-1} L_d(K) F_d -> L_d^Max(K) in operator norm. [L]'s A04 gives only the derivative limit (ConLap), and only as Watches: for some thresholds (D,N,m,R), every Scaling X admitting a Track with d>=D satisfies it, i.e. per scaling and per d, not one sequence for all d. The rotation limit appears only through Spin.Tilt (Commission.lens: 'forall d, exists U w, Tilt ...'), where the transports U are chosen separately for each d and are not the scale frames; ActLaw.connects likewise supplies a different X for each (N,d,m,R). No declaration states the single sequence with both limits for all d,a,K, so the claim stands."
+          ],
+          "provenance": {
+            "actor": "agent",
+            "method": "two skeptics, each reading the LaTeX of [M] and the source of [L], failed to refute it",
+            "confirmed_by_human": false
+          }
+        }
+      ]
+    }
+  }
+}

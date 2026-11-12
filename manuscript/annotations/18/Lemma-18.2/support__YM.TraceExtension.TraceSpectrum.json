@@ -1,0 +1,70 @@
+{
+  "id": "Lemma 18.2",
+  "kind": "lemma",
+  "status": "formalized",
+  "note": "The cone is the closed cone ‖spatial‖ ≤ time, testPlus is the unnormalized plus transform and the Laplace field uses e^{-s p_0}, matching [M]'s conventions; [L] additionally records an explicit energy budget and finiteness of damped measures, which follow from tempered growth.",
+  "relation": "relatedMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 203,
+        "rect": [
+          0.1191,
+          0.63718,
+          0.76063,
+          0.17338
+        ]
+      },
+      "title": "Lemma 18.2 (Unique trace spectral measure)",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 18.2"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.TraceSpectrum",
+        "module": "YM.TraceExtension.WilsonTrace"
+      },
+      "role": "support",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.TraceSpectrum",
+            "kind": "structure"
+          },
+          "snippet": {
+            "text": "structure TraceSpectrum (μ : Measure E4) : Prop where\n    upper : μ.HasTemperateGrowth\n    slab : ∃ (A : ℝ) (k : ℕ), 0 ≤ A ∧ energyBudget μ A k\n    localcone : μ coneᶜ=0\n    boost (g : Lorentz) : μ.map g.act=μ\n    damped_mass (s : ℝ) (h : 0<s) : IsFiniteMeasure (OS.Semigroup.transform timeAxis s μ)\n    laplace (s : ℝ) (h : 0<s) : euclidean F s = (((OS.Semigroup.transform timeAxis s μ).real univ:ℝ):ℂ)\n    core (φ : Probe E4) : F.action.momentum.diagonal (excitation F.action.operators (pinned F) φ) =\n        μ.withDensity fun p => (probeWeight φ p : ℝ≥0∞)\n    norm (φ ψ : Probe E4) : inner ℂ (excitation F.action.operators (pinned F) φ) (excitation F.action.operators (pinned F) ψ) =\n        ∫ p, star (testPlus φ p)*testPlus ψ p ∂μ\n    absolute (φ : Joint 2) : F.A.world.W 2 (pairV F.action.J (pinned F)) φ = ∫ p, waveTest φ p ∂μ",
+            "line": 83,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/WilsonTrace.lean",
+            "fragment": "L83"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          203
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; statements of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      }
+    }
+  }
+}

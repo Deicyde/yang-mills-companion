@@ -1,0 +1,70 @@
+{
+  "id": "Theorem 5.4",
+  "kind": "theorem",
+  "status": "formalized",
+  "note": "Locals bundles the derivative and rotation laws with the stress: Derivatives identifies the inserted V.deriv field with the x0-derivative and Laws.infinitesimal identifies lie with d/dt R_d(e^{tK}), so the conserved, real, symmetric, tensorial J with both shell laws for every window is [M]'s statement. Commission.retune is only a hypothesis field, so the proved statement is picks with Commission supplied by Outer.commission.",
+  "relation": "relatedMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 25,
+        "rect": [
+          0.11885,
+          0.0962,
+          0.76089,
+          0.08632
+        ]
+      },
+      "title": "Theorem 5.4 (ST. Stress tensor)",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Theorem 5.4"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Table.Rotation.Laws",
+        "module": "YM.Euclid.Stress"
+      },
+      "role": "support",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Table.Rotation.Laws",
+            "kind": "structure"
+          },
+          "snippet": {
+            "text": "structure Laws (P : DiffPlan S) (H : S.RealSpin) : Prop where\n  spin d s : Continuous (fun K => R.act d K s)\n  fixes d s : R.act d 1 s = s\n  group d g k s : R.act d (g*k) s = R.act d g (R.act d k s)\n  signed d (s : Signed) v : R.act d s.ortho v = S.mirror H d s v\n  real d s v : S.conj H d (R.act d s v) = R.act d s (S.conj H d v)\n  identity d s : R.act d s (S.unit d) = S.unit d\n  filtered d e (h : d ≤ e) s v : R.act e s (P.rise h v) = P.rise h (R.act d s v)\n  vector d s a v : R.act (d+1) s ((P.deriv d a) v) = ∑ i : Axis, ((s.val i a : ℝ) : ℂ) •\n    P.deriv d i (R.act d s v)\n  infinitesimal (d : ℕ) (g : Ortho.Skew) (v : S.Field d) :\n    HasDerivAt (fun t => R.act d (Ortho.oneParameter g t) v) (R.lie d g v) (0 : ℝ)",
+            "line": 31,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Euclid/Stress.lean",
+            "fragment": "L31"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          25
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; statements of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      }
+    }
+  }
+}

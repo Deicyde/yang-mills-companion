@@ -1,0 +1,70 @@
+{
+  "id": "Definition 8.3",
+  "kind": "definition",
+  "status": "formalized",
+  "note": "Q2 says the relativistic data satisfy W0-W3; Lean's Axioms structure is that conjunction on WightmanTheory, imposed on T.theory in Hierarchy.Reconstructed.axioms. W0-W3 match Definitions W0-W3 in form (spectral relation and forward-cone support, unique vacuum, word domain, tempered, adjoint, covariance, locality at spacelike supports).",
+  "relation": "relatedMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 32,
+        "rect": [
+          0.12026,
+          0.56487,
+          0.75949,
+          0.04007
+        ]
+      },
+      "title": "Definition 8.3 (Q2. Wightman axioms)",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Definition 8.3"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YangMills.WightmanTheory.W2",
+        "module": "PublicTheory"
+      },
+      "role": "support",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YangMills.WightmanTheory.W2",
+            "kind": "structure"
+          },
+          "snippet": {
+            "text": "structure W2 (theory : WightmanTheory H Labels) : Prop where\n  labelIdentity (label : Labels.carrier) :\n    theory.poincare.onLabels 1 label = label\n  labelComposition (g h : theory.poincare.Symmetry)\n      (label : Labels.carrier) :\n    theory.poincare.onLabels (g * h) label =\n      theory.poincare.onLabels g (theory.poincare.onLabels h label)\n  domainInvariant (g : theory.poincare.Symmetry) :\n    Set.MapsTo (theory.poincare.onStates g)\n      (theory.fields.domain : Set H.carrier) theory.fields.domain\n  vacuumInvariant (g : theory.poincare.Symmetry) :\n    theory.poincare.onStates g theory.fields.vacuum.1 =\n      theory.fields.vacuum.1\n  fieldCovariance (g : theory.poincare.Symmetry)\n      (label : Labels.carrier) (test : TestFunction)\n      (state : theory.fields.domain) :\n    theory.poincare.onStates g (theory.fields.field label test state).1 =\n      (theory.fields.field (theory.poincare.onLabels g label)\n        (theory.poincare.onTests g test)\n        ⟨theory.poincare.onStates g state.1,\n          domainInvariant g state.2⟩).1",
+            "line": 287,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/PublicTheory.lean",
+            "fragment": "L287"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          32
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; statements of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      }
+    }
+  }
+}

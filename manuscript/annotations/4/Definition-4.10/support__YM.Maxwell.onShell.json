@@ -1,0 +1,70 @@
+{
+  "id": "Definition 4.10",
+  "kind": "definition",
+  "status": "formalized",
+  "note": "The covariance 1/(4 pi^2|x|^2), colour-diagonal and axis-diagonal, matches, and the on-shell substitution imposes the relations [M] names; [L]'s comparison space is shellSector modulo `residual`, which also quotients by any further correlation-null, whereas [M] divides only by the listed relations.",
+  "relation": "relatedMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 22,
+        "rect": [
+          0.11936,
+          0.19306,
+          0.76086,
+          0.13429
+        ]
+      },
+      "title": "Definition 4.10 (Free Maxwell comparison)",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Definition 4.10"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Maxwell.onShell",
+        "module": "YM.Maxwell.Shell"
+      },
+      "role": "support",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Maxwell.onShell",
+            "kind": "def"
+          },
+          "snippet": {
+            "text": "def onShell (F : Type*) [NormedAddCommGroup F] [NormedSpace ℝ F] (j : ℕ) : Submodule ℝ (TwoJet F j) where\n  carrier := {Q | Q ∈ formSpace j F ∧ ∀ b x, ∑ a : Axis, grad a (diagonal (Q a b)) x = 0}\n  zero_mem' := by\n    refine ⟨Submodule.zero_mem _, ?_⟩\n    intro b z\n    change ∑ a : Axis, fderiv ℝ (fun y : E4 => (0:F)) z (basis a) = _\n    simp\n  add_mem' := by\n    rintro x y ⟨hx,h⟩ ⟨hy,H⟩\n    refine ⟨Submodule.add_mem _ hx hy, ?_⟩\n    intro b z\n    have he (a : Axis) : grad a (diagonal ((x+y) a b)) z =\n        grad a (diagonal (x a b)) z + grad a (diagonal (y a b)) z := by\n      change fderiv ℝ (diagonal (x a b) + diagonal (y a b)) z _ = _\n      rw [fderiv_add ((diag_smooth _ ∞).differentiable (by simp) _)\n        ((diag_smooth _ ∞).differentiable (by simp) _)]; rfl\n    simp_rw [he, Finset.sum_add_distrib, h,H,add_zero]\n  smul_mem' := by\n    rintro t x ⟨hx,h⟩\n    refine ⟨Submodule.smul_mem _ t hx, ?_⟩\n    intro b z\n    have he (a : Axis) : grad a (diagonal ((t • x) a b)) z = t • grad a (diagonal (x a b)) z := by\n      change fderiv ℝ (t • diagonal (x a b)) z _ = _\n      rw [fderiv_const_smul ((diag_smooth _ ∞).differentiable (by simp) _)]; rfl\n    simp_rw [he, ← Finset.smul_sum, h, smul_zero]",
+            "line": 18,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Maxwell/Shell.lean",
+            "fragment": "L18"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          22
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; statements of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      }
+    }
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "id": "Lemma 16.2",
+  "kind": "lemma",
+  "status": "formalized",
+  "note": "scanner has the item's shape: simple G, d large, finitely many collinear positional tests with component axis off the line, real linear read map, kernel on the covariant unit-killing degree-raising vectors equal to the real line of the free derivative; the manuscript's standing simple nonabelian algebra supplies the hypothesis.",
+  "relation": "relatedMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 172,
+        "rect": [
+          0.11891,
+          0.24784,
+          0.76291,
+          0.07428
+        ]
+      },
+      "title": "Lemma 16.2 (Finite vector Ward tests)",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 16.2"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Climb.Colors",
+        "module": "YM.Climb.Cells"
+      },
+      "role": "support",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Climb.Colors",
+            "kind": "def"
+          },
+          "snippet": {
+            "text": "def Colors (P : DiffPlan S) (H : S.RealSpin) (d) : Submodule ℝ (Vector d S) where\n  carrier := {g | (∀ i,g i (S.unit d)=0 ∧ obey (g i) P) ∧\n    (∀ i (k : Signed) v, S.mirror H (d+1) k (g i v)=∑ j : Axis,(↑(k.matrix j i):ℂ) • g j (S.mirror H d k v)) ∧\n       (∀ i v, S.conj H (d+1) (g i v)=g i (S.conj H d v))}\n  add_mem' := by\n    intro x y ⟨A,T,J⟩ ⟨B,F,U⟩\n    simp only [mem_setOf_eq,Pi.add_apply,_root_.add_apply]\n    refine ⟨fun i => ⟨by rw [(A i).1,(B i).1]; simp, fun a h v => (LinearMap.range _).add_mem ((A i).2 a h v) ((B i).2 a h v)⟩,\n      fun i k v => ?_,fun i v => by simp [J,U]⟩\n    simp only [map_add,smul_add,Finset.sum_add_distrib,T,F]\n  zero_mem' := by constructor <;> simp [obey]\n  smul_mem' := by\n    intro c x hx\n    obtain ⟨H1,H2,H3⟩ := hx\n    have he i v : (c • x : Vector d S) i v=(↑c : ℂ) • x i v := by\n      change c • (x i v)=_\n      exact RCLike.real_smul_eq_coe_smul (K:=ℂ) c _\n    change (∀ _,_) ∧ _\n    refine ⟨fun i => ⟨by rw [he,(H1 i).1]; simp, fun a h v => by rw [he];exact (LinearMap.range _).smul_mem _ ((H1 i).2 a h v)⟩,\n      fun i k v => ?_,fun i v => ?_⟩\n    · simp_rw [he,map_smul,H2 i k v, Finset.smul_sum]; apply Finset.sum_congr rfl; intro j _; rw [smul_comm]\n    rw [he,map_smulₛₗ,H3,conj_ofReal,he]",
+            "line": 66,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Climb/Cells.lean",
+            "fragment": "L66"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          172
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; statements of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      }
+    }
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "id": "Eq (13.21)",
+  "kind": "equation",
+  "status": "partial",
+  "note": "Finding: [L] proves t^2|Delta| <= H, |Delta| <= 1, E_m <= epsilon^reg and K_m <= epsilon^for (recloses, reload), but the allowances are epsilon^reg and epsilon^for themselves, and no declaration gives the factor 1/1024 that [M] prints on E_m and K_m (grep for 1024 and for allowance/1024 finds none); the worse constant is the finding.",
+  "relation": "narrowMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 109,
+        "rect": [
+          0.12026,
+          0.27354,
+          0.76155,
+          0.02349
+        ]
+      },
+      "title": "Equation (13.21)",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Eq (13.21)"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Scheduling.Deployment.recloses",
+        "module": "YM.Next.SCHEDULE.Calling"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Scheduling.Deployment.recloses",
+            "kind": "lemma"
+          },
+          "snippet": {
+            "text": "lemma recloses (h : Paid I a) (p : Regime B e F W) (m n : ℕ) (β : ℝ) (hb : β ∈ Shoot.band a (m+1)) :\n    let C := a.clock; let j:= C.J (m+1); let i:=C.J m; let L:ℝ:=(a.S.block m).val\n    let c := (e j i).cost; let f := F j i\n    let θ:= C.theta j; let x:= C.hatBeta m; let y:=C.hatBeta (m+1); let g:=gap β\n    let H := c*f.switch plain c L θ x y g; let t':= C.threshold m; let t:= C.threshold (m+1)\n    ∀ P : Activities G (a.S.side m n),\n      P.EBound (a.budget m) (H+f.bundle plain θ x y*t'^ (3:ℕ)) →\n      P.KBound (a.budget m) (f.H*Real.exp (-f.rate*(t/g)^ (2:ℕ))) →\n      P.EBound (a.budget m) (C.allowance m) ∧\n        P.KBound (a.budget m) (Real.exp (-(B.price F).g j * (C.monitor (m+1))^ (2:ℕ))) ∧\n        P.KBound (a.budget m) (C.forcedAllowance m) ∧\n        ∀ Δ : ℝ, t'^ (2:ℕ)*|Δ| ≤ H → |Δ| ≤ 1 := by",
+            "line": 76,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/SCHEDULE/Calling.lean",
+            "fragment": "L76"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          109
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; finding confirmed by two skeptics; statements of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "verdicts": [
+        {
+          "verdict": "deviation",
+          "summary": "[L] proves less than [M] prints.",
+          "evidence": [
+            "[M] prints t_m^2|Delta| <= H_j, E_m <= eps^reg_m/1024, K_m <= eps^for_m/1024, |Delta| <= 1 with eps^reg_m = refbeta_m^{-11/10}, eps^for_m = exp(-M_m^{1/5}) (appendix-constants.tex:55-56). [L]'s recloses concludes `P.EBound (a.budget m) (C.allowance m)` and `P.KBound (a.budget m) (C.forcedAllowance m)` with allowance = (sqrt hatBeta)^{-11/5} = eps^reg and forcedAllowance = exp(-monitor^{1/5}) = eps^for, and reload carries exactly these into `Valid u.p (allowance m) (forcedAllowance m)`; the Delta bounds match. No declaration bounds E_m or K_m by allowance/1024 (the only 1/1024 constants in [L] are unrelated `a'` in clock assemblies and spectral 1/2^10; the nearest sharper bound is 1/2*allowance in Extra/ITERATION_NO_LOSS/Local.lean:35), so the 1/1024 factors are missing and the claim stands. Not a typo: [M]'s proofs (D-section.tex:510, 518, 740-744) deliberately derive the /1024 margins.",
+            "[M] prints t_m^2|Delta| <= H_j, E_m <= eps_m^reg/1024, K_m <= eps_m^for/1024, |Delta| <= 1, with eps_m^reg = hatbeta_m^{-11/10} and eps_m^for = exp(-(monitor_m)^{1/5}) (Section 3). In [L], Calendar.allowance m = (sqrt hatBeta m)^{-1}^(11/5) = eps^reg and forcedAllowance m = eps^for exactly, and recloses concludes only `P.EBound (a.budget m) (C.allowance m)` and `P.KBound (a.budget m) (C.forcedAllowance m)` (plus t'^2|Delta| <= H -> |Delta| <= 1); the upstream source BandGate.budgets gives only `... < δE x` with δE x = gap x^(11/5), again without a 1/1024 factor, and reload packages exactly these bounds into `Valid ... (allowance m) (forcedAllowance m)`. No declaration in [L] states E_m or K_m against allowance/1024 (the only 1/1024 and /2048 constants in [L] concern unrelated clocks and curvature budgets), so [L] proves the shape with a constant 1024 times worse. Not a typo: [M] derives the 1/1024 deliberately in the proofs of Lemma D1 (D-section.tex:510, 518, 740-744) and uses it as stated."
+          ],
+          "provenance": {
+            "actor": "agent",
+            "method": "two skeptics, each reading the LaTeX of [M] and the source of [L], failed to refute it",
+            "confirmed_by_human": false
+          }
+        }
+      ]
+    }
+  }
+}

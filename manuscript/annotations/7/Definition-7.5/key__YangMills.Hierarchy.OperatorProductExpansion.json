@@ -1,0 +1,88 @@
+{
+  "id": "Definition 7.5",
+  "kind": "definition",
+  "status": "formalized",
+  "note": "Cluster, clearance, degree and slot-enumeration conventions agree. R_D has no standalone definition in [L]; it is the expression inside the `remainder` fields of the two OPE statements, with the coefficients as fields of the Reader or hierarchy.",
+  "relation": "closeMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 30,
+        "rect": [
+          0.12026,
+          0.81574,
+          0.75981,
+          0.09938
+        ]
+      },
+      "title": "Definition 7.5 (Product remainder)",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Definition 7.5#0"
+        }
+      }
+    },
+    {
+      "location": {
+        "page": 31,
+        "rect": [
+          0.12026,
+          0.0962,
+          0.76244,
+          0.07428
+        ]
+      },
+      "title": "Definition 7.5 (Product remainder)",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Definition 7.5#1"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YangMills.Hierarchy.OperatorProductExpansion",
+        "module": "ChallengeSpec"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YangMills.Hierarchy.OperatorProductExpansion",
+            "kind": "structure"
+          },
+          "snippet": {
+            "text": "structure OperatorProductExpansion : Prop where\n  coefficients {I : Type} [Fintype I] (a : I → T.Tag) (M η ε : ℝ) :\n    0 ≤ M → 0 < η → 0 < ε → ∀ j (i : T.Channel j), ∀ᶠ r : ℝ in 𝓝[>] 0,\n    ∀ x o, Within r M η x o → ‖T.coefficient a j i x o‖ ≤ r ^ ((j:ℝ) - T.weight a - ε)\n  remainder {I J : Type} [Fintype I] [Fintype J] (a : I → T.Tag) (b : J → T.Tag)\n      (M η c ε : ℝ) : 0 ≤ M → 0 < η → 0 < c → 0 < ε → ∀ D : ℕ,\n      ∀ᶠ r : ℝ in 𝓝[>] 0, ∀ x o y, Within r M η x o → Clear o y c → ∀ s,\n      ‖T.grouped s a x b y -\n        ∑ j : Fin (D+1), ∑ i : T.Channel j.val, T.coefficient a j.val i x o *\n          T.grouped s (fun _ : Unit => ⟨j.val,T.actor j.val i⟩) (fun _ => o) b y‖\n        ≤ r ^ ((D:ℝ) + 1 - T.weight a - ε)",
+            "line": 70,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/ChallengeSpec.lean",
+            "fragment": "L70"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          30,
+          31
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; statements of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      }
+    }
+  }
+}

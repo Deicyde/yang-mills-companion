@@ -1,0 +1,85 @@
+{
+  "id": "Eq (17.4)",
+  "kind": "equation",
+  "status": "partial",
+  "note": "Finding: [M] prints |int f dnu^{UV}|^2 <= int g1 dnu^U int g2 dnu^V; [L] gives |cross f| <= t*alpha + beta/t, whose optimum over t is 2 sqrt(alpha beta), so the squared form holds only with constant 4 and the sharp constant is not proved.",
+  "relation": "relatedMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 189,
+        "rect": [
+          0.12026,
+          0.55414,
+          0.76155,
+          0.03348
+        ]
+      },
+      "title": "Equation (17.4)",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Eq (17.4)"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Row.fits",
+        "module": "YM.Axis.Matrix"
+      },
+      "role": "support",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Row.fits",
+            "kind": "def"
+          },
+          "snippet": {
+            "text": "def fits (A B : Weight L) (w : E4 → ℂ) :=\n    ∀ i, Integrable w (ν V (combo A B i))",
+            "line": 21,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Axis/Matrix.lean",
+            "fragment": "L21"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          189
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; finding confirmed by two skeptics; statements of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "verdicts": [
+        {
+          "verdict": "deviation",
+          "summary": "[L] proves less than [M] prints.",
+          "evidence": [
+            "[M] prints the sharp spectral Cauchy-Schwarz |int f dnu^{UV}|^2 <= int g1 dnu^U * int g2 dnu^V for |f|^2 <= g1 g2. [L]'s YM.Outer.cross_le concludes only `‖cross V B A f‖ ≤ t*(∫ p,a p ∂ν V B)+(∫ p,b p ∂ν V A)/t` for every t>0 (hypotheses: fits, integrability of a,b, and 0<=a,b, ‖f‖^2<=a*b on p i>=0, which are weaker than or equal to [M]'s), whose infimum over t is 2 sqrt(alpha beta), i.e. the squared bound with constant 4; rescaling a,b cannot help since only the product is constrained. The factor is built in: the private density_bound is docstring'd 'Non-sharp (factor two)' and the module doc says 'A non-sharp constant in the quadratic estimate suffices'; no other declaration states the sharp form. [M]'s inequality is true mathematics, so this is a weaker constant in [L], not a typo.",
+            "[M] prints |int f dnu^{UV}|^2 <= int g1 dnu^U int g2 dnu^V if |f|^2 <= g1 g2. [L] cross_le (with cross = polarized integral of f, fits = integrability) concludes only ‖cross‖ <= t*(int a dnu B)+(int b dnu A)/t for every t>0, under ‖f‖^2 <= a*b on p i >= 0. Its proof (pm_bounds) bounds the density by 2g = t r_v + r_w/t, losing a factor 2 (the inner-product step gives g), so optimizing t yields 2 sqrt(alpha beta), i.e. the squared form with constant 4. No declaration states the sharp squared form (callers Cove.balanced and Mode use the t-form). [M] is mathematically correct, so this is a [L] weakness, not an [M] typo."
+          ],
+          "provenance": {
+            "actor": "agent",
+            "method": "two skeptics, each reading the LaTeX of [M] and the source of [L], failed to refute it",
+            "confirmed_by_human": false
+          }
+        }
+      ]
+    }
+  }
+}

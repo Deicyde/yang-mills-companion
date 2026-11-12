@@ -1,0 +1,70 @@
+{
+  "id": "Definition 3.9",
+  "kind": "definition",
+  "status": "formalized",
+  "note": "Label G d with a Frame is V_d with the same radial condition, weights, bidegrees, invariance, bihomogeneous basis and conjugation. The coefficient space Frame.Coeff carries the sup norm, and the l1 coeffSize is only an auxiliary size used in estimates, so the mapper's norm difference does not hold.",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 17,
+        "rect": [
+          0.11962,
+          0.38123,
+          0.76357,
+          0.16813
+        ]
+      },
+      "title": "Definition 3.9 (Polynomial labels)",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Definition 3.9"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Labels.radial",
+        "module": "YM.Labels.Jet"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Labels.radial",
+            "kind": "def"
+          },
+          "snippet": {
+            "text": "def radial (G : Gauge) (j : ℕ) : Submodule ℝ (Raw G j) where\n  carrier := {A | (∀ i : Axis, Tensor.Sym (A i)) ∧ ∀ z : E4, ∑ i : Axis, z i • Tensor.diagonal (A i) z = 0}\n  zero_mem' := by simp [Tensor.Sym,Tensor.diagonal]\n  add_mem' := by\n    rintro x y ⟨H,H'⟩ ⟨K,K'⟩\n    refine ⟨fun i s r ↦ ?_,fun z ↦ ?_⟩\n    · simp [H i s r, K i s r]\n    simp only [Tensor.diagonal] at H' K' ⊢\n    simp [smul_add, Finset.sum_add_distrib, H', K']\n  smul_mem' := by\n    rintro c y ⟨H,H'⟩\n    refine ⟨fun i s r ↦ ?_,fun z ↦ ?_⟩\n    · simp [H i s r]\n    simp only [Tensor.diagonal] at H' ⊢\n    simp_rw [Pi.smul_apply, smul_apply, smul_comm _ c, ← Finset.smul_sum,\n      H', smul_zero]",
+            "line": 22,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Labels/Jet.lean",
+            "fragment": "L22"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          17
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; statements of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      }
+    }
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "id": "Lemma 12.4",
+  "kind": "lemma",
+  "status": "formalized",
+  "note": "metric_zero and loop_jets are the two displays once symbol0 and loop_coeff are unfolded, the vector moment vanishing componentwise, and Bounds adds real summability, which is absolute convergence. Planned.cap asserts these for the chosen arrays with c_dir of stage J_m.",
+  "relation": "relatedMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 78,
+        "rect": [
+          0.11894,
+          0.41772,
+          0.7608,
+          0.1596
+        ]
+      },
+      "title": "Lemma 12.4 (Kinetic and quadratic cancellations)",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 12.4"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.PathData.Bounds",
+        "module": "YM.RG.PathActions"
+      },
+      "role": "support",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.PathData.Bounds",
+            "kind": "structure"
+          },
+          "snippet": {
+            "text": "structure Bounds (c : Clip) (σ C Λ : ℝ) : Prop where\n  width : 0 < σ\n  rows (p : PlaqAxes) : SumBudget (fun i ↦ |(R.row p i).1| * Real.exp (σ * (R.row p i).2.length)) C\n  two : SumBudget (fun i ↦ (R.loop i).budget σ) Λ\n  three : SumBudget (fun i ↦ (R.cubic i).budget σ) C\n  four : SumBudget (fun i ↦ (R.quartic i).budget σ) C\n  invariant (i : ℕ) : (R.loop i).Invariant ∧ (R.cubic i).Invariant ∧ (R.quartic i).Invariant\n  symTerms (p q : PlaqAxes) : Summable fun k => if (R.row p k).2.plaq = q then (R.row p k).1 else 0\n  metric : R.metric_zero c\n  loopTerms (i x) : Summable (R.loop_coeff i x) ∧ ∀ l : Axis,\n    Summable (fun k => R.loop_coeff i x k *\n      ((((R.loop k).leg 1).offset l - ((R.loop k).leg 0).offset l : ℤ) : ℝ))\n  loop_normal : R.loop_jets",
+            "line": 173,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/RG/PathActions.lean",
+            "fragment": "L173"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          78
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; statements of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      }
+    }
+  }
+}

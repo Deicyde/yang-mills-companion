@@ -1,0 +1,70 @@
+{
+  "id": "Definition 8.1",
+  "kind": "definition",
+  "status": "formalized",
+  "note": "Every datum of Q0 is a field of the structure with the same type: finite-dimensional complex normed F_d, linear maps to the labels, projection from tokens to the sigma type, compact metric Borel phase space with a measure and a selected point, tables indexed by Option Character, continuation, finite channel sets, coefficients over finite index types and a degree-4 element. No axioms are imposed here, as in [M].",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 32,
+        "rect": [
+          0.12026,
+          0.18846,
+          0.76194,
+          0.15982
+        ]
+      },
+      "title": "Definition 8.1 (Q0. Hierarchy data)",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Definition 8.1"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YangMills.Hierarchy",
+        "module": "ChallengeSpec"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YangMills.Hierarchy",
+            "kind": "structure"
+          },
+          "snippet": {
+            "text": "structure Hierarchy {g : GaugeGroup} (C : WilsonFamily g) where\n  H : HilbertSpace\n  labels : FieldLabels\n  theory : WightmanTheory H labels\n  Field : ℕ → Type\n  [fieldAdd (d : ℕ) : NormedAddCommGroup (Field d)]\n  [fieldSpace (d : ℕ) : NormedSpace ℂ (Field d)]\n  [fieldFinite (d : ℕ) : FiniteDimensional ℂ (Field d)]\n  toLabel (d : ℕ) : Field d →ₗ[ℂ] labels.carrier\n  project : C.Token → (Σ d, Field d)\n  Character : Type\n  [characterMetric : MetricSpace Character]\n  [characterSets : MeasurableSpace Character]\n  [characterBorel : BorelSpace Character]\n  [characterCompact : CompactSpace Character]\n  phaseMeasure : Measure Character\n  selected : Character\n  correlation {n : ℕ} : Option Character → (Fin n → Σ d, Field d) → Points n → ℂ\n  continuation {n : ℕ} : (Fin n → Σ d, Field d) → (Fin n → ℂ) → (Fin n → Space) → ℂ\n  Channel : ℕ → Type\n  [finiteChannels (d : ℕ) : Fintype (Channel d)]\n  actor (d : ℕ) : Channel d → Field d\n  coefficient {I : Type} [Fintype I] (a : I → Σ d, Field d) (j : ℕ) :\n    Channel j → (I → Spacetime) → Spacetime → ℂ\n  centeredTrace : Field 4",
+            "line": 24,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/ChallengeSpec.lean",
+            "fragment": "L24"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          32
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; statements of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      }
+    }
+  }
+}

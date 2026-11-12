@@ -1,0 +1,70 @@
+{
+  "id": "Definition 8.6",
+  "kind": "definition",
+  "status": "formalized",
+  "note": "The two inequalities of Theorem OP are fields, with eventually-in-r thresholds that depend only on the listed data (the remainder threshold is chosen after I, J, A, B, M, eta, delta_sp, eps, D and before positions, centre, spectators and state index). Coefficients take only the cluster fields, positions and centre, so they are spectator independent by type.",
+  "relation": "exactMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 32,
+        "rect": [
+          0.12026,
+          0.82242,
+          0.76195,
+          0.09199
+        ]
+      },
+      "title": "Definition 8.6 (Q5. Products)",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Definition 8.6"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YangMills.Hierarchy.OperatorProductExpansion",
+        "module": "ChallengeSpec"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YangMills.Hierarchy.OperatorProductExpansion",
+            "kind": "structure"
+          },
+          "snippet": {
+            "text": "structure OperatorProductExpansion : Prop where\n  coefficients {I : Type} [Fintype I] (a : I → T.Tag) (M η ε : ℝ) :\n    0 ≤ M → 0 < η → 0 < ε → ∀ j (i : T.Channel j), ∀ᶠ r : ℝ in 𝓝[>] 0,\n    ∀ x o, Within r M η x o → ‖T.coefficient a j i x o‖ ≤ r ^ ((j:ℝ) - T.weight a - ε)\n  remainder {I J : Type} [Fintype I] [Fintype J] (a : I → T.Tag) (b : J → T.Tag)\n      (M η c ε : ℝ) : 0 ≤ M → 0 < η → 0 < c → 0 < ε → ∀ D : ℕ,\n      ∀ᶠ r : ℝ in 𝓝[>] 0, ∀ x o y, Within r M η x o → Clear o y c → ∀ s,\n      ‖T.grouped s a x b y -\n        ∑ j : Fin (D+1), ∑ i : T.Channel j.val, T.coefficient a j.val i x o *\n          T.grouped s (fun _ : Unit => ⟨j.val,T.actor j.val i⟩) (fun _ => o) b y‖\n        ≤ r ^ ((D:ℝ) + 1 - T.weight a - ε)",
+            "line": 70,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/ChallengeSpec.lean",
+            "fragment": "L70"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          32
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; statements of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      }
+    }
+  }
+}

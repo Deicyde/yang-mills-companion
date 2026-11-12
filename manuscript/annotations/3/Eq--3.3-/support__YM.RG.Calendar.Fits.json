@@ -1,0 +1,70 @@
+{
+  "id": "Eq (3.3)",
+  "kind": "equation",
+  "status": "formalized",
+  "note": "Since [M] fixes bar-beta > 1 and s_m >= 0, hatBeta > 1, so ((sqrt hatBeta)^{-1})^{11/5} = hatBeta^{-11/10} by unfolding; B_m and eps^for agree literally, leaving no content difference.",
+  "relation": "relatedMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 12,
+        "rect": [
+          0.12026,
+          0.18053,
+          0.76155,
+          0.02488
+        ]
+      },
+      "title": "Equation (3.3)",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Eq (3.3)"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.Calendar.Fits",
+        "module": "YM.RG.History"
+      },
+      "role": "support",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.Calendar.Fits",
+            "kind": "structure"
+          },
+          "snippet": {
+            "text": "structure Fits : Prop where\n  mesh : S.schedule.Gentle\n  sameFactor m : S.factor (S.J (m+1)) = S.schedule.block m\n  monotoneL : Monotone (fun i => (S.factor i).val)\n  mono : Monotone S.J\n  stepSlow m : S.J (m+1) ≤ S.J m + 1\n  deep : Tendsto S.J atTop atTop\n  deepOrder : Monotone (fun m => (S.params m).order)\n  deepPower : Monotone (fun m => (S.params m).power)\n  deepExp : Monotone (fun m => (S.params m).supportExponent)\n  delayed m : 1 < S.hatBeta m\n  smallField m : S.threshold m ≤ 1\n  sizeT m p : 100 * (S.coverSize m + 1) ≤ (S.schedule.side m p).val\n  fitsPatch m p : 100 * ((S.op m p).patch.radius + 1) ≤ (S.schedule.side (m+1) p).val\n  thetaRange m : 0 < S.theta (S.J m) ∧ S.theta (S.J m) ≤ ((S.J m : ℕ) : ℝ)⁻¹\n  thetaMono : Antitone S.theta\n  /-- For pre-L constants in the recursion. -/\n  driftSmall m : (S.params (m+1)).drift / Real.log (S.schedule.block m).val ≤ ((S.J (m+1) : ℝ)^2)⁻¹\n  logCost m :\n    let p := S.params (m+1)\n    Real.log (1 + p.paths + p.width⁻¹ + p.columns + p.clip.relaxation + p.supportExponent) /\n      Real.log (S.schedule.block m).val ≤ ((S.J (m+1) : ℝ)^2)⁻¹",
+            "line": 97,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/RG/History.lean",
+            "fragment": "L97"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          12
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; statements of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      }
+    }
+  }
+}

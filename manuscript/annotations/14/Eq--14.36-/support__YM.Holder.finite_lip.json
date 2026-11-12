@@ -1,0 +1,85 @@
+{
+  "id": "Eq (14.36)",
+  "kind": "equation",
+  "status": "not_formalized",
+  "note": "Finding: [M] writes the operator identity T^{n1+l}XT^{n2-l}-T^{n1}XT^{n2}=T^{n1}(T^lX-XT^l)T^{n2-l} and splits it into the two (1-T^l) terms. [L] proves the same displacement bound by a different route (Holder.finite_lip, entire interpolation in the exponent), so the displayed identity is never written; closest is Holder.finite_lip.",
+  "relation": "relatedMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 142,
+        "rect": [
+          0.12026,
+          0.41714,
+          0.76155,
+          0.04899
+        ]
+      },
+      "title": "Equation (14.36)",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Eq (14.36)"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Holder.finite_lip",
+        "module": "YM.Complex.Gaps"
+      },
+      "role": "support",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Holder.finite_lip",
+            "kind": "theorem"
+          },
+          "snippet": {
+            "text": "theorem finite_lip {X : M ι} (h : X.PosSemidef) (b : Fin n → M ι) {N width p m : ℕ}\n    (he : N=(p+p)*width) (hp : 0 < p) (hw : 0 < width) (hz : 0 < Q X N)\n    {Y Z : Fin n → ℕ} (hY : n*width+∑ i, Y i=N)\n    (i j : Fin n) (hij : i≠j) (hu : Y i+m=Z i) (hv : Z j+m=Y j)\n    (hm : ∀ a : Fin n, a≠i → a≠j → Y a=Z a)\n    (r : ℝ) (hr : 0<r) (hO : ∀ i : Fin n, 2*r < Y i) (hs : (m:ℝ) ≤ r) :\n    ‖(combine (fun i => b i*X^Z i)).trace-(combine (fun i => b i*X^Y i)).trace‖ ≤ cost X b p N / r * m := by",
+            "line": 170,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Complex/Gaps.lean",
+            "fragment": "L170"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          142
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; finding confirmed by two skeptics; statements of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "verdicts": [
+        {
+          "verdict": "deviation",
+          "summary": "[L] states no counterpart of what [M] prints.",
+          "evidence": [
+            "Inside the proof of Lemma 14.17, [M] prints the operator identity T^{n1+l}XT^{n2-l}-T^{n1}XT^{n2}=T^{n1}(T^lX-XT^l)T^{n2-l}=-T^{n1}(1-T^l)XT^{n2-l}+T^{n1}X(1-T^l)T^{n2-l}, an intermediate step of [M]'s own spectral argument (followed by ||(1-T^l)T^n||<=l/(n+1)). [L] proves the enclosing Lemma 14.17 by a different route: stepTotal -> primitive -> Slice organized -> TimeKernel.passage -> Holder.finite_lip, whose proof interpolates the exponent analytically (F x = total h b (W x) via leap), bounds |F| on a disc by `estimation`, and applies the Cauchy derivative bound `Complex.norm_deriv_le_of_forall_mem_sphere_norm_le` to get `<= cost X b p N / r * m`. No declaration or proof step in [L] writes the telescoping/commutator identity or the (1-T^l) splitting, so the display has no counterpart; it is not a typo, and although elementary algebra it is a mathematical step [M] asserts, not notation.",
+            "[M] writes the operator identity T^{n1+l}XT^{n2-l}-T^{n1}XT^{n2}=T^{n1}(T^lX-XT^l)T^{n2-l}=-T^{n1}(1-T^l)XT^{n2-l}+T^{n1}X(1-T^l)T^{n2-l} and bounds each (1-T^l)T^n spectrally. [L] bounds the displacement differently: finite_lip takes a complex derivative of F(x)=total h b (W x) on a disc of radius r (Cauchy estimate, norm_deriv_le_of_forall_mem_sphere_norm_le) and applies the mean value inequality, with TimeKernel.passage and Extraction.Difference.primitive/stepTotal built on it. No declaration states or proves the commutator split or the (1-T^l) factorization, so the printed identity has no counterpart; it is not a typo in [M]."
+          ],
+          "provenance": {
+            "actor": "agent",
+            "method": "two skeptics, each reading the LaTeX of [M] and the source of [L], failed to refute it",
+            "confirmed_by_human": false
+          }
+        }
+      ]
+    }
+  }
+}

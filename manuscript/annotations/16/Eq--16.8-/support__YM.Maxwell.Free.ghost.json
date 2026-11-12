@@ -1,0 +1,70 @@
+{
+  "id": "Eq (16.8)",
+  "kind": "equation",
+  "status": "formalized",
+  "note": "ghost G d is N_d, the shell sectors of all weights exhaust the invariant algebra, and exposed gives a single d killing all of them, which is N_{d0} meeting P^G in zero.",
+  "relation": "relatedMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 172,
+        "rect": [
+          0.12026,
+          0.373,
+          0.76155,
+          0.02324
+        ]
+      },
+      "title": "Equation (16.8)",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Eq (16.8)"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Maxwell.Free.ghost",
+        "module": "YM.Next.MAXWELL.Statistic"
+      },
+      "role": "support",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Maxwell.Free.ghost",
+            "kind": "def"
+          },
+          "snippet": {
+            "text": "def ghost (G : Gauge) (d : ℕ) : Submodule ℂ (WickPol G) where\n  carrier := {p| ∀ (n : ℕ) (v : Fin n → WickPol G) (x : Points (n+1)), (∀ i,v i∈shellSector G d) → x∈conf _ →\n    moment G x (Fin.cons p v)=0}\n  zero_mem' n v x _ _ := (moment G x).map_coord_zero 0 (Fin.cons_zero ..)\n  add_mem' {p q} H K n v x hv hx := by\n    let U z := Fin.cons (α:=fun _ : Fin (n+1) => WickPol G) z v\n    change moment G x (U (p+q))=0\n    rw [show U (p+q) = update (U p) 0 (p+q) from (Fin.update_cons_zero ..).symm, MultilinearMap.map_update_add]\n    unfold U; rw [Fin.update_cons_zero, Fin.update_cons_zero, H n v x hv hx,K n v x hv hx,add_zero]\n  smul_mem' c p H n v x hv hx := by\n    rw [show Fin.cons (c • p) v=update (Fin.cons (α:=fun _ : Fin (n+1) => WickPol G) p v) 0 (c • p) from\n      (Fin.update_cons_zero ..).symm, MultilinearMap.map_update_smul, Fin.update_cons_zero,H n v x hv hx,smul_zero]",
+            "line": 65,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/MAXWELL/Statistic.lean",
+            "fragment": "L65"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          172
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; statements of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      }
+    }
+  }
+}

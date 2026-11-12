@@ -1,0 +1,70 @@
+{
+  "id": "Lemma 12.10",
+  "kind": "lemma",
+  "status": "formalized",
+  "note": "The |Delta_u| <= 1 and continuity claims come from advance and reset, and the e_u bound d_j + 1 <= omega follows from Move.delta together with the kinetic field via links; no single declaration states the lemma with the decomposition beta_u = beta'_u - slope log l + e_u. [L] works with Rep structures and a Directed datum rather than explicit families from Lemma 12.5.",
+  "relation": "hasPart",
+  "subject": [
+    {
+      "location": {
+        "page": 87,
+        "rect": [
+          0.11748,
+          0.55664,
+          0.76226,
+          0.11691
+        ]
+      },
+      "title": "Lemma 12.10 (Coupling reset)",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 12.10"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Precision.Kin.Planned",
+        "module": "YM.PCalc.Loop"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Precision.Kin.Planned",
+            "kind": "structure"
+          },
+          "snippet": {
+            "text": "structure Planned (M : Kin C O) {s : Supply.Sheet G} {ŵ : Supply.Rolls s} (Q : PostCost ŵ) : Prop where\n  stage : s.profile = a.clock.stage\n  lengths : ŵ.L=a.clock.factor\n  links N m : m ≤ N → Attached (C.H N m) (M.path N m)\n  cap N m : m ≤ N →\n    let j:=a.params m\n    (M.path N m).Bounds j.clip j.width j.paths (a.clock.loopCap m)\n  peak N p : ∀ j, j ≤ 4 → SameJet j (fun x => mainTerm (a.params N).clip (M.path N N) (represent (x:fieldDir G (a.S.side N p) 1)))\n      (fun x => Wilson.energy (represent x))\n  initial N b : ( (M.path N N).loop b).coeff=0\n  gap N m p : m < N → ∀ F : Forest (a.clock.op m p).ratio,\n      PriceGap F (a.params (m+1)).clip (M.path N (m+1)) (Q.η (a.clock.J (m+1)))\n  critical N m p : m < N → ∀ F : Forest (a.clock.op m p).ratio,\n      Critical F (a.params (m+1)).clip (M.path N (m+1)) (M.stationary N m p F) ∧\n        Guessed F (installed (a.clock.op m p).ratio (C.towers N m).A0) (M.stationary N m p F)\n  classicalPart N m p : m < N → ∀ F : Forest (a.clock.op m p).ratio,\n    ClassicalMatch F (a.params (m+1)).clip (a.params m).clip (M.path N (m+1)) (M.path N m) (M.stationary N m p F)\n  kinetic N m : m < N → |M.alpha N m + G.slopeConstant*Real.log (a.S.block m).val| + 1 ≤ (a.params (m+1)).drift\n  retains N m p : m < N →\n    let j:= a.clock.J (m+1)\n    ∀ F : Forest (a.clock.op m p).ratio,\n      FiniteBound F (M.path N (m+1)) (M.path N m) (a.params (m+1)).clip (a.params m).clip (M.alpha N m) O\n        (M.stationary N m p F) (Q.Γ j) (Q.c j) (a.clock.loopCap (m+1))",
+            "line": 93,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PCalc/Loop.lean",
+            "fragment": "L93"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          87
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; statements of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      }
+    }
+  }
+}

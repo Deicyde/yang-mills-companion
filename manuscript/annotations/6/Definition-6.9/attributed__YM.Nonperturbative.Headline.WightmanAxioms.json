@@ -1,0 +1,70 @@
+{
+  "id": "Definition 6.9",
+  "kind": "definition",
+  "status": "formalized",
+  "note": "Realizes contains each of W0-W3 for the labels S.Union, star J and Poincare action V. It also requires that the vacuum moments equal a given Euclidean-side surface W (meets), induced star and spin descent (induced, letters), and faithfulness, which M states separately in Definition 6.10.",
+  "relation": "relatedMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 27,
+        "rect": [
+          0.12026,
+          0.50235,
+          0.75948,
+          0.04007
+        ]
+      },
+      "title": "Definition 6.9 (Wightman axioms)",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Definition 6.9"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Nonperturbative.Headline.WightmanAxioms",
+        "module": "YM.Nonperturbative.HeadlineSpec"
+      },
+      "role": "attributed",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Nonperturbative.Headline.WightmanAxioms",
+            "kind": "structure"
+          },
+          "snippet": {
+            "text": "structure WightmanAxioms (A : Wightman S) (W : Surface S) : Prop where\n  norm : ‖A.operators.vacuum‖ = 1\n  dense : Dense (A.operators.domain : Set A.operators.H)\n  cyclic : A.operators.domain = Submodule.span ℂ (Set.range A.operators.vector)\n  tempered (x : S.Union) (v : A.operators.domain) :\n    Continuous (fun f => (A.operators.field x f v).val)\n  adjoints (x : S.Union) (f : Test4) (v w : A.operators.domain) :\n    inner ℂ (A.operators.field x f v).val w.val =\n      inner ℂ v.val (A.operators.field (A.J x) (Probe.bar f) w).val\n  moments (b : Sentence S) : inner ℂ A.operators.vacuum (A.operators.vector b) = W.expect b\n  positive : W.wordsPositive A.J\n  localFields (x y : S.Union) (f g : Test4) (spacelike : Fields.causal f g)\n      (v : A.operators.domain) :\n    A.operators.field x f (A.operators.field y g v) = A.operators.field y g (A.operators.field x f v)\n  symmetries : Symmetries A.spin A.action\n  strong (v : A.operators.H) : Continuous (fun g => A.action.V g v)\n  spectral : A.action.orbit.Spectrum A.momentum\n  forward : A.momentum.region Mink.coneᶜ = 0\n  unique (v : A.operators.H) : (∀ x, A.action.orbit.translation x v = v) →\n    ∃ z : ℂ, z • A.operators.vacuum = v",
+            "line": 52,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Nonperturbative/HeadlineSpec.lean",
+            "fragment": "L52"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          27
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; statements of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      }
+    }
+  }
+}

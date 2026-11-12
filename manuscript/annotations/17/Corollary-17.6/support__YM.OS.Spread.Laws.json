@@ -1,0 +1,70 @@
+{
+  "id": "Corollary 17.6",
+  "kind": "corollary",
+  "status": "formalized",
+  "note": "Existence, boundedness, the entering identity that gives the composition law, and the norm bound by the mixed-space slab norm are in B13.answer (the norm inequality only inside its proof, not in Bid.B13), and the derivative identity is B02.answer applied to the phase spread. No single statement bundles them.",
+  "relation": "relatedMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 197,
+        "rect": [
+          0.12026,
+          0.25491,
+          0.75948,
+          0.04293
+        ]
+      },
+      "title": "Corollary 17.6 (Phase slab operators)",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Corollary 17.6"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OS.Spread.Laws",
+        "module": "YM.OS.Slabs"
+      },
+      "role": "support",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OS.Spread.Laws",
+            "kind": "structure"
+          },
+          "snippet": {
+            "text": "structure Laws {B : Table L} (R : DiffPlan B) : Prop where\n  cap : P.AllCopy\n  regular (d : ℝ≥0) (n : ℕ) (v : Fin n → L.Token) :\n    ContDiffOn ℝ ∞ (fun x => P.place d (realize v x)) {x | Slab a d (realize v x)}\n  positional (d : ℝ≥0) (n : ℕ) (v : Fin n → L.Token) (x : Points n) (p : Fin n)\n      (h : Slab a d (realize v x)) (j : Axis) :\n    let i := (v p).1\n    Analysis.D (Points.direction p j) (fun y => P.place d (realize v y)) x =\n    P.place d (realize (Function.update v p ⟨i+1,B.representative _\n      (R.deriv i j (B.project i (v p).2))⟩) x)",
+            "line": 153,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OS/Slabs.lean",
+            "fragment": "L153"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          197
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; statements of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      }
+    }
+  }
+}

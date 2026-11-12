@@ -1,0 +1,103 @@
+{
+  "id": "Lemma 17.7",
+  "kind": "lemma",
+  "status": "partial",
+  "note": "Finding: Faithfulness, W1-W3, the spectral condition and the joint boundary distributions W_n are in Completed, but the positivity W(F*F) >= 0 is proved only for Sentences (lists of letters with one Test4 each) via Fields.sees, not for finite sequences of joint Schwartz tests in the field-word algebra. Passing from product to joint tests needs a density and continuity argument that [L] does not write.",
+  "relation": "relatedMatch",
+  "subject": [
+    {
+      "location": {
+        "page": 197,
+        "rect": [
+          0.11887,
+          0.82937,
+          0.76088,
+          0.08289
+        ]
+      },
+      "title": "Lemma 17.7 (Fields and boundary distributions)",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 17.7#0"
+        }
+      }
+    },
+    {
+      "location": {
+        "page": 198,
+        "rect": [
+          0.1191,
+          0.09972,
+          0.76063,
+          0.03439
+        ]
+      },
+      "title": "Lemma 17.7 (Fields and boundary distributions)",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Lemma 17.7#1"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Boundary.Wightman.Realizes",
+        "module": "YM.Fields.System"
+      },
+      "role": "support",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Boundary.Wightman.Realizes",
+            "kind": "structure"
+          },
+          "snippet": {
+            "text": "structure Wightman.Realizes {W : Surface S} (R : Wightman S) (V : S.Rotation) (h : S.RealSpin) : Prop where\n  induced : starRead R.J h\n  letters : R.spin.Descends V h\n  total : R.operators.Total\n  adj : R.operators.sharpPair R.J\n  meets : R.operators.realizes W\n  localPairs : R.operators.commutes\n  faithful : R.operators.notLost\n  covariance : Symmetries R.spin R.action\n  spectral : R.action.orbit.Spectrum R.momentum\n  forward : R.momentum.region Mink.coneᶜ = 0\n  unique (v : R.operators.H) : (∀ x, R.action.orbit.translation x v=v) → ∃ z : ℂ, z • R.operators.vacuum=v",
+            "line": 124,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Fields/System.lean",
+            "fragment": "L124"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          197,
+          198
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, a judge ruled; finding confirmed by two skeptics; statements of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      },
+      "verdicts": [
+        {
+          "verdict": "deviation",
+          "summary": "[L] proves less than [M] prints.",
+          "evidence": [
+            "[M] prints W^xi(F^*F) >= 0 for every finite Schwartz test sequence F in the field-word algebra, whose elements carry joint Schwartz tests multiplied by tensor product. In [L], Completed.isTheory gives Wightman.Realizes (meets, adj), and Fields.sees yields only `W.wordsPositive J := Analysis.NNKernel (W.kernel J)` with `kernel b c := W.expect (Sentence.rev J b ++ c)`. Here `expect` evaluates W.W on `Joint.materialize` of the letters' individual Test4s, so positivity covers finite combinations of product-test sentences only. No declaration in [L] extends this to general Joint n tests by density and continuity, so the claim stands as weaker. It is not a typo: [M] says plainly that the algebra uses joint Schwartz tests.",
+            "[M] prints W^xi(F^*F) >= 0 for every finite Schwartz test sequence F in the field-word algebra (joint tests). [L] Completed/Realizes give faithfulness, W1-W3, spectral condition and W_n (Surface.W, continuity `depends`), but positivity is only `Fields.sees : W.wordsPositive J`, i.e. NNKernel of W.kernel on Sentence (lists of letters (x, f : Test4), one test per letter via Joint.materialize). No declaration states nonnegativity for joint tests; the nearest ingredient is Next/BOUNDARY/Heights.lean `limiting_pair`/`heated`, giving inner products of joint-test vectors equal to W(joinedTest), from which positivity would follow by an unwritten step, so the claim stands."
+          ],
+          "provenance": {
+            "actor": "agent",
+            "method": "two skeptics, each reading the LaTeX of [M] and the source of [L], failed to refute it",
+            "confirmed_by_human": false
+          }
+        }
+      ]
+    }
+  }
+}
