@@ -1,0 +1,117 @@
+% Position markers for the items of [M] (yang-mills-informalization, manuscript/main.tex), \input
+% before \begin{document}.  Adapted from the ternary Goldbach companion's regionmarks.tex; the
+% marker mechanism (zref-savepos labels in a list of their own, written at shipout) is
+% formal-companion's informalize fcmarkers.sty \fc@savepos.  Every marker is a zero-size whatsit
+% placed where it adds no break point and changes no \lastskip; layoutcheck.py compares the
+% rebuilt PDF with the committed one word by word.
+%
+%   thm:<n>:head   theorem-like head, inside the label box: the baseline of the first line
+%   thm:<n>:end    the end of the last line (horizontal mode only), and
+%   thm:<n>:below  after that line on the vertical list (also: after a closing list or paragraph)
+%   \rmenddisp{n}{j} in the .aux: theorem n ends with display j (no node is added)
+%   list:<l>:below after the last line of the l-th list in a theorem-like item, and
+%   \rmendlist{n}{l} in the .aux: theorem n ends with list l
+%   dend:<j>       after the box of the j-th display (equation, equation*, \[ \], and the
+%                  amsmath alignments, whose last row is followed by a \noalign)
+%   eq:<k>:pre     after the line before the k-th numbered display environment, whose last space
+%                  it removes as the display would (horizontal mode,
+%                  and not on the empty list after a display, where a \vadjust would add a line)
+%   \rmafterdisp{k} in the .aux: the k-th numbered environment opens such an empty list
+%   eq:<k>:tag:<r> the r-th number of the k-th numbered environment, left of "(" on its baseline
+%   eq:<k>:post    after the box of the k-th numbered environment (not for multline)
+\RequirePackage{zref-savepos}
+\RequirePackage{zref-abspage}
+\makeatletter
+\zref@newlist{rmpos}
+\zref@addprops{rmpos}{posx,posy,abspage}
+\newcommand*\rm@savepos[1]{%
+  \begingroup
+    \edef\rm@tmp{\endgroup
+      \noexpand\ZREF@zsavepos\noexpand\zref@labelbylist{rmpos}{#1}}%
+  \rm@tmp}
+\AddToHook{begindocument/end}{%
+  \immediate\write\@auxout{\string\rmgeometry{pdfpagewidth=\number\pdfpagewidth,%
+    pdfpageheight=\number\pdfpageheight,%
+    textleft=\number\dimexpr1in+\hoffset+\oddsidemargin\relax,%
+    evenleft=\number\dimexpr1in+\hoffset+\evensidemargin\relax,%
+    texttop=\number\dimexpr1in+\voffset+\topmargin+\headheight+\headsep\relax,%
+    textwidth=\number\textwidth,textheight=\number\textheight,%
+    baselineskip=\number\baselineskip}}}
+\providecommand\rmgeometry[1]{}
+% display ends
+\newcount\rm@dk
+\def\rm@dend{\global\advance\rm@dk\@ne\rm@savepos{dend:\the\rm@dk}}
+\newif\ifrm@num
+\newcount\rm@eqk
+\AddToHook{env/equation/end}{\vadjust{\rm@dend\rm@savepos{eq:\the\rm@eqk:post}}}
+\AddToHook{env/equation*/end}{\vadjust{\rm@dend}}
+\let\rm@orig@black\black@
+% (split, inside an equation, also ends with \black@: no marker there)
+\newif\ifrm@split
+\AddToHook{env/split/begin}{\global\rm@splittrue}
+\AddToHook{env/split/after}{\global\rm@splitfalse}
+\def\black@#1{\rm@orig@black{#1}\ifmeasuring@\else\ifrm@split\else
+  \noalign{\rm@dend\ifrm@num\rm@savepos{eq:\the\rm@eqk:post}\fi}\fi\fi}
+% theorem-like items
+\gdef\rm@thm{}
+\let\rm@orig@thmhead\thmhead
+\def\thmhead#1#2#3{\xdef\rm@thm{#2}\global\rm@inthmtrue\global\rm@listlastfalse\rm@savepos{thm:#2:head}\rm@orig@thmhead{#1}{#2}{#3}}
+\def\rm@thmend{%
+  \ifhmode
+    \ifnum\lastnodetype=\m@ne
+      \rm@enddisp
+    \else
+      \unskip\rm@savepos{thm:\rm@thm:end}\vadjust{\rm@savepos{thm:\rm@thm:below}}%
+    \fi
+  \else
+    \ifnum\lastnodetype=\@ne \rm@savepos{thm:\rm@thm:below}\else
+    \ifnum\lastnodetype=\tw@ \rm@savepos{thm:\rm@thm:below}\else
+    \ifrm@listlast \rm@endlist\else
+      \rm@enddisp
+    \fi\fi\fi
+  \fi\global\rm@inthmfalse}
+% a list inside a theorem-like item: the end of its last item's last line (lists end in vertical
+% mode, on glue, where a node would change \lastskip)
+\newif\ifrm@inthm
+\newif\ifrm@listlast
+\newcount\rm@lk
+\def\rm@listend{\ifrm@inthm\ifhmode\global\advance\rm@lk\@ne
+  \unskip\vadjust{\rm@savepos{list:\the\rm@lk:below}}\global\rm@listlasttrue\fi\fi}
+\def\rm@endlist{\if@filesw\immediate\write\@auxout{\string\rmendlist{\rm@thm}{\the\rm@lk}}\fi}
+\providecommand\rmendlist[2]{}
+\AddToHook{env/itemize/end}{\rm@listend}
+\AddToHook{env/enumerate/end}{\rm@listend}
+\AddToHook{env/itemize/after}{\ifrm@inthm\global\rm@listlasttrue\fi}
+\AddToHook{env/enumerate/after}{\ifrm@inthm\global\rm@listlasttrue\fi}
+\AddToHook{para/begin}{\global\rm@listlastfalse}
+% a theorem that ends with a display: name that display's end marker, without a node
+\def\rm@enddisp{\if@filesw\immediate\write\@auxout{\string\rmenddisp{\rm@thm}{\the\rm@dk}}\fi}
+\providecommand\rmenddisp[2]{}
+\AddToHook{env/maintheorem/end}{\rm@thmend}
+\AddToHook{env/theorem/end}{\rm@thmend}
+\AddToHook{env/proposition/end}{\rm@thmend}
+\AddToHook{env/lemma/end}{\rm@thmend}
+\AddToHook{env/corollary/end}{\rm@thmend}
+\AddToHook{env/definition/end}{\rm@thmend}
+\AddToHook{env/remark/end}{\rm@thmend}
+\AddToHook{env/principal/end}{\rm@thmend}
+% numbered display environments
+\def\rm@numbegin{\global\advance\rm@eqk\@ne\global\rm@tagr\z@\global\rm@indisptrue
+  \ifhmode\ifnum\lastnodetype=\m@ne\rm@afterdisp\else\unskip\vadjust{\rm@savepos{eq:\the\rm@eqk:pre}}\fi\fi}
+% a display that opens an empty list (it follows a display directly): say so, without a node
+\def\rm@afterdisp{\if@filesw\immediate\write\@auxout{\string\rmafterdisp{\the\rm@eqk}}\fi}
+\providecommand\rmafterdisp[1]{}
+\AddToHook{env/equation/begin}{\rm@numbegin}
+\AddToHook{env/align/begin}{\rm@numbegin\global\rm@numtrue}
+\AddToHook{env/align/after}{\global\rm@numfalse\global\rm@indispfalse}
+\AddToHook{env/multline/begin}{\rm@numbegin}
+\newcount\rm@tagr
+% numbers outside a numbered environment (\eqref) get no marker
+\newif\ifrm@indisp
+\let\rm@orig@tagform\tagform@
+\def\tagform@#1{\ifrm@indisp\ifmeasuring@\else\global\advance\rm@tagr\@ne\fi
+  \maketag@@@{\rm@savepos{eq:\the\rm@eqk:tag:\the\rm@tagr}(\ignorespaces#1\unskip\@@italiccorr)}%
+  \else\rm@orig@tagform{#1}\fi}
+\AddToHook{env/equation/after}{\global\rm@indispfalse}
+\AddToHook{env/multline/after}{\global\rm@indispfalse}
+\makeatother
