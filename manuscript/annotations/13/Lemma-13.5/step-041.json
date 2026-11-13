@@ -1,9 +1,9 @@
 {
   "id": "Lemma 13.5 step 41",
   "kind": "proof_step",
-  "status": "not_formalized",
-  "relation": "noMatch",
-  "note": "`Houses.remains` requires a sup bound only when `coverNumber B.B support <= B.B`; [L] has no bound for T_i or P_i on the remaining large supports, so the step has no counterpart.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "Beam.estate (Beam/Life.lean 51-100) sends large supports to the tired class with its own budget, so [L] handles this step by a different argument than the unrefined T_i bound.",
   "subject": [
     {
       "location": {
@@ -51,22 +51,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.PhysicalNext.Repeat.Brim.Houses",
-        "module": "YM.PhysicalNext.RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP.Brim.Level",
+        "declaration": "YM.PhysicalNext.Repeat.Beam.estate",
+        "module": "YM.PhysicalNext.RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP.Beam.Life",
         "lines": [
-          52,
-          54
+          61,
+          100
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.PhysicalNext.Repeat.Brim.Houses"
+            "id": "YM.PhysicalNext.Repeat.Beam.estate"
+          },
+          "snippet": {
+            "text": "lemma estate (U : H.fragrances → ℝ) (W : ∀ i, tired H i → p.Regular (dashboard H i).support (sequence H X χ i) ∧ p.supBounds (dashboard H i).site (dashboard H i).support (sequence H X χ i) (U i))\n    (hH : Quotes.early p (dashboard H) (fun i=> if tired H i then U i else 0) β) (ha : preExponent p ≤ γ) (hP : Brim.Houses J D q' κ χ g p γ h K) :\n    ∃ f, Quotes.early p (contents H p) f (β+(h+K)) ∧ ∀ i, p.Regular (contents H p i).support (skilled H X χ (lit H) i) ∧ p.supBounds (contents H p i).site (contents H p i).support (skilled H X χ (lit H) i) (f i) := by\n  obtain ⟨⟨v,hv,Hv⟩,s,Hs,hs⟩:= hP -- shadows\n  let w j := v j+s j; let e' : ℕ ↪ H.fragrances:= ⟨icon H,icon_inj H⟩; let f z:= extend e' w 0 z\n  let u z:= if tired H z then U z else if z∈ Set.range e' then f z else 0\n  let c:= Sum.elim u (fun _ : Songbook c=>0)\n  have hy i: p.Regular (contents H p i).support (skilled H X χ (lit H) i) ∧ p.supBounds (contents H p i).site (contents H p i).support (skilled H X χ (lit H) i) (c i) := by\n    have he i (h : ¬chosen H (lit H) i) (ht : c i=0): p.Regular (contents H p i).support (skilled H X χ (lit H) i) ∧ p.supBounds (contents H p i).site (contents H p i).support (skilled H X χ (lit H) i) (c i) := by\n      rw [pivot H X χ (lit H) 0,if_neg h,ht]; refine ⟨CouplingShape.reg_const _,?_⟩\n      simpa only [abs_zero] using! (CouplingShape.sup_const (G:=G) (p:=p) (o:=(contents H p i).site) (X:=(contents H p i).support) 0)\n    rcases i with i|i\n    swap; · exact he _ (fun h=> h) rfl\n    by_cases ht':tired H i\n    · have h : chosen H (lit H) (.inl i):= Or.inl ht'\n      rw [Height.pivot H X χ (lit H) 0, if_pos h,show c (.inl i)=_ from (if_pos ht' : u i = _)]; exact W i ht'\n    by_cases hk: i∈Set.range e'\n    swap; · have hh : ¬chosen H (lit H) (.inl i):=not_or.mpr ⟨ht',hk⟩\n            apply he _ hh; change u i= _; unfold u; rw [if_neg ht',if_neg hk]\n    obtain ⟨j,rfl⟩:= hk\n    rw [Height.pivot H X χ (lit H) 0,if_pos (show chosen H (lit H) (.inl (e' j)) from Or.inr (show e' j ∈ Set.range e' from ⟨j,rfl⟩)), show c (.inl (e' j))=w j from\n      (by change u _= w _; unfold u f; rw [if_neg ht',if_pos (Set.mem_range_self (f:=e') j),e'.injective.extend_apply]), show contents H p (.inl (e' j))=Brim.plate J j from (impact H j).trans (plates H hg j),\n      show opus H X χ 0 (Sum.inl (e' j))=announced J D q' κ g j-glyph J D q' κ χ g j from (by\n        ext V; change (-1:ℝ) * stream J χ V (X.furrow (icon H j))=announced J D q' κ g j V- (stream J χ V (icon J j)+_); rw [mimics H X (by assumption)]\n        ring)]\n    have hd := shall H j ht'; rw [← ht,concern H,plates H (J:=J) hg] at hd\n    exact ⟨CouplingShape.reg_sub (hv j).1 (hs j).1, CouplingShape.sup_sub (hv j).1 (hs j).1 (hv j).2 ((hs j).2 hd)⟩\n  refine ⟨c, fun x=> ?_,hy⟩; rw [← add_zero (β+(h+K))]\n  suffices hh : SumBudget (fun i=>if (dashboard H i).site=x then u i*Real.exp (preExponent p*coverNumber p.B (dashboard H i).support) else 0) (β+(h+K)) from Cost.sum hh (by simp [c,SumBudget])\n  let Z i:= if (dashboard H i).site=x then u i*Real.exp (preExponent p*coverNumber p.B (dashboard H i).support) else 0\n  let A i:= if tired H i then Z i else 0\n  let B i:= if tired H i then 0 else Z i\n  have hz i : Z i=A i+B i := by by_cases hi:tired H i <;> simp [A,B,hi]\n  change SumBudget Z _; rw [funext hz]\n  have hh: SumBudget A β:= by\n    refine budget_mono (hH x) ?_ ?_\n    · intro i; unfold A Z; split_ifs <;> first| exact le_rfl| exact mul_nonneg (hy (.inl i)).2.1 (Real.exp_pos _).le\n    intro i; unfold A Z u; dsimp only; split_ifs <;> simp\n  apply budget_plus hh\n  apply wallet e'",
+            "line": 61,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Brim/Level.lean",
-            "fragment": "L52-L54"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Beam/Life.lean",
+            "fragment": "L61-L100"
+          },
+          "proof_context": {
+            "declaration": "YM.PhysicalNext.Repeat.Beam.estate",
+            "lines": [
+              61,
+              110
+            ],
+            "conclusion": "estate produces an early-decay budget for the contents, using given bounds only for tired terms and treating the rest through the shadow data, with exponent beta+(h+K)."
           }
         }
       }
@@ -76,22 +90,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.PhysicalNext.Repeat.Brim.pressings",
+        "declaration": "YM.PhysicalNext.Repeat.Brim.Houses",
         "module": "YM.PhysicalNext.RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP.Brim.Level",
         "lines": [
-          61,
-          91
+          54,
+          54
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.PhysicalNext.Repeat.Brim.pressings"
+            "id": "YM.PhysicalNext.Repeat.Brim.Houses"
+          },
+          "snippet": {
+            "text": "      (coverNumber B.B (plate H i).support ≤ B.B → B.supBounds (plate H i).site (plate H i).support (glyph H D q' κ χ ε i) (s i))",
+            "line": 54,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Brim/Level.lean",
-            "fragment": "L61-L91"
+            "fragment": "L54-L54"
+          },
+          "proof_context": {
+            "declaration": "YM.PhysicalNext.Repeat.Brim.Houses",
+            "lines": [
+              49,
+              54
+            ],
+            "conclusion": "Houses is the hypothesis giving support bounds for plates whose cover number is at most B."
           }
         }
       }
@@ -106,8 +134,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; re-judged after a second independent review, which changed it from noMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

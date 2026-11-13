@@ -8,7 +8,10 @@ an opus re-check of closeMatch records whose notes name another route (lead/clos
 gets its file, its snippet (exactly its lines, from the pinned source; none for noMatch) and its
 `proof_context` (the enclosing declaration's full range and the end's conclusion).  A claim that
 the text is wrong is kept under `text_error` with its skeptics' verdicts; only a claim both
-skeptics confirm is `confirmed` and may reach a note.
+skeptics confirm is `confirmed` and may reach a note.  Last, the `records` of data/corrections.json
+(re-judgments after the second independent review) mark each record it re-judged: a `rejudged` entry
+replaces the relation, note, ends and search (with `keep_ends`, the record's ends stay), a `kept` entry
+only records that the verdict was re-judged and stood.
 
 Usage: python3 -I smerge.py <work dir>
 Writes repo/data/manuscript-steps-mapping.json and repo/data/manuscript-displays-mapping.json.
@@ -76,6 +79,7 @@ def main(work):
     # (scratch/steps5/tools/rulings.py)
     s5p = f'{work}/scratch/steps5/rulings.json'
     s5 = json.load(open(s5p))['records'] if os.path.exists(s5p) else {}
+    fixes = json.load(open(f'{work}/repo/data/corrections.json')).get('records', {})
     final = {}
     stats = collections.Counter()
     for B in batches:
@@ -118,6 +122,15 @@ def main(work):
                     j = pick  # its text_error, if any, is the one that counts
                     ver['source'] = (ver['source'] + '+' if ver.get('source') else '') + 's5 ' + x5['how']
                     ver['complete'] = True
+            fx = fixes.get(rid)
+            if fx and pick:
+                ver['rereview'] = {'kind': fx['kind'], 'from': pick.get('relation'), 'source': fx['source'],
+                                   'why': fx.get('why')}
+                if fx['kind'] == 'rejudged':
+                    ends = pick.get('ends', []) if fx.get('keep_ends') else fx['ends']
+                    pick = dict(pick, relation=fx['relation'], note=fx['note'], ends=ends,
+                                searched=fx.get('searched') if fx['relation'] == 'noMatch' else None)
+                    ver['source'] += '+rereview'
             rel = pick and pick.get('relation')
             rec = {'id': rid}
             mt = meta[rid]
@@ -157,7 +170,8 @@ def main(work):
                    'source_pin': '1a47ac9007f80d37832291cc12d578874ff6bef9',
                    'provenance': 'machine: a sonnet mapper and a sonnet verifier per batch, independently; an opus judge on '
                                  'disagreement and on one in five agreed noMatch records; two opus skeptics per claim that '
-                                 'the text is wrong; no person reviewed',
+                                 'the text is wrong; records of the weakest classes re-judged after a second independent review '
+                                 '(a blind opus judge, an opus ruling where it disagreed); no person reviewed',
                    'counts': dict(sorted(counts.items())),
                    'records': recs},
                   open(f'{work}/repo/data/manuscript-{name}-mapping.json', 'w'), ensure_ascii=False, indent=1)

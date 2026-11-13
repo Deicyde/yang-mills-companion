@@ -1,9 +1,9 @@
 {
   "id": "Lemma 10.2 step 27",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "relatedMatch",
-  "note": "Lean states the pull-back of the link solution as the hypothesis `swirls` on `H.links` with a turned jet, and the pull-back of a slot as `slot_pull`; it does not split into positive and negative image directions.",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "G01.part_turn and G01.swirls_of_flow (YM/Work/G01.lean 65-99) split on s.flip and identify the turned-jet coefficient with the image positive link.",
   "subject": [
     {
       "location": {
@@ -29,36 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Bid.swirls",
-        "module": "YM.Bid.Source",
+        "declaration": "YM.Work.G01.part_turn",
+        "module": "YM.Work.G01",
         "lines": [
-          20,
-          21
+          66,
+          72
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Bid.swirls"
+            "id": "YM.Work.G01.part_turn"
           },
           "snippet": {
-            "text": "def swirls (H : Hol G) := ∀ (s : Signed) d (J : Jet G) t,\n    pull s 0 (H.links d J t)=H.links d (changedJet (fun _ => Taylor.turn s.ortho⁻¹) J) t",
-            "line": 20,
+            "text": "private theorem part_turn (s : Signed) (d : ℕ) (J : Jet G) (h t : ℝ) (x : Cover) (i : Axis) :\n    partConnection d (changedJet (fun _ => Taylor.turn s.ortho⁻¹) J) h (x, i) t =\n      h • ((if s.flip i then (-1 : ℝ) else 1) •\n        potential d J (s.perm i)\n          (h • (realSite (s.act x) + t • ((if s.flip i then (-1 : ℝ) else 1) • basis (s.perm i))))) := by\n  change h • potential d _ i (h • (realSite x + t • basis i)) = _\n  rw [potential_turn, map_smul, map_add, map_smul, motion_axis, motion_site]",
+            "line": 66,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Bid/Source.lean",
-            "fragment": "L20-L21"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/G01.lean",
+            "fragment": "L66-L72"
           },
           "proof_context": {
-            "declaration": "YM.Bid.swirls",
+            "declaration": "YM.Work.G01.part_turn",
             "lines": [
-              20,
-              21
+              66,
+              72
             ],
-            "conclusion": "`pull s 0 (H.links d J t) = H.links d (changedJet (turn s.ortho⁻¹) J) t`: the pulled-back link solution is the solution for the turned jet."
+            "conclusion": "part_turn computes the partial connection of the turned jet as h times a sign (-1 if s.flip i, else 1) times the original potential at the permuted axis and transformed site."
           }
         }
       }
@@ -68,36 +68,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Work.G06.slot_pull",
-        "module": "YM.Work.G06.TurnSlot",
+        "declaration": "YM.Work.G01.swirls_of_flow",
+        "module": "YM.Work.G01",
         "lines": [
-          91,
-          98
+          88,
+          99
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Work.G06.slot_pull"
+            "id": "YM.Work.G01.swirls_of_flow"
           },
           "snippet": {
-            "text": "theorem slot_pull (s : Signed) (v : Slot) :\n    ∃ (v' : Slot) (r : ℝ), (r = 1 ∨ r = -1) ∧\n      ∀ U : CoverConfig G, v.eval (pull s 0 U) = r • v'.eval U := by\n  let a := posDir v.plaq.val.1\n  let b := posDir v.plaq.val.2\n  obtain ⟨v',r,hr,hv⟩ := slanted_slot (G := G) (v.walk.map (·.rotate s))\n    (a.rotate s) (b.rotate s) (s.perm.injective.ne v.plaq.property.ne)\n  exact ⟨v', r, hr, fun U => (slanted_pull s v.walk a b U).trans (hv U)⟩",
-            "line": 91,
+            "text": "  let Y := changedJet (fun _ => Taylor.turn s.ortho⁻¹) J\n  change ((posDir i).rotate s).read (H.links d J h) (affine s 0 x) = H.flow d Y h (x,i) 1\n  rw [affine, add_zero]\n  cases hs : s.flip i with\n  | false =>\n    have he : partConnection d Y h (x,i) = partConnection d J h (s.act x,s.perm i) := by\n      funext t\n      unfold Y\n      rw [part_turn]\n      simp [hs, partConnection, realSite]\n    have hu := H.solves d Y h (x,i)\n    rw [he] at hu",
+            "line": 88,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/G06/TurnSlot.lean",
-            "fragment": "L91-L98"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/G01.lean",
+            "fragment": "L88-L99"
           },
           "proof_context": {
-            "declaration": "YM.Work.G06.slot_pull",
+            "declaration": "YM.Work.G01.swirls_of_flow",
             "lines": [
-              91,
-              98
+              84,
+              123
             ],
-            "conclusion": "A signed pull-back of a curvature slot evaluates as ±1 times another slot."
+            "conclusion": "swirls_of_flow splits on s.flip i and, using the ODE solved by the flow, shows the rotated positive-direction link of the original jet equals the flow of the turned jet."
           }
         }
       }
@@ -112,7 +112,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from relatedMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

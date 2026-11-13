@@ -1,9 +1,9 @@
 {
   "id": "Lemma 13.15 step 5",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "[L] has the parameter-independent tests and the affine forced functions K_0 + s K_1. The use of physical link variables in the sector integrals, and Gaussian rescaling applied only after these functions are fixed (so no field argument is differentiated), are not stated.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Jams.SectorOn with ledger_paying (Sym/Chill.lean 49-95) fixes the listing for the whole line, and the coupling enters only through the Gaussian rescaling, with Fold.unveils giving the exponential scaling.",
   "subject": [
     {
       "location": {
@@ -24,45 +24,6 @@
     }
   ],
   "object": [
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.PhysicalNext.Repeat.Pass.tours",
-        "module": "YM.FullVolume.Table.Mirth",
-        "lines": [
-          57,
-          67
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.PhysicalNext.Repeat.Pass.tours"
-          },
-          "snippet": {
-            "text": "          intro A j; simp_rw [fun t=>(F t).val.property.1.point, he]\n          let P u:= (observe T u).regularOccurrence W j A\n          let α:=P A₀; let b:=P B₀\n          refine ⟨fun i=>α+b*i,(FullVolume.Ray.ink.straight ..).rise (by norm_num),fun i=>?_⟩\n          have hp (x:Home T): (observe T x|>.reg)=(layout G (S) W).reg:= rfl\n          unfold α b P Activities.regularOccurrence; dsimp only; simp_rw [hp]\n          by_cases hh: Healthy ((W).threshold) ((layout G (S) W).reg j|>.support) A\n          · rw [masked_eq _ _ _ _ hh,masked_eq _ _ _ _ hh,masked_eq _ _ _ _ hh]; rw [mul_comm _ i.val]; rfl\n          rw [masked_ne _ _ _ _ hh, masked_ne _ _ _ _ hh, masked_ne _ _ _ _ hh,zero_mul,zero_add]\n        intro W' j; simp_rw [he]; let x := (observe T A₀).K j W'; let y:=(observe T B₀).K j W'\n        exact ⟨_,(FullVolume.Ray.ink.straight x y).rise (by norm_num),fun t=> by rw [mul_comm y t.val]; rfl⟩)",
-            "line": 57,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Table/Mirth.lean",
-            "fragment": "L57-L67"
-          },
-          "proof_context": {
-            "declaration": "YM.PhysicalNext.Repeat.Pass.tours",
-            "lines": [
-              43,
-              68
-            ],
-            "conclusion": "`tours`: along the line the regular occurrence is `α+b*i` and the forced function is `x+y*t` (`ink.straight`), with the health test `Healthy` and the masks (`masked_eq`/`masked_ne`) independent of the parameter."
-          }
-        }
-      }
-    },
     {
       "type": "lean",
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
@@ -97,7 +58,85 @@
               49,
               53
             ],
-            "conclusion": "`SectorOn`: the layout `listIn` (flags, allocation, tags, charts) is the same for every line parameter, and regular and forced outputs are polynomials of degree at most 2 (`ink 2`) in it."
+            "conclusion": "SectorOn requires one listing of activities along the whole line and that the activities and kernels are smooth functions of the line parameter."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.PhysicalNext.Repeat.Jams.ledger_paying",
+        "module": "YM.FullVolume.Sym.Chill",
+        "lines": [
+          93,
+          94
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.PhysicalNext.Repeat.Jams.ledger_paying"
+          },
+          "snippet": {
+            "text": "lemma ledger_paying (i:sun): Chord.listing H (F i)=pluck B (Marlin.lodge (H.crewD V₀) e (2*e)) ∧ Chord.source H (F i) = Marlin.poursP B (Marlin.lodge (H.crewD V₀) e (2*e)) (donation Pz D' B Q' γ p e i):=by\n  have hr:= sight_thaw H hV i; have hp:= offer_turn H hV i; rw [gatestone (A:=A) i] at hr hp; unfold Chord.listing Chord.source Chord.lens; rw [hp,hr]; exact ⟨rfl,rfl⟩",
+            "line": 93,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Sym/Chill.lean",
+            "fragment": "L93-L94"
+          },
+          "proof_context": {
+            "declaration": "YM.PhysicalNext.Repeat.Jams.ledger_paying",
+            "lines": [
+              93,
+              94
+            ],
+            "conclusion": "ledger_paying shows the listing and source of each element of the line equal the common lodge-based values, independent of the line parameter."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.Ray.Fold.unveils",
+        "module": "YM.FullVolume.Ray.Veer",
+        "lines": [
+          42,
+          53
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.Ray.Fold.unveils"
+          },
+          "snippet": {
+            "text": "lemma unveils (q:ℝ): Scout R (fun s=> Real.exp (h.sqcost s*q)) (Real.exp (h.scaleT q)):=by\n  let a:= h.peak; let d:= h.slope; let v:= (1-a^2)*q; let w₁:=-(2*a*d)*q; let w₂:=-(d^2)*q\n  let t(s:ℝ):=w₁*s+w₂*s^2; have he:= Scout.line h.price\n  have hp:= (he.scale w₁).pair ((he.power 2).scale w₂)\n  have ht: Scout R t (‖w₁‖*R+‖w₂‖*R^2):=hp\n  have hz:h.scaleT q=v+(‖w₁‖*R+‖w₂‖*R^2):= by\n    unfold scaleT sqcost flow v w₁ w₂; simp only [neg_mul, Real.norm_eq_abs,abs_neg,abs_mul, mul_zero,add_zero]; unfold a d; rw [abs_of_nonneg (sq_nonneg h.slope)] -- abs_pow\n    ring\n  rw [hz,Real.exp_add]\n  have hi:= ht.ignite.scale (Real.exp v); rw [Real.norm_of_nonneg (Real.exp_pos _|>.le)] at hi\n  refine hi.replace (fun s hs=>?_)\n  dsimp only; rw [smul_eq_mul,← Real.exp_add]; unfold v t w₁ w₂ a d sqcost flow; ring_nf",
+            "line": 42,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Ray/Veer.lean",
+            "fragment": "L42-L53"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.Ray.Fold.unveils",
+            "lines": [
+              42,
+              53
+            ],
+            "conclusion": "unveils shows exp(sqcost s * q) is a Scout (a uniformly bounded smooth family) with scale exp(scaleT q), the Gaussian rescaling by the coupling."
           }
         }
       }
@@ -112,7 +151,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, a judge ruled; a re-rating agent agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, a judge ruled; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

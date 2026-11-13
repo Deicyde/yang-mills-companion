@@ -1,9 +1,9 @@
 {
   "id": "Lemma 18.5 step 22",
   "kind": "proof_step",
-  "status": "not_formalized",
-  "relation": "noMatch",
-  "note": "The wrapping half is carried by the choice of `k` then large period in `rideE`; the claim that the nonwrapping bounds are `o(e^{-h_k})` after entry has no counterpart.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "Quince.rideE carries the wrapping half through the exp(-supportExponent*k) factor; the nonwrapping o(e^{-h_k}) claim is not stated.",
   "subject": [
     {
       "location": {
@@ -32,19 +32,72 @@
         "declaration": "YM.PhysicalNext.Repeat.Quince.rideE",
         "module": "YM.TraceExtension.Quince.Pride",
         "lines": [
-          37,
-          42
+          31,
+          52
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
             "id": "YM.PhysicalNext.Repeat.Quince.rideE"
           },
+          "snippet": {
+            "text": "    ∀ (ε:ℝ),0<ε → ∀ᶠ n:ℕ in atTop, ∀ N:ℕ,m<N→ let P':=Warehouse.flight H N m\n    ∃ (h:4≤ (H).levels.clock.J m)(hp:d ≤ (H).levels.clock.J (m+1))(hx: PPX.Blend 2 (A.B.a.budget (m+1)).threshold (A.B.a.budget m).threshold), let V:=Seal.donne _ (sound G d) M.p.kernel.penalty_pos h (Next.Foundations.valuation G d) P' hp hx; let l:=localSection G d\n      ∀ (P:Coefficient F ((H).S.side m n))(Q:Coefficient F ((H).S.side (m+1) n))(u v:ℝ), P.Format 0 (hol G) ((H).rep N n m)→ Q.Format 0 (hol G) ((H).rep N n (m+1))→ P.remBound 0 ((H).rep N n m) (Push.Local.kappa H m) u → Q.remBound 0 ((H).rep N n (m+1)) (Push.Local.kappa H (m+1)) v →P.density 0 l ((H).rep N n m)=blast H N n m d (Q.density 0 l ((H).rep N n (m+1))) →\n       (F).coeffSize (P.x - V.leads L Q.x) ≤ Φ*((F).coeffSize ((F).core Q.x)+v) + ε*(u + (C (J (m+1))*(F).coeffSize (vowel F L ((F).core Q.x))+Doors.rate L*v)):=by\n   intro ε hε\n   let a:= fineK («H»:=hol G) F; let P:= A.B.a.budget m\n   obtain ⟨k,hκ⟩:∃ k:ℕ,a*Real.exp (-P.supportExponent*k) ≤ ε:=by\n       let y(x:ℕ):= -(P.supportExponent*x); have ht: Tendsto y atTop atBot:= tendsto_neg_atTop_atBot.comp (tendsto_natCast_atTop_atTop.const_mul_atTop P.exponent_pos)\n       obtain ⟨k,h⟩:= ((((show Tendsto (fun x=>Real.exp (y x)) atTop (𝓝 0) from Real.tendsto_exp_atBot.comp ht)).const_mul a).eventually (ge_mem_nhds (show a*0<ε from by simpa using hε))).exists\n       exact ⟨k,by simpa only[neg_mul] using h⟩\n   have hu:Tendsto (fun n=> (A.B.a.S.side m n).val) atTop atTop:=by apply StrictMono.tendsto_atTop; intro x y hy; exact mul_lt_mul_of_pos_right (A.B.a.S.period_strict hy) (A.B.a.S.denominator m |>.property)\n   filter_upwards [hu.eventually (eventually_gt_atTop (20*(radiusD β+Heir.reach β+1))), hu.eventually (eventually_gt_atTop (10*(k*(4*P.B+2)+2*P.B)))] with n hs hf N hN\n   obtain ⟨h₁,h₂,hQ,hW⟩:= Cashbox b Z h hG hp hN hk hs\n   intro P'; refine ⟨h₁,h₂,hQ,?_⟩; intro V l U W t v hu hv hK hP hx\n   have hy : (H).Conv N n m:= Z.choice.represents N n m hN.le\n   have hm: (H).Selected:= Z.choice\n   have hb:= lively (A:=A) b.clock (d:=d) (show d ≤ J m from Nat.le_of_add_right_le hk) (n:=n)\n   let Y:= C (J (m+1))*(F).coeffSize (vowel F L ((F).core W.x))+Doors.rate L*v\n   obtain ⟨X,hα,hD,hH,hΩ⟩:=Surrey.include_one l H N n m (hol G) hm hN hW (sprite_pos _ ‹0 < p (J (m+1)) (J m)›|>.le) (Doors.rate_pos _ |>.le) W hv hP\n   have hz:= unique_part (hy.vac.symm ▸ hb) hu hα hK hD (hx.trans hH.symm) k (hy.vac.symm ▸ hf)\n   rw [hy.vac] at hz\n   have he : Real.exp (-P.supportExponent*k) * a ≤ ε:= by rw [mul_comm]; exact hκ",
+            "line": 31,
+            "truncated": false
+          },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Quince/Pride.lean",
-            "fragment": "L37-L42"
+            "fragment": "L31-L52"
+          },
+          "proof_context": {
+            "declaration": "YM.PhysicalNext.Repeat.Quince.rideE",
+            "lines": [
+              30,
+              53
+            ],
+            "conclusion": "rideE shows for every eps that eventually in n, the difference between a coefficient and the lifted next-level coefficient is controlled with an eps term, via the wrapping exponential decay."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.PhysicalNext.Repeat.Quince.unique_part",
+        "module": "YM.TraceExtension.Quince.Unum",
+        "lines": [
+          11,
+          42
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.PhysicalNext.Repeat.Quince.unique_part"
+          },
+          "snippet": {
+            "text": "lemma unique_part (hR:Local.Readable H Y R.p n w)(he:P.Format 0 H R)(hf:Q.Format 0 H R)(hp:P.remBound 0 R v a)(hk:Q.remBound 0 R v b)(hV:P.density 0 Y R=Q.density 0 Y R) (m:ℕ)(hm: 10*(m*(4*R.p.B+2)+2*R.p.B)< n.val):\n    F.coeffSize (P.x-Q.x) ≤ fineK (H:=H) F * (Real.exp (-R.p.supportExponent*m)*(a+b)):=by\n    obtain ⟨t,s,h0,h1,hx,hv,⟨p,hP,hA⟩,-⟩:= hp\n    obtain ⟨u,l,h2,h3,hy,hV₀,⟨q,hQ,hB⟩,-⟩:= hk\n    let f: ℕ⊕ℕ → Config G n→ℂ :=Sum.elim (fun i=>Q.regular i) (fun i=>(-1:ℂ) • P.regular i)\n    let C:ℕ⊕ℕ→Support n:=Sum.elim Q.support P.support; let W:ℕ⊕ℕ→ℝ:=Sum.elim q p\n    have G'(i:ℕ⊕ℕ): (R.p).Regular (C i) (f i):= by cases i; exact hf.smooth _; exact Next.Foundations.regular_smul _ (he.smooth _)\n    have H'(i:ℕ⊕ℕ): R.p.supBounds (0:Site n) (C i) (f i) (W i):=by cases i with\n       | inl i=>exact hB i\n       | inr i=> have hp:= Next.Foundations.bound_smul (-1:ℂ) (hA i); rw [norm_neg,norm_one,one_mul] at hp; exact hp\n    have hF:SumBudget (fun i:ℕ⊕ℕ=> R.p.mass (C i) (W i)) (a+b):=by\n       have Hq := hQ.2.1.hasSum; have Hp:= hP.2.1.hasSum\n       let g(i:ℕ⊕ℕ):= R.p.mass (C i) (W i)\n       have hi: HasSum g _ := HasSum.sum (show HasSum (g ∘ Sum.inl) _ from Hq) Hp\n       refine ⟨fun i=> (H' i).1.trans (R.p.loMass _ _ (H' i).1),hi.summable,le_trans hi.tsum_eq.le ?_⟩; linarith [hP.2.2,hQ.2.2]\n    have H₁(i:ℕ⊕ℕ): (0:Site n)∈ C i :=by cases i; exact hf.origin _; exact he.origin _\n    have H₂(i:ℕ⊕ℕ) : Nonwrapping (C i) 0→ H.PiVanish d (0: Site n) (f i):=by cases i; exact hf.projects _;exact (stretch_format (-1:ℂ) he).projects _\n    let g:=Local.presented Y (0:Site n) R.p.threshold (P.x-Q.x); have hy(U:Config G n)(hp:U∈dent R.p) : g U=∑' i,f i U:=by\n       have hs:=line_caps (f:=f) H' (show Summable W from Summable.of_nonneg_of_le (fun i=> (H' i).1) (fun i=> R.p.loMass _ _ (H' i).1) hF.2.1) U hp [] (by simp) (by simp)\n       let F(i:ℕ⊕ℕ):= f i U; change Summable (fun i=>‖F i‖) at hs; have hs':=hs.of_norm\n       have hu: Summable (fun i=>P.regular i U):=by\n            have hF:(F ∘ Sum.inr)=fun i=>-P.regular i U:=by simp [F,f,comp_def];\n            have ht:= hs.of_norm; exact summable_neg_iff.mp (show Summable _ from hF ▸ ht.comp_injective Sum.inr_injective)\n       have hx:= congr_fun hV U; rw [wiping hR.sound _ he _ hp,wiping hR.sound _ hf _ hp] at hx\n       have hx : wipe Y P R U=wipe Y Q R U:=mul_left_cancel₀ (by exact Complex.ofReal_ne_zero.mpr (Real.exp_ne_zero _)) hx\n       unfold g; rw [map_sub]; unfold wipe at hx; rw [← show (∑' i,Q.regular i U)-(∑' i,P.regular i U)=(∑' i,f i U) from ?_]; swap\n       · have hh:= (hs'.comp_injective Sum.inl_injective).hasSum; rw[sub_eq_add_neg]; apply Eq.symm; refine (?_ : HasSum F _).tsum_eq; exact HasSum.sum hh (Eq.mpr (by simp [Function.comp_def,f,F]) (hu.hasSum.neg))\n       rw [Pi.sub_apply]; linear_combination (norm:=ring_nf) hx\n    let V:= fun q:Probe G d=> partPrice H q; let z:=∑ i∈tests F,V i; let Z:=Real.exp (-R.p.supportExponent*m)*(a+b); have hd:0≤Z:=mul_nonneg (Real.exp_pos _).le ((tsum_nonneg hF.1).trans hF.2.2)\n    have he : fineK (H:=H) F * Z=Local.testPrice F * (z * (Cub.gaugeMeter d *Z)):=by unfold fineK; change Local.testPrice F * (z * Cub.gaugeMeter d) * Z=_; ring\n    rw [he]; have hp := zero_le_one.trans (Cub.horizon (d:=d)); apply (Local.probe_budget F).choose_spec.choose_spec.2 _ _ (mul_nonneg (Finset.sum_nonneg (fun i _=> zero_le_one.trans (partPrice_pos H i))) (mul_nonneg hp hd))\n    intro p hP; apply (loom_s G' H' hF H₁ H₂ hm hy hR p).trans; exact mul_le_mul_of_nonneg_right (Finset.single_le_sum (f:=V) (fun i _=>zero_le_one.trans (partPrice_pos H i)) hP) (mul_nonneg hp hd)",
+            "line": 11,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Quince/Unum.lean",
+            "fragment": "L11-L42"
+          },
+          "proof_context": {
+            "declaration": "YM.PhysicalNext.Repeat.Quince.unique_part",
+            "lines": [
+              11,
+              42
+            ],
+            "conclusion": "unique_part bounds the difference of two formatted coefficients by fineK*exp(-supportExponent*m)*(a+b)."
           }
         }
       }
@@ -59,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a deeper re-search agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a deeper re-search agreed; re-judged after a second independent review, which changed it from noMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

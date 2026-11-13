@@ -1,9 +1,9 @@
 {
   "id": "Lemma 18.5 step 20",
   "kind": "proof_step",
-  "status": "not_formalized",
-  "relation": "noMatch",
-  "note": "[L] has the forced-term allowance `e^{-M^{1/5}}`, its absorption of polynomial factors, and the wrapping cover bound (with `4B+2` for `2B+1` and no `-1`). The Taylor cancellation through degree five giving `C beta^{-1/10} M^C` and the lowering of the support exponent from 100 to 98 are not stated.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "Quince.unique_part and Quince.wound carry the nonwrapping Taylor cancellation, the allowance, its absorption and the wrapping cover bound; the full step is only partly in [L].",
   "subject": [
     {
       "location": {
@@ -29,47 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.RG.Calendar.forcedAllowance",
-        "module": "YM.RG.History",
+        "declaration": "YM.PhysicalNext.Repeat.Quince.unique_part",
+        "module": "YM.TraceExtension.Quince.Unum",
         "lines": [
-          85,
-          85
+          11,
+          42
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.RG.Calendar.forcedAllowance"
+            "id": "YM.PhysicalNext.Repeat.Quince.unique_part"
+          },
+          "snippet": {
+            "text": "lemma unique_part (hR:Local.Readable H Y R.p n w)(he:P.Format 0 H R)(hf:Q.Format 0 H R)(hp:P.remBound 0 R v a)(hk:Q.remBound 0 R v b)(hV:P.density 0 Y R=Q.density 0 Y R) (m:ℕ)(hm: 10*(m*(4*R.p.B+2)+2*R.p.B)< n.val):\n    F.coeffSize (P.x-Q.x) ≤ fineK (H:=H) F * (Real.exp (-R.p.supportExponent*m)*(a+b)):=by\n    obtain ⟨t,s,h0,h1,hx,hv,⟨p,hP,hA⟩,-⟩:= hp\n    obtain ⟨u,l,h2,h3,hy,hV₀,⟨q,hQ,hB⟩,-⟩:= hk\n    let f: ℕ⊕ℕ → Config G n→ℂ :=Sum.elim (fun i=>Q.regular i) (fun i=>(-1:ℂ) • P.regular i)\n    let C:ℕ⊕ℕ→Support n:=Sum.elim Q.support P.support; let W:ℕ⊕ℕ→ℝ:=Sum.elim q p\n    have G'(i:ℕ⊕ℕ): (R.p).Regular (C i) (f i):= by cases i; exact hf.smooth _; exact Next.Foundations.regular_smul _ (he.smooth _)\n    have H'(i:ℕ⊕ℕ): R.p.supBounds (0:Site n) (C i) (f i) (W i):=by cases i with\n       | inl i=>exact hB i\n       | inr i=> have hp:= Next.Foundations.bound_smul (-1:ℂ) (hA i); rw [norm_neg,norm_one,one_mul] at hp; exact hp\n    have hF:SumBudget (fun i:ℕ⊕ℕ=> R.p.mass (C i) (W i)) (a+b):=by\n       have Hq := hQ.2.1.hasSum; have Hp:= hP.2.1.hasSum\n       let g(i:ℕ⊕ℕ):= R.p.mass (C i) (W i)\n       have hi: HasSum g _ := HasSum.sum (show HasSum (g ∘ Sum.inl) _ from Hq) Hp\n       refine ⟨fun i=> (H' i).1.trans (R.p.loMass _ _ (H' i).1),hi.summable,le_trans hi.tsum_eq.le ?_⟩; linarith [hP.2.2,hQ.2.2]\n    have H₁(i:ℕ⊕ℕ): (0:Site n)∈ C i :=by cases i; exact hf.origin _; exact he.origin _\n    have H₂(i:ℕ⊕ℕ) : Nonwrapping (C i) 0→ H.PiVanish d (0: Site n) (f i):=by cases i; exact hf.projects _;exact (stretch_format (-1:ℂ) he).projects _\n    let g:=Local.presented Y (0:Site n) R.p.threshold (P.x-Q.x); have hy(U:Config G n)(hp:U∈dent R.p) : g U=∑' i,f i U:=by\n       have hs:=line_caps (f:=f) H' (show Summable W from Summable.of_nonneg_of_le (fun i=> (H' i).1) (fun i=> R.p.loMass _ _ (H' i).1) hF.2.1) U hp [] (by simp) (by simp)\n       let F(i:ℕ⊕ℕ):= f i U; change Summable (fun i=>‖F i‖) at hs; have hs':=hs.of_norm\n       have hu: Summable (fun i=>P.regular i U):=by\n            have hF:(F ∘ Sum.inr)=fun i=>-P.regular i U:=by simp [F,f,comp_def];\n            have ht:= hs.of_norm; exact summable_neg_iff.mp (show Summable _ from hF ▸ ht.comp_injective Sum.inr_injective)\n       have hx:= congr_fun hV U; rw [wiping hR.sound _ he _ hp,wiping hR.sound _ hf _ hp] at hx\n       have hx : wipe Y P R U=wipe Y Q R U:=mul_left_cancel₀ (by exact Complex.ofReal_ne_zero.mpr (Real.exp_ne_zero _)) hx\n       unfold g; rw [map_sub]; unfold wipe at hx; rw [← show (∑' i,Q.regular i U)-(∑' i,P.regular i U)=(∑' i,f i U) from ?_]; swap\n       · have hh:= (hs'.comp_injective Sum.inl_injective).hasSum; rw[sub_eq_add_neg]; apply Eq.symm; refine (?_ : HasSum F _).tsum_eq; exact HasSum.sum hh (Eq.mpr (by simp [Function.comp_def,f,F]) (hu.hasSum.neg))\n       rw [Pi.sub_apply]; linear_combination (norm:=ring_nf) hx\n    let V:= fun q:Probe G d=> partPrice H q; let z:=∑ i∈tests F,V i; let Z:=Real.exp (-R.p.supportExponent*m)*(a+b); have hd:0≤Z:=mul_nonneg (Real.exp_pos _).le ((tsum_nonneg hF.1).trans hF.2.2)\n    have he : fineK (H:=H) F * Z=Local.testPrice F * (z * (Cub.gaugeMeter d *Z)):=by unfold fineK; change Local.testPrice F * (z * Cub.gaugeMeter d) * Z=_; ring\n    rw [he]; have hp := zero_le_one.trans (Cub.horizon (d:=d)); apply (Local.probe_budget F).choose_spec.choose_spec.2 _ _ (mul_nonneg (Finset.sum_nonneg (fun i _=> zero_le_one.trans (partPrice_pos H i))) (mul_nonneg hp hd))\n    intro p hP; apply (loom_s G' H' hF H₁ H₂ hm hy hR p).trans; exact mul_le_mul_of_nonneg_right (Finset.single_le_sum (f:=V) (fun i _=>zero_le_one.trans (partPrice_pos H i)) hP) (mul_nonneg hp hd)",
+            "line": 11,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/RG/History.lean",
-            "fragment": "L85-L85"
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Push.Local.power_delay",
-        "module": "YM.Push.LOCAL_SPLITTING.Delay",
-        "lines": [
-          20,
-          21
-        ]
-      },
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Push.Local.power_delay"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Quince/Unum.lean",
+            "fragment": "L11-L42"
           },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/LOCAL_SPLITTING/Delay.lean",
-            "fragment": "L20-L21"
+          "proof_context": {
+            "declaration": "YM.PhysicalNext.Repeat.Quince.unique_part",
+            "lines": [
+              11,
+              42
+            ],
+            "conclusion": "unique_part bounds the coefficient size of the difference of two formatted coefficients by fineK*exp(-supportExponent*m)*(a+b)."
           }
         }
       }
@@ -86,15 +75,29 @@
           25
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
             "id": "YM.PhysicalNext.Repeat.Quince.wound"
           },
+          "snippet": {
+            "text": "lemma wound (X:Support n)(hx:o∈X)(h:10*(b*(4*p.B+2)+2*p.B) < n.val)(hi:¬Nonwrapping X o): b ≤ coverNumber p.B X:=by\n   contrapose! hi; intro i hh; apply lt_of_le_of_lt _ h; apply Nat.mul_le_mul_left; apply (Corona.extent X p.B hh hx).trans; gcongr",
+            "line": 24,
+            "truncated": false
+          },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Quince/Unison.lean",
             "fragment": "L24-L25"
+          },
+          "proof_context": {
+            "declaration": "YM.PhysicalNext.Repeat.Quince.wound",
+            "lines": [
+              24,
+              25
+            ],
+            "conclusion": "wound shows a non-nonwrapping support through a point has cover number at least b once the side exceeds 10*(b*(4B+2)+2B)."
           }
         }
       }
@@ -109,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a deeper re-search agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a deeper re-search agreed; re-judged after a second independent review, which changed it from noMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

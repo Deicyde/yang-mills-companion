@@ -1,9 +1,9 @@
 {
   "id": "Lemma 16.4 step 6",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "relatedMatch",
-  "note": "Lean states the comparison on the same window with arity `m ≤ n` and exponent `(P x).arc`, but not through the Gaussian source lemmas; the uniform covariance and Taylor bounds are not displayed.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "East.sight (Suds.lean 47-90) applies the source estimates on the compact window at exponent arc, with the subset-corrected quantities as parts of Ship.invoice; this is the same comparison in [L]'s packaging.",
   "subject": [
     {
       "location": {
@@ -33,7 +33,7 @@
         "module": "YM.MergeProof.East.Suds",
         "lines": [
           47,
-          49
+          90
         ]
       },
       "role": "key",
@@ -43,14 +43,14 @@
             "id": "YM.MergeProof.East.sight"
           },
           "snippet": {
-            "text": "lemma sight (F:Extraction.Order)(hs:(S).Smooth) (R:ℝ)(hn:2≤n)(hi:0<R)(x:ι)(χ:ℝ)\n    (t:Caps m)(ht:∀ i,t i ≤ D)(w:Ribbon (Bel C.book) t)(he:m ≤ n):∃ κ:ℝ,∀ᶠ k:ℕ in atTop, ∀ Y,Poised P B H O J n z k Y→\n       (wok C D k (P x).arc χ Y).inspection F (κ*Ship.budget (A) n k) (Scaling.window (2*R) m) ht w:=by",
+            "text": "lemma sight (F:Extraction.Order)(hs:(S).Smooth) (R:ℝ)(hn:2≤n)(hi:0<R)(x:ι)(χ:ℝ)\n    (t:Caps m)(ht:∀ i,t i ≤ D)(w:Ribbon (Bel C.book) t)(he:m ≤ n):∃ κ:ℝ,∀ᶠ k:ℕ in atTop, ∀ Y,Poised P B H O J n z k Y→\n       (wok C D k (P x).arc χ Y).inspection F (κ*Ship.budget (A) n k) (Scaling.window (2*R) m) ht w:=by\n    cases m with\n    | zero=> refine ⟨0,Eventually.of_forall fun k Y hQ x hx hc a' ha=>?_⟩\n             -- empty numeric moment =1\n             unfold Extraction.Order.late; refine Eventually.of_forall fun j=> Eventually.of_forall fun l=> ?_\n             let u:=hang t w;let L:= standard C\n             have he(U:Points 0):disc (hang t w) U=1:=by change L.useAt L U u=_; exact (Maxwell.table_regular C.labels).trivial (fun i => ⟨(u i).1,L.representative _ (u i).2⟩) U\n             rw [he]; dsimp only; rw [Family.num]\n             simp [ha.le]\n    | succ m =>\n       let I(i:Fin (m+1)):Fin (D+1):= ⟨t i,Nat.lt_succ_of_le (ht i)⟩\n       let v:(i:Fin (m+1))→ C.label (I i):= fun i=> ladder C (t i) (w i)\n       have hW : jointX (d0:=fun i=>(I i).val) v=hang t w:=by funext i; exact congr_arg (Sigma.mk (t i)) (ladder_reads (w i))\n       let T:= Scaling.window (2*R) (m+1);have hh:IsCompact T:=window_closed ..\n       have hz:T ⊆ conf (m+1):= fun i hi' => spaced_conf (by positivity : 0<(2*R)⁻¹) hi'.1\n       let O'(y) := Poly.price (fun _=>1) (Read.maxProfile C y (jointX (d0:=fun i=> t i) v))\n       have hT: ContinuousOn O' T:= by unfold O' Read.maxProfile Poly.price; exact continuousOn_finsetSum _ fun i _ => continuousOn_const.mul ((Read.profile_part_cont (S) hs _ _).norm.mono hz)\n       obtain ⟨c,hc⟩:=(hh.image_of_continuousOn hT).bddAbove\n       let b:= (P x).arc; have hb:0<b:= by dsimp only [b]; linarith only [(P x).huge,Nat.cast_nonneg (α:=ℝ) D]\n       refine ⟨c,?_⟩\n       filter_upwards [lava_v P B H h hp O J z hZ v x (t:=I) hh hz hn he,open_read h hb (2*R) A (m+1)] with k he ha Y hY i hi hk ε hε\n       let Q:= wok C D k b χ Y; let μ:= Next.Rank.Station.mag A b k; let y:= tag μ⁻¹ i\n       rw [wok_spacing] at hi hk\n       have hA :Allowed A b k:=by obtain ⟨p,q,u,h⟩:= hY.supply x; unfold b; rw [← (P x).factor (C.path.levels.clock.J k)]; exact u.age.allot.permitted\n       have hf:=ha hA i hk hi.2; change Fit A b k y at hf\n       obtain ⟨h1,h2⟩:= authentic (V:=A) (b:=b) (k:=k) i\n       unfold Extraction.Order.late\n       refine Eventually.of_forall fun l=>?_\n       have hc' := F.mesh.cofinal.eventually (eventually_all.mpr (fun z : Fin (m+1)=> hf.stencils (F:=C) H (t z)))\n       filter_upwards [F.mesh.cofinal.eventually (eventually_gt_atTop k),hc'] with j hj hx\n       let N:=F.mesh j;let p:=F.per l; let a : (q:Fin (m+1))→ C.label (t q) := fun i=> ladd C μ k N p _ (Y N p (I i)) (v i); let W := q_asked (C:=C) a\n       have he : ∀ s,s.val.Nonempty → (Ship.yard C b (show k ≤ N from hj.le) p).rootTest (C.beta N p) (fun U=> (Ship.invoice (jointX (d0:=fun i=> (I i).val) v) W hf N p U).part s) ≤ Ship.budget (A) n k:=\n          he Y hY N p hj y (h2.symm ▸ hi) hf\n       have hr:∀ i,Interior _ (Read.probes C N p k (Next.Rank.Station.choose (A) b k y) W i):= fun i => (hx i).choose_spec p i (a i)\n       have hu:= Read.full_cost H (Ship.fitting hf) (Ship.budget_pos (A) n k).le (Ship.yard C b (show k≤N from hj.le) p) hr he\n       have hy : O' y ≤ c:= hc (mem_image_of_mem _ hi)\n       have hm:= (Ship.budget_pos (A) n k).le\n       change Next.Rank.Station.choose A b k y=i at h1; change Next.Rank.Station.tested A b k y=y at h2; rw [h1,h2] at hu\n       change ‖C.numeric N p W (fun x=>Cells.location C.S k N p (i x))-disc (hang t w) (tag Q.spacing i)‖ ≤ _\n       rw [show Q.spacing=μ⁻¹ from wok_spacing ..]\n       -- ht disc equality.\n       refine le_trans (show ‖_ - disc (hang t w) y‖ ≤ O' y * Ship.budget (A) n k from ?_) ((mul_le_mul_of_nonneg_right hy hm).trans (le_add_of_nonneg_right hε.le)); rw [← hW]; exact hu",
             "line": 47,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/East/Suds.lean",
-            "fragment": "L47-L49"
+            "fragment": "L47-L90"
           },
           "proof_context": {
             "declaration": "YM.MergeProof.East.sight",
@@ -58,7 +58,46 @@
               47,
               90
             ],
-            "conclusion": "`sight` gives the comparison `inspection` for `wok` at exponent `(P x).arc` on the window `Scaling.window (2*R) m` for words of length `m ≤ n` with `2 ≤ n`."
+            "conclusion": "sight gives a constant kappa such that, eventually in k, the all-arity inspection estimate holds on the compact window with budget kappa*Ship.budget, treating the empty moment as 1."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Rank.Ship.invoice",
+        "module": "YM.Next.RANK.Allowance",
+        "lines": [
+          70,
+          71
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Rank.Ship.invoice"
+          },
+          "snippet": {
+            "text": "def invoice (B : Fin n → (standard C).Tag) (t : Fin n → C.book.Token) (hx : Fit C.path.levels b k x) (N p : ℕ) : Config G (C.side N p) → veil (Fin n) :=\n  Read.cylinder (targets C B hx) (clients C t b k N p x)",
+            "line": 70,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Allowance.lean",
+            "fragment": "L70-L71"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Rank.Ship.invoice",
+            "lines": [
+              70,
+              71
+            ],
+            "conclusion": "invoice defines the configuration read as a cylinder of the targets and clients, the subset-corrected object used in the estimate."
           }
         }
       }
@@ -73,11 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents agreed on the class but cited different declarations; the mapper's kept, not judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents agreed on the class but cited different declarations; the mapper's kept, not judged; re-judged after a second independent review, which changed it from relatedMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {
-        "kind": "helper"
+        "kind": "chain"
       }
     }
   }

@@ -1,9 +1,9 @@
 {
   "id": "Lemma 11.8 step 19",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "relatedMatch",
-  "note": "The Lean freezes at the real point `ground p` and uses a ball estimate in place of the geometric-sum weights comparison `|q(θ(ξ)) - q(θ(ξ'))| ≤ Cμ|ξ-ξ'|`.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Stationary.hill_move (Slabs.lean 344-364, with tilt_feet) compares the alias weights at two momenta through the Lipschitz bound on q, with a fixed factor 6.",
   "subject": [
     {
       "location": {
@@ -61,36 +61,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Stationary.shelter",
+        "declaration": "YM.Stationary.hill_move",
         "module": "YM.Next.STATIONARY.Spectral.Slabs",
         "lines": [
-          153,
-          168
+          361,
+          364
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Stationary.shelter"
+            "id": "YM.Stationary.hill_move"
           },
           "snippet": {
-            "text": "  have hq p (hq : p∈strip (min i j)) : Stable (carryM X Y p p (K p)) (a/2) := by\n    let x := ground p\n    have hp' := ground_near hq\n    have hr : p∈ ball x i := by rw [mem_ball,dist_eq_norm]; exact hp'.trans_le (min_le_left ..)\n    have hx := ground_real p\n    obtain ⟨P,h1,h2,h3⟩ := HX.feel x hx\n    obtain ⟨T,g1,g2,g3⟩ := HY.feel x hx\n    let Q := fun z => carryM P T z z (K z)\n    have hw z (hw : z∈ ball x σ) : vflux (Q z)≤ C*A*C := by\n      have hi := ((h3 z hw).2.bond (hg z (air_ride hx hw))).bond (g3 z hw).1\n      rwa [Matrix.one_mul, Matrix.mul_one] at hi\n    have hL z (hW : z∈ball x σ) : BillD Q z := ((BillD.take (h1 z hW) (P.whole z)).bond (hz.shape (air_ride hx hW))).bond (g1 z hW)\n    have hU : Q x=carryM X Y x x (K x) := by\n      unfold Q carryM; rw [h2 x (axes_of_real hx), g2 x (axes_of_real hx)]\n    have hV : Q p=carryM X Y p p (K p) := by unfold Q carryM; rw [h2 p rfl, g2 p rfl]\n    rw [← hV]; apply Stable.mono (Stable.cove (U:=Q x) (hU.symm ▸ hl x hx) (contour_matrix hs hL hw hr))",
-            "line": 153,
+            "text": "lemma hill_move (l : Site L) (h : ‖p-r‖ ≤ 1) : hill p l≤6*hill r l := by\n  have ht : 0≤shadeK (aliasAt p l) := slug_nonneg _\n  have hx : hill p l ≤ shadeK (aliasAt p l)+inch L := by nlinarith only [ht,hill_sq p l,hill_pos p l,inch_pos L]\n  have H := tilt_feet l h; linarith [hill_inch r l,hill_q r l]",
+            "line": 361,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Spectral/Slabs.lean",
-            "fragment": "L153-L168"
+            "fragment": "L361-L364"
           },
           "proof_context": {
-            "declaration": "YM.Stationary.shelter",
+            "declaration": "YM.Stationary.hill_move",
             "lines": [
-              140,
-              174
+              361,
+              364
             ],
-            "conclusion": "`shelter` compares the complex momentum `p` with a real base point `ground p` at distance at most `σ/2`, and bounds the operator `Q z` on the ball by `C A C`."
+            "conclusion": "hill_move shows hill p l <= 6 * hill r l whenever the momenta satisfy ||p-r|| <= 1, comparing the alias weights at two momenta."
           }
         }
       }
@@ -105,11 +105,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from relatedMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {
-        "kind": "direct"
+        "kind": "helper"
       }
     }
   }

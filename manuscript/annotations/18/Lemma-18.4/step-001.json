@@ -1,9 +1,9 @@
 {
   "id": "Lemma 18.4 step 1",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "relatedMatch",
-  "note": "Lean takes the same regulated determinant and splits the tested coefficient by the same contact identity, but with the abstract gauge-averaged objects `zell`, `wentG`, `rill`, `sailM` instead of [M]'s `R_μ`, `G_μ`, `𝒴_U`, `𝒥_U` written out.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Det.stock and Det.scale_g (Port.lean 61-124) use the same regulated determinant and contact identity under different names.",
   "subject": [
     {
       "location": {
@@ -29,36 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Trace.Lamp.ultimate",
-        "module": "YM.TraceExtension.Lamp.Pious",
+        "declaration": "YM.Trace.Det.stock",
+        "module": "YM.TraceExtension.Det.Port",
         "lines": [
-          21,
-          24
+          61,
+          61
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Trace.Lamp.ultimate"
+            "id": "YM.Trace.Det.stock"
           },
           "snippet": {
-            "text": "lemma ultimate {Y:Gal G f}(hs:G.Simple)(h:M.Bounds p α C D)(hμ:0<μ)(he:(stock p M μ (1:Config G f)).det≠0)(hp:Cloaked Y) :\n   let S:= mainTerm p M (n:=f); let A:=marke p M μ (f:=f); let τ:=1/2* (lux d i q b (sailM p M μ (aroma p M Y)))\n   let J:=rill A Y ∘ input G f; let F:=rill S (ashore p M μ Y)∘ input G f; let W:=rill S (mica p M μ (stampQ 0) b (f:=f))∘ input G f\n   lux d i q b (lush Y ∘ input G f) = τ - lux d i q b J -lux d i q b F +(μ:ℂ)^ (2:ℕ)*(lux d i q b (portage p M μ b f)+lux d i q b W+lux d i q b (lensW p M μ b Y)):=by",
-            "line": 21,
+            "text": "def stock (p:Clip)(R:PathData G)(μ:ℝ)(U:Config G f):=flare p R U+mail U*(mail U)ᵀ+μ^2 • (1:Funds _)",
+            "line": 61,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Lamp/Pious.lean",
-            "fragment": "L21-L24"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Det/Port.lean",
+            "fragment": "L61-L61"
           },
           "proof_context": {
-            "declaration": "YM.Trace.Lamp.ultimate",
+            "declaration": "YM.Trace.Det.stock",
             "lines": [
-              21,
-              50
+              61,
+              61
             ],
-            "conclusion": "`ultimate` writes the tested polarization coefficient `lux d i q b (lush Y ∘ input)` as the contact term `τ`, the `J`/`F` contact terms, and `μ²` times `portage` + `W` + `lensW`."
+            "conclusion": "stock defines the regulated matrix flare + mail*mail^T + mu^2 I."
           }
         }
       }
@@ -68,36 +68,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Trace.Det.marke",
+        "declaration": "YM.Trace.Det.scale_g",
         "module": "YM.TraceExtension.Det.Port",
         "lines": [
-          62,
-          62
+          103,
+          124
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Trace.Det.marke"
+            "id": "YM.Trace.Det.scale_g"
           },
           "snippet": {
-            "text": "def marke (p:Clip)(R:PathData G)(μ:ℝ)(U:Config G f):= Real.log (stock p R μ U).det/2 - Real.log (ammo μ U).det",
-            "line": 62,
+            "text": "lemma scale_g (h:R.Bounds p α C D)(hμ:0<μ)(he:(stock p R μ U).det≠0)(hY:Tune Y U)(hh:∀ᶠ u:BaseSites G f in 𝓝 0,Y (Lattice.gauge (switchSite u) U)=armor (switchSite u) (Y U)) :\n    (shellB p R μ U * beamH (aroma p R Y) U).trace/2 - lush Y U =\n    arrived p R μ Y U- μ^2 * (shellB p R μ U *tidal Y U).trace + aroma p R (ashore p R μ Y) U:=by\n    let W(s:ℝ):= tendr Y s U; let A(s:ℝ):= flare p R (W s); let H:= flare p R U; let B:= shellB p R μ U; let J:=shellG μ U; let V:= tidal Y U; let M(s):=mail (W s)\n    let P:=mail U\n    have hA: Memo A 0:= memo_damage _ (rate_burn U h)\n    have ht: Army W 0:=(Army.powL (v:=fun s:ℝ=> s • Y U) (by fun_prop)).mul (Army.park U _)\n    have hM: Memo M 0:= memo_flash hμ ht |>.1; have h0: M 0=P:= by unfold M W; rw [tendr_o]\n    have hv: directionM M 0 1=V*P:= rising U hY hh\n    have hs : directionM (fun s=> (M s)ᵀ) 0 1=(V*P)ᵀ:=by rw [← hv]; rfl\n    have hp: directionM (fun s=>stock p R μ (W s)) 0 1=directionM A 0 1+(V*P*Pᵀ+ P*(V*P)ᵀ):=by\n        rw[show (fun s=>stock p R μ (W s))= (A+fun s=> M s*(M s)ᵀ)+ (fun _=>μ^2 • 1) from rfl]; rw [direction_add (hA.twice (hM.cross hM.spot)) (Memo.raw _ _), direction_add hA (hM.cross hM.spot), direction_zero,add_zero,direction_prod hM hM.spot,hv,hs,h0]\n    have hq:directionM (fun s=>ammo μ (W s)) 0 1=(V*P)ᵀ*P+Pᵀ*(V*P):= by\n       rw[show (fun s=>ammo μ (W s))=(fun s=>(M s)ᵀ*M s)+(fun _=>μ^2 • 1) from rfl, direction_add (hM.spot.cross hM) (Memo.raw _ _), direction_zero, add_zero,direction_prod hM.spot hM,hv,hs,h0]\n    have hx : aroma p R (ashore p R μ Y) U=(B*tensw p R Y U).trace/2- (J*Pᵀ*(V+Vᵀ)*B*tuneM p R U).trace:=by\n       let L:=fderiv ℝ (burn p R U) 0; unfold aroma ashore; rw [map_sub,map_smul,smul_eq_mul, show fderiv ℝ _ _ (shoreX p R μ Y U)=(B*_).trace from trap_pay B L.toLinearMap (refrain Y U), show fderiv ℝ _ _ (shoreZ p R μ Y U)=(J*Pᵀ*(V+Vᵀ)*B*tuneM p R U).trace from trap_pay _ L.toLinearMap (jeps U)]; congr 1\n       rw [mul_comm]; exact mul_one_div ..\n    have hz: Hᵀ=H:= damage_symm _ (burn_cov U h)\n    have hw: Bᵀ=B:=by unfold B shellB; rw[Matrix.transpose_nonsing_inv, show (stock p R μ U)ᵀ=stock p R μ U from ?_]; unfold stock; simp only [transpose_add,transpose_mul,transpose_transpose, transpose_smul,transpose_one]; rw [show (flare p R U)ᵀ= _ from hz]\n    have hh': Jᵀ=J:=by unfold J shellG; rw [Matrix.transpose_nonsing_inv]; congr 1; unfold ammo tonic; simp\n    rw [hx,solo U h hY,rhyme U h hμ he]; change (B * _).trace/2-V.trace = ((B*directionM (fun s=> stock p R μ (W s)) 0 1).trace/2-(J*directionM (fun s=>ammo μ (W s)) 0 1).trace) - μ^2 * _ + _; rw[hp,hq]\n    exact stag H V P _ (μ^2) _ _ (A:=stock p R μ U) (G:=ammo μ U) (hum U h) rfl rfl (Matrix.nonsing_inv_mul _ he.isUnit) (Matrix.mul_nonsing_inv _ (ammo_safe U hμ).det_pos.ne'.isUnit) hz hw hh'",
+            "line": 103,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Det/Port.lean",
-            "fragment": "L62-L62"
+            "fragment": "L103-L124"
           },
           "proof_context": {
-            "declaration": "YM.Trace.Det.marke",
+            "declaration": "YM.Trace.Det.scale_g",
             "lines": [
-              62,
-              62
+              103,
+              124
             ],
-            "conclusion": "`marke` is `log det(stock)/2 - log det(ammo)`, the regulated log-determinant whose derivative carries `R_μ` and `G_μ` (`zell`, `wentG`)."
+            "conclusion": "scale_g gives the derivative identity for the regulated determinant along a scaling path, with the contact terms retained."
           }
         }
       }
@@ -112,7 +112,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents agreed on the class but cited different declarations; the mapper's kept, not judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents agreed on the class but cited different declarations; the mapper's kept, not judged; re-judged after a second independent review, which changed it from relatedMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

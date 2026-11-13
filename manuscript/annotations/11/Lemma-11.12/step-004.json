@@ -1,9 +1,9 @@
 {
   "id": "Lemma 11.12 step 4",
   "kind": "proof_step",
-  "status": "formalized",
-  "relation": "broadMatch",
-  "note": "[M] shows order-zero Schur bounds through exponential conjugation and a Neumann series; [L] reaches exponential bounds on the inverse and its compressions through `inverseCost`/`areaCost` with all jets up to order `k`. The conjugation argument is not in the Lean.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "Schur.inverse_tilt bounds the inverse entrywise from the gap of the conjugated form (an exponential-rate bound with C = 2/eps); the conjugation and Neumann-series argument of the step is not used.",
   "subject": [
     {
       "location": {
@@ -29,75 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.AnalyticBridge.Covariance.makeVista",
-        "module": "YM.AnalyticBridge.SECTOR_COVARIANCE_JETS.Vista",
+        "declaration": "YM.Next.SectorChange.Schur.inverse_tilt",
+        "module": "YM.SectorNext.GAUSSIAN_SECTOR_CHANGE.Inverse",
         "lines": [
-          42,
-          56
+          74,
+          120
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.AnalyticBridge.Covariance.makeVista"
+            "id": "YM.Next.SectorChange.Schur.inverse_tilt"
           },
           "snippet": {
-            "text": "lemma makeVista (h : RatesPaid p p σ C k A B) (he : Gapped (A B) η) (hv : Price σ C η d 1 V 1 k)\n    (hp : (native c).Volume p d V) (hw : Bars W p n) : Vista p A W B d (rateBreak d n k) (tower k C V η) k := by\n  let N := tallyInverse k C V η\n  let T := tower k C V η\n  have hh : N ≤ T := le_max_of_le_left (le_max_left ..)\n  have hz : rateBreak d n k ≥ 0 := (Real.exp_pos _).le\n  have hx u (hu : 0≤u) := editCosts W h he hv hp hu hw\n  refine ⟨fun u hu => (inverseCost h he hv hp hu).less hh le_rfl hu,\n    fun s u hu => (areaCost s h he hv hp hu).less hh le_rfl hu,fun u hu => ?_,fun u hu => ?_,fun u hu => ?_⟩\n  · exact ((hx u hu).1).less (le_max_of_le_left (le_max_right ..)) le_rfl hu\n  · exact Bundle.mono ((hx u hu).2.1) le_rfl (mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left\n      (le_max_of_le_right (le_max_left ..)) hz) (drain_pos hu).le)\n  have ht : unitF k C N V ≤ T := le_max_of_le_right (le_max_right ..)\n  exact Bundle.mono ((hx u hu).2.2) le_rfl (mul_le_mul_of_nonneg_right\n    (mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left ht hz) (drain_pos hu).le) (drain_pos hu).le)",
-            "line": 42,
+            "text": "lemma inverse_tilt {σ M ε : ℝ} (he : 0 < ε) (hM : 0 ≤ M) (hs : 0 < σ) :\n    ∃ v C : ℝ, 0<v ∧ v≤σ ∧ 0<C ∧\n    ∀ {c : Side} {V : Type} [Fintype V] [DecidableEq V] (p : V → Site c) (A : Gaussian.Table V),\n      Pours A p p σ M → Gapped A ε → A.IsSymm →\n      ∀ i j : V, rate v (separation (p j) (p i)) * |A⁻¹ j i| ≤ C := by\n  let a := min 1 ((ε/2)/(M+1))\n  have ha : 0 < a := lt_min (by norm_num) (by positivity)\n  have hl : a*M ≤ ε/2 := calc\n    _ ≤ a*(M+1) := by gcongr; exact le_add_of_nonneg_right (by positivity)\n    _ ≤ _ := (le_div_iff₀ (by positivity)).mp (min_le_right ..)\n  let v := a*σ\n  have hv : 0<v := mul_pos ha hs\n  let C := 2/ε\n  have hc : 0<C := by unfold C; positivity\n  refine ⟨v,C,hv,(mul_le_of_le_one_left hs.le (min_le_left ..)),hc,?_⟩\n  intro c V _ _ p A h hx hA i j\n  let L := coffee p A v i\n  have hL := tilting p A h hs.le i ha.le (show a ≤ 1 from min_le_left ..)\n  have H (x : Vec V) : (ε/2) * sumSq x ≤ x ⬝ᵥ (L *ᵥ x) := by\n    have ht : |x ⬝ᵥ ((L-A) *ᵥ x)| ≤ (a*M)*(sumSq x+sumSq x)/2 := estimate hL _ _\n    rw [sub_mulVec,dotProduct_sub] at ht\n    have hw := (abs_le.mp ht).1; nlinarith only [hx x, hw, mul_le_mul_of_nonneg_right hl (sumSq_nn x)]\n  let X := fun j => mass p v j i * A⁻¹ j i\n  have hunit : A.PosDef := solved A hx hA he\n  have hd : IsUnit A.det := (A.isUnit_iff_isUnit_det).1 hunit.isUnit\n  have hrest : L *ᵥ X = Pi.single i 1 := by\n    funext j\n    change (∑ k, L j k * X k) = _\n    have h1 (k : V) : L j k * X k = mass p v j i * (A j k * A⁻¹ k i) := by\n      unfold L coffee X\n      simp [mul_assoc,(rate_pos v (separation (p k) (p i))).ne',mass]\n    simp_rw [h1]; rw [← mul_sum, ← Matrix.mul_apply, Matrix.mul_nonsing_inv _ hd, Pi.single_apply]\n    split\n    next hj => subst j; simp [mass,rate]\n    next hj => simp [Matrix.one_apply,hj]\n  have hb := H X; rw [hrest, dotProduct] at hb\n  have hw' : (X ⬝ᵥ Pi.single i 1) = X i := by simp [dotProduct,Pi.single_apply]\n  rw [show (∑ x, X x * Pi.single i (M:=fun _=>ℝ) 1 x)=X i from hw'] at hb\n  have hw k : (X k)^2 ≤ sumSq X := single_le_sum (f:=fun k => X k ^2) (fun k _ => sq_nonneg _) (mem_univ k)\n  have hk : |X j| ≤ C := by\n    have hs := mul_le_mul_of_nonneg_left (hw i) (by positivity : 0 ≤ ε/2)\n    have hu := mul_le_mul_of_nonneg_left (hw j) (by positivity : 0 ≤ ε/2)\n    have ht : X i ≤ C := by unfold C; rw [le_div_iff₀ he]; by_contra! t; nlinarith\n    by_contra! hp\n    have hm : (ε/2)*C=1 := by unfold C; field_simp\n    have hn := mul_lt_mul_of_pos_left (pow_lt_pow_left₀ hp hc.le (by decide : (2:ℕ)≠0)) (by positivity : 0<ε/2)\n    rw [sq_abs] at hn; nlinarith [ht]",
+            "line": 74,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/SECTOR_COVARIANCE_JETS/Vista.lean",
-            "fragment": "L42-L56"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/SectorNext/GAUSSIAN_SECTOR_CHANGE/Inverse.lean",
+            "fragment": "L74-L120"
           },
           "proof_context": {
-            "declaration": "YM.AnalyticBridge.Covariance.makeVista",
+            "declaration": "YM.Next.SectorChange.Schur.inverse_tilt",
             "lines": [
-              42,
-              56
+              74,
+              121
             ],
-            "conclusion": "From `RatesPaid` for `A` and `Gapped (A B) η`, `Vista` gives exponential jet bounds for the inverse (`full`) and its principal compressions (`thin`)."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.AnalyticBridge.Covariance.Vista",
-        "module": "YM.AnalyticBridge.SECTOR_COVARIANCE_JETS.Vista",
-        "lines": [
-          22,
-          28
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.AnalyticBridge.Covariance.Vista"
-          },
-          "snippet": {
-            "text": "structure Vista (p : ι → Site c) (A : Directions G c → Matrix ι ι ℝ) (W : ι → Set ι) (B : Directions G c)\n    (d Y C : ℝ) (k : ℕ) : Prop where\n  full (u : ℝ) : 0≤u → Spiral p (action A u) B u d C k\n  thin (s : Set ι) (u : ℝ) : 0≤u → Spiral (fun i:s => p i.val) (fun z => resolve (principal (A z) s) u) B u d C k\n  glass (u : ℝ) : 0≤u → Spiral p (shelve W A u) B u d C k\n  eject (u : ℝ) : 0≤u → RatesPaid p p d (Y*C*drain u) k (hitch W A u) B\n  difference (u : ℝ) : 0≤u → RatesPaid p p d (Y*C*drain u*drain u) k (shelve W A u-action A u) B",
-            "line": 22,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/SECTOR_COVARIANCE_JETS/Vista.lean",
-            "fragment": "L22-L28"
-          },
-          "proof_context": {
-            "declaration": "YM.AnalyticBridge.Covariance.Vista",
-            "lines": [
-              22,
-              28
-            ],
-            "conclusion": "`Vista` bundles the `Spiral` jet bounds for `action A u`, principal compressions and the window inverse."
+            "conclusion": "inverse_tilt gives constants v<=sigma and C such that rate v(separation) * |A^{-1}_{ji}| <= C for any symmetric gapped Gaussian table that pours with decay sigma, M."
           }
         }
       }
@@ -112,11 +73,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, a judge ruled; re-judged after a second independent review, which changed it from broadMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {
-        "kind": "chain"
+        "kind": "helper"
       }
     }
   }

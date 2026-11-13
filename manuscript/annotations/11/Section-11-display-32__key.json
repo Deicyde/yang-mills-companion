@@ -1,9 +1,9 @@
 {
   "id": "Section 11 display 32",
   "kind": "display",
-  "status": "partial",
-  "relation": "relatedMatch",
-  "note": "[L] has no discrepancy d, hence no d(0) = 0 or Dd(0); it uses the kernel -K_c directly (`taxTone`, J = -K in `audited`) in place of the derivative.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Stationary.got_leg (Joint/Drift.lean 374-422) proves fderiv levy 0 = -K_c for the penalty discrepancy levy, and oriented_fee gives d(0)=0.",
   "subject": [
     {
       "location": {
@@ -29,36 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Stationary.taxTone",
-        "module": "YM.Next.STATIONARY.Films.Contact",
+        "declaration": "YM.Stationary.got_leg",
+        "module": "YM.Next.STATIONARY.Joint.Drift",
         "lines": [
-          570,
-          570
+          374,
+          405
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Stationary.taxTone"
+            "id": "YM.Stationary.got_leg"
           },
           "snippet": {
-            "text": "def taxTone (G : Gauge) (D : Bed) (p : Momentum) (v : Loc G 1) : Phase (Loc G 1) := -(rug G D p *ᵥ Pi.single v 1)",
-            "line": 570,
+            "text": "lemma got_leg (h : S.patch.Branches S.kernel G) (H T : Bed) (hv : Inputs S W (H.metric.acts f) (T.metric.acts c)) :\n    fderiv ℝ (levy S t W) 0= - uniformM (G:=G) (Precision.K (T.metric.acts c)) := by\n  let K := Precision.K (T.metric.acts c)\n  let k := S.kernel.penalty\n  let P x := ribbon S t (chevron S t W (x : Link G c))\n  have hP : P 0=1 := by rw [show P 0=_ from rfl]; unfold P; rw [chevron_zero S t W h,ribbon_zero S t h]\n  have hi : Army P 0 := (chevron_lit S t W h).ribbons h t (show (chevron S t W 0).1=1 by rw [chevron_zero S t W h]; rfl)\n  have hp : levy S t W (G:=G)=fun x => payee S (input _ _ x) (P x) := by ext x; simp [levy,P,income]\n  have hc := pay_memo S (input G c) P (Army.powL contDiffAt_id) hi\n  apply ContinuousLinearMap.ext; intro x\n  let Z := uniformM K x\n  let Y := x - k⁻¹ • Z\n  have he : uniformM (Precision.mean S) ((endorse (G:=G) W x).1) - gradientA G c ((endorse W x).2)=Y := by\n    rw [show (endorse W x).2=(0:BaseSites G c) from rfl,map_zero,sub_zero]; ext i\n    let b := parts G 1 (arm G c 1 x) i.2.2\n    have hh : (Precision.mean S *ᵥ (W *ᵥ b))= b-k⁻¹ • (K *ᵥ b) := by rw [mulVec_mulVec,hv.dual,sub_mulVec,one_mulVec,smul_mulVec]\n    exact congr_fun hh (i.1,i.2.1)\n  have hx : HasDerivAt (fun a : ℝ => content (P (a • x))) Y 0 := by\n    refine ray_content (show P ((0:ℝ) • x)=1 by rw [zero_smul,hP]) fun i => ?_\n    rw [← he]; unfold P chevron; simp_rw [map_smul]; exact centered_pred h t (endorse W x) _\n  rw [hp]\n  refine (Push.side _ (hc.differentiableAt (by simp)) x).unique ?_\n  let f (x : Link G c × Link G c) := payee S (input G c x.1) (input G c x.2)\n  let z (a : ℝ) := (a • x,content (P (a • x)))\n  have hl : HasDerivAt (fun a => f (z a)) (k • (Y-x)) 0 :=\n      ray_swap (V:=f) ((pay_memo S _ _ (Army.powL (x:=(0: Link G c × Link G c)) contDiffAt_fst) (Army.powL contDiffAt_snd)).differentiableAt (by simp))\n        (x:=(x,Y)) (pay_jet S (x,Y)) (u:=z) (by simp [z,hP]) ((ray_id x).prodMk hx)\n  rw [show k • (Y-x)= -Z by unfold Y; rw [sub_right_comm,sub_self,zero_sub,smul_neg,smul_smul,mul_inv_cancel₀ (show k≠0 from S.kernel.penalty_pos.ne'),one_smul]] at hl\n  refine hl.congr_of_eventuallyEq ?_\n  have ht : Tendsto (fun t : ℝ => t • x) (𝓝 0) (𝓝 0) := by simpa using! (ray_id x).continuousAt.tendsto\n  filter_upwards [ht.eventually ((show Tendsto P _ (𝓝 1) from hP ▸ hi.cont.tendsto).eventually content_encodes)] with a ha\n  dsimp only [f,z]; rw [ha]",
+            "line": 374,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Films/Contact.lean",
-            "fragment": "L570-L570"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Joint/Drift.lean",
+            "fragment": "L374-L405"
           },
           "proof_context": {
-            "declaration": "YM.Stationary.taxTone",
+            "declaration": "YM.Stationary.got_leg",
             "lines": [
-              570,
-              570
+              374,
+              405
             ],
-            "conclusion": "`taxTone G D p v = -(rug G D p *v e_v)` is the first penalty derivative kernel -K_c(p) e_v."
+            "conclusion": "got_leg shows the derivative at 0 of the discrepancy levy equals minus the uniform matrix of the metric kernel K."
           }
         }
       }
@@ -68,75 +68,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Stationary.rug",
-        "module": "YM.Next.STATIONARY.Block.Static",
+        "declaration": "YM.Stationary.oriented_fee",
+        "module": "YM.Next.STATIONARY.Joint.Drift",
         "lines": [
-          223,
-          223
+          35,
+          40
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Stationary.rug"
+            "id": "YM.Stationary.oriented_fee"
           },
           "snippet": {
-            "text": "def rug (G : Gauge) (B : Bed) (p : Momentum) := (pageD G 1 (-p))ᵀ * tessH G B p * pageD G 1 p",
-            "line": 223,
+            "text": "lemma oriented_fee : payee S (1:Config G c) 1=0 := by\n  funext i; unfold payee\n  let L : Link G c →L[ℝ] (Link G c × Link G c × Link G c) := (0:Link G c→L[ℝ]Link G c).prod (ContinuousLinearMap.inr ..)\n  have hv : inure S (1:Config G c) 1 = priceless S ∘ L := by\n    funext j; change inure _ _ _ _=inure _ (input G c 0) (input G c 0) j; rw [input_zero]\n  rw [hv,fderiv_comp 0 (by rw [map_zero]; exact (valence S).differentiableAt (by simp)) L.differentiableAt,map_zero,(value_drops (G:=G) S).2.1]; rfl",
+            "line": 35,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Block/Static.lean",
-            "fragment": "L223-L223"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Joint/Drift.lean",
+            "fragment": "L35-L40"
           },
           "proof_context": {
-            "declaration": "YM.Stationary.rug",
+            "declaration": "YM.Stationary.oriented_fee",
             "lines": [
-              223,
-              223
+              35,
+              40
             ],
-            "conclusion": "`rug G B p = (pageD G 1 (-p))^T * tessH G B p * pageD G 1 p`, the kernel K_c = d_1^* H_c d_1."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Stationary.audited",
-        "module": "YM.Next.STATIONARY.Films.Contact",
-        "lines": [
-          369,
-          373
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Stationary.audited"
-          },
-          "snippet": {
-            "text": "lemma audited (B T : Bed) (he : Inputs S W (B.metric.acts f) (T.metric.acts c)) (hx : AnalyticAt ℝ (clouds t r R W) 0) (x y : Link G c) :\n    iteratedFDeriv ℝ 2 (narrative t W F ρ r R) 0 ![x,y]=\n      let J := -(uniformM (G:=G) (Precision.K (T.metric.acts c)))\n      (1/2:ℝ)*(iteratedFDeriv ℝ 2 (clears t r R W) 0 ![boardA G c x,boardB G c (J y)] +\n               iteratedFDeriv ℝ 2 (clears t r R W) 0 ![boardA G c y,boardB G c (J x)] -",
-            "line": 369,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Films/Contact.lean",
-            "fragment": "L369-L373"
-          },
-          "proof_context": {
-            "declaration": "YM.Stationary.audited",
-            "lines": [
-              369,
-              398
-            ],
-            "conclusion": "The Hessian of the contact difference is written with J = -uniformM(K) on the board B direction, i.e. the derivative of the penalty discrepancy is -K_c."
+            "conclusion": "oriented_fee shows payee S 1 1 = 0, so the discrepancy vanishes at the base configuration."
           }
         }
       }
@@ -151,7 +112,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; re-judged after a second independent review, which changed it from relatedMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       }
     }

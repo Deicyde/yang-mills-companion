@@ -1,9 +1,9 @@
 {
   "id": "Lemma 12.3 step 1",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "The hypothesis c_dir <= gamma is `hC` of `wire`, the per-level zero-momentum metric is `Billed.metric`, and the descent from m = N is the builder's `first`/`step`; the positive row factor at every level and the cited lemmas are not linked.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "PricedKernels.delta_square gives c_dir I + delta^T delta = I for the row factor sqrt(1-c_dir) at every size; CepQuote packages the resulting positive row factor.",
   "subject": [
     {
       "location": {
@@ -29,36 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.UVNext.PricedKernels.wire",
-        "module": "YM.UVNext.PRICED_KERNELS.Bridge",
+        "declaration": "YM.UVNext.PricedKernels.delta_square",
+        "module": "YM.UVNext.PRICED_KERNELS.TopLinear",
         "lines": [
-          106,
-          117
+          55,
+          59
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.UVNext.PricedKernels.wire"
+            "id": "YM.UVNext.PricedKernels.delta_square"
           },
           "snippet": {
-            "text": "theorem wire (p : Permit M I a) {K : KernelChoices} {X : MapPrices} {l γ b}\n    (hX : Next.Free.Catalog K X l γ b) (hk : P.kernelChoice G = K)\n    (hF : P.flat = flatOf X)\n    (hC : ∀ i, P.first ≤ i → (P.clip i).direct ≤ γ i)\n    (hL : ∀ i, P.first ≤ i → b i ≤ f i) :\n    ∃ B V : Horizon a, Wired P a X l B V := by\n  have he : Next.Free.Credit a γ b := Next.Free.credit_from_sheet p.paid γ b hC hL\n  obtain ⟨B,hR,hP,hB⟩ := delivered hX a (p.paid.kernel.trans hk) he\n  rw [← hF] at hB\n  obtain ⟨V,hV,hS⟩ := p.kernel hB\n  obtain ⟨hm,hW⟩ := Next.Free.retained_presents a X B V hP hR hV\n  exact ⟨B,V,hB,hR,hP,hV,hS,hm,hW⟩",
-            "line": 106,
+            "text": "lemma delta_square (p : Clip) (u : p.direct ≤ 1) (n : Side) :\n    p.direct • (1: Matrix (Body 2 n) _ ℝ) + ((delta p).acts n).transpose * (delta p).acts n = 1 := by\n  simp only [delta,acts_scale,acts_unit,Matrix.transpose_smul,Matrix.transpose_one,Matrix.smul_mul,\n    Matrix.one_mul,smul_smul,Real.mul_self_sqrt (sub_nonneg_of_le u), ← add_smul]\n  rw [add_sub_cancel,one_smul]",
+            "line": 55,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/PRICED_KERNELS/Bridge.lean",
-            "fragment": "L106-L117"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/PRICED_KERNELS/TopLinear.lean",
+            "fragment": "L55-L59"
           },
           "proof_context": {
-            "declaration": "YM.UVNext.PricedKernels.wire",
+            "declaration": "YM.UVNext.PricedKernels.delta_square",
             "lines": [
-              106,
-              117
+              55,
+              59
             ],
-            "conclusion": "`wire` takes `hC : ∀ i, P.first ≤ i → (P.clip i).direct ≤ γ i` and produces the horizon paths at every level."
+            "conclusion": "delta_square shows p.direct * I plus the transpose of delta times delta equals I at every side n, when p.direct <= 1."
           }
         }
       }
@@ -68,75 +68,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.UVNext.PricedKernels.Billed",
-        "module": "YM.UVNext.PRICED_KERNELS.Seats",
+        "declaration": "YM.UVNext.PricedKernels.CepQuote",
+        "module": "YM.UVNext.PRICED_KERNELS.TopLinear",
         "lines": [
-          97,
-          101
+          68,
+          71
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.UVNext.PricedKernels.Billed"
+            "id": "YM.UVNext.PricedKernels.CepQuote"
           },
           "snippet": {
-            "text": "structure Billed (P : Before) (a : Levels G) (V : Horizon a) (N m : ℕ) (Q : PathData G) : Prop where\n  placed : Attached (V.H N m) Q\n  metric : Q.metric_zero (a.params m).clip\n  top : let i := a.clock.J m; receipt Q (2 * (a.params m).width) (P.amount.born i)\n  edge j : let i := a.clock.J m; StepStages j i → receipt Q (2 * (a.params m).width) (P.amount.sends j i)",
-            "line": 97,
+            "text": "def CepQuote (K : KernelChoices) (j : ℕ) (γ σ η A : ℝ) :=\n    ∀ (p : Clip), p.direct ≤ γ → ∃ M : Bed, Defined K.penalty 0 (Train.top j) M ∧\n        M.diagonal.acts = (fun n => (1:Matrix (Body 2 n) _ ℝ)) ∧ M.metric.acts = (fun n => (1:Matrix (Body 2 n) _ ℝ))\n        ∧ M.roots = delta p ∧ M.covered σ A ∧ (∀ n, Floor M p n η A) ∧ (∀ n G, Bid.Sworn M n G)",
+            "line": 68,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/PRICED_KERNELS/Seats.lean",
-            "fragment": "L97-L101"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/PRICED_KERNELS/TopLinear.lean",
+            "fragment": "L68-L71"
           },
           "proof_context": {
-            "declaration": "YM.UVNext.PricedKernels.Billed",
+            "declaration": "YM.UVNext.PricedKernels.CepQuote",
             "lines": [
-              97,
-              101
+              68,
+              71
             ],
-            "conclusion": "`Billed` records `metric_zero` at the level clip and the row receipts, for each `m ≤ N`."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Push.PriceCompiler.PathBuilder",
-        "module": "YM.Push.PRICE_COMPILER.Builders",
-        "lines": [
-          37,
-          39
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Push.PriceCompiler.PathBuilder"
-          },
-          "snippet": {
-            "text": "  first (N : ℕ) : ∃ R, StartsBudget P a N R ∧ Attached (V.H N N) R ∧ Ready N N R\n  step N m : m < N → ∀ R, Ready N (m+1) R → Attached (V.H N (m+1)) R → Budgeted a (m+1) R →\n    ∃ S, TransferPrices P a m R S ∧ Attached (V.H N m) S ∧ Ready N m S ∧ q N m R S",
-            "line": 37,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/PRICE_COMPILER/Builders.lean",
-            "fragment": "L37-L39"
-          },
-          "proof_context": {
-            "declaration": "YM.Push.PriceCompiler.PathBuilder",
-            "lines": [
-              35,
-              39
-            ],
-            "conclusion": "`first` builds the path data `R` at the top level `m=N` with `Attached`, and `step` produces the path data `S` at level `m` from the one at `m+1`, a descent from `N`."
+            "conclusion": "CepQuote requires, for every clip with p.direct <= gamma, a defined bed with identity diagonal and metric whose roots equal delta p and which is covered, floored and sworn."
           }
         }
       }
@@ -151,7 +112,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

@@ -2,8 +2,8 @@
   "id": "Lemma 16.2 step 26",
   "kind": "proof_step",
   "status": "formalized",
-  "relation": "closeMatch",
-  "note": "The value is written with Lean's constant `normal` (the 4D Green's function normalization) as `-2*normal`; the equality with `-1/(2π²)` rests on `normal = 1/(4π²)`, not checked here.",
+  "relation": "exactMatch",
+  "note": "Maxwell.Free.cross_seed (Steps.lean 134-153) computes the value -2*normal with normal = (4 pi^2)^-1, i.e. -1/(2 pi^2); classification uses its nonvanishing.",
   "subject": [
     {
       "location": {
@@ -33,7 +33,7 @@
         "module": "YM.Next.MAXWELL.Steps",
         "lines": [
           134,
-          134
+          153
         ]
       },
       "role": "key",
@@ -43,14 +43,14 @@
             "id": "YM.Maxwell.Free.cross_seed"
           },
           "snippet": {
-            "text": "lemma cross_seed (c : G.ColorIndex) : fare c (shift 0 0 1) (cell 1 2) (basis 0+basis 2) = -2*normal := by",
+            "text": "lemma cross_seed (c : G.ColorIndex) : fare c (shift 0 0 1) (cell 1 2) (basis 0+basis 2) = -2*normal := by\n  rw [shift,feed_fare c _ _ _ cross_seed_ne]\n  let p := cell 0 1\n  let q := cell 1 2\n  let x := basis 0 + basis 2\n  have he z (hz : z≠0) : fare c p q z = (8*normal)*(z 0*z 2)*(‖z‖^2)⁻¹^3 := by\n    rw [show fare c p q z=K (omegaLeg c 0 1) (omegaLeg c 1 2) z 0 by rw [K,sub_zero]; rfl,omega_K_eq _ _ _ _ _ _ hz,if_pos rfl,sub_zero,bareCurl, Pi.sub_apply]\n    rw [Bare.opp_grad hz, Bare.opp_grad hz]; simp [Axis, second_Green hz]\n  let L := fun z : E4 => (8*normal)*(z 0*z 2)*(‖z‖^2)⁻¹^3\n  rw [grad,GermD (basis 0) ((show EqOn _ L away from he).eventuallyEq_of_mem (open_away.mem_nhds (show x∈away from cross_seed_ne)))]\n  have hx : ‖x‖^2=(2:ℝ) := by rw [EuclideanSpace.real_norm_sq_eq]; simp [Axis,x,Fin.sum_univ_four]; norm_num\n  have h := ((((compAxis 0).hasFDerivAt (x:=x)).mul (compAxis 2).hasFDerivAt).const_mul (8*normal)).mul\n    (((hasFDerivAt_inv (show ‖x‖^2 ≠ 0 by rw [hx]; norm_num)).comp x\n      (hasStrictFDerivAt_norm_sq x).hasFDerivAt).pow 3)\n  have ht := h.fderiv\n  change fderiv ℝ L x = _ at ht\n  change fderiv ℝ L x (basis 0)=_\n  rw [ht]\n  simp [two_smul, -basis_eq, compAxis, hx]\n  rw [← real_inner_comm x, basis_inner]; simp [Axis,x]; ring",
             "line": 134,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/MAXWELL/Steps.lean",
-            "fragment": "L134-L134"
+            "fragment": "L134-L153"
           },
           "proof_context": {
             "declaration": "YM.Maxwell.Free.cross_seed",
@@ -58,7 +58,46 @@
               134,
               153
             ],
-            "conclusion": "`fare c (shift 0 0 1) (cell 1 2) (basis 0 + basis 2) = -2*normal`, nonzero."
+            "conclusion": "cross_seed shows fare c (shift 0 0 1) (cell 1 2) (basis 0 + basis 2) = -2*normal, by differentiating the explicit formula 8*normal*z0*z2/|z|^6 at e_1+e_3."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Maxwell.Free.classification",
+        "module": "YM.Next.MAXWELL.Stabilizer",
+        "lines": [
+          149,
+          155
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Maxwell.Free.classification"
+          },
+          "snippet": {
+            "text": "  let z := basis 0+basis 2\n  have hz : z≠0 := cross_seed_ne\n  have he : a=b := by\n    have hh := hb (cell 0 1) (cell 1 2) z hz\n    rw [ha,hK,← fare_pair c _ _ hz, ← fare_pair c _ _ hz,map_smul,map_smul,LinearMap.smul_apply,LinearMap.smul_apply,fare_pair,fare_pair,show fare c (shift 0 1 2) (cell 0 1) z = _ from shifts_sym c _ _ 0 hz, ← show shift 0 0 1=feed _ _ _ from rfl] at hh\n    apply mul_right_cancel₀ (show fare c (shift 0 0 1) (cell 1 2) z≠0 from by rw [cross_seed]; have := normal_pos; positivity)\n    exact hh",
+            "line": 149,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/MAXWELL/Stabilizer.lean",
+            "fragment": "L149-L155"
+          },
+          "proof_context": {
+            "declaration": "YM.Maxwell.Free.classification",
+            "lines": [
+              145,
+              179
+            ],
+            "conclusion": "classification uses cross_seed's nonvanishing value to cancel the factor and conclude that two proportional coefficients a and b are equal."
           }
         }
       }
@@ -73,11 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; re-judged after a second independent review, which changed it from closeMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {
-        "kind": "helper"
+        "kind": "chain"
       }
     }
   }

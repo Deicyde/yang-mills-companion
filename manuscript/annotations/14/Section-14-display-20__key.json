@@ -2,7 +2,8 @@
   "id": "Section 14 display 20",
   "kind": "display",
   "status": "formalized",
-  "relation": "exactMatch",
+  "relation": "closeMatch",
+  "note": "Extraction.Wcmain and Accent.gardena give the centered budget A*a_m^{-d-eps} at tile centres, not at an arbitrary y as displayed.",
   "subject": [
     {
       "location": {
@@ -23,45 +24,6 @@
     }
   ],
   "object": [
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Extraction.centeredBudget",
-        "module": "YM.Extraction.Center",
-        "lines": [
-          21,
-          23
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Extraction.centeredBudget"
-          },
-          "snippet": {
-            "text": "def centeredBudget (v : C.book.Token) (A : ℝ) (m N p : ℕ) : Prop := ∃ h : m ≤ N,\n    C.ref v.1 ≤ N ∧ ∀ o : Site (C.side N p), Interior ((center C.S p h o).chamber 0) (C.seen v o) ∧\n    (center C.S p h o).rootTest (C.beta N p) (C.seen v o) ≤ A",
-            "line": 21,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extraction/Center.lean",
-            "fragment": "L21-L23"
-          },
-          "proof_context": {
-            "declaration": "YM.Extraction.centeredBudget",
-            "lines": [
-              21,
-              23
-            ],
-            "conclusion": "For m <= N and every anchor o, the observable `seen v o` is `Interior` on the chamber of the centered tiling and its `rootTest` is at most the budget A."
-          }
-        }
-      }
-    },
     {
       "type": "lean",
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
@@ -96,7 +58,46 @@
               38,
               40
             ],
-            "conclusion": "For d, R, eps there is A >= 0 such that for m >= ref d, eventually in N, for all p and `||v|| <= R`, `centeredBudget` holds with budget `A * a_m^(-d-eps)`."
+            "conclusion": "Wcmain asserts a constant A such that the centered budget A*a_m^{-d-eps} holds eventually for all levels and reference vectors of norm at most R."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.MergeProof.Accent.gardena",
+        "module": "YM.MergeProof.Gardens",
+        "lines": [
+          19,
+          40
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.MergeProof.Accent.gardena"
+          },
+          "snippet": {
+            "text": "lemma gardena (hG:G.Simple)(hK:Mix.paidL C) : Extraction.Wcmain C:=by\n   intro d a u ha hu\n   let F':=C.labels.level d\n   have hf : Continuous F'.coeffSize:= by unfold Labels.Frame.coeffSize; fun_prop\n   obtain ⟨b,hb⟩:= (isCompact_closedBall (0:F'.Coeff) a).bddAbove_image hf.continuousOn\n   let g:= max 1 b; have hg:0<g:=zero_lt_one.trans_le (le_max_left ..)\n   let p i:= Stock.Tabs.chosen (T) 1 B i\n   obtain ⟨k,h0⟩:= eventually_atTop.mp (coastwise C d g hg B hG hK hu)\n   have hw(i:ℕ): Real.exp (((d:ℝ)+u)*C.S.scale i)= C.S.a i^(-(d:ℝ)-u):=by rw [Real.rpow_def_of_pos (C.S.a_pos _)]; unfold Schedule.scale; rw [Real.log_inv]; ring_nf\n   let b i:=Real.exp (expense C g i (p i) d)/Real.exp (((d:ℝ)+u)*C.S.scale i); have hb'(i):0 ≤ b i:=by unfold b; positivity\n   let y:= 1+∑ i∈Finset.range k,b i; have hy : 1 ≤ y:= le_add_of_nonneg_right (Finset.sum_nonneg fun i _=>hb' i)\n   refine ⟨y,zero_le_one.trans hy, fun i hi=>?_⟩\n   let X:=p i; have hX : Stock.Tabs.opens (T) 1 i X:= Stock.Tabs.opened (T) 1 B i\n   have hW: Real.exp (expense C g i X d) ≤ y* C.S.a i^(-(d:ℝ)-u):=by\n      rw [← hw]; rcases lt_or_ge i k with h|h\n      · apply (div_le_iff₀ (Real.exp_pos _)).1; exact le_trans (Finset.single_le_sum (f:=b) (fun i _=>hb' _) (Finset.mem_range.mpr h)) (le_add_of_nonneg_left zero_le_one)\n      exact (Real.exp_monotone (h0 _ h)).trans (le_mul_of_one_le_left (Real.exp_pos _).le hy)\n   filter_upwards [eventually_gt_atTop X,Stock.clear_interior C H i d] with N hN hC p' v' hv'\n   obtain ⟨hn,hh⟩:= hC\n   have hp : F'.coeffSize v' ≤ g:= (hb ⟨v',Metric.mem_closedBall.mpr (by rwa [dist_zero_right]),rfl⟩).trans (le_max_right ..)\n   refine ⟨hn,hi.trans hn,fun j=>⟨hh p' j v',?_⟩⟩\n   change (center C.S p' hn j).rootTest (C.beta N p') (C.O N p' (d:=d) v' j) ≤ _; rw [Stock.translate_s (C:=C) hn j ⟨d,v'⟩ (hh p' 0 v')]; exact (tent C N X i p' d v' g hg B H h hx hX hi hN hp).trans hW",
+            "line": 19,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Gardens.lean",
+            "fragment": "L19-L40"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.Accent.gardena",
+            "lines": [
+              19,
+              40
+            ],
+            "conclusion": "gardena proves Wcmain for simple gauges from the paid condition, summing the finitely many early levels into the constant y."
           }
         }
       }
@@ -111,7 +112,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; re-judged after a second independent review, which changed it from exactMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       }
     }

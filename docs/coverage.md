@@ -16,12 +16,12 @@ Armstrong, *The construction of four-dimensional quantum Yang–Mills theory* (`
 | | 1-to-1 | Faithful | Partial | Deviates | Absent | Unjudged | Formalized |
 |---|---|---|---|---|---|---|---|
 | Statements | 65/206 (32%) | 56/206 (27%) | 57/206 (28%) | 20/206 (10%) | 3/206 (1%) | 5/206 (2%) | **121/206 (59%)** |
-| Displays | 292/607 (48%) | 212/607 (35%) | 59/607 (10%) | 37/607 (6%) | 3/607 (0%) | 4/607 (1%) | **504/607 (83%)** |
+| Displays | 290/607 (48%) | 215/607 (35%) | 59/607 (10%) | 36/607 (6%) | 3/607 (0%) | 4/607 (1%) | **505/607 (83%)** |
 | &nbsp;&nbsp;of which numbered displays | 87/252 (35%) | 100/252 (40%) | 46/252 (18%) | 13/252 (5%) | 2/252 (1%) | 4/252 (2%) | **187/252 (74%)** |
-| &nbsp;&nbsp;of which unnumbered displays | 205/355 (58%) | 112/355 (32%) | 13/355 (4%) | 24/355 (7%) | 1/355 (0%) | 0/355 (0%) | **317/355 (89%)** |
-| Steps | 592/1607 (37%) | 480/1607 (30%) | 218/1607 (14%) | 269/1607 (17%) | 48/1607 (3%) | 0/1607 (0%) | **1072/1607 (67%)** |
+| &nbsp;&nbsp;of which unnumbered displays | 203/355 (57%) | 115/355 (32%) | 13/355 (4%) | 23/355 (6%) | 1/355 (0%) | 0/355 (0%) | **318/355 (90%)** |
+| Steps | 602/1607 (37%) | 502/1607 (31%) | 214/1607 (13%) | 261/1607 (16%) | 28/1607 (2%) | 0/1607 (0%) | **1104/1607 (69%)** |
 
-Unjudged steps and unnumbered displays are those whose mapper and verifier disagreed and no judge reached: 0 of 1607 steps and 0 of 355 displays. Of the judged steps, 1072/1607 (67%) are formalized; of the judged unnumbered displays, 317/355 (89%).
+Unjudged steps and unnumbered displays are those whose mapper and verifier disagreed and no judge reached: 0 of 1607 steps and 0 of 355 displays. Of the judged steps, 1104/1607 (69%) are formalized; of the judged unnumbered displays, 318/355 (90%).
 
 Statements are the 206 numbered or named theorems, lemmas, propositions, corollaries, definitions and remarks; displays the 252 numbered equations and the 355 unnumbered displays outside proofs; steps the 1607 steps of the 129 proofs. Of the 20 statements that deviate, 20 are confirmed findings.
 
@@ -38,18 +38,18 @@ Statements are the 206 numbered or named theorems, lemmas, propositions, corolla
 | 7 | 6/7 (86%) | 14/14 (100%) | — | — | 0/21 (0%) |
 | 8 | 8/11 (73%) | 7/7 (100%) | 8/10 (80%) | 0/10 (0%) | 0/28 (0%) |
 | 9 | — | 3/3 (100%) | — | — | 0/3 (0%) |
-| 10 | 1/4 (25%) | 16/18 (89%) | 50/61 (82%) | 0/61 (0%) | 8/83 (10%) |
-| 11 | 4/13 (31%) | 57/67 (85%) | 163/253 (64%) | 5/253 (2%) | 64/333 (19%) |
-| 12 | 4/10 (40%) | 24/27 (89%) | 89/105 (85%) | 0/105 (0%) | 5/142 (4%) |
-| 13 | 7/21 (33%) | 54/69 (78%) | 145/272 (53%) | 8/272 (3%) | 85/362 (23%) |
-| 14 | 20/33 (61%) | 77/103 (75%) | 176/285 (62%) | 8/285 (3%) | 61/421 (14%) |
-| 15 | 1/5 (20%) | 14/20 (70%) | 30/41 (73%) | 0/41 (0%) | 9/66 (14%) |
-| 16 | 5/12 (42%) | 39/47 (83%) | 135/172 (78%) | 0/172 (0%) | 25/231 (11%) |
+| 10 | 1/4 (25%) | 16/18 (89%) | 51/61 (84%) | 0/61 (0%) | 7/83 (8%) |
+| 11 | 4/13 (31%) | 58/67 (87%) | 168/253 (66%) | 5/253 (2%) | 59/333 (18%) |
+| 12 | 4/10 (40%) | 24/27 (89%) | 90/105 (86%) | 0/105 (0%) | 5/142 (4%) |
+| 13 | 7/21 (33%) | 54/69 (78%) | 149/272 (55%) | 5/272 (2%) | 85/362 (23%) |
+| 14 | 20/33 (61%) | 77/103 (75%) | 184/285 (65%) | 5/285 (2%) | 58/421 (14%) |
+| 15 | 1/5 (20%) | 14/20 (70%) | 31/41 (76%) | 0/41 (0%) | 9/66 (14%) |
+| 16 | 5/12 (42%) | 39/47 (83%) | 138/172 (80%) | 0/172 (0%) | 22/231 (10%) |
 | 17 | 1/10 (10%) | 31/38 (82%) | 120/131 (92%) | 0/131 (0%) | 9/179 (5%) |
-| 18 | 10/13 (77%) | 33/42 (79%) | 62/131 (47%) | 24/131 (18%) | 28/186 (15%) |
-| 19 | 14/23 (61%) | 47/56 (84%) | 94/146 (64%) | 3/146 (2%) | 30/225 (13%) |
+| 18 | 10/13 (77%) | 33/42 (79%) | 66/131 (50%) | 13/131 (10%) | 33/186 (18%) |
+| 19 | 14/23 (61%) | 47/56 (84%) | 99/146 (68%) | 0/146 (0%) | 28/225 (12%) |
 
-By statement share: most formalized Sections 2 (3/3), 3 (10/10), 5 (5/5), 100% each; least Section 17, 1/10 (10%). By step share (sections with proofs): most formalized Section 17, 120/131 (92%); least Section 18, 62/131 (47%).
+By statement share: most formalized Sections 2 (3/3), 3 (10/10), 5 (5/5), 100% each; least Section 17, 1/10 (10%). By step share (sections with proofs): most formalized Section 17, 120/131 (92%); least Section 18, 66/131 (50%).
 
 A proof step is counted in the section where its proof is printed. "Deviations" counts the Deviates records among the section's statements, displays and steps. Sections 1–7 and 9 have no proofs; Section 8 has one. A proof written for two items at once gives all its steps to the first: the steps of the joint deduction of Theorems A and B are in Theorem A's folder, and Lemma 12.4, Theorem 3.6, Lemma 17.9 and the first part of Lemma 17.10 have no steps of their own, their proofs being those of Lemma 12.3, Lemma 14.2, Lemma 17.8 and Lemma 17.7; per-item step counts depend on this.
 
@@ -136,16 +136,16 @@ Displays and steps, by section:
 | 7 | 11/14 (79%) | — |
 | 8 | 7/7 (100%) | 7/10 (70%) |
 | 9 | 3/3 (100%) | — |
-| 10 | 12/18 (67%) | 42/61 (69%) |
+| 10 | 12/18 (67%) | 43/61 (70%) |
 | 11 | 34/67 (51%) | 107/253 (42%) |
 | 12 | 16/27 (59%) | 52/105 (50%) |
-| 13 | 23/69 (33%) | 75/272 (28%) |
-| 14 | 31/103 (30%) | 74/285 (26%) |
-| 15 | 6/20 (30%) | 15/41 (37%) |
-| 16 | 23/47 (49%) | 86/172 (50%) |
+| 13 | 22/69 (32%) | 76/272 (28%) |
+| 14 | 30/103 (29%) | 77/285 (27%) |
+| 15 | 6/20 (30%) | 18/41 (44%) |
+| 16 | 23/47 (49%) | 88/172 (51%) |
 | 17 | 16/38 (42%) | 62/131 (47%) |
-| 18 | 21/42 (50%) | 30/131 (23%) |
-| 19 | 24/56 (43%) | 42/146 (29%) |
+| 18 | 21/42 (50%) | 29/131 (22%) |
+| 19 | 24/56 (43%) | 43/146 (29%) |
 
 ## 4. Deviations
 
@@ -163,20 +163,19 @@ Every Deviates record, by section; in each section the confirmed findings come f
 |---|---|---|---|---|
 | Section 4 display 11 | 22 | [L] defines the O(4) action on the Taylor jets of the connection (`turn`, `rotated`), a different quantity from [M]'s action on curvature coordinates and derivatives; the formulas for hF_ab and h∂_a do not appear. | `YM.Labels.Taylor.turn`, `YM.Labels.rotated` | judged `relatedMatch` (mapper and verifier agreed) |
 
-### Section 10 (8)
+### Section 10 (7)
 
 | Record | p. | Text against [L] | Declarations | Evidence |
 |---|---|---|---|---|
 | Lemma 10.2 | 40 | the stencil is the box [-ρ_d,ρ_d]⁴ ∩ ℤ⁴; [L]'s `localSection` is a choice from `Bid.Learns`, and `sound` gives only a stencil containing 0 and stable under signed permutations (the box appears only inside `Work.G06.answer`'s proof). | `YM.Integrated.source_sections`, `YM.Next.Foundations.learns`, `YM.Next.Foundations.localSection`, `YM.Next.Foundations.sound`, `YM.Bid.G06` | confirmed finding (weaker): two skeptics |
 | Lemma 10.2 step 1 | 41 | [M] uses the transports and labels, disposes of d<2 by constant sections and then fixes d>=2; the Lean construction treats every d uniformly with the same `Hol` and `Label` objects, and the triviality of `Snap G d` for d<2 appears only in an unnamed `example` of G03. | `YM.Work.G06.answer` | judged `relatedMatch` (judge ruling) |
 | Lemma 10.2 step 23 | 42 | [M] asserts that both sides are smooth in h with a remainder O(\|h\|^{d+1}); the Lean gives only C^d at 0 with equal derivatives through order d, which is the agreement used in step 24 but not the stated remainder bound. | `YM.Work.G05.recovery_projects`, `YM.Source.Projects` | judged `narrowMatch` (judge ruling) |
-| Lemma 10.2 step 27 | 42 | Lean states the pull-back of the link solution as the hypothesis `swirls` on `H.links` with a turned jet, and the pull-back of a slot as `slot_pull`; it does not split into positive and negative image directions. | `YM.Bid.swirls`, `YM.Work.G06.slot_pull` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 10.2 step 28 | 42 | [M] prints the coefficient of the pulled-back link equation; Lean carries the same statement only through `changedJet` and `Taylor.turn` and does not display the coefficient. | `YM.Bid.swirls` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 10.3 step 2 | 43 | The section bound follows by the same product rule, but [L] proves the global bound (10.6) by continuity on the compact configuration space instead of unit-modulus matrix entries, a different argument for part of the step. | `YM.Work.G07.paid_lumin`, `YM.Work.G07.answer`, `YM.Next.Foundations.full_value_bound`, `YM.Next.Foundations.priced` | judged `relatedMatch` (judge ruling, changed from `closeMatch` in the closeMatch re-check) |
 | Lemma 10.4 step 21 | 45 | Lean does not state the telescoping identity; it gets the same decomposition by induction on the list of factors, peeling one factor at each step with a `ring` identity. | `YM.Push.Mark.split_verse`, `YM.Push.Mark.split_literal` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 10.4 step 29 | 46 | The inverse is taken abstractly from injectivity; the explicit Neumann series is not written. | `YM.Push.Mark.twist`, `YM.Push.Mark.weaveBuild` | judged `relatedMatch` (mapper and verifier agreed) |
 
-### Section 11 (64)
+### Section 11 (59)
 
 | Record | p. | Text against [L] | Declarations | Evidence |
 |---|---|---|---|---|
@@ -190,7 +189,6 @@ Every Deviates record, by section; in each section the confirmed findings come f
 | Section 11 display 13 | 51 | The energy identity is proved for the tree representative of W_0 under the normal equations, and the lower bound is an abstract eta in `Floor`; [M]'s explicit H >= 2 gamma I is stronger than what [L] states. | `YM.Precision.action`, `YM.Precision.Floor`, `YM.Next.Free.bid_bed` | judged `narrowMatch` (judge ruling) |
 | Section 11 display 25 | 58 | [L] uses a single constant A for both M_1 and M_2, so Q_0, Q_1, Q_2 appear only in the special case M_1 = M_2 and summed in one bound (`inverseBill`); [M]'s polynomials with separate M_1, M_2 are more general. | `YM.Stationary.Freezer.back`, `YM.Stationary.inverseBill`, `YM.Stationary.Jam.rebounds` | judged `narrowMatch` (judge ruling) |
 | Section 11 display 26 | 58 | It has no separate M_1, M_2 and no polynomial P_{j,r} with the interpolation, frame and penalty bounds. | `YM.Stationary.Cruise.stars`, `YM.Stationary.cabinTicket`, `YM.Stationary.Spotlight` | judged `relatedMatch` (mapper and verifier agreed) |
-| Section 11 display 32 | 62 | [L] has no discrepancy d, hence no d(0) = 0 or Dd(0); it uses the kernel -K_c directly (`taxTone`, J = -K in `audited`) in place of the derivative. | `YM.Stationary.taxTone`, `YM.Stationary.rug`, `YM.Stationary.audited` | judged `relatedMatch` (mapper and verifier agreed) |
 | Section 11 display 57 | 73 | [L] bounds the value of the packet factor by exp(-(gain - C bill^5)\|A\|), keeping a separate cost term C bill^5, and does not state a bound for the product of seed envelopes through order k with a constant κ'_B < κ. | `YM.ConnectedActivityE6.Target.Invoices` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 11.4 step 14 | 49 | [M] counts each plaquette between at most `2R` layer pairs and obtains `(2R+1){E(X_0) + F(X)}`; Lean bounds each layer separately by `4 F(X)` and obtains the weaker `(2R+1){E(X_0) + 4F(X)}`, which still gives the same final `4r(2R+1)F`. | `YM.Axial.existence`, `YM.Axial.total_slab` | judged `narrowMatch` (judge ruling) |
 | Lemma 11.4 step 15 | 49 | [M]'s first inequality has the plaquette term with coefficient 1, [L]'s has `4*faces`, which is weaker; the final bound `4r(2R+1)F` is the same. | `YM.Axial.total_slab`, `YM.Axial.existence` | judged `narrowMatch` (mapper and verifier agreed) |
@@ -210,10 +208,8 @@ Every Deviates record, by section; in each section the confirmed findings come f
 | Lemma 11.8 step 12 | 59 | It does not state the intermediate `‖Xu‖_2 ≤ C_jℓ‖u‖_2`. | `YM.Stationary.elevation_pay`, `YM.Stationary.Chromatic.costs`, `YM.Stationary.cannon_frozen` | judged `relatedMatch` (judge ruling) |
 | Lemma 11.8 step 15 | 59 | Coercivity is `Stable` of the completed form at real momenta, reached through `secure_cash`, not by squaring. | `YM.Stationary.stadium` | judged `relatedMatch` (mapper and verifier agreed, changed from `closeMatch` in the sample check) |
 | Lemma 11.8 step 17 | 59 | The Lean proves the alias filter for the mass weight `damp` only, with summability in `touring`; the bounds for fine derivatives, the free interpolated field and the frame averages are not separately stated. | `YM.Stationary.thin_pay` | judged `relatedMatch` (mapper and verifier agreed) |
-| Lemma 11.8 step 19 | 59 | The Lean freezes at the real point `ground p` and uses a ball estimate in place of the geometric-sum weights comparison `\|q(θ(ξ)) - q(θ(ξ'))\| ≤ Cμ\|ξ-ξ'\|`. | `YM.Stationary.shelter` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 11.8 step 21 | 59 | The Lean gets the strip inverse from the `Stable` perturbation estimate rather than an explicit Neumann series. | `YM.Stationary.shelter` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 11.8 step 22 | 59 | [L] bounds Taylor coefficients of the inverse along a one-parameter family (`rebounds`, with v = w by polarization) instead of differentiating A^{-1} in directions v, w, so it treats a different quantity. | `YM.Stationary.Jam.rebounds` | judged `relatedMatch` (mapper and verifier agreed, changed from `closeMatch` in the closeMatch re-check) |
-| Lemma 11.8 step 23 | 59 | The mixed second derivative `D²G[v,w]` in two directions is not stated. | `YM.Stationary.Jam.rebounds` | judged `narrowMatch` (judge ruling) |
 | Lemma 11.8 step 24 | 60 | The bookkeeping with `O(μ)`, `O(μ²)`, `ω_z^{-1}` and Cauchy-Schwarz on fine legs is not there. | `YM.Stationary.homes`, `YM.Stationary.conquer`, `YM.Stationary.Spotlight` | judged `relatedMatch` (judge ruling) |
 | Lemma 11.8 step 25 | 60 | The expansion of transported curvature through degree four, the `μ^{-2}`/`μ²` count and the summation by parts are not stated. | `YM.Stationary.cooking`, `YM.Stationary.legion_right`, `YM.Stationary.medals_right` | judged `relatedMatch` (judge ruling) |
 | Lemma 11.8 step 26 | 60 | [L] gets them by composing `Charges` bounds, not by counting products of at most two path-row coefficients or one atom coefficient. | `YM.Stationary.legPay`, `YM.Stationary.boomPay`, `YM.Stationary.cooking` | judged `relatedMatch` (judge ruling) |
@@ -232,16 +228,14 @@ Every Deviates record, by section; in each section the confirmed findings come f
 | Lemma 11.10 step 6 | 63 | Rm vanish at 0, not because F is linear in u with vanishing pure v and pure u Hessians. | `YM.Stationary.dot_quadr`, `YM.Stationary.lean_drift` | judged `relatedMatch` (judge ruling) |
 | Lemma 11.10 step 7 | 63 | [L] keeps the derivative of y = `rind` as the abstract `fderiv` of `drossY` and never expands it into -G (d A^rem) G C + G dC by the product and inverse rules. | `YM.Stationary.lean_drift`, `YM.Stationary.rind` | judged `relatedMatch` (judge ruling) |
 | Lemma 11.10 step 10 | 63 | [L] uses the finite identity, the common strip bound and period limits as [M] does, but `active` gives the limit identity only pointwise at real momenta. | `YM.Stationary.active`, `YM.Stationary.signing_here` | judged `narrowMatch` (judge ruling) |
-| Lemma 11.12 step 1 | 70 | Lean states only the resulting lower bound on the row Gram matrix, proved through `armed` and the sponsorship/curl estimates; the fine-link control by row values plus C*delta_x surrounding increments is not a separate statement. | `YM.Next.SectorChange.Gap.not_flat` | judged `relatedMatch` (mapper and verifier agreed) |
+| Lemma 11.12 step 4 | 70 | Schur.inverse_tilt bounds the inverse entrywise from the gap of the conjugated form (an exponential-rate bound with C = 2/eps); the conjugation and Neumann-series argument of the step is not used. | `YM.Next.SectorChange.Schur.inverse_tilt` | judged `relatedMatch` (judge ruling) |
 | Lemma 11.13 step 4 | 73 | Lean writes the same log-density ratio of the covariance-varying Gaussian in `oriflamme` but never states its first derivative; it bounds all jets through order j by `Brush` calculus instead. | `YM.ConnectedActivityE6.Blaze.Flux.oriflamme` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 11.13 step 5 | 73 | The explicit score -tr(Gamma^{-1}dGamma)/2 + z^T Gamma^{-1}dGamma Gamma^{-1} z/2 - z^T Gamma^{-1} dz is not stated; `oriflamme` bounds the jets of the log-det and inverse-covariance quadratic terms by `Brush` composition, and `logdet_variation`/`inv_variation` sit in another part of [L]. | `YM.ConnectedActivityE6.Blaze.Flux.oriflamme` | judged `relatedMatch` (mapper and verifier agreed) |
-| Lemma 11.13 step 6 | 74 | [L] bounds the jets of the transported density `scalp` by a power of `facescale` directly, a different quantity from [M]'s score polynomials, and has no separate distance polynomial. | `YM.ConnectedActivityE6.Blaze.Flux.rump`, `YM.ConnectedActivityE6.Blaze.Flux.elevates`, `YM.PhysicalNext.Repeat.Daisy.timing` | judged `relatedMatch` (judge ruling, changed from `closeMatch` in the sample check) |
 | Lemma 11.13 step 8 | 74 | Lean records only the consequence that the coefficients have rate zero; the bound g^{-1}s ≤ C exp{(log log β̂)²} itself is not stated here. | `YM.PhysicalNext.Repeat.Daisy.timing` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 11.13 step 16 | 75 | Lean obtains the polynomial moment bounds from the moment generating function (`salience`, `mgf`) instead of an exponential tilt with covariance 2Γ and mean (I-2ΓK)^{-1}(2Γℓ_0). | `YM.ConnectedActivityE6.Blaze.Flux.globes`, `YM.PhysicalNext.Repeat.Daisy.timing` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 11.13 step 23 | 75 | Lean states the packet bound with the energy gain per share inside the cost data and does not describe distributing the local energy among selected seed factors before differentiating. | `YM.ConnectedActivityE6.Target.Invoices` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 11.13 step 26 | 75 | Lean keeps the energy inside a single majorant of all derivatives through order j; [M] says the exponential is kept in each differentiated envelope. | `YM.PhysicalNext.Repeat.Daisy.Herd` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 11.13 step 28 | 75 | Lean bounds the derivatives through order i by a polynomial factor `v x * S'^i` times `facescale^(k i)`; the power counts are fixed by `k*i`, not tracked per source. | `YM.PhysicalNext.Repeat.Daisy.timing` | judged `relatedMatch` (mapper and verifier agreed) |
-| Lemma 11.13 step 29 | 75 | Lean compares the polynomial cost with the energy gain through the rate hypotheses on `costs` and `R.pay_for` in `issue`; the comparison of β t² with the square of the cutoff size is not stated. | `YM.ConnectedActivityE6.Target.Invoices` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 11.13 step 30 | 75 | `annulus` gives E the rate -3/2 against the scale; the limit E(x)/t^2 -> 0 is not stated and the rate is a different quantity. | `YM.ConnectedActivityE6.Coat.annulus` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 11.13 step 33 | 75 | Lean treats the determinant and covariance corrections through the exponential-moment lemmas and the `Rate` bounds on logarithms (`walksWorth`), not in one line that cites the bounds above. | `YM.SectorTools.PhysicalGaussianInsertion.laplace_price` | judged `relatedMatch` (mapper and verifier agreed) |
 
@@ -301,10 +295,11 @@ Every Deviates record, by section; in each section the confirmed findings come f
 | Lemma 13.5 step 35 | 97 | [L] bounds the combined integrand through `trellis` and a uniform bound on the inverse covariance; the inverse difference identity, the link-exponential Taylor formula and the telescoping with a marked difference do not occur. | `YM.PhysicalNext.Repeat.Brim.royaltyB`, `YM.PhysicalNext.Repeat.Brim.value6` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 13.5 step 38 | 97 | [L] keeps the incoming bound τ and a rate −1/2 factor in the conclusion `Brush n (τ*\|B s\|)`; the term-by-term retention of a factor before the Gaussian majorant is not visible. | `YM.PhysicalNext.Repeat.Brim.royaltyB` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 13.5 step 39 | 97 | [L] carries the remaining Gaussian moments as polynomial rate-zero functions of the stage data; `s_M` and `(1+s_M)^{d_j}` do not occur. | `YM.PhysicalNext.Repeat.Brim.royaltyB` | judged `relatedMatch` (mapper and verifier agreed) |
+| Lemma 13.5 step 41 | 97 | Beam.estate (Beam/Life.lean 51-100) sends large supports to the tired class with its own budget, so [L] handles this step by a different argument than the unrefined T_i bound. | `YM.PhysicalNext.Repeat.Beam.estate`, `YM.PhysicalNext.Repeat.Brim.Houses` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 13.5 step 42 | 97 | The inequality in [L] is stated as an upper bound for the outgoing cover; [M]'s lower bound on the incoming cover follows by rearranging, which [L] does not do. | `YM.Lattice.Corona.collapse` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 13.5 step 43 | 97 | [L] keeps half the support exponent through support compression (`landing`) and absorbs polynomial factors in the reach by an exponential (`reachExpense`); the extra e^{-cB_m} is not stated. | `YM.PhysicalNext.Repeat.Brim.landing`, `YM.PhysicalNext.JointLoad.Heir.reachExpense` | judged `relatedMatch` (mapper and verifier agreed) |
+| Lemma 13.5 step 45 | 98 | The large-support remainder is supplied by the tired-class route in Beam.estate, not by Houses.remains; the argument is different. | `YM.PhysicalNext.Repeat.Brim.Houses`, `YM.PhysicalNext.Repeat.Beam.estate` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 13.6 step 8 | 99 | The chain `2e ≤ a_bB < ... ≤ n` is proved, but the second bound is `4R+16 ≤ n` where [M] states the strict `4R+16 < n`; the strict form follows from `2e < n` and is not stated. | `YM.PhysicalNext.Repeat.Roof.volumic`, `YM.PhysicalNext.Repeat.Trio.roof` | judged `narrowMatch` (mapper and verifier agreed) |
-| Lemma 13.6 step 17 | 100 | [L] retains terms whose depth is at least `Stores.till s`, not terms whose support size exceeds the eligibility radius, so the retention uses a different quantity. | `YM.PhysicalNext.Repeat.Height.tired`, `YM.PhysicalNext.Repeat.Meadow.extraHeight` | judged `relatedMatch` (judge ruling, changed from `closeMatch` in the closeMatch re-check) |
 | Lemma 13.6 step 18 | 100 | [L] bounds incoming-activity contributions by weights from abstract rates `v`, `w` of order -1/2 (`rushPrices`, `Eager`) rather than by the explicit product P_j(b) eps^reg b^{-1/2} <= b^{-23/20}. | `YM.ConnectedActivityE6.Blaze.Silica.Clutch.rushPrices` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 13.6 step 24 | 100 | [L] bounds the derivatives of `log ∘ ratify` (log of the Gaussian integral) by composing `Brush` bounds with the logarithm, not by writing them as connected expectations under the Gaussian law. | `YM.PhysicalNext.Repeat.Lantern.lifted`, `YM.PhysicalNext.Repeat.Lantern.ratify` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 13.6 step 29 | 100 | [L] bounds the log of the Gaussian integral through composition with the log (`lifted`), with no expansion of log E e^V into E V + Var/2 plus terms of three or more factors. | `YM.PhysicalNext.Repeat.Lantern.lifted` | judged `relatedMatch` (mapper and verifier agreed) |
@@ -343,9 +338,8 @@ Every Deviates record, by section; in each section the confirmed findings come f
 | Lemma 13.21 step 14 | 121 | [L] bounds the sum over connected inventories through a site by the tree-counting lemma `forest` under a `Hit` condition and (M+M+1)^4 gamma <= 1, not by rooted spanning walks of length 2(r-1) with C(1+B)^4 choices per step; the 5^4 cover bound is the same. | `YM.Ac.forest`, `YM.WilsonStartup.Start.pad_cost`, `YM.WilsonStartup.Start.PacketCost.hit` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 13.21 step 15 | 121 | [L] bounds by the closed form exp(gamma) - 1 under the per-packet inequalities `bids` and `room` instead of the geometric series in r with ratio C(1+B)^8 e^{5^4 sigma - c beta t^2}, a different quantity. | `YM.WilsonStartup.Start.PacketCost`, `YM.WilsonStartup.Start.Loan`, `YM.WilsonStartup.Start.forced_money` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 13.21 step 18 | 121 | [L] bounds the difference by `\|β-β0\|` times the explicit constant `total n`, an upper bound of `sup d_I`, so it is weaker than [M]'s `sup_U d_I(U)`; the exponential step (`exp_dist`) is the same. | `YM.WilsonStartup.Start.paid_dist`, `YM.WilsonStartup.charge_range` | judged `narrowMatch` (mapper and verifier agreed) |
-| Theorem 3.5 step 1 | 121 | [L] takes the classes as `Lives`/`bake` and the final functions of Lemmas D4 to D6 as the `Income`/`Remainder` data of the supplier, so the setup is the shape of the `advances` statement, not a separate construction. | `YM.Input.Directed.Program` | judged `relatedMatch` (mapper and verifier agreed) |
 
-### Section 14 (61)
+### Section 14 (58)
 
 | Record | p. | Text against [L] | Declarations | Evidence |
 |---|---|---|---|---|
@@ -372,7 +366,6 @@ Every Deviates record, by section; in each section the confirmed findings come f
 | Lemma 14.5 step 14 | 130 | Lean chooses L large through `Bank` with exponent 1/8 and keeps the coupling-entry choice implicit in the hypotheses; the thresholds L^{3/5} > 2C_loc and the 1/2 L^{-2/5} split are not there. | `YM.Bid.Bank`, `YM.Bid.roomCost` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 14.5 step 15 | 130 | [M]'s item gives η_m ≤ L^{-2/5}, with ratio to L^{-3/8} chosen later; Lean packages the combined condition as `tiny` with `barunit = L^{-3/8}`. | `YM.Extra.Histories.Buys` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 14.6 step 7 | 131 | Lean prices the clusters with the abstract majorants `KBound` (weights `a i` summing to `w`, cover factor inside `mass Y 1`) and `Y.card * w` where the manuscript uses `\|Sigma_d\| eps^for` and `e^{sigma cover}`; the exponential-minus-one over nonempty subsets is the same shape. | `YM.Extra.Histories.Attach.line_budget`, `YM.Extra.Histories.supplement_bound` | judged `relatedMatch` (mapper and verifier agreed) |
-| Lemma 14.12 step 1 | 135 | The step only lists the ingredients; Lean's induction applies its own pricing lemmas (`copied_price`, `born_mixed`, `rewind`) rather than the cited definitions and lemmas one by one. | `YM.Extra.Multi.Unbilled.realizes` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 14.12 step 6 | 135 | [L] gets the payment from the support reserve as the hypothesis `across`, supplied eventually by `steep_late` for a polynomial `steep`, not from the vanishing coefficient via B_i ≍ (log β̂_i)^2 and β̂_{i+1}/β̂_i → 1; the remark on singleton terms has no counterpart here. | `YM.Extra.Multi.Prepared`, `YM.Extra.Multi.steep_late` | judged `relatedMatch` (judge ruling) |
 | Lemma 14.12 step 7 | 135 | Lean's descending induction is on `Spent` budgets via `rewind`; there are no radii `ρ_{h,i}`, no polynomial `b_{h,i}` or inverse estimate of Lemma E-marked-step. | `YM.Extra.Multi.Unbilled.realizes` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 14.12 step 8 | 135 | Lean bounds `w*allowance ≤ g^strength` and the exponential cover weight by `g^6` at the birth level; the bound `ρ_{h,i} b_{h,i} ≤ ζ_{d,i}` over all levels `k ≤ i ≤ N` with radii is not stated. | `YM.Extra.Multi.born_of_fibers` | judged `relatedMatch` (mapper and verifier agreed) |
@@ -383,7 +376,6 @@ Every Deviates record, by section; in each section the confirmed findings come f
 | Lemma 14.13 step 7 | 137 | [L] uses one integrated bound from `h.at` at the budget's support exponent instead of the rooted clause's derivative bound at sigma+3 and forced bound at sigma+2 with v_0 and n_0, a different quantity. | `YM.MergeProof.Accent.occurs` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 14.13 step 8 | 137 | [L] has multiplicativity of the mode weight `toll` over merging modes; the tree-sum statement that only the marked letter changes is not stated. | `YM.Marker.Poly.multiplier` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 14.13 step 9 | 137 | The factorial and the decrease of the exponent from 100 into [98,100] are not stated. | `YM.MergeProof.Accent.occurs` | judged `relatedMatch` (mapper and verifier agreed) |
-| Lemma 14.13 step 19 | 137 | Lean never states the two o(s_k) facts separately; `he` from `Work.I04.answer` is one eventual inequality on 5 - log Mix.last that combines them, which is weaker than the pair. | `YM.MergeProof.Accent.cheap` | judged `narrowMatch` (mapper and verifier agreed) |
 | Lemma 14.16 step 15 | 141 | Lean keeps the forced complement inside the attained bound `B*zeta <= u*E` and absorbs support and derivative factors through the inequality `sqrt(forcedAllowance)*storms <= 1`, not through a displayed bound E' on the complement followed by division by a new normalization. | `YM.MergeProof.sanded`, `YM.MergeProof.toast` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 14.16 step 22 | 141 | Lean proves the perturbation bound with the constant 1/2 where M claims 1/4, and in `coeffSize` rather than the l^1 norm; 1/2 suffices for invertibility with inverse bound 2. | `YM.MergeProof.cheaper` | judged `narrowMatch` (mapper and verifier agreed) |
 | Lemma 14.17 step 4 | 142 | Lean gets the factor m/r by a Cauchy estimate in a complex exponent, not through the spectral bound sup l(1-t)t^n <= l/(n+1); the resulting factor l a_N/r is the same. | `YM.Holder.finite_lip` | judged `relatedMatch` (mapper and verifier agreed) |
@@ -405,7 +397,6 @@ Every Deviates record, by section; in each section the confirmed findings come f
 | Lemma 14.27 step 9 | 153 | [M] picks an invertible square minor H_0 and bounds the inverse of the perturbed minor by 2\|\|H_0^{-1}\|\|; [L] (`firm`) perturbs the whole injective matrix using an antilipschitz constant, so no minor is chosen. | `YM.FullVolume.firm`, `YM.FullVolume.rank_upper` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 14.28 step 1 | 154 | Lean takes `m` as a given level with the weight condition `ht` on `m ≤ k` in place of the printed `B_m^2 ≤ a_k/a_m`; the cited definitions and lemmas are hypotheses, not a construction step. | `YM.MergeProof.Accent.inTime`, `YM.MergeProof.Accent.dine` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 14.29 step 7 | 156 | [M] also sets g_j = 0 outside the tails so that the supremum bound holds for all N, p, T, j, but `Works.controls` states measurability and the bound only eventually (`f.late`). | `YM.Push.GridApprox.covers`, `YM.Push.GridApprox.real_pair` | judged `narrowMatch` (mapper and verifier agreed) |
-| Lemma 14.30 step 2 | 157 | It does not use [M]'s metric with the bound 2, the halving, or the discrepancy delta_i(N,N') between two cutoffs. | `YM.PhysicalNext.Repeat.Legato.Bandage.Branch.winds`, `YM.MergeProof.Matric.Gear.spends` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 14.30 step 3 | 157 | The quantitative cross-cutoff bound d_m(N,N') <= 2^(1-(h-m)) + sum 2^(-(i-m)) delta_i is not stated. | `YM.MergeProof.Matric.Gear.spends` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 14.30 step 6 | 158 | The uniform positive lower bound and the division are present, but [L] gets the bound from an explicit exponential estimate under `Selected` rather than by restricting to an axial tree gauge with chords at most g/4, a different argument. | `YM.FullVolume.Retreat.lingers`, `YM.FullVolume.Retreat.tills`, `YM.PhysicalNext.Repeat.Legato.Bandage.Rising.latter` | judged `relatedMatch` (mapper and verifier agreed, changed from `closeMatch` in the closeMatch re-check) |
 | Lemma 14.32 step 2 | 159 | [M] bounds \|M_{N,p}-M_{N',p}\| by 4F_0 e^{-B_m/64} plus the difference of the level-m corrections; at this point [L] gets the Cauchy property of the lattice values directly through `Rising.cinema` (`sees`), with no such two-term inequality. | `YM.PhysicalNext.Repeat.Legato.Campaign.sees` | judged `relatedMatch` (mapper and verifier agreed) |
@@ -425,7 +416,7 @@ Every Deviates record, by section; in each section the confirmed findings come f
 | Lemma 15.4 step 5 | 167 | [M] states the explicit exponent d_pow = 1 + max d_i and constants k_0, C_ctr; [L] proves an existential exponent `D` and constants, so [M]'s exponent is stronger. | `YM.Work.D05.image_power`, `YM.Work.D05.answer` | judged `narrowMatch` (mapper and verifier agreed) |
 | Lemma 15.4 step 7 | 167 | The choice of m and k, the strips, the tiling bound and the limit at separation r/2 are as in [M], but the per-anchor bound B a_k^{-D} has an abstract exponent D from `image_power`, whereas [M] states C_ctr a_k^{-d_pow} with d_pow = 1 + max d_i. | `YM.Work.D05.scales`, `YM.Work.D05.separated_bound`, `YM.Work.D05.answer` | judged `narrowMatch` (judge ruling) |
 
-### Section 16 (25)
+### Section 16 (22)
 
 | Record | p. | Text against [L] | Declarations | Evidence |
 |---|---|---|---|---|
@@ -438,10 +429,8 @@ Every Deviates record, by section; in each section the confirmed findings come f
 | Lemma 16.2 step 14 | 173 | Lean shows the common annihilator of the kernel forms is zero by descending induction on the probe order with radial derivatives of the kernel, and does not build a Maxwell wave. | `YM.Maxwell.Free.ranging` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 16.2 step 15 | 173 | The polynomial-wave argument (degree below k, negative homogeneity) has no direct counterpart; `ranging` replaces it by the radial-derivative induction ending at `payment`. | `YM.Maxwell.Free.ranging` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 16.2 step 16 | 173 | [L] makes the probe zero through `ranging`/`payment`, which proves nondegeneracy of the covariance by a radial flux identity (`radial_flux`) for the wave polynomial, not by the explicit Kelvin formula eq:G-kelvin. | `YM.Maxwell.Free.probe_radius_span`, `YM.Maxwell.Free.payment` | judged `relatedMatch` (judge ruling) |
-| Lemma 16.3 step 2 | 174 | [M]'s identity relates the two-point forms b_x and b_y through R^Max(R_y R_x); Lean states the consequence directly, as commutation of T with that reflection product, and proves it from `two_stat` and `corridor` without naming b_x. | `YM.Maxwell.Free.low_motion` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 16.3 step 3 | 174 | [L] gets the quarter-turn commutation in one step from the reflection-product statement (`low_motion`), not through commutation with R^Max(R_y R_x) at two points. | `YM.Maxwell.Free.erasing` | judged `relatedMatch` (mapper and verifier agreed, changed from `closeMatch` in the sample check) |
 | Lemma 16.4 step 1 | 176 | Lean takes the lift as a table `L` obtained from `Poised`, with mirror equivariance and levels at `C.ref d`; it has no on-shell quotient section, averaging over the hypercubic group or marked coefficient readout with Gaussian correction. | `YM.MergeProof.East.wok`, `YM.MergeProof.East.staging` | judged `relatedMatch` (mapper and verifier agreed) |
-| Lemma 16.4 step 6 | 176 | Lean states the comparison on the same window with arity `m ≤ n` and exponent `(P x).arc`, but not through the Gaussian source lemmas; the uniform covariance and Taylor bounds are not displayed. | `YM.MergeProof.East.sight` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 16.4 step 8 | 176 | `match_phase` compares the lift correlations at grid points with the continuum Gaussian moment `disc` up to `e` in a single estimate; it does not subtract the moment over every subset of slots or prove that nonempty coefficients have zero expectation by induction. | `YM.Next.UVStress.match_phase` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 16.4 step 9 | 177 | Lean chooses common late levels by `filter_upwards` over eventualities along `f`; it does not cite a finite-set clause. | `YM.MergeProof.East.aspect` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 16.4 step 15 | 177 | `crushed` bounds the marked modes plus the target cumulant by `bill (-31/32) s` rather than giving exactly zero leading Gaussian coefficient, and `Clipped` is supplied only for at most 2 marks (`v_clinker`, hn : m <= 2). | `YM.Next.Rank.Atlas.crushed`, `YM.Next.Rank.Atlas.Clipped` | judged `narrowMatch` (mapper and verifier agreed) |
@@ -449,7 +438,6 @@ Every Deviates record, by section; in each section the confirmed findings come f
 | Lemma 16.4 step 21 | 177 | [L] gets the smallness of the comparison error from the abstract `Ship.budget` tending to 0 (`Ship.diminishes`), not from the corrected density at large coupling with its amplitude and normalization comparison. | `YM.MergeProof.East.aspect` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 16.5 step 6 | 179 | [L] takes the root estimate as the hypothesis `ShellNode C q j m B d h b T F ε`, proved once in `fees` (via `bricks`), and the zone proof only consumes it. | `YM.MergeProof.Ribbons.ShellNode`, `YM.MergeProof.Ribbons.stencil_pay` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 16.9 step 5 | 184 | Lean states the pointwise bound for the product of the three scaled factors in one lemma (with the factor `fuel 3 n`) and does not state the one-factor bound with `ψ(p_j/w_j)` separately. | `YM.Outer.tracks`, `YM.Outer.track_size` | judged `relatedMatch` (mapper and verifier agreed) |
-| Lemma 16.9 step 6 | 184 | The time integral and the replacement e^{-t}≤(1+t)^{-1} are absorbed in the weights `due`/`low`/`cost` of Lean, which bounds the cross term through `Budget` of two weight integrals. | `YM.Outer.track_size`, `YM.Outer.shear_size`, `YM.Outer.balanced_mul` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 16.11 step 8 | 187 | [M] derives centering from covariance, S_1(R_4(h)J)=S_1(J)=0; [L] (`ignite`) instead re-centers the averaged tensor by subtracting its one-point expectation times the unit. | `YM.UVNext.FreeStress.ignite`, `YM.StressFlux.Centers` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 16.12 step 2 | 187 | [L] takes the constant c and the translation-shell comparison as fields of the hypothesis `Crystal` and works with c⁻¹J, so it never derives J = cT from the one-dimensionality of Lemma G2.2 or c = c_⋆; the step is replaced by an assumption. | `YM.Climb.Crystal`, `YM.Work.A15.normalize_flux` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 16.12 step 3 | 187 | [L] proves the convergence of the normalized `ξ⁻¹ r⁴ J` to the free stress `T.J` for a kernel current produced by rank counting, not for the Haar average `T`. | `YM.Next.UVStress.produce_current`, `YM.Next.UVStress.balanced_J` | judged `relatedMatch` (mapper and verifier agreed) |
@@ -469,7 +457,7 @@ Every Deviates record, by section; in each section the confirmed findings come f
 | Lemma 17.7 step 12 | 199 | [L] defines the support set `coneM` as a Lorentz-invariant intersection of half-spaces and proves only its inclusion in {Σ p_j = 0, suffix sums in the cone}, so it uses a different set from [M]'s V_n. | `YM.Boundary.coneM` | judged `relatedMatch` (mapper and verifier agreed, changed from `closeMatch` in the closeMatch re-check) |
 | Lemma 17.7 step 13 | 200 | [M]'s mollified indicator also has bounded derivatives, which is stronger than temperate growth. | `YM.Boundary.Blanket`, `YM.Work.C11.answer` | judged `narrowMatch` (judge ruling) |
 
-### Section 18 (28)
+### Section 18 (33)
 
 | Record | p. | Text against [L] | Declarations | Evidence |
 |---|---|---|---|---|
@@ -483,7 +471,6 @@ Every Deviates record, by section; in each section the confirmed findings come f
 | Lemma 18.3 step 11 | 205 | Lean bounds only the second window's cell side below r·δ_n; the first window's side is bounded by the different quantity r/(2R). | `YM.MergeProof.East.aspect`, `YM.MergeProof.East.echo_scale` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 18.3 step 14 | 205 | `allGrows` gives a uniform lower bound on the periodic coordinate gaps over the compact set for large period, not the equality of periodic and ordinary separations. | `YM.Extraction.Gaps.allGrows` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 18.3 step 16 | 205 | Lean sets the mesh `spacing = bill(-a)` = M^{-α0} only for u = α0 along the sequence, not for every u in [α0,α0+1]. | `YM.MergeProof.East.aspect` | judged `narrowMatch` (mapper and verifier agreed) |
-| Lemma 18.4 step 1 | 208 | Lean takes the same regulated determinant and splits the tested coefficient by the same contact identity, but with the abstract gauge-averaged objects `zell`, `wentG`, `rill`, `sailM` instead of [M]'s `R_μ`, `G_μ`, `𝒴_U`, `𝒥_U` written out. | `YM.Trace.Lamp.ultimate`, `YM.Trace.Det.marke` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 18.4 step 2 | 208 | The resolvent identity `R_μ d = d G_μ + R_μ T G_μ` is not stated in Lean; its effect is the contact terms `J`, `F`, `W` of `ultimate`, which Lean takes from the gauge-covariance lemmas behind `rill`. | `YM.Trace.Lamp.ultimate` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 18.4 step 5 | 208 | Lean proves the cancellation of the contact terms by the lemmas `arcPay`, `vanish_r` (hypotheses `contours_*`) and not by the explicit `X_acb` coefficient computation of [M]. | `YM.Trace.Lamp.saga` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 18.4 step 6 | 208 | Lean cancels the contact coefficients through the limit `luxSum` (-highray(zell) + 2 highray(wentG)) summed over d != i by `suite`, not through the displayed combination of X_{aca}, X_{cac} and X_{bcb}. | `YM.Trace.Lamp.luxSum`, `YM.Trace.Lamp.suite` | judged `relatedMatch` (mapper and verifier agreed) |
@@ -492,17 +479,23 @@ Every Deviates record, by section; in each section the confirmed findings come f
 | Lemma 18.4 step 16 | 209 | Lean's `Scene`/`Flare` hypotheses (`Viz`, bounded derivatives of `wB`, `wG`) play the role of [M]'s hypotheses (c)-(d); the statement of boundedness is carried inside those structures. | `YM.Trace.Loft.LowPay` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 18.4 step 18 | 209 | Lean's `dots0`, `dots1`, `dots2` give the factors `T²`, `T`, `1` for the zero-, one- and two-field insertions through `Allows` bounds of the Taylor type, with `z` as the scale `peakT`. | `YM.Trace.Loft.noting`, `YM.Trace.Loft.dots0` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 18.4 step 20 | 209 | The inequality C z^{-4} ≤ C' z^{-5} is not stated. | `YM.Trace.Loft.sip_charge` | judged `relatedMatch` (mapper and verifier agreed) |
+| Lemma 18.5 step 4 | 210 | Perfect.Viz carries the preservation of the divergence identity through bar_nab and primary_nab, rather than through Lemma C4's congruence. | `YM.Trace.Perfect.Viz` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 18.5 step 18 | 210 | The Lean bounds the combined error by e^{-h_k/4} (`loss`) through `brass` and `rift`, not each of the four errors by e^{-h_k} with explicit truncation at C_j (log beta_k)^2. | `YM.Trace.Slate.penumbra` | judged `relatedMatch` (mapper and verifier agreed) |
+| Lemma 18.5 step 21 | 211 | Quince.husk and prime_fuel (Lilt.lean 13-24, Unison.lean 26-28) bound the wrapping tail by exp(-sigma b) with a different cover count than the step. | `YM.PhysicalNext.Repeat.Quince.husk`, `YM.PhysicalNext.Repeat.Quince.prime_fuel` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 18.5 step 27 | 211 | `aspiring` gives v^eq -> v_eom and, in its proof, j_i -> Vivid = -v_eom; the rate on rho_tr(j_i) is only `taxA * rho_tr(j_i) -> 0`, weaker than [M]'s \|rho_tr(j_i)\| <= Ce^{-h_{k_i}/4}. | `YM.Trace.Slate.aspiring`, `YM.Trace.Slate.diadem` | judged `narrowMatch` (mapper and verifier agreed) |
+| Lemma 18.5 step 29 | 212 | Terrace.mileage (Meteor.lean 30-52) trades cover number for decay for wrapping supports with the full exponent, and bounds the spectator pairing by Tau(-100); the argument differs. | `YM.Trace.Terrace.mileage` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 18.5 step 30 | 212 | [L] obtains a gain e^{gap/8} over a separation at least (log beta)^48 as a lower bound on `gainChart` (`gainsK`, `gstar`), not by the support-sum argument with tiling level m(n), threshold costs e^{o(H_n)} and replication. | `YM.Trace.Terrace.gainsK`, `YM.Trace.Terrace.gstar` | judged `relatedMatch` (mapper and verifier agreed) |
+| Lemma 18.5 step 31 | 212 | Terrace.summit fixes the level pair with gap (log beta)^48 and Glade.canopy bounds the ratio by (log beta)^6; these are different quantities than B_n^2 <= a_m/a_n <= l B_n^2. | `YM.Trace.Terrace.summit`, `YM.Trace.Terrace.Glade.canopy` | judged `relatedMatch` (mapper and verifier agreed) |
+| Lemma 18.5 step 32 | 212 | Terrace.toll_small absorbs an exponent-27 bound (the step has 22) into the Tau scale, and Glade.tide carries the estimates; the exponents differ. | `YM.Trace.Terrace.toll_small`, `YM.Trace.Terrace.Glade.tide` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 18.5 step 33 | 212 | [L]'s smallness at this point is the `Tau` rate in `gainsK`, a different quantity from the explicit e^{-H_n/100}. | `YM.Trace.Terrace.gainsK` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 18.5 step 34 | 212 | `legacy` proves b_i^p times the rescaled evaluation tends to 0 through `small_means`, without the radius normalization (r_i/a_{n_i})^5 and the diagonal bound u_i <= loglog beta. | `YM.Trace.Slate.legacy` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 18.5 step 35 | 212 | `legacy` gives the limit zero of b_i^p times the evaluation through `small_means`, not via the explicit majorant C b_i^p exp{5(loglog beta)^3 - H/100}. | `YM.Trace.Slate.legacy` | judged `relatedMatch` (mapper and verifier agreed) |
+| Lemma 18.5 step 41 | 212 | Shelves.microphone and tranquil give Fast decay with an unspecified p < 0, where the step states O(a_k^{1/8}); [L] proves less. | `YM.Trace.Shelves.microphone` | judged `narrowMatch` (mapper and verifier agreed) |
 | Lemma 18.5 step 43 | 213 | `lent` bounds the averaged difference by q k = 2 factor/(a_k n_k) with an abstract `factor` and `n k`, in place of 2Ca_k^{eta_0}/(m a_k) with m = floor(a_k^{-1+eta_0/2}); the rates O(a_k^{eta_0/2}) are not stated. | `YM.Trace.Shelves.lent` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 18.12 step 4 | 217 | Lean never rewrites the amplitudes as i^k Y: it states the identity for the plain wave `q = Y.wave i` and carries the phase i^k inside the series expansion, so the step is replaced by sign bookkeeping. | `YM.TraceExtension.Photons.sectors`, `YM.TraceExtension.Photons.cauchy_point` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 18.12 step 14 | 218 | `saturate` sums the sector bounds only after relaxing C R^6 to D R^7 (`6 <= 7`) and contradicts `does_not_fit` at exponent 7; the summed bound C R^6 that [M] states is not established. | `YM.TraceExtension.Photons.saturate`, `YM.TraceExtension.does_not_fit` | judged `narrowMatch` (mapper and verifier agreed) |
 
-### Section 19 (30)
+### Section 19 (28)
 
 | Record | p. | Text against [L] | Declarations | Evidence |
 |---|---|---|---|---|
@@ -510,14 +503,12 @@ Every Deviates record, by section; in each section the confirmed findings come f
 | Lemma 19.1 step 1 | 220 | The step only announces which earlier estimates are used; [L] takes them as the hypothesis `Tones` of `acclaim` with an abstract `η` and discharges them at the call sites, so there is no line that cites them. | `YM.Extra.Histories.Relay.Tones` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 19.1 step 4 | 220 | [M] fixes `η_i = ℓ_i^{-2/5}` and shows both bounds are at most it; [L] keeps `η` abstract and assumes it small against `barunit`, so the stage-constant ordering is not there. | `YM.Extra.Histories.Relay.Tones` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 19.1 step 5 | 220 | The split into regular masses `g_a` and forced masses `k_b/ε^{1/2}` summed before the norm is inside `remBound`; [L] only uses the summed bound `q`. | `YM.Extra.Histories.Relay.Tones` | judged `relatedMatch` (mapper and verifier agreed) |
-| Lemma 19.1 step 8 | 220 | [L] assumes `(1+2C_i)eta <= barunit` as the field `tuned` of `Tones` rather than deriving it from the stage-room display. | `YM.Extra.Histories.Relay.Tones` | judged `relatedMatch` (mapper and verifier agreed, changed from `closeMatch` in the sample check) |
 | Lemma 19.2 step 10 | 222 | Lean needs no equation projections: the labels `y` are already exactly in the low plane (`low F e (B y) = B y`), so the passage to the physical lower field is `belongs`/`limit_lower`, not a normalized remainder. | `YM.OPE.Columns.limit_lower` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 19.2 step 14 | 222 | [L] bounds the low labels directly and extracts their limit with `finite_extract`; there is no normalized cluster point (lambda, z) with Pi z = z and lambda + \|\|z\|\| = 1. | `YM.OPE.Columns.limit_cap` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 19.2 step 15 | 222 | [L] takes the limit of the bounded labels and passes the spectator functionals (`targetB`) to the limit in `belongs` directly; the identity L(z) = lambda L(y) of the normalized argument is not there. | `YM.OPE.Columns.limit_cap`, `YM.OPE.Columns.belongs` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 19.2 step 17 | 222 | Lean produces the lower-field representative `u` directly by `matched` and `brace` and identifies correlations by `Test.unique_kernel`, without the normalized `z/lambda`. | `YM.OPE.Columns.belongs` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 19.7 step 6 | 225 | Lean has the cost as the single quantity `Vac.treasury` rather than Phi_l = max(1, v_l), and does not state the entrance inequality (eq:J-entrance) as a separate fact. | `YM.MergeProof.Accent.stakes` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 19.8 step 2 | 226 | Lean bounds the cover number of two sites at each level instead of moving a marker through at most h cover balls. | `YM.MergeProof.Ribbons.ManyCopies.joins`, `YM.MergeProof.Ribbons.ManyCopies.pairCover` | judged `relatedMatch` (mapper and verifier agreed) |
-| Lemma 19.8 step 8 | 227 | [L] exponentiates the support-conversion estimate and keeps half the fine exponent, but with `exp (base t r)` and an abstract `toll r` in place of A_l, and requires `accepts` (20*base ≤ L*A) instead of A_l ≤ ℓ_l from Lemma E1.1. | `YM.PhysicalNext.JointLoad.Heir.Release.compressed`, `YM.PhysicalNext.JointLoad.Heir.Release.preprices`, `YM.PhysicalNext.JointLoad.Heir.Release.accepts` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 19.8 step 9 | 227 | `Under.pass_L` combines the incoming and local contributions through `Under.evens`, whose total cost is assumed by the `Runs` hypothesis; the masses p_l + A_l L, f_l, the real/imaginary splitting and 2p_l <= L, f_l <= L are not there. | `YM.MergeProof.Ribbons.ManyCopies.Under.pass_L`, `YM.MergeProof.Ribbons.ManyCopies.Under.evens` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 19.9 step 2 | 228 | [L]'s crude coefficient bound `coefficient_rough` comes from a viewer contraction (`viewer_alt`), not from converting roots into algebra norms through 2n translated copies and the chessboard estimate. | `YM.OPE.coefficient_rough` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 19.9 step 5 | 228 | `coefficient_rough` gives a crude exponent proportional to the weight from a viewer contraction, not the norm bound by continuity, full support and moments; there is no exterior term V*upsilon. | `YM.OPE.coefficient_rough` | judged `relatedMatch` (mapper and verifier agreed) |
@@ -563,38 +554,38 @@ Absent displays and steps, by section:
 | 10 | 0/18 (0%) | 0/61 (0%) |
 | 11 | 0/67 (0%) | 5/253 (2%) |
 | 12 | 0/27 (0%) | 0/105 (0%) |
-| 13 | 0/69 (0%) | 8/272 (3%) |
-| 14 | 1/103 (1%) | 8/285 (3%) |
+| 13 | 0/69 (0%) | 5/272 (2%) |
+| 14 | 1/103 (1%) | 5/285 (2%) |
 | 15 | 0/20 (0%) | 0/41 (0%) |
 | 16 | 0/47 (0%) | 0/172 (0%) |
 | 17 | 0/38 (0%) | 0/131 (0%) |
-| 18 | 0/42 (0%) | 24/131 (18%) |
-| 19 | 1/56 (2%) | 3/146 (2%) |
+| 18 | 0/42 (0%) | 13/131 (10%) |
+| 19 | 1/56 (2%) | 0/146 (0%) |
 
 The 20 longest absent steps, the most text with no counterpart (length: characters of the step's LaTeX, whitespace collapsed); the last column is the record's note:
 
 | Step | p. | Length | Note |
 |---|---|---|---|
 | Lemma 11.13 step 10 | 74 | 1045 | The Lean majorant of this lemma has no unbounded Gaussian exponential factors, so the exponents l_i.z + z^T K_i z/2 and the row-sum bound delta_B are absent; `Quadratic.Ready` belongs to an unrelated chain. |
-| Lemma 18.5 step 20 | 211 | 892 | [L] has the forced-term allowance `e^{-M^{1/5}}`, its absorption of polynomial factors, and the wrapping cover bound (with `4B+2` for `2B+1` and no `-1`). The Taylor cancellation through degree five giving `C beta^{-1/10} M^C` and the lowering of the support exponent from 100 to 98 are not stated. |
 | Lemma 11.13 step 14 | 74 | 825 | The weighted Cauchy-Schwarz, the factor exp(C Lambda_i) in a_i and the diagonalization estimate are not in this lemma's Lean chain; `authentic` is a bound of a similar shape elsewhere. |
-| Lemma 18.5 step 32 | 212 | 728 | [L] has the same estimates `l, B, q = O(log)` powers with exponent 27 instead of 22 and absorbs them in the `Ticket`/`Tau` subexponential scale rather than stating `o(H_n)`; the allowance `zeta` bound and the explicit cancellation of `a_n^-5` are only implicit in `ear_price`. |
 | Lemma 13.18 step 5 | 116 | 432 | The Lean cutoff comparison extends the step maps holomorphically with a Lipschitz bound (`Oriel.conquest`) and never states that the cubic, quartic or loop coefficient map is affine in the incoming kernel. |
-| Lemma 14.24 step 1 | 148 | 386 | The step fixes the marker coefficient norm and the separate derivative/support majorants. Lean has neither object and takes the cited inputs as hypotheses of `v_conditioned`. |
 | Lemma 13.4 step 20 | 94 | 303 | No declaration applies Cauchy-Schwarz to split the Gaussian probability ε_w^{2r} of simultaneous warnings into ε_w^r kept in ∏f_a; `Invoices` bounds the warning probability by E^r directly. |
 | Lemma 18.5 step 16 | 210 | 290 | Chain-rule partitions, choice of ratios and entry couplings, the triangular map contracting by 1/2 and normalised defects O(2^{-n_step}) after n_step transfers: [L] has no iterated transfer of the current with this contraction; the only (1/2)^k contractions found (Extension.UV.Tail.squeezing, UVExtension.Crown.Top) belong to the UV coupling-anchoring argument, not to the current transfer. |
-| Lemma 19.8 step 6 | 227 | 265 | The level-passing proof of the lemma uses no support-conversion factor; `Footprint.conversion` exists in the Push library but is not applied here. |
-| Lemma 13.4 step 7 | 93 | 259 | Lean has no compulsory components of seed neighbourhoods and no seed selection (A_f, A_n, A_c); its forced addresses carry only a support and a flag inventory. |
 | Lemma 14.23 step 12 | 147 | 235 | The localization error C·cutoff^q·e^{-cB_t} is never derived. The covariance input enters only as the hypothesis `Bell`, whose verdict carries the abstract error `bill (-3)`. |
 | Lemma 18.5 step 10 | 210 | 210 | The weighted sizes C_j(1+\|x\|)/l^2, C_j(1+\|x\|)^2/l^3 and C_j(1+\|x\|)^3/l^4 of the affine, quadratic and remainder parts of a stationary test field: no such Taylor-part size estimate in [L]. |
 | Lemma 14.5 step 13 | 130 | 205 | Lean never forms the bound C_loc/L + o(1). It assumes the resulting smallness of the abstract error η as the hypothesis `Buys.tiny`. |
 | Lemma 11.13 step 12 | 74 | 193 | No declaration defines per-factor path weights w_{ia} with sup_a Σ_i w_{ia} ≤ C; the Lean carries the Gaussian linear and quadratic exponents inside the abstract majorant `Herd` without such weights. |
-| Lemma 18.5 step 1 | 210 | 192 | Asserts no mathematics beyond listing the cited results; [L]'s proof of the assembly (rungs, springs) takes its inputs as hypotheses of Rod/Mission/Bill structures and does not cite the lemmas by name. |
 | Lemma 18.5 step 6 | 210 | 164 | Choice of a below the kernel decay exponent c_j after stage 7 and degree-three validity of the B3 kernel bound: [L] has no object for the decay exponent c_j; its decay appears only through `Calms`/`Fast` with `O(factor p)` for all or some `p`. |
 | Lemma 18.5 step 11 | 210 | 151 | Subtracting affine-affine and affine-quadratic products to leave quadratic-quadratic and affine-remainder products with factor l^{-6}: no product decomposition of this kind in [L]. |
 | Lemma 13.4 step 9 | 93 | 142 | No declaration chooses a retained seed exponent κ'_B<κ_B followed by a forced exponent r_j<κ'_B; the Lean has the single positive energy constant μ chosen after W, and support exponents split by `Renewed.sits`. |
 | Lemma 14.23 step 13 | 147 | 137 | No nonlinear healthy-chart error C·cutoff^q·β̂^{-δ_G} is stated. The comparison enters as the hypotheses `Clipped`/`Heating` with the abstract error `bill`. |
-| Lemma 13.5 step 41 | 97 | 135 | `Houses.remains` requires a sup bound only when `coverNumber B.B support <= B.B`; [L] has no bound for T_i or P_i on the remaining large supports, so the step has no counterpart. |
+| Lemma 11.13 step 11 | 74 | 130 | The two displayed bounds on Gamma^{1/2} sum l_i and Gamma^{1/2} sum K_i Gamma^{1/2} have no counterpart since the Lean chain has no such exponents. |
+| Lemma 18.5 step 8 | 210 | 116 | The cost C_j l^{5-2r} of transfer at orders 3,4 from two l^{-2} stationary fields: no l-power bookkeeping of the transfer exists in [L]; the transfer is packaged in `Optics`/`Hero` with `Fast` inputs. |
+| Lemma 13.4 step 18 | 94 | 106 | No declaration states a local seed-sector multiplicity bound that spends a fixed part of the energy exponent between κ'_B and r_j. |
+| Lemma 18.5 step 15 | 210 | 106 | The order-two factor bound C_j{1/(log beta_m)^2 + ((log beta_{m+1})^2+1)/(l_m (log beta_m)^2)}: no declaration states this quantity; the Lean current defect is `Fast`, so no explicit rate in logarithms of beta occurs. |
+| Lemma 14.1 step 16 | 125 | 91 | The displayed quantity and its limit at a fixed ratio are not stated in [L]. |
+| Lemma 18.5 step 5 | 210 | 86 | [L] proves that the antisymmetric part and the trace of the matched tensors are `Fast` by subtracting the identities, which is the same preservation as differences, with an exponential-smallness conclusion that [M] does not state at this point. |
+| Lemma 11.13 step 13 | 74 | 78 | No declaration defines Λ_i = Σ_a \|ℓ_i(a)\|²/w_{ia} + tr(Γ^{1/2}K_iΓ^{1/2}) or the weighted Cauchy-Schwarz and square-completion bound E exp(2ℓ₀·z+zᵀKz) ≤ exp(CΣΛ_i). |
 
 ## 6. Definitions and method
 

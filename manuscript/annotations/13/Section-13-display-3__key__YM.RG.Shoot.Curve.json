@@ -1,0 +1,81 @@
+{
+  "id": "Section 13 display 3",
+  "kind": "display",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "RG.Shoot.Curve.continuous asks for two weighted budgets each at most eps near x, where the display has one combined weighted sum tending to zero; the two are equivalent.",
+  "subject": [
+    {
+      "location": {
+        "page": 90,
+        "rect": [
+          0.12026,
+          0.43558,
+          0.75948,
+          0.03716
+        ]
+      },
+      "title": "Display, p. 90",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Section 13 display 3"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.Shoot.Curve",
+        "module": "YM.Shoot.Criteria",
+        "lines": [
+          51,
+          57
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.Shoot.Curve"
+          },
+          "snippet": {
+            "text": "structure Curve (P : BudgetPoint) (T : ℝ → Rep G n) (X : Set ℝ) : Prop where\n  beta : ContinuousOn (fun x => (T x).beta) X\n  v : ContinuousOn (fun x => (T x).v) X\n  reg : ∀ x∈X, ∀ y∈X,(T x).activities.reg=(T y).activities.reg\n  forced : ∀ x∈X, ∀ y∈X,(T x).activities.forced=(T y).activities.forced\n  continuous : ∀ ε : ℝ, 0 < ε → ∀ x∈X,\n      ∀ᶠ y in 𝓝[X] x, deviation P (T x).activities (T y).activities ε",
+            "line": 51,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Shoot/Criteria.lean",
+            "fragment": "L51-L57"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.Shoot.Curve",
+            "lines": [
+              51,
+              57
+            ],
+            "conclusion": "Curve requires continuity of beta and v on X, constancy of the regular and forced activities, and that nearby activities deviate by at most eps in the weighted budget sense."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          90
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents, agreed; re-judged after a second independent review, which changed it from exactMatch; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      }
+    }
+  }
+}

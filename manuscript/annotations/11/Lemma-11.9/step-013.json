@@ -1,9 +1,9 @@
 {
   "id": "Lemma 11.9 step 13",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "`pure_grey` and `greyson` give the successive vanishing orders on shrunk strips (Wilson 4-r, differences 5-r). Missing: the position-space rewriting of e^{ipx}-1 as coordinate differences and the path-length losses.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Stationary.winding and voile (Shape/Shim.lean 365-372, VertexWeights.lean 304-310) factor symbols vanishing to order n into n difference factors on a smaller strip with a norm bound; greyson and whiteWilson apply this; the packaging differs.",
   "subject": [
     {
       "location": {
@@ -29,36 +29,75 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Stationary.pure_grey",
-        "module": "YM.Next.STATIONARY.Shape.SoftTransfers",
+        "declaration": "YM.Stationary.voile",
+        "module": "YM.Next.STATIONARY.Shape.VertexWeights",
         "lines": [
-          29,
-          33
+          304,
+          310
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Stationary.pure_grey"
+            "id": "YM.Stationary.voile"
           },
           "snippet": {
-            "text": "theorem pure_grey (ha : Tendsto (fun i => (m i).val) atTop atTop) (hf : ∀ i, Pointwise (F i))\n    (h0 : ∀ i, fderiv ℝ (F i) 0=0) (hs : LawfulSum 3 m F 1)\n    {q u : ℝ} (p : Picture G 2) (v : Picture G 3) (hp : ∀ i j, Firm σ A (p i j)) (h : ∀ i, Recorded p (F i) 0)\n    (hx : ∀ i j, Firm q u (v i j)) (hv : ∀ i, Recorded v (F i) 0) :\n     (∀ i j,Rays 2 (p i j ∘ axes)) ∧ ∀ i j,Rays 1 (v i j ∘ axes) := by",
-            "line": 29,
+            "text": "lemma voile (G : Gauge) (t n : ℕ) (σ : ℝ) (hs : 0<σ) : ∃ η k, 0<η ∧ 0 ≤ k ∧ ∀ A, 0≤A → ∀ (m : ℕ→Side) (U : ∀ i,Link G (m i)→ℝ), Drinkable t m U n σ A →\n    ∃ K : Needle (Ports t n) (Loc G 1) t,Dai K η (A*k) ∧ ∀ i, Cargo (winglet t n) K (U i) := by\n  obtain ⟨η,K,h,hK,H⟩ := winding (G:=G) t n hs\n  refine ⟨η,K,h,hK,fun A hA m U hp=> ?_⟩\n  obtain ⟨X,hX,hx⟩ := hp\n  obtain ⟨Y,hY,V⟩ := H A hA X hx\n  exact ⟨Y,hY,fun i=> spooling h V hY (hX i)⟩",
+            "line": 304,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Shape/SoftTransfers.lean",
-            "fragment": "L29-L33"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Shape/VertexWeights.lean",
+            "fragment": "L304-L310"
           },
           "proof_context": {
-            "declaration": "YM.Stationary.pure_grey",
+            "declaration": "YM.Stationary.voile",
             "lines": [
-              29,
-              40
+              304,
+              310
             ],
-            "conclusion": "`pure_grey` upgrades vanishing derivative data on the kernels to `Rays 2` and `Rays 1` along axes."
+            "conclusion": "voile gives, for a family of symbols with vanishing order, a factorization kernel with a norm bound proportional to A that reproduces every member of the family."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.winding",
+        "module": "YM.Next.STATIONARY.Shape.Shim",
+        "lines": [
+          365,
+          372
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.winding"
+          },
+          "snippet": {
+            "text": "lemma winding (t n : ℕ) (hs : 0<σ) : ∃ η C,0<η ∧ 0≤C ∧ ∀ (A : ℝ),0≤A → ∀ (F : Picture G t),\n    (∀ i j, Firm σ A (F i j) ∧ Rays n (F i j ∘ axes)) → ∃ k : Needle (Ports t n) (Loc G 1) t, Dai k η (A*C) ∧ Spool F (winglet t n) k := by\n  obtain ⟨η,K,hτ,_,hK,h⟩ := transfers n t hs\n  refine ⟨η,K,hτ,hK,fun A hA F hF => ?_⟩\n  choose k he ht using fun i j => h A hA _ (hF i j).1 (hF i j).2\n  refine ⟨fun i => k (Prod.snd ∘ i) (Prod.fst ∘ i),fun i j => he _ _ _,fun i j p hP => ?_⟩\n  rw [ht i j p (Work.F07.realStrip _ hτ hP)]\n  apply sum_congr rfl; intro b _; unfold factorRay; rw [winglet,wing_factor]; rfl",
+            "line": 365,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Shape/Shim.lean",
+            "fragment": "L365-L372"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.winding",
+            "lines": [
+              365,
+              372
+            ],
+            "conclusion": "winding factors a picture of symbols whose rays vanish to order n into a needle of difference factors with bound A*C, on a smaller strip."
           }
         }
       }
@@ -72,7 +111,7 @@
         "module": "YM.Next.STATIONARY.Shape.Scaled",
         "lines": [
           363,
-          364
+          403
         ]
       },
       "role": "key",
@@ -82,14 +121,14 @@
             "id": "YM.Stationary.greyson"
           },
           "snippet": {
-            "text": "lemma greyson (G : Gauge) (σ ε C Z τ A : ℝ) (hs : 0<σ) (hC : 0≤C) (hZ : 0≤Z) (hτ : 0<τ) (hA : 0≤A) : ∃ s M,0<s ∧ 0≤M ∧ ∀ (m : ℕ→ Side), Tendsto (fun i => (m i).val) atTop atTop → ∀ (B : Bed) (p : Clip) (R : PathData G) Λ, R.Bounds p τ A Λ → Attached B R → B.metric.strip σ C → p.direct ≤ Z → (∀ n,Floor B p n ε C) → (∀ i,Bid.Sworn B (m i) G) →\n    ∀ i, i>0 → i≤3 → Drinkable i m (fun i => intended (m:=m i) p R-WilsonQ G (m i)) (4-i) s M := by",
+            "text": "lemma greyson (G : Gauge) (σ ε C Z τ A : ℝ) (hs : 0<σ) (hC : 0≤C) (hZ : 0≤Z) (hτ : 0<τ) (hA : 0≤A) : ∃ s M,0<s ∧ 0≤M ∧ ∀ (m : ℕ→ Side), Tendsto (fun i => (m i).val) atTop atTop → ∀ (B : Bed) (p : Clip) (R : PathData G) Λ, R.Bounds p τ A Λ → Attached B R → B.metric.strip σ C → p.direct ≤ Z → (∀ n,Floor B p n ε C) → (∀ i,Bid.Sworn B (m i) G) →\n    ∀ i, i>0 → i≤3 → Drinkable i m (fun i => intended (m:=m i) p R-WilsonQ G (m i)) (4-i) s M := by\n  obtain ⟨w,P,hp,hq,L⟩ := column_price G 2 A Z hτ hZ\n  obtain ⟨v,T,hv,hk,U⟩ := column_price G 3 A Z hτ hZ\n  obtain ⟨hk',x,hx,H,h,H₀⟩ := Wilson_stream G 2\n  obtain ⟨hq',y,hy,V,hV,H₁⟩ := Wilson_stream G 3\n  obtain ⟨u,W,hu,hW,X⟩ := veneer G τ hτ\n  let d := min w v; let e := min σ 1\n  let a := min d e\n  have hd : 0<d := lt_min hp hv\n  have he : 0<e := lt_min hs zero_lt_one\n  have ha : 0<a := lt_min hd he\n  let b := bedCharge σ C+ bedCharge σ 1\n  let g := b+P+T+x+y\n  have hb : 0≤ b := add_nonneg (bedCharge_nonneg hC) (bedCharge_nonneg zero_le_one)\n  have hg : 0≤g := by unfold g; positivity\n  let s := min a u\n  have ht : 0<s := lt_min ha hu\n  refine ⟨s,g+A*W,ht,add_nonneg hg (mul_nonneg hA hW),fun m hm B p R Λ hR hB hw hY hh hj k hN hM => ?_⟩\n  -- f=raw minus Wilson (Log not Dough)\n  have hk : BankRows R τ A := hR.rows\n  obtain ⟨hL,l,hl,l'⟩ := L p R _ _ _ hY hR hk\n  obtain ⟨hT,j,hj',j'⟩ := U p R _ _ _ hY hR hk\n  let F i := inputSeries (m:=m i) p R-WilsonQ G (m i)\n  have ht' i : Pointwise (inputSeries p R (m:=m i)) := stain_knit R p hR\n  have hf i : Pointwise (F i) := (ht' i).sub Wilson_witness\n  have hu₀ := (whites_on_K hR hB hw hs (fun i=> hh (m i)) hj (F:=ageCore p R m) (fun _=>rfl)).2\n  have he (i j') : Firm a g ((l-H) i j') := (((hl i j').mono ha ((min_le_left ..).trans (min_le_left ..)) le_rfl).sub ((h i j').mono ha ((min_le_right ..).trans (min_le_right ..)) le_rfl)).mono ha le_rfl (by unfold g; linarith)\n  have hE (i k') : Firm a g ((j-V) i k') := (((hj' i k').mono ha ((min_le_left ..).trans (min_le_right ..)) le_rfl).sub ((hV i k').mono ha ((min_le_right ..).trans (min_le_right ..)) le_rfl)).mono ha le_rfl (by unfold g; linarith)\n  have hr i : Recorded (l-H) (F i) 0 := (l' (m i)).less (ht' i).analytic (hk' (m i)) (H₀ (m i))\n  have hr' i : Recorded (j-V) (F i) 0 := (j' (m i)).less (ht' i).analytic (hq' (m i)) (H₁ (m i))\n  obtain ⟨hQ,hQ'⟩ := pure_grey hm hf (fun i => (show fderiv ℝ (F i) 0=0 by unfold F; rw [fderiv_sub (ht' i).analytic.differentiableAt (hk' _).differentiableAt,(low_columns hR hB (hh (m i)) (hj i)).2.1,(outright G _).2.1,sub_self])) hu₀ (l-H) (j-V) he hr hE hr'\n  have h₀ (k) (hN : 0<k) (hM : k≤3) : Drinkable k m F (4-k) a g := by\n    interval_cases k\n    · refine ⟨slots B.metric G-slots leader G,fun i=> (according (B.metric.rights _ _ hw hs.le) (low_columns hR hB (hh (m i)) (hj i)).2.2).less (ht' i).analytic Wilson_witness.analytic (outright G (m i)).2.2,fun i j => ⟨?_,slots_gain hs hw (hh 1).starts i j⟩⟩\n      apply ((slots_cost hs hw i j).sub (slots_cost hs (leader_pay σ) i j)).mono ha ((min_le_right ..).trans (min_le_left ..)); show b≤g; unfold g; linarith\n    · exact ⟨_,hr,fun i j=> ⟨he i j,hQ i j⟩ ⟩\n    exact ⟨_,hr',fun i j => ⟨hE i j,hQ' i j⟩ ⟩\n  have hW i : intended (m:=m i) p R-WilsonQ G (m i)=(F+cureCore R m) i := by\n    rw [show intended (m:=m i) p R=ageCore p R m i+cureCore R m i from congr_fun (intent_bound p R m) i]; change inputSeries _ _+_ - _ = (inputSeries _ _-_)+_; abel\n  rw [show (fun i=> intended (m:=m i) p R-WilsonQ G (m i))=F+cureCore R m from funext hW]; exact ((h₀ k hN hM).thins ht (min_le_left ..) le_rfl le_rfl).more ((X m hm p R A Λ hA hR k hN hM).thins ht (min_le_right ..) le_rfl le_rfl) (fun i=> (hf i).analytic) (fun i=> (cures m hR i).1.analytic)",
             "line": 363,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Shape/Scaled.lean",
-            "fragment": "L363-L364"
+            "fragment": "L363-L403"
           },
           "proof_context": {
             "declaration": "YM.Stationary.greyson",
@@ -97,7 +136,46 @@
               363,
               403
             ],
-            "conclusion": "`greyson` gives difference orders 3, 2, 1 for Wilson degrees 2, 3, 4."
+            "conclusion": "greyson shows the connected-activity quantities of orders 1 to 3 are drinkable, with uniform constants, by combining the column-price and Wilson-stream bounds."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.whiteWilson",
+        "module": "YM.Next.STATIONARY.Shape.Scaled",
+        "lines": [
+          408,
+          415
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.whiteWilson"
+          },
+          "snippet": {
+            "text": "lemma whiteWilson (G : Gauge) : ∃ B:ℝ,0≤B ∧ ∀ (m : ℕ→Side), Tendsto (fun i=> (m i).val) atTop atTop → ∀ k, k>0 → k≤3 → Drinkable k m (fun i => WilsonQ G (m i)) (3-k) 1 B := by\n  obtain ⟨hV,Y,hY,F,h,H⟩ := Wilson_stream G 2\n  obtain ⟨_,Z,hZ,K,hK,hU⟩ := Wilson_stream G 3\n  let D := bedCharge 1 1\n  have h₁ : (0:ℝ)<1 := zero_lt_one\n  have hd : 0≤D := bedCharge_nonneg (le_of_lt h₁)\n  refine ⟨D+Y+Z,by positivity,fun m hm k hk he => ?_⟩\n  let V i := WilsonQ G (m i)",
+            "line": 408,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Shape/Scaled.lean",
+            "fragment": "L408-L415"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.whiteWilson",
+            "lines": [
+              408,
+              422
+            ],
+            "conclusion": "whiteWilson shows the Wilson quantities of orders 1 to 3 are drinkable with a uniform constant B along any sequence of sides tending to infinity."
           }
         }
       }
@@ -112,7 +190,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent disagreed and a judge changed it from relatedMatch; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent disagreed and a judge changed it from relatedMatch; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

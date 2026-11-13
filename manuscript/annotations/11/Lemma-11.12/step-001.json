@@ -2,8 +2,8 @@
   "id": "Lemma 11.12 step 1",
   "kind": "proof_step",
   "status": "partial",
-  "relation": "relatedMatch",
-  "note": "Lean states only the resulting lower bound on the row Gram matrix, proved through `armed` and the sponsorship/curl estimates; the fine-link control by row values plus C*delta_x surrounding increments is not a separate statement.",
+  "relation": "hasPart",
+  "note": "Gap.not_flat proves the Gram lower bound eta*(a.a) <= a.(Gram a) by the same fine-link comparison; the intermediate inequality ||a||^2 <= C||Da||^2 + C delta^2 ||a||^2 is not stated separately.",
   "subject": [
     {
       "location": {
@@ -33,7 +33,7 @@
         "module": "YM.SectorNext.GAUSSIAN_SECTOR_CHANGE.Gap",
         "lines": [
           242,
-          246
+          264
         ]
       },
       "role": "key",
@@ -43,14 +43,14 @@
             "id": "YM.Next.SectorChange.Gap.not_flat"
           },
           "snippet": {
-            "text": "theorem not_flat (G : Gauge) (P : Patch) (Pt : Teller G) (hS : P.Branches Pt.bind G) :\n    ∃ η : ℝ, 0 < η ∧ ∀ᶠ x : ℝ in atTop, ∀ {c f : Side} (S : StepData c f) (T : Tube G S),\n    S.patch=P → 100*(1+radiusB x) ≤ c.val → Pt.Funds S T →\n    ∀ (A : Stores S) (F : Forest S.ratio) (k:S.Choices) (V : Config G c), A.flags=RG.flags (temp x) V →\n    ∀ a : Prices G (Active A x F), η*(a ⬝ᵥ a) ≤ a ⬝ᵥ (Rows.gram T x V k (shots S x) A F *ᵥ a) := by",
+            "text": "theorem not_flat (G : Gauge) (P : Patch) (Pt : Teller G) (hS : P.Branches Pt.bind G) :\n    ∃ η : ℝ, 0 < η ∧ ∀ᶠ x : ℝ in atTop, ∀ {c f : Side} (S : StepData c f) (T : Tube G S),\n    S.patch=P → 100*(1+radiusB x) ≤ c.val → Pt.Funds S T →\n    ∀ (A : Stores S) (F : Forest S.ratio) (k:S.Choices) (V : Config G c), A.flags=RG.flags (temp x) V →\n    ∀ a : Prices G (Active A x F), η*(a ⬝ᵥ a) ≤ a ⬝ᵥ (Rows.gram T x V k (shots S x) A F *ᵥ a) := by\n  obtain ⟨m,hm,H⟩ := Work.E02.answer G P.L P.J Pt.bind\n  let L := P.L; let n := curlFactor L (box (macroR P)) m; let q := probeFactor L\n  obtain ⟨ε,η,hε,hη,h⟩ := arn n q (fineCap P 1) (sideCap P (predReach P)) Pt.top.clip.direct Pt.bind.penalty\n    (by unfold n curlFactor; positivity) (by unfold q probeFactor; positivity)\n    (by unfold fineCap lots grain; positivity) (by unfold sideCap lots grain; positivity)\n    Pt.top.clip.quadratic_pos Pt.bind.penalty_pos\n  obtain ⟨δ,hδ,hs⟩ := sponsorship P Pt.bind G hS hε\n  refine ⟨slip^2 * η,mul_pos (pow_pos slip_pos _) hη, ?_⟩\n  filter_upwards [temp_deploy (G:=G) P hδ, Work.E01.radiusB_tendsto.eventually_ge_atTop (allot P+1)] with x hx hB\n  intro c f S T hP hp hT A F k V hv a\n  have hF : c.val ≤ f.val := S.sizes ▸ le_mul_of_one_le_right (Nat.zero_le _) S.patch.L.property\n  apply armed S F A k T hT V x hε hm hη\n  · intro U h e he\n    apply H c f S hT.knobs (congr_arg RG.Patch.L hP) (congr_arg RG.Patch.J hP) ?_ ?_ F U h 1 e k he\n    · rw [hP]; unfold allot at hB; omega\n    · omega\n  · exact hs S F A V k x hP hT.knobs (by omega) (by omega) hv hx\n  rw [hP,hT.knobs,hT.high]; exact h",
             "line": 242,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/SectorNext/GAUSSIAN_SECTOR_CHANGE/Gap.lean",
-            "fragment": "L242-L246"
+            "fragment": "L242-L264"
           },
           "proof_context": {
             "declaration": "YM.Next.SectorChange.Gap.not_flat",
@@ -58,7 +58,7 @@
               242,
               264
             ],
-            "conclusion": "For large `x` the Gram matrix `Rows.gram` of the retained rows satisfies `η*(a ⬝ᵥ a) ≤ a ⬝ᵥ (Rows.gram ... *ᵥ a)` on the active prices."
+            "conclusion": "not_flat gives eventually in x a uniform eta>0 with eta*(a.a) <= a.(Rows.gram a) for all price vectors on the active set, for every step data, tube and store matching the patch."
           }
         }
       }
@@ -73,7 +73,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from relatedMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

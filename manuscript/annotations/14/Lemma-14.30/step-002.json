@@ -1,9 +1,9 @@
 {
   "id": "Lemma 14.30 step 2",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "relatedMatch",
-  "note": "Lean propagates Cauchy-ness one level at a time through a step that is a contraction on the same unmarked representation. It does not use [M]'s metric with the bound 2, the halving, or the discrepancy delta_i(N,N') between two cutoffs.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Matric.Gear.shawls and voyages (Mark/Sages.lean 22-38) start the graph distance at 2 and halve it per step; this is a metric argument differing from the step's normalization by C_{J_i} and the coefficient sum.",
   "subject": [
     {
       "location": {
@@ -29,36 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.PhysicalNext.Repeat.Legato.Bandage.Branch.winds",
-        "module": "YM.FullVolume.Gables.Master",
+        "declaration": "YM.MergeProof.Matric.Gear.shawls",
+        "module": "YM.FullVolume.Mark.Sages",
         "lines": [
-          44,
-          48
+          22,
+          32
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.PhysicalNext.Repeat.Legato.Bandage.Branch.winds"
+            "id": "YM.MergeProof.Matric.Gear.shawls"
           },
           "snippet": {
-            "text": "lemma winds (m:ℕ) (h:r≤ m): CauchySeq (fun n=> y' m n) :=by\n     have h' (i:ℕ)(h:r ≤ i): ∀ᶠ n in atTop,y' i n=(T' i h n|>.leanings (W (i+1) n)) (y' (i+1) n):=(L'.sails.eventually (eventually_gt_atTop i)).mono fun n hn=> ((B' n).tallies hG b hz hc hR ht (V n) (hV n) i h hn).2 _\n     apply (Matric.Gear.spends (cheerful hG b hz hc hR ht B' L' hZ V hV) _ h' m h)\n     have hh:Tendsto (fun _ : ℕ=> y) atTop (𝓝 y):= tendsto_const_nhds\n     apply Tendsto.cauchySeq (x:=y) (hh.congr' ?_); filter_upwards [L'.sails.eventually (eventually_ge_atTop r)] with n hn; exact ((he n hn).reads _ |>.trans ((V n).terminal.apply_symm_apply _))|>.symm",
-            "line": 44,
+            "text": "private lemma shawls (i:ℕ)(hi:k ≤ i)(d':ℕ) : ∃ V:ℕ→Gram F Y (D i) (p i),TwoFold V ∧ ∀ᶠ n in atTop, Within (W i n) (V n) (2 * (1/2:ℝ)^d'):=by\n    induction d' generalizing i with\n    | zero=>\n       let z:= W i 0; have hp:1≤p i:=(Q.tight i hi).starts\n       refine ⟨fun _=>z,fun e he=>⟨0,fun _ _ _ _=> ⟨he.le,fun v=>?_⟩⟩, Eventually.of_forall fun n=>?_⟩\n       · simp only [sub_self,norm_zero];exact mul_nonneg (mul_nonneg he.le (by linarith)) (Work.G08.size_nonneg ..)\n       rw [pow_zero,mul_one]; exact two _ _ (zero_le_one.trans hp)\n    | succ d' ih=>\n       obtain ⟨V,hV,hK⟩:= ih (i+1) (by omega); let P:=T i hi\n       refine ⟨fun n=> (P n).flow (V n),(Q.tight i hi).stories hV,?_⟩\n       filter_upwards [hK,Q.income i hi] with n hn h; rw [h,show 2*(1/2:ℝ)^(d'+1)=2*(1/2:ℝ)^d'/2 from by rw [pow_succ]; ring]; exact (P n).trail _ _ _ hn",
+            "line": 22,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Gables/Master.lean",
-            "fragment": "L44-L48"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Mark/Sages.lean",
+            "fragment": "L22-L32"
           },
           "proof_context": {
-            "declaration": "YM.PhysicalNext.Repeat.Legato.Bandage.Branch.winds",
+            "declaration": "YM.MergeProof.Matric.Gear.shawls",
             "lines": [
-              44,
-              48
+              22,
+              32
             ],
-            "conclusion": "`winds` proves the Cauchy property at level `m` by feeding the base case and the relation `p' i n = leaning (p' (i+1) n)` between consecutive levels into `Matric.Gear.spends`."
+            "conclusion": "shawls shows by induction on d' that there is a Gram family V within 2*(1/2)^{d'} of W eventually, starting at distance 2 and halving per step."
           }
         }
       }
@@ -68,36 +68,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.MergeProof.Matric.Gear.spends",
+        "declaration": "YM.MergeProof.Matric.Gear.voyages",
         "module": "YM.FullVolume.Mark.Sages",
         "lines": [
-          66,
-          70
+          34,
+          38
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.MergeProof.Matric.Gear.spends"
+            "id": "YM.MergeProof.Matric.Gear.voyages"
           },
           "snippet": {
-            "text": "lemma spends {p':∀ m:ℕ,ℕ →F.Coeff}(ht:CauchySeq (p' k))(he:∀ i:ℕ,∀ h:k ≤ i ,∀ᶠ n in atTop,p' i n=(T i h n|>.leanings (W (i+1) n)) (p' (i+1) n))(v:ℕ)(hv:k≤v): CauchySeq (p' v):=by\n     induction v,hv using Nat.le_induction with\n     | base=>exact ht\n     | succ v h ih=>\n       apply succor (Ritzy.invests (Q.tight v h) (Q.voyages (v+1) (by omega))) (zero_lt_one.trans_le (Q.tight v h).senior) (fun i x=> (T v h i).hail (W (v+1) i) _) ih (he v h) -- Iiff orientation",
-            "line": 66,
+            "text": "    intro e he; let d:=e/4; have hd:0<d:=by unfold d; positivity\n    obtain ⟨k,hk⟩:= ((tendsto_pow_atTop_nhds_zero_of_lt_one (r:= (1/2:ℝ)) (by norm_num) (by norm_num)).eventually (ge_mem_nhds (half_pos hd))).exists; have hq: 2*((1/2:ℝ)^k)≤ d:=by\n       change (1/2:ℝ)^k ≤ d/2 at hk; linarith\n    obtain ⟨V,hV,hT⟩:= shawls Q i hi k; obtain ⟨K,hK⟩:= eventually_atTop.mp hT; obtain ⟨u,hu⟩:= hV d hd\n    refine ⟨max K u,fun n hn m hm=>?_⟩; obtain ⟨ha,hb⟩:= max_le_iff.mp hn; obtain ⟨hv,hc⟩:= max_le_iff.mp hm",
+            "line": 34,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Mark/Sages.lean",
-            "fragment": "L66-L70"
+            "fragment": "L34-L38"
           },
           "proof_context": {
-            "declaration": "YM.MergeProof.Matric.Gear.spends",
+            "declaration": "YM.MergeProof.Matric.Gear.voyages",
             "lines": [
-              66,
-              70
+              33,
+              39
             ],
-            "conclusion": "`spends` propagates the Cauchy property down one level at a time by `Nat.le_induction` with the contraction data `Q.tight`."
+            "conclusion": "voyages uses shawls with (1/2)^k small to get, for every e>0, a threshold beyond which the differences are at most e."
           }
         }
       }
@@ -112,7 +112,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents agreed on the class but cited different declarations; the mapper's kept, not judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents agreed on the class but cited different declarations; the mapper's kept, not judged; re-judged after a second independent review, which changed it from relatedMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

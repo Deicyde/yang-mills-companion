@@ -1,9 +1,9 @@
 {
   "id": "Lemma 18.5 step 21",
   "kind": "proof_step",
-  "status": "not_formalized",
-  "relation": "noMatch",
-  "note": "[L] gets the wrapping tail from the whole support exponent with cover count `b` from side `> 10*(b*(4*B+2)+2*B)`, while [M] keeps weight 98 for summation and keeps `e^{-2c}` with `c >= n/(10(2B+1))-1`; the prefactor `beta^C M^C` is not present.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "Quince.husk and prime_fuel (Lilt.lean 13-24, Unison.lean 26-28) bound the wrapping tail by exp(-sigma b) with a different cover count than the step.",
   "subject": [
     {
       "location": {
@@ -29,22 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.PhysicalNext.Repeat.Quince.prime_fuel",
-        "module": "YM.TraceExtension.Quince.Unison",
+        "declaration": "YM.PhysicalNext.Repeat.Quince.husk",
+        "module": "YM.TraceExtension.Quince.Lilt",
         "lines": [
-          26,
-          27
+          13,
+          24
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.PhysicalNext.Repeat.Quince.prime_fuel"
+            "id": "YM.PhysicalNext.Repeat.Quince.husk"
+          },
+          "snippet": {
+            "text": "lemma husk (W':I→ℂ)(hq:∀ i,‖W' i‖ ≤ u i)(hP:Summable u)(S:Set I)(h:∀ i∈ S,¬ Nonwrapping (X i) o):\n    ‖∑' i: ↑S,W' i.val‖ ≤ Real.exp (-p.supportExponent*b)*a:=by\n   let w:=Real.exp (-p.supportExponent*b); have hw:0≤w:= (Real.exp_pos _).le\n   have hh : Summable (fun i=> ‖W' i‖):= .of_nonneg_of_le (fun _=>norm_nonneg _) hq hP\n   let f(i):= p.mass (X i) (u i); let g(i):=w*f i\n   have he'(i: ↑S): ‖W' i.val‖≤ g i.val:= (hq _).trans (prime_fuel he (ht i.val) (h i.val i.property) (hv i.val).1)\n   apply (norm_tsum_le_tsum_norm (show Summable (fun i: S=> ‖W' i.val‖) from hh.subtype _)).trans\n   have h':Summable g:=hc.2.1.mul_left w; have hz:Summable (fun i:↑S=> g i.val):=h'.subtype _\n   apply ((show Summable (fun i:↑S=> ‖W' i.val‖) from hh.subtype _).tsum_le_tsum he' hz).trans; refine le_trans ((show (∑' i:↑S,g i.val) ≤ ∑' i,g i from ?_)) ?_\n   · rw [← h'.tsum_subtype_add_tsum_subtype_compl S]; exact le_add_of_nonneg_right (tsum_nonneg (fun i =>mul_nonneg hw (hc.1 i.val)))\n   unfold g at *\n   rw [tsum_mul_left]; exact mul_le_mul_of_nonneg_left hc.2.2 hw",
+            "line": 13,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Quince/Unison.lean",
-            "fragment": "L26-L27"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Quince/Lilt.lean",
+            "fragment": "L13-L24"
+          },
+          "proof_context": {
+            "declaration": "YM.PhysicalNext.Repeat.Quince.husk",
+            "lines": [
+              13,
+              24
+            ],
+            "conclusion": "husk bounds the norm of the sum over wrapping supports by exp(-supportExponent*b) times the total mass a."
           }
         }
       }
@@ -54,22 +68,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.PhysicalNext.Repeat.Quince.loom_s",
-        "module": "YM.TraceExtension.Quince.Lilt",
+        "declaration": "YM.PhysicalNext.Repeat.Quince.prime_fuel",
+        "module": "YM.TraceExtension.Quince.Unison",
         "lines": [
           26,
-          26
+          27
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.PhysicalNext.Repeat.Quince.loom_s"
+            "id": "YM.PhysicalNext.Repeat.Quince.prime_fuel"
+          },
+          "snippet": {
+            "text": "lemma prime_fuel (h:10*(b*(4*p.B+2)+2*p.B) < n.val) {X:Support n}(hx:o∈X)(hi:¬Nonwrapping X o) (hw:0≤w): w ≤ Real.exp (-p.supportExponent*b)*p.mass X w:=by\n   unfold BudgetPoint.mass; rw[← mul_assoc,← Real.exp_add]; have hv:=p.exponent_pos; apply le_mul_of_one_le_left hw; exact Real.one_le_exp (by rw [neg_mul]; linarith only [mul_le_mul_of_nonneg_left (Nat.cast_le (α:=ℝ)|>.mpr (wound X hx h hi)) hv.le])",
+            "line": 26,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Quince/Lilt.lean",
-            "fragment": "L26-L26"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Quince/Unison.lean",
+            "fragment": "L26-L27"
+          },
+          "proof_context": {
+            "declaration": "YM.PhysicalNext.Repeat.Quince.prime_fuel",
+            "lines": [
+              26,
+              27
+            ],
+            "conclusion": "prime_fuel shows a weight on a wrapping support is at most exp(-supportExponent*b) times its mass when the side is large."
           }
         }
       }
@@ -84,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a deeper re-search agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a deeper re-search agreed; re-judged after a second independent review, which changed it from noMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

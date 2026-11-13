@@ -1,9 +1,9 @@
 {
   "id": "Lemma 16.4 step 24",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "`aspect` fixes the widths K and T of the two cells; the displayed interval-length relations with block ratio L are missing.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "East.echo_scale (Nitre.lean 22-46) proves the interval-length bound with block ratio r.",
   "subject": [
     {
       "location": {
@@ -29,36 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.MergeProof.East.aspect",
-        "module": "YM.MergeProof.East.Medal",
+        "declaration": "YM.MergeProof.East.echo_scale",
+        "module": "YM.MergeProof.East.Nitre",
         "lines": [
-          65,
-          65
+          22,
+          45
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.MergeProof.East.aspect"
+            "id": "YM.MergeProof.East.echo_scale"
           },
           "snippet": {
-            "text": "    let k:=f i; let K:= Next.Rank.Station.width A b k;let T:=Next.Rank.Station.width A d k",
-            "line": 65,
+            "text": "lemma echo_scale (A:Levels G)(hG:G.Simple)(b:ℝ)(hb:0<b) : ∀ᶠ k:ℕ in atTop,\n    Allowed A b k → wheel A k ≤ A.clock.monitor k →\n      A.S.a (width A b k)/A.S.a k ≤ bill (b+5) (clim A k):=by\n    have hz:= YM.UVNext.Annulus.opens_radius hG A (s:=1) le_rfl (show 0<(1/5:ℝ) by norm_num)\n    filter_upwards [hz] with k hz h ht\n    let X:=clim A k; let V:=A.clock.coverSize k; let M:=A.clock.monitor k;let r:=wheel A k\n    have hV : (1:ℝ) ≤ V:= by exact_mod_cast (A.budget k).B_pos\n    have hm : 1 ≤ M:= by rw [show M=bill 1 X from Atlas.fire_bill A k]; exact Glimmer.costed _ _ zero_le_one\n    have hs : (V:ℝ)^10≤M:=by\n       change 16*(1:ℝ)*(V:ℝ)^2 ≤ Station.mag A (1/5:ℝ) k at hz\n       have hc:(V:ℝ)^2 ≤ Perch.bill (1/5) X:=by rw [← show Station.mag A (1/5) k=bill (1/5) X from Atlas.mag_bill ..]; have hv:0≤(V:ℝ)^2:=sq_nonneg _;linarith only [hz,hv]\n       rw [show (10:ℕ)=2*5 from rfl,pow_mul]\n       apply le_trans (pow_le_pow_left₀ (sq_nonneg _) hc _) _; rw [Glimmer.bills,show M=_ from Atlas.fire_bill A k]; norm_num; exact le_rfl\n    let i:=width A b k;let j:=middle A b k\n    have hp := h.large\n    rw [h.scales (width ..) k le_rfl ((wider ..).trans (before ..)) le_rfl]\n    change r^(k-i) ≤ bill _ X\n    have hG : 1 ≤ Station.mag A b k:=Real.one_le_rpow hm hb.le\n    rw [show k-i=(k-j)+(j-i) by have hs:i≤j:=wider ..; have hT:j ≤ k:=before ..; omega,pow_add,show k-j=height A b k from h.full,show j-i=surplus A k from h.shift]\n    apply le_trans (b:=(Station.mag A b k*M^2*M)*(M*M))\n    · apply mul_le_mul _ _ (by have h:0<r:= zero_lt_one.trans hp; positivity) (by positivity)\n      · exact (pays_wants hp (one_le_mul_of_one_le_of_one_le hG (one_le_pow₀ hm (n:=2)))).trans (mul_le_mul_of_nonneg_left ht (by positivity))\n      exact (pays_wants hp (one_le_pow₀ hV (n:=10))).trans (mul_le_mul hs ht (zero_le_one.trans hp.le) (zero_le_one.trans hm)) -- adjust\n    rw [Atlas.mag_bill,show M=_ from Atlas.fire_bill A k, bills,overlap,overlap,overlap,overlap]; norm_num; ring_nf; exact le_rfl",
+            "line": 22,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/East/Medal.lean",
-            "fragment": "L65-L65"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/East/Nitre.lean",
+            "fragment": "L22-L45"
           },
           "proof_context": {
-            "declaration": "YM.MergeProof.East.aspect",
+            "declaration": "YM.MergeProof.East.echo_scale",
             "lines": [
-              36,
-              76
+              22,
+              45
             ],
-            "conclusion": "`aspect` fixes the widths `K` and `T` of the two cells used in the inequalities below."
+            "conclusion": "echo_scale shows eventually in k that, for allowed levels with wheel at most monitor, the ratio a(width)/a(k) is at most bill (b+5) of the climate."
           }
         }
       }
@@ -73,11 +73,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent disagreed and a judge changed it from relatedMatch; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent disagreed and a judge changed it from relatedMatch; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {
-        "kind": "direct"
+        "kind": "helper"
       }
     }
   }

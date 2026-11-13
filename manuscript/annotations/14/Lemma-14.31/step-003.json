@@ -2,8 +2,8 @@
   "id": "Lemma 14.31 step 3",
   "kind": "proof_step",
   "status": "formalized",
-  "relation": "closeMatch",
-  "note": "The constant depends on the base level, the weights and the bounds `x, y` and not on the stopping level, as in [M]. The Lean `treasury` and `toll s t` stand for the vacuum ratio term and `prod w_i`, so the form is similar and its match to the printed formula is read from the names.",
+  "relation": "exactMatch",
+  "note": "Sever.refreeze and Sever.charges (Fields/Flight.lean 28-36) give the bound with a constant depending on the base level, weights and bounds only.",
   "subject": [
     {
       "location": {
@@ -58,7 +58,7 @@
               28,
               28
             ],
-            "conclusion": "`refreeze` defines the constant `exp(card(Site)*treasury + card V*(x+y+2)) / toll s t` from the base level `k`, weights `s`, and bounds `x, y`."
+            "conclusion": "refreeze defines the explicit exponential constant depending on the base level."
           }
         }
       }
@@ -68,36 +68,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.PhysicalNext.Repeat.Legato.Bandage.Rising.arrives",
-        "module": "YM.FullVolume.Fields.Timber",
+        "declaration": "YM.FullVolume.Sever.charges",
+        "module": "YM.FullVolume.Fields.Flight",
         "lines": [
-          81,
-          81
+          31,
+          36
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.PhysicalNext.Repeat.Legato.Bandage.Rising.arrives"
+            "id": "YM.FullVolume.Sever.charges"
           },
           "snippet": {
-            "text": "    let F₀:= refreeze A.B.a p r H y a x",
-            "line": 81,
+            "text": "lemma charges {k:ℕ} {k₁: V→ Config G (A.S.side k p)→ℂ}{k₂:V→Box (A.S.side k p)→ Config G (A.S.side k p)→ℂ}{X:Config G (A.S.side k p)→ Poly B}{o:V→Site (A.S.side k p)} {x y:ℝ}{w:V→ℝ}(hk:k≤N) (hs:∀ i,0<w i)\n          (hp:Served (A.rep N p k) k₁ k₂ X o w (A.levels.budget k).supportExponent 1)(he:Vault w k₁ k₂ x y)(hx:Integrable X (prior G _))(t:B.Mode): ‖stamp A N p k X t‖ ≤ refreeze (A.levels) p k x y t w:=by\n    let Q:= A.levels.clock; have hv:= h.represents N p k hk; have hq:0<Q.hatCoupling k:= inv_pos.mpr (Real.sqrt_pos.mpr (zero_lt_one.trans (A.levels.fits.delayed k)))\n    have hf: Q.hatCoupling k ≤ (R k).p.threshold:=by rw [hv.vac]; exact le_mul_of_one_le_right hq.le (Real.one_le_exp (sq_nonneg _))\n    have hg:= (sail hs hp hv.good (Overlay.beta_positive h hk).le he (A.levels.budget k|>.exponent_pos.le) t hx _ hq hf (History.nonnegative A h N p k hk)).trans (Real.exp_monotone (Vac.suffices_bill h hk (Fintype.card V) ..))\n    unfold stamp refreeze; rw [norm_div,Complex.norm_real,Real.norm_of_nonneg (partition_pos _).le]; rw [History.partition_eq A h N p k hk,mul_one] at hg; exact (le_div_iff₀ (Poly.worth hs _)).mpr hg",
+            "line": 31,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Fields/Timber.lean",
-            "fragment": "L81-L81"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Fields/Flight.lean",
+            "fragment": "L31-L36"
           },
           "proof_context": {
-            "declaration": "YM.PhysicalNext.Repeat.Legato.Bandage.Rising.arrives",
+            "declaration": "YM.FullVolume.Sever.charges",
             "lines": [
-              74,
-              103
+              31,
+              36
             ],
-            "conclusion": "`arrives` sets `F₀ := refreeze A.B.a p r H y a x` at the base level `r`, independent of the stopping level `j`."
+            "conclusion": "charges bounds the normalized integral for Served and Vault data, with that constant depending only on the base level, weights and bounds, via sail."
           }
         }
       }
@@ -112,7 +112,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; re-judged after a second independent review, which changed it from closeMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

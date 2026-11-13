@@ -2,8 +2,8 @@
   "id": "Lemma 15.3 step 2",
   "kind": "proof_step",
   "status": "formalized",
-  "relation": "closeMatch",
-  "note": "Idempotence at both stages is imposed as fields of the `Branch` structure instead of being derived by continuity of composition; the convergence along the ordered tails is `approaches F.fuse`.",
+  "relation": "exactMatch",
+  "note": "Extract.projected_limit (EXTRACTION/Relay.lean 70-96) derives idempotence of the limit by continuity of composition.",
   "subject": [
     {
       "location": {
@@ -29,75 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Dash.Branch",
-        "module": "YM.Dash.Limits",
+        "declaration": "YM.Next.Extract.projected_limit",
+        "module": "YM.Next.EXTRACTION.Relay",
         "lines": [
-          53,
-          57
+          70,
+          74
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Dash.Branch"
+            "id": "YM.Next.Extract.projected_limit"
           },
           "snippet": {
-            "text": "structure Branch (V : Type*) [NormedAddCommGroup V] [NormedSpace ℂ V] (S : Type*) where\n  step : S → (V→L[ℂ] V)\n  trueP : V→L[ℂ] V\n  projection u v : step u (step u v)= step u v\n  final x : trueP (trueP x)=trueP x",
-            "line": 53,
+            "text": "lemma projected_limit {d : ℕ} {X : Type*} {h : Filter X} [h.NeBot]\n    (p : X → CoordMap C d) (q : CoordMap C d)\n    (H : ∀ i x, p i (p i x) = p i x) (he : Tendsto p h (𝓝 q)) (x : C.label d) : q (q x) = q x := by\n  have hx := Dash.arcing he (tendsto_const_nhds (x := x))\n  exact tendsto_nhds_unique_of_eventuallyEq (Dash.arcing he hx) hx (Eventually.of_forall fun i => H i x)",
+            "line": 70,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Dash/Limits.lean",
-            "fragment": "L53-L57"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/EXTRACTION/Relay.lean",
+            "fragment": "L70-L74"
           },
           "proof_context": {
-            "declaration": "YM.Dash.Branch",
+            "declaration": "YM.Next.Extract.projected_limit",
             "lines": [
-              53,
-              57
+              70,
+              74
             ],
-            "conclusion": "A `Branch` carries the stage projections `step u` and the limit `trueP`, with `step u (step u v) = step u v` (`projection`) and `trueP (trueP x) = trueP x` (`final`)."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Dash.approaches",
-        "module": "YM.Dash.Limits",
-        "lines": [
-          59,
-          59
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Dash.approaches"
-          },
-          "snippet": {
-            "text": "def approaches (ℱ : Filter S) (p : Branch V S) := Tendsto p.step ℱ (𝓝 p.trueP)",
-            "line": 59,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Dash/Limits.lean",
-            "fragment": "L59-L59"
-          },
-          "proof_context": {
-            "declaration": "YM.Dash.approaches",
-            "lines": [
-              59,
-              59
-            ],
-            "conclusion": "`approaches ℱ p`: `step` tends to `trueP` in operator norm along `ℱ`, used with `F.fuse`, the filter of ordered tails."
+            "conclusion": "projected_limit shows that a limit q of idempotent coordinate maps p i is idempotent, q (q x) = q x, by continuity of composition and uniqueness of limits."
           }
         }
       }
@@ -112,11 +73,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, a judge ruled; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, a judge ruled; re-judged after a second independent review, which changed it from closeMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {
-        "kind": "chain"
+        "kind": "helper"
       }
     }
   }

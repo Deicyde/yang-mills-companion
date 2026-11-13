@@ -2,7 +2,8 @@
   "id": "Lemma 11.11 step 38",
   "kind": "proof_step",
   "status": "formalized",
-  "relation": "exactMatch",
+  "relation": "closeMatch",
+  "note": "E09.assemble combines the fine, mismatch and coarse budgets as stated; the order of choices (ell, then W) is carried as hypotheses cF <= linear/4 and C <= penalty/16 * W rather than as a sequential selection.",
   "subject": [
     {
       "location": {
@@ -28,36 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Work.E09.fine_budget",
-        "module": "YM.Work.E09.Budget",
+        "declaration": "YM.Work.E09.assemble",
+        "module": "YM.Work.E09",
         "lines": [
-          21,
-          29
+          69,
+          111
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Work.E09.fine_budget"
+            "id": "YM.Work.E09.assemble"
           },
           "snippet": {
-            "text": "lemma fine_budget (A : Stores S) (T : Tube G S) (U : Config G f) (V : Config G c)\n    (x m d cF : ℝ) (Q : Config G c) (t : ℝ)\n    (ht : 0 ≤ t) (hu : t ≤ largeT G x S.patch.L)\n    (hm : 0 ≤ m) (hmp : m ≤ T.high.linear/8) (hmd : m ≤ d)\n    (hF : cF ≤ T.high.linear/4)\n    (h : T.high.linear/2*t*(∑ i ∈ A.swell U t, toll U i) +\n      d*t^2*((A.costs \\ A.swell U t).card:ℝ) ≤ A.tally T x U V) :\n    m*t^2*A.costs.card + m*t*largeT G x S.patch.L*(A.spend U Q V x).costs.card +\n      cF*t*(∑ i ∈ A.swell U t, toll U i) ≤ A.tally T x U V := by",
-            "line": 21,
+            "text": "lemma assemble {S : StepData c f} (A : Stores S) (T : Tube G S)\n    (U : Config G f) (Q V : Config G c) (x m t cF C W Z B δ d : ℝ) (K : ℕ)\n    (hm : 0 ≤ m) (hf : m ≤ T.high.linear/8) (hd : m ≤ d)\n    (hi : m ≤ S.kernel.penalty/32) (hc : m ≤ T.low.direct/64)\n    (hF : cF ≤ T.high.linear/4) (hC : C ≤ S.kernel.penalty/16 * W)\n    (hw : 1 ≤ W) (hlist : ∀ i ∈ A.aisles, W*t ≤ wire Q V i)\n    (ht : 0 ≤ t) (hu : t ≤ largeT G x S.patch.L) (hB : 0 ≤ B)\n    (hs : 0 ≤ temp x) (hst : t ≤ 2*temp x) (hx : temp x ≤ δ)\n    (hspend : (4*m*K + Z*(radiusB x:ℝ)^4)*t^2 ≤ m*t*largeT G x S.patch.L)\n    (herr : B*temp x^4*K*(radiusB x:ℝ)^4 ≤ m/4*t^2)\n    (a : T.high.linear/2*t*(∑ i ∈ A.swell U t, toll U i) +\n      d*t^2*((A.costs \\ A.swell U t).card:ℝ) ≤ A.tally T x U V)\n    (a' : S.kernel.penalty/8*(∑ i∈A.aisles, wire Q V i^2) ≤ A.talli T x Q V)\n    (b : Bid.Payments δ A x U Q V K) (e : Bid.Crowds δ B T x V)\n    (g : talll T x U Q V (A.hit U Q V x) + cF*t*(∑ i ∈ A.swell U t,toll U i) +\n        C*t*(∑ i∈A.aisles, wire Q V i) + Z*t^2*(radiusB x:ℝ)^4*(A.spend U Q V x).shares ≥\n          (T.low.linear*temp x)*(∑ i ∈ A.tides V x δ,toll V i))\n    (g' : talll T x U Q V (A.outs x \\ A.hit U Q V x) ≥ -(m/4*t^2*A.shares)) :\n    m/2*t^2*A.shares ≤ A.assessed T x U Q V := by\n  let D := A.spend U Q V x\n  have h₁ := fine_budget A T U V x m d cF Q t ht hu hm hf hd hF a\n  have h₂ := noise_budget A T U Q V x m C W t hw hlist ht hu hm hi hC a'\n  have h₃ := coarse_budget A T V x m B δ t hs hx hB ht hst hc e\n  have h₄ : (A.flags.card:ℝ) ≤ 4 *\n      (((A.tides V x (temp x) \\ A.tides V x δ).card:ℝ) + K*(D.shares:ℝ)) := by\n    exact_mod_cast flags_budget A V Q U x δ hx K b\n  have hn : 0 ≤ A.talln T x V := sum_nonneg (fun i _ =>\n    div_nonneg (sq_nonneg _) (by norm_num))\n  have heq : talll T x U Q V (A.outs x \\ A.hit U Q V x) + talll T x U Q V (A.hit U Q V x) =\n      talll T x U Q V (A.outs x) :=\n    sum_sdiff (show A.hit U Q V x ⊆ A.outs x from filter_subset ..)\n  have hflags := mul_le_mul_of_nonneg_left h₄ (mul_nonneg hm (sq_nonneg t))\n  have hy := mul_le_mul_of_nonneg_right hspend (show 0 ≤ ((D.shares):ℝ) by positivity)\n  have hz : B*temp x^4*(A.outs x).card ≤ m/4*t^2*A.shares := by\n    have h : ((A.outs x).card:ℝ) ≤ K*(radiusB x:ℝ)^4*A.shares := by exact_mod_cast b.ours\n    linarith only [mul_le_mul_of_nonneg_left h (mul_nonneg hB (show 0 ≤ temp x^4 by positivity)),\n      mul_le_mul_of_nonneg_right herr (show 0 ≤ (A.shares:ℝ) by positivity)]\n  have hnot : ((A.spend U Q V x).shares:ℝ) = (D.costs.card:ℝ) + D.aisles.card := by\n    simp [shares, D, spend]\n  dsimp only [D] at *\n  rw [hnot] at g hflags hy\n  simp only [assessed, shares, Nat.cast_add] at g' hz ⊢\n  linarith only [h₁,h₂,h₃, hflags, hn, heq, hz, hy, g, g']",
+            "line": 69,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/E09/Budget.lean",
-            "fragment": "L21-L29"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/E09.lean",
+            "fragment": "L69-L111"
           },
           "proof_context": {
-            "declaration": "YM.Work.E09.fine_budget",
+            "declaration": "YM.Work.E09.assemble",
             "lines": [
-              21,
-              54
+              69,
+              111
             ],
-            "conclusion": "The fine bound leaves `m*t^2` per cost and `m*t*largeT` per spent cost, while keeping `cF*t*sum swell toll` for the signed-row loss."
+            "conclusion": "assemble combines the tally, penalty, payment and crowd hypotheses, under the smallness conditions on m, cF, C and W, into the final lower bound for the step."
           }
         }
       }
@@ -67,114 +68,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Work.E09.noise_budget",
-        "module": "YM.Work.E09.Budget",
+        "declaration": "YM.Work.E09.bank",
+        "module": "YM.Work.E09",
         "lines": [
-          64,
-          72
+          23,
+          62
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Work.E09.noise_budget"
+            "id": "YM.Work.E09.bank"
           },
           "snippet": {
-            "text": "lemma noise_budget (A : Stores S) (T : Tube G S) (U : Config G f) (Q V : Config G c)\n    (x m C W t : ℝ)\n    (hw : 1 ≤ W) (hlist : ∀ i ∈ A.aisles, W*t ≤ wire Q V i)\n    (ht : 0 ≤ t) (hu : t ≤ largeT G x S.patch.L)\n    (hm : 0 ≤ m) (hmp : m ≤ S.kernel.penalty/32)\n    (hC : C ≤ S.kernel.penalty/16 * W)\n    (h : S.kernel.penalty/8*(∑ i∈A.aisles, wire Q V i^2) ≤ A.talli T x Q V) :\n    m*t^2*A.aisles.card + m*t*largeT G x S.patch.L*(A.spend U Q V x).aisles.card +\n      C*t*(∑ i ∈ A.aisles, wire Q V i) ≤ A.talli T x Q V := by",
-            "line": 64,
+            "text": "private lemma bank (G : Gauge) (L : Side) (m Z B δ : ℝ) (K : ℕ)\n    (hm : 0 < m) (hB : 0 ≤ B) (hδ : 0 < δ) :\n    ∀ᶠ x : ℝ in atTop,\n      let t := fiery G x L; let u := largeT G x L; let s := temp x; let b : ℝ := radiusB x\n      0 ≤ s ∧ s ≤ δ ∧ 0 ≤ t ∧ t ≤ u ∧ t ≤ 2*s ∧\n      (4*m*K + Z*b^4)*t^2 ≤ m*t*u ∧ B*s^4*K*b^4 ≤ m/4*t^2 := by\n  have hs : Tendsto temp atTop (𝓝 0) := by simpa using radiusB_temp 0\n  have hr : Tendsto (fun x : ℝ => fiery G x L / temp x) atTop (𝓝 1) := temp_ratio _\n  have hq : Tendsto (fun x : ℝ => fiery G x L / largeT G x L) atTop (𝓝 0) := by\n    simpa using radiusB_fiery_largeT G L 0\n  have hy := ((hq.const_mul (4*m*K)).add ((radiusB_fiery_largeT G L 4).const_mul Z))\n  rw [mul_zero, mul_zero, add_zero] at hy\n  have hz := (((radiusB_temp 4).mul hs).const_mul (4*B*K))\n  rw [mul_zero, mul_zero] at hz\n  filter_upwards [eventually_gt_atTop 0, (betaF_growth G L).eventually (eventually_gt_atTop 0),\n    hs.eventually (ge_mem_nhds hδ), hr.eventually (ge_mem_nhds (show (1:ℝ)<2 by norm_num)),\n    hr.eventually (le_mem_nhds (show (1/2:ℝ)<1 by norm_num)),\n    hq.eventually (ge_mem_nhds zero_lt_one), hy.eventually (ge_mem_nhds hm),\n    hz.eventually (ge_mem_nhds (show 0 < m/4 by positivity))] with x hx he hsd hrt hrs hqu hY hZ\n  let t := fiery G x L\n  let u := largeT G x L\n  let s := temp x\n  let b : ℝ := radiusB x\n  have hs : 0 < s := temp_pos hx\n  have ht : 0 < t := temp_pos he\n  have hu : 0 < u := by\n    unfold u; rw [largeT_eq _ _ _ he.le]; exact Real.rpow_pos_of_pos he _\n  refine ⟨hs.le,hsd,ht.le,?_,(div_le_iff₀ hs).mp hrt,?_,?_⟩\n  · exact (le_trans ((div_le_iff₀ hu).mp hqu) (one_mul u).le)\n  · change (4*m*K + Z*b^4)*t^2 ≤ m*t*u\n    change (4*m*K)*(t/u) + Z*(b^4*(t/u)) ≤ m at hY\n    have h : (4*m*K + Z*b^4)*t ≤ m*u := by\n      apply (div_le_iff₀ hu).mp; apply le_trans _ hY; exact le_of_eq (by ring)\n    linarith only [mul_le_mul_of_nonneg_right h ht.le]\n  change B*s^4*K*b^4 ≤ m/4*t^2\n  change 4*B*K*((b^4*s)*s) ≤ m/4 at hZ\n  have h : s ≤ 2*t := by linarith only [(le_div_iff₀ hs).mp hrs]\n  have hP : 0 ≤ B*s^2*K*b^4 := by positivity\n  linarith only [mul_le_mul_of_nonneg_left (pow_le_pow_left₀ hs.le h 2) hP,\n    mul_le_mul_of_nonneg_right hZ (sq_nonneg t)]",
+            "line": 23,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/E09/Budget.lean",
-            "fragment": "L64-L72"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/E09.lean",
+            "fragment": "L23-L62"
           },
           "proof_context": {
-            "declaration": "YM.Work.E09.noise_budget",
+            "declaration": "YM.Work.E09.bank",
             "lines": [
-              64,
-              106
+              23,
+              62
             ],
-            "conclusion": "The noise bound leaves `m*t^2` per aisle and `m*t*largeT` per spent aisle, keeping `C*t*sum wire` for the loss."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Work.E09.coarse_budget",
-        "module": "YM.Work.E09.Budget",
-        "lines": [
-          114,
-          120
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Work.E09.coarse_budget"
-          },
-          "snippet": {
-            "text": "lemma coarse_budget (A : Stores S) (T : Tube G S) (V : Config G c)\n    (x m B δ t : ℝ) (hs : 0 ≤ temp x) (hx : temp x ≤ δ) (hB : 0 ≤ B)\n    (ht : 0 ≤ t) (hu : t ≤ 2*temp x)\n    (hm : m ≤ T.low.direct/64) (h : Bid.Crowds δ B T x V) :\n    4*m*t^2*((A.tides V x (temp x) \\ A.tides V x δ).card : ℝ) ≤\n      A.tallc T x V + T.low.linear*temp x*(∑ i ∈ A.tides V x δ, toll V i) +\n        B*temp x^4*(A.outs x).card := by",
-            "line": 114,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/E09/Budget.lean",
-            "fragment": "L114-L120"
-          },
-          "proof_context": {
-            "declaration": "YM.Work.E09.coarse_budget",
-            "lines": [
-              114,
-              158
-            ],
-            "conclusion": "The middle range leaves `4*m*t^2` per tide in `(temp, delta]`."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Work.E09.flags_budget",
-        "module": "YM.Work.E09.Budget",
-        "lines": [
-          160,
-          166
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Work.E09.flags_budget"
-          },
-          "snippet": {
-            "text": "lemma flags_budget (A : Stores S) (V Q : Config G c) (U : Config G f)\n    (x δ : ℝ) (hx : temp x ≤ δ) (K : ℕ) (h : Bid.Payments δ A x U Q V K) :\n    A.flags.card ≤ 4 *\n      ((A.tides V x (temp x) \\ A.tides V x δ).card + K*(A.spend U Q V x).shares) := by\n  apply le_trans h.flags\n  apply Nat.mul_le_mul_left\n  exact le_trans (card_sdiff_add_card_eq_card (tides_subset A V x δ hx)).ge (Nat.add_le_add_left h.fee _)",
-            "line": 160,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/E09/Budget.lean",
-            "fragment": "L160-L166"
-          },
-          "proof_context": {
-            "declaration": "YM.Work.E09.flags_budget",
-            "lines": [
-              160,
-              166
-            ],
-            "conclusion": "`card flags <= 4*(card(tides temp minus tides delta) + K*(spend).shares)`, assigning at most four flags per plaquette."
+            "conclusion": "bank shows that eventually in x the chosen scales t, largeT, temp and radiusB satisfy the quantitative conditions (4mK+Zb^4)t^2 <= m t u and B s^4 K b^4 <= (m/4)t^2 that assemble needs."
           }
         }
       }
@@ -189,7 +112,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; re-judged after a second independent review, which changed it from exactMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

@@ -1,9 +1,9 @@
 {
   "id": "Lemma 16.3 step 2",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "relatedMatch",
-  "note": "[M]'s identity relates the two-point forms b_x and b_y through R^Max(R_y R_x); Lean states the consequence directly, as commutation of T with that reflection product, and proves it from `two_stat` and `corridor` without naming b_x.",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "Maxwell.Free.corridor (Depth.lean 131-148) states b_x(p,q) = b_y(R(R_y R_x)p, q) for weight-four p, q and |x| = |y|.",
   "subject": [
     {
       "location": {
@@ -29,36 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Maxwell.Free.low_motion",
+        "declaration": "YM.Maxwell.Free.corridor",
         "module": "YM.Next.MAXWELL.Depth",
         "lines": [
-          162,
-          166
+          131,
+          148
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Maxwell.Free.low_motion"
+            "id": "YM.Maxwell.Free.corridor"
           },
           "snippet": {
-            "text": "lemma low_motion (h : G.Simple) {d} (hd : 4≤d) {T : Module.End ℂ (WickPol G)} (H : silence G d T)\n    (ht : ∀ p ∈ shellSector G 4,T p∈shellSector G 4)\n    (a : Axis) {r : ℝ} (hr : 0 < r) {v : E4} (hv : ‖v‖=r) {p : WickPol G} (hp : p∈shellSector G 4) :\n    let x := (-r) • basis a\n    reflectPol (house x * house v) (T p) = T (reflectPol (house x * house v) p) := by",
-            "line": 162,
+            "text": "lemma corridor (h : G.Simple) {x y : E4} (hx : x≠0) (hy : y≠0) (he : ‖x‖=‖y‖) (p q : WickPol G)\n    (hp : p ∈ shellSector G 4) (hq : q ∈ shellSector G 4) :\n    bond G x 0 p q=bond G y 0 (reflectPol (house y * house x) p) q := by\n  have H : ∀ p∈Floor G,∀ q∈Floor G, bond G x 0 (reflectPol (house x) p) q=bond G y 0 (reflectPol (house y) p) q := by\n    intro p hp; induction hp using Submodule.span_induction with\n    | mem u h =>\n      obtain ⟨p,rfl⟩ := h\n      intro v hv; induction hv using Submodule.span_induction with\n      | mem v h => obtain ⟨q,rfl⟩ := h; exact bond_rotate_same_list p q hx hy he\n      | zero => simp\n      | add p q _ _ h k => rw [map_add,map_add,h,k]\n      | smul c p _ h => rw [map_smul,map_smul,h]\n    | zero => simp\n    | add p q _ _ h k => intro u hu; rw [map_add,map_add,map_add,map_add,LinearMap.add_apply,LinearMap.add_apply,h u hu,k u hu]\n    | smul t p _ h => intro u hu; rw [map_smul,map_smul,map_smul,map_smul,LinearMap.smul_apply,LinearMap.smul_apply,h u hu]\n  have hr := H _ (fits_floor h (closed_sector hp (house x)).1) _ (fits_floor h hq)\n  rw [← pol_mul, ← pol_mul, show house x * house x=1 by nth_rw 1 [← house_inv]; exact inv_mul_cancel _,pol_one] at hr\n  exact hr",
+            "line": 131,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/MAXWELL/Depth.lean",
-            "fragment": "L162-L166"
+            "fragment": "L131-L148"
           },
           "proof_context": {
-            "declaration": "YM.Maxwell.Free.low_motion",
+            "declaration": "YM.Maxwell.Free.corridor",
             "lines": [
-              162,
-              181
+              131,
+              148
             ],
-            "conclusion": "For silent `T`, `reflectPol s (T p) = T (reflectPol s p)` for `s = house x * house v` with `‖x‖=‖v‖`, on the weight-four sector."
+            "conclusion": "corridor shows bond G x 0 p q equals bond G y 0 (reflectPol (house y * house x) p) q for weight-four sector polynomials when ||x|| = ||y||."
           }
         }
       }
@@ -73,7 +73,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from relatedMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

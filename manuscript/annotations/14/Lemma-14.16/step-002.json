@@ -1,9 +1,9 @@
 {
   "id": "Lemma 14.16 step 2",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "The covering number 81, the support weight e^{81 sigma} inside E, and subpower growth are present; the separate sup-bound E' on the uncontrolled complement and the statement that no division by the forced allowance is made there are not stated.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Push.RelayDifference.newPersist (Forward.lean 29-43) handles the forced complement inside one subpower E, whereas the text uses E and E'; the stencil weight e^{81 sigma} and cover number at most 81 appear.",
   "subject": [
     {
       "location": {
@@ -29,75 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.MergeProof.inviting",
-        "module": "YM.MergeProof.Parterre",
+        "declaration": "YM.Push.RelayDifference.newPersist",
+        "module": "YM.FullVolume.Forward",
         "lines": [
-          22,
-          25
+          29,
+          43
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.MergeProof.inviting"
+            "id": "YM.Push.RelayDifference.newPersist"
           },
           "snippet": {
-            "text": "    (hr:let D:=regional X o; D.card*C.path.levels.clock.forcedAllowance N ≤ 1∧coverNumber (K).B D ≤ 81)\n    (hs:Real.sqrt (C.path.levels.clock.forcedAllowance N)*storms (BasisCost.price V) (BasisCost.price (C.localSection d)) C N d ≤ 1) (j:(C.labels.level d).Index) :\n    let Q:= sphere (C.path.levels.params N) ((V.stencil ∪ (C.localSection d).stencil).card) b; let s:= storms (BasisCost.price V) (BasisCost.price (C.localSection d)) C N d\n    let E:=4*(1+(C.path.levels.params N).columns)*Q + Real.exp (((K).supportExponent+2)*81)*s*(ζ d N)*(u N)⁻¹",
-            "line": 22,
+            "text": "  let A (j : Cutoffs) := Real.exp ((H.levels.params j.1).supportExponent) ^ (81:ℕ)\n  let Att (j : Cutoffs):= A j* Real.exp (162:ℝ)*r j\n  let box (j : Cutoffs) := A j*(g j+r j*M)\n  let total (j : Cutoffs) := 1 + (box j + score j); let BaseE (j : Cutoffs):=4*(1+(C.path.levels.params j.1).columns)*total j; let E (j : Cutoffs):= BaseE j + Att j*(ζ d j.1)*(u j.1)⁻¹\n  have hs : Sluggish C (fun j=> score j):=(Sluggish.const k).mul hc'; have ho:Sluggish C r:= hb.add (((Sluggish.const (C:=C) ((2:ℝ)*t)).mul (borrowed (W:=Opening.seats C d) (seats_slow K))).mul hs); have hA := Sluggish.pow hp 81\n  have hm: Sluggish C total := (Sluggish.const (C:=C) (1:ℝ)).add ((hA.mul ((hc'.add (pillars.mul hs)).add (ho.mul (Sluggish.const M)))).add hs)\n  refine ⟨E,(((((Sluggish.const (C:=C) (4:ℝ)).mul ((Sluggish.const _).add pillars)).mul hm)).add (((((hA.mul (Sluggish.const _)).mul ho).mul hv)).mul hx)),?_⟩\n  filter_upwards [deepen.eventually (cover_tops (C:=C) K D), ht, deepen.eventually_ge_atTop (C.ref d),deepen.eventually (mitt (C:=C) K D),H'] with i hi hP hI hJ hV\n  let N:=i.1; let p:=i.2; let z:= D; let o:= (0:Site (C.side N p)); let Y:=regional D o; let C':=C.path.rep N p N; let P:= C.path.levels.budget N; let v':= C.path.levels.clock.forcedAllowance N\n  have hY:regional X o ⊆ Y := Finset.image_subset_image Finset.subset_union_left\n  obtain ⟨hy,hC,hB,hL⟩:= hV o; have hG:=regular_larger hy hY; have hc'' := bound_larger hC hY; obtain ⟨Z,h,Zr,hK,hV, S,hS,Hx⟩:= saving C hc hI Y (Classical.choice (hZ N p)) (hJ p) (Finset.image_subset_image Finset.subset_union_right) F ⟨hG,hc'',hB,hL⟩ ht' h₂ (score:=score i) (fun z hz => h₁ _ o Y P _ _ (Nat.le_of_succ_le ((hc.stages d).2 N hI).1) ((hc.stages d).2 N hI).2 hG hc'' z hz)\n  have hY': (Y.card:ℝ) ≤ D.card:=by exact_mod_cast Finset.card_image_le\n  have hp: (coverNumber P.B Y:ℝ) ≤ 81:=by exact_mod_cast hi p; -- exponent.N\n  let a:ℝ:= Real.exp (P.supportExponent*coverNumber P.B Y)\n  have he : a  ≤  A i:=by unfold a A;rw [← Real.exp_nat_mul]; apply Real.exp_monotone; push_cast;change _ ≤ 81*P.supportExponent;nlinarith only [hp,P.exponent_pos, mul_le_mul_of_nonneg_left hp P.exponent_pos.le]",
+            "line": 29,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Parterre.lean",
-            "fragment": "L22-L25"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Forward.lean",
+            "fragment": "L29-L43"
           },
           "proof_context": {
-            "declaration": "YM.MergeProof.inviting",
+            "declaration": "YM.Push.RelayDifference.newPersist",
             "lines": [
-              20,
-              58
+              15,
+              66
             ],
-            "conclusion": "The enlarged stencil `regional X o` has at most 81 covering boxes and `card * forcedAllowance <= 1`, and the weight `exp((supportExponent+2)*81) * storms` enters `E`."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.MergeProof.solaris",
-        "module": "YM.MergeProof.Canopy",
-        "lines": [
-          49,
-          50
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.MergeProof.solaris"
-          },
-          "snippet": {
-            "text": "    have hξ := Slow.pow (roof_of_tabs (f:=f) B) 81; have hX : Slow C f fun i=> Real.exp (81*(K i.1).supportExponent):= hξ.reduce (Eventually.of_forall (fun i=> le_of_eq (by congr 1; rw [← Real.exp_nat_mul]; norm_num)))\n    have ht : Slow C f fun i=> hE i.1:= (hX.mul (Slow.const (Real.exp 162))).reduce (Eventually.of_forall fun i=>le_of_eq (by unfold hE; congr 1; rw [← Real.exp_add]; ring_nf))",
-            "line": 49,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Canopy.lean",
-            "fragment": "L49-L50"
-          },
-          "proof_context": {
-            "declaration": "YM.MergeProof.solaris",
-            "lines": [
-              36,
-              54
-            ],
-            "conclusion": "`hX`, `ht`: the factors `exp(81*supportExponent)` and `hE` are `Slow` (subpower) along every order."
+            "conclusion": "newPersist builds a sluggish (subpower) bound E, from stencil weight A j = exp(supportExponent)^81 and cover number at most 81, controlling the enlarged-stencil terms eventually."
           }
         }
       }
@@ -112,11 +73,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {
-        "kind": "chain"
+        "kind": "direct"
       }
     }
   }

@@ -1,9 +1,9 @@
 {
   "id": "Lemma 18.5 step 32",
   "kind": "proof_step",
-  "status": "not_formalized",
-  "relation": "noMatch",
-  "note": "[L] has the same estimates `l, B, q = O(log)` powers with exponent 27 instead of 22 and absorbs them in the `Ticket`/`Tau` subexponential scale rather than stating `o(H_n)`; the allowance `zeta` bound and the explicit cancellation of `a_n^-5` are only implicit in `ear_price`.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "Terrace.toll_small absorbs an exponent-27 bound (the step has 22) into the Tau scale, and Glade.tide carries the estimates; the exponents differ.",
   "subject": [
     {
       "location": {
@@ -29,22 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Trace.Terrace.liability",
-        "module": "YM.TraceExtension.Terrace.Stanza",
+        "declaration": "YM.Trace.Terrace.toll_small",
+        "module": "YM.TraceExtension.Terrace.Arms",
         "lines": [
-          65,
-          71
+          18,
+          18
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Trace.Terrace.liability"
+            "id": "YM.Trace.Terrace.toll_small"
+          },
+          "snippet": {
+            "text": "lemma toll_small {P:Levels G}{x:ℝ}(hp:0<x) {f:ℕ→ℝ}(ht:Ticket P 0 f):∀ᶠ i:ℕ in atTop, f i ≤ Tau P i x:=(ht _ (mul_pos hp (by norm_num : (0:ℝ)<Dust))).mono fun i h=> h.2",
+            "line": 18,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Terrace/Stanza.lean",
-            "fragment": "L65-L71"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Terrace/Arms.lean",
+            "fragment": "L18-L18"
+          },
+          "proof_context": {
+            "declaration": "YM.Trace.Terrace.toll_small",
+            "lines": [
+              18,
+              18
+            ],
+            "conclusion": "toll_small shows any Ticket f is eventually at most Tau P i x for every positive x."
           }
         }
       }
@@ -54,47 +68,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Trace.Terrace.Bgap",
-        "module": "YM.TraceExtension.Terrace.Stanza",
+        "declaration": "YM.Trace.Terrace.Glade.tide",
+        "module": "YM.TraceExtension.Terrace.Grid",
         "lines": [
-          53,
-          64
+          39,
+          46
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Trace.Terrace.Bgap"
+            "id": "YM.Trace.Terrace.Glade.tide"
+          },
+          "snippet": {
+            "text": "lemma tide :∀ᶠ i:ℕ in atTop,∀ p N,let k:=summit C.path.levels i; ∀ h:k<N,let f:=Tau C.path.levels i; let T:=tilesAt C.S p ((stellar A i).le.trans h.le); let q:= (C.S.a i/C.S.a k)^5; let a:=C.S.a i^ (5:ℕ); let t:=(A).clock.hatBeta k; let β:= C.path.β N p k; ∀ (x y: Axis→ Film G (C.side k p))(X Y: Axis→ C.label 5)(l:ℕ),\n    (∀ i:Axis,Interior (Push.GridApprox.window 0 l) (x i)∧ Interior (Push.GridApprox.window 0 l) (y i)) →(∀ x:C.label 5, Interior (T.chamber 0) (C.O N p x 0))  → room (A) i k l → (∀ i,∃ v,Bill C N p 5 k (x i) v (X i)) →(∀ i,∃ v,Bill C N p 5 k (y i) v (Y i))→∀ d:Axis,\n    let Z:= Reed (Prism (C.labels.level 5)) (X-β • Y); Crown C i N p h.le (Reed (present _) (q • (x-β • y)) d) → Probe C 4 i p N h (a • Z d):=by\n    let T:=A; let k':=summit T;let L i:= T.clock.hatBeta (k' i); let F:= D!; let c:=orbitCost F; have Hc:0<c:= zero_lt_one.trans_le (orbitCost_one_le _)\n    have hv:= (sapTree h T 1 zero_le_one).sum ((sapTree h T 2 zero_le_two).push (stickK T h θ)) h\n    filter_upwards [stageCrown H θ h,open_budget T h θ K,tends_price (C:=C) h θ K 5,(bondB T K).eventually_ge_atTop (C.ref 5),toll_small (x:=230) (by norm_num) hv,((hrate T h).comp (Sstar T)).eventually_ge_atTop (6*c)] with i hΩ hh hi hw hx hb p N k hN T' q a β x y X Y l h₁ hF hL h₂ h₃ d Z hZ\n    have hk:i≤k:= (stellar ..|>.le); have hl:k ≤ N:= hN.le; let b:= C.beta N p; let t:=L i; let f:= Tau T i; let E:= f (-430)\n    let V:= X-β • Y; let J := q • (x-β • y)",
+            "line": 39,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Terrace/Stanza.lean",
-            "fragment": "L53-L64"
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Trace.Terrace.ear_price",
-        "module": "YM.TraceExtension.Terrace.PriceLimit",
-        "lines": [
-          34,
-          35
-        ]
-      },
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Trace.Terrace.ear_price"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Terrace/Grid.lean",
+            "fragment": "L39-L46"
           },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Terrace/PriceLimit.lean",
-            "fragment": "L34-L35"
+          "proof_context": {
+            "declaration": "YM.Trace.Terrace.Glade.tide",
+            "lines": [
+              39,
+              86
+            ],
+            "conclusion": "tide combines the sap-tree, stage and price bounds at the summit level to give the Probe conclusion for window data."
           }
         }
       }
@@ -109,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a deeper re-search agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a deeper re-search agreed; re-judged after a second independent review, which changed it from noMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

@@ -1,9 +1,9 @@
 {
   "id": "Lemma 16.9 step 6",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "relatedMatch",
-  "note": "The time integral and the replacement e^{-t}≤(1+t)^{-1} are absorbed in the weights `due`/`low`/`cost` of Lean, which bounds the cross term through `Budget` of two weight integrals.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Outer.shear_size and balanced_mul give the step's Cauchy-Schwarz bound C lambda^{3+omega}[I(B) I(J)]^{1/2}; absorbing the time integral into the weights is packaging.",
   "subject": [
     {
       "location": {
@@ -29,36 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Outer.track_size",
-        "module": "YM.Next.ROTATIONS.Cove",
+        "declaration": "YM.Outer.exterior_size",
+        "module": "YM.Next.ROTATIONS.Vanishing",
         "lines": [
-          33,
-          35
+          110,
+          115
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Outer.track_size"
+            "id": "YM.Outer.exterior_size"
           },
           "snippet": {
-            "text": "lemma track_size (w : Axis→ℝ) (d : Axis) (f : Panels) (e : ℂ) (he : ‖e‖=1)\n    (h : ∀ p : ℝ,hat (f d) p≠0 → 1≤|p|) : ∃ M : ℝ,0≤M ∧ ∀ (n : ℕ) (p : E4), 0≤p d → p∈cove w d n →\n    ‖jar w d f e n p‖ ≤ M*fuel 3 n*crop (other d) (homes w n) p*Real.exp (-(p d/fuel (w d) n)) := by",
-            "line": 33,
+            "text": "    let z := due w d (w d)\n    obtain ⟨M,hM,hN⟩ := shear_size w d f e hj hf (-3000) (by linarith [(hk d).1])\n    have hF : Budget 1 (fun n => integral (ν (V d) A) (z n)) := point_cost V H d A _ Finset.univ (Finset.mem_univ _) (spar_both d b hc) (fun i _ => hg i) (fun i _ => hA i) (fun i => 1+w i) (fun i _ => hW i) (w d) (hw d) _ hG 1 (by norm_num)\n    refine (balanced_mul (V d) B A X hX u 1 T z hY (fun n => cost_int V d A _ (fuel_pos ..) _ _) hT hF (3+w d) M hM (fun n p H => ⟨due_nn _ _ _ _ p H,due_nn _ _ _ _ p H,hN n p H⟩)).rise ?_\n    rw [show w d= _ from chart_away a b l d hd hc]; unfold u at *\n    split_ifs with h <;> simp only [h, if_true, if_false] at ht <;> linarith",
+            "line": 110,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Cove.lean",
-            "fragment": "L33-L35"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Vanishing.lean",
+            "fragment": "L110-L115"
           },
           "proof_context": {
-            "declaration": "YM.Outer.track_size",
+            "declaration": "YM.Outer.exterior_size",
             "lines": [
-              33,
-              42
+              68,
+              120
             ],
-            "conclusion": "The product of the scaled factors gives `fuel 3 n` times the Laplace weight `exp(-(p d/fuel (w d) n))`."
+            "conclusion": "exterior_size obtains the shear bound for the exterior component and feeds it with the point-cost budgets into balanced_mul."
           }
         }
       }
@@ -72,7 +72,7 @@
         "module": "YM.Next.ROTATIONS.Cove",
         "lines": [
           57,
-          60
+          59
         ]
       },
       "role": "key",
@@ -82,14 +82,14 @@
             "id": "YM.Outer.shear_size"
           },
           "snippet": {
-            "text": "lemma shear_size (w : Axis→ℝ) (d : Axis) (f : Panels) (e : ℂ) (he : ‖e‖=1)\n    (h : ∀ p : ℝ,hat (f d) p≠0 → 1≤|p|) (a : ℝ) (hl : a≤w d) : ∃ M : ℝ,0≤M ∧ ∀ (n : ℕ) (p : E4), 0≤p d →\n    ‖jar w d f e n p‖^2 ≤ (M*fuel (3+w d) n)^2 * (due w d a n p * due w d (w d) n p) := by\n  obtain ⟨M,hM,hx⟩ := track_size w d f e he h",
+            "text": "lemma shear_size (w : Axis→ℝ) (d : Axis) (f : Panels) (e : ℂ) (he : ‖e‖=1)\n    (h : ∀ p : ℝ,hat (f d) p≠0 → 1≤|p|) (a : ℝ) (hl : a≤w d) : ∃ M : ℝ,0≤M ∧ ∀ (n : ℕ) (p : E4), 0≤p d →\n    ‖jar w d f e n p‖^2 ≤ (M*fuel (3+w d) n)^2 * (due w d a n p * due w d (w d) n p) := by",
             "line": 57,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Cove.lean",
-            "fragment": "L57-L60"
+            "fragment": "L57-L59"
           },
           "proof_context": {
             "declaration": "YM.Outer.shear_size",
@@ -97,7 +97,7 @@
               57,
               75
             ],
-            "conclusion": "The square of the kernel is at most `(M*fuel (3+w d) n)^2` times a product of two `due` weights, the form used for Cauchy--Schwarz."
+            "conclusion": "shear_size bounds the squared norm of the shear by (M*fuel)^2 times the product of two weights for nonnegative momentum in direction d."
           }
         }
       }
@@ -136,7 +136,7 @@
               19,
               30
             ],
-            "conclusion": "A pointwise bound `‖f‖^2 ≤ (M λ^t)^2 x y` gives `Budget (t+(a+b)/2)` for `cross`, i.e. Cauchy--Schwarz in the spectral measures."
+            "conclusion": "balanced_mul turns a pointwise bound |f|^2 <= (M fuel)^2 x y into a budget t+(a+b)/2 for the cross integral, the Cauchy-Schwarz step."
           }
         }
       }
@@ -151,7 +151,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents agreed on the class but cited different declarations; the mapper's kept, not judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents agreed on the class but cited different declarations; the mapper's kept, not judged; re-judged after a second independent review, which changed it from relatedMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

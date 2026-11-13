@@ -1,9 +1,9 @@
 {
   "id": "Lemma 11.8 step 23",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "narrowMatch",
-  "note": "[L] proves the identities for Taylor coefficients of a one-parameter family, the diagonal case `v = w`. The mixed second derivative `D²G[v,w]` in two directions is not stated.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Stationary.seat_flip and cart_flip (Loops/Syntax.lean 140-157) prove the first and the mixed second derivative of the matrix inverse in two directions u, v; the packaging differs from the displayed formula.",
   "subject": [
     {
       "location": {
@@ -29,36 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Stationary.Jam.rebounds",
-        "module": "YM.Next.STATIONARY.OneLoop.Weights",
+        "declaration": "YM.Stationary.seat_flip",
+        "module": "YM.Next.STATIONARY.Loops.Syntax",
         "lines": [
-          130,
-          130
+          140,
+          145
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Stationary.Jam.rebounds"
+            "id": "YM.Stationary.seat_flip"
           },
           "snippet": {
-            "text": "  have hV : jarY 1 Y= -(Y 0 *jarY 1 X*Y 0) := by",
-            "line": 130,
+            "text": "lemma seat_flip (h : Memo U 0) (he : IsUnit (U 0).det) (u : Phase ι) :\n    seat (fun a => (U a)⁻¹) u = -((cardM U)⁻¹*seat U u*(cardM U)⁻¹) := by\n  refine Leads.buys (seat_e _) ((((seat_e U).lower _).upper _).neg) ?_ u\n  intro z; simp only [seating,direction_inverse h he.ne_zero, ← card_flip he]\n  change approached _ = - (approached (U 0)⁻¹ * approached _ * approached (U 0)⁻¹)\n  rw [← prom_mul,← prom_mul]; ext; simp [approached]",
+            "line": 140,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/OneLoop/Weights.lean",
-            "fragment": "L130-L130"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Loops/Syntax.lean",
+            "fragment": "L140-L145"
           },
           "proof_context": {
-            "declaration": "YM.Stationary.Jam.rebounds",
+            "declaration": "YM.Stationary.seat_flip",
             "lines": [
-              125,
-              151
+              140,
+              145
             ],
-            "conclusion": "`jarY 1 Y = -(Y 0 * jarY 1 X * Y 0)`, the first derivative of the inverse."
+            "conclusion": "seat_flip shows the first derivative of the inverse is minus the inverse times the derivative of U times the inverse."
           }
         }
       }
@@ -68,36 +68,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Stationary.Jam.rebounds",
-        "module": "YM.Next.STATIONARY.OneLoop.Weights",
+        "declaration": "YM.Stationary.cart_flip",
+        "module": "YM.Next.STATIONARY.Loops.Syntax",
         "lines": [
-          138,
-          140
+          146,
+          157
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Stationary.Jam.rebounds"
+            "id": "YM.Stationary.cart_flip"
           },
           "snippet": {
-            "text": "    let U := Y 0*jarY 2 X +jarY 1 Y*jarY 1 X +jarY 1 Y * jarY 1 X\n    have ht : U + jarY 2 Y * X 0=0 := Eq.trans (by unfold U; rw [add_assoc (_ + _), ← jar_multi hE h.run]) ((jar_tape (n:=2) hh).trans (jar_const (by decide : 0<2) _))\n    have hx : jarY 2 Y= -(U*Y 0) := by",
-            "line": 138,
+            "text": "lemma cart_flip (h : Memo U 0) (he : IsUnit (U 0).det) (u v : Phase ι) :\n    let W : Corn ι →Matrix α α ℝ := fun a => (U a)⁻¹\n    let P := (cardM U)⁻¹\n    cart W u v= -((seat W v * seat U u + seat W u * seat U v + P * cart U u v) * P) := by\n  intro W P\n  have hW : Memo W 0 := h.flip he.ne_zero\n  have hk : cart (fun a => W a * U a) u v=0 := Eq.trans\n    (art_neighbor (U:=fun a => W a * U a) (V:=fun _ => 1) (by filter_upwards [h.det_val.continuousAt.eventually_ne he.ne_zero] with a ha; exact nonsing_inv_mul _ ha.isUnit) 2 ![u,v])\n      (art_raw _ (by decide : 2≠0) _)\n  rw [cart_prod hW h,show cardM W=P from card_flip he,add_assoc,add_assoc] at hk\n  have hm := congr_arg (·*P) (eq_neg_of_add_eq_zero_left hk)\n  simpa only [P, Matrix.mul_nonsing_inv_cancel_right _ _ (cash_safe he), neg_mul, add_assoc] using hm",
+            "line": 146,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/OneLoop/Weights.lean",
-            "fragment": "L138-L140"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Loops/Syntax.lean",
+            "fragment": "L146-L157"
           },
           "proof_context": {
-            "declaration": "YM.Stationary.Jam.rebounds",
+            "declaration": "YM.Stationary.cart_flip",
             "lines": [
-              125,
-              151
+              146,
+              157
             ],
-            "conclusion": "`jarY 2 Y = -(U * Y 0)` with `U = Y 0·jarY 2 X + 2·jarY 1 Y·jarY 1 X`, the second Taylor coefficient of the inverse."
+            "conclusion": "cart_flip shows the mixed second derivative of the inverse in directions u, v is -((seat W v * seat U u + seat W u * seat U v + P * cart U u v) * P), with P the inverse at 0."
           }
         }
       }
@@ -112,11 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, a judge ruled; a re-rating agent agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, a judge ruled; a re-rating agent agreed; re-judged after a second independent review, which changed it from narrowMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {
-        "kind": "direct"
+        "kind": "chain"
       }
     }
   }

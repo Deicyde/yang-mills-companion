@@ -2,8 +2,8 @@
   "id": "Lemma 15.2 step 1",
   "kind": "proof_step",
   "status": "formalized",
-  "relation": "closeMatch",
-  "note": "The choices of k with a_k < δ, k at least m, J = 8(n+1) and a finer spectator level with 3 a_sp at most a_k/[8(n+1)] agree. [L] reads the small-error condition off the hypothesis `rents` and gets the spectator constant A from `image_` for the centered book, not by citing the centered estimate directly.",
+  "relation": "exactMatch",
+  "note": "Extraction.Lease.take (Lane/Lease.lean 57-67) makes the step's choices (k, J = 8(n+1), spectator level, bound A from the centered estimate).",
   "subject": [
     {
       "location": {
@@ -32,8 +32,8 @@
         "declaration": "YM.Extraction.Lease.take",
         "module": "YM.Lane.Lease",
         "lines": [
-          59,
-          66
+          57,
+          67
         ]
       },
       "role": "key",
@@ -43,14 +43,14 @@
             "id": "YM.Extraction.Lease.take"
           },
           "snippet": {
-            "text": "  obtain ⟨m,hm⟩ := eventually_atTop.mp (C.S.shrinks.eventually (gt_mem_nhds hδ))\n  obtain ⟨k,hk,H1⟩:=he n m\n  let J := 8*(n+1)\n  have hk : C.S.a k<δ:=hm k hk\n  have he : ∀ᶠ j : ℕ in atTop, (3*J:ℕ)*C.S.a j ≤ C.S.a k := by\n    have hu := (C.S.shrinks.const_mul ((3*J:ℕ):ℝ)).eventually (ge_mem_nhds (show ((3*J:ℕ):ℝ)*0 < C.S.a k by rw [mul_zero]; exact C.S.a_pos _))\n    exact hu\n  obtain ⟨j,H2,hS,A,hA,hq⟩:=((eventually_ge_atTop k).and (he.and ((image_ q h).2))).exists",
-            "line": 59,
+            "text": "theorem take (H : C.Makes) (h : CenteredBook C f) {F : Trial C} {y : ℕ→ℕ→ℝ} (he : rents F y f) : gain F f y := by\n  intro n q u δ hδ\n  obtain ⟨m,hm⟩ := eventually_atTop.mp (C.S.shrinks.eventually (gt_mem_nhds hδ))\n  obtain ⟨k,hk,H1⟩:=he n m\n  let J := 8*(n+1)\n  have hk : C.S.a k<δ:=hm k hk\n  have he : ∀ᶠ j : ℕ in atTop, (3*J:ℕ)*C.S.a j ≤ C.S.a k := by\n    have hu := (C.S.shrinks.const_mul ((3*J:ℕ):ℝ)).eventually (ge_mem_nhds (show ((3*J:ℕ):ℝ)*0 < C.S.a k by rw [mul_zero]; exact C.S.a_pos _))\n    exact hu\n  obtain ⟨j,H2,hS,A,hA,hq⟩:=((eventually_ge_atTop k).and (he.and ((image_ q h).2))).exists\n  let p (s : Fin n) := if s=u then (1:ℝ) else A",
+            "line": 57,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Lane/Lease.lean",
-            "fragment": "L59-L66"
+            "fragment": "L57-L67"
           },
           "proof_context": {
             "declaration": "YM.Extraction.Lease.take",
@@ -58,7 +58,7 @@
               57,
               124
             ],
-            "conclusion": "`take` picks m with a_m < δ, gets k ≥ m from `rents`, sets `J = 8*(n+1)`, and takes a finer level `j` with `3*J*a_j ≤ a_k` carrying the spectator bound `A`."
+            "conclusion": "take proves gain F f y from the rents hypothesis: it selects a level k below delta, sets J = 8(n+1), and picks a spectator level and bound A from the centered book."
           }
         }
       }
@@ -73,7 +73,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; re-judged after a second independent review, which changed it from closeMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

@@ -2,8 +2,8 @@
   "id": "Lemma 11.5 step 14",
   "kind": "proof_step",
   "status": "formalized",
-  "relation": "closeMatch",
-  "note": "Prose that the identity removes the singularity; Lean uses it inside the proof of `lift_bend` rather than stating the removal separately.",
+  "relation": "exactMatch",
+  "note": "Train.lift_bend (Bend.lean 88-100) proves divisor*bend = sum jewel 1/bulb via price_sources, which is the identity removing the apparent singularity at p=0.",
   "subject": [
     {
       "location": {
@@ -29,11 +29,89 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
+        "declaration": "YM.Next.Free.Train.price_sources",
+        "module": "YM.Next.FREE_KERNELS.Bend",
+        "lines": [
+          82,
+          87
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Free.Train.price_sources"
+          },
+          "snippet": {
+            "text": "lemma price_sources (v : Train j) (p : Momentum) (a) : jewel 1 p a * v.halo p = jewel v.mass p a * v.lid a p := by\n  have he : chip (-p a) = rail v.mass (narrow v.mass (-p) a)*seedQ v.mass (-p) a := sourceQ v.mass (-p) a\n  rw [jewel_one, he, sourceQ v.mass p a]\n  unfold jewel halo lid yen drive\n  -- `seedQ v.mass (-p)` not touched\n  rw [show narrow v.mass (-p) a=(-(narrow v.mass p)) a by rw [narrow_neg]]; ring",
+            "line": 82,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/Bend.lean",
+            "fragment": "L82-L87"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Free.Train.price_sources",
+            "lines": [
+              82,
+              87
+            ],
+            "conclusion": "price_sources shows jewel 1 p a * halo p = jewel mass p a * lid a p, the cross-multiplied source identity."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Free.Train.bend",
+        "module": "YM.Next.FREE_KERNELS.Bend",
+        "lines": [
+          43,
+          44
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Free.Train.bend"
+          },
+          "snippet": {
+            "text": "def bend (k : ℝ) (v : Train j) (p : Momentum) := (v.halo p)⁻¹-∑ a,\n    jewel 1 p a * drain k v a p / (v.lid a p*bulb k v p a)",
+            "line": 43,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/Bend.lean",
+            "fragment": "L43-L44"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Free.Train.bend",
+            "lines": [
+              43,
+              44
+            ],
+            "conclusion": "bend defines the corrected quantity (halo p)^{-1} minus the sum of jewel 1 * drain / (lid * bulb)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
         "declaration": "YM.Next.Free.Train.lift_bend",
         "module": "YM.Next.FREE_KERNELS.Bend",
         "lines": [
           88,
-          89
+          100
         ]
       },
       "role": "key",
@@ -43,14 +121,14 @@
             "id": "YM.Next.Free.Train.lift_bend"
           },
           "snippet": {
-            "text": "lemma lift_bend (k : ℝ) (hk : 0<k) (v : Train j) {p : Momentum} (hp : p ∈ realCube zone) :\n    divisor v.mass p*bend k v p=∑ i, jewel 1 p i / bulb k v p i := by",
+            "text": "lemma lift_bend (k : ℝ) (hk : 0<k) (v : Train j) {p : Momentum} (hp : p ∈ realCube zone) :\n    divisor v.mass p*bend k v p=∑ i, jewel 1 p i / bulb k v p i := by\n  let M := v.mass\n  have he (i : Axis) : jewel M p i*(v.halo p)⁻¹-divisor M p*(\n      jewel 1 p i * drain k v i p / (v.lid i p*bulb k v p i)) = jewel 1 p i / bulb k v p i := by\n    obtain ⟨hh,hb⟩ := v.reserve_link hp\n    have hg := hb i; have hd := bulb_glows k hk v hp i\n    rw [show jewel M p i*(v.halo p)⁻¹=jewel 1 p i/v.lid i p by\n      field_simp; exact (price_sources v p i).symm.trans (mul_comm ..)]\n    field_simp; unfold bulb; ring\n  have hu : divisor M p*(v.halo p)⁻¹ = ∑ i, jewel M p i*(v.halo p)⁻¹ := by rw [← Finset.sum_mul]; rfl\n  change divisor M p*_=_\n  rw [bend,mul_sub,hu,Finset.mul_sum,← Finset.sum_sub_distrib]; exact Finset.sum_congr rfl fun i _ => he i",
             "line": 88,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/Bend.lean",
-            "fragment": "L88-L89"
+            "fragment": "L88-L100"
           },
           "proof_context": {
             "declaration": "YM.Next.Free.Train.lift_bend",
@@ -58,7 +136,7 @@
               88,
               100
             ],
-            "conclusion": "Using `price_sources`, `divisor mass p * bend = sum jewel 1 p i / bulb i`, so the apparent pole of `bend` at p = 0 is cancelled."
+            "conclusion": "lift_bend shows divisor*bend equals the sum over axes of jewel 1 p i / bulb on the real cube, a form with no singularity."
           }
         }
       }
@@ -73,11 +151,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; re-judged after a second independent review, which changed it from closeMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {
-        "kind": "helper"
+        "kind": "chain"
       }
     }
   }

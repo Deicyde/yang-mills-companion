@@ -182,6 +182,10 @@ def step_provenance(r):
             method += f"; {agent} disagreed and a judge {'changed it from ' + s5['was'] if ch else 'kept it'}"
         else:
             method += f'; {agent} disagreed, not judged'
+    rr = v.get('rereview')
+    if rr:
+        ch = rr['kind'] == 'rejudged' and r['relation'] != rr['from']
+        method += f"; re-judged after a second independent review, which {'changed it from ' + str(rr['from']) if ch else 'kept it'}"
     method += '; lines of [L] read at the pin, not built'
     return {'actor': 'agent', 'method': method, 'confirmed_by_human': False}
 

@@ -1,9 +1,9 @@
 {
   "id": "Lemma 15.3 step 6",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "The inclusion target and the corrected difference family are both present, but the exact torus summation-by-parts identity is not in these lines; it is inside the hypothesis `D`.",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "Work.D03.pair_sum and on_lattice (D03.lean 59-77) give the exact torus summation by parts.",
   "subject": [
     {
       "location": {
@@ -29,36 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Work.D04.answer",
-        "module": "YM.Work.D04",
+        "declaration": "YM.Work.D03.pair_sum",
+        "module": "YM.Work.D03",
         "lines": [
-          226,
-          233
+          59,
+          69
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Work.D04.answer"
+            "id": "YM.Work.D03.pair_sum"
           },
           "snippet": {
-            "text": "  · intro d e he x\n    apply matched T W h c R (hr e) (sober_upper (C := C) (e := d) (fun _ => x)) ((hr e).transit d he x)\n    intro i\n    have hi : Tendsto (fun u => snapshots i d u x) F.fuse (𝓝 (i.core S H x)) :=\n      arcing (i.ready H hh d) tendsto_const_nhds\n    refine hi.congr' (Eventually.of_forall ?_)\n    rintro ⟨N,p⟩\n    exact (upper_scan (fun _ => x) i N p).symm",
-            "line": 226,
+            "text": "lemma pair_sum {s A : Type*} [AddGroup s] [Fintype s] [CommRing A]\n    (f g : s → A) (u : s) (k : A) :\n    (∑ r : s, f r * (k * (g (r+u)-g r))) = ∑ r : s, (k * (f (r-u)-f r)) * g r := by\n  have he := Equiv.sum_comp (Equiv.addRight u) (fun r => f (r-u)*g r)\n  change (∑ r, f ((r+u)-u)*g (r+u)) = _ at he\n  simp only [add_sub_cancel_right] at he\n  calc\n    _ = k * ((∑ r, f r*g (r+u)) - ∑ r, f r*g r) := by\n      rw [← Finset.sum_sub_distrib, Finset.mul_sum]; exact Finset.sum_congr rfl (fun _ _ => by ring)\n    _ = _ := by\n      rw [he, ← Finset.sum_sub_distrib, Finset.mul_sum]; exact Finset.sum_congr rfl (fun _ _ => by ring)",
+            "line": 59,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/D04.lean",
-            "fragment": "L226-L233"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/D03.lean",
+            "fragment": "L59-L69"
           },
           "proof_context": {
-            "declaration": "YM.Work.D04.answer",
+            "declaration": "YM.Work.D03.pair_sum",
             "lines": [
-              212,
-              240
+              59,
+              69
             ],
-            "conclusion": "For `x` at degree `d`, the readouts at degree `e` of the inclusion tend to the target `i.core S H x` (`matched` with `sober_upper`)."
+            "conclusion": "pair_sum shows sum_r f r * k*(g(r+u)-g r) equals sum_r k*(f(r-u)-f r) * g r on a finite additive group."
           }
         }
       }
@@ -68,36 +68,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Work.D04.answer",
-        "module": "YM.Work.D04",
+        "declaration": "YM.Work.D03.on_lattice",
+        "module": "YM.Work.D03",
         "lines": [
-          234,
-          240
+          71,
+          77
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Work.D04.answer"
+            "id": "YM.Work.D03.on_lattice"
           },
           "snippet": {
-            "text": "  · intro d k x\n    have hx : sober C (heighten C d x k) F := by\n      apply sober_of_cont\n      intro N p o\n      exact ((C.continuousO N p d x _).sub (C.continuousO N p d x _)).const_smul _\n    apply matched T W h c R (hr (d+1)) hx ((hr d).pace x k)\n    exact D h hh (Around.size_done h (c.book _ _)) H d x k",
-            "line": 234,
+            "text": "lemma on_lattice (x : C.label d) (v : Shot C.book) (a : Axis) (N p : ℕ) :\n    targetB (heighten C d x a) v N p = (C.S.a N:ℂ)^(4*v.n) *\n      ∑ r : Fin v.n → Site (C.side N p), ((C.S.a N:ℂ)⁻¹ *\n          (v.f (Order.cells C N p (r-jump v.i a)) - v.f (Order.cells C N p r))) *\n        C.numeric N p (v.record x) r := by\n  simp_rw [targetB, featuring_heighten x v]\n  exact congr_arg ((C.S.a N:ℂ)^(4*v.n)*·) (pair_sum (fun r => v.f (Order.cells C N p r)) ..)",
+            "line": 71,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/D04.lean",
-            "fragment": "L234-L240"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/D03.lean",
+            "fragment": "L71-L77"
           },
           "proof_context": {
-            "declaration": "YM.Work.D04.answer",
+            "declaration": "YM.Work.D03.on_lattice",
             "lines": [
-              212,
-              240
+              71,
+              77
             ],
-            "conclusion": "The `heighten` difference of two smeared families is `sober`, and `matched` gives its limit."
+            "conclusion": "on_lattice rewrites the lattice target of the heightened coordinate as a^{4n} times a sum with the difference quotient moved onto v.f, via pair_sum."
           }
         }
       }
@@ -112,11 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {
-        "kind": "direct"
+        "kind": "chain"
       }
     }
   }

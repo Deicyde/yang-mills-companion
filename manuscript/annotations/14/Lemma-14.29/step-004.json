@@ -1,9 +1,9 @@
 {
   "id": "Lemma 14.29 step 4",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "The order of the two eventualities (large t, then large periods avoiding wrapping) is there. The remark that only the roots and not the supremum bounds occur on the right is not visible: `expense` is built from the caps and errors of the figures.",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "GridApprox.tariff (Telescope.lean 34-41) bounds the telescoped difference with root-test bounds only; spent_shifts (Separation.lean 59-70) gives the eventual no-wrapping order.",
   "subject": [
     {
       "location": {
@@ -24,6 +24,45 @@
     }
   ],
   "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Push.GridApprox.tariff",
+        "module": "YM.Push.GRID_APPROXIMATION.Telescope",
+        "lines": [
+          34,
+          41
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Push.GridApprox.tariff"
+          },
+          "snippet": {
+            "text": "lemma tariff (S : Schedule) {h N p : ℕ} (hh : h≤N) (β : ℝ) (H : Seam G (S.side N p) β)\n    (a : ι → Site (S.side h p)) (hc : Injective a)\n    (O Z : ι → Config G (S.side N p) → ℂ) (c e : ι → ℝ)\n    (hf : ∀ i, Interior ((tilesAt S p hh).chamber 0) (O i))\n    (hF : ∀ i, Interior ((tilesAt S p hh).chamber 0) (Z i))\n    (hO : ∀ i, (tilesAt S p hh).rootTest β (O i) ≤ c i)\n    (hZ : ∀ i, (tilesAt S p hh).rootTest β (Z i-O i) ≤ e i) :\n    ‖moment β (fun U => ∏ i, Z i (translate (anchor S p hh (a i)) U)) -",
+            "line": 34,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/GRID_APPROXIMATION/Telescope.lean",
+            "fragment": "L34-L41"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.GridApprox.tariff",
+            "lines": [
+              34,
+              78
+            ],
+            "conclusion": "tariff bounds the difference of the moments of two products of interior observables by a telescoped sum using only the root tests c i and e i."
+          }
+        }
+      }
+    },
     {
       "type": "lean",
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
@@ -58,7 +97,7 @@
               59,
               70
             ],
-            "conclusion": "`spent_shifts` shows that for large `t` the shifted placements are injective after wrapping (`wrap_late`), and then the moment error is at most `expense`, eventually in `t` and then late in the ordered limits."
+            "conclusion": "spent_shifts shows eventually in the shift t that the moments of products at offset positions match the literal products within the combined expense, for large periods."
           }
         }
       }
@@ -73,11 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {
-        "kind": "helper"
+        "kind": "chain"
       }
     }
   }

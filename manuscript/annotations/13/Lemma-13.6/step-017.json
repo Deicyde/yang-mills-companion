@@ -1,9 +1,9 @@
 {
   "id": "Lemma 13.6 step 17",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "relatedMatch",
-  "note": "[L] retains terms whose depth is at least `Stores.till s`, not terms whose support size exceeds the eligibility radius, so the retention uses a different quantity.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Height.voyageFare (Census/Coffer.lean 31-35) ties depth >= till s to support decay at least h^3, so Height.tired retains the step's terms; the depth criterion is an equivalent packaging.",
   "subject": [
     {
       "location": {
@@ -90,7 +90,7 @@
               25,
               25
             ],
-            "conclusion": "One clause of `tired` is `till s ≤ depth`: large-support terms are retained among those with the gain."
+            "conclusion": "tired marks a term when its degree is at least 3, its overlap is at least 1, or its depth is at least the store's till."
           }
         }
       }
@@ -100,36 +100,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.PhysicalNext.Repeat.Meadow.extraHeight",
-        "module": "YM.PhysicalNext.RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP.Meadow.Storeys",
+        "declaration": "YM.PhysicalNext.Repeat.Height.voyageFare",
+        "module": "YM.PhysicalNext.RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP.Census.Coffer",
         "lines": [
-          17,
-          21
+          32,
+          35
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.PhysicalNext.Repeat.Meadow.extraHeight"
+            "id": "YM.PhysicalNext.Repeat.Height.voyageFare"
           },
           "snippet": {
-            "text": "lemma extraHeight (X : ConnectedActivityE6.Target.Expense Q) (μ:ℝ) (_hp : 0 < μ) (j n:ℕ) (he : X.wanting≤ -(7/16:ℝ)) : ∀ᶠ x : ℝ in atTop,\n    ∀ A i k, Armada Q L μ X.earn x i A j k → 0 ≤ A→\n        collars G i x j n*(salary Q L μ A x j k*(1-1/2)⁻¹) ≤ betaF G x L^X.wanting →\n          let D:= grow G L x; let y:= asset X\n          (D^3)⁻¹*collars G y x j n*(D*salary Q L μ A x j k*(1-1/2)⁻¹) ≤ betaF G x L ^ (-(23/20):ℝ):= by",
-            "line": 17,
+            "text": "lemma voyageFare (Q : YM.ConnectedActivityE6.Target G P) (L : Side) : ∀ᶠ x in atTop, grow G L x ^ 3 ≤ Real.exp (Q.ε*Pressure.Stores.till x) := by\n  have h:= (Rate.power (G:=G) (L:=L) (a:=3/8)).pow 3|>.mul (Rate.cutoff Q.usable (a:=-2))\n  filter_upwards [h.below (by norm_num) 1 zero_lt_one] with x hx\n  apply le_of_mul_le_mul_right _ (Real.exp_pos (-Q.ε*Pressure.Stores.till x))",
+            "line": 32,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Meadow/Storeys.lean",
-            "fragment": "L17-L21"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Census/Coffer.lean",
+            "fragment": "L32-L35"
           },
           "proof_context": {
-            "declaration": "YM.PhysicalNext.Repeat.Meadow.extraHeight",
+            "declaration": "YM.PhysicalNext.Repeat.Height.voyageFare",
             "lines": [
-              17,
-              46
+              32,
+              36
             ],
-            "conclusion": "A gain `(grow^3)⁻¹` gives the bound `betaF ^ (-(23/20))`."
+            "conclusion": "voyageFare shows eventually in x that grow^3 is at most exp(eps*till x) times a decaying factor, so depth at least till gives support decay at least h^3."
           }
         }
       }
@@ -144,7 +144,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, a judge ruled; a re-check of closeMatch records changed it from closeMatch; a re-rating agent agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, a judge ruled; a re-check of closeMatch records changed it from closeMatch; a re-rating agent agreed; re-judged after a second independent review, which changed it from relatedMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

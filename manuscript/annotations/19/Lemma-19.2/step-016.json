@@ -1,9 +1,9 @@
 {
   "id": "Lemma 19.2 step 16",
   "kind": "proof_step",
-  "status": "not_formalized",
-  "relation": "noMatch",
-  "note": "[L] takes no cluster point (λ,z) of the normalized projected labels, so the case λ = 0 and its contradiction with ‖z‖ = 1 do not occur; the projection convergence is carried by the `RelayBin.mark` hypothesis.",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "Dash.brace (Dash/Limits.lean 103-110) takes the cluster point (c,v) with c+||v|| = 1 and shows c = 0 puts v in ker trueP with trueP v = v, hence v = 0, the step's contradiction.",
   "subject": [
     {
       "location": {
@@ -51,97 +51,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.OPE.Columns.belongs",
-        "module": "YM.OPE.Columns.Limit",
+        "declaration": "YM.Dash.brace",
+        "module": "YM.Dash.Limits",
         "lines": [
-          28,
-          61
+          103,
+          110
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.OPE.Columns.belongs"
+            "id": "YM.Dash.brace"
+          },
+          "snippet": {
+            "text": "  have hj : c≠0 := by\n    intro hq\n    have hx : v∈LinearMap.ker p.trueP.toLinearMap := hC.symm ▸ (Submodule.mem_iInf _).2 fun i => LinearMap.mem_ker.mpr\n      (show G i v=0 by rw [hm i,hq]; simp)\n    have hpv : v=0 := ht.symm.trans hx\n    have hr := tendsto_nhds_unique_of_eventuallyEq (ha.norm.add hh) tendsto_const_nhds (Eventually.of_forall heq)\n    rw [hpv,hq] at hr\n    simp at hr",
+            "line": 103,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Columns/Limit.lean",
-            "fragment": "L28-L61"
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.OPE.Columns.limit_lower",
-        "module": "YM.OPE.Columns.Limit",
-        "lines": [
-          63,
-          78
-        ]
-      },
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.OPE.Columns.limit_lower"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Dash/Limits.lean",
+            "fragment": "L103-L110"
           },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Columns/Limit.lean",
-            "fragment": "L63-L78"
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.OPE.Columns.ExtensionCost.cost_limit",
-        "module": "YM.OPE.Columns.ExtensionCost",
-        "lines": [
-          167,
-          171
-        ]
-      },
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.OPE.Columns.ExtensionCost.cost_limit"
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Columns/ExtensionCost.lean",
-            "fragment": "L167-L171"
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.OPE.Columns.ExtensionCost.matched",
-        "module": "YM.OPE.Columns.ExtensionCost",
-        "lines": [
-          199,
-          208
-        ]
-      },
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.OPE.Columns.ExtensionCost.matched"
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Columns/ExtensionCost.lean",
-            "fragment": "L199-L208"
+          "proof_context": {
+            "declaration": "YM.Dash.brace",
+            "lines": [
+              69,
+              111
+            ],
+            "conclusion": "brace shows c is nonzero: c = 0 would put v in the kernel of trueP with trueP v = v, so v = 0, contradicting the norm normalization."
           }
         }
       }
@@ -156,8 +95,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge changed it from noMatch; re-judged after a second independent review, which changed it from noMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
       }
     }
   }

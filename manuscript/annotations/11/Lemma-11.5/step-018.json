@@ -1,9 +1,9 @@
 {
   "id": "Lemma 11.5 step 18",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "Lean defines the metric directly by the formula, so the substitution of w_a = lambda_M/B_a in the minimization giving 1/(h B_a B_b) is not carried; extension to zero and H^0(0) = I appear as `pulse_zero` and `Floor.starts`.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Free.pulse_sources (Heart.lean 53-60) shows the directly defined metric equals the weighted-minimization form off p=0, with pulse_zero giving H^0(0)=I; bend_firm gives the uniform bound on the extension.",
   "subject": [
     {
       "location": {
@@ -29,36 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Next.Free.pulse_pays",
+        "declaration": "YM.Next.Free.pulse_sources",
         "module": "YM.Next.FREE_KERNELS.Heart",
         "lines": [
-          28,
-          29
+          53,
+          59
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Next.Free.pulse_pays"
+            "id": "YM.Next.Free.pulse_sources"
           },
           "snippet": {
-            "text": "lemma pulse_pays (k : ℝ) (hk : 0<k) (v : Train j) {p : Momentum} (hp : p ∈ realCube zone) :\n    pulse k v p*vault k v p=1 ∧ vault k v p*pulse k v p=1 := by",
-            "line": 28,
+            "text": "lemma pulse_sources (k : ℝ) (hk : 0<k) (v : Train j) {p : Momentum} (hp : p ∈ realCube zone) (he : p≠0) :\n    pulse k v p=(v.rho k p)⁻¹ • mask 2 (fun i => (v.levelD k i p)⁻¹) := by\n  have hh (i) : (v.levelD k i p)⁻¹=(divisor v.mass p)*(v.bulb k p i)⁻¹ := by rw [Train.D_bulb k v hp he, inv_div,div_eq_mul_inv];\n  rw [Train.recover_rho _ hk _ hp he,pulse]\n  simp_rw [hh,mask_scale, smul_smul]\n  have hz := divisor_ne v.mass hp he\n  congr 1; rw [_root_.mul_inv_rev,mul_assoc]; simp [hz]",
+            "line": 53,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/Heart.lean",
-            "fragment": "L28-L29"
+            "fragment": "L53-L59"
           },
           "proof_context": {
-            "declaration": "YM.Next.Free.pulse_pays",
+            "declaration": "YM.Next.Free.pulse_sources",
             "lines": [
-              28,
-              34
+              53,
+              59
             ],
-            "conclusion": "`pulse * vault = 1` and `vault * pulse = 1` on the real cube: the metric and its inverse `vault` exist and are mutually inverse."
+            "conclusion": "pulse_sources shows that for p != 0 the pulse equals the inverse of rho times the masked vector of inverse level quantities, matching the weighted-minimization formula."
           }
         }
       }
@@ -68,36 +68,75 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Next.Free.heart_budget",
+        "declaration": "YM.Next.Free.pulse",
         "module": "YM.Next.FREE_KERNELS.Heart",
         "lines": [
-          36,
-          37
+          22,
+          22
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Next.Free.heart_budget"
+            "id": "YM.Next.Free.pulse"
           },
           "snippet": {
-            "text": "lemma heart_budget {ι : Type*} (k : ℝ) (hk : 0<k) (hj : 4 ≤ j) (v : ι → Train j) :\n    Pay (fun _ : ι => 1) (fun i => pulse k (v i)) ∧ Pay (fun _ : ι => 1) fun i => vault k (v i) := by",
-            "line": 36,
+            "text": "def pulse (k : ℝ) (v : Train j) (p : Momentum) := (v.bend k p)⁻¹ • mask 2 (fun i => (v.bulb k p i)⁻¹)",
+            "line": 22,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/Heart.lean",
-            "fragment": "L36-L37"
+            "fragment": "L22-L22"
           },
           "proof_context": {
-            "declaration": "YM.Next.Free.heart_budget",
+            "declaration": "YM.Next.Free.pulse",
             "lines": [
-              36,
-              43
+              22,
+              22
             ],
-            "conclusion": "`pulse` and `vault` have uniform analytic strip bounds."
+            "conclusion": "pulse defines the metric as (bend)^{-1} times the mask of inverse bulb values."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Free.Train.bend_firm",
+        "module": "YM.Next.FREE_KERNELS.Bend",
+        "lines": [
+          188,
+          194
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Free.Train.bend_firm"
+          },
+          "snippet": {
+            "text": "lemma bend_firm (k : ℝ) (hk : 0<k) (hj : 4 ≤ j) (v : ι → Train j) :\n    Firm (fun _ : ι => 1) fun i => bend k (v i) := by\n  obtain ⟨η,C,he,hC,h⟩ := bulb_budget k hj (fun x : ι×Axis => v x.1) (fun x => x.2)\n  refine ⟨min zone η,min 1 (meter.low^2/(C*meter.high^2)),lt_min zone_pos he,\n    lt_min one_pos (div_pos (pow_pos meter.low_pos _) (mul_pos hC (pow_pos meter.high_pos _))),fun i p hh => ?_⟩\n  rw [mul_one]; apply bend_strength k hk _ (realCube_mono (min_le_left ..) hh) hC\n  exact fun a => ((h (i,a)).bound _ (mem_cube_real (realCube_mono (min_le_right ..) hh) he)).trans_eq (mul_one _)",
+            "line": 188,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/Bend.lean",
+            "fragment": "L188-L194"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Free.Train.bend_firm",
+            "lines": [
+              188,
+              194
+            ],
+            "conclusion": "bend_firm shows the bend is uniformly firm (bounded above and below) on a small real cube, uniformly over a family of trains."
           }
         }
       }
@@ -112,7 +151,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

@@ -1,9 +1,9 @@
 {
   "id": "Lemma 18.5 step 29",
   "kind": "proof_step",
-  "status": "not_formalized",
-  "relation": "noMatch",
-  "note": "[L] has the same trade of cover number for decay but only for wrapping supports and with the full exponent; [M]'s split `98 -> 100` with the sum over `c_X >= q` for arbitrary `q` is not stated.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "Terrace.mileage (Meteor.lean 30-52) trades cover number for decay for wrapping supports with the full exponent, and bounds the spectator pairing by Tau(-100); the argument differs.",
   "subject": [
     {
       "location": {
@@ -29,47 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.PhysicalNext.Repeat.Quince.prime_fuel",
-        "module": "YM.TraceExtension.Quince.Unison",
+        "declaration": "YM.Trace.Terrace.mileage",
+        "module": "YM.TraceExtension.Terrace.Meteor",
         "lines": [
-          26,
-          27
+          30,
+          52
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.PhysicalNext.Repeat.Quince.prime_fuel"
+            "id": "YM.Trace.Terrace.mileage"
+          },
+          "snippet": {
+            "text": "lemma mileage (m:ℕ)(v:C.label 4) : ∀ᶠ i in atTop,let k:=summit C.path.levels i; ∀ᶠ p:ℕ in atTop,∀ (N:ℕ) (hn:k < N)(T0:Module.End ℂ (C.label 4)),Tested C 4 i N p T0 →∀ (b:ℝ),1 ≤ b → b ≤ tilt_cap (A) i → let h: i ≤ N:= (stellar C.path.levels i).le.trans hn.le; let T:= tilesAt C.S p h\n       (∀ d:ℕ,d ≤ 5 → ∀ v:C.label d,Interior (T.chamber 0) (C.O N p v 0)) → ∀ y, Probe C m i p N hn y→∀ x z:Site (C.side i p),x≠z→ ‖pew C.S h (C.beta N p) x z (C.O N p y 0) (C.O N p (ladd C b i N p 4 T0 v) 0)‖ ≤ Tau (A) i (-100):=by\n    filter_upwards [concert h θ K H ht hM m,outside h θ K H ht 4 (by decide) v, toll_small (x:=1) one_pos (sapTree h (A) 4 (by positivity))] with i hi hg hw k\n    filter_upwards [hi] with p hp N hn T0 hT b hz he h₀ T hF y hY x z hx\n    let t:= Tau (A) i; let β:=C.beta N p; let P:= C.O N p y 0; let Q:= C.O N p (ladd C b i N p 4 T0 v) 0\n    have hS:= seamless H N p\n    obtain ⟨hQ,g,hG,hC,hR,hB,hz₁⟩:= hg N p hn T0 hT b hz he (hF _ (by decide)); obtain ⟨f,hα,hχ,hD⟩:=hY.toll; let V:= backTo C.path N p hn.le g; let U:= backTo C.path N p hn.le f; have hp': Interior (T.chamber 0) P:= hF 5 le_rfl y; have hq': Interior (T.chamber 0) Q:= hF 4 (by decide) _; let F0:= T.rootTest (G:=G) β\n    have hP : F0 P ≤ t 5:= hp _ hn _ hY.hue hY.cost _\n    have hb : F0 V ≤ t (-300)+t 5:=by\n        nth_rw 1[← sub_add_cancel V Q]; exact (hS.semi _ _ _ (Next.UVStress.minus hB hq') hq').trans (add_le_add hz₁ hQ)\n    let L (Z B': Config G (C.side N p)→ℂ):= pew C.S h₀ β x z Z B'\n    have h₁ : ‖L U V‖ ≤ t (-200):=hD _ _ hx _ hG hC hR\n    have h₂ : ‖L P (Q-V)‖ ≤ t 5*t (-300):= by\n       refine (pulpit _ _ _ _ _ hx hp' (Next.UVStress.minus hq' hB) hS).trans (mul_le_mul hP ?_ (T.root_nonneg β (Q-V)) (Tau_pos ..|>.le)); rw [anti_test]; exact hz₁\n    have h₃ : ‖L (P-U) V‖ ≤ t (-200)*(t (-300)+t 5):=by\n       refine (pulpit _ _ _ _ _ hx (Next.UVStress.minus hp' hα) hB hS).trans (mul_le_mul ?_ hb (T.root_nonneg β V) (Tau_pos ..|>.le)); rw[anti_test]; exact hχ\n    have hz(A' B':ℝ): t A'*t B'=t (A'+B') :=(Tau_add ..).symm\n    change ‖L P Q‖≤ t (-100); rw [show L P Q=L U V+L P (Q-V)+L (P-U) V from slides C.S h₀ β x z hα hB hp' hq']; apply le_trans ((norm_add_le ..).trans (add_le_add ((norm_add_le ..).trans (add_le_add h₁ h₂)) h₃)); rw [mul_add,hz,hz,hz]\n    have hp : 4*t (-195) ≤ t (-100):= calc\n      _ ≤ t 1*t (-195):= mul_le_mul_of_nonneg_right hw (Tau_pos ..|>.le)\n      _ ≤ _:= (hz ..).le.trans (tau_mono (A) i (by norm_num))\n    apply le_trans _ hp; have hw (x:ℝ)(he:x ≤ -195):t x ≤ t (-195):= tau_mono (A) i he\n    linarith only [hw _ (by norm_num : (-(200:ℝ)) ≤ -195),hw _ (by norm_num : (5:ℝ)+ -300 ≤ -195),hw _ (by norm_num : (-(200:ℝ))+ -300 ≤ -195),hw _ (by norm_num : (-(200:ℝ))+ 5 ≤ -195)]",
+            "line": 30,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Quince/Unison.lean",
-            "fragment": "L26-L27"
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.PhysicalNext.Repeat.Quince.loom_s",
-        "module": "YM.TraceExtension.Quince.Lilt",
-        "lines": [
-          26,
-          26
-        ]
-      },
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.PhysicalNext.Repeat.Quince.loom_s"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Terrace/Meteor.lean",
+            "fragment": "L30-L52"
           },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Quince/Lilt.lean",
-            "fragment": "L26-L26"
+          "proof_context": {
+            "declaration": "YM.Trace.Terrace.mileage",
+            "lines": [
+              30,
+              52
+            ],
+            "conclusion": "mileage bounds the spectator pairing at distinct sites, eventually, using toll_small and Tau-scale estimates at orders -200, -300 and 5, collected as Tau(-100)."
           }
         }
       }
@@ -84,8 +73,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a deeper re-search agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a deeper re-search agreed; re-judged after a second independent review, which changed it from noMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
       }
     }
   }

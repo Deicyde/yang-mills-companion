@@ -1,9 +1,9 @@
 {
   "id": "Lemma 14.13 step 19",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "narrowMatch",
-  "note": "Lean never states the two o(s_k) facts separately; `he` from `Work.I04.answer` is one eventual inequality on 5 - log Mix.last that combines them, which is weaker than the pair.",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "Work.I04.columns_receipt and hat_receipt (I04.lean 24-74) state the two o(s_k) relations separately.",
   "subject": [
     {
       "location": {
@@ -29,36 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.MergeProof.Accent.cheap",
-        "module": "YM.MergeProof.Baskets",
+        "declaration": "YM.Work.I04.columns_receipt",
+        "module": "YM.Work.I04",
         "lines": [
-          23,
-          23
+          24,
+          62
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.MergeProof.Accent.cheap"
+            "id": "YM.Work.I04.columns_receipt"
           },
           "snippet": {
-            "text": "   obtain ⟨hz,he⟩:= Work.I04.answer G hG a C n ha hK",
-            "line": 23,
+            "text": "theorem columns_receipt (a : Levels G) :\n    (fun i => ∑ m ∈ Finset.range i, Real.log (a.params (m+1)).columns) =o[atTop] a.S.scale := by\n  let f : ℕ → ℝ := fun i => ∑ m ∈ Finset.range i, Real.log (a.params (m+1)).columns\n  have hf (i) : 0 ≤ f i :=\n    Finset.sum_nonneg fun m _ => Real.log_nonneg (a.params (m+1)).columns_ge\n  change f =o[atTop] a.S.scale\n  refine isLittleO_iff.mpr ?_\n  intro ε hε\n  have hz : Tendsto (fun i : ℕ => ((a.clock.J (i+1) : ℝ)^2)⁻¹) atTop (𝓝 0) :=\n    tendsto_inv_atTop_zero.comp\n      ((tendsto_pow_atTop (n := 2) (by decide)).comp\n        (tendsto_natCast_atTop_atTop.comp (a.fits.deep.comp (tendsto_add_atTop_nat 1))))\n  -- Tail increment control and absorption of a finite prefix, as for\n  -- the drift in Shoot.trajectory.\n  obtain ⟨j,hj⟩ := eventually_atTop.mp (hz.eventually (ge_mem_nhds (half_pos hε)))\n  have htail (i : ℕ) (hi : j ≤ i) :\n      f i ≤ f j + ε/2 * (a.S.scale i - a.S.scale j) := by\n    induction i, hi using Nat.le_induction with\n    | base => rw [sub_self, mul_zero, add_zero]\n    | succ i hi H =>\n      let X := a.params (i+1)\n      have hcol : Real.log X.columns ≤\n          Real.log (1 + X.paths + X.width⁻¹ + X.columns + X.clip.relaxation + X.supportExponent) :=\n        Real.log_le_log (lt_of_lt_of_le zero_lt_one X.columns_ge) (by\n          linarith only [X.paths_pos, (inv_pos.mpr X.width_pos), X.clip.radius_pos, X.price_pos])\n      have hL : 0 < Real.log (a.S.block i).val := Real.log_pos (by\n        exact_mod_cast (show 1 < (a.S.block i).val from\n          lt_of_lt_of_le (by norm_num) (a.S.block_large i)))\n      have he : Real.log (a.params (i+1)).columns ≤ ε/2 * Real.log (a.S.block i).val :=\n        hcol.trans ((div_le_iff₀ hL).mp ((a.fits.logCost i).trans (hj i hi)))\n      have step : f (i+1) = f i + Real.log (a.params (i+1)).columns :=\n        Finset.sum_range_succ _ _\n      rw [step, Schedule.scale_succ]\n      linarith only [he, H]\n  have hc := (a.S.divergent.const_mul_atTop (half_pos hε)).eventually_ge_atTop (f j)\n  filter_upwards [eventually_ge_atTop j, hc] with i hi hb\n  have hhead : f j ≤ ε/2 * a.S.scale i := hb\n  rw [Real.norm_eq_abs, Real.norm_eq_abs, abs_of_nonneg (hf i), abs_of_nonneg (Shoot.scale_nn a i)]\n  linarith only [hhead, htail i hi, mul_nonneg hε.le (Shoot.scale_nn a j)]",
+            "line": 24,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Baskets.lean",
-            "fragment": "L23-L23"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/I04.lean",
+            "fragment": "L24-L62"
           },
           "proof_context": {
-            "declaration": "YM.MergeProof.Accent.cheap",
+            "declaration": "YM.Work.I04.columns_receipt",
             "lines": [
-              21,
-              32
+              24,
+              62
             ],
-            "conclusion": "`Work.I04.answer` gives `he`, the eventual bound `5 - log (Mix.last C i (f i)) ≤ ...` that combines the two `o(s_k)` terms."
+            "conclusion": "columns_receipt shows the sum of log columns over levels up to i is o of the scale S."
           }
         }
       }
@@ -68,36 +68,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.MergeProof.Accent.cheap",
-        "module": "YM.MergeProof.Baskets",
+        "declaration": "YM.Work.I04.hat_receipt",
+        "module": "YM.Work.I04",
         "lines": [
-          31,
-          32
+          65,
+          74
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.MergeProof.Accent.cheap"
+            "id": "YM.Work.I04.hat_receipt"
           },
           "snippet": {
-            "text": "   change 5 - Real.log (Mix.last C i (f i)) ≤ _ at hx'; change 6 - (_* -(C.S.scale i) + Real.log (f i)) ≤ _\n   linarith only [hi,hx',hg]",
-            "line": 31,
+            "text": "theorem hat_receipt (a : Levels G) (hG : G.Simple) :\n    (fun i => Real.log (a.clock.hatBeta i)) =o[atTop] a.S.scale := by\n  have ht : Tendsto a.clock.hatBeta atTop atTop :=\n    tendsto_atTop_add_const_left _ _\n      (a.S.divergent.const_mul_atTop (Gauge.slopeConstant_pos hG))\n  have he : (fun _ : ℕ => a.clock.bar) =o[atTop] a.S.scale :=\n    (isLittleO_const_id_atTop a.clock.bar).comp_tendsto a.S.divergent\n  have hf : a.clock.hatBeta =O[atTop] a.S.scale :=\n    he.isBigO.add ((isBigO_refl a.S.scale _).const_mul_left G.slopeConstant)\n  exact (Real.isLittleO_log_id_atTop.comp_tendsto ht).trans_isBigO hf",
+            "line": 65,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Baskets.lean",
-            "fragment": "L31-L32"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/I04.lean",
+            "fragment": "L65-L74"
           },
           "proof_context": {
-            "declaration": "YM.MergeProof.Accent.cheap",
+            "declaration": "YM.Work.I04.hat_receipt",
             "lines": [
-              21,
-              32
+              65,
+              74
             ],
-            "conclusion": "`linarith` combines `hx'` and `hg` into the final bound."
+            "conclusion": "hat_receipt shows log hatBeta i is o of the scale S for simple gauges."
           }
         }
       }
@@ -112,11 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent disagreed and a judge kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent disagreed and a judge changed it from narrowMatch; re-judged after a second independent review, which changed it from narrowMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {
-        "kind": "direct"
+        "kind": "chain"
       }
     }
   }

@@ -2,8 +2,8 @@
   "id": "Lemma 13.19 step 9",
   "kind": "proof_step",
   "status": "formalized",
-  "relation": "closeMatch",
-  "note": "The squared-difference bound appears only inside the combined estimate of the weighted term, not as a separate statement.",
+  "relation": "exactMatch",
+  "note": "Rally.sprintD (Amp/Shelf.lean 64-67) states ||a^2-b^2|| <= 2 lux ||a-b|| for ||a||,||b|| <= lux.",
   "subject": [
     {
       "location": {
@@ -29,36 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.FullVolume.Amp.Rally.danceD",
-        "module": "YM.FullVolume.Amp.Sieve",
+        "declaration": "YM.FullVolume.Amp.Rally.sprintD",
+        "module": "YM.FullVolume.Amp.Shelf",
         "lines": [
-          37,
-          37
+          64,
+          67
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.FullVolume.Amp.Rally.danceD"
+            "id": "YM.FullVolume.Amp.Rally.sprintD"
           },
           "snippet": {
-            "text": "  · exact show _≤ 2*lux*‖U-V‖ from (mul_le_of_le_one_left (norm_nonneg _) (K.wtP i)).trans ((sprintD _ _ (perN h _).1 (perN ht _).1).trans (mul_le_mul_of_nonneg_left (perD _|>.1) (by norm_num [lux])))",
-            "line": 37,
+            "text": "lemma sprintD (a b:Beam ℝ)(ha:‖a‖≤lux)(hb:‖b‖≤lux): ‖sprint a-sprint b‖≤ 2*lux*‖a-b‖:=by\n rw [show sprint a-sprint b=brave (ContinuousLinearMap.mul ℝ ℝ) (a+b) (a-b) from ?_]\n apply (braveN ..).trans; exact (mul_le_of_le_one_left (mul_nonneg (norm_nonneg _) (norm_nonneg _)) (ContinuousLinearMap.opNorm_mul_le _ _)).trans (mul_le_mul_of_nonneg_right ((norm_add_le ..).trans (by linarith)) (norm_nonneg _))\n refine Beam.soul _ _ fun v=>?_; change read ℝ v (sprint a-sprint b)=read ℝ v _; rw [map_sub,sprintL,sprintL, harp,map_add,map_sub]; rw [ContinuousLinearMap.mul_apply']; ring",
+            "line": 64,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Amp/Sieve.lean",
-            "fragment": "L37-L37"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Amp/Shelf.lean",
+            "fragment": "L64-L67"
           },
           "proof_context": {
-            "declaration": "YM.FullVolume.Amp.Rally.danceD",
+            "declaration": "YM.FullVolume.Amp.Rally.sprintD",
             "lines": [
-              28,
-              38
+              64,
+              67
             ],
-            "conclusion": "`sprintD` with `perD` bounds the difference of squared coordinates by `2*lux*‖U-V‖` (times the weight `wt`≤1)."
+            "conclusion": "sprintD shows the squaring map satisfies ||sprint a - sprint b|| <= 2*lux*||a-b|| when both arguments have norm at most lux."
           }
         }
       }
@@ -73,11 +73,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; re-judged after a second independent review, which changed it from closeMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {
-        "kind": "direct"
+        "kind": "helper"
       }
     }
   }
