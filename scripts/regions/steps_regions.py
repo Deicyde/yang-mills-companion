@@ -19,8 +19,8 @@ to the committed PDF's own word boxes (`pdftotext -bbox`).
 - One region per page; a step crossing a page is cut at the bottom and top of the text block.
 - Top and bottom edges move off ink as in regions.py (288 dpi, within 8 pt).
 - Overlaps: a new box gives way to a committed numbered display's box (data/regions.json); two new
-  boxes that overlap are cut in the gap between their word boxes (a text line touching a display
-  keeps its words whole), then off ink within 3 pt.
+  boxes that overlap are cut at the ink gap between the two lines' glyphs (sub- and superscripts,
+  tall operators and descenders included), or where there is none at the row of least ink.
 
 Checks (all on the committed PDF; `pdftotext -f p -l p -x -y -W -H` crops, in points):
 - display: the crop holds the display's distinctive tokens: every word of 3 or more letters in its
@@ -111,6 +111,14 @@ class Ink:
             return True
         row = px[r * w + max(0, int(x0 * k)):r * w + min(w, int(x1 * k) + 1)]
         return all(b >= 224 for b in row)
+
+    def dark(self, pg, y, x0, x1):
+        w, h, px = self.page(pg)
+        k = DPI / 72
+        r = int(y * k)
+        if not 0 <= r < h:
+            return 0
+        return sum(b < 224 for b in px[r * w + max(0, int(x0 * k)):r * w + min(w, int(x1 * k) + 1)])
 
     def snap(self, pg, y, x0, x1, outward, lo=None, hi=None):
         """The nearest blank row within SNAP points, preferring `outward`, kept inside [lo, hi]."""
@@ -497,15 +505,29 @@ def regions_mode(build, pdf, steps_path, displays_path, items_regions_path, item
                     # a text line touching a display: the text keeps its words whole
                     mid = ub if kind_of[id(upper)] == 'prose' else lt
                 mid = min(max(mid, lower[1]), upper[3])
-                # off ink, if a blank row is within 3 points
-                x0, x1 = max(upper[0], lower[0]), min(upper[2], lower[2])
+                # then at the ink gap between the two lines' glyphs (sub- and superscripts, tall
+                # operators and descenders included), within 4 points of that cut and inside the word-box gap if there is one: the middle of the
+                # longest blank band, nearest the cut; with no blank row, the row with the least ink
+                x0, x1 = min(upper[0], lower[0]), max(upper[2], lower[2])  # both lines' glyphs
+                zt, zb = max(mid - 4, lower[1] - 3), min(mid + 4, upper[3] + 3)
+                if ub <= lt:  # a gap between the word boxes: stay in it
+                    zt, zb = max(zt, ub), min(zb, lt)
                 step = 72 / DPI / 2
-                for n in range(int(3 / step) + 1):
-                    hit = next((z for z in (mid + n * step, mid - n * step) if lower[1] - 3 <= z <= upper[3] + 3
-                                and ink.blank(pg, z, x0, x1)), None)
-                    if hit is not None:
-                        mid = hit
-                        break
+                rows = [zt + n * step for n in range(int(max(0.0, zb - zt) / step) + 1)]
+                runs, cur = [], []
+                for z in rows:
+                    if ink.blank(pg, z, x0, x1):
+                        cur.append(z)
+                    elif cur:
+                        runs.append(cur)
+                        cur = []
+                if cur:
+                    runs.append(cur)
+                if runs:
+                    best = max(runs, key=lambda r: (len(r), -abs((r[0] + r[-1]) / 2 - mid)))
+                    mid = (best[0] + best[-1]) / 2
+                elif rows:
+                    mid = min(rows, key=lambda z: (ink.dark(pg, z, x0, x1), abs(z - mid)))
                 upper[3], lower[1] = mid - 0.01, mid + 0.01
                 cuts.append((a, b, pg, round(ov, 2)))
                 if ub > lt:
