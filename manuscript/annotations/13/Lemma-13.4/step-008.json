@@ -1,9 +1,9 @@
 {
   "id": "Lemma 13.4 step 8",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "relatedMatch",
-  "note": "The retained exponential in the component size is present only as an abstract `Q.mark` weight inside the forced constant, not as `exp(-kappa_B beta'_u t^2 |A|)` from a seed selection.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] keeps the local energy exp(-beta*quoteNear) in Coat.steam, with the lower bound (kappa*t^2 - E(x))|Z| from Coat.earns, before integrating (Coat.steam_prices). The retained exponent includes the annular correction E(x) of scale rate -3/2.",
   "subject": [
     {
       "location": {
@@ -51,36 +51,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.ConnectedActivityE6.Cash.armK",
-        "module": "YM.AnalyticNext.CONNECTED_ACTIVITY_JETS_E6.Bulkhead",
+        "declaration": "YM.ConnectedActivityE6.Coat.earns",
+        "module": "YM.AnalyticNext.CONNECTED_ACTIVITY_JETS_E6.AssignedPrice",
         "lines": [
-          41,
-          42
+          54,
+          86
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.ConnectedActivityE6.Cash.armK"
+            "id": "YM.ConnectedActivityE6.Coat.earns"
           },
           "snippet": {
-            "text": "def armK (Q : YM.ConnectedActivityE6.Target G P) (L : Side) (μ x : ℝ) (m j : ℕ) := ((( (2:ℝ)^m)⁻¹*\n      Real.exp (-Q.mark L μ x))*(Q.mergeScale L μ x j*(1-1/2)⁻¹))",
-            "line": 41,
+            "text": "theorem earns (P : Teller G) (L : Side) (D : Patch) (hd : D.Branches P.bind G) (A : ℝ) (hA : 0<A)\n    {w : ℝ → ℝ} (h : Rate G L (-(1/2)) w) (hp : ∀ᶠ x in atTop, 0 ≤ w x) :\n    ∃ E : ℝ → ℝ, Rate G L (-(3/2)) E ∧ ∀ᶠ x in atTop,\n    0 ≤ E x ∧ ∀ (c f : Side) (S : StepData c f) (T : Tube G S) (F : Forest S.ratio)\n      (X : Coat T F), X.x=x → S.patch=D → S.patch.L=L → Room P S T x →\n      ∀ (Z : Stores S) (u : Directions G f) (W γ κ : ℝ), Z.place ⊆ X.seeds.place →\n      (∀ V, Bid.Maximum A T x V) → PointCharge T x W κ → ShellAccess S G X.x W X.width γ →\n      γ*(2*(X.width*X.t)) ≤ w x → Controlled X (304*X.B) Z u (w x) →\n      Tags.Wide Z (300*X.B) (X.input u) X.k X.V X.x W →\n        (κ * X.t^2 - E x)*Z.shares ≤ X.quoteNear Z u := by\n  obtain ⟨Y,y,H⟩ := annulus P L D hd A hA h hp\n  let E x := Y x*(Animals.ballCost (200*radiusB x+1):ℝ)*(Census.spots L:ℝ)\n  have hf : Rate G L (-(3/2)) E := by\n    simpa only [add_zero] using! ((y.mul (Census.width_rate G L 200 1)).mul_right (Census.spots L))\n  refine ⟨E,hf,H.mono ?_⟩\n  intro x hx\n  refine ⟨by unfold E; have h := hx.1; positivity,?_⟩\n  intro c f S T F X hx' hS hL hr Z u W γ κ hz hm hq he hf hh ht\n  subst x\n  let v := Z.shares\n  let t := X.t\n  let U := X.input u\n  let M := meanEnergy Z T X.x U X.k X.V\n  have Hm : κ*t^2*v ≤ M := ht.bought (by unfold Coat.B; omega) (SectorMeasure.funds_branch hr.accepted) F (X.sliced u) hq\n  have hy (s : Signed) := expenses X Z s u hz hx.1 fun p hi hj =>\n    hx.2 c f S T F X rfl hS hL hr Z u p s W γ (hm _) he hf hh ht hi hj\n  rw [sub_mul]\n  apply le_trans (sub_le_sub_right Hm _)\n  unfold M meanEnergy quoteNear\n  rw [← av_const (E _ * _),← av_sub];\n  apply av_mono\n  intro s\n  have he := hy s; rw [hL] at he; exact he",
+            "line": 54,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/Bulkhead.lean",
-            "fragment": "L41-L42"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/AssignedPrice.lean",
+            "fragment": "L54-L86"
           },
           "proof_context": {
-            "declaration": "YM.ConnectedActivityE6.Cash.armK",
+            "declaration": "YM.ConnectedActivityE6.Coat.earns",
             "lines": [
-              41,
-              42
+              54,
+              86
             ],
-            "conclusion": "`armK` is the forced-factor constant `2^{-m} exp(-Q.mark) * mergeScale/(1-1/2)`, carrying an exponential decay weight `exp(-Q.mark)`."
+            "conclusion": "(kappa*t^2 - E(x))*|Z| <= quoteNear, from the mean-energy bound kappa*t^2*|Z| <= meanEnergy of the point charge, with E of rate -3/2."
           }
         }
       }
@@ -95,7 +95,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from relatedMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

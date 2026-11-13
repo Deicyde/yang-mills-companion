@@ -8,12 +8,12 @@
  "provenance": "machine: a sonnet mapper and a sonnet verifier per batch, independently; an opus judge on disagreement and on one in five agreed noMatch records; two opus skeptics per claim that the text is wrong; records of the weakest classes re-judged after a second independent review (a blind opus judge, an opus ruling where it disagreed); no person reviewed",
  "counts": {
   "broadMatch": 47,
-  "closeMatch": 562,
-  "exactMatch": 608,
+  "closeMatch": 565,
+  "exactMatch": 609,
   "hasPart": 100,
   "narrowMatch": 35,
   "noMatch": 32,
-  "relatedMatch": 223
+  "relatedMatch": 219
  },
  "records": [
   {
@@ -21150,7 +21150,13 @@
      "how": "judge",
      "ruling": "B"
     },
-    "source": "s5 judge"
+    "source": "s5 judge",
+    "rereview": {
+     "kind": "kept",
+     "from": "relatedMatch",
+     "source": "re-judged after a second independent review (whole class: blind opus judge, opus ruling on disagreement)",
+     "why": "The record is an explicit derivative formula; [L] goes straight to derivative bounds by a different route without deriving it, so closeMatch is too strong."
+    }
    }
   },
   {
@@ -22675,7 +22681,13 @@
      "how": "judge",
      "ruling": "B"
     },
-    "source": "s5 judge"
+    "source": "s5 judge",
+    "rereview": {
+     "kind": "kept",
+     "from": "relatedMatch",
+     "source": "re-judged after a second independent review (whole class: blind opus judge, opus ruling on disagreement)",
+     "why": "the blind judge agreed on the class"
+    }
    }
   },
   {
@@ -23413,6 +23425,12 @@
      "sweep": "re-rate",
      "sweep_relation": "relatedMatch",
      "was": "relatedMatch"
+    },
+    "rereview": {
+     "kind": "kept",
+     "from": "relatedMatch",
+     "source": "re-judged after a second independent review (whole class: blind opus judge, opus ruling on disagreement)",
+     "why": "the blind judge agreed on the class"
     }
    }
   },
@@ -29562,49 +29580,30 @@
    "item": "Lemma 12.10",
    "step": 4,
    "kind": "proof_step",
-   "relation": "relatedMatch",
-   "class": "Deviates",
+   "relation": "closeMatch",
+   "class": "Faithful",
    "ends": [
     {
      "decl": "YM.UVNext.CouplingReset.sensor",
      "file": "YM/UVNext/COUPLING_RESET/Probe.lean",
      "lines": [
-      126,
-      134
-     ],
-     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/COUPLING_RESET/Probe.lean#L126-L134",
-     "snippet": "    have hsmall : C*(4*h)^3+C*(4*h)^4 ≤ A.direct*h^2/4 := calc\n      _ ≤ C*(4*h)^3 + C*(4*h)^3 := by\n        exact add_le_add_right (mul_le_mul_of_nonneg_left (pow_le_pow_of_le_one h₄ (hz.trans P.threshold_le)\n          (by decide : (3:ℕ) ≤ 4)) hC) _\n      _ = ((512*C)*h)*h^2/4 := by ring\n      _ ≤ _ := by\n        have hb := (le_div_iff₀ (show (0:ℝ) < 512*(1+C) by positivity)).mp (show t ≤ A.direct / _ from min_le_right ..)\n        have hcost : 512*C*h ≤ A.direct := by nlinarith\n        gcongr",
-     "conclusion": "`C*(4h)^3 + C*(4h)^4 <= A.direct*h^2/4`, using the choice of `t` through `512*C*h <= A.direct`.",
-     "proof_context": {
-      "declaration": "YM.UVNext.CouplingReset.sensor",
-      "lines": [
-       96,
-       142
-      ],
-      "conclusion": "`C*(4h)^3 + C*(4h)^4 <= A.direct*h^2/4`, using the choice of `t` through `512*C*h <= A.direct`."
-     }
-    },
-    {
-     "decl": "YM.UVNext.CouplingReset.sensor",
-     "file": "YM/UVNext/COUPLING_RESET/Probe.lean",
-     "lines": [
-      135,
+      97,
       139
      ],
-     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/COUPLING_RESET/Probe.lean#L135-L139",
-     "snippet": "    have hterm (x : Site n) : -(A.direct*h^2/4) ≤ PathData.atomSeries D.cubic P (pull s 0 U) x +\n          PathData.atomSeries D.quartic P (pull s 0 U) x := by\n      have h1 := neg_le_of_abs_le (atomSeries_chord (P:=P) hD.width hD.three h₄ hm x)\n      have h2 := neg_le_of_abs_le (atomSeries_chord (P:=P) hD.width hD.four h₄ hm x)\n      linarith only [h1,h2,hsmall]",
-     "conclusion": "At every site the cubic and quartic atom series of each signed image is at least `-(A.direct*h^2/4)`, by `atomSeries_chord`.",
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/COUPLING_RESET/Probe.lean#L97-L139",
+     "snippet": "  obtain ⟨ε,hε,hg⟩ := reachable_chord G\n  let t := min (min ε (1/4)) (A.direct/(512*(1+C)))\n  have hA := A.quadratic_pos\n  have htp : 0 < t := lt_min (lt_min hε (by norm_num)) (by positivity)\n  refine ⟨A.direct*t^2/4,by positivity,fun n he D P σ Λ hD => ?_⟩\n  let h := t * P.threshold\n  have hP := P.threshold_pos\n  have hh : 0 ≤ h := (mul_pos htp hP).le\n  have hh' : h ≤ t := mul_le_of_le_one_right htp.le P.threshold_le\n  obtain ⟨u,hu⟩ := hg _ ⟨hh,hh'.trans ((min_le_left ..).trans (min_le_left ..))⟩\n  let U := stripe u he\n  have hf p : G.chord (faceValue U p) ≤ 4*h := by\n    have hb (i) : G.chord (U i) ≤ h := by unfold U stripe; split <;> simp [*]\n    simpa [faceValue,square] using Next.Fluctuations.travel_chord U (square p.2.val.1 p.2.val.2) p.1 h hb\n  have hz : 4*h ≤ P.threshold := by\n    have hle := mul_le_mul_of_nonneg_right (show t ≤ 1/4 from (min_le_left ..).trans (min_le_right ..)) hP.le\n    dsimp [h]; linarith\n  refine ⟨U, flags_empty (fun p => (hf p).trans hz), ?_⟩\n  let T := A.direct * t^2 / 4 * P.threshold^2\n  let N := sites n\n  change N * T ≤ _\n  rw [kinetic, le_inv_mul_iff₀ (by exact_mod_cast (Fintype.card_pos (α:=Signed)))]\n  have H (s : Signed) : N*T ≤ (∑ p, D.baseTerm A P (pull s 0 U) p) + ∑ x : Site n,\n      (PathData.atomSeries D.cubic P (pull s 0 U) x + PathData.atomSeries D.quartic P (pull s 0 U) x) := by\n    have hm p : G.chord (faceValue (pull s 0 U) p) ≤ 4*h :=\n      (Face.send_price U _ _ _ G.chord G.chord_inv (fun k g => G.chord_conj g k)).trans_le (hf _)\n    have hx := direct_probe D A P u he (fun p => (hf p).trans hz) s\n    rw [hu] at hx\n    have h₄ : 0 ≤ 4*h := by positivity\n    have hsmall : C*(4*h)^3+C*(4*h)^4 ≤ A.direct*h^2/4 := calc\n      _ ≤ C*(4*h)^3 + C*(4*h)^3 := by\n        exact add_le_add_right (mul_le_mul_of_nonneg_left (pow_le_pow_of_le_one h₄ (hz.trans P.threshold_le)\n          (by decide : (3:ℕ) ≤ 4)) hC) _\n      _ = ((512*C)*h)*h^2/4 := by ring\n      _ ≤ _ := by\n        have hb := (le_div_iff₀ (show (0:ℝ) < 512*(1+C) by positivity)).mp (show t ≤ A.direct / _ from min_le_right ..)\n        have hcost : 512*C*h ≤ A.direct := by nlinarith\n        gcongr\n    have hterm (x : Site n) : -(A.direct*h^2/4) ≤ PathData.atomSeries D.cubic P (pull s 0 U) x +\n          PathData.atomSeries D.quartic P (pull s 0 U) x := by\n      have h1 := neg_le_of_abs_le (atomSeries_chord (P:=P) hD.width hD.three h₄ hm x)\n      have h2 := neg_le_of_abs_le (atomSeries_chord (P:=P) hD.width hD.four h₄ hm x)\n      linarith only [h1,h2,hsmall]",
+     "conclusion": "With t <= A.direct/(512(1+C)) and face chords at most 4h, C(4h)^3 + C(4h)^4 <= 2C(4h)^3 <= A.direct*h^2/4 per site, so every site's cubic and quartic atom series is at least -(A.direct*h^2/4).",
      "proof_context": {
       "declaration": "YM.UVNext.CouplingReset.sensor",
       "lines": [
        96,
        142
       ],
-      "conclusion": "At every site the cubic and quartic atom series of each signed image is at least `-(A.direct*h^2/4)`, by `atomSeries_chord`."
+      "conclusion": "With t <= A.direct/(512(1+C)) and face chords at most 4h, C(4h)^3 + C(4h)^4 <= 2C(4h)^3 <= A.direct*h^2/4 per site, so every site's cubic and quartic atom series is at least -(A.direct*h^2/4)."
      }
     }
    ],
-   "note": "[L] bounds the slots by 4h and proves C(4h)^3 + C(4h)^4 ≤ c_dir h^2/4 instead of 2A h^3 ≤ c_dir h^2/4, so the intermediate quantity differs even though the final bound is the same.",
+   "note": "[L] carries the inequality in CouplingReset.sensor. It works per site rather than with the |Lambda| total, and uses the face-chord bound 4h in place of slot norm h, with the same 512(1+A^path) choice of tau.",
    "confidence": "medium",
    "verification": {
     "batch": "P18",
@@ -29615,7 +29614,7 @@
     "mapper": "closeMatch",
     "verifier": "closeMatch",
     "agreed": true,
-    "source": "mapper+verifier+review",
+    "source": "mapper+verifier+review+rereview",
     "complete": true,
     "close_review": {
      "was": "closeMatch",
@@ -29626,6 +29625,12 @@
      "sweep": "re-rate",
      "sweep_relation": "relatedMatch",
      "was": "relatedMatch"
+    },
+    "rereview": {
+     "kind": "rejudged",
+     "from": "relatedMatch",
+     "source": "re-judged after a second independent review (whole class: blind opus judge, opus ruling on disagreement)",
+     "why": "Bounding the quartic by the cubic term to get 2C(4h)^3 <= c_dir h^2/4 is the same fact with the chord normalised as 4h and summed per site, which is a nameable normalisation and not a different quantity."
     }
    }
   },
@@ -30991,6 +30996,12 @@
      "sweep_relation": "relatedMatch",
      "was": "noMatch",
      "ruling": "B"
+    },
+    "rereview": {
+     "kind": "kept",
+     "from": "relatedMatch",
+     "source": "re-judged after a second independent review (whole class: blind opus judge, opus ruling on disagreement)",
+     "why": "the blind judge agreed on the class"
     }
    }
   },
@@ -30999,30 +31010,30 @@
    "item": "Lemma 13.4",
    "step": 5,
    "kind": "proof_step",
-   "relation": "relatedMatch",
-   "class": "Deviates",
+   "relation": "closeMatch",
+   "class": "Faithful",
    "ends": [
     {
-     "decl": "YM.ConnectedActivityE6.Rate.monitor_cutoff",
-     "file": "YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/Numerics.lean",
+     "decl": "YM.ConnectedActivityE6.Coat.alarm_bills",
+     "file": "YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/ResponsePrice.lean",
      "lines": [
-      121,
-      129
+      65,
+      110
      ],
-     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/Numerics.lean#L121-L129",
-     "snippet": "lemma monitor_cutoff {δ γ : ℝ} (hδ : 0 < δ) (hγ : 0 < γ) :\n    Rate G L a (fun x => Real.exp (-δ*(Delay.fineMonitor G L x)^γ)) := by\n  intro b hb\n  let N := max (-b) 1\n  have h1 : 0 < N := lt_of_lt_of_le zero_lt_one (le_max_right ..)\n  filter_upwards [Fees.hat_decay G L hδ hγ h1,\n    (Work.E09.betaF_growth G L).eventually_gt_atTop 1] with x hx hp\n  rw [abs_of_pos (Real.exp_pos _)]\n  exact hx.trans (Real.rpow_le_rpow_of_exponent_le hp.le (by have := le_max_left (-b) (1:ℝ); unfold N; linarith))",
-     "conclusion": "For δ,γ>0, `exp(-δ * fineMonitor^γ)` is a `Rate` of every exponent `a`: it is eventually below every power of β.",
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/ResponsePrice.lean#L65-L110",
+     "snippet": "lemma alarm_bills (P : Teller G) (L : Side) {η r Q Y ξ : ℝ} (k : ℝ) (hξ : 0<ξ) :\n    ∃ E, Rate G L k E ∧ ∀ᶠ x : ℝ in atTop,\n    0≤ E x ∧ ∀ (c f : Side) (S : StepData c f) (T : Tube G S) (F : Forest S.ratio)\n     (X : Coat T F), X.x=x → S.patch.L=L → Rotator P L η r Q Y X → ∀ R : Rep G f, Intake P T X.x R →\n       ∀ v : Finset (WarningAt c f), X.dice.real (X.catastrophe ξ R.beta v) ≤ (E x)^v.card := by\n  let p := Delay.fineMonitor G L\n  let H (x : ℝ) := p x ^ ((1:ℝ)/2)\n  let B x := radiusB x; let ε := ξ/4\n  let u := Census.tubularPrice G L; let W := warning_count L\n  let M := payE η r Q u; let V (x : ℝ) := Animals.ballCost (2*B x)\n  let E (x : ℝ) := (V x:ℝ)* (u:ℝ)*2*Real.exp (-H x*ε)\n  have hp : Rate G L k (fun x=>Real.exp (-H x*ε)) := by\n    refine (Rate.monitor_cutoff (show 0< ε by unfold ε; positivity) (show (0:ℝ) < 1/2 by norm_num)).congr\n      (Eventually.of_forall (fun x => ?_))\n    exact congr_arg Real.exp (show -H x*ε=-ε*H x by ring)\n  have he := Census.width_rate G L 2 0; simp only [add_zero] at he\n  refine ⟨E,(by convert (((he.mul_right u).mul_right 2).mul hp) using 1\n                linarith),?_⟩\n  obtain ⟨A,hA,h⟩ := width_bound G L 2 0\n  simp only [add_zero] at h\n  have hε : 0<ε := by unfold ε; positivity\n  filter_upwards [Delay.monitor_pays G L 4 (show 0≤ A*(W:ℝ) by positivity) (show (0:ℝ)<1/2 by norm_num),\n    Delay.monitor_pays G L 0 (show 0≤ |M|/ε by positivity) zero_lt_one] with x hx hy\n  have hf : V x ≤ A*Delay.bill G L x^4 := h _\n  have hv : 0 < H x := by unfold H; exact Real.rpow_pos_of_pos (Delay.monitor_pos ..) _\n  refine ⟨(by unfold E; positivity),?_⟩; intro c f S T F X hg hL hR R hr v\n  subst x\n  let x := X.x\n  have ht : H X.x*H X.x=p X.x := by unfold H; rw [← Real.rpow_add (Delay.monitor_pos ..)]; norm_num; rfl\n  unfold dice catastrophe\n  unfold E; rw [show -H X.x*ε=-(ε*H X.x) by ring]\n  refine Poll.shattered _ _ _ hR.fullC.posSemidef (fun v => (le_abs_self _).trans\n    (Control.top (hR.scale.mate X.shutter) hR.full.prices.le v)) (by unfold u; rw [← hL]; exact entering S) (p:=u) (m:=W)\n      (by unfold W; rw [← hL]; exact staffed S) v (2*X.B) (by positivity) ?_\n  have hm : M/2 ≤ ε*p X.x := by\n    rw [pow_zero,mul_one,Real.rpow_one] at hy\n    have he := (div_le_iff₀ hε).mp hy\n    have hv : 0 ≤ p X.x := (Delay.monitor_pos ..).le\n    nlinarith [mul_nonneg hε.le hv, le_abs_self M]\n  have hz : ε*H X.x *((V X.x:ℝ)*W) ≤ ε*p X.x := by\n    have hp : (V X.x:ℝ)*W ≤ H X.x := (mul_le_mul_of_nonneg_right hf (Nat.cast_nonneg W)).trans\n      ((le_of_eq (by ring : A*Delay.bill G L X.x^4 * (W:ℝ) = A*(W:ℝ)*Delay.bill G L X.x^4)).trans hx)\n    rw [← ht]; refine (mul_le_mul_of_nonneg_left hp (by positivity : 0 ≤ ε*H X.x)).trans_eq (by ring)\n  apply (add_le_add hm hz).trans\n  have hp := charge_area S X.x T R hr\n  change Delay.fineMonitor G S.patch.L X.x /2 ≤ X.t*(gStep R.beta)⁻¹ at hp",
+     "conclusion": "Eventually A*W*bill^4 <= fineMonitor^{1/2} (Delay.monitor_pays), exp(-eps*fineMonitor^{1/2}) has every rate (Rate.monitor_cutoff), and fineMonitor/2 <= t/g (charge_area), giving the warning probability bound.",
      "proof_context": {
-      "declaration": "YM.ConnectedActivityE6.Rate.monitor_cutoff",
+      "declaration": "YM.ConnectedActivityE6.Coat.alarm_bills",
       "lines": [
-       121,
-       129
+       65,
+       112
       ],
-      "conclusion": "For δ,γ>0, `exp(-δ * fineMonitor^γ)` is a `Rate` of every exponent `a`: it is eventually below every power of β."
+      "conclusion": "Eventually A*W*bill^4 <= fineMonitor^{1/2} (Delay.monitor_pays), exp(-eps*fineMonitor^{1/2}) has every rate (Rate.monitor_cutoff), and fineMonitor/2 <= t/g (charge_area), giving the warning probability bound."
      }
     }
    ],
-   "note": "Lean uses the monitor exp(-δ·fineMonitor^γ), which is a `Rate` of every exponent, in place of the ratio (t_{m+1}/g)/(B⁴ log 𝔟)→∞; the limit itself is not stated.",
+   "note": "[L] carries the growth in Coat.alarm_bills. It goes through fineMonitor: fineMonitor/2 <= t/g, fineMonitor^{1/2} beats every power of bill = 1+B+(log beta)^2, and exp(-eps*fineMonitor^{1/2}) is below every power of beta. The literal quotient (t_{m+1}/g)/(B^4 log b) -> infinity is never stated.",
    "confidence": "low",
    "verification": {
     "batch": "P19",
@@ -31033,7 +31044,7 @@
     "mapper": "noMatch",
     "verifier": "noMatch",
     "agreed": true,
-    "source": "mapper+verifier+s5 sweep+judge",
+    "source": "mapper+verifier+s5 sweep+judge+rereview",
     "complete": true,
     "s5": {
      "how": "sweep+judge",
@@ -31041,6 +31052,12 @@
      "sweep_relation": "relatedMatch",
      "was": "noMatch",
      "ruling": "B"
+    },
+    "rereview": {
+     "kind": "rejudged",
+     "from": "relatedMatch",
+     "source": "re-judged after a second independent review (whole class: blind opus judge, opus ruling on disagreement)",
+     "why": "These lines prove that t/g dominates B^4 and log b in the form the warning bound uses; monitor_cutoff on its own is only one ingredient and does not make this a different argument."
     }
    }
   },
@@ -31214,30 +31231,30 @@
    "item": "Lemma 13.4",
    "step": 8,
    "kind": "proof_step",
-   "relation": "relatedMatch",
-   "class": "Deviates",
+   "relation": "closeMatch",
+   "class": "Faithful",
    "ends": [
     {
-     "decl": "YM.ConnectedActivityE6.Cash.armK",
-     "file": "YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/Bulkhead.lean",
+     "decl": "YM.ConnectedActivityE6.Coat.earns",
+     "file": "YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/AssignedPrice.lean",
      "lines": [
-      41,
-      42
+      54,
+      86
      ],
-     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/Bulkhead.lean#L41-L42",
-     "snippet": "def armK (Q : YM.ConnectedActivityE6.Target G P) (L : Side) (μ x : ℝ) (m j : ℕ) := ((( (2:ℝ)^m)⁻¹*\n      Real.exp (-Q.mark L μ x))*(Q.mergeScale L μ x j*(1-1/2)⁻¹))",
-     "conclusion": "`armK` is the forced-factor constant `2^{-m} exp(-Q.mark) * mergeScale/(1-1/2)`, carrying an exponential decay weight `exp(-Q.mark)`.",
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/AssignedPrice.lean#L54-L86",
+     "snippet": "theorem earns (P : Teller G) (L : Side) (D : Patch) (hd : D.Branches P.bind G) (A : ℝ) (hA : 0<A)\n    {w : ℝ → ℝ} (h : Rate G L (-(1/2)) w) (hp : ∀ᶠ x in atTop, 0 ≤ w x) :\n    ∃ E : ℝ → ℝ, Rate G L (-(3/2)) E ∧ ∀ᶠ x in atTop,\n    0 ≤ E x ∧ ∀ (c f : Side) (S : StepData c f) (T : Tube G S) (F : Forest S.ratio)\n      (X : Coat T F), X.x=x → S.patch=D → S.patch.L=L → Room P S T x →\n      ∀ (Z : Stores S) (u : Directions G f) (W γ κ : ℝ), Z.place ⊆ X.seeds.place →\n      (∀ V, Bid.Maximum A T x V) → PointCharge T x W κ → ShellAccess S G X.x W X.width γ →\n      γ*(2*(X.width*X.t)) ≤ w x → Controlled X (304*X.B) Z u (w x) →\n      Tags.Wide Z (300*X.B) (X.input u) X.k X.V X.x W →\n        (κ * X.t^2 - E x)*Z.shares ≤ X.quoteNear Z u := by\n  obtain ⟨Y,y,H⟩ := annulus P L D hd A hA h hp\n  let E x := Y x*(Animals.ballCost (200*radiusB x+1):ℝ)*(Census.spots L:ℝ)\n  have hf : Rate G L (-(3/2)) E := by\n    simpa only [add_zero] using! ((y.mul (Census.width_rate G L 200 1)).mul_right (Census.spots L))\n  refine ⟨E,hf,H.mono ?_⟩\n  intro x hx\n  refine ⟨by unfold E; have h := hx.1; positivity,?_⟩\n  intro c f S T F X hx' hS hL hr Z u W γ κ hz hm hq he hf hh ht\n  subst x\n  let v := Z.shares\n  let t := X.t\n  let U := X.input u\n  let M := meanEnergy Z T X.x U X.k X.V\n  have Hm : κ*t^2*v ≤ M := ht.bought (by unfold Coat.B; omega) (SectorMeasure.funds_branch hr.accepted) F (X.sliced u) hq\n  have hy (s : Signed) := expenses X Z s u hz hx.1 fun p hi hj =>\n    hx.2 c f S T F X rfl hS hL hr Z u p s W γ (hm _) he hf hh ht hi hj\n  rw [sub_mul]\n  apply le_trans (sub_le_sub_right Hm _)\n  unfold M meanEnergy quoteNear\n  rw [← av_const (E _ * _),← av_sub];\n  apply av_mono\n  intro s\n  have he := hy s; rw [hL] at he; exact he",
+     "conclusion": "(kappa*t^2 - E(x))*|Z| <= quoteNear, from the mean-energy bound kappa*t^2*|Z| <= meanEnergy of the point charge, with E of rate -3/2.",
      "proof_context": {
-      "declaration": "YM.ConnectedActivityE6.Cash.armK",
+      "declaration": "YM.ConnectedActivityE6.Coat.earns",
       "lines": [
-       41,
-       42
+       54,
+       86
       ],
-      "conclusion": "`armK` is the forced-factor constant `2^{-m} exp(-Q.mark) * mergeScale/(1-1/2)`, carrying an exponential decay weight `exp(-Q.mark)`."
+      "conclusion": "(kappa*t^2 - E(x))*|Z| <= quoteNear, from the mean-energy bound kappa*t^2*|Z| <= meanEnergy of the point charge, with E of rate -3/2."
      }
     }
    ],
-   "note": "The retained exponential in the component size is present only as an abstract `Q.mark` weight inside the forced constant, not as `exp(-kappa_B beta'_u t^2 |A|)` from a seed selection.",
+   "note": "[L] keeps the local energy exp(-beta*quoteNear) in Coat.steam, with the lower bound (kappa*t^2 - E(x))|Z| from Coat.earns, before integrating (Coat.steam_prices). The retained exponent includes the annular correction E(x) of scale rate -3/2.",
    "confidence": "low",
    "verification": {
     "batch": "P19",
@@ -31248,13 +31265,19 @@
     "mapper": "relatedMatch",
     "verifier": "relatedMatch",
     "agreed": true,
-    "source": "mapper+verifier",
+    "source": "mapper+verifier+rereview",
     "complete": true,
     "s5": {
      "how": "sweep agreed",
      "sweep": "re-rate",
      "sweep_relation": "relatedMatch",
      "was": "relatedMatch"
+    },
+    "rereview": {
+     "kind": "rejudged",
+     "from": "relatedMatch",
+     "source": "re-judged after a second independent review (whole class: blind opus judge, opus ruling on disagreement)",
+     "why": "Coat.earns derives the retained energy lower bound from the point-charge constant kappa; Cash.armK is an unrelated forced-factor constant."
     }
    }
   },
@@ -31532,6 +31555,12 @@
      "sweep_relation": "hasPart",
      "was": "relatedMatch",
      "ruling": "A"
+    },
+    "rereview": {
+     "kind": "kept",
+     "from": "relatedMatch",
+     "source": "re-judged after a second independent review (whole class: blind opus judge, opus ruling on disagreement)",
+     "why": "M.weight is the sup weight of the leaf ingredient, not the seed-energy suppression, so Herd.nil is not closeMatch. The alternative citation (VerifiedReset Collection.Local) is only a hypothesis structure for forced sup bounds, so these Herd lines are the right place, with relatedMatch."
     }
    }
   },
@@ -31637,6 +31666,12 @@
      "sweep_relation": "relatedMatch",
      "was": "noMatch",
      "ruling": "B"
+    },
+    "rereview": {
+     "kind": "kept",
+     "from": "relatedMatch",
+     "source": "re-judged after a second independent review (whole class: blind opus judge, opus ruling on disagreement)",
+     "why": "the blind judge agreed on the class"
     }
    }
   },
@@ -31841,49 +31876,49 @@
    "item": "Lemma 13.4",
    "step": 19,
    "kind": "proof_step",
-   "relation": "relatedMatch",
-   "class": "Deviates",
+   "relation": "exactMatch",
+   "class": "1-to-1",
    "ends": [
     {
-     "decl": "YM.PhysicalNext.Repeat.Song.books",
-     "file": "YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Song/Octet.lean",
+     "decl": "YM.PhysicalNext.Repeat.Daisy.score",
+     "file": "YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Daisy/Charm.lean",
      "lines": [
-      81,
-      84
+      27,
+      46
      ],
-     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Song/Octet.lean#L81-L84",
-     "snippet": "lemma books (γ : ℝ) (ha : Quotes.preExponent p ≤ a) (hX : Armada Q L μ a s i B j k) (hn : p.power≤ n)\n    (hd : WilsonStartup.Decent T.low p) {σ C Λ : ℝ} (ht : T.down.Bounds T.low σ C Λ) (hw : preExponent p / p.B ≤ σ/2) :\n      ∃ u, Quotes.early p (scaleT p H) u ((collars G i s j n*(salary Q L μ B s j k*(1-1/2)⁻¹))+\n        octaveNeed G p T.low σ C Λ R.beta γ) ∧ ∀ l, p.Regular (scaleT p H l).support (opus H X χ γ l) ∧",
-     "conclusion": "`books` gives each regular activity of `scaleT p H` the `p.Regular` and `p.supBounds` bounds `u l` whose budget is `collars*salary*(1-1/2)⁻¹ + octaveNeed`, from `Armada` and `T.down.Bounds`.",
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Daisy/Charm.lean#L27-L46",
+     "snippet": "lemma score (he : troupe T R Q.halo (radiusB x) p)(hA : M.turn.badge S∈p) (hX:X.x=x)(ht:X.width=o.K)(hF:X.χ=χ)(hu:X.manifest)(hv:Healthy (Pressure.temp X.x) (H.unionP p) X.V)(hV : Mode V y j v)(hr: Clutch X z' o.a R.beta d y j V f' (fun i=>course X A R.beta z' (V i))) (hB : 0≤B)\n    (hC : Brush j M.weight (B*spanW T R X.B Q.halo (M.turn.badge S)) (fun t=> M.fond (vary X (V t)) o.a (f' t) (X.input (worldZ X R.beta z'))) y)\n    (hT : Brush j 1 (B'*facescale I z'^k) (fun i=> scalp I X (V i) R.beta A z') y)(h':0≤B') :\n    let K':=M.weight * ∏i∈p.erase (M.turn.badge S), Ξ.tag i\n    Brush j ((X.catastrophe (o.ξ/2) R.beta (blaze p)).indicator (fun z=> K'*(1+B'+2*(r+B))^j*(1+H.shapeW p)^j*facescale I z^(k*j)) z') 1\n      (fun i=> M.chimes X p I (V i) A Q.table W o.a Q.halo z') y := by\n  intro P'; have hD:=(hT.paints (acreage M X H Ξ he hA (own p) hX ht hF hu hv hV hr hB hC)).trim\n  refine hD.climb ?_ le_rfl; by_cases hx:z'∈X.catastrophe (o.ξ/2) R.beta (blaze p)\n  swap; · rw [Set.indicator_of_notMem hx, Set.indicator_of_notMem hx,mul_zero,zero_mul]\n  rw [Set.indicator_of_mem hx, Set.indicator_of_mem hx,one_mul]; change P'* _ ≤ _\n  let f:=facescale I z'; let g := r+B; let D:=1+H.shapeW p; have ht':1≤g:=Ξ.active.trans (le_add_of_nonneg_right hB); have hF:1≤f:= (Flux.expenses ..).1; have hv':1≤D:=le_add_of_nonneg_right (H.positive_volume p)\n  have h₁:1≤ f^k:= one_le_pow₀ hF; have h₂ : 1+(B'*f^k+g*(2*H.shapeW p))≤(1+B'+2*g)*D*f^k:=by\n    have hc : f^k ≤ D*f^k:= le_mul_of_one_le_left (zero_le_one.trans h₁) hv'\n    have hS:H.shapeW p ≤ D*f^k:= (show H.shapeW p ≤ D from le_add_of_nonneg_left zero_le_one).trans (le_mul_of_one_le_right (zero_le_one.trans hv') h₁)\n    have ha:1≤ D*f^k:= h₁.trans hc\n    -- nlinarith\n    nlinarith only [mul_le_mul_of_nonneg_left hc h', mul_le_mul_of_nonneg_left hS (zero_le_one.trans ht'),ha]\n  have he : 0 ≤ 1+(B'*f^k+g*(2*H.shapeW p)):=add_nonneg zero_le_one (add_nonneg hT.pos (mul_nonneg (zero_le_one.trans ht') (mul_nonneg zero_le_two (H.positive_volume p))))\n  refine (mul_le_mul_of_nonneg_left (pow_le_pow_left₀ he h₂ j) (show 0≤P' from mul_nonneg M.profit (prod_nonneg fun _ _=>Ξ.tagged _))).trans_eq ?_\n  rw [mul_pow,mul_pow,pow_mul]; unfold f g D; ring",
+     "conclusion": "The order-j jet majorant of chimes is K'*(1+B'+2(r+B))^j*(1+shapeW)^j*facescale^{kj} on the catastrophe set.",
      "proof_context": {
-      "declaration": "YM.PhysicalNext.Repeat.Song.books",
+      "declaration": "YM.PhysicalNext.Repeat.Daisy.score",
       "lines": [
-       81,
-       90
+       27,
+       46
       ],
-      "conclusion": "`books` gives each regular activity of `scaleT p H` the `p.Regular` and `p.supBounds` bounds `u l` whose budget is `collars*salary*(1-1/2)⁻¹ + octaveNeed`, from `Armada` and `T.down.Bounds`."
+      "conclusion": "The order-j jet majorant of chimes is K'*(1+B'+2(r+B))^j*(1+shapeW)^j*facescale^{kj} on the catastrophe set."
      }
     },
     {
-     "decl": "YM.ConnectedActivityE6.Blaze.March.collars",
-     "file": "YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/Armada.lean",
+     "decl": "YM.PhysicalNext.Repeat.Daisy.timing",
+     "file": "YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Daisy/Charm.lean",
      "lines": [
-      25,
-      25
+      72,
+      78
      ],
-     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/Armada.lean#L25-L25",
-     "snippet": "def collars (_G : Gauge) (η : ℝ) (s : ℝ) (j m: ℕ) := (shiftG s)^(m*j)*Reserves.polyPrice η (m*j)",
-     "conclusion": "`collars` is `(shiftG s)^(m*j) * polyPrice η (m*j)`, the price of `m` derivatives.",
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Daisy/Charm.lean#L72-L78",
+     "snippet": "  obtain ⟨J',hJ',hP',hX'⟩:= Clutch.central G L χ i hb (2*o.a)\n  let e x:= 1+|F x|; let v x:=(1+|U x|+2*(r x+J' x))^i; let p x:=e x*v x\n  have hh {V:ℝ→ℝ} (h:Rate G L 0 V):= h.compare (v:=fun x=> |V x|) (Eventually.of_forall fun z=> (abs_abs _).le)\n  have he:= Rate.const (G:=G) (L:=L) 1\n  refine ⟨C,(fun x=> |B x|),r,p,K+i,hb,by unfold p; simpa only [zero_mul,zero_add] using! ((he.add (hh hF)).mul (((he.add\n    (hh hU)).add ((hr.add hJ').mul_left 2)).pow i)),?_⟩\n  filter_upwards [hχ,hΓ,hX,hX', ((Rate.flame (G:=G) (L:=L)).mul_left (8*o.a)).below (by norm_num) _ (half_pos hA.warm)] with",
+     "conclusion": "The derivative constants are collected into p = e*v with v=(1+|U|+2(r+J'))^i of rate 0, and into the support polynomial with exponent K+i.",
      "proof_context": {
-      "declaration": "YM.ConnectedActivityE6.Blaze.March.collars",
+      "declaration": "YM.PhysicalNext.Repeat.Daisy.timing",
       "lines": [
-       25,
-       25
+       58,
+       179
       ],
-      "conclusion": "`collars` is `(shiftG s)^(m*j) * polyPrice η (m*j)`, the price of `m` derivatives."
+      "conclusion": "The derivative constants are collected into p = e*v with v=(1+|U|+2(r+J'))^i of rate 0, and into the support polynomial with exponent K+i."
      }
     }
    ],
-   "note": "Lean charges the prescribed derivatives through the price `collars` in the budget of `books`, a different quantity from the read-count polynomial and subpower factor.",
+   "note": "[L] makes the same assembly in Daisy.score and Daisy.timing. The derivative costs go into the rate-0 (subpower) factor p and into the support polynomial (1+shapeW)^{K+i}.",
    "confidence": "medium",
    "verification": {
     "batch": "P19",
@@ -31900,7 +31935,13 @@
      "how": "judge",
      "ruling": "B"
     },
-    "source": "s5 judge"
+    "source": "s5 judge+rereview",
+    "rereview": {
+     "kind": "rejudged",
+     "from": "relatedMatch",
+     "source": "re-judged after a second independent review (whole class: blind opus judge, opus ruling on disagreement)",
+     "why": "The remark only points to where derivative costs are absorbed, and timing absorbs them in exactly those two places. Song.books and March.collars belong to a different budget."
+    }
    }
   },
   {

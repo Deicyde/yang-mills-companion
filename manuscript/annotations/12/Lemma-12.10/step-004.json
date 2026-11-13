@@ -1,9 +1,9 @@
 {
   "id": "Lemma 12.10 step 4",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "relatedMatch",
-  "note": "[L] bounds the slots by 4h and proves C(4h)^3 + C(4h)^4 ≤ c_dir h^2/4 instead of 2A h^3 ≤ c_dir h^2/4, so the intermediate quantity differs even though the final bound is the same.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] carries the inequality in CouplingReset.sensor. It works per site rather than with the |Lambda| total, and uses the face-chord bound 4h in place of slot norm h, with the same 512(1+A^path) choice of tau.",
   "subject": [
     {
       "location": {
@@ -32,46 +32,7 @@
         "declaration": "YM.UVNext.CouplingReset.sensor",
         "module": "YM.UVNext.COUPLING_RESET.Probe",
         "lines": [
-          126,
-          134
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.UVNext.CouplingReset.sensor"
-          },
-          "snippet": {
-            "text": "    have hsmall : C*(4*h)^3+C*(4*h)^4 ≤ A.direct*h^2/4 := calc\n      _ ≤ C*(4*h)^3 + C*(4*h)^3 := by\n        exact add_le_add_right (mul_le_mul_of_nonneg_left (pow_le_pow_of_le_one h₄ (hz.trans P.threshold_le)\n          (by decide : (3:ℕ) ≤ 4)) hC) _\n      _ = ((512*C)*h)*h^2/4 := by ring\n      _ ≤ _ := by\n        have hb := (le_div_iff₀ (show (0:ℝ) < 512*(1+C) by positivity)).mp (show t ≤ A.direct / _ from min_le_right ..)\n        have hcost : 512*C*h ≤ A.direct := by nlinarith\n        gcongr",
-            "line": 126,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/COUPLING_RESET/Probe.lean",
-            "fragment": "L126-L134"
-          },
-          "proof_context": {
-            "declaration": "YM.UVNext.CouplingReset.sensor",
-            "lines": [
-              96,
-              142
-            ],
-            "conclusion": "`C*(4h)^3 + C*(4h)^4 <= A.direct*h^2/4`, using the choice of `t` through `512*C*h <= A.direct`."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.UVNext.CouplingReset.sensor",
-        "module": "YM.UVNext.COUPLING_RESET.Probe",
-        "lines": [
-          135,
+          97,
           139
         ]
       },
@@ -82,14 +43,14 @@
             "id": "YM.UVNext.CouplingReset.sensor"
           },
           "snippet": {
-            "text": "    have hterm (x : Site n) : -(A.direct*h^2/4) ≤ PathData.atomSeries D.cubic P (pull s 0 U) x +\n          PathData.atomSeries D.quartic P (pull s 0 U) x := by\n      have h1 := neg_le_of_abs_le (atomSeries_chord (P:=P) hD.width hD.three h₄ hm x)\n      have h2 := neg_le_of_abs_le (atomSeries_chord (P:=P) hD.width hD.four h₄ hm x)\n      linarith only [h1,h2,hsmall]",
-            "line": 135,
+            "text": "  obtain ⟨ε,hε,hg⟩ := reachable_chord G\n  let t := min (min ε (1/4)) (A.direct/(512*(1+C)))\n  have hA := A.quadratic_pos\n  have htp : 0 < t := lt_min (lt_min hε (by norm_num)) (by positivity)\n  refine ⟨A.direct*t^2/4,by positivity,fun n he D P σ Λ hD => ?_⟩\n  let h := t * P.threshold\n  have hP := P.threshold_pos\n  have hh : 0 ≤ h := (mul_pos htp hP).le\n  have hh' : h ≤ t := mul_le_of_le_one_right htp.le P.threshold_le\n  obtain ⟨u,hu⟩ := hg _ ⟨hh,hh'.trans ((min_le_left ..).trans (min_le_left ..))⟩\n  let U := stripe u he\n  have hf p : G.chord (faceValue U p) ≤ 4*h := by\n    have hb (i) : G.chord (U i) ≤ h := by unfold U stripe; split <;> simp [*]\n    simpa [faceValue,square] using Next.Fluctuations.travel_chord U (square p.2.val.1 p.2.val.2) p.1 h hb\n  have hz : 4*h ≤ P.threshold := by\n    have hle := mul_le_mul_of_nonneg_right (show t ≤ 1/4 from (min_le_left ..).trans (min_le_right ..)) hP.le\n    dsimp [h]; linarith\n  refine ⟨U, flags_empty (fun p => (hf p).trans hz), ?_⟩\n  let T := A.direct * t^2 / 4 * P.threshold^2\n  let N := sites n\n  change N * T ≤ _\n  rw [kinetic, le_inv_mul_iff₀ (by exact_mod_cast (Fintype.card_pos (α:=Signed)))]\n  have H (s : Signed) : N*T ≤ (∑ p, D.baseTerm A P (pull s 0 U) p) + ∑ x : Site n,\n      (PathData.atomSeries D.cubic P (pull s 0 U) x + PathData.atomSeries D.quartic P (pull s 0 U) x) := by\n    have hm p : G.chord (faceValue (pull s 0 U) p) ≤ 4*h :=\n      (Face.send_price U _ _ _ G.chord G.chord_inv (fun k g => G.chord_conj g k)).trans_le (hf _)\n    have hx := direct_probe D A P u he (fun p => (hf p).trans hz) s\n    rw [hu] at hx\n    have h₄ : 0 ≤ 4*h := by positivity\n    have hsmall : C*(4*h)^3+C*(4*h)^4 ≤ A.direct*h^2/4 := calc\n      _ ≤ C*(4*h)^3 + C*(4*h)^3 := by\n        exact add_le_add_right (mul_le_mul_of_nonneg_left (pow_le_pow_of_le_one h₄ (hz.trans P.threshold_le)\n          (by decide : (3:ℕ) ≤ 4)) hC) _\n      _ = ((512*C)*h)*h^2/4 := by ring\n      _ ≤ _ := by\n        have hb := (le_div_iff₀ (show (0:ℝ) < 512*(1+C) by positivity)).mp (show t ≤ A.direct / _ from min_le_right ..)\n        have hcost : 512*C*h ≤ A.direct := by nlinarith\n        gcongr\n    have hterm (x : Site n) : -(A.direct*h^2/4) ≤ PathData.atomSeries D.cubic P (pull s 0 U) x +\n          PathData.atomSeries D.quartic P (pull s 0 U) x := by\n      have h1 := neg_le_of_abs_le (atomSeries_chord (P:=P) hD.width hD.three h₄ hm x)\n      have h2 := neg_le_of_abs_le (atomSeries_chord (P:=P) hD.width hD.four h₄ hm x)\n      linarith only [h1,h2,hsmall]",
+            "line": 97,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/COUPLING_RESET/Probe.lean",
-            "fragment": "L135-L139"
+            "fragment": "L97-L139"
           },
           "proof_context": {
             "declaration": "YM.UVNext.CouplingReset.sensor",
@@ -97,7 +58,7 @@
               96,
               142
             ],
-            "conclusion": "At every site the cubic and quartic atom series of each signed image is at least `-(A.direct*h^2/4)`, by `atomSeries_chord`."
+            "conclusion": "With t <= A.direct/(512(1+C)) and face chords at most 4h, C(4h)^3 + C(4h)^4 <= 2C(4h)^3 <= A.direct*h^2/4 per site, so every site's cubic and quartic atom series is at least -(A.direct*h^2/4)."
           }
         }
       }
@@ -112,7 +73,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-check of closeMatch records changed it from closeMatch; a re-rating agent agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-check of closeMatch records changed it from closeMatch; a re-rating agent agreed; re-judged after a second independent review, which changed it from relatedMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

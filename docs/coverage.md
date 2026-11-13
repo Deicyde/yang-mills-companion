@@ -16,12 +16,12 @@ Armstrong, *The construction of four-dimensional quantum Yang–Mills theory* (`
 | | 1-to-1 | Faithful | Partial | Deviates | Absent | Unjudged | Formalized |
 |---|---|---|---|---|---|---|---|
 | Statements | 65/206 (32%) | 56/206 (27%) | 57/206 (28%) | 20/206 (10%) | 3/206 (1%) | 5/206 (2%) | **121/206 (59%)** |
-| Displays | 290/607 (48%) | 223/607 (37%) | 51/607 (8%) | 36/607 (6%) | 3/607 (0%) | 4/607 (1%) | **513/607 (85%)** |
+| Displays | 290/607 (48%) | 224/607 (37%) | 51/607 (8%) | 35/607 (6%) | 3/607 (0%) | 4/607 (1%) | **514/607 (85%)** |
 | &nbsp;&nbsp;of which numbered displays | 87/252 (35%) | 100/252 (40%) | 46/252 (18%) | 13/252 (5%) | 2/252 (1%) | 4/252 (2%) | **187/252 (74%)** |
-| &nbsp;&nbsp;of which unnumbered displays | 203/355 (57%) | 123/355 (35%) | 5/355 (1%) | 23/355 (6%) | 1/355 (0%) | 0/355 (0%) | **326/355 (92%)** |
-| Steps | 608/1607 (38%) | 609/1607 (38%) | 100/1607 (6%) | 258/1607 (16%) | 32/1607 (2%) | 0/1607 (0%) | **1217/1607 (76%)** |
+| &nbsp;&nbsp;of which unnumbered displays | 203/355 (57%) | 124/355 (35%) | 5/355 (1%) | 22/355 (6%) | 1/355 (0%) | 0/355 (0%) | **327/355 (92%)** |
+| Steps | 609/1607 (38%) | 612/1607 (38%) | 100/1607 (6%) | 254/1607 (16%) | 32/1607 (2%) | 0/1607 (0%) | **1221/1607 (76%)** |
 
-Unjudged steps and unnumbered displays are those whose mapper and verifier disagreed and no judge reached: 0 of 1607 steps and 0 of 355 displays. Of the judged steps, 1217/1607 (76%) are formalized; of the judged unnumbered displays, 326/355 (92%).
+Unjudged steps and unnumbered displays are those whose mapper and verifier disagreed and no judge reached: 0 of 1607 steps and 0 of 355 displays. Of the judged steps, 1221/1607 (76%) are formalized; of the judged unnumbered displays, 327/355 (92%).
 
 Statements are the 206 numbered or named theorems, lemmas, propositions, corollaries, definitions and remarks; displays the 252 numbered equations and the 355 unnumbered displays outside proofs; steps the 1607 steps of the 129 proofs. Of the 20 statements that deviate, 20 are confirmed findings.
 
@@ -33,16 +33,16 @@ Not re-judged in full, with the class-correct rate the sample measured (Wilson 9
 
 | Stratum | Records | Re-judged | Class right in the sample | 95% interval | Steps not re-judged: formalized shift | Displays not re-judged: formalized shift |
 |---|---|---|---|---|---|---|
-| Deviates by `relatedMatch` | 177 | 75 | 29/39 (74%) | 59%–85% | +22 [+4, +37] of 96 | +1 [0, +2] of 6 |
+| Deviates by `relatedMatch` | 177 | 87 | 29/39 (74%) | 59%–85% | +20 [+3, +33] of 86 | +1 [0, +2] of 4 |
 | Deviates by `narrowMatch` | 46 | 30 | 28/30 (93%) | 79%–98% | +1 [−1, +3] of 12 | 0 [0, +1] of 4 |
 | 1-to-1 | 787 | 38 | 33/38 (87%) | 73%–94% | 0 [−51, +51] of 558 | 0 [−18, +18] of 191 |
 | Faithful (judged) | 387 | 29 | 25/29 (86%) | 69%–95% | −20 [−64, +29] of 293 | −4 [−14, +6] of 65 |
 | Faithful kept by rule | 190 | 26 | 21/26 (81%) | 62%–91% | 0 [−16, +16] of 128 | 0 [−5, +5] of 36 |
 | Declaration-set disagreements (mapper's verdict kept by rule) | 98 | 16 | 9/16 (56%) | 33%–77% | +29 [−1, +47] of 77 | +2 [0, +3] of 5 |
 
-Formalized steps: 1217/1607 (76%) as judged; with the measured error rates applied to the records not re-judged, 1249/1607 (78%), range 1087–1400 (68%–87%). The range adds each stratum's interval bounds, so it is wider than a joint 95% interval; it covers sampling error, not error in the rulings.
+Formalized steps: 1221/1607 (76%) as judged; with the measured error rates applied to the records not re-judged, 1250/1607 (78%), range 1090–1400 (68%–87%). The range adds each stratum's interval bounds, so it is wider than a joint 95% interval; it covers sampling error, not error in the rulings.
 
-Formalized unnumbered displays: 326/355 (92%) as judged; with the measured error rates applied to the records not re-judged, 325/355 (92%), range 289–355 (81%–100%). The range adds each stratum's interval bounds, so it is wider than a joint 95% interval; it covers sampling error, not error in the rulings.
+Formalized unnumbered displays: 327/355 (92%) as judged; with the measured error rates applied to the records not re-judged, 326/355 (92%), range 290–355 (82%–100%). The range adds each stratum's interval bounds, so it is wider than a joint 95% interval; it covers sampling error, not error in the rulings.
 
 ## 2. By section
 
@@ -58,9 +58,9 @@ Formalized unnumbered displays: 326/355 (92%) as judged; with the measured error
 | 8 | 8/11 (73%) | 7/7 (100%) | 10/10 (100%) | 9–10 | 0/10 (0%) | 0/28 (0%) |
 | 9 | — | 3/3 (100%) | — | — | — | 0/3 (0%) |
 | 10 | 1/4 (25%) | 16/18 (89%) | 55/61 (90%) | 50–59 | 0/61 (0%) | 4/83 (5%) |
-| 11 | 4/13 (31%) | 58/67 (87%) | 190/253 (75%) | 171–209 | 5/253 (2%) | 46/333 (14%) |
-| 12 | 4/10 (40%) | 26/27 (96%) | 94/105 (90%) | 84–105 | 1/105 (1%) | 6/142 (4%) |
-| 13 | 7/21 (33%) | 54/69 (78%) | 168/272 (62%) | 150–204 | 7/272 (3%) | 89/362 (25%) |
+| 11 | 4/13 (31%) | 59/67 (88%) | 190/253 (75%) | 171–209 | 5/253 (2%) | 45/333 (14%) |
+| 12 | 4/10 (40%) | 26/27 (96%) | 95/105 (90%) | 85–105 | 1/105 (1%) | 5/142 (4%) |
+| 13 | 7/21 (33%) | 54/69 (78%) | 171/272 (63%) | 153–205 | 7/272 (3%) | 86/362 (24%) |
 | 14 | 20/33 (61%) | 78/103 (76%) | 206/285 (72%) | 183–240 | 5/285 (2%) | 63/421 (15%) |
 | 15 | 1/5 (20%) | 14/20 (70%) | 34/41 (83%) | 30–38 | 0/41 (0%) | 10/66 (15%) |
 | 16 | 5/12 (42%) | 39/47 (83%) | 149/172 (87%) | 133–169 | 0/172 (0%) | 22/231 (10%) |
@@ -160,7 +160,7 @@ Displays and steps, by section:
 | 10 | 12/18 (67%) | 43/61 (70%) |
 | 11 | 34/67 (51%) | 109/253 (43%) |
 | 12 | 16/27 (59%) | 52/105 (50%) |
-| 13 | 22/69 (32%) | 76/272 (28%) |
+| 13 | 22/69 (32%) | 77/272 (28%) |
 | 14 | 30/103 (29%) | 77/285 (27%) |
 | 15 | 6/20 (30%) | 18/41 (44%) |
 | 16 | 23/47 (49%) | 89/172 (52%) |
@@ -187,7 +187,7 @@ Every Deviates record, by section; in each section the confirmed findings come f
 | Lemma 10.3 step 2 | 43 | The section bound follows by the same product rule, but [L] proves the global bound (10.6) by continuity on the compact configuration space instead of unit-modulus matrix entries, a different argument for part of the step. | `YM.Work.G07.paid_lumin`, `YM.Work.G07.answer`, `YM.Next.Foundations.full_value_bound`, `YM.Next.Foundations.priced` | judged `relatedMatch` (judge ruling, changed from `closeMatch` in the closeMatch re-check) |
 | Lemma 10.4 step 29 | 46 | The inverse is taken abstractly from injectivity; the explicit Neumann series is not written. | `YM.Push.Mark.twist`, `YM.Push.Mark.weaveBuild` | judged `relatedMatch` (mapper and verifier agreed) |
 
-### Section 11 (46)
+### Section 11 (45)
 
 | Record | p. | Text against [L] | Declarations | Evidence |
 |---|---|---|---|---|
@@ -201,7 +201,6 @@ Every Deviates record, by section; in each section the confirmed findings come f
 | Section 11 display 13 | 51 | The energy identity is proved for the tree representative of W_0 under the normal equations, and the lower bound is an abstract eta in `Floor`; [M]'s explicit H >= 2 gamma I is stronger than what [L] states. | `YM.Precision.action`, `YM.Precision.Floor`, `YM.Next.Free.bid_bed` | judged `narrowMatch` (judge ruling) |
 | Section 11 display 25 | 58 | [L] uses a single constant A for both M_1 and M_2, so Q_0, Q_1, Q_2 appear only in the special case M_1 = M_2 and summed in one bound (`inverseBill`); [M]'s polynomials with separate M_1, M_2 are more general. | `YM.Stationary.Freezer.back`, `YM.Stationary.inverseBill`, `YM.Stationary.Jam.rebounds` | judged `narrowMatch` (judge ruling) |
 | Section 11 display 26 | 58 | It has no separate M_1, M_2 and no polynomial P_{j,r} with the interpolation, frame and penalty bounds. | `YM.Stationary.Cruise.stars`, `YM.Stationary.cabinTicket`, `YM.Stationary.Spotlight` | judged `relatedMatch` (mapper and verifier agreed) |
-| Section 11 display 57 | 73 | [L] bounds the value of the packet factor by exp(-(gain - C bill^5)\|A\|), keeping a separate cost term C bill^5, and does not state a bound for the product of seed envelopes through order k with a constant κ'_B < κ. | `YM.ConnectedActivityE6.Target.Invoices` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 11.4 step 14 | 49 | [M] counts each plaquette between at most `2R` layer pairs and obtains `(2R+1){E(X_0) + F(X)}`; Lean bounds each layer separately by `4 F(X)` and obtains the weaker `(2R+1){E(X_0) + 4F(X)}`, which still gives the same final `4r(2R+1)F`. | `YM.Axial.existence`, `YM.Axial.total_slab` | judged `narrowMatch` (judge ruling) |
 | Lemma 11.4 step 15 | 49 | [M]'s first inequality has the plaquette term with coefficient 1, [L]'s has `4*faces`, which is weaker; the final bound `4r(2R+1)F` is the same. | `YM.Axial.total_slab`, `YM.Axial.existence` | judged `narrowMatch` (mapper and verifier agreed) |
 | Lemma 11.5 step 4 | 51 | Lean defines the two-form metric directly and proves its reduced one-form as a Schur complement (`rotor_law`) with the Lagrange-type matrix identity `blade_price`; the minimum over phi with weights w_a is never stated, so the closed form is reached as a different quantity. | `YM.Next.Free.rotor_law`, `YM.Next.Free.blade_price` | judged `relatedMatch` (mapper and verifier agreed) |
@@ -238,7 +237,7 @@ Every Deviates record, by section; in each section the confirmed findings come f
 | Lemma 11.13 step 30 | 75 | `annulus` gives E the rate -3/2 against the scale; the limit E(x)/t^2 -> 0 is not stated and the rate is a different quantity. | `YM.ConnectedActivityE6.Coat.annulus` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 11.13 step 33 | 75 | Lean treats the determinant and covariance corrections through the exponential-moment lemmas and the `Rate` bounds on logarithms (`walksWorth`), not in one line that cites the bounds above. | `YM.SectorTools.PhysicalGaussianInsertion.laplace_price` | judged `relatedMatch` (mapper and verifier agreed) |
 
-### Section 12 (6)
+### Section 12 (5)
 
 | Record | p. | Text against [L] | Declarations | Evidence |
 |---|---|---|---|---|
@@ -247,9 +246,8 @@ Every Deviates record, by section; in each section the confirmed findings come f
 | Lemma 12.8 step 22 | 84 | `boundedTip` first halves the width (`fireworks` to sigma/2) and then applies the Cauchy estimate `shoot` on radius sigma/4, so a bound A on width sigma gives (A/(sigma/4))/(sigma/8) = 32A/sigma^2 times `‖axes (step 0)‖^2`; [M]'s 8C_*/zeta_*^2 for a bound C_* on width zeta_* is four times sharper. | `YM.Stationary.boundedTip`, `YM.Stationary.shoot`, `YM.Stationary.biteCost`, `YM.Stationary.quoting` | judged `narrowMatch` (judge ruling) |
 | Lemma 12.3 step 9 | 86 | [L] bounds the loop weight by `add L^4` plus `send/L^2 * Λ` with abstract prices and has no `log ℓ` term; the inherited-kernel pullback is the `send/L^2*Λ` part. | `YM.Push.PriceCompiler.LoopPrices.cost` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 12.10 step 3 | 87 | CouplingReset.sensor with stripe_plane and direct_probe carries the step (healthy probe, direct lower bound, nonnegative remaining terms, cubic and quartic bound) on sides with 2 \| n; it does not show the other plaquettes have chord zero or slots norm at most h, instead bounding every plaquette chord and slot by 4h and requiring 4h <= threshold. | `YM.UVNext.CouplingReset.sensor`, `YM.UVNext.CouplingReset.direct_probe`, `YM.UVNext.CouplingReset.stripe_plane` | judged `relatedMatch` (judge ruling) |
-| Lemma 12.10 step 4 | 88 | [L] bounds the slots by 4h and proves C(4h)^3 + C(4h)^4 ≤ c_dir h^2/4 instead of 2A h^3 ≤ c_dir h^2/4, so the intermediate quantity differs even though the final bound is the same. | `YM.UVNext.CouplingReset.sensor` | judged `relatedMatch` (mapper and verifier agreed, changed from `closeMatch` in the closeMatch re-check) |
 
-### Section 13 (89)
+### Section 13 (86)
 
 | Record | p. | Text against [L] | Declarations | Evidence |
 |---|---|---|---|---|
@@ -270,13 +268,10 @@ Every Deviates record, by section; in each section the confirmed findings come f
 | Lemma 13.4 step 2 | 92 | [M] fixes the chart variable `z`, the scale `g=(beta'_u)^(-1/2)` and the mean; the Lean has the factor bounds only as abstract `supBounds` with the coupling in `p.B`, no chart. | `YM.PhysicalNext.Repeat.Song.stanzaReady` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 13.4 step 3 | 93 | The rows bounded here by Taylor expansion about a chart point appear in the Lean as the abstract cubic/quartic/loop score bounds `singBook`, `pitch_charge`; the chart, determinant and warning-factor estimates are not carried. | `YM.PhysicalNext.Repeat.Song.stanzaReady` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 13.4 step 4 | 93 | Lean bounds the simultaneous warning probability by E^{\|v\|} with an abstract E of rate β^{-1} taken from `tends_val`, not by fixing τ_w=1/2. | `YM.ConnectedActivityE6.Target.Invoices`, `YM.ConnectedActivityE6.Target.issue` | judged `relatedMatch` (mapper and verifier agreed) |
-| Lemma 13.4 step 5 | 93 | Lean uses the monitor exp(-δ·fineMonitor^γ), which is a `Rate` of every exponent, in place of the ratio (t_{m+1}/g)/(B⁴ log 𝔟)→∞; the limit itself is not stated. | `YM.ConnectedActivityE6.Rate.monitor_cutoff` | judged `relatedMatch` (mapper and verifier agreed) |
-| Lemma 13.4 step 8 | 93 | The retained exponential in the component size is present only as an abstract `Q.mark` weight inside the forced constant, not as `exp(-kappa_B beta'_u t^2 \|A\|)` from a seed selection. | `YM.ConnectedActivityE6.Cash.armK` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 13.4 step 12 | 93 | Lean uses a different quantity: a pointwise sup bound `k i` for each forced factor, in place of an integrable majorant g_A of the component product. | `YM.AnalyticBridge.VerifiedReset.Collection.Local` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 13.4 step 13 | 94 | Lean uses a different quantity: a sup constant `k i` with `Ac.Hit`. | `YM.AnalyticBridge.VerifiedReset.Collection.Local` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 13.4 step 15 | 94 | `impartial` controls an unbounded Gaussian coordinate with an integrable Gaussian-times-polynomial majorant rather than by square completion, and it does so for the full-volume factors, not for this molecule's covariance scores. | `YM.ConnectedActivityE6.Lim.impartial` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 13.4 step 16 | 94 | `marched` factorizes integrals of factors with disjoint coordinate supports under a general product measure. | `YM.ConnectedActivityE6.Pond.marched` | judged `relatedMatch` (mapper and verifier agreed) |
-| Lemma 13.4 step 19 | 94 | Lean charges the prescribed derivatives through the price `collars` in the budget of `books`, a different quantity from the read-count polynomial and subpower factor. | `YM.PhysicalNext.Repeat.Song.books`, `YM.ConnectedActivityE6.Blaze.March.collars` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 13.4 step 22 | 94 | The Lean sums over connected label sets rooted at a site by an induction on `film`/`pouch` (`Ac.step`), not by spanning trees with children ordered by first intersection. | `YM.Ac.forest` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 13.4 step 28 | 94 | Refrain.chargesOut proves both forced bounds (uniform sup bounds and the rooted Ac.Hit sum) with budget Cash.armK, which keeps exp(-Q.mark) where Q.mark is the seed mark of the cost table (Threshold.lean 66), not the explicit exp(-r_j beta'_u t_{m+1}^2). | `YM.PhysicalNext.Repeat.Refrain.chargesOut`, `YM.ConnectedActivityE6.Cash.armK` | judged `relatedMatch` (mapper and verifier agreed) |
 | Lemma 13.4 step 33 | 94 | Boulevard.lays takes the raised fine exponent as hG (supportExponent+3 <= earn) and delivers the regular output exponent sigma+3 (preExponent), but the forced output exponent is only sigma+1 (Refrain.chargesOut, Collection.Local.expensive), weaker than sigma+2. | `YM.PhysicalNext.Repeat.Boulevard.lays`, `YM.AnalyticBridge.VerifiedReset.Quotes.preExponent`, `YM.PhysicalNext.Repeat.Refrain.chargesOut` | judged `narrowMatch` (mapper and verifier agreed) |
@@ -616,6 +611,6 @@ For each record take its key relation: for an item, the strongest relation of it
 **"Formalized" means 1-to-1 + Faithful.** Report every percentage with its count, as
 "41/52 (79%)". Never report a percentage without its denominator.
 
-AI agents judged every relation: for the numbered items a mapper and an independent verifier per batch, a judge on disagreement and an independent review with re-judging; for the displays and proof steps a mapper and an independent verifier per batch, a judge on every disagreement of the first batches and then only on those crossing the formalized boundary, and a judge's re-search of one agreed absence in five. A second pass, after an independent review, sent every remaining disagreement between classes to a judge (the 288 that differed only between exactMatch and a weaker formalized relation, or only in the declarations cited, keep the weaker or the mapper's verdict by rule), searched every absent step again through the key proofs' callees and across [L], and re-rated every relatedMatch, hasPart and narrowMatch verdict, with a judge wherever that changed the class. Verdicts were checked mechanically (every declaration against an index built from [L]'s source at the pin, every line range and snippet against that source) and by random samples read by the session leads, themselves agents: 23 of the 360 item verdicts then complete, and 74 of the 1,356 display and step verdicts then complete. A claim that the text is wrong counts only when two independent skeptics confirmed it. No person has reviewed any verdict.
+AI agents judged every relation: for the numbered items a mapper and an independent verifier per batch, a judge on disagreement and an independent review with re-judging; for the displays and proof steps a mapper and an independent verifier per batch, a judge on every disagreement of the first batches and then only on those crossing the formalized boundary, and a judge's re-search of one agreed absence in five. A second pass, after an independent review, sent every remaining disagreement between classes to a judge (the 288 that differed only between exactMatch and a weaker formalized relation, or only in the declarations cited, keep the weaker or the mapper's verdict by rule), searched every absent step again through the key proofs' callees and across [L], and re-rated every relatedMatch, hasPart and narrowMatch verdict, with a judge wherever that changed the class. Verdicts were checked mechanically (every declaration against an index built from [L]'s source at the pin, every line range and snippet against that source) and by random samples read by the session leads, themselves agents: 23 of the 360 item verdicts then complete, and 74 of the 1,356 display and step verdicts then complete. A claim that the text is wrong counts only when two independent skeptics confirmed it. A later independent re-review judged a stratified sample of 252 step and display verdicts blind and ruled each disagreement; its corrections are applied, and then whole classes were re-judged: an opus judge per record, blind to the verdict, and a second opus judge ruling, given both, wherever the class differed (section 1 lists which classes). No person has reviewed any verdict.
 
 How the class is taken here. An item with a checked absence is Absent. An item with a confirmed finding is Deviates whatever its relation, including the no-match findings. The 17 items that [L] carries inside a proof (status `inlined`, key relation `relatedMatch`: [L] argues the same way but states no declaration of them) are Partial. The 9 items whose verdict was contested or left unsettled (status `unclear`) carry no relation and are Unjudged. Every `relatedMatch` step or unnumbered display is Deviates: by `docs/steps-mapping.md` it means [L] does the step there by another argument or with another quantity.

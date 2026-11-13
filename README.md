@@ -117,12 +117,12 @@ definitions, the 1-to-1 list, every deviation and the absences: [`docs/coverage.
 | | 1-to-1 | Faithful | Partial | Deviates | Absent | Unjudged | Formalized |
 |---|---|---|---|---|---|---|---|
 | Statements | 65/206 (32%) | 56/206 (27%) | 57/206 (28%) | 20/206 (10%) | 3/206 (1%) | 5/206 (2%) | **121/206 (59%)** |
-| Displays | 290/607 (48%) | 223/607 (37%) | 51/607 (8%) | 36/607 (6%) | 3/607 (0%) | 4/607 (1%) | **513/607 (85%)** |
-| Steps | 608/1607 (38%) | 609/1607 (38%) | 100/1607 (6%) | 258/1607 (16%) | 32/1607 (2%) | 0/1607 (0%) | **1217/1607 (76%)** |
+| Displays | 290/607 (48%) | 224/607 (37%) | 51/607 (8%) | 35/607 (6%) | 3/607 (0%) | 4/607 (1%) | **514/607 (85%)** |
+| Steps | 609/1607 (38%) | 612/1607 (38%) | 100/1607 (6%) | 254/1607 (16%) | 32/1607 (2%) | 0/1607 (0%) | **1221/1607 (76%)** |
 
-Unjudged steps and unnumbered displays are those whose mapper and verifier disagreed and no judge reached: 0 of 1607 steps and 0 of 355 displays. Of the judged steps, 1217/1607 (76%) are formalized; of the judged unnumbered displays, 326/355 (92%).
+Unjudged steps and unnumbered displays are those whose mapper and verifier disagreed and no judge reached: 0 of 1607 steps and 0 of 355 displays. Of the judged steps, 1221/1607 (76%) are formalized; of the judged unnumbered displays, 327/355 (92%).
 
-An independent re-review sampled the step and display verdicts and found many classes too weak. Re-judged in full since: Absent (`noMatch`) (49 records), Partial (228 records). The other classes were only sampled; their measured error rates put formalized steps at 1087–1400 of 1607 (68%–87%). Rates and intervals by class and section: [`docs/coverage.md`](docs/coverage.md).
+An independent re-review sampled the step and display verdicts and found many classes too weak. Re-judged in full since: Absent (`noMatch`) (49 records), Partial (228 records). The other classes were only sampled; their measured error rates put formalized steps at 1090–1400 of 1607 (68%–87%). Rates and intervals by class and section: [`docs/coverage.md`](docs/coverage.md).
 
 | Section | Statements formalized | Displays formalized | Steps formalized | Steps formalized, measured range | Steps absent | Deviations |
 |---|---|---|---|---|---|---|
@@ -136,9 +136,9 @@ An independent re-review sampled the step and display verdicts and found many cl
 | 8 | 8/11 (73%) | 7/7 (100%) | 10/10 (100%) | 9–10 | 0/10 (0%) | 0/28 (0%) |
 | 9 | — | 3/3 (100%) | — | — | — | 0/3 (0%) |
 | 10 | 1/4 (25%) | 16/18 (89%) | 55/61 (90%) | 50–59 | 0/61 (0%) | 4/83 (5%) |
-| 11 | 4/13 (31%) | 58/67 (87%) | 190/253 (75%) | 171–209 | 5/253 (2%) | 46/333 (14%) |
-| 12 | 4/10 (40%) | 26/27 (96%) | 94/105 (90%) | 84–105 | 1/105 (1%) | 6/142 (4%) |
-| 13 | 7/21 (33%) | 54/69 (78%) | 168/272 (62%) | 150–204 | 7/272 (3%) | 89/362 (25%) |
+| 11 | 4/13 (31%) | 59/67 (88%) | 190/253 (75%) | 171–209 | 5/253 (2%) | 45/333 (14%) |
+| 12 | 4/10 (40%) | 26/27 (96%) | 95/105 (90%) | 85–105 | 1/105 (1%) | 5/142 (4%) |
+| 13 | 7/21 (33%) | 54/69 (78%) | 171/272 (63%) | 153–205 | 7/272 (3%) | 86/362 (24%) |
 | 14 | 20/33 (61%) | 78/103 (76%) | 206/285 (72%) | 183–240 | 5/285 (2%) | 63/421 (15%) |
 | 15 | 1/5 (20%) | 14/20 (70%) | 34/41 (83%) | 30–38 | 0/41 (0%) | 10/66 (15%) |
 | 16 | 5/12 (42%) | 39/47 (83%) | 149/172 (87%) | 133–169 | 0/172 (0%) | 22/231 (10%) |
