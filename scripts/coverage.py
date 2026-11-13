@@ -34,6 +34,10 @@ CLASS_OF = {'exactMatch': '1-to-1', 'closeMatch': 'Faithful', 'broadMatch': 'Fai
 RANK = ('exactMatch', 'closeMatch', 'broadMatch', 'hasPart', 'narrowMatch', 'relatedMatch', 'noMatch')
 FORMALIZED = ('1-to-1', 'Faithful')
 TYPES = ('statements', 'displays', 'steps')
+STRATA = {'absent': 'Absent (`noMatch`)', 'related': 'Deviates by `relatedMatch`', 'narrow': 'Deviates by `narrowMatch`',
+          'one': '1-to-1', 'faithful': 'Faithful (judged)', 'faithful_rule': 'Faithful kept by rule',
+          'partial': 'Partial', 'declset': "Declaration-set disagreements (mapper's verdict kept by rule)",
+          'other': 'Other'}
 TITLE = 'Armstrong, *The construction of four-dimensional quantum Yang–Mills theory* (`manuscript/`, draft {pin7})'
 LONGEST = 20
 CONTRAST = re.compile(r'\b(?:not|no|only|whereas|instead|rather|but|neither|nowhere|never|different|differs|'
@@ -125,6 +129,9 @@ def records(root):
             if rec['relation'] == 'noMatch':
                 rec['searched'] = m.get('searched', [])
             rec['class'] = CLASS_OF.get(rec['relation'], 'Unjudged')
+            rr = m['verification'].get('rereview')
+            rec['rereview'] = rr and {'sample': 'sample' in rr['source'], 'from': CLASS_OF.get(rr['from'], 'Unjudged')}
+            rec['stratum'] = stratum(m, rr['from'] if rr else rec['relation'])
         else:
             m = mapping[rid]
             rec.update(type='displays' if kind == 'equation' else 'statements', section=items[rid]['section']['number'],
@@ -152,6 +159,108 @@ def records(root):
         out.append(rec)
     natural = lambda t: [int(x) if x.isdigit() else x for x in re.split(r'(\d+)', t)]
     return sorted(out, key=lambda r: (section_key(r['section']), TYPES.index(r['type']), r['page'], natural(r['id'])))
+
+
+def stratum(m, relation):
+    """The re-review's stratum of a step or unnumbered display, from its verdict before any re-review."""
+    how = m['verification'].get('s5', {}).get('how')
+    if relation == 'noMatch':
+        return 'absent'
+    if how == 'rule: mapper, same class':
+        return 'declset'
+    if how == 'rule: the Faithful verdict':
+        return 'faithful_rule'
+    if relation in ('relatedMatch', 'narrowMatch'):
+        return {'relatedMatch': 'related', 'narrowMatch': 'narrow'}[relation]
+    return {'1-to-1': 'one', 'Faithful': 'faithful', 'Partial': 'partial'}.get(CLASS_OF.get(relation), 'other')
+
+
+def wilson(k, n, z=1.96):
+    if not n:
+        return 0.0, 1.0
+    p = k / n
+    c, h = (p + z * z / (2 * n)) / (1 + z * z / n), z * (p * (1 - p) / n + z * z / (4 * n * n)) ** .5 / (1 + z * z / n)
+    return max(0.0, c - h), min(1.0, c + h)
+
+
+def error_bars(recs):
+    """Per stratum: records, re-judged, the re-review sample's class-correct rate and formalized flips, and the
+    range those flips put on the formalized count of the records not re-judged (steps; unnumbered displays)."""
+    rs = [r for r in recs if r['type'] == 'steps' or r['kind'] == 'display']
+    out = {}
+    for st in STRATA:
+        mine = [r for r in rs if r['stratum'] == st]
+        if not mine:
+            continue
+        smp = [r for r in mine if r['rereview'] and r['rereview']['sample']]
+        right = sum(1 for r in smp if r['class'] == r['rereview']['from'])
+        into = sum(1 for r in smp if r['rereview']['from'] not in FORMALIZED and r['class'] in FORMALIZED)
+        outof = sum(1 for r in smp if r['rereview']['from'] in FORMALIZED and r['class'] not in FORMALIZED)
+        lo_in, hi_in = wilson(into, len(smp))
+        lo_out, hi_out = wilson(outof, len(smp))
+        row = {'records': len(mine), 'rejudged': sum(1 for r in mine if r['rereview']), 'sample': len(smp),
+               'class_right': right, 'interval': wilson(right, len(smp)), 'into': into, 'out_of': outof}
+        for t, pred in (('steps', lambda r: r['type'] == 'steps'), ('unnumbered displays', lambda r: r['kind'] == 'display')):
+            n = sum(1 for r in mine if pred(r) and not r['rereview'])
+            row[t] = {'not_rejudged': n, 'shift': [n * (lo_in - hi_out), n * (into - outof) / len(smp) if smp else 0,
+                                                   n * (hi_in - lo_out)] if n else [0, 0, 0]}
+        out[st] = row
+    return out
+
+
+def section_shift(recs, bars, sec):
+    """Range of the shift of a section's formalized steps from its records not re-judged."""
+    lo = mid = hi = 0.0
+    for r in recs:
+        if r['type'] == 'steps' and r['section'] == sec and not r['rereview'] and r['stratum'] in bars:
+            b = bars[r['stratum']]
+            if not b['sample']:
+                lo, hi = lo - (r['class'] in FORMALIZED), hi + (r['class'] not in FORMALIZED)
+                continue
+            lin, hin = wilson(b['into'], b['sample'])
+            lout, hout = wilson(b['out_of'], b['sample'])
+            lo, mid, hi = lo + lin - hout, mid + (b['into'] - b['out_of']) / b['sample'], hi + hin - lout
+    return lo, mid, hi
+
+
+def signed(x):
+    x = round(x)
+    return f'+{x}' if x > 0 else f'−{-x}' if x < 0 else '0'
+
+
+def bars_lines(head, bars):
+    """The re-review's error bars, for under the headline table."""
+    full = [st for st, b in bars.items() if b['rejudged'] == b['records']]
+    rest = [st for st, b in bars.items() if b['rejudged'] < b['records']]
+    md = ['**How reliable these classes are.** An independent re-review (`out/REREVIEW.md` of the audit run) drew a'
+          ' stratified sample of the step and unnumbered-display verdicts, judged it blind and ruled every'
+          ' disagreement; then whole classes were re-judged the same way. Each re-judged record names it in its'
+          ' provenance. The strata are the verdicts\' classes before that re-review.', '']
+    md.append('Re-judged in full: ' + ('; '.join(f"{STRATA[st]}, {bars[st]['records']} records" for st in full) or 'none') + '.')
+    if rest:
+        md += ['', 'Not re-judged in full, with the class-correct rate the sample measured (Wilson 95% interval) and the'
+               ' formalized records that the measured errors would add (+) or remove (−) among the records not re-judged:', '',
+               '| Stratum | Records | Re-judged | Class right in the sample | 95% interval | Steps not re-judged: formalized shift | Displays not re-judged: formalized shift |',
+               '|---|---|---|---|---|---|---|']
+        for st in rest:
+            b = bars[st]
+            lo, hi = b['interval']
+            sh = lambda t: (f"{signed(b[t]['shift'][1])} [{signed(b[t]['shift'][0])}, {signed(b[t]['shift'][2])}] of {b[t]['not_rejudged']}"
+                            if b[t]['not_rejudged'] else '—')
+            md.append(f"| {STRATA[st]} | {b['records']} | {b['rejudged']} | {frac(b['class_right'], b['sample'])} | "
+                      f"{100 * lo:.0f}%–{100 * hi:.0f}% | {sh('steps')} | {sh('unnumbered displays')} |")
+        for t, name in (('steps', 'steps'), ('unnumbered displays', 'unnumbered displays')):
+            h = head[t]
+            lo, mid, hi = (sum(b[t]['shift'][i] for b in bars.values()) for i in range(3))
+            n = h['total']
+            a, c = max(0, round(h['formalized'] + lo)), min(n, round(h['formalized'] + hi))
+            md += ['', f"Formalized {name}: {frac(h['formalized'], n)} as judged; with the measured error rates applied to the"
+                   f" records not re-judged, {round(h['formalized'] + mid)}/{n} ({100 * (h['formalized'] + mid) / n:.0f}%), range"
+                   f" {a}–{c} ({100 * a / n:.0f}%–{100 * c / n:.0f}%). The range adds each stratum's interval bounds, so it is"
+                   ' wider than a joint 95% interval; it covers sampling error, not error in the rulings.']
+    else:
+        md += ['', 'Every stratum was re-judged in full, so no sampled error rate applies to the figures above.']
+    return md
 
 
 def counts(recs):
@@ -206,12 +315,19 @@ def headline_table(head, names=('statements', 'displays', 'numbered displays', '
 
 
 def section_table(sections):
-    lines = ['| Section | Statements formalized | Displays formalized | Steps formalized | Steps absent | Deviations |',
-             '|---|---|---|---|---|---|']
+    lines = ['| Section | Statements formalized | Displays formalized | Steps formalized | Steps formalized, measured range | Steps absent | Deviations |',
+             '|---|---|---|---|---|---|---|']
     for r in sections:
-        lines.append(f"| {r['section']} | {frac(*r['statements'])} | {frac(*r['displays'])} | {frac(*r['steps'])} | "
+        k, n = r['steps']
+        lo, mid, hi = r['steps_shift']
+        rng = f"{max(0, round(k + lo))}–{min(n, round(k + hi))}" if n and (lo or hi) else ('exact' if n else '—')
+        lines.append(f"| {r['section']} | {frac(*r['statements'])} | {frac(*r['displays'])} | {frac(*r['steps'])} | {rng} | "
                      f"{frac(*r['steps_absent'])} | {frac(*r['deviations'])} |")
     return lines
+
+
+RANGE_NOTE = ('"Steps formalized, measured range": the section\'s formalized steps with each not re-judged step moved by its'
+              " stratum's measured error interval (as under the headline); \"exact\" where every step was re-judged.")
 
 
 def extremes_line(sections):
@@ -242,7 +358,7 @@ def evidence(r):
     return f"judged `{r['relation']}` ({r['verification']})"
 
 
-def write_doc(root, pin, src_pin, recs, head, sections):
+def write_doc(root, pin, src_pin, recs, head, sections, bars):
     md = ['# Coverage', '',
           '> Unreviewed machine audit. AI agents produced every verdict; no mathematician has checked any of it.', '',
           f'How much of the manuscript [L] (yang-mills-group/OpenAI-YM-20261028 at `{pin}`) formalizes, by record and',
@@ -257,7 +373,7 @@ def write_doc(root, pin, src_pin, recs, head, sections):
            f" {head['unnumbered displays']['total']} unnumbered displays outside proofs; steps the"
            f" {head['steps']['total']} steps of the {len({r['item'] for r in recs if r['type'] == 'steps'})} proofs."
            f" Of the {len(st)} statements that deviate, {sum(1 for r in st if r.get('finding'))} are confirmed findings.", '',
-           '## 2. By section', ''] + section_table(sections) + ['', extremes_line(sections), '',
+           ] + bars_lines(head, bars) + ['', '## 2. By section', ''] + section_table(sections) + ['', RANGE_NOTE, '', extremes_line(sections), '',
            'A proof step is counted in the section where its proof is printed. "Deviations" counts the Deviates records'
            " among the section's statements, displays and steps. Sections 1–7 and 9 have no proofs; Section 8 has one."
            ' A proof written for two items at once gives all its steps to the first: the steps of the joint deduction of'
@@ -317,14 +433,31 @@ def write_doc(root, pin, src_pin, recs, head, sections):
     open(os.path.join(root, 'docs', 'coverage.md'), 'w', encoding='utf-8').write('\n'.join(md))
 
 
-def write_readme(root, head, sections):
+def readme_bars(head, bars):
+    full = [st for st, b in bars.items() if b['rejudged'] == b['records']]
+    rest = [st for st, b in bars.items() if b['rejudged'] < b['records']]
+    out = ['An independent re-review sampled the step and display verdicts and found classes wrong, mostly too weak;'
+           ' the weakest classes were then re-judged in full: ' + ('; '.join(f"{STRATA[st]} ({bars[st]['records']})" for st in full) or 'none') + '.']
+    if rest:
+        h = head['steps']
+        lo, mid, hi = (sum(b['steps']['shift'][i] for b in bars.values()) for i in range(3))
+        n = h['total']
+        a, c = max(0, round(h['formalized'] + lo)), min(n, round(h['formalized'] + hi))
+        out[0] += (' The rest keep the sample\'s measured error rates (' +
+                   '; '.join(f"{STRATA[st]}: class right {frac(bars[st]['class_right'], bars[st]['sample'])}" for st in rest) +
+                   f"), which put formalized steps at {a}–{c} of {n} ({100 * a / n:.0f}%–{100 * c / n:.0f}%)."
+                   ' Error bars by class and section: [`docs/coverage.md`](docs/coverage.md).')
+    return out
+
+
+def write_readme(root, head, sections, bars):
     path = os.path.join(root, 'README.md')
     text = open(path, encoding='utf-8').read()
     lines = ['<!-- coverage: written by scripts/coverage.py -->', '## Coverage', '',
              'Each statement, display and proof step has one class; "formalized" is 1-to-1 + Faithful. The',
              'definitions, the 1-to-1 list, every deviation and the absences: [`docs/coverage.md`](docs/coverage.md).', '']
-    lines += headline_table(head, TYPES) + ['', unjudged_line(head), ''] + section_table(sections) + \
-        ['', extremes_line(sections), '', '<!-- /coverage -->']
+    lines += headline_table(head, TYPES) + ['', unjudged_line(head), ''] + readme_bars(head, bars) + [''] + \
+        section_table(sections) + ['', RANGE_NOTE, '', extremes_line(sections), '', '<!-- /coverage -->']
     block = '\n'.join(lines)
     rx = re.compile(r'<!-- coverage: written by scripts/coverage.py -->.*?<!-- /coverage -->', re.S)
     if rx.search(text):
@@ -342,15 +475,19 @@ def main():
     pin = load(root, 'mapping.json')['lean']['version']
     recs = records(root)
     head, sections = summarize(recs)
+    bars = error_bars(recs)
+    for row in sections:
+        row['steps_shift'] = section_shift(recs, bars, row['section'])
     doc = {'about': 'Coverage of the manuscript overlay by class (docs/coverage.md), written by scripts/coverage.py.',
            'lean': pin, 'classes': list(CLASSES), 'formalized': list(FORMALIZED),
-           'headline': head, 'sections': sections,
-           'records': [{k: r[k] for k in ('id', 'type', 'kind', 'section', 'page', 'relation', 'class')} for r in recs]}
+           'headline': head, 'sections': sections, 'error_bars': bars,
+           'records': [{k: r[k] for k in ('id', 'type', 'kind', 'section', 'page', 'relation', 'class', 'stratum', 'rereview')
+                        if k in r} for r in recs]}
     with open(os.path.join(root, 'data', 'coverage.json'), 'w', encoding='utf-8') as f:
         json.dump(doc, f, indent=1, ensure_ascii=False)
         f.write('\n')
-    write_doc(root, pin, load(root, 'mapping.json')['source_pin'], recs, head, sections)
-    write_readme(root, head, sections)
+    write_doc(root, pin, load(root, 'mapping.json')['source_pin'], recs, head, sections, bars)
+    write_readme(root, head, sections, bars)
     print(json.dumps({t: {'formalized': frac(h['formalized'], h['total']), **h['classes']} for t, h in head.items()}, indent=1))
 
 
