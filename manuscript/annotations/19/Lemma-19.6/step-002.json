@@ -1,9 +1,9 @@
 {
   "id": "Lemma 19.6 step 2",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "The compatibility is proved for every `u`, which is more than `i < q <= j`. The identity `L_{i,q} = j_{q,i}` for `i >= q` appears only inside `test_formula` through `checkReal_fixed`, and the induction in `j` is the recursion of `knife`.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] carries L_{i,q} = j_{q,i} as checkReal_fixed (via liftOne_check), the compatibility L_{i,j} j_{q,j} = L_{i,q} as liftOne_affinity (for every i, not only i < q), and the induction in test_formula, reconstruct and kills_lower. Difference: Q_j L_{j,q} is packaged as cutTest = knife composed with liftOne.",
   "subject": [
     {
       "location": {
@@ -29,36 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.OPE.Orbits.Reader.test_formula",
-        "module": "YM.OPE.Orbits.Cuts",
+        "declaration": "YM.OPE.Orbits.checkReal_fixed",
+        "module": "YM.OPE.Orbits.Real",
         "lines": [
-          61,
-          62
+          81,
+          84
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.OPE.Orbits.Reader.test_formula"
+            "id": "YM.OPE.Orbits.checkReal_fixed"
           },
           "snippet": {
-            "text": "lemma test_formula (m q:ℕ)(h:q ≤ m) (z:S.Field q):\n    R.cutTest m q z = Q.rise h z - ∑ i:Fin m, Q.rise i.isLt.le (R.cutTest i.val q z) :=by",
-            "line": 61,
+            "text": "lemma checkReal_fixed (j:ℕ)(u:S.Field j)(hP:P.Coherent)(hQ:Q.Inclusions S)\n      (hc:Q.Orientation ρ)(he:j ≤ m) : checkReal P hX hS m (sole 0) 0 (d:=fun _:Unit=>j) (sole u)=Q.rise he u:=by\n    have hh:bar ρ (d:=fun _:Unit=> j) (sole u) = sole (S.conj ρ j u):=rfl\n    rw [checkValue,hh,average_fixes hX hS m _ hQ hP he,average_fixes hX hS m _ hQ hP he,hc.realInc,S.reflect_star, ← two_smul ℝ, inv_smul_smul₀ (two_ne_zero (α:=ℝ))] -- two_smul names?",
+            "line": 81,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Orbits/Cuts.lean",
-            "fragment": "L61-L62"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Orbits/Real.lean",
+            "fragment": "L81-L84"
           },
           "proof_context": {
-            "declaration": "YM.OPE.Orbits.Reader.test_formula",
+            "declaration": "YM.OPE.Orbits.checkReal_fixed",
             "lines": [
-              61,
-              65
+              81,
+              84
             ],
-            "conclusion": "For `q <= m`, `cutTest m q z = rise h z - sum_{i<m} rise (cutTest i q z)`, using that the lifted functional of an included field reads as the inclusion."
+            "conclusion": "For j <= m, the averaged real reader of a single degree-j field at the origin returns its rise, using rotation averaging and the reality laws."
           }
         }
       }
@@ -68,36 +68,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.OPE.Orbits.Reader.liftOne_affinity",
+        "declaration": "YM.OPE.Orbits.Reader.kills_lower",
         "module": "YM.OPE.Orbits.Cuts",
         "lines": [
-          37,
-          37
+          70,
+          79
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.OPE.Orbits.Reader.liftOne_affinity"
+            "id": "YM.OPE.Orbits.Reader.kills_lower"
           },
           "snippet": {
-            "text": "private lemma liftOne_affinity (u q m : ℕ)(h:q ≤ m)(z:S.Field q): R.liftOne u m (Q.rise h z) = R.liftOne u q z :=by",
-            "line": 37,
+            "text": "lemma kills_lower (m q:ℕ)(h:q < m) (z:S.Field q): R.cutTest m q z=0:=by\n    cases m with\n    | zero=> exact (Nat.not_lt_zero _ h).elim\n    | succ m=>\n       rw [R.test_formula (m+1) q h.le]\n       have he: (∑ i:Fin (m+1),Q.rise i.isLt.le (R.cutTest i.val q z))= Q.rise h.le z := by\n          rw [← Q.transit R.continuum.laws.toSymmetric R.lifts (Nat.le_sub_one_of_lt h) m.le_succ]\n          have hw:= congr_arg (Q.rise m.le_succ) (R.reconstruct m q (by omega) z)\n          rw [map_sum] at hw; apply Eq.trans ?_ hw; refine Finset.sum_congr rfl fun i _=> (Q.transit R.continuum.laws.toSymmetric R.lifts ..).symm\n       rw [he,sub_self]",
+            "line": 70,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Orbits/Cuts.lean",
-            "fragment": "L37-L37"
+            "fragment": "L70-L79"
           },
           "proof_context": {
-            "declaration": "YM.OPE.Orbits.Reader.liftOne_affinity",
+            "declaration": "YM.OPE.Orbits.Reader.kills_lower",
             "lines": [
-              37,
-              47
+              70,
+              79
             ],
-            "conclusion": "`L_{u,m} j_{q,m} = L_{u,q}` for all `u` and `q <= m`."
+            "conclusion": "test_formula and reconstruct give the sum of rises of cuts equal to the rise, and kills_lower gives cutTest m q = 0 for q < m."
           }
         }
       }
@@ -112,7 +112,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

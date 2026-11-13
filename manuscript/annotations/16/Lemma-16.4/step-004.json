@@ -1,9 +1,9 @@
 {
   "id": "Lemma 16.4 step 4",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "Existence is `solve`; the inverse estimate is only composed inside `within` from `reference_size` and `Tested.cost` (readout error 1/2, factor 2), not stated as one inequality.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Existence is Price.solve / East.poured; the inverse estimate is the composite of Price.reference_size and Tested.cost, chained in Price.within and East.sun. Difference: the estimate is split into the readout bound (factor 2) and the reference-size bound (outward * a_k^d), with the frame coefficient size as the l1 norm.",
   "subject": [
     {
       "location": {
@@ -29,36 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Next.Rank.Price.solve",
+        "declaration": "YM.Next.Rank.Price.Tested.bijective",
         "module": "YM.Next.RANK.Matrices",
         "lines": [
-          129,
-          140
+          78,
+          86
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Next.Rank.Price.solve"
+            "id": "YM.Next.Rank.Price.Tested.bijective"
           },
           "snippet": {
-            "text": "lemma solve (h : C.Makes) (hk : C.ref d ≤ k) (hn : k≤N) {read : C.label d →ₗ[ℂ] C.label d}\n    (c : Tested C d k N p read) (v : C.label d) (ρ : ℝ) : ∃! u : C.label d, Solves C ρ d k N p read v u := by\n  let Y := C.labels.level d; let a := weightTag C d ρ v\n  have hr := Tested.bijective C h hk hn _ c\n  let t := shrink C k N p\n  have ht : 0<t := shrink_pos C h hn p\n  obtain ⟨w,hw⟩ := hr.2 (Y.scaled t⁻¹ a)\n  refine ⟨w,?_,?_⟩\n  · change Y.scaled t (read w)=a; rw [hw,Y.scaled_inv ht.ne']\n  intro y hy\n  apply hr.1; rw [hw, ← show Y.scaled t (read y)=a from hy]\n  have he := Y.scaled_inv (inv_ne_zero ht.ne') (read y); rw [inv_inv] at he; exact he.symm",
-            "line": 129,
+            "text": "lemma Tested.bijective (h : C.Makes) (hk : C.ref d ≤ k) (hn : k ≤ N) (read : C.label d →ₗ[ℂ] C.label d) (c : Tested C d k N p read) :\n    Bijective read := by\n  have he : Injective read := by\n    apply LinearMap.ker_eq_bot.mp; apply LinearMap.ker_eq_bot'.mpr\n    intro v hv; apply size_separates (C.labels.level d)\n    have hx := c.cost _ _ v; rw [hv, show (C.labels.level d).coeffSize 0=0 by simp [Labels.Frame.coeffSize],mul_zero] at hx\n    apply le_trans (reference_size _ h hk hn p v)\n    exact mul_nonpos_of_nonneg_of_nonpos (mul_nonneg (zero_le_one.trans (outward_nn ..)) (pow_nonneg (C.S.a_pos _).le _)) hx\n  exact ⟨he,LinearMap.surjective_of_injective he⟩",
+            "line": 78,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Matrices.lean",
-            "fragment": "L129-L140"
+            "fragment": "L78-L86"
           },
           "proof_context": {
-            "declaration": "YM.Next.Rank.Price.solve",
+            "declaration": "YM.Next.Rank.Price.Tested.bijective",
             "lines": [
-              129,
-              140
+              78,
+              86
             ],
-            "conclusion": "`solve` gives, for a `Tested` readout, a unique `u` with `Solves ρ ... v u`, i.e. existence of the solution of the lift equation (`Solves`: `scaled (shrink) (T v) = weightTag ρ basis`)."
+            "conclusion": "A tested readout has coefficient error at most half, which gives coeffSize(awake v) <= 2 coeffSize(read v) (Tested.cost), and is bijective."
           }
         }
       }
@@ -97,7 +97,7 @@
               58,
               61
             ],
-            "conclusion": "`reference_size` bounds `coeffSize v` by `outward C d k * a_k^d * coeffSize (awake v)` (column factors, power d of the spacing)."
+            "conclusion": "coeffSize v <= outward C d k * a_k^d * coeffSize(awake v)."
           }
         }
       }
@@ -107,36 +107,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Next.Rank.Price.Tested.cost",
+        "declaration": "YM.Next.Rank.Price.solve",
         "module": "YM.Next.RANK.Matrices",
         "lines": [
-          74,
-          76
+          129,
+          140
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Next.Rank.Price.Tested.cost"
+            "id": "YM.Next.Rank.Price.solve"
           },
           "snippet": {
-            "text": "lemma Tested.cost (read : C.label d →ₗ[ℂ] C.label d) (c : Tested C d k N p read) (v : C.label d) :\n    (C.labels.level d).coeffSize (awake C d k N p v) ≤ 2*(C.labels.level d).coeffSize (read v) := by\n  have he := size_triangle (C.labels.level d) (awake C d k N p v) (read v); linarith only [he,c.score v]",
-            "line": 74,
+            "text": "lemma solve (h : C.Makes) (hk : C.ref d ≤ k) (hn : k≤N) {read : C.label d →ₗ[ℂ] C.label d}\n    (c : Tested C d k N p read) (v : C.label d) (ρ : ℝ) : ∃! u : C.label d, Solves C ρ d k N p read v u := by\n  let Y := C.labels.level d; let a := weightTag C d ρ v\n  have hr := Tested.bijective C h hk hn _ c\n  let t := shrink C k N p\n  have ht : 0<t := shrink_pos C h hn p\n  obtain ⟨w,hw⟩ := hr.2 (Y.scaled t⁻¹ a)\n  refine ⟨w,?_,?_⟩\n  · change Y.scaled t (read w)=a; rw [hw,Y.scaled_inv ht.ne']\n  intro y hy\n  apply hr.1; rw [hw, ← show Y.scaled t (read y)=a from hy]\n  have he := Y.scaled_inv (inv_ne_zero ht.ne') (read y); rw [inv_inv] at he; exact he.symm",
+            "line": 129,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Matrices.lean",
-            "fragment": "L74-L76"
+            "fragment": "L129-L140"
           },
           "proof_context": {
-            "declaration": "YM.Next.Rank.Price.Tested.cost",
+            "declaration": "YM.Next.Rank.Price.solve",
             "lines": [
-              74,
-              76
+              129,
+              140
             ],
-            "conclusion": "`Tested.cost` bounds `coeffSize (awake v)` by `2 * coeffSize (read v)`, the factor 2 coming from relative readout error at most 1/2."
+            "conclusion": "A tested readout gives a unique solution of the lift equation Solves."
           }
         }
       }
@@ -146,36 +146,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Next.Rank.Price.within",
-        "module": "YM.Next.RANK.Matrices",
+        "declaration": "YM.Next.Rank.East.poured",
+        "module": "YM.MergeProof.East.Ladle",
         "lines": [
-          187,
-          212
+          27,
+          29
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Next.Rank.Price.within"
+            "id": "YM.Next.Rank.East.poured"
           },
           "snippet": {
-            "text": "lemma within (h : C.Makes) (hk : C.ref d≤k) : ∃ A : ℝ, ∀ N, k ≤ N → ∀ p T,\n    Tested C d k N p T → ∀ x, Names C p' ρ k N p T x → ∀ i, ‖x i‖≤A := by\n  let Z := C.labels.level d\n  let F (i : Fin (X.dim+1)) := weightTag C d ρ (p'.rep i)\n  let r := 2*C.path.levels.clock.monitor k\n  let B i := Z.coeffSize (Z.scaled r (F i))\n  refine ⟨outward C d k * (C.S.a k)^d * (2*∑ i,B i),fun N hN p T ht x hx i => ?_⟩\n  let a := shrink C k N p\n  have h₁ : 0<a := shrink_pos C h hN p\n  have h₂ : a⁻¹≤r := shrink_min C h hN p\n  have hp : T (x i)= Z.scaled a⁻¹ (F i) := by\n    have hv := Z.scaled_inv (inv_ne_zero h₁.ne') (T (x i)); rw [inv_inv,hx i] at hv; exact hv.symm\n  have he : Z.coeffSize (T (x i)) ≤ B i := by\n    rw [hp]; unfold B Labels.Frame.coeffSize\n    refine Finset.sum_le_sum fun j _ => ?_\n    have h₀ : 0 < r := lt_of_lt_of_le (inv_pos.mpr h₁) h₂\n    simp only [Labels.Frame.scaled_apply,norm_mul,norm_real]\n    rw [Real.norm_of_nonneg (pow_nonneg (inv_pos.mpr h₁).le _), Real.norm_of_nonneg (pow_nonneg h₀.le _)]\n    exact mul_le_mul_of_nonneg_right (pow_le_pow_left₀ (inv_pos.mpr h₁).le h₂ _) (norm_nonneg _)\n  apply (show ‖x i‖ ≤ Z.coeffSize (x i) from ?_).trans\n  · apply (reference_size C h hk hN p (x i)).trans\n    exact mul_le_mul_of_nonneg_left ((ht.cost _ _ _).trans (mul_le_mul_of_nonneg_left\n      (he.trans (Finset.single_le_sum (fun i _ => show 0 ≤ B i from size_nonneg Z _) (Finset.mem_univ i))) (by norm_num)))\n      (mul_nonneg (zero_le_one.trans (outward_nn ..)) (pow_nonneg (C.S.a_pos _).le _))\n  apply (pi_norm_le_iff_of_nonneg (size_nonneg Z (x i))).2\n  exact fun j => Finset.single_le_sum (fun _ _ => norm_nonneg _) (Finset.mem_univ j)",
-            "line": 187,
+            "text": "lemma poured (x:C.label d): Solves C b d k N p T x (Z x):= by\n    let F':= F; have ht:= H.bijective C h hr hk T; simp only [Solves,ladd,dif_pos ht]; rw [LinearMap.comp_apply,LinearEquiv.coe_coe]\n    rw [show T ((LinearEquiv.ofBijective T ht).symm _)= _ from (LinearEquiv.ofBijective T ht).apply_symm_apply _]; exact F'.scaled_inv (shrink_pos C h hk p).ne' _",
+            "line": 27,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Matrices.lean",
-            "fragment": "L187-L212"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/East/Ladle.lean",
+            "fragment": "L27-L29"
           },
           "proof_context": {
-            "declaration": "YM.Next.Rank.Price.within",
+            "declaration": "YM.Next.Rank.East.poured",
             "lines": [
-              187,
-              212
+              27,
+              29
             ],
-            "conclusion": "`within` chains these to bound solutions uniformly in N, p at fixed k."
+            "conclusion": "ladd solves the lift equation, i.e. inverts the readout on the scaled weighted target."
           }
         }
       }
@@ -190,7 +190,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge changed it from noMatch; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge changed it from noMatch; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

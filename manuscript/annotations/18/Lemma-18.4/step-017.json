@@ -1,9 +1,9 @@
 {
   "id": "Lemma 18.4 step 17",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "h₁-h₄ (`arcPay`, `vanish_r`) carry the vanishing of the zero-background symbols and of the zero-momentum insertion; the explicit cancellation of dM_b + D_b - T_b^{(1)}/2 by the free curvature displacement is not stated.",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "[L] proves this as Lamp.onsite: its conclusion Oil records the vanishing zero-background symbols, first momentum derivatives and first field insertion. The cancellation of the free curvature displacement happens inside Lamp.combine_r.",
   "subject": [
     {
       "location": {
@@ -61,36 +61,75 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Trace.Lamp.saga",
-        "module": "YM.TraceExtension.Lamp.Pious",
+        "declaration": "YM.Trace.Lamp.onsite",
+        "module": "YM.TraceExtension.Lamp.Outpost",
         "lines": [
-          116,
-          119
+          16,
+          35
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Trace.Lamp.saga"
+            "id": "YM.Trace.Lamp.onsite"
           },
           "snippet": {
-            "text": "    have h₁: Rose L (fun w=> xup q (J w)) 0:=by unfold Rose; rw [sub_zero]; exact arcPay _ Q (mark_kin H hσ hM hm) hG (fun i=> contours_m (he i) (hp i) (hs' i)) hu (fun b=> ⟨_,C,by exact show 0<a/5 by positivity,h.c0,fun w i=> (hc w b i).tilt le_rfl le_rfl (by decide)⟩)\n    have h₂: Rose L (fun w=> xup q (E w)) 0:=by unfold Rose; rw[sub_zero]; exact arcPay _ Q hk hG (fun i=> contours_main (hp i)) (fun w b=> cloak_shore (hp w) (he w) (hs' w) (hu w b)) hX\n    have h₃: Rose L (fun w=> xup q (M w)) 0:=by unfold Rose; rw[sub_zero]; exact arcPay _ Q hk hG (fun i=> contours_main (hp i)) (fun w b=> cloak_mica (stampQ 0) b (hp w) (he w) (hs' w)) (fun a=> mica_budget (fun w=>(0:Site (g w))) a hh hv)\n    have h₄ : Rose L (fun w=> xup q (F w)) 0:=Rose.chain (suite_hold (F:=fun w d i=> fata d i q (F w)) (H:=fun _ _ _=>0) (fun d i=>by unfold Rose; rw[show (fun _:W=>(0:ℂ))=0 from rfl,sub_zero]; exact vanish_r _ _ q Q h.house h.pad hε h.clip H hσ ha h.c0 hM hm)) (Rose.skip (Eventually.of_forall (fun i=>by dsimp only[suite];simp)))",
-            "line": 116,
+            "text": "lemma onsite (Q:Tendsto (fun w=>(g w).val) L atTop)(h:Scene g V p R a C ε)(ht:Flare g R p σ A)(hp:Tendsto ε L (𝓝 0))(hG:G.Simple) (b:Axis):\n    let Y(w):=(V w).Y b 0; Oil L (fun w=> wB (stampQ 0) b (Y w) ∘ input G (g w))∧Oil L (g:=g) (fun w=> wG (stampQ 0) b∘ input G (g w)):=by\n    intro Y\n    have hz(w):Y w∈ rains G _:= (h.house w).sound.palm b 0\n    have he(w): Cloaked (Y w):=by obtain ⟨h,_⟩:=hz w;exact h\n    have hc(w i):= pea_rain (hz w) ((h.house w).Y b _) h.c0 h.vp.le i\n    obtain ⟨A',hA,H⟩:= pipe_w G 3\n    have hy:Pella (fun w:W=>(0:Site (g w))) (fun w=>tidal (Y w)∘ input G (g w)) 2:=by\n        have hp:=h.vp; refine ⟨_,A'*C, ?_,mul_nonneg hA h.c0,fun w=> tidal_pay _ (he w) (H (g w) _ 0 C (a/5) (by positivity) h.c0 (he w) (hc w))⟩; positivity\n    obtain ⟨hc',hd⟩:= locus_extra hy b\n    have hM: CodeM (g:=g) (fun _=>0) (fun w=> Y w ∘ input G (g w)) 1:=⟨a/5,C,div_pos h.vp (by norm_num),h.c0,fun w i=>(hc w i|>.tilt le_rfl le_rfl (by norm_num))⟩\n    choose B τ P D h' hv hu hh using ht.tanks\n    have hx(w): (Tempo (wB (stampQ 0) b (Y w) ∘ input G (g w)))∧(Tempo (wG (stampQ 0) b∘ input G (g w))):= PaceV b (hz w) (h' w) ((hull_m (μ:= (1:ℝ)) zero_lt_one le_rfl (h' w) (hv w) (hu w) (hh w)).1.det_pos.ne')\n    let F(w):=(wB (stampQ 0) b (Y w) ∘ input G (g w))\n    let H(w):=(wG (stampQ 0) b∘ input G (g w));\n    have hm(i j:Loc G 1)(x y:Cover): Tendsto (fun w=>w0 (F w 0) i j x y) L (𝓝 0):=by\n        have hw:= combine_r Q b hz hp (fun w=>(h.house w).orb b 0) hM hG x y i j; refine hw.congr' (Eventually.of_forall (fun w=>?_)); unfold F; simp only[Function.comp_apply,input_zero]\n    have hQ(i j:Loc G 0)(x y:Cover): Tendsto (fun w=> w0 (H w 0) i j x y) L (𝓝 0):=by\n        have hw := combine_p Q x y b i j; refine hw.congr' (Eventually.of_forall fun w=>?_); unfold H; simp only[Function.comp_apply,input_zero]\n    exact ⟨⟨hc',fun i j=>Tempo.pike Q (F:=F) hm (hc'.tada (by omega)) i j, fun i j x=> Tempo.via (F:=F) Q (fun w=>(hx w).1) hm (hc'.tada (by omega)) i j ![x]⟩,⟨hd,fun i j=>Tempo.pike (F:=H) Q hQ (hd.tada (by omega)) i j,fun i j x=>Tempo.via (F:=H) Q (fun w=>(hx w).2) hQ (hd.tada (by omega)) i j ![x]⟩⟩",
+            "line": 16,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Lamp/Pious.lean",
-            "fragment": "L116-L119"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Lamp/Outpost.lean",
+            "fragment": "L16-L35"
           },
           "proof_context": {
-            "declaration": "YM.Trace.Lamp.saga",
+            "declaration": "YM.Trace.Lamp.onsite",
             "lines": [
-              97,
-              127
+              16,
+              35
             ],
-            "conclusion": "`h₁`-`h₄` show the `xup` terms of `J`, `E`, `M`, `F` tend to 0."
+            "conclusion": "For both regulator insertions wB (one-forms) and wG (zero-forms), Oil holds: the zero-background symbol and its first derivative tend to zero (turn), and so does the zero-momentum first field insertion (hat)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Trace.Lamp.combine_r",
+        "module": "YM.TraceExtension.Lamp.Riven",
+        "lines": [
+          50,
+          62
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Trace.Lamp.combine_r"
+          },
+          "snippet": {
+            "text": "lemma combine_r (p q:Cover)(i j:Loc G 1): Tendsto (fun w=> w0 (wB (stampQ 0) b (Y w) 1) i j p q) L (𝓝 0):=by\n    apply high_filter; intro L' hw\n    have hC(w): Cloaked (Y w):=by obtain ⟨h,_⟩:=hP w;exact h\n    obtain ⟨K,hK⟩:=flamed L' hM hC\n    have he:=Q.mono_left hw; let B(w):= tidal (Y w) 1- mail (1:Config G (g w))*mine G (stampQ 0) b - deal G (stampQ 0) b\n    have hh(p q:Cover)(i j:Loc G 1): Tendsto (fun w=> w0 (B w) i j p q) (↑L':Filter W) (𝓝 (if i=j then Complex.I*(p b:ℂ) else 0)):=by\n        have hm:= wick_span he hM hC ht hK i j p q; rcases i with ⟨i,u⟩; rcases j with ⟨j,v⟩; obtain ⟨i,rfl⟩:=axisEquiv.surjective i; obtain ⟨j,rfl⟩:= axisEquiv.surjective j\n        let I:=mood G i u; let J:=mood G j v; let r:= reel p; let s:=reel q\n        have hx:= (hm.sub (pack_r he p q b i j u v)).sub (pack_d he p q b i j u v)\n        convert hx using 1\n        · funext x; unfold B w0; rw [pier_sub,pier_sub,tide_dot _ _ _ _ (hP x),mul_sub,mul_sub]; rfl\n        congr 1; rw [show K (axisEquiv i,u) (axisEquiv j,v) (reel p,reel q)= _ from analytic_full b i j u v p q hP hK hv (hε.mono_left hw) (know he hC ht hM hK)]\n        simp only[Prod.mk.injEq,Equiv.apply_eq_iff_eq]; split_ifs <;> ring",
+            "line": 50,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Lamp/Riven.lean",
+            "fragment": "L50-L62"
+          },
+          "proof_context": {
+            "declaration": "YM.Trace.Lamp.combine_r",
+            "lines": [
+              50,
+              66
+            ],
+            "conclusion": "The zero-momentum insertion of wB tends to zero, after subtracting mail*mine and deal from tidal Y (the free displacement cancelling dM_b + D_b)."
           }
         }
       }
@@ -105,11 +144,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent disagreed and a judge changed it from relatedMatch; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent disagreed and a judge changed it from relatedMatch; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {
-        "kind": "direct"
+        "kind": "chain"
       }
     }
   }

@@ -1,9 +1,9 @@
 {
   "id": "Section 18 display 5",
   "kind": "display",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "[L] states the uniform comparison for the rescaled continuum correlation at r_k y of a compact set, assuming `Approaches`; the convergence of lattice correlations at the rounded points r_i x^(i) is not stated.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "travels_jet (Focus.lean) carries the display for all jet orders, applied along the subsequence and scaling from pays_sky, which supplies Approaches. [L] evaluates the correlation at r_i x itself, not at the rounded grid points r_i x^(i). The rounding error vanishes uniformly by the first-jet convergence.",
   "subject": [
     {
       "location": {
@@ -33,7 +33,7 @@
         "module": "YM.Next.UV_STRESS.Focus",
         "lines": [
           183,
-          189
+          196
         ]
       },
       "role": "key",
@@ -43,14 +43,14 @@
             "id": "YM.Next.UVStress.travels_jet"
           },
           "snippet": {
-            "text": "lemma travels_jet (H : S.Hierarchy) (h : W.Derivatives S) (L : (Bel C.book).Hierarchy) (hp : V.Derivatives (Bel C.book))\n    (X : Scaling S) (ht : Approaches (path X) (isoPanel X)) (v : ℕ → Ribbon (Bel C.book) t) (x : Ribbon (Bel C.book) t)\n    (hv : ∀ i, Tendsto (fun k => v k i) atTop (𝓝 (x i)))\n    (j : ℕ) (s : Set (Points n)) (hs : IsCompact s) (hu : s ⊆ conf n) (ε : ℝ) (he : 0<ε) :\n    ∀ᶠ k in atTop, ∀ y∈s,\n      ‖iteratedFDeriv ℝ j (tested (X.r k) (isoPanel X k) (hang t (v k))) y - iteratedFDeriv ℝ j (disc (hang t x)) y‖ ≤ ε := by\n  filter_upwards [(closed_path H h L hp X ht n).jets (show Travels n X _ from ⟨t,v,x,hv,rfl⟩) s hs hu j he] with k hk y hy",
+            "text": "lemma travels_jet (H : S.Hierarchy) (h : W.Derivatives S) (L : (Bel C.book).Hierarchy) (hp : V.Derivatives (Bel C.book))\n    (X : Scaling S) (ht : Approaches (path X) (isoPanel X)) (v : ℕ → Ribbon (Bel C.book) t) (x : Ribbon (Bel C.book) t)\n    (hv : ∀ i, Tendsto (fun k => v k i) atTop (𝓝 (x i)))\n    (j : ℕ) (s : Set (Points n)) (hs : IsCompact s) (hu : s ⊆ conf n) (ε : ℝ) (he : 0<ε) :\n    ∀ᶠ k in atTop, ∀ y∈s,\n      ‖iteratedFDeriv ℝ j (tested (X.r k) (isoPanel X k) (hang t (v k))) y - iteratedFDeriv ℝ j (disc (hang t x)) y‖ ≤ ε := by\n  filter_upwards [(closed_path H h L hp X ht n).jets (show Travels n X _ from ⟨t,v,x,hv,rfl⟩) s hs hu j he] with k hk y hy\n  specialize hk y hy\n  -- symmetry/derivative closure is inside conf\n  have hh := ((smoothZoom H.smooth (panels (isoPanel X k) ∘ (hang t (v k))) (X.positive k)) _ (hu hy)).contDiffAt\n    ((conf_open _).mem_nhds (hu hy))\n  have hF := cont_disc L (hang t x) (hu hy)\n  rw [← iteratedFDeriv_sub_apply (show ContDiffAt ℝ (j : WithTop ℕ∞) (tested (X.r k) (isoPanel X k) (hang t (v k))) y from\n    hh.of_le (WithTop.coe_le_coe.mpr le_top)) (hF.of_le (WithTop.coe_le_coe.mpr le_top))]; exact hk",
             "line": 183,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/UV_STRESS/Focus.lean",
-            "fragment": "L183-L189"
+            "fragment": "L183-L196"
           },
           "proof_context": {
             "declaration": "YM.Next.UVStress.travels_jet",
@@ -58,7 +58,7 @@
               183,
               196
             ],
-            "conclusion": "For a scaling `X` satisfying `Approaches`, tags `v_k → x` and a compact `s ⊆ conf n`, every fixed jet of the rescaled correlation at `r_k y` is eventually within `ε` of the Maxwell one, uniformly on `s`."
+            "conclusion": "For a scaling with Approaches, labels v_k→x and compact s in the configuration space, the j-th derivative of tested(r_k, U_k, v_k) minus that of the free correlation is eventually at most epsilon uniformly on s."
           }
         }
       }
@@ -68,36 +68,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Next.UVStress.comparison_jets",
-        "module": "YM.Next.UV_STRESS.Focus",
+        "declaration": "YM.MergeProof.East.pays_sky",
+        "module": "YM.TraceExtension.Prom.Zoom.Running",
         "lines": [
-          208,
-          212
+          25,
+          31
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Next.UVStress.comparison_jets"
+            "id": "YM.MergeProof.East.pays_sky"
           },
           "snippet": {
-            "text": "lemma comparison_jets (H : S.Hierarchy) (h : W.Derivatives S) (L : (Bel C.book).Hierarchy) (hp : V.Derivatives (Bel C.book))\n    (X : Scaling S) (ht : Approaches (path X) (isoPanel X)) (N d m : ℕ) (R : ℝ) (hr : 0<R) : X.jets N d m R := by\n  intro n _ j _ v hv ε he\n  exact travels_jet H h L hp X ht (t:=fun i => (v i).1) (fun _ i => (v i).2) (fun i => (v i).2)\n    (fun _ => tendsto_const_nhds) j _ (window_closed ..) (fun _ h => spaced_conf (inv_pos.mpr hr) h.1) ε he",
-            "line": 208,
+            "text": "theorem pays_sky (hG:G.Simple)(hX: Scrim C W u ψ φ δ (fly C.path.levels) r L) {z:ℕ →ℝ}\n   (hZ:∀ i j, i≤j→ generator G i≤z j) (h : ∀ d,FiresSky B H O J d (z d))(hD:DimAbove S) (𝓛:Ultrafilter (ℕ×ℕ))(hℓ:(𝓛:Filter _)≤ F.fuse) (s:ℕ→ℝ)(hS:Tendsto s atTop (𝓝 0))(hp:∀ i,0<s i): ∃ f:ℕ→ℕ,StrictMono f ∧ ∃ X:Scaling S,X.r=s ∘ f ∧ StarPath F a X hs 𝓛:= by\n   obtain ⟨v,V,hF,h',hκ,hV⟩:= wakesSky B H O J F a P hs.smooth he hG hX hZ h s hS hp\n   let X:Zoom:=⟨s∘v,(fun _=> hp _),h', hS.comp hF.tendsto_atTop⟩\n   obtain ⟨Y,hY,hA,hu,hZ⟩:= dockedSky hs P a H X V (fun i=> (hV i).1) (fun i=> (hV i).2) 𝓛 hℓ hD\n   have hr:Y.r=s ∘ v:= congr_arg Zoom.r hY\n   exact ⟨v,hF,Y,hr,⟨hA,hu,V,hκ,fun i=> ⟨(hV i).1,(hV i).2.trans (congr_fun hr i).symm⟩, hZ⟩⟩",
+            "line": 25,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/UV_STRESS/Focus.lean",
-            "fragment": "L208-L212"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Prom/Zoom/Running.lean",
+            "fragment": "L25-L31"
           },
           "proof_context": {
-            "declaration": "YM.Next.UVStress.comparison_jets",
+            "declaration": "YM.MergeProof.East.pays_sky",
             "lines": [
-              208,
-              212
+              25,
+              31
             ],
-            "conclusion": "From `Approaches`, `X.jets N d m R` holds: the jet comparison is uniform on the window of `Conf_n`."
+            "conclusion": "Every positive null sequence s has a strictly increasing f and a scaling X with X.r=s∘f satisfying StarPath, including Approaches."
           }
         }
       }
@@ -112,7 +112,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, a judge ruled; a re-rating agent agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, a judge ruled; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       }
     }

@@ -1,9 +1,9 @@
 {
   "id": "Lemma 19.7 step 7",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "Existence of k_* from the 2/3 decay and log S_k = o(T) are there; the minimality-based estimates s_{k*}/s_k -> 1 and log Xi_m = o(s_m) are not stated separately.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Carried by Stock.Tabs (mayOpen, chosen, needs, pay; the entrance conditions are the fields grows and cheap), OPE.stock_step, stock_price and Wicker.whence/banket. Lean states log S_k = o(.) as RateLE along height sequences and uses Vac.fiat as the normalisation cost in place of Phi_l.",
   "subject": [
     {
       "location": {
@@ -58,7 +58,85 @@
               36,
               58
             ],
-            "conclusion": "`mayOpen` shows some level opens (`opens`: s*coverSize^2 <= a_i/a_j) because a_i*coverSize_i^2 decreases by at least the factor 2/3 per step."
+            "conclusion": "Using coverSize^2 growth by at most 2 per level, a_i b_i^2 decreases by factor 2/3, so an opening level exists; chosen is the minimal one (Nat.find)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stock.Tabs.pay",
+        "module": "YM.Overlay.Prior",
+        "lines": [
+          85,
+          115
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stock.Tabs.pay"
+          },
+          "snippet": {
+            "text": "lemma pay (h : Tabs a) (hs : 1≤s) (e : ℝ) (he : 0<e) :\n    ∀ᶠ m : ℕ in atTop,\n      let p := chosen a s h m\n      (a.S.a m / a.S.a p)^4* Vac.fiat G (a.params p) (a.clock.hatBeta p) ≤ e * a.S.scale p := by\n  have hw : ∀ᶠ m : ℕ in atTop, ∀ i ≥ m-1,\n      ((a.S.block i).val * ((a.clock.coverSize i:ℝ)^2))^(4:ℕ) * Vac.fiat G (a.params (i+1)) (a.clock.hatBeta (i+1)) ≤\n        (e/s^4) * a.S.scale (i+1) := by\n    have hn : 0 < s := by linarith\n    obtain ⟨j,hj⟩ := eventually_atTop.1 (h.cheap (e/s^4) (by positivity))\n    filter_upwards [eventually_gt_atTop j] with i hg k hk using hj _ (by omega)\n  filter_upwards [hw,eventually_gt_atTop 0] with i hi hp\n  dsimp only\n  have hv := (opened a s h i).1\n  cases hg : chosen a s h i with\n  | zero => omega\n  | succ m =>\n    have hh := hi m (by omega)\n    have hf (q : ℕ) : 0≤Vac.fiat G (a.params q) (a.clock.hatBeta q) := by\n      unfold Vac.fiat\n      have hu := (a.params q).clip.quadratic_pos\n      have hx := (a.params q).paths_pos\n      have he := Real.log_pos (a.fits.delayed q)\n      positivity\n    calc\n      _ ≤ (s*((a.S.block m).val*(a.clock.coverSize m:ℝ)^ (2:ℕ)))^(4:ℕ) * Vac.fiat G (a.params (m+1)) (a.clock.hatBeta (m+1)) := mul_le_mul_of_nonneg_right\n        (pow_le_pow_left₀ (div_nonneg (a.S.a_pos _).le (a.S.a_pos _).le) (expensive a s h hs i m hg) 4) (hf (m+1))\n      _ ≤ _ := by\n        rw [mul_pow,mul_assoc]\n        refine (mul_le_mul_of_nonneg_left hh (show 0 ≤ s^4 by positivity)).trans_eq ?_\n        have hn := ne_of_gt (lt_of_lt_of_le (by norm_num : (0:ℝ) < 1) hs)\n        field_simp",
+            "line": 85,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Overlay/Prior.lean",
+            "fragment": "L85-L115"
+          },
+          "proof_context": {
+            "declaration": "YM.Stock.Tabs.pay",
+            "lines": [
+              85,
+              115
+            ],
+            "conclusion": "Minimality of chosen (needs/expensive) gives (a_m/a_{k_*})^4 * fiat_{k_*} <= e * s_{k_*} eventually, for every e > 0."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.stock_step",
+        "module": "YM.OPE.Prices.Stock",
+        "lines": [
+          27,
+          50
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.stock_step"
+          },
+          "snippet": {
+            "text": "lemma stock_step : Tendsto (fun i=> C.S.scale i/C.S.scale (J i)) atTop (𝓝 1):=by\n    let x i:= C.S.scale (J i)\n    let y:= C.S.scale\n    have he(i): i ≤ J i:= (Stock.Tabs.opened _ _ _ i).1\n    have hp:Tendsto J atTop atTop:= tendsto_atTop_mono he tendsto_id\n    have hz:Tendsto x atTop atTop:= C.S.divergent.comp hp\n    rw [tendsto_order]; constructor\n    · intro r hr; obtain ⟨v,hv,hv'⟩:= exists_between (sub_pos.mpr hr);\n      filter_upwards [Stock.Tabs.pay C.path.levels 1 t le_rfl v hv,hz.eventually_gt_atTop 0] with i hi ht\n      rw [lt_div_iff₀ ht]\n      let u := C.S.a i/C.S.a (J i)\n      let B := Vac.fiat G (P'|>.params (J i)) (P'|>.clock.hatBeta (J i))\n      have hs : 1≤u := (one_le_div (C.S.a_pos _)).2 (C.S.strictAnti.antitone (he i))\n      have hF : x i-y i=Real.log u := by\n         unfold x y Schedule.scale u; rw [Real.log_div (C.S.a_pos _).ne' (C.S.a_pos _).ne', Real.log_inv, Real.log_inv]; ring\n      have hB : 1 ≤ B:= stock_fiat C _\n      have hW : x i-y i ≤ v*x i:= by\n         rw [hF]; calc\n            _ ≤ u:= Real.log_le_self (by linarith)\n            _ ≤ u^4 := by nth_rw 1 [← pow_one u]; exact pow_le_pow_right₀ hs (by norm_num)\n            _ ≤ u^4*B:= le_mul_of_one_le_right (by positivity) hB\n            _ ≤ _ := hi\n      change r*x i < y i; linarith only [hW,mul_lt_mul_of_pos_right hv' ht]\n    intro r hr; filter_upwards [hz.eventually_gt_atTop 0] with i hi using lt_of_le_of_lt ((div_le_one hi).2 ((scale_mono C.S).monotone (he i))) hr",
+            "line": 27,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Prices/Stock.lean",
+            "fragment": "L27-L50"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.stock_step",
+            "lines": [
+              27,
+              50
+            ],
+            "conclusion": "s_k/s_{k_*} -> 1, via s_{k_*} - s_k = log(a_k/a_{k_*}) <= (a_k/a_{k_*})^4 fiat = o(s_{k_*})."
           }
         }
       }
@@ -72,7 +150,7 @@
         "module": "YM.OPE.Prices.Stock",
         "lines": [
           57,
-          57
+          68
         ]
       },
       "role": "key",
@@ -82,14 +160,14 @@
             "id": "YM.OPE.stock_price"
           },
           "snippet": {
-            "text": "lemma stock_price (hG:G.Simple) (h:Height C.S l T m a)(hT:Tendsto T l atTop) : RateLE l T (fun i=> stakes C (m i) (J (m i))) 0 :=by",
+            "text": "lemma stock_price (hG:G.Simple) (h:Height C.S l T m a)(hT:Tendsto T l atTop) : RateLE l T (fun i=> stakes C (m i) (J (m i))) 0 :=by\n    cases l.eq_or_neBot with\n    | inl hh=> rw [hh]; intro r _; simp\n    | inr hl =>\n    let v i:= C.S.a (m i)/C.S.a (J (m i)); intro r hr; let u:=r/3/(1+a)\n    have ha:=h.nonneg hT; have hf:0< u:= div_pos (by positivity) (by positivity); have hs :u*(a+1)+r/3 ≤ r:=by unfold u; rw [add_comm a 1, div_mul_cancel₀ _ (by linarith only [ha])]; linarith only [hr]\n    filter_upwards [h.grows.eventually (Stock.Tabs.pay C.path.levels 1 t le_rfl u hf),\n       (h.stock t).grows.eventually (Vac.treasury_stage C.path.levels hG),\n       (h.stock t).pace.eventually (gt_mem_nhds (show a<a+1 by linarith)),hT.eventually_gt_atTop 0,(hT.const_mul_atTop (div_pos hr (by norm_num : (0:ℝ) < 3))).eventually_ge_atTop 5] with i hi hv he hT he'\n    rw [stakes,Real.norm_of_nonneg (Real.exp_pos _).le]; apply Real.exp_monotone\n    let z:= J (m i); have hZ:C.S.scale z /T i<a+1:= he; have hε:= le_of_lt ((div_lt_iff₀ hT).1 hZ); have hp:v i^4 * Vac.treasury (P') z ≤ u*C.S.scale z:= le_trans (mul_le_mul_of_nonneg_left hv (by positivity)) hi\n    have he':= show (5:ℝ) ≤ (r/3)*T i from he'; change v i^4 * Vac.treasury _ z +_ ≤ _; linarith only [he',hp,mul_le_mul_of_nonneg_left hε hf.le, mul_le_mul_of_nonneg_right hs hT.le]",
             "line": 57,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Prices/Stock.lean",
-            "fragment": "L57-L57"
+            "fragment": "L57-L68"
           },
           "proof_context": {
             "declaration": "YM.OPE.stock_price",
@@ -97,7 +175,46 @@
               57,
               68
             ],
-            "conclusion": "`stock_price` gives `RateLE` of `stakes C (m i) (J (m i))` by 0, i.e. log S_k = o(T) along the sequence."
+            "conclusion": "log stakes(m, k_*(m)) has rate at most 0 in T along a height sequence (log S_k = o(T))."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.MergeProof.Ribbons.whence",
+        "module": "YM.MergeProof.North.Wicker",
+        "lines": [
+          49,
+          56
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.MergeProof.Ribbons.whence"
+          },
+          "snippet": {
+            "text": "lemma whence : Tendsto (fun i=> Real.sqrt (H i)/C.S.scale i) atTop (𝓝 0):=by\n   have ht : Tendsto (H) atTop atTop:= tendsto_atTop_add_const_left _ _ (C.S.divergent.const_mul_atTop (Gauge.slopeConstant_pos hG))\n   have he:Tendsto (fun i=> H i / C.S.scale i) atTop (𝓝 G.slopeConstant):= by\n       have hp : Tendsto (fun i=> C.path.levels.clock.bar/C.S.scale i) atTop (𝓝 0) := tendsto_const_nhds.div_atTop C.S.divergent\n       refine (show Tendsto (fun i=> C.path.levels.clock.bar/C.S.scale i+G.slopeConstant) atTop (𝓝 G.slopeConstant) from by simpa only [zero_add] using! hp.add_const G.slopeConstant).congr' ?_; filter_upwards [C.S.divergent.eventually_gt_atTop 0] with i hi; change _= (C.path.levels.clock.bar+G.slopeConstant* Q i)/_; rw [add_div,mul_div_cancel_right₀ _ hi.ne']\n   have hx:Tendsto (fun i=> (Real.sqrt (H i))⁻¹) atTop (𝓝 0):=by simp_rw [Real.sqrt_eq_rpow]; exact tendsto_inv_atTop_zero.comp ((tendsto_rpow_atTop (by norm_num)).comp ht)\n   refine (show Tendsto (fun i=> H i/Q i*(Real.sqrt (H i))⁻¹) atTop (𝓝 0) from by simpa using! he.mul hx).congr' ?_\n   filter_upwards with i; let y:=H i; have hp: 0<y:=zero_lt_one.trans (C.path.levels.fits.delayed _); have hf:= Real.mul_self_sqrt hp.le; change y/_*(Real.sqrt y)⁻¹= Real.sqrt y/_; nth_rw 1 [← hf]; have hv:0<Real.sqrt y:= Real.sqrt_pos.2 hp; ring_nf; field_simp",
+            "line": 49,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/North/Wicker.lean",
+            "fragment": "L49-L56"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.Ribbons.whence",
+            "lines": [
+              49,
+              56
+            ],
+            "conclusion": "sqrt(hatBeta_i)/s_i -> 0 from hatBeta = bar + slope*s, so exp sqrt(hatBeta) has Note rate 0 (log Xi_m = o(s_m))."
           }
         }
       }
@@ -112,7 +229,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

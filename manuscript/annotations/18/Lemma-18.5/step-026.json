@@ -1,9 +1,9 @@
 {
   "id": "Lemma 18.5 step 26",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "rho_tr(v_eom) = 0 is `Lease_alive` and the maps s_i -> s are `Prosper`; the comparison of the current coefficient with its read-out is `diadem` at the rate `taxA * loss` rather than Ce^{-h_k/4}, and the joint cluster choice, closedness and Taylor matching are not there.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] carries the equation direction with Slate.medium and Slate.aspiring (j_i -> -v_eom, v_eq -> v_eom), and uses Terrace.Lease_alive for rho_tr(v_eom)=0. The bound |rho_tr(j_i)| <= C e^{-h_k/4} appears instead as the rate taxA*(Lease(Shine5 L.Z) - Lease(Vivid)) -> 0 in Slate.diadem, and filter limits replace the joint cluster choice.",
   "subject": [
     {
       "location": {
@@ -24,6 +24,45 @@
     }
   ],
   "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Trace.Slate.aspiring",
+        "module": "YM.TraceExtension.Slate.Garnet",
+        "lines": [
+          45,
+          54
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Trace.Slate.aspiring"
+          },
+          "snippet": {
+            "text": "lemma aspiring : Tendsto (medium L X Z) atTop (𝓝 (Stem5 (Zᵣ))) ∧ Tendsto (fun k=> taxA (A) k * Lease Zᵣ h (medium L X Z k)) atTop (𝓝 0):=by\n    obtain ⟨q,hq,hR,hV⟩:= penumbra P h hb hu hz hp; let f(k):=(Z.β k)⁻¹; let v:= Shine5 Z X; let w:= Shine5 Z L.Z\n    have he:Tendsto (fun i=> f i • v i) atTop (𝓝 0):=by\n       apply tendsto_zero_iff_norm_tendsto_zero.mpr; refine squeeze_zero' (Eventually.of_forall fun i=>norm_nonneg _) ?_ (g:=fun i=> q*(Pig A i*(Z.β i)⁻¹)) ?_\n       · filter_upwards [hR] with i hi; have hp:f i ≥0:=inv_nonneg.mpr (measured hb P hz i|>.le); rw [norm_smul,Real.norm_of_nonneg hp]; exact (mul_le_mul_of_nonneg_left hi hp).trans_eq (by unfold f; ring)\n       simpa [Pig] using! (washout P h hb hz (1/6)).const_mul q\n    let y:= taxA (A); let ρ:=Lease Zᵣ h; have hx : Vivid (Zᵣ) (BornZ none)= -Stem5 (Zᵣ):=Vivid_z _\n    have hv':ρ (Vivid (Zᵣ) (BornZ none))=0:=by rw[hx,map_neg, show ρ (Stem5 _)=0 from Lease_alive .., neg_zero]\n    have hZ:= (continuous_snd.continuousAt).tendsto.comp (tiara P h hb hu hz hL); change Tendsto w atTop (𝓝 (Vivid (Zᵣ) (BornZ none))) at hZ; rw [hx] at hZ; constructor\n    · have ht:= he.sub hZ; rw [zero_sub,neg_neg] at ht; exact ht",
+            "line": 45,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Slate/Garnet.lean",
+            "fragment": "L45-L54"
+          },
+          "proof_context": {
+            "declaration": "YM.Trace.Slate.aspiring",
+            "lines": [
+              45,
+              57
+            ],
+            "conclusion": "medium = beta^{-1} Shine5 X - Shine5 L.Z tends to Stem5 (the equation vector), since beta^{-1} Shine5 X -> 0 and the current read-out tends to Vivid(BornZ none) = -Stem5 with Lease(Stem5)=0; also taxA * Lease(medium) -> 0."
+          }
+        }
+      }
+    },
     {
       "type": "lean",
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
@@ -58,46 +97,7 @@
               24,
               25
             ],
-            "conclusion": "`Lease F h (Stem5 F) = 0`, i.e. rho_tr(v_eom) = 0."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Trace.Terrace.Prosper",
-        "module": "YM.TraceExtension.Terrace.Lease",
-        "lines": [
-          27,
-          28
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Trace.Terrace.Prosper"
-          },
-          "snippet": {
-            "text": "structure Prosper (V:∀ i,Vane C i)(h:G.Simple)(a:(Cells.standard C).Hierarchy)(s:ℕ→Bowl (C.labels.level 5) →L[ℝ] (TableOne a.spin)) : Prop where\n   alpha : Tendsto s atTop (𝓝 (Vbase a.spin).toContinuousLinearMap)",
-            "line": 27,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Terrace/Lease.lean",
-            "fragment": "L27-L28"
-          },
-          "proof_context": {
-            "declaration": "YM.Trace.Terrace.Prosper",
-            "lines": [
-              27,
-              30
-            ],
-            "conclusion": "`Prosper` records that the transport maps `s i` (bounded linear maps from the level-5 field to the free quotient `TableOne`) tend to the free map `Vbase`."
+            "conclusion": "rho_tr vanishes on the equation vector Stem5 (via rho_eom)."
           }
         }
       }
@@ -136,7 +136,7 @@
               54,
               62
             ],
-            "conclusion": "`taxA k * (Lease(Shine5 L.Z k) - Lease(Vivid ..)) → 0`, the stationary and marked comparison of the current coefficient."
+            "conclusion": "taxA k * (Lease(Shine5 L.Z k) - Lease(Vivid ..)) -> 0, comparing the current coefficient with its read-out at rate loss = AgeK(-1/4)."
           }
         }
       }
@@ -151,7 +151,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

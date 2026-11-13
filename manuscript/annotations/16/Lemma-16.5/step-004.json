@@ -1,9 +1,9 @@
 {
   "id": "Lemma 16.5 step 4",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "Representatives, existence of the levels and the extracted coefficient vector are present. The blocking of the two marked insertions and the Taylor truncation at weight D are inside the `ShellNode`/`fragment` objects and are not stated at these lines.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Carried by MergeProof.Ribbons.laurelE (levels via trapeze) and MergeProof.Acme.zone (representatives, annulus grid points). Difference: the blocked two-mark difference and its bounded coefficient vector are packaged in the ShellNode estimate built by Ribbons.bricks (fragment, corners), not displayed.",
   "subject": [
     {
       "location": {
@@ -29,50 +29,11 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.MergeProof.Acme.zone",
-        "module": "YM.MergeProof.West.Ozone",
-        "lines": [
-          23,
-          24
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.MergeProof.Acme.zone"
-          },
-          "snippet": {
-            "text": "   let b:= S.representative 4 B; let v:= S.representative d T\n   have hb:S.project 4 b=B:= S.rep ..; have hT: S.project d v=T:= S.rep ..",
-            "line": 23,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/West/Ozone.lean",
-            "fragment": "L23-L24"
-          },
-          "proof_context": {
-            "declaration": "YM.MergeProof.Acme.zone",
-            "lines": [
-              21,
-              45
-            ],
-            "conclusion": "`zone` picks representatives `b := S.representative 4 B` and `v := S.representative d T` projecting to `B` and `T`."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
         "declaration": "YM.MergeProof.Ribbons.laurelE",
         "module": "YM.MergeProof.North.Economist",
         "lines": [
-          28,
-          28
+          23,
+          32
         ]
       },
       "role": "key",
@@ -82,14 +43,14 @@
             "id": "YM.MergeProof.Ribbons.laurelE"
           },
           "snippet": {
-            "text": "   obtain ⟨j,hj,hh,hT⟩:= trapeze C.S t he C.path.levels.fits.mesh; refine ⟨t,j,he,hj,hT,fun p k hx hK v y F=>?_⟩",
-            "line": 28,
+            "text": "lemma laurelE (ht:Created C)(h:C.Makes): Economics C:=by\n   obtain ⟨χ,h'⟩:= hV.mother\n   constructor; intro d D l hp\n   let a:ℝ:= (d:ℝ)+4+8; let t:=1+1/(64*a); have ha:0<a:=by unfold a; positivity\n   have he:1<t:=lt_add_of_pos_right _ (by positivity); have ht':a*(1-t) > -(1/32):=by rw [show a*(1-t)= -(1/64) by unfold t; field_simp; ring]; norm_num\n   obtain ⟨j,hj,hh,hT⟩:= trapeze C.S t he C.path.levels.fits.mesh; refine ⟨t,j,he,hj,hT,fun p k hx hK v y F=>?_⟩\n   let b:=max 1 ((C.labels.level 4).coeffSize y); let w:= max 1 ((C.labels.level d).coeffSize v)\n   have hb:0<b:=zero_lt_one.trans_le (le_max_left ..); have hw:0<w:=zero_lt_one.trans_le (le_max_left ..)\n   filter_upwards [pricey C D d l hG t hT hj hV hb hw hp hW k hK ht', lightness C hG hV p,eventually_ge_atTop k,hj.eventually_ge_atTop (C.ref d), hj.eventually_ge_atTop (C.ref 4), hh,Push.GridApprox.plenty C.path.levels p (lensScope C D)] with i ⟨⟨he,hp⟩,hϑ⟩ ⟨hM,hL⟩ hN hK' hI hj' hU\n   exact bricks C p k (j i) i D d l v y hx.1 hN hj' F h ht hW b w _ _ _ _ (le_max_right ..) (le_max_right ..) hw hb (Real.exp_pos _) L hx hK hK' hI hM (renal _) (bling _) (h' D) (hK.trans hN) rfl rfl hU (by push_cast at hL; exact hL) hp he (le_refl _) hϑ",
+            "line": 23,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/North/Economist.lean",
-            "fragment": "L28-L28"
+            "fragment": "L23-L32"
           },
           "proof_context": {
             "declaration": "YM.MergeProof.Ribbons.laurelE",
@@ -97,7 +58,7 @@
               23,
               32
             ],
-            "conclusion": "Levels `j` with `scale (j i)/scale i → t` exist by `trapeze` from the mesh condition (the ratio `s_{m+1}/s_m → 1`)."
+            "conclusion": "With t = 1 + 1/(64(d+12)), trapeze gives levels j(i) with scale ratio tending to t, and bricks gives the shell estimate ShellNode at those levels."
           }
         }
       }
@@ -107,36 +68,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.MergeProof.Ribbons.stencil_pay",
-        "module": "YM.MergeProof.West.Stencil",
+        "declaration": "YM.MergeProof.Acme.zone",
+        "module": "YM.MergeProof.West.Ozone",
         "lines": [
-          24,
-          25
+          21,
+          45
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.MergeProof.Ribbons.stencil_pay"
+            "id": "YM.MergeProof.Acme.zone"
           },
           "snippet": {
-            "text": "   obtain ⟨z,hz,_,c,hE⟩:= finite_extract (𝓛:=F.fuse) w Q hp'\n   let Y := S.project B c",
-            "line": 24,
+            "text": "lemma zone (hp:W.Derivatives S)(hv:Aroma C) -- fix\n    (hh:D+h=d+4)(B: S.Field 4)(T:S.Field d) (ht:∀ v:S.Field D,(∑ i:ι,g i*(X i).tester S D v)=0) {ε:ℝ}(hε:0<ε) :∀ᶠ m in atTop,∀ y∈annulus ((R) m), ‖∑ i:ι,g i*((((R) m):ℂ)^h * (X i).asked B T y)‖ ≤ ε:=by\n   let b:= S.representative 4 B; let v:= S.representative d T\n   have hb:S.project 4 b=B:= S.rep ..; have hT: S.project d v=T:= S.rep ..\n   let Q:= Finset.univ.sup (fun i=>(X i).t); obtain ⟨k₀,hk⟩:=Stock.Tabs.mayOpen L 1 hv.opens Q\n   let k:=max k₀ (C.ref D); have hK:Stock.Tabs.opens L 1 Q k:=Stock.Tabs.open_later _ _ hv.opens hk (le_max_left ..) zero_le_one\n   obtain ⟨A,hA,hP⟩:= stencil_pay hC hq ho H X g Q (fun i=> Finset.le_sup (s:=Finset.univ) (f:=fun i=>(X i).t) (Finset.mem_univ i)) ht\n   obtain ⟨s,j,hs,hj,hJ,hf⟩:=hv.shells.fees d D h hh\n   let u(i:ι):Fin ((X i).n+1)→ S.Tag:= Fin.cons ⟨d,T⟩ (S.classTokens ∘ (X i).q)\n   obtain ⟨n,hm⟩:= mountain W hC hq ho H ⟨4,B⟩ X u g hv.notes hp j s hs hj hJ h\n   obtain ⟨P,hπ,hp⟩:= mars n\n   let z:= ε/P; have hz:0<z:= div_pos hε hπ; let c:= stakes C Q k\n   let a m:= C.S.a (j m)\n   have he:Tendsto (fun m:ℕ=>2*(c/pitts C m)*A) atTop (𝓝 0):=by\n       have h':Tendsto (pitts C) atTop atTop:= Real.tendsto_exp_atTop.comp (Tendsto.const_mul_atTop (by norm_num) C.S.divergent)\n       simpa only [mul_zero,zero_mul] using ((tendsto_const_nhds (x:=c)).div_atTop h'|>.const_mul (2:ℝ)).mul_const A\n   have hx: Note C.S (fun m=>arm n*a m) (-s):= ((Note.notes C.S _ (arm_pos n)).mills ((Note.note_a C.S).relay j hj hJ)).swapP (by ring)\n   have hw:∀ᶠ m in atTop, arm n*a m≤ (R) m /128:= hx.outweigh (hv.notes.splits (Note.notes C.S 128 (by norm_num))) (by linarith)\n   filter_upwards [hw,he.eventually (ge_mem_nhds hz),hf Q k hK (le_max_right ..) v b F,eventually_all.mpr fun i=> cloudW (X i) hv.notes, hm z hz] with m hM he hh hc hr y hy\n   let f:=district ⟨4,B⟩ X u g h m\n   change ‖f y‖ ≤ ε\n   refine (hp ((R) m) (a m) z (C.S.a_pos _) hz hM f (fun x hx ha=>?_) hr y hy).trans_eq (div_mul_cancel₀ ε hπ.ne')\n   obtain ⟨x',rfl,hx'⟩:= read_grid (C:=C) ha\n   specialize hP d h v b m (j m) _ hh _ hx (fun i=> hc i _ _ hx hx'); rw [hT,hb] at hP\n   exact hP.trans he",
+            "line": 21,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/West/Stencil.lean",
-            "fragment": "L24-L25"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/West/Ozone.lean",
+            "fragment": "L21-L45"
           },
           "proof_context": {
-            "declaration": "YM.MergeProof.Ribbons.stencil_pay",
+            "declaration": "YM.MergeProof.Acme.zone",
             "lines": [
-              14,
-              38
+              21,
+              45
             ],
-            "conclusion": "A coefficient cluster `c` of the bounded replacement fields is extracted by `finite_extract` and projected to `Y := S.project B c`."
+            "conclusion": "Chooses representatives b, v of B, T, takes the levels from Economics.fees, and estimates the annular sum at grid points (read_grid) by stencil_pay."
           }
         }
       }
@@ -151,7 +112,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

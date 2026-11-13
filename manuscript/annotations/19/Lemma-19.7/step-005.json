@@ -1,9 +1,9 @@
 {
   "id": "Lemma 19.7 step 5",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "[L] has the per-cell bound by S_k with the constant five, the triangle inequality, and the root bound 2 S_k/varpi. The split of the five into per-cell contributions 2,1,1,1 of the singleton, forced-profile, connected regular and eligible forced sums is not stated in these lines.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Carried by MergeProof.bequeathed (root triangle inequality seamless.semi, local difference via celeri) and Accent.filling/baking, where stakes builds the additive five into the exponent. Difference: Lean bounds the correction column by S_k/(2 varpi), sharper than S_k/varpi.",
   "subject": [
     {
       "location": {
@@ -29,50 +29,11 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.MergeProof.Ribbons.ManyCopies.joins",
-        "module": "YM.OPE.Sweep.Camp",
-        "lines": [
-          62,
-          62
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.MergeProof.Ribbons.ManyCopies.joins"
-          },
-          "snippet": {
-            "text": "    : ∃ z:C.label d, let g : Config G (C.side N p)→ℂ := (fun u=>∏ i,f i u); Next.UVStress.quota C d m N p z ≤ 2*e ∧ Interior ((T).chamber 0) (g-C.O N p z 0)∧ (T).rootTest (C.beta N p) (g-C.O N p z 0) ≤ 2*(stakes C J k / b):=by",
-            "line": 62,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Sweep/Camp.lean",
-            "fragment": "L62-L62"
-          },
-          "proof_context": {
-            "declaration": "YM.MergeProof.Ribbons.ManyCopies.joins",
-            "lines": [
-              54,
-              94
-            ],
-            "conclusion": "The root test of the difference with the matched column is at most `2*(stakes C J k / b)`, with `b` the weight."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
         "declaration": "YM.MergeProof.bequeathed",
         "module": "YM.MergeProof.South.Merman",
         "lines": [
-          72,
-          73
+          63,
+          74
         ]
       },
       "role": "key",
@@ -82,14 +43,14 @@
             "id": "YM.MergeProof.bequeathed"
           },
           "snippet": {
-            "text": "    change W₀.rootTest (C.beta N p) _ ≤ 2*S\n    suffices hy' : W₀.rootTest (C.beta N p) f' ≤ S by rw [show f-C.O N p B 0=f'+b'' from by unfold f' b'' V'; abel,two_mul]; exact ((seamless H N p).semi W₀ f' b'' (Next.UVStress.minus hZc hv) hPc').trans (add_le_add hy' hPc)",
-            "line": 72,
+            "text": "    let S:= stakes C J m/w\n    have hPc:W₀.rootTest (C.beta N p) (-r' - C.O N p B 0) ≤ S:=by\n       have he: 0 ≤ stakes C J m/w:=div_nonneg (Real.exp_pos _).le hw.le\n       calc\n          _ ≤ _ := hσ\n          _ = S/2:=by unfold v' S stakes; field_simp; ring -- edit\n          _ ≤ _ := div_le_self he (by norm_num)\n    let V':= -f; have hv:Interior (W₀.chamber 0) V':= by rw [show V'=(-1:ℂ) • f from (neg_one_smul ..).symm]; exact ha.scale _\n    let f':=r'-V'; let b'':= -r'-C.O N p B 0; have hPc' : Interior (W₀.chamber 0) b'':= by unfold b''; rw [show -r'=(-1:ℂ) • r' from (neg_one_smul ..).symm]; exact Next.UVStress.minus ((show Interior _ r' from hZc).scale _) (hC B)\n    change W₀.rootTest (C.beta N p) _ ≤ 2*S\n    suffices hy' : W₀.rootTest (C.beta N p) f' ≤ S by rw [show f-C.O N p B 0=f'+b'' from by unfold f' b'' V'; abel,two_mul]; exact ((seamless H N p).semi W₀ f' b'' (Next.UVStress.minus hZc hv) hPc').trans (add_le_add hy' hPc)\n    exact celeri C N k m p d H w h L J hV f Q ht (hk:=hk) hN hR hf E hw hp X hL P b x Z e g hK hU hB s hs hΨ hβ hW hZ",
+            "line": 63,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/South/Merman.lean",
-            "fragment": "L72-L73"
+            "fragment": "L63-L74"
           },
           "proof_context": {
             "declaration": "YM.MergeProof.bequeathed",
@@ -97,7 +58,7 @@
               43,
               74
             ],
-            "conclusion": "The root of the difference is bounded by the root triangle inequality `seamless.semi`, applied to the original local difference and the correction, each at most `S = stakes/w`."
+            "conclusion": "With S = stakes C J m / w, the column correction has root test at most S/2 <= S, the local difference has root test at most S via celeri, and the root triangle inequality (seamless.semi) gives root test of f - O(B) at most 2*(stakes/w)."
           }
         }
       }
@@ -107,36 +68,75 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.MergeProof.Accent.stakes",
+        "declaration": "YM.MergeProof.Accent.filling",
         "module": "YM.MergeProof.Strudel",
         "lines": [
-          21,
-          21
+          23,
+          44
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.MergeProof.Accent.stakes"
+            "id": "YM.MergeProof.Accent.filling"
           },
           "snippet": {
-            "text": "def stakes (m k:ℕ):=Real.exp ((C.S.a m/C.S.a k)^ (4:ℕ)*Vac.treasury C.path.levels k+5)",
-            "line": 21,
+            "text": "lemma filling (w:ℝ) (x:Motion) (hm: Stock.Tabs.opens C.path.levels 1 m k)(hd:C.ref d ≤ k)(hN:k<N)(hk:0<w) (he:Yeast C.path C.params (C.localSection d) ζ u ψ k N p (fun i=> march (fun _:Unit=>w) φ k i ()) b D Z z)\n    (hf':Fiesta C.path (C.labels.level d) ζ ψ k)(hu: Moonlit C.path r δ u D)(hi:∀ i,k ≤ i→ φ i ≤1)(hr:Brine C.path k δ φ)(hR:Monotone r)(hc:Continuous b) : (Cells.center C.S p (hm.1.trans hN.le) 0).rootTest (C.beta N p) (dance x b) ≤ stakes C m k/w:=by\n   let hn:m ≤ N:= hm.1.trans hN.le; let X:= b! hn 0\n   let f(j):=(Mix.camp C p m j); let nu(i:A):=dye (X.omega i) (X.hand i); let θ i:= twist (nu i) x; let t(i:A):=stepUp (θ i) (f N i) b\n   let K:= Fintype.card A; let Y:= Stock.census A\n   have hp:Migrating C.path k p N f:= ⟨fun j hi _=> funext fun i=> Work.I03.camp_step C p (hm.1.trans hi) i⟩\n   have hv := Work.I03.answer G C 1 le_rfl B m k hm N hN.le p hn\n   have hs(i:A): X.copy i (dance x b) = t i:=by\n      funext U; have hh : f N i= X.copyMap i 0:= (hv.1 i).symm\n      rw [show t i U= scalar (twist (nu i) x) (b (pull _ (f N i) U)) from rfl,← oper,hh, show X.copyMap i 0=X.translateBy i by change (X.omega i).act 0+_= _; simp]; simp_rw [nu,calling]; change dot (X.hand i) (scalar x (b (pull x.1 0 (pull (X.omega i) (X.translateBy i) U)))) = dot (X.hand i) (scalar x (b (pull (X.omega i*x.1) (X.translateBy i) U))); rw [pull_pull]; simp [affine]\n   have hf: Edition.Spaced (P k|>.B) (f k):= fun i j hij=>by\n       have he':= hv.2.2 k le_rfl hN.le i j hij; rw [mul_one] at he'; exact_mod_cast he' -- coe maybe cast\n   let z(i:A):=w\n   have hj:= baking (B:=Y) C N k p d H f θ b Z _ w ζ hN hd hk he hf' hu hi hr hR hc hp (fun i=> (Extra.Multi.Occupancy.of_injective (Edition.injected _ _ (P k|>.B_pos) hf) i).trans (hx _)) ⟨fun _ _ i _ j _=> hf i j⟩ (Stock.final A)\n   have hz : Poly.toll (R:=Stock.census A) (fun _:A=>w) (Stock.final A)=w^K:=by simp [Poly.toll, K,Stock.final]\n   unfold Tiling.rootTest; change ‖moment (C.beta N p) (fun U=>∏ i:A,X.copy i _ U)‖^_ ≤ _; simp_rw [hs]\n   let W:= C.omega N p (fun U=>∏ i:A,t i U); let g:=(C.S.a m/C.S.a k)^4*Vac.treasury T k+ (5:ℝ)\n   rw [hz] at hj\n   refine Stock.spacer ‖W‖ g w K (norm_nonneg _) hk Fintype.card_pos ?_\n   have he : (Fintype.card (Site (C.side k p)):ℝ)*Vac.treasury C.path.levels k+K* (5:ℝ)=K*g:=by\n       rw [Stock.tallies C.S m k p]; unfold K g; ring\n   exact hj.trans_eq (congr_arg Real.exp he)",
+            "line": 23,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Strudel.lean",
-            "fragment": "L21-L21"
+            "fragment": "L23-L44"
           },
           "proof_context": {
-            "declaration": "YM.MergeProof.Accent.stakes",
+            "declaration": "YM.MergeProof.Accent.filling",
             "lines": [
-              21,
-              21
+              23,
+              44
             ],
-            "conclusion": "`stakes m k = exp((a_m/a_k)^4 * treasury k + 5)`, the normalization S_k with additive constant five."
+            "conclusion": "stakes m k = exp((a_m/a_k)^4 * treasury_k + 5), and the root test of the marked difference is at most stakes/w, from the per-cell bound of baking (cell count times treasury plus 5 per cell)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.MergeProof.Accent.baking",
+        "module": "YM.MergeProof.Caprese",
+        "lines": [
+          45,
+          76
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.MergeProof.Accent.baking"
+          },
+          "snippet": {
+            "text": "lemma baking {B:Census V}(hQ:k<N)(hK:C.ref d≤k)(hw:0<w) (he:Yeast C.path C.params s! ζ u ψ k N p (fun i=> march (fun _:Unit=>w) φ k i ()) b D Z a)\n    (hf:Fiesta C.path F! ζ ψ k)(hN: Moonlit C.path r δ u D)(hi:∀ i,k ≤ i→ φ i ≤1)(hr:Brine C.path k δ φ)(hR:Monotone r)(hc:Continuous b)\n    (hp:Migrating C.path k p N o)(hv:Occupancy (o k) (r k))(hx: Drake B (C.path.levels.budget k).B (o k))(i:B.Mode): ‖C.omega N p (fun V=> ∏ j∈ i.val,(U) j V)‖* Poly.toll (fun _=>w) i ≤ Real.exp (Fintype.card (Site (C.side k p))* Vac.treasury C.path.levels k+ Fintype.card V*(5:ℝ)):=by\n    let τ : Course C N p k:= ⟨C.path.β N p,hQ.le,fun i _ _=>rfl,fun i h=> Overlay.beta_positive H.wilson h⟩; let F:= Accent.birth B (R N) (U); let q:=τ.flow F\n    have hq:∀ i:ℕ,k ≤ i→∀ h:i<N,q i h.le=(C.path.levels.clock.op i p).push ((R (i+1)).beta) (q (i+1) h):=by\n       intro i hi hj; unfold q; rw [τ.flow_step _ i hj,τ.same (i+1) (hi.trans i.le_succ) hj]\n    have hN':q N le_rfl=F:=τ.flow_self F; have hk(j:V):Continuous ((U) j):=by unfold stepUp Motion.scalar;dsimp only;split;exact (hc.comp (continuous_pull ..)).star; exact hc.comp (continuous_pull ..)\n    have ha: Integrable (q N le_rfl) (prior G (C.side N p)):=by\n       rw [hN']; exact ((hatCont C N p (U) hk (show Continuous (R N).eval by rw [(H.wilson.starts ..).2]; exact bare_cont _) B).integrable_of_hasCompactSupport (HasCompactSupport.of_compactSpace _))\n    let v i:= march (fun _:Unit=>w) φ k i (); let x:= march (fun _:V=>w) φ k; have hX:=desal C.path r k p N δ φ o (fun _=>w) (fun _=>hw) hr B hp hx hR hv\n    have h'(j:V): (fun i=>x i j)=v:=by\n        funext i; induction i with\n        | zero=> rfl\n        | succ i IH=> by_cases h:k ≤ i\n                      · exact (show x (i+1) j=φ i*x i j from by simp only [x,march,h,if_true]).trans ((congr_arg (φ i*·) IH).trans (show φ i*v i=v (i+1) from by simp only [v,march,h,if_true]))\n                      unfold x v; simp [march,h]\n    let f i j:= liftF C.path s! N p (t j) (fun m=>o m j) Z i; let g i j:= liftK C.path N p (t j) (fun m=>o m j) Z i\n    have hw' i (h:k ≤ i): 0 < v i:= march_pos _ _ _ _ _ (fun _=>hw) hr i h _\n    have hz(j:V): ∃ u':∀ i:ℕ,ℕ → Config G (C.side i p)→ℂ, Wild C.path u k N p (fun m=>o m j) (fun i=>x i j) (fun i=>f i j) u' ((U) j) D ∧ ∀ i:ℕ,k ≤ i → i≤N→ profile (R i).activities (u' i)=g i j:=by\n       rw [h' j]; apply baker C.path C.params s! ζ u ψ k N p (t j) (fun m=>o m j) v b D Z a H.wilson (H.sections d) he hQ.le (fun i h _=> hw' i h) (fun i h _=> ?_) hf (fun m h hx=> (congr_fun (hp.mare _ h hx) j).symm) (fun m h hx=>?_)\n       · rw [show v (i+1)=φ i * v i by simp only [v,march,h,if_true]]; exact mul_le_of_le_one_left ((hw' i h).le) (hi i h)\n       obtain ⟨u,z,h',ht'⟩:= hN.days N p m hx; exact h'.propagate\n    choose u' hL hZ using hz\n    let K m (j:V):=u' j m; have ht(j:V): Nectar C.path u D p N k o x f K (U) j := by obtain ⟨h1,h2,h3,h4,h5⟩:=hL j; exact ⟨h1,h2,h3,h4,h5⟩\n    have hS:=Accent.sentry C.path r δ u D p N o x f K (U) H.wilson hQ.le hX hN ht hq hN' ha k le_rfl hQ.le|>.2.2\n    have hh:v k=w:=by unfold v; rw [marines k φ (fun _:Unit=>w) (fun _=>hw)]\n    rw [show x k=(fun _=>w) from marines k φ _ (fun _=>hw),show tapes _ p N K k=g k from funext fun j=>hZ j k le_rfl hQ.le, show topPitch C.path N k=(P! k).supportExponent from if_neg hQ.ne] at hS\n    have hE:=he.rates k le_rfl hQ.le; rw [show march (fun _:Unit=>w) φ k k ()=w from hh] at hE\n    have HV (i:V)(V':Config G (C.side k p)):= toasted C N k p d H Z ζ hK hQ.le (t i) (o k i) ((he.ticks k le_rfl hQ.le).2) hw.le hE (hf.coin k le_rfl) V'\n    have Hi:Vault (fun _:V=> w) (f k) (g k) 2 1:=⟨fun i V=>(HV i V).1,fun i V=> by simp_rw [← Finset.mul_sum]; exact (HV i V).2⟩\n    refine (vista _ B N p k (U) hq hN' ha H.wilson hQ.le i (continuous_integrable _ (continuous_finsetProd _ fun i _=> hk i)) hS Hi (fun _=>hw) (C.path.levels.budget k|>.exponent_pos.le)).trans_eq ?_\n    ring_nf",
+            "line": 45,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Caprese.lean",
+            "fragment": "L45-L76"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.Accent.baking",
+            "lines": [
+              45,
+              76
+            ],
+            "conclusion": "The weighted marked integral is at most exp(#cells * treasury_k + |V|*5), with the per-cell singleton and forced-sum constants 2 and 1 supplied by toasted through Vault."
           }
         }
       }
@@ -151,7 +151,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, a judge ruled; a re-rating agent agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, a judge ruled; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

@@ -1,9 +1,9 @@
 {
   "id": "Lemma 15.3 step 16",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "Injectivity, composition, unit, surjectivity and the symmetry identities are present; the positional identity in every slot and the uniqueness of inclusions are not stated.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Carried by DiffPlan.through_limit/inject/transit/arrival/fixs, DiffPlan.covered/joint with Table.pin_inj, Work.D06.compat and DiffPlan.inclusion_slot/derivative_slot. Difference: [L] builds the maps directly on quotient labels (Dash.lifts_model, used by Org.Arrives.serves) rather than descending coefficient maps, and the symmetry identities are the fields of DiffPlan.Orientation.",
   "subject": [
     {
       "location": {
@@ -58,124 +58,7 @@
               82,
               85
             ],
-            "conclusion": "`rise` is injective by `faithfully`."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.DiffPlan.transit",
-        "module": "YM.Euclid.Differential",
-        "lines": [
-          87,
-          89
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.DiffPlan.transit"
-          },
-          "snippet": {
-            "text": "theorem transit {d e l : ℕ} (H : d ≤ e) (J : e ≤ l) (p : S.Field d) :\n    P.rise J (P.rise H p) = P.rise (H.trans J) p := by\n  apply S.faithfully; simp only [P.through_limit h hm]",
-            "line": 87,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Euclid/Differential.lean",
-            "fragment": "L87-L89"
-          },
-          "proof_context": {
-            "declaration": "YM.DiffPlan.transit",
-            "lines": [
-              87,
-              89
-            ],
-            "conclusion": "Inclusions compose: `rise J (rise H p) = rise (H.trans J) p`."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.DiffPlan.fixs",
-        "module": "YM.Euclid.Differential",
-        "lines": [
-          95,
-          98
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.DiffPlan.fixs"
-          },
-          "snippet": {
-            "text": "lemma fixs (H : S.Basic) {d e : ℕ} (w : d ≤ e) : P.rise w (S.unit d) = S.unit e := by\n  apply S.field_ext H.toSymmetric\n  intro n q x hx\n  rw [hm.kernels w _ hx, S.at_unit H hx, S.at_unit H hx]",
-            "line": 95,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Euclid/Differential.lean",
-            "fragment": "L95-L98"
-          },
-          "proof_context": {
-            "declaration": "YM.DiffPlan.fixs",
-            "lines": [
-              95,
-              98
-            ],
-            "conclusion": "`rise w (unit d) = unit e`."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Table.pin_inj",
-        "module": "YM.Euclid.Union",
-        "lines": [
-          29,
-          30
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Table.pin_inj"
-          },
-          "snippet": {
-            "text": "theorem pin_inj d : Injective (S.pin d) := fun _ _ h =>\n  S.faithfully _ (congr_arg Subtype.val h)",
-            "line": 29,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Euclid/Union.lean",
-            "fragment": "L29-L30"
-          },
-          "proof_context": {
-            "declaration": "YM.Table.pin_inj",
-            "lines": [
-              29,
-              30
-            ],
-            "conclusion": "Each response map `S.pin d` is injective."
+            "conclusion": "Inclusions preserve responses (through_limit), hence are injective (inject), compose (transit), are the identity on equal degrees (arrival) and fix the unit (fixs)."
           }
         }
       }
@@ -214,46 +97,7 @@
               40,
               45
             ],
-            "conclusion": "Every element of the union is a response of some `pin n x`."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Table.onto",
-        "module": "YM.Euclid.Null",
-        "lines": [
-          84,
-          84
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Table.onto"
-          },
-          "snippet": {
-            "text": "theorem onto d : Surjective (S.project d) := (S.null d).mkQ_surjective",
-            "line": 84,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Euclid/Null.lean",
-            "fragment": "L84-L84"
-          },
-          "proof_context": {
-            "declaration": "YM.Table.onto",
-            "lines": [
-              84,
-              84
-            ],
-            "conclusion": "`project d` is surjective, so every field has a token representative."
+            "conclusion": "Every element of the union of responses, and every finite family of them (joint), comes from one common degree."
           }
         }
       }
@@ -292,7 +136,85 @@
               98,
               135
             ],
-            "conclusion": "`Orientation`: inclusions and derivatives commute with conjugation and signed permutations, with `mirrorDer d b s B = sum_a s.ortho a b * deriv d a (mirror B)`."
+            "conclusion": "Inclusions and derivatives commute with conjugation and signed reflections (derivative with the reflection matrix), derived from response injectivity and the chain rule."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.DiffPlan.inclusion_slot",
+        "module": "YM.Euclid.Differential",
+        "lines": [
+          108,
+          116
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.DiffPlan.inclusion_slot"
+          },
+          "snippet": {
+            "text": "theorem inclusion_slot (h : P.Inclusions T) (hp : T.Symmetric) {d e : ℕ} (H : d ≤ e) {x : Points n}\n    (hx : x ∈ conf n) (i : Fin n) (w : Fin n → S.Tag) (p : S.Field d) :\n    S.useAt T x (update w i ⟨e,P.rise H p⟩) = S.useAt T x (update w i ⟨d,p⟩) := by\n  cases n with\n  | zero => exact Fin.elim0 i\n  | succ n =>\n    conv_lhs => rw [← Table.class_perm S T hp (Equiv.swap 0 i) hx]\n    conv_rhs => rw [← Table.class_perm S T hp (Equiv.swap 0 i) hx]\n    rw [swap_fix,swap_fix]; apply h.kernels H p (rearrange_in _ hx)",
+            "line": 108,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Euclid/Differential.lean",
+            "fragment": "L108-L116"
+          },
+          "proof_context": {
+            "declaration": "YM.DiffPlan.inclusion_slot",
+            "lines": [
+              108,
+              116
+            ],
+            "conclusion": "The inclusion and derivative identities hold in every slot, by permuting the distinguished slot (inclusion_slot, derivative_slot)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Org.Arrives.serves",
+        "module": "YM.Org.Input",
+        "lines": [
+          101,
+          109
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Org.Arrives.serves"
+          },
+          "snippet": {
+            "text": "lemma serves (h : C.Makes) (h' : CenterPort C F) : ∃ T : Table C.book,∃ W : DiffPlan T, Cleaner S P T W F := by\n  obtain ⟨R,hR⟩ := H.pin\n  obtain ⟨Y,hY⟩ := lifts_model H.born H.census.integral R hR\n  obtain ⟨T,ht,hT⟩ := awake S H.born H.census.regular hY.through_ties\n  have hx := H.census.ready (Around.size_done h (h'.book _ _)) hT fun n w x hx => (ht _ _ hx).symm\n  have hb := Extraction.Order.limits_basic h hT (f:=F) ⟨P,hx.mesh,hx.volume⟩\n  have hv : Live T := fun n v t => Test.smearing t (T.smooth_read hT v).continuousOn\n  have hi := sameWake (p := hv) ht hY\n  exact ⟨T,Y.descends hv hi hT hb.toSymmetric,ht,hx,hb,hT,Y.readies hi hT hb.toSymmetric,Y.tilts hi hT hb.toSymmetric⟩",
+            "line": 101,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Org/Input.lean",
+            "fragment": "L101-L109"
+          },
+          "proof_context": {
+            "declaration": "YM.Org.Arrives.serves",
+            "lines": [
+              101,
+              109
+            ],
+            "conclusion": "Builds the table and the DiffPlan on quotient fields from the monitor maps (lifts_model, descends), with Inclusions and Derivatives."
           }
         }
       }
@@ -307,7 +229,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

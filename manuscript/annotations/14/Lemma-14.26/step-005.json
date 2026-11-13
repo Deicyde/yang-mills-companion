@@ -1,9 +1,9 @@
 {
   "id": "Lemma 14.26 step 5",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "The sequence of windows with decreasing radii, errors to zero, common lifts and genericity are there; the identification of the corrected coefficients with R_I (via multiplication by `e^{C^Max}`) and interiority of every R_I are not stated in these lines.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] carries the window selection in YM.PhysicalNext.InteractingRank.Soft.v_obtain_purchases, the identity c_I = R_I in Tests.single/Tests.pairs, and interiority from the polynomial formula in Recover.lean (actual_one, actual_pair). The difference: everything is done for arity at most two, the case this proof uses (n = 2).",
   "subject": [
     {
       "location": {
@@ -32,8 +32,8 @@
         "declaration": "YM.PhysicalNext.InteractingRank.Soft.v_obtain_purchases",
         "module": "YM.PhysicalNext.AFTERNOON_INTERACTING_RANK_COMPARISON.Soft.Supra",
         "lines": [
-          194,
-          214
+          177,
+          222
         ]
       },
       "role": "key",
@@ -43,14 +43,14 @@
             "id": "YM.PhysicalNext.InteractingRank.Soft.v_obtain_purchases"
           },
           "snippet": {
-            "text": "  let B : Extraction.Sequence := ⟨U,strictMono_nat_of_lt_succ (fun n => Hf (U n))⟩\n  let W : Extraction.Sequence := ⟨fun k => w (B k),strictMono_nat_of_lt_succ (fun n => hs (U n))⟩\n  choose x hPacu hx he' hT using fun i : ℕ => ticketed p' b hc ((hU i).2.1) ((hU i).2.2.2.2) ((hU i).2.2.2.1)\n  let Z : X.Trials := {\n    depth := B\n    width := W\n    window := fun i => ((wider A b (U i)).trans (before ..))\n    scale := fun i => g (U i)\n    positive := fun i => gap_pos ..\n    zoom := (gap_rate A h b).comp B.cofinal\n    mark := fun i j => Station.choose A b (U i) (X.row j).expected\n    lift := x\n    later := fun _ _ => 0\n    gap := fun i => Ship.budget A 2 (U i)\n    allowed := fun i => (budget_pos ..).le\n    small := (diminishes A 2 h (by decide)).comp B.cofinal }\n  have ht : Travels_ O p' b Z := ⟨fun i => (hU i).2.2.1,fun _ => rfl,fun _ => rfl,fun _ _ => rfl,\n      fun _ => rfl,fun i => (hU i).2.2.2.2,fun i => (hU i).2.1,hT⟩\n  refine ⟨Z,ht, ⟨⟨b,hb, ht.testScale⟩,fun i => (ht.occupied i).permitted.plateau,strictAnti_nat_of_succ_lt (fun n => K (U n)),he',hx,hPacu,\n    fun i => (tuning A (X.row i).expected h hb).comp B.cofinal, ⟨1/4,by norm_num,fun k i => (ht.fits k i).within⟩,\n    fun i j => (ht.fits i j).usable,?_⟩⟩",
-            "line": 194,
+            "text": "theorem v_obtain_purchases (h : G.Simple) (hc : C.Makes) (hb : 0<b) (he : Offers_ O p' b) : ∃ Z : X.Trials,\n    Travels_ O p' b Z ∧ Purchases Z := by\n  let A := C.path.levels\n  let w := Station.width A b\n  let g := Station.gap A b\n  let P k := bank O A (w k) ∧ C.ref d ≤ k ∧ Allocated A 2 k O b ∧ Quota_ p' b k ∧ ∀ i,Fit A b k (X.row i).expected\n  obtain ⟨r,Hr⟩ := eventually_atTop.mp (banking A O h)\n  have hv (i j) (ε : ℝ) (hε : 0<ε) : ∃ k, P k ∧ i < k ∧ j < w k ∧ g k < ε := by\n    have hq := (gap_rate A h b).eventually (gt_mem_nhds hε)\n    have hf := eventually_all.mpr (fun i => Station.ready h (X.row i).expected (X.row i).probes A hb)\n    obtain ⟨k,⟨ha,hB⟩,⟨H₁,⟨H₂,H₃⟩,H₄⟩,H₅⟩ := (he.and_eventually (((sold A b (max r j)).and (((eventually_gt_atTop i).and hq).and hf)).and (eventually_ge_atTop (C.ref d)))).exists\n    have H := ha.permitted\n    exact ⟨k,⟨Hr _ ((le_max_left ..).trans (H₁ H).le),H₅,ha,hB,fun i => H₄ i H⟩,H₂,(le_max_right r j).trans_lt (H₁ H),H₃⟩\n  obtain ⟨i,hi,-⟩ := hv 0 0 1 (by norm_num)\n  choose f hf Hf hs K using fun i => hv i (w i) (g i) (gap_pos A b i)\n  let U := fun n : ℕ => Nat.rec (motive:=fun _ => ℕ) i (fun _ j => f j) n\n  have hU a : P (U a) := by cases a <;> first | exact hi | exact hf _\n  let B : Extraction.Sequence := ⟨U,strictMono_nat_of_lt_succ (fun n => Hf (U n))⟩\n  let W : Extraction.Sequence := ⟨fun k => w (B k),strictMono_nat_of_lt_succ (fun n => hs (U n))⟩\n  choose x hPacu hx he' hT using fun i : ℕ => ticketed p' b hc ((hU i).2.1) ((hU i).2.2.2.2) ((hU i).2.2.2.1)\n  let Z : X.Trials := {\n    depth := B\n    width := W\n    window := fun i => ((wider A b (U i)).trans (before ..))\n    scale := fun i => g (U i)\n    positive := fun i => gap_pos ..\n    zoom := (gap_rate A h b).comp B.cofinal\n    mark := fun i j => Station.choose A b (U i) (X.row j).expected\n    lift := x\n    later := fun _ _ => 0\n    gap := fun i => Ship.budget A 2 (U i)\n    allowed := fun i => (budget_pos ..).le\n    small := (diminishes A 2 h (by decide)).comp B.cofinal }\n  have ht : Travels_ O p' b Z := ⟨fun i => (hU i).2.2.1,fun _ => rfl,fun _ => rfl,fun _ _ => rfl,\n      fun _ => rfl,fun i => (hU i).2.2.2.2,fun i => (hU i).2.1,hT⟩\n  refine ⟨Z,ht, ⟨⟨b,hb, ht.testScale⟩,fun i => (ht.occupied i).permitted.plateau,strictAnti_nat_of_succ_lt (fun n => K (U n)),he',hx,hPacu,\n    fun i => (tuning A (X.row i).expected h hb).comp B.cofinal, ⟨1/4,by norm_num,fun k i => (ht.fits k i).within⟩,\n    fun i j => (ht.fits i j).usable,?_⟩⟩\n\n  intro i\n  filter_upwards [ht.name_at i, eventually_all.mpr (fun j => Fit.stencils (ht.fits i j) hc d)] with N hN hX\n  obtain ⟨a,L⟩ := hN; refine ⟨a,fun p j z => ?_⟩\n  obtain ⟨R,Hr,hw,Y,P,hP,hh⟩ := L p\n  obtain ⟨e,hε,hb⟩ := hh j (ht.fits i j) z\n  refine ⟨fun u => (hX j).choose_spec p u (Z.lift i N p _),fun q hq => ?_⟩\n  exact coupon O (ht.occupied i) (hU i).1 hP _ _ (ht.fits i j) (by have hv := (X.row j).cap; omega) hε le_rfl le_rfl hb q hq",
+            "line": 177,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/AFTERNOON_INTERACTING_RANK_COMPARISON/Soft/Supra.lean",
-            "fragment": "L194-L214"
+            "fragment": "L177-L222"
           },
           "proof_context": {
             "declaration": "YM.PhysicalNext.InteractingRank.Soft.v_obtain_purchases",
@@ -58,7 +58,85 @@
               177,
               222
             ],
-            "conclusion": "`v_obtain_purchases` extracts a strictly increasing sequence of levels, windows with strictly decreasing radii (`strictAnti_nat_of_succ_lt`), errors `Ship.budget` tending to zero, common bounded lifts `x`, and the fit/genericity data `Fit.within`, `Fit.usable` for all rows."
+            "conclusion": "Builds trials with strictly increasing depths and widths inside admissible scale-selection windows, strictly decreasing scales tending to zero, errors Ship.budget tending to zero, common lifts and grid-chosen marks with Fit.within/Fit.usable."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Push.Corrected.Tests.pairs",
+        "module": "YM.Push.CORRECTED_COLUMNS.Program",
+        "lines": [
+          106,
+          108
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Push.Corrected.Tests.pairs"
+          },
+          "snippet": {
+            "text": "lemma pairs (k N p i c s t U) (h : s<t) : Marks.part (Y.pattern k N p i c U) {s,t}=\n    (Y.letter k N p i c s U-Y.one k i c s)*(Y.letter k N p i c t U-Y.one k i c t)-Y.pair k i c s t := by\n  rw [pattern,Marks.corrected_pair _ (none Y ..) _ s t h.ne, Y.alone,Y.alone,Y.both _ _ _ _ _ h]",
+            "line": 106,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/CORRECTED_COLUMNS/Program.lean",
+            "fragment": "L106-L108"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.Corrected.Tests.pairs",
+            "lines": [
+              106,
+              108
+            ],
+            "conclusion": "The corrected coefficients on {s} and {s,t} are F_s - G_s and (F_s-G_s)(F_t-G_t) - (G_st - G_s G_t), i.e. R_I for |I| <= 2."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Push.Corrected.Recover.actual_one",
+        "module": "YM.Push.CORRECTED_COLUMNS.Recover",
+        "lines": [
+          43,
+          56
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Push.Corrected.Recover.actual_one"
+          },
+          "snippet": {
+            "text": "private lemma actual_one (C0 : C.Makes) (H : Tests.Offer Y P f) (k i c j) :\n    let A (N p : ℕ) := fun U : Config G (C.side N p) => Y.letter k N p i c j U - Y.one k i c j\n    ∀ ε : ℝ, 0 < ε → f.late fun N p => ‖moment (C.beta N p) (A N p)‖ ≤ Real.exp (P.Q k)/ P.W k+ε := by\n  intro A ε hε\n  have ht := Tests.Offer.stamp Y H k ε hε\n  unfold Order.late at *\n  filter_upwards [ht] with a ha\n  filter_upwards [ha,f.mesh.cofinal.eventually (sits C0 Y k)] with b hb hc\n  obtain ⟨h,he⟩ := hb\n  let N := f.mesh b; let p := f.per a; let X := center C.S p ((Y.B.side_le k).trans h) (0 : Site (C.side N p))\n  have hs := he i c {j} (Finset.singleton_nonempty _)\n  have hr := subtract (hc.choose_spec p i c j) (Y.one k i c j)\n  refine (once X (seamless C0 _ _) (show Interior (X.chamber 0) (A N p) from hr)).trans ?_\n  simp_rw [Tests.single] at hs; exact hs",
+            "line": 43,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/CORRECTED_COLUMNS/Recover.lean",
+            "fragment": "L43-L56"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.Corrected.Recover.actual_one",
+            "lines": [
+              43,
+              56
+            ],
+            "conclusion": "The singleton and pair relative errors are interior, built from interior insertions by subtracting constants and multiplying (polynomial formula)."
           }
         }
       }
@@ -73,11 +151,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {
-        "kind": "direct"
+        "kind": "chain"
       }
     }
   }

@@ -1,9 +1,9 @@
 {
   "id": "Lemma 14.6 step 8",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "`launched` proves the first inequality, the forced remainder within fee·coeffSize(core v). The comparison fee ≤ sqrt(forced allowance) that closes the chain at |v°|_1 is the hypothesis `hm`/`he`.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] carries the display in YM.Extra.Histories.launched, called by onTop at level N. The fee fullCost*mass*(e^{|Y|w}-1) stands in for C_d t_N^{-d} e^{sigma}(e^{|Sigma|eps}-1), measured in coeffSize. The final inequality is the hypothesis fee <= sqrt(forcedAllowance), the counterpart of item birth, which Issue.press discharges from the Budget receipts.",
   "subject": [
     {
       "location": {
@@ -58,46 +58,7 @@
               116,
               161
             ],
-            "conclusion": "The forced remainder is within budget `fee * coeffSize (core v)`, and `fee <= sqrt w` gives budget `sqrt w * coeffSize (core v)`."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Extra.Histories.onTop",
-        "module": "YM.Extra.SOURCE_HISTORIES.Song",
-        "lines": [
-          48,
-          50
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Extra.Histories.onTop"
-          },
-          "snippet": {
-            "text": "theorem onTop (h : H.Selected) (hS : B.Sound A) (Y : Shelf (H.rep N p N).activities) (q : ℕ) {C : ℝ} (hc : 1 ≤ C)\n    (ht : ∀ (i : F.Index) (U : Config G (H.S.side N p)), ‖B.places (Size.axis F i) 0 U‖ ≤ C)\n    (he : fee F (H.levels.budget N) (B.footprint (0:Site (H.S.side N p))) C (H.levels.clock.forcedAllowance N) ≤",
-            "line": 48,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/SOURCE_HISTORIES/Song.lean",
-            "fragment": "L48-L50"
-          },
-          "proof_context": {
-            "declaration": "YM.Extra.Histories.onTop",
-            "lines": [
-              48,
-              90
-            ],
-            "conclusion": "`onTop` assumes `fee ... <= sqrt (forcedAllowance N)` as its hypothesis `he`."
+            "conclusion": "The forced remainder of the born coefficient is at most fee * coeffSize(core v), with fee = fullCost * mass(Y) * (e^{|Y| w}-1), and so at most sqrt(w) * coeffSize(core v) under fee <= sqrt w."
           }
         }
       }
@@ -112,11 +73,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {
-        "kind": "chain"
+        "kind": "direct"
       }
     }
   }

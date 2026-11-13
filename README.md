@@ -117,34 +117,38 @@ definitions, the 1-to-1 list, every deviation and the absences: [`docs/coverage.
 | | 1-to-1 | Faithful | Partial | Deviates | Absent | Unjudged | Formalized |
 |---|---|---|---|---|---|---|---|
 | Statements | 65/206 (32%) | 56/206 (27%) | 57/206 (28%) | 20/206 (10%) | 3/206 (1%) | 5/206 (2%) | **121/206 (59%)** |
-| Displays | 290/607 (48%) | 215/607 (35%) | 59/607 (10%) | 36/607 (6%) | 3/607 (0%) | 4/607 (1%) | **505/607 (83%)** |
-| Steps | 602/1607 (37%) | 502/1607 (31%) | 214/1607 (13%) | 261/1607 (16%) | 28/1607 (2%) | 0/1607 (0%) | **1104/1607 (69%)** |
+| Displays | 290/607 (48%) | 218/607 (36%) | 55/607 (9%) | 37/607 (6%) | 3/607 (0%) | 4/607 (1%) | **508/607 (84%)** |
+| Steps | 606/1607 (38%) | 573/1607 (36%) | 128/1607 (8%) | 271/1607 (17%) | 29/1607 (2%) | 0/1607 (0%) | **1179/1607 (73%)** |
 
-Unjudged steps and unnumbered displays are those whose mapper and verifier disagreed and no judge reached: 0 of 1607 steps and 0 of 355 displays. Of the judged steps, 1104/1607 (69%) are formalized; of the judged unnumbered displays, 318/355 (90%).
+Unjudged steps and unnumbered displays are those whose mapper and verifier disagreed and no judge reached: 0 of 1607 steps and 0 of 355 displays. Of the judged steps, 1179/1607 (73%) are formalized; of the judged unnumbered displays, 321/355 (90%).
 
-| Section | Statements formalized | Displays formalized | Steps formalized | Steps absent | Deviations |
-|---|---|---|---|---|---|
-| 1 | — | 10/10 (100%) | — | — | 0/10 (0%) |
-| 2 | 3/3 (100%) | 7/9 (78%) | — | — | 1/12 (8%) |
-| 3 | 10/10 (100%) | 35/37 (95%) | — | — | 0/47 (0%) |
-| 4 | 9/11 (82%) | 12/14 (86%) | — | — | 1/25 (4%) |
-| 5 | 5/5 (100%) | 11/13 (85%) | — | — | 0/18 (0%) |
-| 6 | 13/15 (87%) | 13/13 (100%) | — | — | 0/28 (0%) |
-| 7 | 6/7 (86%) | 14/14 (100%) | — | — | 0/21 (0%) |
-| 8 | 8/11 (73%) | 7/7 (100%) | 8/10 (80%) | 0/10 (0%) | 0/28 (0%) |
-| 9 | — | 3/3 (100%) | — | — | 0/3 (0%) |
-| 10 | 1/4 (25%) | 16/18 (89%) | 51/61 (84%) | 0/61 (0%) | 7/83 (8%) |
-| 11 | 4/13 (31%) | 58/67 (87%) | 168/253 (66%) | 5/253 (2%) | 59/333 (18%) |
-| 12 | 4/10 (40%) | 24/27 (89%) | 90/105 (86%) | 0/105 (0%) | 5/142 (4%) |
-| 13 | 7/21 (33%) | 54/69 (78%) | 149/272 (55%) | 5/272 (2%) | 85/362 (23%) |
-| 14 | 20/33 (61%) | 77/103 (75%) | 184/285 (65%) | 5/285 (2%) | 58/421 (14%) |
-| 15 | 1/5 (20%) | 14/20 (70%) | 31/41 (76%) | 0/41 (0%) | 9/66 (14%) |
-| 16 | 5/12 (42%) | 39/47 (83%) | 138/172 (80%) | 0/172 (0%) | 22/231 (10%) |
-| 17 | 1/10 (10%) | 31/38 (82%) | 120/131 (92%) | 0/131 (0%) | 9/179 (5%) |
-| 18 | 10/13 (77%) | 33/42 (79%) | 66/131 (50%) | 13/131 (10%) | 33/186 (18%) |
-| 19 | 14/23 (61%) | 47/56 (84%) | 99/146 (68%) | 0/146 (0%) | 28/225 (12%) |
+An independent re-review sampled the step and display verdicts and found classes wrong, mostly too weak; the weakest classes were then re-judged in full: Absent (`noMatch`) (49); Partial (228). The rest keep the sample's measured error rates (Deviates by `relatedMatch`: class right 29/39 (74%); Deviates by `narrowMatch`: class right 28/30 (93%); 1-to-1: class right 33/38 (87%); Faithful (judged): class right 25/29 (86%); Faithful kept by rule: class right 21/26 (81%); Declaration-set disagreements (mapper's verdict kept by rule): class right 9/16 (56%)), which put formalized steps at 1050–1375 of 1607 (65%–86%). Error bars by class and section: [`docs/coverage.md`](docs/coverage.md).
 
-By statement share: most formalized Sections 2 (3/3), 3 (10/10), 5 (5/5), 100% each; least Section 17, 1/10 (10%). By step share (sections with proofs): most formalized Section 17, 120/131 (92%); least Section 18, 66/131 (50%).
+| Section | Statements formalized | Displays formalized | Steps formalized | Steps formalized, measured range | Steps absent | Deviations |
+|---|---|---|---|---|---|---|
+| 1 | — | 10/10 (100%) | — | — | — | 0/10 (0%) |
+| 2 | 3/3 (100%) | 7/9 (78%) | — | — | — | 1/12 (8%) |
+| 3 | 10/10 (100%) | 35/37 (95%) | — | — | — | 0/47 (0%) |
+| 4 | 9/11 (82%) | 12/14 (86%) | — | — | — | 1/25 (4%) |
+| 5 | 5/5 (100%) | 11/13 (85%) | — | — | — | 0/18 (0%) |
+| 6 | 13/15 (87%) | 13/13 (100%) | — | — | — | 0/28 (0%) |
+| 7 | 6/7 (86%) | 14/14 (100%) | — | — | — | 0/21 (0%) |
+| 8 | 8/11 (73%) | 7/7 (100%) | 8/10 (80%) | 7–9 | 0/10 (0%) | 0/28 (0%) |
+| 9 | — | 3/3 (100%) | — | — | — | 0/3 (0%) |
+| 10 | 1/4 (25%) | 16/18 (89%) | 51/61 (84%) | 46–57 | 0/61 (0%) | 7/83 (8%) |
+| 11 | 4/13 (31%) | 58/67 (87%) | 168/253 (66%) | 150–199 | 5/253 (2%) | 59/333 (18%) |
+| 12 | 4/10 (40%) | 24/27 (89%) | 90/105 (86%) | 80–101 | 0/105 (0%) | 5/142 (4%) |
+| 13 | 7/21 (33%) | 54/69 (78%) | 162/272 (60%) | 144–198 | 5/272 (2%) | 87/362 (24%) |
+| 14 | 20/33 (61%) | 78/103 (76%) | 206/285 (72%) | 183–240 | 5/285 (2%) | 63/421 (15%) |
+| 15 | 1/5 (20%) | 14/20 (70%) | 34/41 (83%) | 30–38 | 0/41 (0%) | 10/66 (15%) |
+| 16 | 5/12 (42%) | 39/47 (83%) | 149/172 (87%) | 133–169 | 0/172 (0%) | 22/231 (10%) |
+| 17 | 1/10 (10%) | 31/38 (82%) | 124/131 (95%) | 109–131 | 0/131 (0%) | 9/179 (5%) |
+| 18 | 10/13 (77%) | 35/42 (83%) | 74/131 (56%) | 66–89 | 13/131 (10%) | 35/186 (19%) |
+| 19 | 14/23 (61%) | 47/56 (84%) | 113/146 (77%) | 101–139 | 1/146 (1%) | 29/225 (13%) |
+
+"Steps formalized, measured range": the section's formalized steps with each not re-judged step moved by its stratum's measured error interval (as under the headline); "exact" where every step was re-judged.
+
+By statement share: most formalized Sections 2 (3/3), 3 (10/10), 5 (5/5), 100% each; least Section 17, 1/10 (10%). By step share (sections with proofs): most formalized Section 17, 124/131 (95%); least Section 18, 74/131 (56%).
 
 <!-- /coverage -->
 

@@ -1,9 +1,9 @@
 {
   "id": "Lemma 13.11 step 13",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "The Wilson start (regular and forced families, moves, EBound, KBound) is established in `WilsonStartup.Start`; the induction of Lemma D2 giving the class assertion is not in these lines.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] makes the same assembly: the Wilson top (Pass.at_top) followed by downward induction (Pass.cycle), with per-step validity from Ingredients.gates. The difference: the induction runs over address teams and passages rather than over the manuscript's classes of densities.",
   "subject": [
     {
       "location": {
@@ -51,36 +51,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.WilsonStartup.Start.regularFamily",
-        "module": "YM.Extra.WILSON_STARTUP.Ink",
+        "declaration": "YM.PhysicalNext.Repeat.Pass.at_top",
+        "module": "YM.FullVolume.Table.Whiz",
         "lines": [
-          44,
-          53
+          30,
+          40
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.WilsonStartup.Start.regularFamily"
+            "id": "YM.PhysicalNext.Repeat.Pass.at_top"
           },
           "snippet": {
-            "text": "lemma regularFamily (β : ℝ) : (raw G n c b β).RegularFamily b := by\n  have he (i : ℕ) : b.Regular ((dictionary G n).reg i).support ((raw G n c b β).E i) ∧\n      ((raw G n c b β).E i) 1=0 ∧ ∀ x y,logHessian ((raw G n c b β).E i) x y = 0 := by\n    change b.Regular (eInfo _).support _ ∧ _\n    simp only [raw,Ovens.Pipes.pours,payload]; split\n    · rcases name (Sheet n) i with p|s\n      · exact ⟨times_reg _ (accrual_regular ..),accrual_null ..⟩\n      exact ⟨zero_reg,rfl,fun x y => by simp [written,logHessian]⟩\n    exact ⟨zero_reg,rfl,fun x y => by simp [logHessian]⟩\n  exact ⟨fun i => (he i).1,fun i => (he i).2.1,fun i _ x y _ _ => (he i).2.2 x y⟩",
-            "line": 44,
+            "text": "lemma at_top : ∃ T:Team (stageP A.B.a N n),Top N n T := by\n  choose f hf using fun (s:Signed) (v:Site (A.B.a.S.side N n))=>Tent.affable (N:=N) s v\n  let y: Y:= ⟨_,left_mem_Icc.mpr (show A.B.a.clock.hatBeta N/2 ≤ 2*A.B.a.clock.hatBeta N from by linarith [A.B.a.fits.delayed N])⟩\n  have hp i v : amid (f i v) ((0:Show P).proper) i v:=by\n    obtain ⟨x,hx,h⟩:= hf i v y\n    exact ⟨⟨_,_,x.reg_site, x.reg_support,x.forced_support,x.forced_inventory,x.forced_tests,fun _ _=> rfl,fun _ _=>rfl⟩,hx,h⟩\n  let T:Team P:= ⟨f,hp⟩\n  refine ⟨T,fun x=>?_⟩\n  have h:= (speaks R he hr N n).2 x x.property\n  obtain ⟨k,hk⟩:= corresponds T (launch (A:=A) N n x).activities rfl rfl h.2.1.valid.labels (fun i v=> hf i v _)\n  exact ⟨k,hk⟩",
+            "line": 30,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/WILSON_STARTUP/Ink.lean",
-            "fragment": "L44-L53"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Table/Whiz.lean",
+            "fragment": "L30-L40"
           },
           "proof_context": {
-            "declaration": "YM.WilsonStartup.Start.regularFamily",
+            "declaration": "YM.PhysicalNext.Repeat.Pass.at_top",
             "lines": [
-              44,
-              53
+              30,
+              40
             ],
-            "conclusion": "The Wilson start is a regular family."
+            "conclusion": "The Wilson starts give a top team satisfying Top at level N."
           }
         }
       }
@@ -90,36 +90,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.WilsonStartup.Start.forcedFamily",
-        "module": "YM.Extra.WILSON_STARTUP.Labels",
+        "declaration": "YM.PhysicalNext.Repeat.Pass.cycle",
+        "module": "YM.FullVolume.Table.Whiz",
         "lines": [
-          119,
-          129
+          50,
+          55
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.WilsonStartup.Start.forcedFamily"
+            "id": "YM.PhysicalNext.Repeat.Pass.cycle"
           },
           "snippet": {
-            "text": "theorem forcedFamily (h : Decent c b) (β : ℝ) : (raw G n c b β).ForcedFamily b := by\n  have he i : (raw G n c b β).K i = if fixed (Foot n) i then paid c b (name (Foot n) i) β else 0 := rfl\n  refine ⟨fun i k U => ?_,fun _ _ _ => Iff.rfl,fun i => ?_,fun _ => MeasurableSet.univ, fun i => ?_, fun _ _ _ _ _ => rfl,fun i U hp => ?_⟩\n  · rw [he]; split; exact paid_gauge ..; rfl\n  · rw [he]; split; exact paid_meas ..; exact measurable_const\n  · rw [he]; split\n    · exact paid_final h _ _\n    intro U V _ _; rfl\n  rw [he] at hp; split at hp\n  · exact permit_paid _ β U hp\n  exact (hp rfl).elim",
-            "line": 119,
+            "text": "lemma cycle : Nonempty (Circle N n V):=by\n  obtain ⟨p,hp⟩:= at_top (N:=N) (n:=n) R he hr\n  let step (m:ℕ) (h:m<N)(T:Team (stageP A.B.a (m+1) n)) := (passage g (V m h) T).choose\n  let W (m:ℕ)(hv:m≤N): Team (stageP A.B.a m n):= Nat.decreasingInduction (motive:=fun m h=>Team (stageP A.B.a m n)) step p hv\n  refine ⟨⟨W,?_,?_⟩⟩; · rwa [show W N le_rfl=p from Nat.decreasingInduction_self ..]\n  intro m hm; rw [show W m hm.le=step m hm (W (m+1) hm) from Nat.decreasingInduction_succ_left ..]; exact (passage g (V m hm) _).choose_spec",
+            "line": 50,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/WILSON_STARTUP/Labels.lean",
-            "fragment": "L119-L129"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Table/Whiz.lean",
+            "fragment": "L50-L55"
           },
           "proof_context": {
-            "declaration": "YM.WilsonStartup.Start.forcedFamily",
+            "declaration": "YM.PhysicalNext.Repeat.Pass.cycle",
             "lines": [
-              119,
-              129
+              50,
+              55
             ],
-            "conclusion": "The Wilson start is a forced family."
+            "conclusion": "From the Wilson top, a downward induction (Nat.decreasingInduction with passage) builds a Circle: a team at every level m <= N with the top condition and passages between adjacent levels."
           }
         }
       }
@@ -129,114 +129,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.WilsonStartup.Start.moves",
-        "module": "YM.Extra.WILSON_STARTUP.Labels",
+        "declaration": "YM.Progress.DirectedRecipe.Ingredients.gates",
+        "module": "YM.Progress.DIRECTED_RECIPE.Batch",
         "lines": [
-          137,
-          152
+          63,
+          68
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.WilsonStartup.Start.moves"
+            "id": "YM.Progress.DirectedRecipe.Ingredients.gates"
           },
           "snippet": {
-            "text": "theorem moves (s : Signed) (x : Site n) (β : ℝ) : Nonempty ((raw G n c b β).Moves s x) := by\n  refine ⟨{ ep := sends (sheetAction s x), kp := sends (footAction s x), reg_site := fun i => ?_,reg_support := fun i => ?_,\n            forced_support := fun i => ?_,forced_inventory := fun i => ?_,forced_tests := fun i U => Iff.rfl,\n            valuesE := fun i U => ?_,valuesK := fun i U => ?_ }⟩\n  · change (eInfo _).site = affine s x (eInfo _).site\n    rw [name_sends,eInfo_transport]\n  · change (eInfo _).support = Finset.image _ (eInfo _).support\n    rw [name_sends,eInfo_transport]\n  · change (name (Foot n) _).val.1 = (name (Foot n) i).val.1.image _\n    rw [name_sends,foot_trans]\n  · change (name (Foot n) _).val.2 = (name (Foot n) i).val.2.image _\n    rw [name_sends,foot_trans]\n  · simp only [raw,pours,payload,name_sends,fixed_sends]\n    split <;> first | exact written_oriented .. | exact rfl\n  · simp only [raw,pours,payload,name_sends,fixed_sends]\n    split <;> first | exact paid_oriented .. | exact rfl",
-            "line": 137,
+            "text": "lemma gates (W : PathData G) (c : Clip) (β v : ℝ) :\n    (finish W c P X d β v).activities.Valid P δ w := by\n  obtain ⟨κ,γ,u,he,hp,hg⟩ := H.to_shelves.pays\n  obtain ⟨ha,hb⟩ := Work.H03.answer _ n _ _ (folio G n) _ _ _ he\n  refine ⟨?_,ha,hb,he.stamp.boundE,Work.H02.answer _ n _ _ (folio G n) _ _ κ γ _ _ hg he hp⟩\n  exact ⟨he.stamp.regular.smooth,he.stamp.regular.at_flat,he.stamp.regular.vanish⟩",
+            "line": 63,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/WILSON_STARTUP/Labels.lean",
-            "fragment": "L137-L152"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Progress/DIRECTED_RECIPE/Batch.lean",
+            "fragment": "L63-L68"
           },
           "proof_context": {
-            "declaration": "YM.WilsonStartup.Start.moves",
+            "declaration": "YM.Progress.DirectedRecipe.Ingredients.gates",
             "lines": [
-              137,
-              152
+              63,
+              68
             ],
-            "conclusion": "The Wilson start is covariant under signed permutations and translations."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.WilsonStartup.Start.ink",
-        "module": "YM.Extra.WILSON_STARTUP.Ink",
-        "lines": [
-          104,
-          122
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.WilsonStartup.Start.ink"
-          },
-          "snippet": {
-            "text": "theorem ink (ht : b.threshold ≤ threshold G b.order b.power) (hc : c.direct ≤ 1) {q : ℝ} (hy : ‖β‖ ≤ v)\n    (hp : book G b v ≤ q) : (raw G n c b β).EBound b q := by\n  let E := fun i : Sheet n => i.elim (fun _ => ‖weight c β‖*item G b) (fun _ => (0:ℝ))\n  let T := fun i : ℕ => if fixed (Sheet n) i then E (name (Sheet n) i) else 0\n  have he : ∀ i, b.supBounds ((raw G n c b β).reg i).site ((raw G n c b β).reg i).support ((raw G n c b β).E i) (T i) := by\n    intro i\n    simp only [T,raw,Ovens.Pipes.pours,payload,dictionary]; split\n    · cases h : name (Sheet n) i with\n      | inl p => exact times_bound _ (accrual_fit p ht)\n      | inr s => exact zero_bound\n    exact zero_bound\n  refine ⟨T,he,fun x => Padded.budget (α:=Sheet n) ?_ (fun i => ?_) ((sum_items x hy hc).trans hp)⟩\n  · intro i; change (if _ then b.mass _ (ite ..) else _) = _; by_cases h : fixed (Sheet n) i\n    · rw [if_pos h,if_pos h]; rfl\n    rw [if_neg h,if_neg h]; simp [BudgetPoint.mass]\n  split\n  · apply mul_nonneg (Real.exp_pos _).le\n    simpa only [T,E,name_index,fixed_index,if_true] using (show 0 ≤ T (index i) from (he _).1)\n  exact le_rfl",
-            "line": 104,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/WILSON_STARTUP/Ink.lean",
-            "fragment": "L104-L122"
-          },
-          "proof_context": {
-            "declaration": "YM.WilsonStartup.Start.ink",
-            "lines": [
-              104,
-              122
-            ],
-            "conclusion": "The Wilson start has a regular `EBound`."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.WilsonStartup.Start.Loan.kernel",
-        "module": "YM.Extra.WILSON_STARTUP.Funds",
-        "lines": [
-          130,
-          143
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.WilsonStartup.Start.Loan.kernel"
-          },
-          "snippet": {
-            "text": "theorem Loan.kernel (h : Loan b l σ κ γ) (hc : Decent c b) (hb : l ≤ β) :\n    (raw G n c b β).KBound b (Real.exp γ-1) := by\n  refine ⟨cash n b σ,fun i => ⟨cash_pos _,fun U => ?_⟩,fun x => ?_⟩\n  · exact (forced_money hc h.forced h.slope h.allows hb i U).trans <|\n      mul_le_of_le_one_left (cash_pos _) (Real.exp_le_one_iff.mpr (by linarith only [h.forced]))\n  let f := fun i => if x ∈ extent n i then b.mass (extent n i) (cash n b σ i) else 0\n  have hf i : 0 ≤ f i := by unfold f BudgetPoint.mass; split <;> first | exact le_rfl | exact mul_nonneg (Real.exp_pos _).le (cash_pos _)\n  have H := h.packets.hit (n:=n) x\n  have he i : f i ≤ (if x ∈ extent n i then cash n b σ i * Real.exp ((b.supportExponent+1)*coverNumber b.B (extent n i)) else 0) := by\n    unfold f; split\n    · rw [BudgetPoint.mass,mul_comm]; have := cash_pos (n:=n) (b:=b) (σ:=σ) i; gcongr; linarith\n    rfl\n  have H' := H.2.1.of_nonneg_of_le hf he\n  exact ⟨hf,H',(H'.tsum_le_tsum he H.2.1).trans H.2.2⟩",
-            "line": 130,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/WILSON_STARTUP/Funds.lean",
-            "fragment": "L130-L143"
-          },
-          "proof_context": {
-            "declaration": "YM.WilsonStartup.Start.Loan.kernel",
-            "lines": [
-              130,
-              143
-            ],
-            "conclusion": "The Wilson start has a forced `KBound`."
+            "conclusion": "Each finished step's activities are Valid, using the fusion and address answers Work.H02/H03."
           }
         }
       }
@@ -251,7 +173,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

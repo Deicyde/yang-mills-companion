@@ -2,8 +2,8 @@
   "id": "Lemma 14.17 step 2",
   "kind": "proof_step",
   "status": "partial",
-  "relation": "hasPart",
-  "note": "Lean has the nonnegative transfer kernel, the normalized trace on the periodic axis, and the move by l that changes the two adjacent gaps by ±l. The rescaling to 0 ≤ T ≤ 1 and the displayed change of the factor are absent; the bound goes through `Holder.finite_lip`.",
+  "relation": "relatedMatch",
+  "note": "[L] has the same setup (nonnegative transfer kernel, normalized cyclic trace, a move by l changing the two adjacent gaps by +l and -l) in YM.TimeKernel.passage and YM.Slice.Time.powering. It estimates the move differently: YM.Holder.finite_lip extends the gap lengths to complex powers (Holder.leap) and applies a Hadamard-type bound (Holder.estimation). There is no rescaling to 0 <= T <= 1 and no factorization T^{n1}(T^l X - X T^l)T^{n2-l} through 1-T^l.",
   "subject": [
     {
       "location": {
@@ -29,11 +29,50 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
+        "declaration": "YM.Holder.finite_lip",
+        "module": "YM.Complex.Gaps",
+        "lines": [
+          170,
+          205
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Holder.finite_lip"
+          },
+          "snippet": {
+            "text": "theorem finite_lip {X : M ι} (h : X.PosSemidef) (b : Fin n → M ι) {N width p m : ℕ}\n    (he : N=(p+p)*width) (hp : 0 < p) (hw : 0 < width) (hz : 0 < Q X N)\n    {Y Z : Fin n → ℕ} (hY : n*width+∑ i, Y i=N)\n    (i j : Fin n) (hij : i≠j) (hu : Y i+m=Z i) (hv : Z j+m=Y j)\n    (hm : ∀ a : Fin n, a≠i → a≠j → Y a=Z a)\n    (r : ℝ) (hr : 0<r) (hO : ∀ i : Fin n, 2*r < Y i) (hs : (m:ℝ) ≤ r) :\n    ‖(combine (fun i => b i*X^Z i)).trace-(combine (fun i => b i*X^Y i)).trace‖ ≤ cost X b p N / r * m := by\n  have hN : 0<N := by rw [he]; positivity\n  have hJ : 0<Y i := Nat.cast_pos.mp (lt_of_le_of_lt (show 0≤2*r by positivity) (hO i))\n  let W (x : ℂ) (s : Fin n) := ↑(Y s) + ((if s=i then x else 0) - (if s=j then x else 0))\n  let F (x : ℂ) := total h b (W x)\n  have hF : Differentiable ℂ F := by\n    unfold F total; apply (dtrace (ι := ι)).comp\n      (dproduct (fun x i => b i*leap h (W x i)) ?_)\n    intro a\n    exact (differentiable_const _).mul ((leap_smooth h).comp (show Differentiable ℂ (fun x => W x a) from by\n      unfold W; split_ifs <;> fun_prop))\n  have hh (x : ℂ) (hx : ‖x‖ ≤ 2*r) : ‖F x‖ ≤ cost X b p N := by\n    refine estimation h hp hN ?_ ?_ hz\n    · intro a\n      have hl := hO a\n      have ha := (abs_le.mp (abs_re_le_norm x)).1\n      have hb := (abs_le.mp (abs_re_le_norm x)).2\n      change 0 ≤ (W x a).re; unfold W\n      split_ifs <;> simp only [Complex.add_re,Complex.natCast_re,Complex.sub_re,Complex.zero_re] <;> linarith\n    have hy : ∑ i, W x i = ∑ i, (Y i:ℂ) := by simp [W, Finset.sum_add_distrib,Finset.sum_sub_distrib]\n    have hg : ∑ i, (W x i).re = ∑ i, (Y i:ℝ) := by simp only [← Complex.re_sum, hy]; simp\n    rw [hg,rate]\n    have hN' : (N:ℝ)>0 := Nat.cast_pos.mpr hN\n    have hf : (0:ℝ)<p+p := by exact_mod_cast (show 0<p+p by omega)\n    have hj : (n:ℝ)*width+∑ i, (Y i:ℝ)=(N:ℝ) := by exact_mod_cast hY\n    have hy' : (N:ℝ)=(↑p+↑p)*(width:ℝ) := by exact_mod_cast he\n    rw [Nat.cast_add]\n    calc\n      _ = ((n:ℝ)*width+(∑ i, (Y i:ℝ)))/N := by field_simp; grind\n      _ = _ := by rw [hj,div_self hN'.ne']",
+            "line": 170,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Complex/Gaps.lean",
+            "fragment": "L170-L205"
+          },
+          "proof_context": {
+            "declaration": "YM.Holder.finite_lip",
+            "lines": [
+              170,
+              229
+            ],
+            "conclusion": "For a PSD matrix X and gap lists Y, Z differing by moving m sites between two gaps, the cyclic trace difference is at most cost/r * m, proved by complexifying the gap lengths (leap) and bounding the holomorphic function on a disc (estimation)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
         "declaration": "YM.TimeKernel.passage",
         "module": "YM.TimeKernel.Unit",
         "lines": [
           76,
-          84
+          106
         ]
       },
       "role": "key",
@@ -43,14 +82,14 @@
             "id": "YM.TimeKernel.passage"
           },
           "snippet": {
-            "text": "theorem passage (B : Fin n → K X) (h : NNKernel T) (hc : possible T) (ht : ∀ i, possible (B i)) {width N p m : ℕ}\n    (he : N=(p+p)*width) (hp : 0 < p) (hw : 0 < width) (R : ℝ) (hr : 0 < R) (hR : closed μ (List.replicate N T) = ↑R)\n    {Y Z : Fin n → ℕ} (hY : n*width+∑ i, Y i=N)\n    (i j : Fin n) (hij : i≠j) (hu : Y i+m=Z i) (hv : Z j+m=Y j)\n    (hm : ∀ a : Fin n, a≠i → a≠j → Y a=Z a)\n    (r : ℝ) (hy : 0<r) (hO : ∀ i : Fin n, 2*r < Y i) (hs : (m:ℝ) ≤ r)\n    (K : Fin n → ℝ) (hK : ∀ i, ‖closed μ (multiply (B i) p)‖^(Holder.rate p) ≤ K i * R ^ (Holder.rate p)) :\n    ‖closed μ (along T B Z)-closed μ (along T B Y)‖ ≤ R*(∏ i, K i)/r * m := by\n  letI : Nonempty (Fin n) := ⟨i⟩",
+            "text": "theorem passage (B : Fin n → K X) (h : NNKernel T) (hc : possible T) (ht : ∀ i, possible (B i)) {width N p m : ℕ}\n    (he : N=(p+p)*width) (hp : 0 < p) (hw : 0 < width) (R : ℝ) (hr : 0 < R) (hR : closed μ (List.replicate N T) = ↑R)\n    {Y Z : Fin n → ℕ} (hY : n*width+∑ i, Y i=N)\n    (i j : Fin n) (hij : i≠j) (hu : Y i+m=Z i) (hv : Z j+m=Y j)\n    (hm : ∀ a : Fin n, a≠i → a≠j → Y a=Z a)\n    (r : ℝ) (hy : 0<r) (hO : ∀ i : Fin n, 2*r < Y i) (hs : (m:ℝ) ≤ r)\n    (K : Fin n → ℝ) (hK : ∀ i, ‖closed μ (multiply (B i) p)‖^(Holder.rate p) ≤ K i * R ^ (Holder.rate p)) :\n    ‖closed μ (along T B Z)-closed μ (along T B Y)‖ ≤ R*(∏ i, K i)/r * m := by\n  letI : Nonempty (Fin n) := ⟨i⟩\n  have hZ : 0<N := by rw [he]; positivity\n  let P := Quad.shrink X\n  have ha := learns μ (List.replicate N T) (by simp [hZ.ne']) fun i hi => (List.mem_replicate.mp hi).2 ▸ hc\n  simp_rw [List.map_replicate, List.prod_replicate,hR] at ha\n  have hl : Tendsto (fun x : ℕ => Holder.Q (sample μ (P x) T) N) atTop (𝓝 R) := by\n    unfold Holder.Q; simpa only [Complex.norm_real,Real.norm_eq_abs,abs_of_pos hr,P] using ha.norm\n  let A (k : ℕ) (v : Fin n → ℕ) := (Holder.combine (fun i => sample μ (P k) (B i) * sample μ (P k) T ^ (v i : ℕ))).trace\n  let D (k : ℕ) := Holder.cost (sample μ (P k) T) (fun i => sample μ (P k) (B i)) p N\n  have hq : ∀ᶠ k : ℕ in atTop, ‖A k Z-A k Y‖ ≤ D k / r * m := (hl.eventually (lt_mem_nhds hr)).mono\n    (fun x hx => Holder.finite_lip (safe μ _ _ h) _ he hp hw hx hY i j hij hu hv hm r hy hO hs)\n  let f (i : Fin n) := ‖closed μ (multiply (B i) p)‖^(Holder.rate p)\n  have h' : Tendsto D atTop (𝓝 ((∏ i, f i) * R ^ ((1:ℝ) - n*Holder.rate p))) :=\n    (tendsto_finsetProd Finset.univ (fun i _ => totality μ _ (ht i) hp)).mul (hl.rpow_const (Or.inl hr.ne'))\n  apply le_trans (le_of_tendsto_of_tendsto ((goes μ T hc _ ht Z).sub (goes μ T hc _ ht Y) |>.norm)\n    ((h'.div_const _).mul_const _) hq)\n  have hx := Finset.prod_le_prod (s := Finset.univ) (f := f) (fun i _ => Real.rpow_nonneg (norm_nonneg _) _)\n    (fun i _ => hK i)\n  let a := Holder.rate p\n  refine mul_le_mul_of_nonneg_right (div_le_div_of_nonneg_right ?_ hy.le) (Nat.cast_nonneg _)\n  apply le_trans (mul_le_mul_of_nonneg_right hx (Real.rpow_nonneg (x := R) hr.le (1 - n*a))) (le_of_eq ?_)\n  rw [Finset.prod_mul_distrib,Finset.prod_const,Finset.card_univ, ← Real.rpow_mul_natCast hr.le,mul_assoc,← Real.rpow_add hr]\n  rw [Fintype.card_fin,show Holder.rate p*↑n+(1-n*a) =1 by unfold a;ring]; simp [mul_comm]",
             "line": 76,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TimeKernel/Unit.lean",
-            "fragment": "L76-L84"
+            "fragment": "L76-L106"
           },
           "proof_context": {
             "declaration": "YM.TimeKernel.passage",
@@ -58,7 +97,7 @@
               76,
               106
             ],
-            "conclusion": "A move by `m` steps changes two gaps by `+m` and `-m`: `Y i + m = Z i`, `Z j + m = Y j`, the other gaps equal, and the closed (traced) correlation differs by at most `R*(∏ K)/r*m`."
+            "conclusion": "Transfers the finite-matrix Lipschitz bound to the cyclic transfer-kernel integrals with partition value R: the closed correlation changes by at most R*(prod K)/r*m when two gaps change by +m and -m."
           }
         }
       }
@@ -72,7 +111,7 @@
         "module": "YM.Slice.Calendar",
         "lines": [
           72,
-          80
+          102
         ]
       },
       "role": "key",
@@ -82,14 +121,14 @@
             "id": "YM.Slice.Time.powering"
           },
           "snippet": {
-            "text": "theorem powering (β : ℝ) (hβ : 0 ≤ β) (B : Fin m → Brick a G n) {p l w : ℕ}\n    (he : n.val=(p+p)*w) (hp : 0 < p) (hw : 0 < w) (hW : ∀ i, (B i).width=w)\n    {Y Z : Fin m → ℕ} (hY : m*w+∑ i, Y i=n.val) (hZ : m*w+∑ i, Z i=n.val)\n    (i j : Fin m) (hij : i≠j) (hu : Y i+l=Z i) (hv : Z j+l=Y j)\n    (hm : ∀ z : Fin m, z≠i → z≠j → Y z=Z z)\n    (r : ℝ) (hy : 0<r) (hO : ∀ i : Fin m, 2*r < Y i) (hs : (l:ℝ) ≤ r)\n    (b c : Per n) (H : Fin m → Per n) (K : Fin m → ℝ)\n    (hK : ∀ x : Fin m, ‖moment β (word (column (B x) p) (H x))‖ ^ (Holder.rate p) ≤ K x) :\n    ‖moment β (word (drive B Z) b) - moment β (word (drive B Y) c)‖ ≤ (∏ i, K i)/r*l := by",
+            "text": "theorem powering (β : ℝ) (hβ : 0 ≤ β) (B : Fin m → Brick a G n) {p l w : ℕ}\n    (he : n.val=(p+p)*w) (hp : 0 < p) (hw : 0 < w) (hW : ∀ i, (B i).width=w)\n    {Y Z : Fin m → ℕ} (hY : m*w+∑ i, Y i=n.val) (hZ : m*w+∑ i, Z i=n.val)\n    (i j : Fin m) (hij : i≠j) (hu : Y i+l=Z i) (hv : Z j+l=Y j)\n    (hm : ∀ z : Fin m, z≠i → z≠j → Y z=Z z)\n    (r : ℝ) (hy : 0<r) (hO : ∀ i : Fin m, 2*r < Y i) (hs : (l:ℝ) ≤ r)\n    (b c : Per n) (H : Fin m → Per n) (K : Fin m → ℝ)\n    (hK : ∀ x : Fin m, ‖moment β (word (column (B x) p) (H x))‖ ^ (Holder.rate p) ≤ K x) :\n    ‖moment β (word (drive B Z) b) - moment β (word (drive B Y) c)‖ ≤ (∏ i, K i)/r*l := by\n  have hi (v : Fin m → ℕ) (h : m*w+∑ i, v i=n.val) : duration (drive B v)=n.val := by\n    simp_rw [drive_time,hW,Finset.sum_add_distrib]; simp [h]\n  let f (x : Fin m) := (B x).pulse β\n  let R := partition G n β\n  have hr : 0<R := partition_pos _\n  have hC x : ‖closed (trans n G a) (multiply (f x) p)‖^(Holder.rate p) ≤ K x * R ^ (Holder.rate p) := by\n    unfold f; rw [← colony _ _ β, ← closed_eval _ _ (H x) (show duration (column _ _)=_ by rw [clockTime,hW]; exact he.symm)]\n    rw [norm_mul,Real.mul_rpow (norm_nonneg _) (norm_nonneg _),mul_comm]\n    rw [Complex.norm_real, Real.norm_eq_abs,abs_of_pos hr]\n    exact mul_le_mul_of_nonneg_right (hK x) (Real.rpow_nonneg hr.le _)\n  letI : @BorelSpace (Leaf G a n) (MetricSpace.toPseudoMetricSpace (α := Leaf G a n)).toUniformSpace.toTopologicalSpace (inferInstance : MeasurableSpace _) := instBorelSpaceLeaf _\n  letI : @SecondCountableTopology (Leaf G a n) (MetricSpace.toPseudoMetricSpace (α := Leaf G a n)).toUniformSpace.toTopologicalSpace := instSecondCountableTopologyLeaf _\n  letI : @CompactSpace (Leaf G a n) (MetricSpace.toPseudoMetricSpace (α := Leaf G a n)).toUniformSpace.toTopologicalSpace := (inferInstance : CompactSpace (Leaf G a n))\n  have hx := passage (trans n G a) _ f (step_positive a (n := n) hβ) (heat_cont ..) (fun i =>\n    testB_cont β _ (B i).reads) he hp hw _ (partition_pos β (G := G) (n := n)) (partition_seen β) hY\n    i j hij hu hv hm r hy hO hs K hC\n  rw [← show cores (drive B Z) β = _ from B_start B Z β,← show cores (drive B Y) β = _ from B_start B Y β,\n    ← closed_eval _ _ b (hi Z hZ),← closed_eval _ _ c (hi Y hY), ← mul_sub] at hx\n  rw [norm_mul, Complex.norm_real,Real.norm_eq_abs, abs_of_pos hr] at hx\n  apply le_of_mul_le_mul_left _ hr\n  apply hx.trans_eq\n  ring",
             "line": 72,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Slice/Calendar.lean",
-            "fragment": "L72-L80"
+            "fragment": "L72-L102"
           },
           "proof_context": {
             "declaration": "YM.Slice.Time.powering",
@@ -97,7 +136,7 @@
               72,
               102
             ],
-            "conclusion": "The same statement for bricks on a periodic axis with a positive transfer kernel."
+            "conclusion": "The normalized periodic moment with brick insertions changes by at most (prod K_i)/r*l when one insertion moves by l between two adjacent gaps."
           }
         }
       }
@@ -112,7 +151,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

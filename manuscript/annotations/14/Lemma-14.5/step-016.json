@@ -1,9 +1,9 @@
 {
   "id": "Lemma 14.5 step 16",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "`computed` reads the Taylor label from smoothness at a healthy chart; that the indicators are never differentiated is only implicit in `rebate` applying the mask outside, not established by any lines.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "In [L] Taylor jets are read from smoothness on healthy configurations (Germ.computed, RegFit.smooth), and the healthy indicator appears only as the outer factor masked t X f (Plate.Prints.regular, Push.Local.rebate). The difference: the claim that indicators are never differentiated is built into the types, with smoothness asked only of the unmasked function, rather than stated as a lemma.",
   "subject": [
     {
       "location": {
@@ -80,7 +80,46 @@
               65,
               67
             ],
-            "conclusion": "The label (Taylor jet) of a `B.Regular` function is read from its smoothness at the flat configuration, a healthy chart (`one_healthy`)."
+            "conclusion": "The degree-d jet label of a B.Regular function is read from its smoothness at the flat configuration, which is healthy (one_healthy)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.MergeProof.Matric.Plate.Prints",
+        "module": "YM.FullVolume.Mark.Latch",
+        "lines": [
+          51,
+          52
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.MergeProof.Matric.Plate.Prints"
+          },
+          "snippet": {
+            "text": "  regular i U t: let b:= mapSeat (n:=f) i; let x:=(E).p.mass b t -- f unknown in mapSeat\n    RegFit E 0 d Y b U→ (E).p.supBounds 0 b U t→ Span B H N p m Y (tell (P.tint i U)) (masked (E).p.threshold b U) 0 0 S X (Extra.Histories.salary (E) b U) 0 (ζ*x) (ζ*x) (2*x)",
+            "line": 51,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Mark/Latch.lean",
+            "fragment": "L51-L52"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.Matric.Plate.Prints",
+            "lines": [
+              47,
+              55
+            ],
+            "conclusion": "Regular marks enter as the masked threshold factor masked b U, with RegFit (smoothness, anchor, unit-null, degree-d projection vanishing) required of the chart function U only."
           }
         }
       }
@@ -119,7 +158,7 @@
               107,
               108
             ],
-            "conclusion": "`rebate` subtracts the primary part and the masked residual from `masked t X f`, so the mask enters only as an outer factor of the unmasked jets."
+            "conclusion": "rebate subtracts the primary part and the masked residual from masked t X f, so the healthy mask is always an outer factor applied to unmasked smooth functions."
           }
         }
       }
@@ -134,7 +173,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge changed it from hasPart; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

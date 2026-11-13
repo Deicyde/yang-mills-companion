@@ -2,8 +2,8 @@
   "id": "Lemma 18.2 step 3",
   "kind": "proof_step",
   "status": "partial",
-  "relation": "hasPart",
-  "note": "The Laplace formula for the Euclidean continuation and the boundary identity with `W_2` are stated. The holomorphy and Schwarz-reflection argument and the monotonicity (real, nonnegative, nonincreasing) are not stated as such.",
+  "relation": "relatedMatch",
+  "note": "traceSpectrum_exists (WilsonTrace.lean) gives the Laplace formula and the boundary identity with W_2 by another route: it takes the measure to be the spectral measure of a vector and reads off the Euclidean continuation from the heat semigroup. There is no holomorphic Fourier-Laplace integral, primitives or Schwarz reflection. The `laplace` field makes the two-point function real and nonnegative, but monotonicity is not stated.",
   "subject": [
     {
       "location": {
@@ -29,36 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.TraceExtension.TraceSpectrum",
+        "declaration": "YM.TraceExtension.traceSpectrum_exists",
         "module": "YM.TraceExtension.WilsonTrace",
         "lines": [
-          88,
-          89
+          99,
+          119
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.TraceExtension.TraceSpectrum"
+            "id": "YM.TraceExtension.traceSpectrum_exists"
           },
           "snippet": {
-            "text": "    damped_mass (s : ℝ) (h : 0<s) : IsFiniteMeasure (OS.Semigroup.transform timeAxis s μ)\n    laplace (s : ℝ) (h : 0<s) : euclidean F s = (((OS.Semigroup.transform timeAxis s μ).real univ:ℝ):ℂ)",
-            "line": 88,
+            "text": "lemma traceSpectrum_exists : ∃! μ, TraceSpectrum F μ := by\n    let P := F.realization.qt\n    obtain ⟨Y,hY,h⟩ := ((Next.BOUNDARY.both (s:=F.room) F.phase P.letters F.realization.allWorld F.realization.chosen).2).reveals\n    have he := (h F.action.J P.induced).2\n    rw [hY] at he\n    let v := pinned F\n    let B := Y.bits\n    let μ := spectralMeasure B v\n    have hm : F.A.waves.Breathes := by rw [← hY]; exact Y.power.1\n    have ht (s : ℝ) (hp : 0<s) : ∃ k:ℝ≥0, 0<k ∧ 2*(k:ℝ)=s :=\n        ⟨⟨s/2,by positivity⟩,half_pos hp,by change 2*(s/2)=s; ring⟩\n    have hμ : TraceSpectrum F μ := by\n        refine ⟨spectral_temperate he hm _, energy_bounded he hm _, spectral_forward he hm F.realization.chosen.emerges P _, fun g => ?_, fun s hs=> ?_, fun s hs => ?_,\n            mass_read he hm F.realization.chosen.emerges P _, norm_read he hm F.realization.chosen.emerges P _, surface_integral he hm F.realization.chosen.emerges _⟩\n        · have hh := spectral_placed he hm F.realization.chosen.emerges P v g.dual\n          unfold v at hh; rw [pinned_scalar,Lorentz.dual_involution] at hh; exact hh.symm\n        · obtain ⟨k,hk,rfl⟩ := ht s hs\n          unfold μ B; rw [damp he _ k hk]; infer_instance\n        obtain ⟨k,hk,rfl⟩ := ht s hs\n        unfold μ B; rw [continuation F hk,pair_restricted he _ k hk,damp he _ k hk]; simp [v]\n    exact ⟨μ,hμ,fun ν h => h.unique hμ⟩",
+            "line": 99,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/WilsonTrace.lean",
-            "fragment": "L88-L89"
+            "fragment": "L99-L119"
           },
           "proof_context": {
-            "declaration": "YM.TraceExtension.TraceSpectrum",
+            "declaration": "YM.TraceExtension.traceSpectrum_exists",
             "lines": [
-              83,
-              94
+              99,
+              119
             ],
-            "conclusion": "`damped_mass` and `laplace`: the damped measure is finite and `euclidean F s` is the Laplace transform `∫ e^{-s p0} dμ` of `μ`, for `s > 0`."
+            "conclusion": "Builds the trace spectral measure as the spectral measure of the pinned vector and verifies the TraceSpectrum fields, including the Laplace identity (from continuation, pair_restricted and the heat-semigroup damp) and the boundary identity with W 2."
           }
         }
       }
@@ -71,7 +71,7 @@
         "declaration": "YM.TraceExtension.TraceSpectrum",
         "module": "YM.TraceExtension.WilsonTrace",
         "lines": [
-          94,
+          88,
           94
         ]
       },
@@ -82,14 +82,14 @@
             "id": "YM.TraceExtension.TraceSpectrum"
           },
           "snippet": {
-            "text": "    absolute (φ : Joint 2) : F.A.world.W 2 (pairV F.action.J (pinned F)) φ = ∫ p, waveTest φ p ∂μ",
-            "line": 94,
+            "text": "    damped_mass (s : ℝ) (h : 0<s) : IsFiniteMeasure (OS.Semigroup.transform timeAxis s μ)\n    laplace (s : ℝ) (h : 0<s) : euclidean F s = (((OS.Semigroup.transform timeAxis s μ).real univ:ℝ):ℂ)\n    core (φ : Probe E4) : F.action.momentum.diagonal (excitation F.action.operators (pinned F) φ) =\n        μ.withDensity fun p => (probeWeight φ p : ℝ≥0∞)\n    norm (φ ψ : Probe E4) : inner ℂ (excitation F.action.operators (pinned F) φ) (excitation F.action.operators (pinned F) ψ) =\n        ∫ p, star (testPlus φ p)*testPlus ψ p ∂μ\n    absolute (φ : Joint 2) : F.A.world.W 2 (pairV F.action.J (pinned F)) φ = ∫ p, waveTest φ p ∂μ",
+            "line": 88,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/WilsonTrace.lean",
-            "fragment": "L94-L94"
+            "fragment": "L88-L94"
           },
           "proof_context": {
             "declaration": "YM.TraceExtension.TraceSpectrum",
@@ -97,46 +97,7 @@
               83,
               94
             ],
-            "conclusion": "`absolute`: the boundary two-point function `W 2` is `∫ waveTest φ dμ`."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.TraceExtension.continuation",
-        "module": "YM.TraceExtension.WilsonTrace",
-        "lines": [
-          69,
-          78
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.TraceExtension.continuation"
-          },
-          "snippet": {
-            "text": "lemma continuation {s : ℝ≥0} (h : 0<s) : euclidean F (2*(s:ℝ))=\n    F.A.waves.restricted (pairV F.action.J (pinned F)) (pairH s) 0 := by\n    let z : S.Tag := ⟨4,center F⟩\n    have he := F.realization.chosen.heat.roots 2 (fun _ => z) 0 (pairH s) (east_pairH h)\n    have hp : trace (0:Points 2)=0 := by funext i; simp [trace]\n    have ht : pairV F.action.J (pinned F)=fun _ => pinned F := by funext i; fin_cases i <;> simp [self_adjoint]\n    rw [ht]; unfold euclidean opposed Waves.restricted\n    rw [show (2*(s:ℝ))/2 = s by ring,hp,show shift (0:Points 2) (pairH s)=(fun i => (↑(pairH s i):ℂ)*I) by\n        funext i; simp [shift]]\n    exact he.symm",
-            "line": 69,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/WilsonTrace.lean",
-            "fragment": "L69-L78"
-          },
-          "proof_context": {
-            "declaration": "YM.TraceExtension.continuation",
-            "lines": [
-              69,
-              78
-            ],
-            "conclusion": "The Euclidean two-point function at separation `2s` is the restricted boundary wave of the pinned trace."
+            "conclusion": "Fields damped_mass and laplace give euclidean F s as the real mass of the e^{-s p0}-damped measure for s>0; absolute gives W 2 = ∫ waveTest dμ."
           }
         }
       }
@@ -151,7 +112,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

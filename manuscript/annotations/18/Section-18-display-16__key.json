@@ -1,9 +1,9 @@
 {
   "id": "Section 18 display 16",
   "kind": "display",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "Γ_μ is the definition marke, with ammo for d^*d+μ^2. R_Λ(μ) = Q(Γ_μ) is not defined as such in Lean, and D_Λ = -μR_Λ' appears only through the differentiated form seaD with the resolvent traces in umbra.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] defines Gamma_mu as Det.marke, R_Lambda as Loft.ridge (Q applied to marke) and D_Lambda as Loft.seaD. The real part in Q is taken later (.re in coastMark), and D_Lambda is defined as mu^2 suite umbra, with -mu R' = D_Lambda proved by Loft.ridge_deriv rather than taken as the definition.",
   "subject": [
     {
       "location": {
@@ -58,7 +58,7 @@
               62,
               62
             ],
-            "conclusion": "`marke p R μ U = log det (stock p R μ U) / 2 - log det (ammo μ U)`, i.e. Γ_μ."
+            "conclusion": "marke = log det(flare + mail mail^T + mu^2 I)/2 - log det(ammo mu): the regulated Gamma_mu."
           }
         }
       }
@@ -68,36 +68,75 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Trace.Det.stock",
-        "module": "YM.TraceExtension.Det.Port",
+        "declaration": "YM.Trace.Loft.ridge",
+        "module": "YM.TraceExtension.Loft.Fluent",
         "lines": [
-          61,
-          61
+          9,
+          9
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Trace.Det.stock"
+            "id": "YM.Trace.Loft.ridge"
           },
           "snippet": {
-            "text": "def stock (p:Clip)(R:PathData G)(μ:ℝ)(U:Config G f):=flare p R U+mail U*(mail U)ᵀ+μ^2 • (1:Funds _)",
-            "line": 61,
+            "text": "def ridge (p:Clip)(M:PathData G)(μ:ℝ)(f:Side):= suite fun d i=> yard d i q (marke p M μ∘ input G f)",
+            "line": 9,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Det/Port.lean",
-            "fragment": "L61-L61"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Loft/Fluent.lean",
+            "fragment": "L9-L9"
           },
           "proof_context": {
-            "declaration": "YM.Trace.Det.stock",
+            "declaration": "YM.Trace.Loft.ridge",
             "lines": [
-              61,
-              61
+              9,
+              9
             ],
-            "conclusion": "`stock = flare + mail * mailᵀ + μ^2 • 1`, the matrix H + d d^* + μ^2 I."
+            "conclusion": "ridge = suite over d != i of the volume-normalised coefficient yard of marke: R_Lambda(mu) = Q(Gamma_mu)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Trace.Loft.ridge_deriv",
+        "module": "YM.TraceExtension.Loft.Fluent",
+        "lines": [
+          47,
+          47
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Trace.Loft.ridge_deriv"
+          },
+          "snippet": {
+            "text": "lemma ridge_deriv (hs:M.Bounds p σ C D)(hm:0 < μ)(h:(Det.stock p M μ (1:Config G f)).det ≠ 0): HasDerivAt (fun t:ℝ=> ridge q p M t f) (-(μ:ℂ)*suite (fun d i=>umbra d i q p M μ f)) μ:=by",
+            "line": 47,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Loft/Fluent.lean",
+            "fragment": "L47-L47"
+          },
+          "proof_context": {
+            "declaration": "YM.Trace.Loft.ridge_deriv",
+            "lines": [
+              47,
+              60
+            ],
+            "conclusion": "d/dmu ridge = -mu * suite umbra, so -mu R' = mu^2 suite umbra."
           }
         }
       }
@@ -136,7 +175,7 @@
               10,
               10
             ],
-            "conclusion": "`seaD μ = μ^2 * suite (umbra ..)`, the μ^2-weighted resolvent-trace coefficient that equals -μ R'(μ) after differentiating Γ_μ."
+            "conclusion": "seaD mu = mu^2 * suite umbra, the quantity D_Lambda(mu)."
           }
         }
       }
@@ -151,7 +190,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       }
     }

@@ -2,8 +2,8 @@
   "id": "Lemma 18.7 step 3",
   "kind": "proof_step",
   "status": "partial",
-  "relation": "hasPart",
-  "note": "Lean proves the expansion with remainder of every order and only nonnegative log powers, for products via `Expands.mult`, by a differential recursion rather than the split at 2m_sh; the massless closed form proportional to r^{-j_h-k_E-2} is not stated.",
+  "relation": "relatedMatch",
+  "note": "[L] proves the power-log expansion of the mass-shell moments in Wick.basic_expands and moment_expands (for all m, including m=0), and Track.moments_expand handles products via Expands.mult. It does not split at 2m_sh or expand the tail into I_a integrals; it bootstraps from first_order through the Euler identity (euler, differentiated) and Gain.primitives.",
   "subject": [
     {
       "location": {
@@ -24,45 +24,6 @@
     }
   ],
   "object": [
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.TraceExtension.Wick.moment_expands",
-        "module": "YM.TraceExtension.Wick.Massive",
-        "lines": [
-          122,
-          131
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.TraceExtension.Wick.moment_expands"
-          },
-          "snippet": {
-            "text": "lemma moment_expands (m j k) : Expands (moment m j k) := by\n    induction k using Nat.strong_induction_on generalizing j with\n    | h k ih=>\n      match k with\n      | 0=> exact basic_expands m j\n      | 1=>\n          intro i; let b : ℤ:= max (-↑(j+2:ℕ)) i\n          exact allows (show i ≤ b+1 from (le_max_right ..).trans (le_add_of_nonneg_right (by norm_num))) (derived (le_max_left ..) (basic_expands m j b))\n      | k+2 =>\n          intro i; apply ((((ih k (by omega) j).scale (m^2)).plus (ih k (by omega) (j+2))) i).upon; filter_upwards [mostly] with x hx; exact (moment_step _ _ _ _ hx.1).symm",
-            "line": 122,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Wick/Massive.lean",
-            "fragment": "L122-L131"
-          },
-          "proof_context": {
-            "declaration": "YM.TraceExtension.Wick.moment_expands",
-            "lines": [
-              122,
-              131
-            ],
-            "conclusion": "`Expands (moment m j k)`: for every order `i`, `moment m j k` equals a finite combination of `s^a log^k s` up to `O(s^i)` at `0+`."
-          }
-        }
-      }
-    },
     {
       "type": "lean",
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
@@ -97,7 +58,7 @@
               106,
               121
             ],
-            "conclusion": "`Expands (moment m j 0)`, built from `first_order`, the derivative recursion `moment_d` and `primitives`."
+            "conclusion": "Each mass-shell moment m j k has a power-log expansion to every order (Expands), obtained by bootstrapping from the leading bound r^{-(j+2)} through the Euler identity and the primitive lemma, then by the m^2 recursion in k."
           }
         }
       }
@@ -107,36 +68,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.TraceExtension.Wick.Track.moments_expand",
-        "module": "YM.TraceExtension.Wick.PolynomialField",
+        "declaration": "YM.TraceExtension.Wick.primitives",
+        "module": "YM.TraceExtension.Wick.Gain",
         "lines": [
-          116,
-          125
+          109,
+          113
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.TraceExtension.Wick.Track.moments_expand"
+            "id": "YM.TraceExtension.Wick.primitives"
           },
           "snippet": {
-            "text": "lemma moments_expand : Expands W.euclidean := by\n    let f i := fun s:ℝ=> ∫ p, (W.modes i).kernel s p\n    have he (i : Fin W.n) : Expands (f i) := by\n        let m := W.modes i\n        rw [show f i=(m.angular*(2:ℝ)⁻¹) • (moment (m.mass:ℝ) m.j m.k) from funext (fun s=> m.field_value s)]; exact Expands.scale (moment_expands _ _ _) _\n    have hv (x : Finset (Fin W.n)) : Expands (∏ i ∈ x,f i) := by\n        induction x using Finset.induction_on with\n        | empty=> rw [Finset.prod_empty]; exact own one_board\n        | insert i s h ih=> rw [Finset.prod_insert h]; exact (he i).mult ih\n    convert hv Finset.univ using 1; ext p; rw [Finset.prod_apply]; rfl",
-            "line": 116,
+            "text": "lemma primitives (f g : ℝ→ℝ) {k : ℤ} (hk : k≠ -1) (h : integrates g f) (hp : AtOrder g k) : AtOrder f (k+1) := by\n    obtain ⟨p,x,hp⟩ := hp; obtain ⟨z, hz, ht⟩ := integrate_poly _ x\n    have he : integrates (g-p) (f-z) := fun x hx=> (h x hx).sub (ht x hx)\n    have hv : AtOrder (f-z+z) (k+1) := (remainder_o _ _ hk he hp).plus (own hz _);\n    rwa [sub_add_cancel] at hv",
+            "line": 109,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Wick/PolynomialField.lean",
-            "fragment": "L116-L125"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Wick/Gain.lean",
+            "fragment": "L109-L113"
           },
           "proof_context": {
-            "declaration": "YM.TraceExtension.Wick.Track.moments_expand",
+            "declaration": "YM.TraceExtension.Wick.primitives",
             "lines": [
-              116,
-              125
+              109,
+              113
             ],
-            "conclusion": "For a product of modes, `Expands W.euclidean` follows by `Expands.mult` from the expansion of each factor."
+            "conclusion": "Integrating a function with a power-log expansion of order k (k not -1) gives a power-log expansion of order k+1."
           }
         }
       }
@@ -151,7 +112,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent disagreed and a judge changed it from relatedMatch; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent disagreed and a judge kept it; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

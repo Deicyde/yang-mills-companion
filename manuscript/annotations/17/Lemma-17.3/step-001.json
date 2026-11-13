@@ -1,9 +1,9 @@
 {
   "id": "Lemma 17.3 step 1",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "[L] has both estimates for every delta > 0 (so [M]'s delta = 1 is an instance) and the lower bound c/(E+w) for its kernel (`remote_base`); the upper bound C'v^{-1}e^{-2uE} on R_v(E) is not stated.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "line_cost (Tunnel.lean) carries the split d=l / d≠l, using gap_cost, point_cost for the point word and bill_cash to restore the l-profile supremum. The kernel R_v is the `remote` profile of GapTest.lean, with remote_base, remote_top and remote_cost giving its lower, upper and supremum bounds. [L] proves the estimates for every delta>0 (so delta=1 is one instance) and states them as Budget exponents.",
   "subject": [
     {
       "location": {
@@ -50,7 +50,7 @@
         "module": "YM.Next.ROTATIONS.Tunnel",
         "lines": [
           215,
-          219
+          239
         ]
       },
       "role": "key",
@@ -60,14 +60,14 @@
             "id": "YM.Outer.line_cost"
           },
           "snippet": {
-            "text": "theorem line_cost (H : S.Hierarchy) (l : Axis) (e : Axis→Bool) (A : Weight L) (hf : ∀ i, Own A i (e i))\n    (he : Mixed (other l) e) (h : ∃ i∈other l,e i≠e l) (hp : ∀ j∈other l,Pressed j A)\n    (i : Axis) (w : Axis→ℝ) (hw : ∀ j,w j≤0) (δ q : ℝ) (hq : q<0) (hd : 0<δ) (f : Grouping)\n    (hl : Colors Finset.univ f) :\n    Budget (if i=l then δ else -w l+δ) (fun n => ∫ p,cost i Finset.univ (fuel q n) (mails w f n) p ∂ν (V i) A) := by",
+            "text": "theorem line_cost (H : S.Hierarchy) (l : Axis) (e : Axis→Bool) (A : Weight L) (hf : ∀ i, Own A i (e i))\n    (he : Mixed (other l) e) (h : ∃ i∈other l,e i≠e l) (hp : ∀ j∈other l,Pressed j A)\n    (i : Axis) (w : Axis→ℝ) (hw : ∀ j,w j≤0) (δ q : ℝ) (hq : q<0) (hd : 0<δ) (f : Grouping)\n    (hl : Colors Finset.univ f) :\n    Budget (if i=l then δ else -w l+δ) (fun n => ∫ p,cost i Finset.univ (fuel q n) (mails w f n) p ∂ν (V i) A) := by\n  have HC : Colors (other l) f := fun j _ => hl j (Finset.mem_univ _)\n  split_ifs with ht\n  · subst i; obtain ⟨j,hj,h⟩ := h; exact gap_cost V H l A e j (Finset.mem_erase.mp hj).1 (Ne.symm h) he hp hf w (fun j _ => hw j) q hq f HC δ hd\n  let Y := fun n p => cost i (other l) (fuel q n) (mails w f n) p\n  have hh := point_cost V H i A e (other l) (apart ht) he hp (fun j _ => hf j) w (fun j _ => hw j) q hq f HC δ hd\n  let C := SchwartzMap.seminorm ℝ 0 0 (f l)\n  have hZ n (j) : Plus (mails w f n j) := bill_plus (hl _ (Finset.mem_univ _)).2.1 _ _\n  apply (((budget_fuel _).times C).prod hh).signed\n  · refine .of_forall fun n => integral_nonneg_of_ae ((before (V i) A).mono fun p hi => ?_)\n    exact cost_nn i _ _ _ p (fuel_pos ..) hi fun j _ => hZ n j\n  refine .of_forall fun n => ?_\n  change _ ≤ C*fuel (-w l) n*integral (ν (V i) A) (Y n)\n  rw [← integral_const_mul]\n  refine integral_mono_ae (cost_int V i A _ (fuel_pos ..) _ _) ((cost_int V i A _ (fuel_pos ..) _ _).const_mul _) ((before (V i) A).mono fun p hi => ?_)\n  have hz := crop_cons (other i) (mails w f n) l (mails w f n l) p (apart (Ne.symm ht))\n  rw [update_eq_self] at hz\n  change low _ _ p * crop (other i) _ p ≤ C*fuel _ n*(low _ _ p * crop _ _ p)\n  rw [hz,mul_left_comm (C*fuel _ n)]; unfold other; rw [Finset.erase_right_comm]\n  exact mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_right ((le_abs_self _).trans\n    (bill_cash (w l) n (f l) (-w l) (by simp) (p l))) (crop_nonneg _ _ (fun j _ => hZ _ _) _)) (low_nn _ _ _ (fuel_pos ..) hi)",
             "line": 215,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Tunnel.lean",
-            "fragment": "L215-L219"
+            "fragment": "L215-L239"
           },
           "proof_context": {
             "declaration": "YM.Outer.line_cost",
@@ -75,7 +75,7 @@
               215,
               239
             ],
-            "conclusion": "For a mixed collinear weight `B`, the line integral `I_d(B;q)` with `q=-3000` is `Budget (if i=l then δ else -w l+δ)` for every `δ>0` and widths `1+c_j`, i.e. `O(λ^δ)` for `i=l` and `O(λ^{-c_l+δ})` otherwise."
+            "conclusion": "With weight (E+v)^{-1} on E≤1: if i=l the cost is Budget delta (gap_cost); otherwise apply point_cost on Q=other l and restore the l profile's supremum fuel(-w_l) (bill_cash), giving Budget(-w_l+delta)."
           }
         }
       }
@@ -89,7 +89,7 @@
         "module": "YM.Next.ROTATIONS.Tunnel",
         "lines": [
           51,
-          54
+          94
         ]
       },
       "role": "key",
@@ -99,14 +99,14 @@
             "id": "YM.Outer.point_cost"
           },
           "snippet": {
-            "text": "theorem point_cost (H : S.Hierarchy) (i : Axis) (A : Weight L) (e) (Q : Finset Axis)\n    (hi : i∈Q) (he : Mixed Q e) (hp : ∀ i∈Q,Pressed i A) (hk : ∀ i∈Q,Own A i (e i))\n    (w : Axis→ℝ) (hw : ∀ i∈Q,w i≤0) (q : ℝ) (hq : q<0) (f : Grouping) (hf : Colors Q f)\n    (δ : ℝ) (hd : 0<δ) : Budget δ (fun n => ∫ p,cost i Q (fuel q n) (mails w f n) p ∂ν (V i) A) := by",
+            "text": "theorem point_cost (H : S.Hierarchy) (i : Axis) (A : Weight L) (e) (Q : Finset Axis)\n    (hi : i∈Q) (he : Mixed Q e) (hp : ∀ i∈Q,Pressed i A) (hk : ∀ i∈Q,Own A i (e i))\n    (w : Axis→ℝ) (hw : ∀ i∈Q,w i≤0) (q : ℝ) (hq : q<0) (f : Grouping) (hf : Colors Q f)\n    (δ : ℝ) (hd : 0<δ) : Budget δ (fun n => ∫ p,cost i Q (fuel q n) (mails w f n) p ∂ν (V i) A) := by\n  let W := update w i q; let F := update f i center\n  have hW : W i=q := update_self ..; have hF : F i=center := update_self ..\n  obtain ⟨z,hz,h⟩ := walk V H Q e i hi he A hp hk W (fun j hj => by\n    by_cases h : j=i\n    · subst j; exact hW ▸ hq.le\n    · rw [show W j=w j from update_of_ne h ..]; exact hw _ hj) δ hd\n  have hx := mail_room hq center center_ends\n  have he' : ∀ᶠ n in atTop, Room (mails W F n i) (1*fuel 0 n) := by\n    simp_rw [mails,hW,hF,one_mul]; exact hx\n  obtain ⟨m,h⟩ := h 0 le_rfl hz.le 1 le_rfl F (fun j hj => by\n    by_cases he : j=i\n    · subst j; rw [hF]; exact ⟨center_ends,center_plus,center_even⟩\n    · rw [show F j=f j from update_of_ne he ..]; exact hf _ hj) he'\n  obtain ⟨k,hV⟩ := runs_order (V i) H A (hp _ hi)\n  let n := max m k\n  have hy l : mails W F l= update (mails w f l) i (bill q l center) := by\n    ext1 j; unfold mails\n    by_cases h : j=i\n    · subst j; rw [hF,hW,update_self]\n    · simp [W,F,h]\n  have ht := h n (le_max_left m k); simp_rw [hW,hy,pay_self,hF] at ht\n  apply projects V i A Q _ _ (fun n l hh => bill_plus (hf l (Finset.mem_of_mem_erase hh)).2.1 _ _) q ?_ ?_ δ ht\n  · refine .of_forall (fun k => hV _ (le_max_right ..) _ ?_ _ (center_ends.width _) (center_even.tall _))\n    simp [fuel0]\n  let C : ℝ := 2⁻¹ ^ n * 2⁻¹^(2*n)\n  have hC : 0<C := by unfold C; positivity\n  refine ⟨C⁻¹,inv_pos.mpr hC,?_⟩\n  filter_upwards [he'] with j hj p hp\n  let a := fuel q j\n  let s := 1*fuel 0 j\n  rw [hy j,update_self] at hj\n  have hS : 1≤s := by simp [s,fuel0]\n  rw [low]; split_ifs with H\n  · rw [inv_mul_eq_div]; apply (le_div_iff₀ hC).mpr\n    refine le_trans ?_ (lower n s a (p i) hS (fuel_pos ..) hj hp)\n    change (p i+a)⁻¹ * _ ≤ _\n    unfold C\n    have hx : 0<p i+a := by have := show 0<a from fuel_pos ..; linarith\n    rw [← mul_assoc,(mul_comm (p i+a)⁻¹)]; gcongr; linarith\n  exact mul_nonneg (inv_pos.mpr hC |>.le) (lamp_signs n q 0 1 center center_ends center_plus j zero_lt_one hj i p hp)",
             "line": 51,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Tunnel.lean",
-            "fragment": "L51-L54"
+            "fragment": "L51-L94"
           },
           "proof_context": {
             "declaration": "YM.Outer.point_cost",
@@ -114,7 +114,46 @@
               51,
               94
             ],
-            "conclusion": "For a point word with both signs present in `Q`, `I_d(J_db;q)` is `Budget δ` for every `δ>0` (`mails` encode the widths `λ^{1+c_j}`)."
+            "conclusion": "For a point-like axis of a mixed-sign cluster, the walk/sign-transfer induction gives Budget delta for the (E+v)^{-1}-weighted integral."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.remote_top",
+        "module": "YM.Next.ROTATIONS.GapTest",
+        "lines": [
+          135,
+          163
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.remote_top"
+          },
+          "snippet": {
+            "text": "lemma remote_top (u : ℝ≥0) : ∃ C : ℝ,0≤C ∧ ∀ w : ℝ, 0<w → ∀ E : ℝ,0 ≤ E →\n    (Lap 1 (stamp (width w civic-remote u w)) E).re ≤ C*w⁻¹*Real.exp (-((u+u:ℝ≥0):ℝ)*E) := by\n  let J := ∫ t,phi t\n  have hJ : 0 < J := by\n    have hp := integral_pos_iff_support_of_nonneg (f:=phi) (μ:=volume) (fun t => phi_pos t) phi_int\n    apply hp.mpr\n    refine IsOpen.measure_pos (μ:=volume) ?_ ⟨0,fun h => one_ne_zero (phi_home.symm.trans h)⟩\n    exact isClosed_eq (Complex.continuous_re.comp (hat (stamp circle)).continuous) (continuous_const (y:=0)) |>.isOpen_compl\n  refine ⟨J,hJ.le,fun w hw E h => ?_⟩\n  let v : ℝ := Real.exp (-((u+u:ℝ≥0):ℝ)*E)\n  rw [covered u w E hw h]\n  have ht := Measure.integral_comp_mul_left phi w; rw [abs_of_pos (inv_pos.mpr hw)] at ht\n  change _ ≤ J*w⁻¹*v\n  calc\n    _ ≤ ∫ t : ℝ,v*phi (w*t) := by\n      have he : Integrable (fun t : ℝ => phi (w*t)) := Integrable.of_integral_ne_zero (by\n        rw [ht]; exact (mul_pos (inv_pos.mpr hw) hJ).ne')\n      apply integral_mono (leg_int u w E hw h) (he.const_mul v)\n      intro t\n      unfold leg\n      by_cases hz : ((u+u:ℝ≥0):ℝ) ≤ |t|\n      · rw [← mul_assoc]; apply mul_le_mul_of_nonneg_right _ (phi_pos _)\n        refine (mul_le_of_le_one_right (Real.exp_pos _ |>.le) ?_).trans (Real.exp_le_exp.mpr ?_)\n        · linarith [(shade u).nonneg (x:=t)]\n        exact mul_le_mul_of_nonneg_right (neg_le_neg hz) h\n      have hi := mt (remote_gap u w hw t) hz\n      rw [not_not] at hi; unfold civic remote at hi; rw [cut u w hw, Complex.ofReal_eq_zero] at hi; rw [hi,mul_zero]\n      exact mul_nonneg (Real.exp_pos _ |>.le) (phi_pos _)\n    _ = _ := by rw [integral_const_mul,ht]; change v*(w⁻¹*J)=_; ring",
+            "line": 135,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/GapTest.lean",
+            "fragment": "L135-L163"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.remote_top",
+            "lines": [
+              135,
+              163
+            ],
+            "conclusion": "The cut-off response satisfies Re Lap ≤ C w^{-1} e^{-2uE}."
           }
         }
       }
@@ -153,7 +192,7 @@
               165,
               208
             ],
-            "conclusion": "The remote-profile response `Lap 1 (stamp (width w civic-remote u w)) E` has real part at least `c/(E+w)` for small `w` and `0≤E≤1`, the lower bound on `R_v(E)`."
+            "conclusion": "The cut-off response satisfies c/(E+w) ≤ Re Lap for small w and 0≤E≤1."
           }
         }
       }
@@ -169,7 +208,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, a judge ruled; a re-rating agent agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, a judge ruled; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

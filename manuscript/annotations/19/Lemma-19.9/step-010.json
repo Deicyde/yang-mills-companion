@@ -1,9 +1,9 @@
 {
   "id": "Lemma 19.9 step 10",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "The right-hand exponent Z-(D+1)(θ-β)+Vυ is the rate of `algebra_rate` (a=θ, b=β, c=υ); the comparison from Z-iθ+iβ+Vυ for i ≥ D+1 is not stated, and Lean works at the rate level.",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "Carried in OPE.grid_remainder (Ladder.lean, case hr), with u' = tax the grid exponent Z, a the grid height theta, c the exterior exponent beta and cost' the exterior cost V upsilon.",
   "subject": [
     {
       "location": {
@@ -29,36 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.OPE.Orbits.algebra_rate",
-        "module": "YM.OPE.Orbits.Separated",
+        "declaration": "YM.OPE.grid_remainder",
+        "module": "YM.OPE.Schemes.Ladder",
         "lines": [
-          30,
-          31
+          65,
+          68
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.OPE.Orbits.algebra_rate"
+            "id": "YM.OPE.grid_remainder"
           },
           "snippet": {
-            "text": "lemma algebra_rate (m:ℕ): RateLE φ A (fun i=> algebraError U R (x i) (o i) v (y i) w m) (weight d*a-(m+1:ℝ)*(a-b)+weight e*c):=by\n   obtain ⟨h₁,h₂⟩:= clearance_both hA hx hk hp hy hba hc",
-            "line": 30,
+            "text": "    have hr(w: Mode Λ)(hw:w ∈ bands Λ q \\ bands Λ N): RateLE φ T (fun i=>v w i*Q' w i) t':=by\n       have hm:= w.fst; have hh: (N:ℕ)< w.fst:= lt_of_not_ge (fun h=>(Finset.mem_sdiff.mp hw).2 ((full_bands ..).mpr h))\n       refine ((ha' w (Finset.mem_sdiff.mp hw).1).mul (cloudRead (R:=R) U r hT h s hV hp ht hl w)).mono ?_; have hx': (↑(N+1:ℕ):ℝ) ≤ w.fst:= by exact_mod_cast hh\n       unfold t' x'; push_cast at hx'; linarith only [mul_le_mul_of_nonneg_right hx' (sub_nonneg.mpr (hc.le.trans ha.le))]",
+            "line": 65,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Orbits/Separated.lean",
-            "fragment": "L30-L31"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Schemes/Ladder.lean",
+            "fragment": "L65-L68"
           },
           "proof_context": {
-            "declaration": "YM.OPE.Orbits.algebra_rate",
+            "declaration": "YM.OPE.grid_remainder",
             "lines": [
-              30,
-              35
+              53,
+              73
             ],
-            "conclusion": "`algebra_rate` bounds the truncation error by `weight d*a-(m+1)*(a-b)+weight e*c`."
+            "conclusion": "For an omitted degree w with N < w.fst, the term has rate u' - w.fst*a + w.fst*c + cost', which is at most u' - (N+1)(a-c) + cost' since N+1 <= w.fst and c <= a."
           }
         }
       }
@@ -73,7 +73,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent disagreed and a judge changed it from relatedMatch; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent disagreed and a judge changed it from relatedMatch; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

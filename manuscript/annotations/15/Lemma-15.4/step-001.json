@@ -1,9 +1,9 @@
 {
   "id": "Lemma 15.4 step 1",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "`finish` has the same order: the order-zero bound (`D05.answer`) first, then the positive derivative orders from it with the derivative data (`B10.answer`). The list of cited inputs is not stated.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The announcement is carried by Next.Extract.finish, which assembles the table with its derivative plan, takes the order-zero bound from Work.D05.answer and only then uses the derivative maps (H.ready, H.tilt) in Work.B10.answer. Difference: the inputs are Lean hypotheses and producers rather than a list of cited lemmas and equations.",
   "subject": [
     {
       "location": {
@@ -32,7 +32,7 @@
         "declaration": "YM.Next.Extract.finish",
         "module": "YM.Next.EXTRACTION.Base",
         "lines": [
-          90,
+          79,
           92
         ]
       },
@@ -43,14 +43,14 @@
             "id": "YM.Next.Extract.finish"
           },
           "snippet": {
-            "text": "  have ht := Work.D05.answer h c H.smooth hp\n  have hh := Work.B10.answer T T W (fun _ => le_rfl) H.smooth H.basic H.ready H.tilt ht\n  exact ⟨T,W,h,c,hv,ha,hm,H,ht,H.stay h hh⟩",
-            "line": 90,
+            "text": "theorem finish (h : C.Makes) (c : CenterPort C f) (p : RawLimits C f S M) (he : Projected b f R z)\n    (hr : ∀ d, RelayCosts b f d) (hd : ∀ d, Detector b f d) :\n    ∃ T : Table C.book, ∃ W : DiffPlan T, Base C f S M R T W := by\n  have hv : ∀ d, RelayBin C R f d := fun d => he.ready d (hr d)\n  have hx (i : Live S) (d : ℕ) : Bin.shortage R i d :=\n    shortage_of_detector i p.integral (he.approaches d) (he.same d).symm (hd d)\n  have ha := Bid.arriving c h Work.D01.answer Work.D02.answer Work.D03.answer Work.D04.answer M p R hv hx\n  have hm : Spans ha.born R f := Work.D04.answer Work.D01.answer Work.D02.answer Work.D03.answer ha.born h c\n    p.integral R hv (hx ha.born)\n  obtain ⟨T,W,H⟩ := ha.serves h c\n  have hp : f.PointLimits C T := ⟨M,H.mesh.mesh,H.mesh.volume⟩\n  have ht := Work.D05.answer h c H.smooth hp\n  have hh := Work.B10.answer T T W (fun _ => le_rfl) H.smooth H.basic H.ready H.tilt ht\n  exact ⟨T,W,h,c,hv,ha,hm,H,ht,H.stay h hh⟩",
+            "line": 79,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/EXTRACTION/Base.lean",
-            "fragment": "L90-L92"
+            "fragment": "L79-L92"
           },
           "proof_context": {
             "declaration": "YM.Next.Extract.finish",
@@ -58,7 +58,7 @@
               79,
               92
             ],
-            "conclusion": "`D05.answer` gives the order-zero bound `ht`, and `B10.answer` then gives all derivative orders from it together with the tilt and ready inclusion and derivative data."
+            "conclusion": "Assembles the arrived table and DiffPlan (D01-D04, Arrives.serves), then applies the order-zero bound Work.D05.answer and, with the inclusion and derivative data, Work.B10.answer for the positive orders."
           }
         }
       }
@@ -73,7 +73,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

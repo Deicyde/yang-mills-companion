@@ -1,9 +1,9 @@
 {
   "id": "Lemma 19.22 step 3",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "[L] has the arm reorganization as identities of field expressions with test operators. The remark that individual unsubtracted summands need not be integrable has no Lean statement.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean states the reorganization as pointwise identities of field expressions (Harvest.Route.decomposition, Solstice.puncture_eq) and proves integrability for whole expressions (Deliver.each_weight). The caveat that individual unsubtracted summands need not be integrable has no Lean counterpart, as it asserts nothing to prove.",
   "subject": [
     {
       "location": {
@@ -51,50 +51,11 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Contacts.Normal.System.equation_subtract",
-        "module": "YM.Contacts.Score.Formula",
-        "lines": [
-          55,
-          55
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Contacts.Normal.System.equation_subtract"
-          },
-          "snippet": {
-            "text": "lemma equation_subtract (hg : 1 < g.card) : S.cumulant P s g= S.subtractAt P s g (S.punctured P s g) := by",
-            "line": 55,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Score/Formula.lean",
-            "fragment": "L55-L55"
-          },
-          "proof_context": {
-            "declaration": "YM.Contacts.Normal.System.equation_subtract",
-            "lines": [
-              55,
-              59
-            ],
-            "conclusion": "For `1 < g.card` the cumulant equals `subtractAt` applied to the punctured expression, an identity of `Score`s (field expressions with test operators)."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
         "declaration": "YM.Contacts.Harvest.Route.decomposition",
         "module": "YM.Contacts.Harvest.Achieved",
         "lines": [
           28,
-          29
+          31
         ]
       },
       "role": "key",
@@ -104,14 +65,14 @@
             "id": "YM.Contacts.Harvest.Route.decomposition"
           },
           "snippet": {
-            "text": "lemma decomposition (f : Menu k) (w z x) : r.windings M D T f w z x=\n    ∑ b∈(r.components M T w).slate i.val (f i.val), r.select M T D i (d:=d) (show Way d i.val from b) f w (System.sliceAt P i.val (f i.val).slice (r.net i b w z)) x := by",
+            "text": "lemma decomposition (f : Menu k) (w z x) : r.windings M D T f w z x=\n    ∑ b∈(r.components M T w).slate i.val (f i.val), r.select M T D i (d:=d) (show Way d i.val from b) f w (System.sliceAt P i.val (f i.val).slice (r.net i b w z)) x := by\n   unfold windings scoreAt; rw [System.renewal P (r.length w) (r.components M T w) f Q i h,map_sum]; apply Finset.sum_congr rfl; intro b hb\n   unfold select scoreAt net; rw [r.treated,r.core_mask]; rfl",
             "line": 28,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Harvest/Achieved.lean",
-            "fragment": "L28-L29"
+            "fragment": "L28-L31"
           },
           "proof_context": {
             "declaration": "YM.Contacts.Harvest.Route.decomposition",
@@ -119,7 +80,85 @@
               28,
               31
             ],
-            "conclusion": "`windings` equals the sum over the arms `b : Way d i` of the selected arm expressions, as an identity of scored expressions."
+            "conclusion": "windings equals the sum over arms b of the selected arm expressions, pointwise, as an identity of scored field expressions with test operators."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Solstice.puncture_eq",
+        "module": "YM.Contacts.Solstice.Puncture",
+        "lines": [
+          47,
+          49
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Solstice.puncture_eq"
+          },
+          "snippet": {
+            "text": "lemma puncture_eq (D : Reader E W X k Z.sector.derivatives)(h : 1 < g.card)(w : W)(p : SmoothTests E)(hh : Loose P g p) : outsideCost r M T D w p=r.windings M D T (festive k) w p := by\n   funext x; let Y:= r.components M T w; have hg:g.Nonempty:= Finset.card_pos.mp (by omega)\n   unfold windings scoreAt outsideCost outsideC; rw [tag_alone hg, ← full_loose _ (r.length w) h p hh]; simp_rw [festive,System.all_votes]",
+            "line": 47,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Solstice/Puncture.lean",
+            "fragment": "L47-L49"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Solstice.puncture_eq",
+            "lines": [
+              47,
+              49
+            ],
+            "conclusion": "The punctured outside cost equals the windings expression pointwise (funext), with no integrability assumption."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Solstice.Thresholds.each_weight",
+        "module": "YM.Contacts.Solstice.Deliver",
+        "lines": [
+          92,
+          94
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Solstice.Thresholds.each_weight"
+          },
+          "snippet": {
+            "text": "lemma each_weight (n : ℕ) (hw : r.stage w ⊆ strip (normalOn P g) (M.clearance n)) : Integrable (r.windings M (rootCoeff r M n) X f w p):= by\n    let x(_:Unit):=w; let q:=pullBank r x; let D:=coefficient_loan q hg M n (fun _=> hw) H\n    have he : q.windings M (rootCoeff q M n) (X ∘ x) f () p=r.windings M (rootCoeff r M n) X f w p:= rfl; rw [← he]; exact readable (r:=q) (T:= X∘x) f () p D (given_drops X x hT) (show q.Authority M d from hm) H hp",
+            "line": 92,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Solstice/Deliver.lean",
+            "fragment": "L92-L94"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Solstice.Thresholds.each_weight",
+            "lines": [
+              92,
+              94
+            ],
+            "conclusion": "Integrability is proved for windings expressions on the clearance strip as wholes."
           }
         }
       }
@@ -134,7 +173,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, a judge ruled; a re-rating agent agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, a judge ruled; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

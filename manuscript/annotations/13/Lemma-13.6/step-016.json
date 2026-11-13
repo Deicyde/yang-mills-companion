@@ -1,9 +1,9 @@
 {
   "id": "Lemma 13.6 step 16",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "`inherit_multi` bounds the inherited terms by a majorant for large x, which gives the retention and the threshold part. Choosing the ratio against H_j does not appear in the statement.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] retains the inherited terms in Roof.tapes. The ratio choice is the hypothesis v/L <= c, which faceting (Gates.lean 31-35) supplies, and the threshold raise is the 'eventually in x' filter. The prescribed multiple appears as c*deltaE x.",
   "subject": [
     {
       "location": {
@@ -51,36 +51,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.ConnectedActivityE6.Raw.inherit_multi",
-        "module": "YM.PhysicalNext.RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP.Census.Typhos",
+        "declaration": "YM.PhysicalNext.Repeat.Roof.tapes",
+        "module": "YM.PhysicalNext.RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP.Roof.Gates",
         "lines": [
-          22,
-          25
+          45,
+          57
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.ConnectedActivityE6.Raw.inherit_multi"
+            "id": "YM.PhysicalNext.Repeat.Roof.tapes"
           },
           "snippet": {
-            "text": "theorem inherit_multi (G : Gauge) (P : Teller G) (l : ℕ) {a ε : ℝ} (he : 0<ε) (ha : 0≤a)\n    (hx : 4*ε < P.top.supportExponent) (hy : 8*ε < P.top.width) (hz : 8*ε < P.below.width) :\n    ∃ n : ℕ, ∀ L : Side, n ≤ L.val → ∀ r : ℝ, -(1/2:ℝ) < r → ∀ r' : ℝ,\n      ∀ᶠ x : ℝ in atTop, ∀ (c f : Side) (S : StepData c f) (T : Tube G S) (R : Rep G f), S.patch.L=L →",
-            "line": 22,
+            "text": "lemma tapes (G : Gauge) (hG : G.Simple) (P : Teller G) (Q : ConnectedActivityE6.Target G P) (p L) {n : ℕ} (M : Record) (C : Libretto G n) (W c ε v : ℝ) (o : ConnectedActivityE6.Target.Order G W) (m : ℕ) (κ : Chi)\n    (hn : 2 ≤ n) (hM : M.ε≤1/4) (hc : 0<c) (ht : v / (L:Side).val ≤ c) (he : 0 ≤ ε) : ∀ᶠ s in atTop, Verandah Q o M C ε v m p κ L s c := by\n  by_cases h : ∃ t : Patch,t.L=L ∧ t.J=P.j ∧ t.Branches P.bind G\n  swap; · exact Eventually.of_forall fun s c f S T hh=> (h ⟨S.patch,hh.length_eq,hh.funds.atStep,hh.funds.kernel⟩).elim\n  obtain ⟨D,h,hF,h'⟩:= h\n  obtain ⟨X,hX,H⟩:= Brim.pressings G hG P L D h' p n C M hM hn Chi.canonical κ W o ε m he\n  filter_upwards [eventually_gt_atTop (0:ℝ),H,hX.below (by norm_num) _ hc] with x hx hh hE c' f S T hs R μ α H B hb hp hW hA hf hh' hu j hj C' d v' Y A b r B₀ q k N q' ε'\n  obtain ⟨⟨z,hz,hZ⟩,z',hz',hZ'⟩:=hh c' f S T (hs.patch h hF) hs R Q μ α H B hb hp hW hA v hf hh' hu _ hj A b d Y C' B₀ r v' q k N q' ε' -- field order!\n  have hp : 0 ≤ incomingE G L x := Real.rpow_nonneg (inv_nonneg.mpr (Real.sqrt_nonneg _)) _\n  have hy : incomingE G L x ≤ δE x := Real.rpow_le_rpow (inv_nonneg.mpr (Real.sqrt_nonneg _))\n    (inv_anti₀ (Real.sqrt_pos.mpr hx) (Real.sqrt_le_sqrt (le_add_of_nonneg_right (YM.Work.E04.shift_nonneg G L)))) (by norm_num)\n  exact ⟨⟨z,hz, fun i=>budget_loosen (hZ i) ((mul_le_mul_of_nonneg_right ht hp).trans (mul_le_mul_of_nonneg_left hy hc.le))⟩,\n    z',fun i=>budget_loosen (hz' i) ((mul_le_mul_of_nonneg_right hE hp).trans (mul_le_mul_of_nonneg_left hy hc.le)),hZ'⟩",
+            "line": 45,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Census/Typhos.lean",
-            "fragment": "L22-L25"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Roof/Gates.lean",
+            "fragment": "L45-L57"
           },
           "proof_context": {
-            "declaration": "YM.ConnectedActivityE6.Raw.inherit_multi",
+            "declaration": "YM.PhysicalNext.Repeat.Roof.tapes",
             "lines": [
-              22,
-              89
+              45,
+              57
             ],
-            "conclusion": "`inherit_multi` bounds the inherited terms `expo T x R U V i` by weights `z i` with a `Sales` majorant, for all large `L` and eventually in `x`."
+            "conclusion": "Given v/L <= c (the side fixed by wantFacet/faceting), eventually in the coupling the inherited-term record Brim.Houses holds with principal budget and comparison residual both bounded by c*deltaE."
           }
         }
       }
@@ -95,7 +95,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent disagreed and a judge changed it from relatedMatch; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent disagreed and a judge changed it from relatedMatch; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {
