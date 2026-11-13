@@ -2,8 +2,9 @@
 """Line ranges of [L]'s declarations, from the declaration index and the pinned source.
 
 A declaration runs from its keyword line (the index's `line`) to the last line of code before the
-next declaration of its file, its docstring and attributes, or an `end`/`namespace`/`section` or
-`/-!` header at column 0, whichever comes first; trailing blank and comment lines are dropped.
+next declaration of its file, its docstring and attributes, or a command at column 0 (`end`,
+`namespace`, `section`, `open`, `include`, `omit`, `local notation`, `variable`, a `/-` comment, ...),
+whichever comes first; trailing blank and comment lines are dropped.
 
 Usage: python3 -I ranges.py <decls.json> <lean dir> <out json>
 Output: {"fields": [...], "ranges": {name: [file, first, last], ...}, "dups": {name: [[file, first, last], ...]}}
@@ -13,7 +14,9 @@ import json
 import re
 import sys
 
-BOUNDARY = re.compile(r'^(end\b|namespace\b|section\b|/-!|noncomputable section\b|mutual\b|open\b|variable\b|universe\b|set_option\b|attribute\b|#)')
+BOUNDARY = re.compile(r'^(end\b|namespace\b|section\b|/-|noncomputable section\b|mutual\b|open\b|variable\b|universe\b|'
+                      r'set_option\b|attribute\b|#|include\b|omit\b|local\b|scoped\b|notation\b|infix[lr]?\b|prefix\b|'
+                      r'postfix\b|macro\b|macro_rules\b|syntax\b|elab\b|export\b|deriving instance\b|initialize\b)')
 KEYWORD = re.compile(r'^\s*(?:@\[[^\]]*\]\s*|(?:private|protected|noncomputable|nonrec|partial|unsafe|scoped|local)\s+)*'
                      r'(?:theorem|lemma|def|abbrev|structure|class|inductive|instance|example|opaque|axiom)\b')
 
@@ -23,7 +26,9 @@ def head_start(lines, i):
     j = i
     while j > 0:
         prev = lines[j - 1].strip()
-        if (prev.startswith('@[') and not KEYWORD.match(prev)) or prev.startswith('--'):
+        if not prev and j > 1 and lines[j - 2].strip().endswith('-/'):
+            j -= 1  # a blank line between a docstring and its keyword
+        elif (prev.startswith('@[') and not KEYWORD.match(prev)) or prev.startswith('--'):
             j -= 1
         elif prev.endswith('-/'):
             k = j - 1

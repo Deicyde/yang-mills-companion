@@ -6,6 +6,7 @@
   stool.py src <name> [a b]      a declaration's full source with line numbers (or lines a..b of
                                  its file), headed by its range
   stool.py range <name>...       file and line range of declarations
+  stool.py ids <json>            the same for the record ids listed in a file {"id", "kind", "records"}
   stool.py check <json>          validate a mapper/verifier/judge output file
 
 For text and declaration search use ../mapping/tool.py (tex, search, keys, exists) and grep -rn.
@@ -86,8 +87,14 @@ def show_item(iid, M, label):
         print(f"    step: {it['step']}")
 
 
-def cmd_batch(b):
-    B = batch(b)
+def cmd_ids(path):
+    """Like `batch`, for the records listed in a JSON file {"id": ..., "records": [ids]}."""
+    return cmd_batch(None, json.load(open(path)))
+
+
+def cmd_batch(b, B=None):
+    B = B or batch(b)
+    b = b or B['id']
     R = records()
     M = mapping()
     print(f"batch {b}: {len(B['records'])} records ({B['kind']})")
@@ -138,7 +145,8 @@ def cmd_check(path):
     recs = d.get('records', [])
     judge = d.get('agent') == 'judge' or '/judge/' in path
     if not judge:
-        want = batch(d.get('batch'))['records']
+        want = (json.load(open(d['ids_file']))['records'] if d.get('ids_file')
+                else batch(d.get('batch'))['records'])
         got = [x.get('id') for x in recs]
         if got != want:
             errs.append(f'record ids differ from the batch: missing {[w for w in want if w not in got]}, '

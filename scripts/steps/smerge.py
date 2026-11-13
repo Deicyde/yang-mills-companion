@@ -50,7 +50,8 @@ def main(work):
         f, a, b = R[e['decl']]
         if e.get('file') and e['file'] != f:
             f, a, b = next(d for d in D.get(e['decl'], []) if d[0] == e['file'])
-        lines = e.get('lines') or [a, b]
+        lines = list(e.get('lines') or [a, b])
+        lines = [max(a, min(lines[0], b)), max(a, min(lines[1], b))]  # inside the declaration's range
         out = {'decl': e['decl'], 'file': f, 'lines': lines,
                'url': f'{REPO_URL}/blob/{PIN}/{f}#L{lines[0]}-L{lines[1]}'}
         if rel != 'noMatch':
@@ -70,6 +71,11 @@ def main(work):
     # the opus re-check of closeMatch records whose notes name another route (prompted by the sample)
     cp = f'{S}/lead/closecheck.json'
     review = json.load(open(cp))['records'] if os.path.exists(cp) else {}
+    # session 5: opus judges on the records left unjudged, a deeper re-search of every noMatch record
+    # and a re-rating of relatedMatch, hasPart and narrowMatch, with an opus judge where the class changed
+    # (scratch/steps5/tools/rulings.py)
+    s5p = f'{work}/scratch/steps5/rulings.json'
+    s5 = json.load(open(s5p))['records'] if os.path.exists(s5p) else {}
     final = {}
     stats = collections.Counter()
     for B in batches:
@@ -104,6 +110,14 @@ def main(work):
                 ver['close_review'] = {'was': 'closeMatch', 'ruling': review[rid]['relation']}
                 pick = dict(pick, relation=review[rid]['relation'], note=review[rid]['note'])
                 ver['source'] += '+review'
+            x5 = s5.get(rid)
+            if x5:
+                ver['s5'] = {k: x5[k] for k in ('how', 'sweep', 'sweep_relation', 'was', 'ruling') if x5.get(k)}
+                if not x5.get('keep'):
+                    pick = {k: x5.get(k) for k in ('relation', 'ends', 'note', 'searched', 'confidence', 'text_error')}
+                    j = pick  # its text_error, if any, is the one that counts
+                    ver['source'] = (ver['source'] + '+' if ver.get('source') else '') + 's5 ' + x5['how']
+                    ver['complete'] = True
             rel = pick and pick.get('relation')
             rec = {'id': rid}
             mt = meta[rid]
