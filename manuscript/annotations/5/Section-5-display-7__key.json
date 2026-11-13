@@ -1,9 +1,9 @@
 {
   "id": "Section 5 display 7",
   "kind": "display",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "The generator equation is `infinitesimal` and p_b = c_star times the derivative is `Crystal.sizes`. The angular relation Y = c_star L appears only through the generator `c⁻¹ • I.Y` of the transported rotation (`mill W I c U`) and its `StressLaws`, not as a displayed equality of maps.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] carries the display in Commission.picks: Crystal.sizes gives p_b = c⋆∂_b and Rotation.Laws.infinitesimal gives L_d as the derivative of the action. The difference: Y = c⋆L is stated in the equivalent form that the rotation mill W I c U (YM.Spin.morph, lie := D) has generator c⁻¹ • Y, and p is stated through leaves.",
   "subject": [
     {
       "location": {
@@ -24,6 +24,84 @@
     }
   ],
   "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Org.Commission.picks",
+        "module": "YM.Org.Twist",
+        "lines": [
+          45,
+          53
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Org.Commission.picks"
+          },
+          "snippet": {
+            "text": "lemma Commission.picks (Z : Commission V W I H) (hv : V.Inclusions S) (hp : V.Derivatives S) :\n    ∃ c U J, Tab S V W I H c U J ∧ ∃ K0 : Boundary.Spins S, K0.Descends (mill W I c U) H.basis.kernel.spin := by\n  obtain ⟨c,Hc⟩ := Z.scales hv hp (Z.shape hv hp)\n  obtain ⟨U,hu,ht,hp'⟩ := Climb.descends W.T W.lit _ V Hc hp (Z.lens hv hp c Hc)\n  obtain ⟨he,hh⟩ := Z.group c U hv hp ht hp'\n  obtain ⟨J,h1,h2,h3⟩ := Z.retune c U hv hp Hc he hh\n  have hj : Tab S V W I H c U J := ⟨Hc,hu,ht, hv,hp,H.aligned,he,hh, Climb.comparison H.weak,h1,h2,h3⟩\n  refine ⟨c,U,J,hj,Spin.reach V W.T U (c⁻¹ • I.Y) hu ?_ hv H.basis.kernel.laws.toSymmetric W.vacuum W.rolls (Z.generate c U J hj)⟩\n  exact Spin.transmits U _ W.lit _ ht",
+            "line": 45,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Org/Twist.lean",
+            "fragment": "L45-L53"
+          },
+          "proof_context": {
+            "declaration": "YM.Org.Commission.picks",
+            "lines": [
+              45,
+              53
+            ],
+            "conclusion": "From Commission (proved by YM.Outer.commission) there are c, U, J with Crystal … c and the rotation laws for mill W I c U, whose generator field lie is c⁻¹ • I.Y."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Climb.Crystal",
+        "module": "YM.Climb.Beams",
+        "lines": [
+          83,
+          87
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Climb.Crystal"
+          },
+          "snippet": {
+            "text": "structure Crystal (H : S.Hierarchy) (V : DiffPlan S) (J : S.Stress) (p : Parts S) (Y : SpinRows S) (c : ℝ) : Prop where\n  positive : c≠0\n  pre : Shapes H V J p Y\n  sizes d : leaves p d=c • leaves V.deriv d\n  ready : commutes V ((c⁻¹:ℝ) • Y) ∧ Collinear V ((c⁻¹:ℝ) • Y)",
+            "line": 83,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Climb/Beams.lean",
+            "fragment": "L83-L87"
+          },
+          "proof_context": {
+            "declaration": "YM.Climb.Crystal",
+            "lines": [
+              83,
+              87
+            ],
+            "conclusion": "c ≠ 0 and leaves p d = c • leaves V.deriv d: the translation charge maps are c times the derivatives."
+          }
+        }
+      }
+    },
     {
       "type": "lean",
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
@@ -58,46 +136,7 @@
               31,
               42
             ],
-            "conclusion": "`infinitesimal` says `R.lie d g v` is the derivative at 0 of `t ↦ R.act d (oneParameter g t) v`."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Climb.Crystal",
-        "module": "YM.Climb.Beams",
-        "lines": [
-          83,
-          86
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Climb.Crystal"
-          },
-          "snippet": {
-            "text": "structure Crystal (H : S.Hierarchy) (V : DiffPlan S) (J : S.Stress) (p : Parts S) (Y : SpinRows S) (c : ℝ) : Prop where\n  positive : c≠0\n  pre : Shapes H V J p Y\n  sizes d : leaves p d=c • leaves V.deriv d",
-            "line": 83,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Climb/Beams.lean",
-            "fragment": "L83-L86"
-          },
-          "proof_context": {
-            "declaration": "YM.Climb.Crystal",
-            "lines": [
-              83,
-              87
-            ],
-            "conclusion": "`Crystal` carries a nonzero real `c` with `leaves p d = c • leaves V.deriv d`, the charge maps being c times the derivatives."
+            "conclusion": "lie d g v is the derivative at t=0 of t ↦ act d (oneParameter g t) v."
           }
         }
       }
@@ -112,7 +151,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       }
     }

@@ -1,9 +1,9 @@
 {
   "id": "Lemma 10.2 step 28",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "relatedMatch",
-  "note": "[M] prints the coefficient of the pulled-back link equation; Lean carries the same statement only through `changedJet` and `Taylor.turn` and does not display the coefficient.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] carries the displayed coefficient in YM.Work.G01.part_turn (private, via potential_turn) and uses it in YM.Work.G01.swirls_of_flow, which proves YM.Bid.swirls. The difference: for a signed permutation the sum over b is written as its one surviving term with its sign.",
   "subject": [
     {
       "location": {
@@ -29,36 +29,75 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Bid.swirls",
-        "module": "YM.Bid.Source",
+        "declaration": "YM.Work.G01.part_turn",
+        "module": "YM.Work.G01",
         "lines": [
-          20,
-          21
+          66,
+          72
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Bid.swirls"
+            "id": "YM.Work.G01.part_turn"
           },
           "snippet": {
-            "text": "def swirls (H : Hol G) := ∀ (s : Signed) d (J : Jet G) t,\n    pull s 0 (H.links d J t)=H.links d (changedJet (fun _ => Taylor.turn s.ortho⁻¹) J) t",
-            "line": 20,
+            "text": "private theorem part_turn (s : Signed) (d : ℕ) (J : Jet G) (h t : ℝ) (x : Cover) (i : Axis) :\n    partConnection d (changedJet (fun _ => Taylor.turn s.ortho⁻¹) J) h (x, i) t =\n      h • ((if s.flip i then (-1 : ℝ) else 1) •\n        potential d J (s.perm i)\n          (h • (realSite (s.act x) + t • ((if s.flip i then (-1 : ℝ) else 1) • basis (s.perm i))))) := by\n  change h • potential d _ i (h • (realSite x + t • basis i)) = _\n  rw [potential_turn, map_smul, map_add, map_smul, motion_axis, motion_site]",
+            "line": 66,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Bid/Source.lean",
-            "fragment": "L20-L21"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/G01.lean",
+            "fragment": "L66-L72"
           },
           "proof_context": {
-            "declaration": "YM.Bid.swirls",
+            "declaration": "YM.Work.G01.part_turn",
             "lines": [
-              20,
-              21
+              66,
+              72
             ],
-            "conclusion": "The pulled-back solution is the solution for the jet `changedJet (turn s.ortho⁻¹) J`, whose coefficients are the turned ones."
+            "conclusion": "The link-equation coefficient of the rotated jet at (x,i) is h times the signed component s.perm i of the potential at h(s x + t(sign) e_{s.perm i}) (with potential_turn for the jet itself)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.G01.swirls_of_flow",
+        "module": "YM.Work.G01",
+        "lines": [
+          84,
+          123
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.G01.swirls_of_flow"
+          },
+          "snippet": {
+            "text": "theorem swirls_of_flow (H : Hol G) : Bid.swirls H := by\n  intro s d J h\n  funext e\n  rcases e with ⟨x, i⟩\n  let Y := changedJet (fun _ => Taylor.turn s.ortho⁻¹) J\n  change ((posDir i).rotate s).read (H.links d J h) (affine s 0 x) = H.flow d Y h (x,i) 1\n  rw [affine, add_zero]\n  cases hs : s.flip i with\n  | false =>\n    have he : partConnection d Y h (x,i) = partConnection d J h (s.act x,s.perm i) := by\n      funext t\n      unfold Y\n      rw [part_turn]\n      simp [hs, partConnection, realSite]\n    have hu := H.solves d Y h (x,i)\n    rw [he] at hu\n    rw [show (posDir i).rotate s = posDir (s.perm i) by simp [Step.rotate, posDir, hs],\n      Step.pos_read]\n    exact congr_fun ((H.solves _ _ _ _).unique hu) 1\n  | true =>\n    let p : Edge Cover := (s.act x - step (s.perm i), s.perm i)\n    have he : partConnection d Y h (x,i) = fun t => - partConnection d J h p (1-t) := by\n      funext t\n      unfold Y\n      rw [part_turn]\n      change h • ((if s.flip i then (-1 : ℝ) else 1) • _) =\n        -(h • potential d J (s.perm i) (h • (realSite (s.act x - step (s.perm i)) +\n          (1-t) • basis (s.perm i))))\n      simp only [hs, ↓reduceIte, neg_one_smul, smul_neg, realSite_prev]\n      rw [show realSite (s.act x) + -(t • basis (s.perm i)) =\n        realSite (s.act x) - basis (s.perm i) + (1-t) • basis (s.perm i) by\n          rw [sub_smul, one_smul]\n          abel]\n    have hu := H.solves d Y h (x,i)\n    rw [he] at hu\n    rw [show (posDir i).rotate s = negDir (s.perm i) by simp [Step.rotate, posDir, negDir, hs],\n      Step.neg_read]\n    change (H.flow d J h p 1)⁻¹ = _\n    simpa only [sub_self, (H.solves d J h p).1, mul_one] using\n      congr_fun ((solves_backward (H.solves d J h p)).unique hu) 1",
+            "line": 84,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/G01.lean",
+            "fragment": "L84-L123"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.G01.swirls_of_flow",
+            "lines": [
+              84,
+              123
+            ],
+            "conclusion": "By uniqueness of the link ODE (reversing for negative image directions), pull s 0 (H.links d J t) = H.links d (turn s^{-1} J) t."
           }
         }
       }
@@ -73,11 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from relatedMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {
-        "kind": "helper"
+        "kind": "chain"
       }
     }
   }

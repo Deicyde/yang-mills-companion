@@ -2,8 +2,8 @@
   "id": "Lemma 12.10 step 3",
   "kind": "proof_step",
   "status": "partial",
-  "relation": "hasPart",
-  "note": "[L] has the (0,1)-plane chords equal to `G.chord u`, health, evenness as the hypothesis `2 ∣ n.val` and the direct lower bound with nonnegative remaining terms; it bounds every other chord and every slot only by 4h <= threshold, so the claims that other plaquettes have chord zero and slots have norm at most h_pr <= 1/4 are not there.",
+  "relation": "relatedMatch",
+  "note": "CouplingReset.sensor with stripe_plane and direct_probe carries the step (healthy probe, direct lower bound, nonnegative remaining terms, cubic and quartic bound) on sides with 2 | n; it does not show the other plaquettes have chord zero or slots norm at most h, instead bounding every plaquette chord and slot by 4h and requiring 4h <= threshold.",
   "subject": [
     {
       "location": {
@@ -46,6 +46,45 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
+        "declaration": "YM.UVNext.CouplingReset.sensor",
+        "module": "YM.UVNext.COUPLING_RESET.Probe",
+        "lines": [
+          96,
+          142
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVNext.CouplingReset.sensor"
+          },
+          "snippet": {
+            "text": "theorem sensor (G : Gauge) [Nontrivial G.Color] (A : Clip) (C : ℝ) (hC : 0 ≤ C) : ∃ η, Sensor G A C η := by\n  obtain ⟨ε,hε,hg⟩ := reachable_chord G\n  let t := min (min ε (1/4)) (A.direct/(512*(1+C)))\n  have hA := A.quadratic_pos\n  have htp : 0 < t := lt_min (lt_min hε (by norm_num)) (by positivity)\n  refine ⟨A.direct*t^2/4,by positivity,fun n he D P σ Λ hD => ?_⟩\n  let h := t * P.threshold\n  have hP := P.threshold_pos\n  have hh : 0 ≤ h := (mul_pos htp hP).le\n  have hh' : h ≤ t := mul_le_of_le_one_right htp.le P.threshold_le\n  obtain ⟨u,hu⟩ := hg _ ⟨hh,hh'.trans ((min_le_left ..).trans (min_le_left ..))⟩\n  let U := stripe u he\n  have hf p : G.chord (faceValue U p) ≤ 4*h := by\n    have hb (i) : G.chord (U i) ≤ h := by unfold U stripe; split <;> simp [*]\n    simpa [faceValue,square] using Next.Fluctuations.travel_chord U (square p.2.val.1 p.2.val.2) p.1 h hb\n  have hz : 4*h ≤ P.threshold := by\n    have hle := mul_le_mul_of_nonneg_right (show t ≤ 1/4 from (min_le_left ..).trans (min_le_right ..)) hP.le\n    dsimp [h]; linarith\n  refine ⟨U, flags_empty (fun p => (hf p).trans hz), ?_⟩\n  let T := A.direct * t^2 / 4 * P.threshold^2\n  let N := sites n\n  change N * T ≤ _\n  rw [kinetic, le_inv_mul_iff₀ (by exact_mod_cast (Fintype.card_pos (α:=Signed)))]\n  have H (s : Signed) : N*T ≤ (∑ p, D.baseTerm A P (pull s 0 U) p) + ∑ x : Site n,\n      (PathData.atomSeries D.cubic P (pull s 0 U) x + PathData.atomSeries D.quartic P (pull s 0 U) x) := by\n    have hm p : G.chord (faceValue (pull s 0 U) p) ≤ 4*h :=\n      (Face.send_price U _ _ _ G.chord G.chord_inv (fun k g => G.chord_conj g k)).trans_le (hf _)\n    have hx := direct_probe D A P u he (fun p => (hf p).trans hz) s\n    rw [hu] at hx\n    have h₄ : 0 ≤ 4*h := by positivity\n    have hsmall : C*(4*h)^3+C*(4*h)^4 ≤ A.direct*h^2/4 := calc\n      _ ≤ C*(4*h)^3 + C*(4*h)^3 := by\n        exact add_le_add_right (mul_le_mul_of_nonneg_left (pow_le_pow_of_le_one h₄ (hz.trans P.threshold_le)\n          (by decide : (3:ℕ) ≤ 4)) hC) _\n      _ = ((512*C)*h)*h^2/4 := by ring\n      _ ≤ _ := by\n        have hb := (le_div_iff₀ (show (0:ℝ) < 512*(1+C) by positivity)).mp (show t ≤ A.direct / _ from min_le_right ..)\n        have hcost : 512*C*h ≤ A.direct := by nlinarith\n        gcongr\n    have hterm (x : Site n) : -(A.direct*h^2/4) ≤ PathData.atomSeries D.cubic P (pull s 0 U) x +\n          PathData.atomSeries D.quartic P (pull s 0 U) x := by\n      have h1 := neg_le_of_abs_le (atomSeries_chord (P:=P) hD.width hD.three h₄ hm x)\n      have h2 := neg_le_of_abs_le (atomSeries_chord (P:=P) hD.width hD.four h₄ hm x)\n      linarith only [h1,h2,hsmall]\n    have hb := add_le_add hx (Finset.sum_le_sum (s:=Finset.univ) fun x _ => hterm x)\n    exact le_trans (le_of_eq (by simp [Finset.sum_const,N,sites,h,T]; ring)) hb\n  simpa using Finset.sum_le_sum (s:=Finset.univ) (fun s _ => H s)",
+            "line": 96,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/COUPLING_RESET/Probe.lean",
+            "fragment": "L96-L142"
+          },
+          "proof_context": {
+            "declaration": "YM.UVNext.CouplingReset.sensor",
+            "lines": [
+              96,
+              142
+            ],
+            "conclusion": "On every even side the stripe configuration with link chord h = t*threshold has every plaquette chord at most 4h <= threshold (so no flags) and, using direct_probe and the cubic/quartic bound C(4h)^3+C(4h)^4 <= direct*h^2/4, averaged kinetic action at least sites*direct*t^2/4*threshold^2."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
         "declaration": "YM.UVNext.CouplingReset.direct_probe",
         "module": "YM.UVNext.COUPLING_RESET.Probe",
         "lines": [
@@ -75,7 +114,7 @@
               70,
               87
             ],
-            "conclusion": "The summed direct plaquette term of every signed image `pull s 0 (stripe u he)` is at least `sites n * (A.direct * G.chord u ^ 2 / 2)`, using the (0,1)-plane plaquettes, nonnegativity of the other terms and invariance of the plaquette chords under signed permutations."
+            "conclusion": "Each signed image of the stripe has summed direct plaquette term at least sites*direct*chord(u)^2/2, by invariance of plaquette chords under signed permutations and nonnegativity of the other terms."
           }
         }
       }
@@ -114,46 +153,7 @@
               61,
               68
             ],
-            "conclusion": "Every (0,1) plaquette of `stripe u he` has chord `G.chord u`."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.UVNext.CouplingReset.sensor",
-        "module": "YM.UVNext.COUPLING_RESET.Probe",
-        "lines": [
-          107,
-          114
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.UVNext.CouplingReset.sensor"
-          },
-          "snippet": {
-            "text": "  let U := stripe u he\n  have hf p : G.chord (faceValue U p) ≤ 4*h := by\n    have hb (i) : G.chord (U i) ≤ h := by unfold U stripe; split <;> simp [*]\n    simpa [faceValue,square] using Next.Fluctuations.travel_chord U (square p.2.val.1 p.2.val.2) p.1 h hb\n  have hz : 4*h ≤ P.threshold := by\n    have hle := mul_le_mul_of_nonneg_right (show t ≤ 1/4 from (min_le_left ..).trans (min_le_right ..)) hP.le\n    dsimp [h]; linarith\n  refine ⟨U, flags_empty (fun p => (hf p).trans hz), ?_⟩",
-            "line": 107,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/COUPLING_RESET/Probe.lean",
-            "fragment": "L107-L114"
-          },
-          "proof_context": {
-            "declaration": "YM.UVNext.CouplingReset.sensor",
-            "lines": [
-              96,
-              142
-            ],
-            "conclusion": "Every plaquette chord of `stripe u he` is at most `4*h <= P.threshold`, so `flags P.threshold U = ∅` (everywhere healthy)."
+            "conclusion": "Every (0,1) plaquette of the stripe has chord G.chord u."
           }
         }
       }
@@ -169,7 +169,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, a judge ruled; a re-rating agent agreed; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, a judge ruled; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

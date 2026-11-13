@@ -1,9 +1,9 @@
 {
   "id": "Lemma 11.13 step 35",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "`earns` gives the lower energy bound (kappa t^2 - E x)*shares with E of rate -3/2. `upkeep` bounds the logarithmic factors by K*bill^5*shares. Not stated: retention of the full masks and frozen links, and the assembled envelope.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] assembles the compulsory-component envelope in YM.ConnectedActivityE6.Coat.steam_prices from the energy lower bound `earns` (κt²−E, E of rate −3/2) and the logarithmic cost bound `upkeep`. The difference is normalisation: the fixed log-power is `C·bill^5` with `bill = 1 + B + (log β)^2`, and the term βE is absorbed into that same `bill^5` term instead of being kept separate.",
   "subject": [
     {
       "location": {
@@ -58,7 +58,7 @@
               54,
               86
             ],
-            "conclusion": "The local energy `quoteNear` is at least `(κ t^2 - E x) * shares`, with `E` of rate -3/2."
+            "conclusion": "The local energy `quoteNear` is at least `(κ t^2 - E x) * shares`, with `E` of scale rate -3/2 coming from the annular remainders."
           }
         }
       }
@@ -97,7 +97,46 @@
               54,
               97
             ],
-            "conclusion": "The chart-density, tag and local-determinant log factors are at most `K * bill^5 * shares` in the upper exponent."
+            "conclusion": "The chart-density/tag/determinant log factors plus toll are at most `-β·quoteNear + K * bill^5 * shares` in the upper exponent."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.ConnectedActivityE6.Coat.steam_prices",
+        "module": "YM.AnalyticNext.CONNECTED_ACTIVITY_JETS_E6.Revenue",
+        "lines": [
+          99,
+          106
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.ConnectedActivityE6.Coat.steam_prices"
+          },
+          "snippet": {
+            "text": "lemma steam_prices (P : Teller G) (D : Patch) (L : Side) (hd : D.Branches P.bind G) {Ñ : ChartRatio G} (h : LocalRatio Ñ)\n    {a A W : ℝ} (ha : 0<a) (hA : 0<A) (hW : 0<W) (η r Q Y γ k μ : ℝ) (hm : γ*k ≤ a) :\n    ∃ C : ℝ, 0≤C ∧ ∀ᶠ x in atTop, ∀ (c f : Side) (S : StepData c f) (T : Tube G S) (F : Forest S.ratio)\n    (X : Coat T F), X.x=x → S.patch=D → S.patch.L=L → Rotator P L η r Q Y X →\n    Rotator P L η r Q Y X.blank → X.width=k → ShellAccess S G X.x W k γ → PointCharge T X.x W μ →\n    (∀ v, Maximum A T X.x v) → ∀ R, Intake P T X.x R → ∀ (B : Stores S) (l u),\n    |X.Pack R Ñ l W a B u| ≤ Packets.income 1 (C*Delay.bill G L x^5) (R.beta*(μ*X.t^2)) B.shares := by\n  let H x := (2*a)*Pressure.fiery G x L",
+            "line": 99,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/Revenue.lean",
+            "fragment": "L99-L106"
+          },
+          "proof_context": {
+            "declaration": "YM.ConnectedActivityE6.Coat.steam_prices",
+            "lines": [
+              99,
+              140
+            ],
+            "conclusion": "Combining `earns` and `upkeep`, the masked component value `|X.Pack ...|` is at most `income 1 (C*bill^5) (β μ t^2) shares = exp((C bill^5 - β μ t^2)·shares)`."
           }
         }
       }
@@ -112,7 +151,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, a judge ruled; a re-check of closeMatch records changed it from closeMatch; a re-rating agent disagreed and a judge changed it from relatedMatch; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, a judge ruled; a re-check of closeMatch records changed it from closeMatch; a re-rating agent disagreed and a judge changed it from relatedMatch; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

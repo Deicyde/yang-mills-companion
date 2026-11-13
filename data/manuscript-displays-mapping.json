@@ -8,12 +8,12 @@
  "provenance": "machine: a sonnet mapper and a sonnet verifier per batch, independently; an opus judge on disagreement and on one in five agreed noMatch records; two opus skeptics per claim that the text is wrong; records of the weakest classes re-judged after a second independent review (a blind opus judge, an opus ruling where it disagreed); no person reviewed",
  "counts": {
   "broadMatch": 22,
-  "closeMatch": 96,
+  "closeMatch": 98,
   "exactMatch": 203,
   "hasPart": 9,
-  "narrowMatch": 16,
+  "narrowMatch": 15,
   "noMatch": 1,
-  "relatedMatch": 8
+  "relatedMatch": 7
  },
  "records": [
   {
@@ -2848,8 +2848,8 @@
    "context": "statement",
    "enclosing": "Definition 4.10",
    "kind": "display",
-   "relation": "hasPart",
-   "class": "Partial",
+   "relation": "closeMatch",
+   "class": "Faithful",
    "ends": [
     {
      "decl": "YM.Maxwell.Green",
@@ -2860,33 +2860,14 @@
      ],
      "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Maxwell/PotentialKernel.lean#L22-L22",
      "snippet": "def Green (x : E4) : ℝ := normal * (‖x‖^2)⁻¹",
-     "conclusion": "`Green x = normal * (‖x‖^2)⁻¹` with `normal = (4 pi^2)⁻¹`, the kernel Gamma(x) = 1/(4 pi^2 |x|^2).",
+     "conclusion": "Green x = (4π²)⁻¹‖x‖⁻², with the lemma normalization Green x = 1/(4π²‖x‖²).",
      "proof_context": {
       "declaration": "YM.Maxwell.Green",
       "lines": [
        22,
        22
       ],
-      "conclusion": "`Green x = normal * (‖x‖^2)⁻¹` with `normal = (4 pi^2)⁻¹`, the kernel Gamma(x) = 1/(4 pi^2 |x|^2)."
-     }
-    },
-    {
-     "decl": "YM.Maxwell.curlOpp",
-     "file": "YM/Maxwell/Curls.lean",
-     "lines": [
-      17,
-      18
-     ],
-     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Maxwell/Curls.lean#L17-L18",
-     "snippet": "def curlOpp (b k m : Axis) : E4 → ℝ :=\n  (if k=b then grad m Green else 0) - (if m=b then grad k Green else 0)",
-     "conclusion": "`curlOpp b k m` is the correlation of a potential leg b with the curvature F_km, built from `grad` of `Green` with the axis Kronecker delta `if k=b`.",
-     "proof_context": {
-      "declaration": "YM.Maxwell.curlOpp",
-      "lines": [
-       17,
-       18
-      ],
-      "conclusion": "`curlOpp b k m` is the correlation of a potential leg b with the curvature F_km, built from `grad` of `Green` with the axis Kronecker delta `if k=b`."
+      "conclusion": "Green x = (4π²)⁻¹‖x‖⁻², with the lemma normalization Green x = 1/(4π²‖x‖²)."
      }
     },
     {
@@ -2898,18 +2879,37 @@
      ],
      "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Maxwell/Curls.lean#L20-L20",
      "snippet": "def bareCurl (a b k m : Axis) := grad a (curlOpp b k m) - grad b (curlOpp a k m)",
-     "conclusion": "`bareCurl a b k m` is the single-colour curvature-curvature kernel, obtained by applying F_ab = d_a A_b - d_b A_a to both legs of delta_ab Gamma.",
+     "conclusion": "curlOpp applies F_km to a potential leg with covariance δ_{bk}Γ, and bareCurl applies F_ab = ∂_aA_b − ∂_bA_a on the other leg, giving the curvature-curvature kernel.",
      "proof_context": {
       "declaration": "YM.Maxwell.bareCurl",
       "lines": [
        20,
        20
       ],
-      "conclusion": "`bareCurl a b k m` is the single-colour curvature-curvature kernel, obtained by applying F_ab = d_a A_b - d_b A_a to both legs of delta_ab Gamma."
+      "conclusion": "curlOpp applies F_km to a potential leg with covariance δ_{bk}Γ, and bareCurl applies F_ab = ∂_aA_b − ∂_bA_a on the other leg, giving the curvature-curvature kernel."
+     }
+    },
+    {
+     "decl": "YM.Maxwell.raw_mixed",
+     "file": "YM/Maxwell/Bilinear.lean",
+     "lines": [
+      72,
+      87
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Maxwell/Bilinear.lean#L72-L87",
+     "snippet": "lemma raw_mixed (u : Fin j → E4) (v : Fin l → E4) (i m a b : Axis) (c d : G.ColorIndex) (h : z ≠ 0) :\n    pairing (G := G) (show z ∈ away from h) (constrain (fromF G u c i m)) (constrain (fromF G v d a b)) =\n    if c=d then (-1)^l * coeff (fun z => coeff (bareCurl i m a b) j z u) l z v else 0 := by\n  change legKernel _ _ z = _\n  rw [concrete (fromF ..) (fromF ..) h]\n  let R := responded G (fromF G u c i m)\n  let L : G.Color →L[ℝ] ℝ := EuclideanSpace.proj d\n  change (-1)^l * L (coeff (R a b) l z v) = _\n  rw [← coeff_linear L v (((response (G := G) (fromF ..)).smooth _ _ z h).of_le (WithTop.coe_le_coe.mpr le_top))]\n  have he : L ∘ R a b =ᶠ[𝓝 z] fun w => if c=d then coeff (bareCurl i m a b) j w u else 0 := by\n    filter_upwards [open_away.mem_nhds (show z ∈ away from h)] with w hw\n    exact tests_curl u c i m a b d hw\n  rw [GermCoeff l he]\n  by_cases hw : c=d\n  · subst c; simp\n  simp [hw]",
+     "conclusion": "The leg kernel between colours c and d is (if c=d then the jets of bareCurl else 0), so the covariance is colour-diagonal.",
+     "proof_context": {
+      "declaration": "YM.Maxwell.raw_mixed",
+      "lines": [
+       72,
+       87
+      ],
+      "conclusion": "The leg kernel between colours c and d is (if c=d then the jets of bareCurl else 0), so the covariance is colour-diagonal."
      }
     }
    ],
-   "note": "Gamma is stated exactly. [L] has no potential A: the covariance delta_{alpha beta} delta_{ab} Gamma and F_ab = d_a A_b - d_b A_a appear only implicitly in the curvature kernels `curlOpp` and `bareCurl`, and colour diagonality appears only in their docstring and use.",
+   "note": "[L] carries the free Maxwell comparison through YM.Maxwell.Green (Γ exactly), curlOpp/bareCurl (F = ∂A − ∂A applied to δ_{ab}Γ) and raw_mixed (colour diagonality, proved). The difference: [L] defines no Gaussian potential A; the covariance δδΓ enters only through the curvature kernels derived from Green.",
    "confidence": "medium",
    "verification": {
     "batch": "D04",
@@ -2924,7 +2924,7 @@
     "disagreement": "class Faithful vs Partial",
     "judge": "hasPart",
     "ruling": "combined",
-    "source": "judge",
+    "source": "judge+rereview",
     "complete": true,
     "s5": {
      "how": "sweep agreed",
@@ -2933,10 +2933,10 @@
      "was": "hasPart"
     },
     "rereview": {
-     "kind": "kept",
+     "kind": "rejudged",
      "from": "hasPart",
      "source": "re-judged after a second independent review (whole class: blind opus judge, opus ruling on disagreement)",
-     "why": "the blind judge agreed on the class"
+     "why": "Colour diagonality is a proved theorem (raw_mixed), not only a docstring, and since the comparison space only uses curvature jets, encoding E AA through its curl images is a packaging difference rather than a missing part."
     }
    }
   },
@@ -2945,49 +2945,68 @@
    "context": "text",
    "enclosing": null,
    "kind": "display",
-   "relation": "relatedMatch",
-   "class": "Deviates",
+   "relation": "closeMatch",
+   "class": "Faithful",
    "ends": [
     {
-     "decl": "YM.Labels.Taylor.turn",
-     "file": "YM/Labels/Jet.lean",
+     "decl": "YM.Extra.FD.carry",
+     "file": "YM/Extra/FREE_DETECTOR_ALGEBRA/Covariance.lean",
      "lines": [
-      69,
-      71
+      30,
+      39
      ],
-     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Labels/Jet.lean#L69-L71",
-     "snippet": "def turn (g : Ortho) : Taylor G j →ₗ[ℝ] Taylor G j where\n  toFun A := ⟨ fun i => ∑ k, g.val i k •\n    ((A.val k).compContinuousLinearMap fun _ ↦ (Ortho.motion g⁻¹).toContinuousLinearMap), by",
-     "conclusion": "`turn g` acts on a Taylor jet by the vector index through `g.val i k` and on the arguments by the motion of `g⁻¹`.",
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/FREE_DETECTOR_ALGEBRA/Covariance.lean#L30-L39",
+     "snippet": "def carry (s : Ortho) : TwoJet F j →ₗ[ℝ] TwoJet F j where\n  toFun Q := bi s.val (fun i m => byDir s (Q i m))\n  map_add' Q R := by\n    change bi s.val _ = _\n    rw [← map_add (bi s.val)]\n    congr 1\n  map_smul' t Q := by\n    change bi s.val _ = _\n    rw [← map_smul (bi s.val)]\n    congr 1",
+     "conclusion": "O(4) acts on two-form (curvature) jets by `bi s.val` on both form indices, (bi s v)_{im} = sum_{a,b} s_{ia} s_{mb} v_{ab}, and by composition with the motion of s^{-1} on the derivative directions.",
      "proof_context": {
-      "declaration": "YM.Labels.Taylor.turn",
+      "declaration": "YM.Extra.FD.carry",
       "lines": [
-       69,
-       96
+       30,
+       39
       ],
-      "conclusion": "`turn g` acts on a Taylor jet by the vector index through `g.val i k` and on the arguments by the motion of `g⁻¹`."
+      "conclusion": "O(4) acts on two-form (curvature) jets by `bi s.val` on both form indices, (bi s v)_{im} = sum_{a,b} s_{ia} s_{mb} v_{ab}, and by composition with the motion of s^{-1} on the derivative directions."
      }
     },
     {
-     "decl": "YM.Labels.rotated",
-     "file": "YM/Labels/Action.lean",
+     "decl": "YM.Extra.FD.reel_gradient",
+     "file": "YM/Extra/FREE_DETECTOR_ALGEBRA/Covariance.lean",
      "lines": [
-      80,
-      80
+      75,
+      77
      ],
-     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Labels/Action.lean#L80-L80",
-     "snippet": "def rotated (s : Ortho) : Pol G →ₐ[ℂ] Pol G := changed fun _ => Taylor.turn s⁻¹",
-     "conclusion": "`rotated s` acts on polynomial labels by `Taylor.turn s⁻¹` on the connection jets.",
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/FREE_DETECTOR_ALGEBRA/Covariance.lean#L75-L77",
+     "snippet": "theorem reel_gradient (s : Ortho) {f : Maxwell.Field F} {x}\n    (hf : ∀ i m, ContDiffAt ℝ ∞ (f i m) (mov s⁻¹ x)) (a i m : Axis) :\n    grad a (reel s f i m) x = tri s.val (fun i m a => grad a (f i m) (mov s⁻¹ x)) i m a := by",
+     "conclusion": "For the rotated two-form field `reel s f`, the derivative grad_a transforms as a third tensor index: grad_a (reel s f)_{im} = sum s_{iu} s_{mv} s_{ab} grad_b f_{uv} at s^{-1}x.",
      "proof_context": {
-      "declaration": "YM.Labels.rotated",
+      "declaration": "YM.Extra.FD.reel_gradient",
       "lines": [
-       80,
-       80
+       75,
+       93
       ],
-      "conclusion": "`rotated s` acts on polynomial labels by `Taylor.turn s⁻¹` on the connection jets."
+      "conclusion": "For the rotated two-form field `reel s f`, the derivative grad_a transforms as a third tensor index: grad_a (reel s f)_{im} = sum s_{iu} s_{mv} s_{ab} grad_b f_{uv} at s^{-1}x."
+     }
+    },
+    {
+     "decl": "YM.Extra.FD.ride",
+     "file": "YM/Extra/FREE_DETECTOR_ALGEBRA/Rank.lean",
+     "lines": [
+      99,
+      101
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/FREE_DETECTOR_ALGEBRA/Rank.lean#L99-L101",
+     "snippet": "def ride (s : Ortho) (d : ℕ) : (freeTable F).Field d →ₗ[ℂ] (freeTable F).Field d :=\n    (exactField F d).symm.toLinearMap.comp (((pullSol s).toLinearMap.comp (writes F d)).codRestrict _ fun P =>\n      sector_rot ((exactField F d P).property) s)",
+     "conclusion": "The rotation action on the free Maxwell fields `(freeTable F).Field d` is induced by `pullSol s` on Wick polynomials (preserving `shellSector`), and `rideO` packages it as a linear equivalence with inverse `ride s⁻¹`.",
+     "proof_context": {
+      "declaration": "YM.Extra.FD.ride",
+      "lines": [
+       99,
+       101
+      ],
+      "conclusion": "The rotation action on the free Maxwell fields `(freeTable F).Field d` is induced by `pullSol s` on Wick polynomials (preserving `shellSector`), and `rideO` packages it as a linear equivalence with inverse `ride s⁻¹`."
      }
     }
    ],
-   "note": "[L] defines the O(4) action on the Taylor jets of the connection (`turn`, `rotated`), a different quantity from [M]'s action on curvature coordinates and derivatives; the formulas for hF_ab and h∂_a do not appear.",
+   "note": "[L] carries the jet action on curvature components and derivatives as YM.Extra.FD.carry / reel (two-form indices via `bi`) and reel_gradient (derivative index), and the induced action R_d^Max on the Maxwell fields as YM.Extra.FD.ride / rideO via pullSol. The difference is the index convention: [L] contracts h's first index (with argument h^{-1}x) where [M] contracts h's first index on the summed side, i.e. the action by h versus its transpose.",
    "confidence": "medium",
    "verification": {
     "batch": "D04",
@@ -2998,7 +3017,7 @@
     "mapper": "relatedMatch",
     "verifier": "relatedMatch",
     "agreed": true,
-    "source": "mapper+verifier+s5 sweep+judge",
+    "source": "mapper+verifier+s5 sweep+judge+rereview",
     "complete": true,
     "s5": {
      "how": "sweep+judge",
@@ -3006,6 +3025,12 @@
      "sweep_relation": "hasPart",
      "was": "relatedMatch",
      "ruling": "A"
+    },
+    "rereview": {
+     "kind": "rejudged",
+     "from": "relatedMatch",
+     "source": "re-judged after a second independent review (whole class: blind opus judge, opus ruling on disagreement)",
+     "why": "Both verdicts cite only the connection-jet action `Taylor.turn`/`rotated`, but [L] does state the curvature-jet and derivative transformation laws in FREE_DETECTOR_ALGEBRA/Covariance.lean, so the record is carried, not merely implied or replaced."
     }
    }
   },
@@ -3576,9 +3601,47 @@
    "context": "text",
    "enclosing": null,
    "kind": "display",
-   "relation": "hasPart",
-   "class": "Partial",
+   "relation": "closeMatch",
+   "class": "Faithful",
    "ends": [
+    {
+     "decl": "YM.Org.Commission.picks",
+     "file": "YM/Org/Twist.lean",
+     "lines": [
+      45,
+      53
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Org/Twist.lean#L45-L53",
+     "snippet": "lemma Commission.picks (Z : Commission V W I H) (hv : V.Inclusions S) (hp : V.Derivatives S) :\n    ∃ c U J, Tab S V W I H c U J ∧ ∃ K0 : Boundary.Spins S, K0.Descends (mill W I c U) H.basis.kernel.spin := by\n  obtain ⟨c,Hc⟩ := Z.scales hv hp (Z.shape hv hp)\n  obtain ⟨U,hu,ht,hp'⟩ := Climb.descends W.T W.lit _ V Hc hp (Z.lens hv hp c Hc)\n  obtain ⟨he,hh⟩ := Z.group c U hv hp ht hp'\n  obtain ⟨J,h1,h2,h3⟩ := Z.retune c U hv hp Hc he hh\n  have hj : Tab S V W I H c U J := ⟨Hc,hu,ht, hv,hp,H.aligned,he,hh, Climb.comparison H.weak,h1,h2,h3⟩\n  refine ⟨c,U,J,hj,Spin.reach V W.T U (c⁻¹ • I.Y) hu ?_ hv H.basis.kernel.laws.toSymmetric W.vacuum W.rolls (Z.generate c U J hj)⟩\n  exact Spin.transmits U _ W.lit _ ht",
+     "conclusion": "From Commission (proved by YM.Outer.commission) there are c, U, J with Crystal … c and the rotation laws for mill W I c U, whose generator field lie is c⁻¹ • I.Y.",
+     "proof_context": {
+      "declaration": "YM.Org.Commission.picks",
+      "lines": [
+       45,
+       53
+      ],
+      "conclusion": "From Commission (proved by YM.Outer.commission) there are c, U, J with Crystal … c and the rotation laws for mill W I c U, whose generator field lie is c⁻¹ • I.Y."
+     }
+    },
+    {
+     "decl": "YM.Climb.Crystal",
+     "file": "YM/Climb/Beams.lean",
+     "lines": [
+      83,
+      87
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Climb/Beams.lean#L83-L87",
+     "snippet": "structure Crystal (H : S.Hierarchy) (V : DiffPlan S) (J : S.Stress) (p : Parts S) (Y : SpinRows S) (c : ℝ) : Prop where\n  positive : c≠0\n  pre : Shapes H V J p Y\n  sizes d : leaves p d=c • leaves V.deriv d\n  ready : commutes V ((c⁻¹:ℝ) • Y) ∧ Collinear V ((c⁻¹:ℝ) • Y)",
+     "conclusion": "c ≠ 0 and leaves p d = c • leaves V.deriv d: the translation charge maps are c times the derivatives.",
+     "proof_context": {
+      "declaration": "YM.Climb.Crystal",
+      "lines": [
+       83,
+       87
+      ],
+      "conclusion": "c ≠ 0 and leaves p d = c • leaves V.deriv d: the translation charge maps are c times the derivatives."
+     }
+    },
     {
      "decl": "YM.Table.Rotation.Laws",
      "file": "YM/Euclid/Stress.lean",
@@ -3588,37 +3651,18 @@
      ],
      "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Euclid/Stress.lean#L41-L42",
      "snippet": "  infinitesimal (d : ℕ) (g : Ortho.Skew) (v : S.Field d) :\n    HasDerivAt (fun t => R.act d (Ortho.oneParameter g t) v) (R.lie d g v) (0 : ℝ)",
-     "conclusion": "`infinitesimal` says `R.lie d g v` is the derivative at 0 of `t ↦ R.act d (oneParameter g t) v`.",
+     "conclusion": "lie d g v is the derivative at t=0 of t ↦ act d (oneParameter g t) v.",
      "proof_context": {
       "declaration": "YM.Table.Rotation.Laws",
       "lines": [
        31,
        42
       ],
-      "conclusion": "`infinitesimal` says `R.lie d g v` is the derivative at 0 of `t ↦ R.act d (oneParameter g t) v`."
-     }
-    },
-    {
-     "decl": "YM.Climb.Crystal",
-     "file": "YM/Climb/Beams.lean",
-     "lines": [
-      83,
-      86
-     ],
-     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Climb/Beams.lean#L83-L86",
-     "snippet": "structure Crystal (H : S.Hierarchy) (V : DiffPlan S) (J : S.Stress) (p : Parts S) (Y : SpinRows S) (c : ℝ) : Prop where\n  positive : c≠0\n  pre : Shapes H V J p Y\n  sizes d : leaves p d=c • leaves V.deriv d",
-     "conclusion": "`Crystal` carries a nonzero real `c` with `leaves p d = c • leaves V.deriv d`, the charge maps being c times the derivatives.",
-     "proof_context": {
-      "declaration": "YM.Climb.Crystal",
-      "lines": [
-       83,
-       87
-      ],
-      "conclusion": "`Crystal` carries a nonzero real `c` with `leaves p d = c • leaves V.deriv d`, the charge maps being c times the derivatives."
+      "conclusion": "lie d g v is the derivative at t=0 of t ↦ act d (oneParameter g t) v."
      }
     }
    ],
-   "note": "The generator equation is `infinitesimal` and p_b = c_star times the derivative is `Crystal.sizes`. The angular relation Y = c_star L appears only through the generator `c⁻¹ • I.Y` of the transported rotation (`mill W I c U`) and its `StressLaws`, not as a displayed equality of maps.",
+   "note": "[L] carries the display in Commission.picks: Crystal.sizes gives p_b = c⋆∂_b and Rotation.Laws.infinitesimal gives L_d as the derivative of the action. The difference: Y = c⋆L is stated in the equivalent form that the rotation mill W I c U (YM.Spin.morph, lie := D) has generator c⁻¹ • Y, and p is stated through leaves.",
    "confidence": "medium",
    "verification": {
     "batch": "D05",
@@ -3629,7 +3673,7 @@
     "mapper": "hasPart",
     "verifier": "hasPart",
     "agreed": true,
-    "source": "mapper+verifier",
+    "source": "mapper+verifier+rereview",
     "complete": true,
     "s5": {
      "how": "sweep agreed",
@@ -3638,10 +3682,10 @@
      "was": "hasPart"
     },
     "rereview": {
-     "kind": "kept",
+     "kind": "rejudged",
      "from": "hasPart",
      "source": "re-judged after a second independent review (whole class: blind opus judge, opus ruling on disagreement)",
-     "why": "the blind judge agreed on the class"
+     "why": "Since morph sets lie := c⁻¹ • Y and Laws.infinitesimal makes that lie the derivative of the O(4) action, Y = c⋆L holds as an equivalent form, which is closeMatch rather than a missing part."
     }
    }
   },
@@ -12012,8 +12056,8 @@
    "context": "text",
    "enclosing": null,
    "kind": "display",
-   "relation": "hasPart",
-   "class": "Partial",
+   "relation": "closeMatch",
+   "class": "Faithful",
    "ends": [
     {
      "decl": "YM.Precision.Floor",
@@ -12024,28 +12068,14 @@
      ],
      "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PREC/Stacks.lean#L64-L65",
      "snippet": "  roots : (M.full p n).transpose*M.full p n=M.metric.acts n\n  starts : M.metric.read 0=1",
-     "conclusion": "`Floor` states `(M.full p n)^T (M.full p n) = M.metric.acts n` with `full` stacking `sqrt(c.direct) I` over the roots, and `M.metric.read 0 = 1`.",
-     "notation": [
-      {
-       "math": "H_{N,m}",
-       "lean": "M.metric"
-      },
-      {
-       "math": "rho",
-       "lean": "M.roots"
-      },
-      {
-       "math": "H^(0)=I",
-       "lean": "M.metric.read 0 = 1"
-      }
-     ],
+     "conclusion": "`roots`: `(full p n)^T (full p n) = metric.acts n` with `full` stacking `sqrt(c_dir) I` over the row factor, so H = c_dir I + ρ^T ρ; `starts`: `metric.read 0 = 1`.",
      "proof_context": {
       "declaration": "YM.Precision.Floor",
       "lines": [
        61,
        68
       ],
-      "conclusion": "`Floor` states `(M.full p n)^T (M.full p n) = M.metric.acts n` with `full` stacking `sqrt(c.direct) I` over the roots, and `M.metric.read 0 = 1`."
+      "conclusion": "`roots`: `(full p n)^T (full p n) = metric.acts n` with `full` stacking `sqrt(c_dir) I` over the row factor, so H = c_dir I + ρ^T ρ; `starts`: `metric.read 0 = 1`."
      }
     },
     {
@@ -12057,18 +12087,37 @@
      ],
      "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PCalc/Chart.lean#L24-L25",
      "snippet": "def quadratic (p : Clip) (R : PathData G) (U : Config G n) :=\n    ∑ b : Face (Per n), (p.direct*G.price (faceValue U b) + ‖R.ell U b‖^2/2)",
-     "conclusion": "The quadratic action is the sum over faces of `p.direct * price` plus `‖R.ell U b‖^2/2`.",
+     "conclusion": "The leading quadratic action is Σ_faces (c_dir·price + ‖ρ U‖^2/2).",
      "proof_context": {
       "declaration": "YM.Precision.quadratic",
       "lines": [
        24,
        25
       ],
-      "conclusion": "The quadratic action is the sum over faces of `p.direct * price` plus `‖R.ell U b‖^2/2`."
+      "conclusion": "The leading quadratic action is Σ_faces (c_dir·price + ‖ρ U‖^2/2)."
+     }
+    },
+    {
+     "decl": "YM.Push.PriceCompiler.Canonical.weights",
+     "file": "YM/Push/PRICE_COMPILER/Canonical.lean",
+     "lines": [
+      140,
+      141
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/PRICE_COMPILER/Canonical.lean#L140-L141",
+     "snippet": "lemma weights {a A v : ℝ} {H : Bed} (h : H.roots.strip a A) (ha : 0 ≤ a) {p : Clip}\n    (hp : Floor H p 1 v A) {W : PathData G} (hw : W.row=row H) : W.metric_zero p := by",
+     "conclusion": "For rows built from a Floor datum, `metric_zero` holds: c_dir δ + Σ s s = δ, i.e. Ĥ(0)=I.",
+     "proof_context": {
+      "declaration": "YM.Push.PriceCompiler.Canonical.weights",
+      "lines": [
+       140,
+       176
+      ],
+      "conclusion": "For rows built from a Floor datum, `metric_zero` holds: c_dir δ + Σ s s = δ, i.e. Ĥ(0)=I."
      }
     }
    ],
-   "note": "Floor gives H = c_dir I + rho^T rho and H^(0)=I, and `quadratic` the prescribed quadratic part through the row factor. The identity of the quadratic form with (1/2)<d_1 a, H d_1 a> is not stated as one fact.",
+   "note": "[L] defines the action `quadratic` as c_dir·price plus ‖ρU‖²/2. YM.Precision.Floor gives H = c_dir I + ρᵀρ with Ĥ(0)=I, and `weights` derives the entrywise form `metric_zero`. The difference is packaging: the quadratic part appears as the nonlinear price plus row-factor square, not as the single form ½⟨d₁a, H d₁a⟩.",
    "confidence": "medium",
    "verification": {
     "batch": "D12",
@@ -12079,7 +12128,7 @@
     "mapper": "hasPart",
     "verifier": "hasPart",
     "agreed": true,
-    "source": "mapper+verifier",
+    "source": "mapper+verifier+rereview",
     "complete": true,
     "s5": {
      "how": "sweep agreed",
@@ -12088,10 +12137,10 @@
      "was": "hasPart"
     },
     "rereview": {
-     "kind": "kept",
+     "kind": "rejudged",
      "from": "hasPart",
      "source": "re-judged after a second independent review (whole class: blind opus judge, opus ruling on disagreement)",
-     "why": "the blind judge agreed on the class"
+     "why": "Taken together, Floor and `quadratic` give every part of the prescribed display, so hasPart (Y) is too low; X's ends cover only Ĥ(0)=I."
     }
    }
   },
@@ -12346,8 +12395,8 @@
    "context": "text",
    "enclosing": null,
    "kind": "display",
-   "relation": "hasPart",
-   "class": "Partial",
+   "relation": "closeMatch",
+   "class": "Faithful",
    "ends": [
     {
      "decl": "YM.Stationary.alphaPay",
@@ -12358,47 +12407,37 @@
      ],
      "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Films/LeadingRay.lean#L699-L699",
      "snippet": "def alphaPay (f : Picture G 1) := 2*(leapTip f (step (0:Axis)) 1 ![i,i]).re",
-     "conclusion": "`alphaPay f` is twice the real part of the degree-two Taylor value `leapTip` of the diagonal entry `(i,i)` along the axis `step 0`.",
-     "notation": [
-      {
-       "math": "alpha_b(Y)",
-       "lean": "alphaPay Y b"
-      },
-      {
-       "math": "[t^2]g",
-       "lean": "speedy ... 2"
-      }
-     ],
+     "conclusion": "Defines α as 2·Re of the degree-two coefficient (leapTip) of the (e₂,i),(e₂,i) entry along momentum direction e₁; tip_fuel shows the prescribed kinetic kernel has this coefficient 1/2, so α=1.",
      "proof_context": {
       "declaration": "YM.Stationary.alphaPay",
       "lines": [
        699,
        699
       ],
-      "conclusion": "`alphaPay f` is twice the real part of the degree-two Taylor value `leapTip` of the diagonal entry `(i,i)` along the axis `step 0`."
+      "conclusion": "Defines α as 2·Re of the degree-two coefficient (leapTip) of the (e₂,i),(e₂,i) entry along momentum direction e₁; tip_fuel shows the prescribed kinetic kernel has this coefficient 1/2, so α=1."
      }
     },
     {
-     "decl": "YM.Precision.FiniteBound",
-     "file": "YM/PCalc/Loop.lean",
+     "decl": "YM.Stationary.transition_cap",
+     "file": "YM/Next/STATIONARY/Level/Transition.lean",
      "lines": [
-      62,
-      71
+      158,
+      158
      ],
-     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PCalc/Loop.lean#L62-L71",
-     "snippet": "structure FiniteBound (F : Forest S.ratio) (R T : PathData G) (p q : Clip) (α : ℝ) (A : ChartRatio G)\n    (ρ : fieldDir G c 1 → AxisChart G F) (Θ γ Λ : ℝ) : Prop where\n  branch (t : S.Choices) : ∀ᶠ x in nhds 0, 0 < (hessian F t p R x (ρ x)).det\n  born t : ContDiffAt ℝ ω (thermal F t p R ρ A) 0\n  classicalResult : ContDiffAt ℝ ω (draft (c:=c) α T q) 0\n  wave_price t (i j : Site c) (σ τ : TypeFace 1 → G.ColorIndex → ℂ) :\n      (∀ x y, ‖σ x y‖≤1) → (∀ x y, ‖τ x y‖≤1) →\n      let W := ![wave i σ,wave j τ]\n      |iteratedFDeriv ℝ 2 (thermal F t p R ρ A) 0 W - iteratedFDeriv ℝ 2 (draft α T q) 0 W| ≤\n        (Fintype.card (Site c):ℝ)*Θ*Λ*Real.exp (-γ*c.val)",
-     "conclusion": "`FiniteBound` ties the abstract `alpha` to the second derivative of `thermal` against `draft alpha`, up to an exponentially small error.",
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Level/Transition.lean#L158-L158",
+     "snippet": "  let a0 := profitable (medalCue M'' r.penalty Y'); let α := alphaPay i a0; let F := G.slopeConstant*Real.log X.L.val",
+     "conclusion": "The stage α is defined as `alphaPay i (profitable (medalCue ...))`, α_b of the one-loop block kernel.",
      "proof_context": {
-      "declaration": "YM.Precision.FiniteBound",
+      "declaration": "YM.Stationary.transition_cap",
       "lines": [
-       62,
-       71
+       93,
+       182
       ],
-      "conclusion": "`FiniteBound` ties the abstract `alpha` to the second derivative of `thermal` against `draft alpha`, up to an exponentially small error."
+      "conclusion": "The stage α is defined as `alphaPay i (profitable (medalCue ...))`, α_b of the one-loop block kernel."
      }
     }
    ],
-   "note": "alphaPay gives alpha_b(Y) and its [t^2] extraction through `speedy _ 2`. The defining identity alpha_{N,m}=alpha_b(Y^blk_{N,m}) is not stated: `Kin.alpha` is a field linked to the thermal kernel only through `FiniteBound`.",
+   "note": "[L] defines the extraction α_b as YM.Stationary.alphaPay, with [t²] taken through `leapTip`/`speedy`. YM.Stationary.transition_cap sets the stage α to alphaPay of the block kernel `profitable (medalCue ...)`. The difference: the series stores this α as the field Kin.alpha, and only `FiniteBound` relates it to the thermal kernel.",
    "confidence": "medium",
    "verification": {
     "batch": "D12",
@@ -12409,7 +12448,7 @@
     "mapper": "hasPart",
     "verifier": "hasPart",
     "agreed": true,
-    "source": "mapper+verifier",
+    "source": "mapper+verifier+rereview",
     "complete": true,
     "s5": {
      "how": "sweep agreed",
@@ -12418,10 +12457,10 @@
      "was": "hasPart"
     },
     "rereview": {
-     "kind": "kept",
+     "kind": "rejudged",
      "from": "hasPart",
      "source": "re-judged after a second independent review (whole class: blind opus judge, opus ruling on disagreement)",
-     "why": "the blind judge agreed on the class"
+     "why": "X says α_{N,m}=α_b(Y^blk) is not stated, but transition_cap line 158 defines it that way."
     }
    }
   },
@@ -15609,30 +15648,68 @@
    "context": "text",
    "enclosing": null,
    "kind": "display",
-   "relation": "closeMatch",
-   "class": "Faithful",
+   "relation": "hasPart",
+   "class": "Partial",
    "ends": [
     {
-     "decl": "YM.Extraction.Gaps.someFine",
+     "decl": "YM.Lattice.separation",
+     "file": "YM/Lattice/Site.lean",
+     "lines": [
+      81,
+      81
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Lattice/Site.lean#L81-L81",
+     "snippet": "def separation (x y : Site n) := pdist (x-y)",
+     "conclusion": "`separation x y` is the torus max-distance of two sites, `pdist (x-y)`, with `pdist` the sup over axes of the minimal-absolute lift (`lift`), which equals the minimum over lattice translates of the sup norm.",
+     "proof_context": {
+      "declaration": "YM.Lattice.separation",
+      "lines": [
+       81,
+       81
+      ],
+      "conclusion": "`separation x y` is the torus max-distance of two sites, `pdist (x-y)`, with `pdist` the sup over axes of the minimal-absolute lift (`lift`), which equals the minimum over lattice translates of the sup norm."
+     }
+    },
+    {
+     "decl": "YM.Lattice.pdist",
+     "file": "YM/Lattice/Site.lean",
+     "lines": [
+      78,
+      78
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Lattice/Site.lean#L78-L78",
+     "snippet": "def pdist (x : Site n) := Finset.univ.sup fun i : Axis => (lift x i).natAbs",
+     "conclusion": "`pdist` takes the coordinatewise minimal-absolute lift in `ZMod n` and then the sup of absolute values, the inner `min_z |.|_infty`.",
+     "proof_context": {
+      "declaration": "YM.Lattice.pdist",
+      "lines": [
+       78,
+       78
+      ],
+      "conclusion": "`pdist` takes the coordinatewise minimal-absolute lift in `ZMod n` and then the sup of absolute values, the inner `min_z |.|_infty`."
+     }
+    },
+    {
+     "decl": "YM.Extraction.Gaps.gridSeparation",
      "file": "YM/Extraction/Gaps.lean",
      "lines": [
-      28,
-      29
+      151,
+      152
      ],
-     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extraction/Gaps.lean#L28-L29",
-     "snippet": "def someFine {n : ℕ} (p : ℕ) (s : ℝ) (x : Points n) := ∀ i j, i≠j → ∃ a,\n    off S p (distances x i j a) s",
-     "conclusion": "someFine p s x: for every pair i != j some axis a has physical coordinate difference at distance at least s from every multiple of the period length, i.e. min over pairs of the torus sup-distance is at least s; allFine requires this on every axis.",
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extraction/Gaps.lean#L151-L152",
+     "snippet": "lemma gridSeparation {p N : ℕ} {u : Fin n → Cover} (x : Fin n → Site (S.side N p)) (h : x = wrap _ ∘ u) {r : ℝ}\n    (he : someFine S p r (tag (S.a N) u)) : ∀ i j, i≠j → r ≤ S.a N * separation (x j) (x i) := by",
+     "conclusion": "A lower bound `r <= S.a N * separation (x j) (x i)` for every pair `i != j` is the physical-unit, all-pairs use of the separation.",
      "proof_context": {
-      "declaration": "YM.Extraction.Gaps.someFine",
+      "declaration": "YM.Extraction.Gaps.gridSeparation",
       "lines": [
-       28,
-       29
+       151,
+       158
       ],
-      "conclusion": "someFine p s x: for every pair i != j some axis a has physical coordinate difference at distance at least s from every multiple of the period length, i.e. min over pairs of the torus sup-distance is at least s; allFine requires this on every axis."
+      "conclusion": "A lower bound `r <= S.a N * separation (x j) (x i)` for every pair `i != j` is the physical-unit, all-pairs use of the separation."
      }
     }
    ],
-   "note": "[L] uses the torus separation only through the threshold predicate YM.Extraction.Gaps.someFine, in physical units. For all pairs i != j it asks for an axis whose periodic distance is at least s, which is equivalent to sep_tor >= s. The lattice-unit pairwise distance YM.Lattice.separation (pdist of the difference) is related to it by Gaps.gridSeparation. [L] has no named quantity for the minimum over pairs.",
+   "note": "`separation` is the pairwise torus max-distance in lattice units, the inner minimum over z; the minimum over pairs i != j, the factor a_N and the value +infinity for one slot are not a named quantity in [L].",
    "confidence": "medium",
    "verification": {
     "batch": "D14-1",
@@ -15647,7 +15724,7 @@
     "disagreement": "class Partial vs Faithful",
     "judge": "hasPart",
     "ruling": "mapper",
-    "source": "judge+rereview",
+    "source": "judge",
     "complete": true,
     "s5": {
      "how": "sweep agreed",
@@ -15656,10 +15733,10 @@
      "was": "hasPart"
     },
     "rereview": {
-     "kind": "rejudged",
+     "kind": "kept",
      "from": "hasPart",
      "source": "re-judged after a second independent review (whole class: blind opus judge, opus ruling on disagreement)",
-     "why": "Because the per-axis minima over translates commute with the maximum over axes, someFine is exactly the condition sep_tor >= s, an equivalent packaging of the display, not just a part of it."
+     "why": "the blind judge agreed on the class"
     }
    }
   },
@@ -17605,28 +17682,9 @@
    "context": "text",
    "enclosing": null,
    "kind": "display",
-   "relation": "narrowMatch",
-   "class": "Deviates",
+   "relation": "hasPart",
+   "class": "Partial",
    "ends": [
-    {
-     "decl": "YM.Cells.Columns.Trials.cumulant",
-     "file": "YM/Cells/Corrected.lean",
-     "lines": [
-      84,
-      86
-     ],
-     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Cells/Corrected.lean#L84-L86",
-     "snippet": "def cumulant (k : ℕ) (i c s t) := (standard C).useAt (standard C)\n  (points ![Z.tested k i s, Z.tested k i t])\n    ![⟨d,X.basis (names (X := X) i c s)⟩,⟨d,X.basis (names (X := X) i c t)⟩] - Z.singleton k i c s * Z.singleton k i c t",
-     "conclusion": "The pair cumulant is defined as the pair moment minus the product of the two singleton means.",
-     "proof_context": {
-      "declaration": "YM.Cells.Columns.Trials.cumulant",
-      "lines": [
-       84,
-       86
-      ],
-      "conclusion": "The pair cumulant is defined as the pair moment minus the product of the two singleton means."
-     }
-    },
     {
      "decl": "YM.Push.Corrected.Tests.cumulant",
      "file": "YM/Push/CORRECTED_COLUMNS/Program.lean",
@@ -17636,18 +17694,37 @@
      ],
      "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/CORRECTED_COLUMNS/Program.lean#L64-L66",
      "snippet": "def cumulant (k : ℕ) (i : Row X) (c : AxisX X) : Marks.Algebra (Mark X i) :=\n  Poly.inject fun v => (∑ s : Mark X i, if v.val={s} then Y.one k i c s else 0) +\n    ∑ s : Mark X i, ∑ t : Mark X i, if s<t ∧ v.val={s,t} then Y.pair k i c s t else 0",
-     "conclusion": "The cumulant mark polynomial has singleton coefficients `one` and pair coefficients `pair` (moment minus product of means) and no other modes.",
+     "conclusion": "`cumulant` is the mark polynomial with singleton coefficients `one` and pair coefficients `pair`, and no other modes.",
      "proof_context": {
       "declaration": "YM.Push.Corrected.Tests.cumulant",
       "lines": [
        64,
        66
       ],
-      "conclusion": "The cumulant mark polynomial has singleton coefficients `one` and pair coefficients `pair` (moment minus product of means) and no other modes."
+      "conclusion": "`cumulant` is the mark polynomial with singleton coefficients `one` and pair coefficients `pair`, and no other modes."
+     }
+    },
+    {
+     "decl": "YM.Push.Corrected.Tests.pair",
+     "file": "YM/Push/CORRECTED_COLUMNS/Program.lean",
+     "lines": [
+      61,
+      62
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/CORRECTED_COLUMNS/Program.lean#L61-L62",
+     "snippet": "def pair (k : ℕ) (i : Row X) (c : AxisX X) (s t : Mark X i) := (standard C).useAt (standard C)\n  (points ![Y.reads k i s, Y.reads k i t]) ![⟨d,label X i c s⟩,⟨d,label X i c t⟩] - Y.one k i c s * Y.one k i c t",
+     "conclusion": "`pair k i c s t` is the two-point moment minus the product `one s * one t`, the connected pair moment.",
+     "proof_context": {
+      "declaration": "YM.Push.Corrected.Tests.pair",
+      "lines": [
+       61,
+       62
+      ],
+      "conclusion": "`pair k i c s t` is the two-point moment minus the product `one s * one t`, the connected pair moment."
      }
     }
    ],
-   "note": "[L] has only the two-slot case. Tests.cumulant and Columns.Trials.cumulant define the singleton means and the connected pair moment directly as definitions, not as coefficients of log G^Max. The general partition formula with weights (-1)^{|P|-1}(|P|-1)! is absent.",
+   "note": "The cases |I| = 1 and |I| = 2 of the formula are present: the singleton moment and the pair moment minus the product of the means. The general partition sum with weights (-1)^(|P|-1)(|P|-1)! is not written; [L] determines C^Max for any arity only through `Expands`.",
    "confidence": "medium",
    "verification": {
     "batch": "D14-2",
@@ -17658,7 +17735,7 @@
     "mapper": "hasPart",
     "verifier": "hasPart",
     "agreed": true,
-    "source": "mapper+verifier+rereview",
+    "source": "mapper+verifier",
     "complete": true,
     "s5": {
      "how": "sweep agreed",
@@ -17667,10 +17744,10 @@
      "was": "hasPart"
     },
     "rereview": {
-     "kind": "rejudged",
+     "kind": "kept",
      "from": "hasPart",
      "source": "re-judged after a second independent review (whole class: blind opus judge, opus ruling on disagreement)",
-     "why": "[L] gives a special case (arity at most two) of a general formula, which is a narrower fact, rather than one part of a conjunction."
+     "why": "the blind judge agreed on the class"
     }
    }
   },
@@ -20898,49 +20975,49 @@
    "context": "statement",
    "enclosing": "Lemma 18.3",
    "kind": "display",
-   "relation": "closeMatch",
-   "class": "Faithful",
+   "relation": "hasPart",
+   "class": "Partial",
    "ends": [
     {
      "decl": "YM.Next.UVStress.travels_jet",
      "file": "YM/Next/UV_STRESS/Focus.lean",
      "lines": [
       183,
-      196
+      189
      ],
-     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/UV_STRESS/Focus.lean#L183-L196",
-     "snippet": "lemma travels_jet (H : S.Hierarchy) (h : W.Derivatives S) (L : (Bel C.book).Hierarchy) (hp : V.Derivatives (Bel C.book))\n    (X : Scaling S) (ht : Approaches (path X) (isoPanel X)) (v : ℕ → Ribbon (Bel C.book) t) (x : Ribbon (Bel C.book) t)\n    (hv : ∀ i, Tendsto (fun k => v k i) atTop (𝓝 (x i)))\n    (j : ℕ) (s : Set (Points n)) (hs : IsCompact s) (hu : s ⊆ conf n) (ε : ℝ) (he : 0<ε) :\n    ∀ᶠ k in atTop, ∀ y∈s,\n      ‖iteratedFDeriv ℝ j (tested (X.r k) (isoPanel X k) (hang t (v k))) y - iteratedFDeriv ℝ j (disc (hang t x)) y‖ ≤ ε := by\n  filter_upwards [(closed_path H h L hp X ht n).jets (show Travels n X _ from ⟨t,v,x,hv,rfl⟩) s hs hu j he] with k hk y hy\n  specialize hk y hy\n  -- symmetry/derivative closure is inside conf\n  have hh := ((smoothZoom H.smooth (panels (isoPanel X k) ∘ (hang t (v k))) (X.positive k)) _ (hu hy)).contDiffAt\n    ((conf_open _).mem_nhds (hu hy))\n  have hF := cont_disc L (hang t x) (hu hy)\n  rw [← iteratedFDeriv_sub_apply (show ContDiffAt ℝ (j : WithTop ℕ∞) (tested (X.r k) (isoPanel X k) (hang t (v k))) y from\n    hh.of_le (WithTop.coe_le_coe.mpr le_top)) (hF.of_le (WithTop.coe_le_coe.mpr le_top))]; exact hk",
-     "conclusion": "For a scaling with Approaches, labels v_k→x and compact s in the configuration space, the j-th derivative of tested(r_k, U_k, v_k) minus that of the free correlation is eventually at most epsilon uniformly on s.",
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/UV_STRESS/Focus.lean#L183-L189",
+     "snippet": "lemma travels_jet (H : S.Hierarchy) (h : W.Derivatives S) (L : (Bel C.book).Hierarchy) (hp : V.Derivatives (Bel C.book))\n    (X : Scaling S) (ht : Approaches (path X) (isoPanel X)) (v : ℕ → Ribbon (Bel C.book) t) (x : Ribbon (Bel C.book) t)\n    (hv : ∀ i, Tendsto (fun k => v k i) atTop (𝓝 (x i)))\n    (j : ℕ) (s : Set (Points n)) (hs : IsCompact s) (hu : s ⊆ conf n) (ε : ℝ) (he : 0<ε) :\n    ∀ᶠ k in atTop, ∀ y∈s,\n      ‖iteratedFDeriv ℝ j (tested (X.r k) (isoPanel X k) (hang t (v k))) y - iteratedFDeriv ℝ j (disc (hang t x)) y‖ ≤ ε := by\n  filter_upwards [(closed_path H h L hp X ht n).jets (show Travels n X _ from ⟨t,v,x,hv,rfl⟩) s hs hu j he] with k hk y hy",
+     "conclusion": "For a scaling `X` satisfying `Approaches`, tags `v_k → x` and a compact `s ⊆ conf n`, every fixed jet of the rescaled correlation at `r_k y` is eventually within `ε` of the Maxwell one, uniformly on `s`.",
      "proof_context": {
       "declaration": "YM.Next.UVStress.travels_jet",
       "lines": [
        183,
        196
       ],
-      "conclusion": "For a scaling with Approaches, labels v_k→x and compact s in the configuration space, the j-th derivative of tested(r_k, U_k, v_k) minus that of the free correlation is eventually at most epsilon uniformly on s."
+      "conclusion": "For a scaling `X` satisfying `Approaches`, tags `v_k → x` and a compact `s ⊆ conf n`, every fixed jet of the rescaled correlation at `r_k y` is eventually within `ε` of the Maxwell one, uniformly on `s`."
      }
     },
     {
-     "decl": "YM.MergeProof.East.pays_sky",
-     "file": "YM/TraceExtension/Prom/Zoom/Running.lean",
+     "decl": "YM.Next.UVStress.comparison_jets",
+     "file": "YM/Next/UV_STRESS/Focus.lean",
      "lines": [
-      25,
-      31
+      208,
+      212
      ],
-     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Prom/Zoom/Running.lean#L25-L31",
-     "snippet": "theorem pays_sky (hG:G.Simple)(hX: Scrim C W u ψ φ δ (fly C.path.levels) r L) {z:ℕ →ℝ}\n   (hZ:∀ i j, i≤j→ generator G i≤z j) (h : ∀ d,FiresSky B H O J d (z d))(hD:DimAbove S) (𝓛:Ultrafilter (ℕ×ℕ))(hℓ:(𝓛:Filter _)≤ F.fuse) (s:ℕ→ℝ)(hS:Tendsto s atTop (𝓝 0))(hp:∀ i,0<s i): ∃ f:ℕ→ℕ,StrictMono f ∧ ∃ X:Scaling S,X.r=s ∘ f ∧ StarPath F a X hs 𝓛:= by\n   obtain ⟨v,V,hF,h',hκ,hV⟩:= wakesSky B H O J F a P hs.smooth he hG hX hZ h s hS hp\n   let X:Zoom:=⟨s∘v,(fun _=> hp _),h', hS.comp hF.tendsto_atTop⟩\n   obtain ⟨Y,hY,hA,hu,hZ⟩:= dockedSky hs P a H X V (fun i=> (hV i).1) (fun i=> (hV i).2) 𝓛 hℓ hD\n   have hr:Y.r=s ∘ v:= congr_arg Zoom.r hY\n   exact ⟨v,hF,Y,hr,⟨hA,hu,V,hκ,fun i=> ⟨(hV i).1,(hV i).2.trans (congr_fun hr i).symm⟩, hZ⟩⟩",
-     "conclusion": "Every positive null sequence s has a strictly increasing f and a scaling X with X.r=s∘f satisfying StarPath, including Approaches.",
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/UV_STRESS/Focus.lean#L208-L212",
+     "snippet": "lemma comparison_jets (H : S.Hierarchy) (h : W.Derivatives S) (L : (Bel C.book).Hierarchy) (hp : V.Derivatives (Bel C.book))\n    (X : Scaling S) (ht : Approaches (path X) (isoPanel X)) (N d m : ℕ) (R : ℝ) (hr : 0<R) : X.jets N d m R := by\n  intro n _ j _ v hv ε he\n  exact travels_jet H h L hp X ht (t:=fun i => (v i).1) (fun _ i => (v i).2) (fun i => (v i).2)\n    (fun _ => tendsto_const_nhds) j _ (window_closed ..) (fun _ h => spaced_conf (inv_pos.mpr hr) h.1) ε he",
+     "conclusion": "From `Approaches`, `X.jets N d m R` holds: the jet comparison is uniform on the window of `Conf_n`.",
      "proof_context": {
-      "declaration": "YM.MergeProof.East.pays_sky",
+      "declaration": "YM.Next.UVStress.comparison_jets",
       "lines": [
-       25,
-       31
+       208,
+       212
       ],
-      "conclusion": "Every positive null sequence s has a strictly increasing f and a scaling X with X.r=s∘f satisfying StarPath, including Approaches."
+      "conclusion": "From `Approaches`, `X.jets N d m R` holds: the jet comparison is uniform on the window of `Conf_n`."
      }
     }
    ],
-   "note": "travels_jet (Focus.lean) carries the display for all jet orders, applied along the subsequence and scaling from pays_sky, which supplies Approaches. [L] evaluates the correlation at r_i x itself, not at the rounded grid points r_i x^(i). The rounding error vanishes uniformly by the first-jet convergence.",
+   "note": "[L] states the uniform comparison for the rescaled continuum correlation at r_k y of a compact set, assuming `Approaches`; the convergence of lattice correlations at the rounded points r_i x^(i) is not stated.",
    "confidence": "medium",
    "verification": {
     "batch": "D18",
@@ -20955,7 +21032,7 @@
     "disagreement": "class Partial vs Faithful",
     "judge": "hasPart",
     "ruling": "mapper",
-    "source": "judge+rereview",
+    "source": "judge",
     "complete": true,
     "s5": {
      "how": "sweep agreed",
@@ -20964,10 +21041,10 @@
      "was": "hasPart"
     },
     "rereview": {
-     "kind": "rejudged",
+     "kind": "kept",
      "from": "hasPart",
      "source": "re-judged after a second independent review (whole class: blind opus judge, opus ruling on disagreement)",
-     "why": "The rounding to x^(i) is a nameable difference in a uniformly continuous evaluation, not a missing part of the comparison, and pays_sky supplies the Approaches hypothesis."
+     "why": "the blind judge agreed on the class"
     }
    }
   },
@@ -21754,8 +21831,8 @@
    "context": "text",
    "enclosing": null,
    "kind": "display",
-   "relation": "closeMatch",
-   "class": "Faithful",
+   "relation": "hasPart",
+   "class": "Partial",
    "ends": [
     {
      "decl": "YM.Trace.Det.marke",
@@ -21766,52 +21843,33 @@
      ],
      "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Det/Port.lean#L62-L62",
      "snippet": "def marke (p:Clip)(R:PathData G)(μ:ℝ)(U:Config G f):= Real.log (stock p R μ U).det/2 - Real.log (ammo μ U).det",
-     "conclusion": "marke = log det(flare + mail mail^T + mu^2 I)/2 - log det(ammo mu): the regulated Gamma_mu.",
+     "conclusion": "`marke p R μ U = log det (stock p R μ U) / 2 - log det (ammo μ U)`, i.e. Γ_μ.",
      "proof_context": {
       "declaration": "YM.Trace.Det.marke",
       "lines": [
        62,
        62
       ],
-      "conclusion": "marke = log det(flare + mail mail^T + mu^2 I)/2 - log det(ammo mu): the regulated Gamma_mu."
+      "conclusion": "`marke p R μ U = log det (stock p R μ U) / 2 - log det (ammo μ U)`, i.e. Γ_μ."
      }
     },
     {
-     "decl": "YM.Trace.Loft.ridge",
-     "file": "YM/TraceExtension/Loft/Fluent.lean",
+     "decl": "YM.Trace.Det.stock",
+     "file": "YM/TraceExtension/Det/Port.lean",
      "lines": [
-      9,
-      9
+      61,
+      61
      ],
-     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Loft/Fluent.lean#L9-L9",
-     "snippet": "def ridge (p:Clip)(M:PathData G)(μ:ℝ)(f:Side):= suite fun d i=> yard d i q (marke p M μ∘ input G f)",
-     "conclusion": "ridge = suite over d != i of the volume-normalised coefficient yard of marke: R_Lambda(mu) = Q(Gamma_mu).",
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Det/Port.lean#L61-L61",
+     "snippet": "def stock (p:Clip)(R:PathData G)(μ:ℝ)(U:Config G f):=flare p R U+mail U*(mail U)ᵀ+μ^2 • (1:Funds _)",
+     "conclusion": "`stock = flare + mail * mailᵀ + μ^2 • 1`, the matrix H + d d^* + μ^2 I.",
      "proof_context": {
-      "declaration": "YM.Trace.Loft.ridge",
+      "declaration": "YM.Trace.Det.stock",
       "lines": [
-       9,
-       9
+       61,
+       61
       ],
-      "conclusion": "ridge = suite over d != i of the volume-normalised coefficient yard of marke: R_Lambda(mu) = Q(Gamma_mu)."
-     }
-    },
-    {
-     "decl": "YM.Trace.Loft.ridge_deriv",
-     "file": "YM/TraceExtension/Loft/Fluent.lean",
-     "lines": [
-      47,
-      47
-     ],
-     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Loft/Fluent.lean#L47-L47",
-     "snippet": "lemma ridge_deriv (hs:M.Bounds p σ C D)(hm:0 < μ)(h:(Det.stock p M μ (1:Config G f)).det ≠ 0): HasDerivAt (fun t:ℝ=> ridge q p M t f) (-(μ:ℂ)*suite (fun d i=>umbra d i q p M μ f)) μ:=by",
-     "conclusion": "d/dmu ridge = -mu * suite umbra, so -mu R' = mu^2 suite umbra.",
-     "proof_context": {
-      "declaration": "YM.Trace.Loft.ridge_deriv",
-      "lines": [
-       47,
-       60
-      ],
-      "conclusion": "d/dmu ridge = -mu * suite umbra, so -mu R' = mu^2 suite umbra."
+      "conclusion": "`stock = flare + mail * mailᵀ + μ^2 • 1`, the matrix H + d d^* + μ^2 I."
      }
     },
     {
@@ -21823,18 +21881,18 @@
      ],
      "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Loft/Awake.lean#L10-L10",
      "snippet": "abbrev seaD (p:Clip)(R:PathData G)(q:G.ColorIndex)(f:Side)(μ:ℝ):ℂ:=(μ:ℂ)^(2:ℕ)*suite (fun d i=> umbra d i q p R μ f)",
-     "conclusion": "seaD mu = mu^2 * suite umbra, the quantity D_Lambda(mu).",
+     "conclusion": "`seaD μ = μ^2 * suite (umbra ..)`, the μ^2-weighted resolvent-trace coefficient that equals -μ R'(μ) after differentiating Γ_μ.",
      "proof_context": {
       "declaration": "YM.Trace.Loft.seaD",
       "lines": [
        10,
        10
       ],
-      "conclusion": "seaD mu = mu^2 * suite umbra, the quantity D_Lambda(mu)."
+      "conclusion": "`seaD μ = μ^2 * suite (umbra ..)`, the μ^2-weighted resolvent-trace coefficient that equals -μ R'(μ) after differentiating Γ_μ."
      }
     }
    ],
-   "note": "[L] defines Gamma_mu as Det.marke, R_Lambda as Loft.ridge (Q applied to marke) and D_Lambda as Loft.seaD. The real part in Q is taken later (.re in coastMark), and D_Lambda is defined as mu^2 suite umbra, with -mu R' = D_Lambda proved by Loft.ridge_deriv rather than taken as the definition.",
+   "note": "Γ_μ is the definition marke, with ammo for d^*d+μ^2. R_Λ(μ) = Q(Γ_μ) is not defined as such in Lean, and D_Λ = -μR_Λ' appears only through the differentiated form seaD with the resolvent traces in umbra.",
    "confidence": "medium",
    "verification": {
     "batch": "D18",
@@ -21845,7 +21903,7 @@
     "mapper": "hasPart",
     "verifier": "hasPart",
     "agreed": true,
-    "source": "mapper+verifier+rereview",
+    "source": "mapper+verifier",
     "complete": true,
     "s5": {
      "how": "sweep agreed",
@@ -21854,10 +21912,10 @@
      "was": "hasPart"
     },
     "rereview": {
-     "kind": "rejudged",
+     "kind": "kept",
      "from": "hasPart",
      "source": "re-judged after a second independent review (whole class: blind opus judge, opus ruling on disagreement)",
-     "why": "Loft.ridge in Fluent.lean defines R_Lambda = Q(Gamma_mu) and ridge_deriv ties -mu R' to seaD, so the claim that R_Lambda is not defined in [L] is wrong."
+     "why": "the blind judge agreed on the class"
     }
    }
   },

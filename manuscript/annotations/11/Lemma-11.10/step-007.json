@@ -1,9 +1,9 @@
 {
   "id": "Lemma 11.10 step 7",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "relatedMatch",
-  "note": "[L] keeps the derivative of y = `rind` as the abstract `fderiv` of `drossY` and never expands it into -G (d A^rem) G C + G dC by the product and inverse rules.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "In `drift_tip` [L] takes the mixed trace `hatchTrace` of `carrierY`, built from `Film.back` of the operator and `Film.pay` with the source film, so the expansion −G(∂A)G C + G ∂C comes from the film product and inverse rules (`Ticket.back` shows they are the true derivatives). Difference: written as Bloch-film insertions at momenta, not as a derivative in v_i.",
   "subject": [
     {
       "location": {
@@ -29,36 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Stationary.lean_drift",
-        "module": "YM.Next.STATIONARY.Joint.Drift",
+        "declaration": "YM.Stationary.Film.back",
+        "module": "YM.Next.STATIONARY.Loops.Syntax",
         "lines": [
-          547,
-          547
+          214,
+          217
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Stationary.lean_drift"
+            "id": "YM.Stationary.Film.back"
           },
           "snippet": {
-            "text": "  have hRm : fderiv ℝ Rm 0=fderiv ℝ Y 0 := stem_pay t h hk hy (M:=fun z => rind S t 1 (V' z) (W' z) p R μ) ((rind_diff hy t hp W' hw hw' V' hv' (by simp [V']) hi ht).differentiableAt (by simp))",
-            "line": 547,
+            "text": "def back (F : Film ι α α) : Film ι α α where\n  tab q := F.coupon q\n  spot := F.vSpot\n  arch i j p q r := -((F.vSpot j q (r+p)*F.spot i p r + F.vSpot i p (r+q)*F.spot j q r + F.coupon (r+(p+q))*F.arch i j p q r)*F.coupon r)",
+            "line": 214,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Joint/Drift.lean",
-            "fragment": "L547-L547"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Loops/Syntax.lean",
+            "fragment": "L214-L217"
           },
           "proof_context": {
-            "declaration": "YM.Stationary.lean_drift",
+            "declaration": "YM.Stationary.Film.back",
             "lines": [
-              498,
-              589
+              214,
+              217
             ],
-            "conclusion": "`hRm`: the derivative at 0 of the trace vector Rm along the stationary curve equals the derivative of `drossY` along the tangent, by `stem_pay`."
+            "conclusion": "Film product and inverse rules: the spot of `F.pay G` is F_v G + F G_v and the spot of `F.back` is −F^{-1} F_v F^{-1}, with the corresponding mixed (arch) rules."
           }
         }
       }
@@ -68,36 +68,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Stationary.rind",
-        "module": "YM.Next.STATIONARY.Joint.Drift",
+        "declaration": "YM.Stationary.Ticket.back",
+        "module": "YM.Next.STATIONARY.Loops.Syntax",
         "lines": [
-          102,
-          104
+          268,
+          272
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Stationary.rind"
+            "id": "YM.Stationary.Ticket.back"
           },
           "snippet": {
-            "text": "def rind (p : Clip) (R : PathData G) (μ : ℝ) : Link G c :=\n  let A := legion S t p R μ K V U\n  ∑ i, ∑ j, (A⁻¹ i j) • (lapel S t K U j i)",
-            "line": 102,
+            "text": "lemma back (h : Ticket K W) (he : IsUnit (W 0).det) : Ticket K.back (fun z => (W z)⁻¹) := by\n  let X := fun z => (W z)⁻¹\n  let M := (cardM W)⁻¹\n  have ht : Jaunt M K.coupon 0 := h.tab.backway (cash_safe he)\n  have hx (i) (p : Site m) (q) (hp : rolls (mon p) q) : Jaunt (seat X (relay p i)) (K.vSpot i q) p := by",
+            "line": 268,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Joint/Drift.lean",
-            "fragment": "L102-L104"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Loops/Syntax.lean",
+            "fragment": "L268-L272"
           },
           "proof_context": {
-            "declaration": "YM.Stationary.rind",
+            "declaration": "YM.Stationary.Ticket.back",
             "lines": [
-              102,
-              104
+              268,
+              279
             ],
-            "conclusion": "`rind` is the vector of traces y_lambda = sum_ij (A^-1)_ij (lapel)_ji = tr(G_mu C_lambda)."
+            "conclusion": "These film rules are the actual derivatives of the inverse operator."
           }
         }
       }
@@ -107,36 +107,75 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Stationary.lean_drift",
-        "module": "YM.Next.STATIONARY.Joint.Drift",
+        "declaration": "YM.Stationary.carrierY",
+        "module": "YM.Next.STATIONARY.Films.Contact",
         "lines": [
-          585,
-          585
+          181,
+          181
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Stationary.lean_drift"
+            "id": "YM.Stationary.carrierY"
           },
           "snippet": {
-            "text": "  have heT z : ((K z)⁻¹ * Gm z).trace=dotProduct (B z) (Rm z) := (earn_ad S t 1 (V z) (X z) p R μ (B z)).symm",
-            "line": 585,
+            "text": "def carrierY (k : ℝ) (T : Spark (Loc G 1) G P) := (seamLeft E k T).pay (commandY E)",
+            "line": 181,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Joint/Drift.lean",
-            "fragment": "L585-L585"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Films/Contact.lean",
+            "fragment": "L181-L181"
           },
           "proof_context": {
-            "declaration": "YM.Stationary.lean_drift",
+            "declaration": "YM.Stationary.carrierY",
             "lines": [
-              498,
-              589
+              181,
+              181
             ],
-            "conclusion": "`heT` writes tr(K^-1 Gm) as dotProduct B Rm."
+            "conclusion": "The carrier film is the inverse film `(legionF ...).back`, sandwiched, paid against the source film `commandY`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.hatchTrace",
+        "module": "YM.Next.STATIONARY.Films.Contact",
+        "lines": [
+          510,
+          510
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.hatchTrace"
+          },
+          "snippet": {
+            "text": "def hatchTrace (F : Film ι β β) (i j : ι) (p q : Momentum) := (F.arch i j (-p) p q).trace",
+            "line": 510,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Films/Contact.lean",
+            "fragment": "L510-L510"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.hatchTrace",
+            "lines": [
+              510,
+              510
+            ],
+            "conclusion": "The mixed insertion trace `(arch i j (-p) p q).trace` used by `star_analytic`/`drift_tip`."
           }
         }
       }
@@ -151,7 +190,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, a judge ruled; a re-rating agent agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, a judge ruled; a re-rating agent agreed; re-judged after a second independent review, which changed it from relatedMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

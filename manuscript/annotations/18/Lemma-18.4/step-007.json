@@ -1,9 +1,9 @@
 {
   "id": "Lemma 18.4 step 7",
   "kind": "proof_step",
-  "status": "formalized",
-  "relation": "exactMatch",
-  "note": "[L] proves the cancellation as Lamp.turn_tank and applies it through Lamp.arcPay to each contact term in Lamp.saga. The first term is handled by Lamp.vanish_r with cob_abs, and the correction in h tends to zero by Loft.smooth_u in Loft.midAwake.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "`saga` h₁-h₄ prove that the contact terms and the correction in 𝔥 vanish in the limit; the linear-in-t coefficient selection, the cancellation of the sums and tr J = Σ δ_a q_a are not in these lines.",
   "subject": [
     {
       "location": {
@@ -46,128 +46,11 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Trace.Lamp.turn_tank",
-        "module": "YM.TraceExtension.Lamp.Code",
-        "lines": [
-          58,
-          68
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Trace.Lamp.turn_tank"
-          },
-          "snippet": {
-            "text": "lemma turn_tank (he:Campus T)(hp:∀ b,Kelly (P b)):\n    ∑ d:Axis,∑ i:Axis,(if d=i then 0 else ∑ b:Axis,∑ a:Axis,Deb (song d i b q (P b) T (coord a,j)))=0:=by\n    let X(d i b:Axis):=P b (coord i,j) (coord i,q) (step d,0)\n    have hZ(d i:Axis): P i (coord d,j) (coord i,q) (step d,0) = -X i d i:= (hp i).inverse _ _ _ _\n    have hv(i:Axis): X i i i=0:=by have he:=hZ i i; change X i i i=-X i i i at he; linear_combination he/2\n    have ht(i:Axis): ∑ d:Axis, (if d=i then 0 else ∑ b:Axis,X b i b)=3*∑ b,X b i b:=by fin_cases i<;>simp [Fin.sum_univ_four]<;> ring\n    let F(d i):= if d=i then 0 else ∑ b:Axis,∑ a:Axis,Deb (song d i b q (P b) T (coord a,j)); let Λ:=Complex.I*tickt T j q\n    have hF(d i:Axis): F d i= Λ*(-2* X d i d-(if d=i then 0 else X i d i)+(if d=i then 0 else ∑ b:Axis,X b i b)):=by\n        unfold F; split_ifs with hh; · subst d;rw[hv]; ring\n        rw [tune_body d i q j hh he hp,hZ]; rfl\n    change ∑ d:Axis,∑ i:Axis,F d i=0; simp_rw[hF,← Finset.mul_sum,sum_add_distrib, Finset.sum_sub_distrib]; simp [Fin.sum_univ_four,hv]; right; ring",
-            "line": 58,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Lamp/Code.lean",
-            "fragment": "L58-L68"
-          },
-          "proof_context": {
-            "declaration": "YM.Trace.Lamp.turn_tank",
-            "lines": [
-              58,
-              68
-            ],
-            "conclusion": "With X(d,i,b) the momentum coefficient, gauge covariance gives the mixed term -X_{iai} and X_{aaa}=0, and the sum of -2X_{aca}-X_{cac}+sum_b X_{bcb} over a != c is zero."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Trace.Lamp.arcPay",
-        "module": "YM.TraceExtension.Lamp.Oct",
-        "lines": [
-          46,
-          63
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Trace.Lamp.arcPay"
-          },
-          "snippet": {
-            "text": "lemma arcPay : Tendsto (fun w=> xup q (fun a=> rill (F w) (Y w a) ∘ input G (g w))) L (𝓝 0):=by\n    apply high_filter; intro v hv\n    have hQ:= Q.mono_left hv; obtain ⟨T,hT⟩:= shine v h; choose K hK using (fun a=> flamed v (ht a) (fun w=> hp w a)); have ha(a): Kelly (K a) := know hQ (fun w=>hp w a) hs (ht a) (hK a)\n    have ht':= shines hQ h hT he hs\n    have hx(d i): Tendsto (fun w=> if d=i then 0 else ∑ b:Axis,lux d i q b (rill (F w) (Y w b) ∘ input G (g w))) (↑v:Filter W) (𝓝 (if d=i then 0 else ∑ b:Axis,∑ a:Loc G 1,Deb (song d i b q (K b) T a))):=by\n       by_cases h0:d=i\n       · simp only[h0,↓reduceIte]; exact tendsto_const_nhds\n       simp only[h0,↓reduceIte]; exact tendsto_finsetSum _ fun b _=>ardor d i b q hQ hT h hs he (hK b) (fun w=>hp w b) (ht b)\n    have hl:= tendsto_finsetSum _ (fun d (_: d∈univ)=> tendsto_finsetSum _ (fun i (_:i∈univ)=> hx d i))\n    suffices H: (∑ d:Axis,∑ i:Axis,(if d=i then 0 else ∑ b:Axis,∑ a:Loc G 1,Deb (song d i b q (K b) T a)))=0 from by rw [H] at hl; exact hl\n    let R(d i j:Axis)(c:G.ColorIndex): ℂ:= ∑ b:Axis,Deb (song d i b q (K b) T (coord j,c))\n    let V(d i:Axis)(c:G.ColorIndex):= if d=i then (0:ℂ) else ∑ b:Axis,∑ j:Axis,Deb (song d i b q (K b) T (coord j,c))\n    have hs: ∀ d i:Axis,(if d=i then (0:ℂ) else ∑ b:Axis,∑ a:Loc G 1,Deb (song d i b q (K b) T a))=∑ c,V d i c :=by\n       intro d i; by_cases hd:d=i; simp [V,hd]\n       simp only[V,hd,↓reduceIte,Fintype.sum_prod_type]; rw [sum_comm (f:=fun c b=> ∑ a:Axis,Deb (song d i b q (K b) T (coord a,c)))]; refine sum_congr rfl fun b _=>?_ ;rw[← Equiv.sum_comp axisEquiv,sum_comm]; rfl\n    simp_rw [hs]\n    have hu(d): (∑ i,∑ c,V d i c)=∑ c,∑ i, V d i c:=sum_comm\n    simp_rw [hu];rw [sum_comm]; exact sum_eq_zero fun i _=> turn_tank q i ht' ha",
-            "line": 46,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Lamp/Oct.lean",
-            "fragment": "L46-L63"
-          },
-          "proof_context": {
-            "declaration": "YM.Trace.Lamp.arcPay",
-            "lines": [
-              46,
-              63
-            ],
-            "conclusion": "The tested read-out xup of every action-variation term rill F (Y) tends to zero (limit via ardor, then turn_tank)."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Trace.Lamp.vanish_r",
-        "module": "YM.TraceExtension.Lamp.Pool",
-        "lines": [
-          41,
-          64
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Trace.Lamp.vanish_r"
-          },
-          "snippet": {
-            "text": "lemma vanish_r (hV: ∀ w, Viz (V w) p (R w) a (fun _=> C) (fun _=> ε w) (ε w))(h:∀ w,Dart.March (V w))(he:Tendsto ε L (𝓝 0))(hε:∀ w,0≤ε w∧ε w≤1)(hh:Flare g R p α A)(ht:0 < α)(ha:0<a)(hp:0≤ C)(hb:0<b)(hμ:∀ w, b ≤ μ w ∧ μ w≤c):\n    Tendsto (fun w=>∑ b:Axis,lux d i q b (sailM p (R w) (μ w) (aroma p (R w) ((V w).Y b 0)))) L (𝓝 0) :=by\n    have hQ:=(hh.house ht hb hμ 2).2.2.1\n    choose B ζ P D hD hF hx hK using hh.tanks\n    let Y(w)(a b):= fun x=> (V w).J a b x; have hr w:=hb.trans_le (hμ w|>.1); have hs(w): (stock p (R w) (μ w) (1:Config G (g w))).det≠0:= (hull_m (hr w) le_rfl (hD w) (hF w) (hx w) (hK w)|>.1.det_pos.ne')\n    let Z(w):= sailM p (R w) (μ w) (f:=g w); let J(w) a b x:= Z w (Y w a b x); let Ξ(w) b:= Z w ((V w).E b 0); let G'(w) b:= sailM p (R w) (μ w) (aroma p (R w) ((V w).Y b 0))\n    have hm(w): Memo (shellB p (R w) (μ w) ∘ input G (g w)) 0:= (gate_shell (hD w) (hr w) (hs w) (Army.powL (v:=id) contDiffAt_id) (input_zero ..)).1\n    have hu(w)(a b:Axis): Traverse (J w a b):= traverse_pay (hD w) (hr w) (hs w) _ ((hV w).sound.heart ..) (polish (V w) (h w) _ _)\n    have H(t b:Axis): Pico (fun _=>0) (fun w=> Y w t b 0 ∘ input G (g w)) 4:=⟨a/5,C,by positivity,hp,fun w=>pea_loom ((hV w).sound.heart t b 0) ((hV w).J ..) hp ha.le⟩\n    have ht(b:Axis): Rose L (fun w=> lux d i q b (G' w b)) (fun w=> -cob d i q (J w b b 0)):=by\n       have ht(a):= orb_debit d i b q Tn (hearth_pk (H a b) hQ) (fun w=> hu w a b) a\n       have hx:= Rose.sumX univ (F:=fun a w=> lux d i q b (elm a (J w a b) 0)) (fun j _=> ht j)\n       have hz:=hearth_hush (V:=fun w=>(V w).E b 0) d i q Tn (show 0<_ from div_pos ha (by norm_num: (0:ℝ)<5)) (fun w=>pea_loom ((hV w).sound.plum b _) ((hV w).E ..) (hε w|>.1) ha.le) (fun i=>(hε i).1) he 1 (fun i=>(hε i).2) zero_le_one b hQ\n       refine Rose.chain (Rose.skip (Eventually.of_forall fun w=>?_)) ((Rose.dec hx hz).chain (Rose.skip (Eventually.of_forall fun w=>?_)))\n       · let K:= ((∑ a:Axis,elm a ((V w).J a b))-(V w).E b) 0\n         change lux _ _ _ _ _= (∑ a:Axis,lux d i q b (elm a (J w a b) 0))-lux d i q b (Ξ w b)\n         rw [show lux d i q b (G' w b)=lux d i q b (Z w K) from congr_arg Deb (funext (fun x=> congr_arg (fun p:ℂ=> ((pitchf (g w):ℂ)⁻¹)^(3:ℕ)*p) (clip_eq i q (stiff ((hV w).sound.fin b 0) (hm w)).symm _ _)))]\n         unfold K; rw[Pi.sub_apply,Finset.sum_apply]; refine pilots d i q b (fun a=> (V w).J a b) (fun a x=>?_) (hm w) ?_\n         · obtain ⟨hb,_⟩:=(hV w).sound.heart a b x;exact hb\n         obtain ⟨hx,_⟩:=(hV w).sound.plum b 0;exact hx\n       simp only [Pi.sub_apply,Pi.zero_apply,sub_zero]; simp\n    have hy:(fun w=> ∑ b:Axis, -cob d i q (J w b b 0))=ᶠ[L] (0:W→ℂ):=by refine Eventually.of_forall fun w=>?_ ; change ∑ b:Axis,-cob d i q (sailM p (R w) (μ w) ((V w).J b b 0)) = 0; rw [sum_neg_distrib,cob_abs d i q (V w) (h w) (hV w).sound (hr w) (hs w) (hD w),neg_zero]\n    have hp':= Rose.chain (Rose.sumX univ (fun i _=> ht i)) (Rose.skip hy)\n    unfold Rose at hp'; rw [sub_zero] at hp'; exact hp'",
-            "line": 41,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Lamp/Pool.lean",
-            "fragment": "L41-L64"
-          },
-          "proof_context": {
-            "declaration": "YM.Trace.Lamp.vanish_r",
-            "lines": [
-              41,
-              64
-            ],
-            "conclusion": "Substituting DS[Y_b] = sum_a nabla_a J_ab - E_b selects cob(J_bb); cob_abs kills the trace sum, and the defect E tends to zero (hearth_hush)."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
         "declaration": "YM.Trace.Lamp.saga",
         "module": "YM.TraceExtension.Lamp.Pious",
         "lines": [
-          97,
-          125
+          116,
+          119
         ]
       },
       "role": "key",
@@ -177,14 +60,14 @@
             "id": "YM.Trace.Lamp.saga"
           },
           "snippet": {
-            "text": "lemma saga {b':ℝ}(Q:Tendsto (fun x=>(g x).val) L atTop)(hG:G.Simple)(h:Scene g V p R a C ε)(H:Flare g R p σ A)(hσ:0<σ) (hM:0<b')(hm:∀ w,b'≤μ' w∧ μ' w≤ c)(hε:Tendsto ε L (𝓝 0)):\n    Rose L (fun w=> xup q (fun b=> lush ((V w).Y b 0) ∘ input G (g w))) (fun w=> (μ' w:ℂ)^ (2:ℕ)*(suite (fun d i=>umbra d i q p (R w) (μ' w) (g w)) + xup q (fun b=>lensW p (R w) (μ' w) b ((V w).Y b 0)))):=by\n    choose B A' N D hp hF ht hs using H.tanks\n    let Y w b:= (V w).Y b 0; let S w:=mainTerm p (R w) (n:=g w); let Z w:= marke p (R w) (μ' w) (f:=g w)\n    let U w:=input G (g w); let A'X w b:= ashore p (R w) (μ' w) (Y w b); let M' w b:= mica p (R w) (μ' w) (stampQ 0) b (f:=g w)\n    have hz(w b):Y w b∈rains G _:= (h.house w).sound.palm b 0; have hu(w b): Cloaked (Y w b):=by obtain ⟨p,h⟩:= hz w b;exact p\n    have he(w):= hM.trans_le (hm w|>.1); have hs'(w):(stock p (R w) (μ' w) (1:Config G (g w))).det≠0:=by have hx:=(H.posit he w);rw[input_zero] at hx;exact hx.det_pos.ne'\n    have hT:= H.house hσ hM hm 1\n    have hc:∀ w b i, Pet Prod.fst 0 (fun z=> Y w b (U w z) i) (a/5) (C* Decay (a/5) 0 i.1) 3:= fun w b i=> pea_rain (hz w b) ((h.house w).Y b _) h.c0 h.vp.le i\n    obtain ⟨T,h',HT⟩:= pipe_w G 3; have hh:= hT.2.2.1; have hv:= hT.2.2.2; have hy:=h.c0; have ha:=h.vp\n    have hR(w:W)(b:Axis):=HT (g w) (Y w b) 0 _ _ (by positivity) hy (hu w b) (hc w b)\n    have hX(b): CodeM (g:=g) (fun _=>0) (fun w=> A'X w b ∘ U w) 1:=by\n        have hc:0≤ T*C:=mul_nonneg h' hy; have hd:0 < a/5/((↑(3:ℕ):ℝ)+1)/( (↑(3:ℕ):ℝ)+2):=by positivity\n        have he: Pella (fun w=>(0:Site (g w))) (fun w=> tidal (Y w b) ∘ U w) 2:=⟨_,_,hd,hc,fun w=>tidal_pay _ (hu w b) (hR w b)⟩\n        exact ashore_budget (he.tada (by norm_num)) hh hv (shoreX_step hh (fun w=> hR w b) (fun w=> hu w b) hd hc)\n    let F(w) b:= sailM p (R w) (μ' w) (aroma p (R w) (Y w b)); let P(w) b:= portage p (R w) (μ' w) b (g w); let X(w) b:= lensW p (R w) (μ' w) b (Y w b); let μV(w):=(μ' w:ℂ)^ (2:ℕ)\n    let J w b:= rill (Z w) (Y w b)∘U w; let M w b:= rill (S w) (M' w b)∘ U w; let E w b:=rill (S w) (A'X w b)∘ U w\n    have hm':DashQ L μV:=by refine ⟨c^2,sq_nonneg _,Eventually.of_forall fun w=>?_⟩; unfold μV; rw[norm_pow,Complex.norm_real,Real.norm_of_nonneg (he w|>.le)]; exact pow_le_pow_left₀ (he w|>.le) (hm w|>.2) _\n    have hk:=knick_path H hσ\n    have h₁: Rose L (fun w=> xup q (J w)) 0:=by unfold Rose; rw [sub_zero]; exact arcPay _ Q (mark_kin H hσ hM hm) hG (fun i=> contours_m (he i) (hp i) (hs' i)) hu (fun b=> ⟨_,C,by exact show 0<a/5 by positivity,h.c0,fun w i=> (hc w b i).tilt le_rfl le_rfl (by decide)⟩)\n    have h₂: Rose L (fun w=> xup q (E w)) 0:=by unfold Rose; rw[sub_zero]; exact arcPay _ Q hk hG (fun i=> contours_main (hp i)) (fun w b=> cloak_shore (hp w) (he w) (hs' w) (hu w b)) hX\n    have h₃: Rose L (fun w=> xup q (M w)) 0:=by unfold Rose; rw[sub_zero]; exact arcPay _ Q hk hG (fun i=> contours_main (hp i)) (fun w b=> cloak_mica (stampQ 0) b (hp w) (he w) (hs' w)) (fun a=> mica_budget (fun w=>(0:Site (g w))) a hh hv)\n    have h₄ : Rose L (fun w=> xup q (F w)) 0:=Rose.chain (suite_hold (F:=fun w d i=> fata d i q (F w)) (H:=fun _ _ _=>0) (fun d i=>by unfold Rose; rw[show (fun _:W=>(0:ℂ))=0 from rfl,sub_zero]; exact vanish_r _ _ q Q h.house h.pad hε h.clip H hσ ha h.c0 hM hm)) (Rose.skip (Eventually.of_forall (fun i=>by dsimp only[suite];simp)))\n    let V' w:=suite fun d i=> umbra d i q p (R w) (μ' w) (g w); have h₅: Rose L (fun w=>xup q (P w)) V':= suite_hold (F:=fun w d i=> fata d i q (P w)) (H:=fun w d i=>umbra d i q p (R w) (μ' w) (g w)) (fun d i=>luxSum d i q Q H hσ hM hm)\n    refine Rose.chain (Rose.skip ?_) (Rose.chain (Rose.inc (Rose.dec (Rose.dec (roseRate (1/2) h₄) h₁) h₂) (scale_select _ hm' (Rose.inc (Rose.inc h₅ h₃) (Rose.const (fun w=> xup q (X w)))))) (Rose.skip ?_))\n    · filter_upwards with w\n      let F'(a:Axis):= lush (Y w a) ∘ U w\n      have hz(d i: Axis): fata d i q F' = (1/2:ℂ)*fata d i q (F w)-fata d i q (J w)-fata d i q (E w)+μV w*(fata d i q (P w)+fata d i q (M w)+fata d i q (X w)):=by\n         unfold fata; simp_rw[ show ∀ b: Axis,lux d i q b (F' b)= _ from fun b=> ultimate d i b q hG (hp w) (he w) (hs' w) (hu w b),sum_add_distrib,Finset.sum_sub_distrib, ← Finset.mul_sum]; rw [sum_add_distrib,sum_add_distrib]",
-            "line": 97,
+            "text": "    have h₁: Rose L (fun w=> xup q (J w)) 0:=by unfold Rose; rw [sub_zero]; exact arcPay _ Q (mark_kin H hσ hM hm) hG (fun i=> contours_m (he i) (hp i) (hs' i)) hu (fun b=> ⟨_,C,by exact show 0<a/5 by positivity,h.c0,fun w i=> (hc w b i).tilt le_rfl le_rfl (by decide)⟩)\n    have h₂: Rose L (fun w=> xup q (E w)) 0:=by unfold Rose; rw[sub_zero]; exact arcPay _ Q hk hG (fun i=> contours_main (hp i)) (fun w b=> cloak_shore (hp w) (he w) (hs' w) (hu w b)) hX\n    have h₃: Rose L (fun w=> xup q (M w)) 0:=by unfold Rose; rw[sub_zero]; exact arcPay _ Q hk hG (fun i=> contours_main (hp i)) (fun w b=> cloak_mica (stampQ 0) b (hp w) (he w) (hs' w)) (fun a=> mica_budget (fun w=>(0:Site (g w))) a hh hv)\n    have h₄ : Rose L (fun w=> xup q (F w)) 0:=Rose.chain (suite_hold (F:=fun w d i=> fata d i q (F w)) (H:=fun _ _ _=>0) (fun d i=>by unfold Rose; rw[show (fun _:W=>(0:ℂ))=0 from rfl,sub_zero]; exact vanish_r _ _ q Q h.house h.pad hε h.clip H hσ ha h.c0 hM hm)) (Rose.skip (Eventually.of_forall (fun i=>by dsimp only[suite];simp)))",
+            "line": 116,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Lamp/Pious.lean",
-            "fragment": "L97-L125"
+            "fragment": "L116-L119"
           },
           "proof_context": {
             "declaration": "YM.Trace.Lamp.saga",
@@ -192,46 +75,7 @@
               97,
               127
             ],
-            "conclusion": "On mu in [b',c] the J (D Gamma), E (DS[Z]) and M terms vanish by arcPay, and the first term vanishes by vanish_r."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Trace.Loft.smooth_u",
-        "module": "YM.TraceExtension.Loft.Leaf",
-        "lines": [
-          24,
-          24
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Trace.Loft.smooth_u"
-          },
-          "snippet": {
-            "text": "lemma smooth_u (d i b:Axis)(hα:0 < α): Tendsto (fun w=> Lamp.cob d i q (lush ((B w).Y b 0) ∘ input G (g w))) L (𝓝 0):=by",
-            "line": 24,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Loft/Leaf.lean",
-            "fragment": "L24-L24"
-          },
-          "proof_context": {
-            "declaration": "YM.Trace.Loft.smooth_u",
-            "lines": [
-              24,
-              34
-            ],
-            "conclusion": "The cob coefficient of lush(Y_b) tends to zero, which gives the vanishing correction in h used in midAwake."
+            "conclusion": "`h₁`-`h₄`: the contact terms and the `1/2·F` correction have `xup` tending to 0 along `L`."
           }
         }
       }
@@ -247,11 +91,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent disagreed and a judge changed it from relatedMatch; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent disagreed and a judge changed it from relatedMatch; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {
-        "kind": "chain"
+        "kind": "direct"
       }
     }
   }

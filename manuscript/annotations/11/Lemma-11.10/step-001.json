@@ -1,9 +1,9 @@
 {
   "id": "Lemma 11.10 step 1",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "Lean carries only the order-two conclusion for the tax vector `taxTone`; the free normal equation giving blockpenalty(I-Q_m W_0)=K_c and the identification a=-K_c are not stated there (the tax is a given object built from the metric).",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Carried by YM.Stationary.tax_birth (symbol of minusTax = -K_c is -rug, rug = d_1^T H d_1) and YM.Stationary.tax_ray (order two); the free normal equation is the field Inputs.dual (mean S * W = 1 - penalty^{-1} K H'), a hypothesis of YM.Stationary.audited, where the first derivative enters as J = -K.",
   "subject": [
     {
       "location": {
@@ -24,6 +24,45 @@
     }
   ],
   "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.tax_birth",
+        "module": "YM.Next.STATIONARY.Films.Contact",
+        "lines": [
+          439,
+          440
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.tax_birth"
+          },
+          "snippet": {
+            "text": "lemma tax_birth (B : Bed) (h : B.metric.safe) (p : Site c) (q : Momentum) (hs : rolls (mon p) q) (v : Phase (Loc G 1)) : minusTax B (tune p v)=tune p (-(rug G B q*ᵥ v)) := by\n  simp only [minusTax,LinearMap.neg_apply,Matrix.mulVecLin_apply,rug_plane _ B h _ _ hs,add_zero]; ext1 i; simp [tune]",
+            "line": 439,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Films/Contact.lean",
+            "fragment": "L439-L440"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.tax_birth",
+            "lines": [
+              439,
+              440
+            ],
+            "conclusion": "minusTax = -K_c acts on Fourier modes as -(rug G B q), with rug = d_1(-p)^T H d_1(p)."
+          }
+        }
+      }
+    },
     {
       "type": "lean",
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
@@ -58,7 +97,7 @@
               223,
               233
             ],
-            "conclusion": "The coefficient vector `taxTone` (the first derivative a = -K_c e_i of the penalty) is `Rays 2`, i.e. of momentum order two."
+            "conclusion": "taxTone = -rug vanishes to order two along rays (Rays 2), via its curl-curl form dcross."
           }
         }
       }
@@ -73,11 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {
-        "kind": "direct"
+        "kind": "chain"
       }
     }
   }

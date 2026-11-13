@@ -1,9 +1,9 @@
 {
   "id": "Lemma 16.5 step 7",
   "kind": "proof_step",
-  "status": "formalized",
-  "relation": "closeMatch",
-  "note": "Carried by MergeProof.Ribbons.quilled: the two per-mark rates are the relayed Note facts hg and he, then combined via pica. Difference: they appear as local Note statements (logarithmic rate with o(1)) inside quilled, not as separate displayed identities.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "`quilled` obtains the two single-mark rates from `plumN` (rate -d for degree d, and degree 4 shifted by the power h) and multiplies them; the two displayed exponents (-dt+o(1))s_m and (-4t+h+o(1))s_m are not stated separately, only their combination with rate -D+M.",
   "subject": [
     {
       "location": {
@@ -32,8 +32,8 @@
         "declaration": "YM.MergeProof.Ribbons.quilled",
         "module": "YM.MergeProof.North.Welch",
         "lines": [
-          35,
-          39
+          36,
+          37
         ]
       },
       "role": "key",
@@ -43,14 +43,14 @@
             "id": "YM.MergeProof.Ribbons.quilled"
           },
           "snippet": {
-            "text": "lemma quilled : Note C.S Z' (-D + M) :=by\n   have hg:= plumN C d hG a ha|>.relay j hj hT; have he:= ((plumN C 4 hG b hb).relay j hj hT).splits (((fuchsia C hG hV).scales C.path.levels.fits.mesh).powerN h); unfold ventola\n   apply ((pica _ hG _ hT hj hV (w:=A) false (by exact hg)).mills (pica _ hG _ hT hj hV (w:=A) true (by exact he))).swapP\n   have hi:(d:ℝ)+4-h=D:=by exact sub_eq_of_eq_add (by exact_mod_cast hp.symm)\n   push_cast; rw [←hi]; ring",
-            "line": 35,
+            "text": "   have hg:= plumN C d hG a ha|>.relay j hj hT; have he:= ((plumN C 4 hG b hb).relay j hj hT).splits (((fuchsia C hG hV).scales C.path.levels.fits.mesh).powerN h); unfold ventola\n   apply ((pica _ hG _ hT hj hV (w:=A) false (by exact hg)).mills (pica _ hG _ hT hj hV (w:=A) true (by exact he))).swapP",
+            "line": 36,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/North/Welch.lean",
-            "fragment": "L35-L39"
+            "fragment": "L36-L37"
           },
           "proof_context": {
             "declaration": "YM.MergeProof.Ribbons.quilled",
@@ -58,7 +58,7 @@
               35,
               39
             ],
-            "conclusion": "The degree-d rate (plumN d relayed to j, hg) and the degree-4 rate times rho^h (plumN 4 with fuchsia powered by h, he) are combined into the joint rate -D + M."
+            "conclusion": "`quilled` gets the two single-mark amplitude rates from `plumN` for the degree-d and degree-4 marks (`hg`, `he`) and multiplies them with `pica`."
           }
         }
       }
@@ -73,11 +73,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {
-        "kind": "helper"
+        "kind": "direct"
       }
     }
   }

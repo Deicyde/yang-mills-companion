@@ -1,9 +1,9 @@
 {
   "id": "Lemma 11.9 step 1",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "The Lean uses the path data, its path bounds and the quadratic-row normalization as hypotheses and calls the vertex-weight lemmas at this point; no declaration here plays the role of Lemmas B2-B3 by name.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Carried by the assembly in YM.Stationary.setWest, with the vanishing of the difference intended - WilsonQ proved in YM.Stationary.greyson; [L] states the order-three property as a jet-vanishing condition (Drinkable) and does not write the explicit symbol 1/2 d_1(-p)^T(H_f(p)-I)d_1(p).",
   "subject": [
     {
       "location": {
@@ -32,8 +32,8 @@
         "declaration": "YM.Stationary.setWest",
         "module": "YM.Next.STATIONARY.Shape.VertexWeights",
         "lines": [
-          361,
-          369
+          357,
+          368
         ]
       },
       "role": "key",
@@ -43,14 +43,14 @@
             "id": "YM.Stationary.setWest"
           },
           "snippet": {
-            "text": "  obtain ⟨B,hB,H⟩ := whiteWilson G\n  obtain ⟨u,Mτ,hu,hτ,H₁⟩ := voile G 2 1 1 zero_lt_one\n  obtain ⟨v,N,hv,hN,H₂⟩ := voile G 3 0 1 zero_lt_one\n  let a := |giftBay G 2 (Ports 2 1) D η (B*Mτ)+napTax G J 2 K.penalty D|\n  let b := |giftBay G 3 (Ports 3 0) D η (B*N)+napTax G J 3 K.penalty D|\n  refine ⟨a,b,abs_nonneg _,abs_nonneg _,fun σ A hs he => ?_⟩\n  obtain ⟨y,P,hy,hP,V⟩ := greyson G w ε Q Z σ A hσ hQ hz hs he\n  obtain ⟨z,Zτ,hz₀,hzc,V₁⟩ := voile G 2 2 y hy\n  obtain ⟨r,E',hr,hE,V₂⟩ := voile G 3 1 y hy",
-            "line": 361,
+            "text": "lemma setWest (G : Gauge) (w η Q Z D ε : ℝ) (hσ : 0<w) (hη : 0<η) (hw : η ≤ 1) (hz : 0≤Z) (hQ : 0≤Q)\n    (J : ℕ) (K : KernelChoices) : ∃ a b : ℝ, 0≤a ∧ 0≤b ∧ ∀ σ A, 0<σ → 0 ≤ A → ∃ σ' ℓ r:ℝ, 0 < σ' ∧ 0≤ℓ ∧ 0≤r ∧ ∀ (m n : ℕ→Side), Tendsto (fun i => (n i).val) atTop atTop → ∀ (p : Clip) (R : PathData G) (B : Bed) (Λ : ℝ), p.direct ≤ Z → R.Bounds p σ A Λ → Attached B R → B.metric.strip w Q → (∀ i, Floor B p i ε Q) → (∀ i, Bid.Sworn B (n i) G) →\n      ∀ (P : Patch), P.J=J → P.Branches K G → inch P.L*η ≤ σ' → ∀ (F : Armada m n P K) (t : ∀ i,(F.boot i).Choices) (Φ : Bridge G P), Cruise Φ 2 η D →\n    ∃ T : TextS 3 P G, ∃ U : TextS 4 P G, Pungent T η ∧ Pungent U η ∧ Laureate T Φ η (a+inch P.L*ℓ) ∧ Laureate U Φ η (b+inch P.L*r) ∧ ∀ i, Skimming (F.boot i) T (centR (F.boot i) (t i) p R) ∧ Skimming (F.boot i) U (centR (F.boot i) (t i) p R) := by\n  obtain ⟨B,hB,H⟩ := whiteWilson G\n  obtain ⟨u,Mτ,hu,hτ,H₁⟩ := voile G 2 1 1 zero_lt_one\n  obtain ⟨v,N,hv,hN,H₂⟩ := voile G 3 0 1 zero_lt_one\n  let a := |giftBay G 2 (Ports 2 1) D η (B*Mτ)+napTax G J 2 K.penalty D|\n  let b := |giftBay G 3 (Ports 3 0) D η (B*N)+napTax G J 3 K.penalty D|\n  refine ⟨a,b,abs_nonneg _,abs_nonneg _,fun σ A hs he => ?_⟩\n  obtain ⟨y,P,hy,hP,V⟩ := greyson G w ε Q Z σ A hσ hQ hz hs he\n  obtain ⟨z,Zτ,hz₀,hzc,V₁⟩ := voile G 2 2 y hy",
+            "line": 357,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Shape/VertexWeights.lean",
-            "fragment": "L361-L369"
+            "fragment": "L357-L368"
           },
           "proof_context": {
             "declaration": "YM.Stationary.setWest",
@@ -58,7 +58,7 @@
               357,
               382
             ],
-            "conclusion": "`setWest` takes the Wilson kernel bounds `whiteWilson`, the vertex-weight lemma `voile` and the difference-kernel bounds `greyson` as its inputs."
+            "conclusion": "setWest assembles the Wilson jets (whiteWilson), the vertex-weight lemma voile with the penalty term napTax, and the input-path bounds via greyson on R.Bounds to build the order-3 and order-4 texts."
           }
         }
       }
@@ -97,7 +97,7 @@
               363,
               403
             ],
-            "conclusion": "`greyson` assumes the path data `R` with its path bounds `R.Bounds`, the attachment `Attached B R` and the `Floor` normalization of the quadratic row, the counterparts of the path action and its input bounds."
+            "conclusion": "For path data with Bounds, the difference intended p R - WilsonQ is Drinkable: its order-i derivatives vanish to order 4-i at zero with uniform Firm bounds."
           }
         }
       }
@@ -112,7 +112,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, a judge ruled; a re-rating agent agreed; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, a judge ruled; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

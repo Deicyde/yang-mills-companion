@@ -1,9 +1,9 @@
 {
   "id": "Lemma 14.12 step 2",
   "kind": "proof_step",
-  "status": "formalized",
-  "relation": "closeMatch",
-  "note": "[L] defines the weighted marker norm as Marker.Poly.price (mode weight Poly.toll) and proves submultiplicativity in Marker.Poly.multiplication (via binary and merges). Extra.Multi.Weighted states the rooted clause for toll-weighted majorants. The difference is that the rooted clause is phrased by multiplying the majorants by mode weights, not as a statement in the algebra.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "The product weight ∏w_i on a mode and the rooted attachment clause are present (`Weighted`, `Rooted`). The submultiplicative marker coefficient norm and the separate majorants v_{a,i} are not.",
   "subject": [
     {
       "location": {
@@ -24,84 +24,6 @@
     }
   ],
   "object": [
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Marker.Poly.price",
-        "module": "YM.Marker.Weight",
-        "lines": [
-          76,
-          76
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Marker.Poly.price"
-          },
-          "snippet": {
-            "text": "def price (w : V → ℝ) (a : Poly R) := ∑ i,toll w i * ‖a.part i‖",
-            "line": 76,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Marker/Weight.lean",
-            "fragment": "L76-L76"
-          },
-          "proof_context": {
-            "declaration": "YM.Marker.Poly.price",
-            "lines": [
-              76,
-              76
-            ],
-            "conclusion": "A mode x gets the weight toll w x = prod_{i in x} w_i, and the marker norm is the weighted l1 sum of coefficient norms."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Marker.Poly.multiplication",
-        "module": "YM.Marker.Weight",
-        "lines": [
-          139,
-          146
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Marker.Poly.multiplication"
-          },
-          "snippet": {
-            "text": "lemma multiplication (a b : Poly R) : price w (a*b) ≤ price w a*price w b := by\n  unfold price\n\n  change price w (a*b) ≤ _\n  conv_lhs => rw [← studs a,← studs b,sum_mul]\n  apply le_trans (batch hw ..)\n  rw [sum_mul]; refine sum_le_sum fun i _ => ?_\n  rw [mul_sum,mul_sum]; exact (batch hw ..).trans (sum_le_sum fun j _ ↦ binary hw ..)",
-            "line": 139,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Marker/Weight.lean",
-            "fragment": "L139-L146"
-          },
-          "proof_context": {
-            "declaration": "YM.Marker.Poly.multiplication",
-            "lines": [
-              139,
-              146
-            ],
-            "conclusion": "The weighted marker norm is submultiplicative, price w (a*b) <= price w a * price w b, using disjoint-union merges."
-          }
-        }
-      }
-    },
     {
       "type": "lean",
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
@@ -136,7 +58,46 @@
               34,
               35
             ],
-            "conclusion": "The rooted clause is applied to majorants multiplied by the mode weight toll w (q i), with derivative/support bounds kept in the separate majorants f i."
+            "conclusion": "`Weighted` is the rooted cover budget of the terms with the mode weight `Poly.toll w (q i)`, the product of the weights `w v` over the mode, times the coefficient `f i`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extra.Multi.Rooted",
+        "module": "YM.Extra.MULTISOURCE_BOUNDS.Root",
+        "lines": [
+          67,
+          68
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extra.Multi.Rooted"
+          },
+          "snippet": {
+            "text": "def Rooted (mode : ι → Finset V) (X : ι → Support n) (M : ℕ) (a : ℝ) (f : ι → ℝ) (c : ℝ) :=\n    ∀ s : V, SumBudget (fun i => if s ∈ mode i then Real.exp (a*coverNumber M (X i)) * f i else 0) c",
+            "line": 67,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/MULTISOURCE_BOUNDS/Root.lean",
+            "fragment": "L67-L68"
+          },
+          "proof_context": {
+            "declaration": "YM.Extra.Multi.Rooted",
+            "lines": [
+              67,
+              68
+            ],
+            "conclusion": "`Rooted` is the marker-rooted attachment budget: for each root vertex `s` the sum over terms whose mode contains `s` is a `SumBudget` with the exponential cover weight."
           }
         }
       }
@@ -151,7 +112,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

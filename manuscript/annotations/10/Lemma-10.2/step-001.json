@@ -1,9 +1,9 @@
 {
   "id": "Lemma 10.2 step 1",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "relatedMatch",
-  "note": "[M] uses the transports and labels, disposes of d<2 by constant sections and then fixes d>=2; the Lean construction treats every d uniformly with the same `Hol` and `Label` objects, and the triviality of `Snap G d` for d<2 appears only in an unnamed `example` of G03.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] makes the same assembly in YM.Next.Foundations.learns: the transport `hol G` and the frames `Labels.frames G` feed YM.Integrated.source_sections. The difference: there is no case split at d<2; one construction covers every d, and an unnamed example in YM/Work/G03.lean shows that the jet space vanishes for d<2.",
   "subject": [
     {
       "location": {
@@ -29,36 +29,75 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Work.G06.answer",
-        "module": "YM.Work.G06",
+        "declaration": "YM.Next.Foundations.learns",
+        "module": "YM.Next.FOUNDATIONS.Primary",
         "lines": [
-          43,
-          60
+          98,
+          99
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Work.G06.answer"
+            "id": "YM.Next.Foundations.learns"
           },
           "snippet": {
-            "text": "theorem answer : YM.Bid.G06 := by\n  intro G H d F m B hS hP\n  obtain ⟨P,hP⟩ := hP\n  obtain ⟨n,V,Q,hQ,hv⟩ := common_pose B P hP\n  obtain ⟨r,hr⟩ := enclose V\n  obtain ⟨E,hE⟩ := realize G V (box r) hr\n  let A : SectionData F := ⟨box r,E.toLinearMap.comp Q⟩\n  have he (c : F.Coeff) : A.evaluate c = averaged B P c := by\n    rw [hQ]; funext U\n    exact hE U (Q c)\n  refine ⟨A, ?_, ?_⟩\n  · exact ⟨center_box r,box_covariant r,fun c => by rw [he]; exact averaged_gauge B P hP c,\n      by rw [he]; exact averaged_unit B P hP,\n      fun s c U => by rw [he,he]; exact averaged_Hpart B P s c U,\n      fun c U => by rw [he,he]; exact averaged_bar B P hP c U,\n      fun c => by rw [he]; exact averaged_projects B P hS hP c⟩\n  intro i\n  exact ⟨n,V,hr,Q (Pi.single i 1), (he _).trans (hQ _),hv i⟩",
-            "line": 43,
+            "text": "theorem learns : Bid.Learns G (hol G) (Labels.frames G) :=\n  Integrated.source_sections G (hol G) (Labels.frames G)",
+            "line": 98,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/G06.lean",
-            "fragment": "L43-L60"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FOUNDATIONS/Primary.lean",
+            "fragment": "L98-L99"
           },
           "proof_context": {
-            "declaration": "YM.Work.G06.answer",
+            "declaration": "YM.Next.Foundations.learns",
             "lines": [
-              43,
-              60
+              98,
+              99
             ],
-            "conclusion": "`answer` builds the section for every degree `d` at once from `Cumuli` data, averaged over `Signed`, on the common stencil `box r`, with no case split on `d`."
+            "conclusion": "The sections are produced from the actual lattice transport `hol G` and the label frames `Labels.frames G` via `Integrated.source_sections`, giving `localSection G d` for every d."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "example@YM/Work/G03.lean:228",
+        "module": "YM.Work.G03",
+        "lines": [
+          228,
+          231
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "example@YM/Work/G03.lean:228"
+          },
+          "snippet": {
+            "text": "example (d : ℕ) (h : d < 2) (A : Snap G d) : A = 0 := by\n  funext i\n  have := i.isLt\n  omega",
+            "line": 228,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/G03.lean",
+            "fragment": "L228-L231"
+          },
+          "proof_context": {
+            "declaration": "example@YM/Work/G03.lean:228",
+            "lines": [
+              228,
+              231
+            ],
+            "conclusion": "For d < 2 the truncated jet space Snap G d is zero, so there is nothing to sample."
           }
         }
       }
@@ -73,11 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, a judge ruled; a re-rating agent agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, a judge ruled; a re-rating agent agreed; re-judged after a second independent review, which changed it from relatedMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {
-        "kind": "helper"
+        "kind": "chain"
       }
     }
   }

@@ -1,9 +1,9 @@
 {
   "id": "Lemma 13.4 step 38",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "The log identity and absolute convergence are there; the rooted `1/(n-1)!` count, the separation of forced components and the identification of the deterministic part with `beta'_u K^kin + L + alpha Q` are not.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] carries the cluster-expansion identity in YM.Push.AbsoluteSums.Gas.price_log (applied in Song.summon to the ordinary gas homesteadPool) and the identity for the full integral, with the forced part kept as the gas factor r.gas, in Song.forward. The difference: [L] proves the cluster expansion by its own tree bounds instead of citing Ueltschi's theorem, and writes the deterministic part as T.down.inChannels, gamma*Collection.receipt and the billOf terms rather than literally as beta'K+L+alpha Q.",
   "subject": [
     {
       "location": {
@@ -33,7 +33,7 @@
         "module": "YM.Push.ABSOLUTE_SUMS.Log",
         "lines": [
           114,
-          121
+          120
         ]
       },
       "role": "key",
@@ -43,14 +43,14 @@
             "id": "YM.Push.AbsoluteSums.Gas.price_log"
           },
           "snippet": {
-            "text": "theorem price_log (hr : Hard R) {n : Side} (X : ι → Support n) (B : ℕ)\n    (ht : Tests R X) {a γ δ q : ℝ} (ha : 0 ≤ a)\n    (h : Ready X B (fun i => ‖w i‖) a γ δ q) :\n    SumBudget (fun s => ‖value R w s‖) (Real.exp ((n.val^4:ℕ)*γ)) ∧\n    SumBudget (fun i => ‖term R w i‖) (((n.val^4:ℕ)*γ)*(1-q)⁻¹) ∧\n    Real.exp (logSum R w) = total R w ∧ 0 < total R w ∧ Real.log (total R w) = logSum R w := by\n  have hX i : (X i).Nonempty := by obtain ⟨x,hx,-⟩ := ht i i (hr.diag i); exact ⟨x,hx⟩\n  have hb := actual_values R w X B hX ha h",
+            "text": "theorem price_log (hr : Hard R) {n : Side} (X : ι → Support n) (B : ℕ)\n    (ht : Tests R X) {a γ δ q : ℝ} (ha : 0 ≤ a)\n    (h : Ready X B (fun i => ‖w i‖) a γ δ q) :\n    SumBudget (fun s => ‖value R w s‖) (Real.exp ((n.val^4:ℕ)*γ)) ∧\n    SumBudget (fun i => ‖term R w i‖) (((n.val^4:ℕ)*γ)*(1-q)⁻¹) ∧\n    Real.exp (logSum R w) = total R w ∧ 0 < total R w ∧ Real.log (total R w) = logSum R w := by\n  have hX i : (X i).Nonempty := by obtain ⟨x,hx,-⟩ := ht i i (hr.diag i); exact ⟨x,hx⟩",
             "line": 114,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/ABSOLUTE_SUMS/Log.lean",
-            "fragment": "L114-L121"
+            "fragment": "L114-L120"
           },
           "proof_context": {
             "declaration": "YM.Push.AbsoluteSums.Gas.price_log",
@@ -58,7 +58,7 @@
               114,
               149
             ],
-            "conclusion": "`price_log` gives absolute convergence, `exp(logSum) = total` and `log total = logSum` under `Hard` and `Ready`."
+            "conclusion": "For the hard overlap gas under the Ready condition, Real.log (total) = logSum, the connected-cluster series, with absolute bounds."
           }
         }
       }
@@ -68,36 +68,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.PhysicalNext.Repeat.Boulevard.lays",
-        "module": "YM.PhysicalNext.RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP.Boulevard.Blue",
+        "declaration": "YM.PhysicalNext.Repeat.Song.forward",
+        "module": "YM.PhysicalNext.RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP.Song.Embassy",
         "lines": [
-          47,
-          49
+          88,
+          105
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.PhysicalNext.Repeat.Boulevard.lays"
+            "id": "YM.PhysicalNext.Repeat.Song.forward"
           },
           "snippet": {
-            "text": "lemma lays (he: SeekR R A N m H Y) (F:Forest (panel A m H).ratio) :\n    Collection.Local (posting B Y') B (o) (turnFee B*(betaF G x L ^ (Z J I).wanting + betaF G x L ^ (-(7/16):ℝ))) (Cash.armK (P') L (R.μ J I) x 0 (e).degrees) ∧\n     ∀ V,(panel A m H).push u.beta u.eval V=earlyValue (posting B Y') (T).down (T).low B (o) u.beta (weighty Y Chi.canonical F) γ V:= by",
-            "line": 47,
+            "text": "    earlyValue (posting p H) T.down T.low p (plusone H X χ γ) R.beta (weighty J χ O) γ V=S.push R.beta R.eval V := by\n  let r:= (posting p H).read (plusone H X χ γ)\n  have ht t := language p H X χ N hp hP γ h hx (Seat.view t V)\n  have hz : ∀ t: Seat c, HasSum (fun i=> masked p.threshold (scaleT p H i).support (opus H X χ γ i) (Seat.view t V)) (-(Real.log (J.homesteadPool χ V)) + (-(γ*Collection.receipt T.down T.low p V+(R.beta*(billOf p T.down.cubic V+billOf p T.down.quartic V)+billOf p T.down.loop V)))) := by\n    intro t; have hb:= ht t; rw [harmony χ h V t,Seat.view, Collection.receipt, layer_spread,\n      bill_spread p _ hx.width hx.three,bill_spread p _ hx.width hx.four,bill_spread p _ hx.width hx.two] at hb; exact hb\n  have hd := voices (scaleT p H) (opus H X χ γ) p V _ hz\n  have hL : r.additive p V=_ := ((pennant H).hasSum_iff.mpr hd).tsum_eq\n  let X':= prism T s χ o.K V O; let y:=overhead X' R Q.table; let C := J.homesteadPool χ V\n  have hg : r.gas p V=∑' i,J.canopyPool χ V i := inundated p H X χ ((posting p H).reg) (plusone H X χ γ).logRead V h hp\n  have hu : HasSum (fun u=> y*C*J.canopyPool χ V u) (S.push R.beta R.eval V) := J.convoyPool χ V h O\n  have he : y*C*r.gas p V=S.push R.beta R.eval V := by rw [hg, ← tsum_mul_left]; exact hu.tsum_eq\n  have hm : Real.exp (weighty J χ O * Fintype.card (Site c)- T.down.inChannels T.low p R.beta V - r.additive p V)*Real.exp (-γ* Collection.receipt T.down T.low p V)=y*C := by\n    rw [← Real.exp_add,chan, hL, show y=_ from grants p (J:=J) χ O hp V]\n    have hv : 0<C := by unfold C; rw [← (J.threshold_logPool χ V h).2]; positivity\n    rw [← Real.exp_log hv,← Real.exp_add]; apply congr_arg Real.exp\n    unfold C at *; ring\n  unfold earlyValue RG.Rep.eval; rw [mul_right_comm (Real.exp _)]; change Real.exp _*Real.exp _*r.gas p V=_; exact Eq.trans (congr_arg (·*r.gas p V) hm) he",
+            "line": 88,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Boulevard/Blue.lean",
-            "fragment": "L47-L49"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Song/Embassy.lean",
+            "fragment": "L88-L105"
           },
           "proof_context": {
-            "declaration": "YM.PhysicalNext.Repeat.Boulevard.lays",
+            "declaration": "YM.PhysicalNext.Repeat.Song.forward",
             "lines": [
-              47,
-              58
+              87,
+              105
             ],
-            "conclusion": "`lays` gives `Collection.Local` for the posted expansion of the step with regular fee `beta^wanting + beta^(-7/16)`, and identifies `push` with `earlyValue` of the weighted gas."
+            "conclusion": "earlyValue of the posted activities (exponent with channels, gamma*receipt and cubic/quartic/loop bills, times the forced gas) equals the full push S.push R.beta R.eval V."
           }
         }
       }
@@ -112,7 +112,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

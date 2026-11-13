@@ -1,9 +1,9 @@
 {
   "id": "Lemma 14.7 step 1",
   "kind": "proof_step",
-  "status": "formalized",
-  "relation": "closeMatch",
-  "note": "[L] carries this in YM.Extra.Histories.Sung.clocks and YM.Work.G08.answer (fields realForm and orients of TransferData.Based). Commutation is propagated level by level as the Heard.moves invariant (re-established in the one-level step in Replay.lean) for the composite map down to level m, not stated for each single L_m.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "[L] gives commutation of the terminal map (the product) with complex conjugation and signed permutations; commutation with each L_m is not stated.",
   "subject": [
     {
       "location": {
@@ -29,75 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Extra.Histories.Sung.clocks",
-        "module": "YM.Extra.SOURCE_HISTORIES.Song",
+        "declaration": "YM.Source.TransferData.Based",
+        "module": "YM.Source.Insertion",
         "lines": [
-          105,
-          113
+          113,
+          114
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Extra.Histories.Sung.clocks"
+            "id": "YM.Source.TransferData.Based"
           },
           "snippet": {
-            "text": "  · have he := (h.earned i hi he).book; exact ⟨he.x,he.reg,he.f,he.tags⟩\n  let y := V.tone i\n  have he := h.earned i hi he\n  have hf (s) : Motion.patch F s (y.plays v).x=(y.plays (Motion.patch F s v)).x := by\n    unfold y; rw [he.currents,he.currents,he.moves]\n  refine ⟨?_,fun s => (hf (s,false)).symm⟩\n  have ha := (hf (1,true)).symm\n  unfold Motion.patch at ha; simp only [if_true] at ha\n  simpa only [Music.draft,y,show (1:Signed).ortho=1 from map_one Signed.inclusionO, Frame.act_one] using ha",
-            "line": 105,
+            "text": "  realForm v : T.terminal (star v) = star (T.terminal v)\n  orients (k : Signed) v : T.terminal (F.act k.ortho v) = F.act k.ortho (T.terminal v)",
+            "line": 113,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/SOURCE_HISTORIES/Song.lean",
-            "fragment": "L105-L113"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Source/Insertion.lean",
+            "fragment": "L113-L114"
           },
           "proof_context": {
-            "declaration": "YM.Extra.Histories.Sung.clocks",
+            "declaration": "YM.Source.TransferData.Based",
             "lines": [
-              100,
-              113
+              89,
+              114
             ],
-            "conclusion": "At every fitted level the coefficient map commutes with the signed-permutation action and with conjugation (from Heard.moves/currents)."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Work.G08.answer",
-        "module": "YM.Work.G08",
-        "lines": [
-          254,
-          255
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Work.G08.answer"
-          },
-          "snippet": {
-            "text": "    realForm := fun v => (hp.moves k le_rfl hp.ahead v).1\n    orients := fun s v => (hp.moves k le_rfl hp.ahead v).2 s }⟩",
-            "line": 254,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/G08.lean",
-            "fragment": "L254-L255"
-          },
-          "proof_context": {
-            "declaration": "YM.Work.G08.answer",
-            "lines": [
-              207,
-              258
-            ],
-            "conclusion": "The terminal map commutes with star (realForm) and with each signed permutation (orients)."
+            "conclusion": "`realForm` and `orients`: the terminal map commutes with complex conjugation and with signed permutations."
           }
         }
       }
@@ -112,11 +73,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent disagreed and a judge changed it from narrowMatch; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent disagreed and a judge changed it from narrowMatch; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {
-        "kind": "chain"
+        "kind": "direct"
       }
     }
   }

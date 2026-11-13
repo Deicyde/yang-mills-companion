@@ -1,9 +1,9 @@
 {
   "id": "Lemma 14.16 step 23",
   "kind": "proof_step",
-  "status": "formalized",
-  "relation": "closeMatch",
-  "note": "Carried by MergeProof.cheaper inside MergeProof.solaris (the Hearth structure), with the last-step ratio entering through the Braze.flight field and the ordered version in solarQ. Lean's perturbation bound is |x - Px| <= |x|/2 rather than |x|/4; it gives the same inverse bound 2.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "Invertibility, the inverse bound 2, the comparison and the ordered form are present; [L] gets them from a perturbation of size one half rather than one quarter. The identification of B as multiplication by the factor scale, R_d and Z is not at these lines.",
   "subject": [
     {
       "location": {
@@ -33,7 +33,7 @@
         "module": "YM.MergeProof.Marimba",
         "lines": [
           35,
-          47
+          35
         ]
       },
       "role": "key",
@@ -43,14 +43,14 @@
             "id": "YM.MergeProof.cheaper"
           },
           "snippet": {
-            "text": "lemma cheaper (h:∀ i,F.coeffSize (Size.axis F i-X i) ≤ sliver F): ∃ V:F.Coeff≃ₗ[ℂ] F.Coeff, (∀ i,V i=decor F X i)∧ ∀ i, F.coeffSize (V.symm i) ≤ 2*F.coeffSize i:=by\n    let T:= decor F X; let z:= Size.axis F; let c:=orbitCost F; have hc:0<c:= zero_lt_one.trans_le (orbitCost_one_le _)\n    have he (i): F.coeffSize i ≤ 2*F.coeffSize (T i):=by\n       have hs: i - T i=(∑ j:Motion.Tally F, chips F i j • Motion.patch F j.1 (z j.2-X j.2)):=by\n           conv_lhs=> lhs; rw [← show repaint F z i=i from repaint_same F LinearMap.id (fun v m=> rfl) i]; unfold repaint\n           simp_rw [patch_sub,smul_sub,Finset.sum_sub_distrib]; rfl\n       have hp : F.coeffSize (i-T i) ≤ F.coeffSize i/2:=by\n           rw [hs]; apply (Size.finite F _ _).trans; let p:=sliver F\n           have hA(j:Motion.Tally F): F.coeffSize (chips F i j • Motion.patch F j.1 (z j.2-X j.2)) ≤ ‖chips F i j‖ * (orbitCost F*p):=by\n              rw [Size.smul]; exact mul_le_mul_of_nonneg_left ((patch_cost ..).trans (mul_le_mul_of_nonneg_left (h j.2) hc.le)) (norm_nonneg _)\n           apply le_trans (Finset.sum_le_sum (fun j _=> hA j)); rw [←Finset.sum_mul]; apply (mul_le_mul_of_nonneg_right (chipcost F i) (mul_nonneg hc.le (sliver_pos F).le)).trans_eq; unfold c sliver; unfold c at hc; field_simp\n       have hv := Work.G08.size_triangle F i (T i); linarith only [hv,hp]\n    exact ePack F T he",
+            "text": "lemma cheaper (h:∀ i,F.coeffSize (Size.axis F i-X i) ≤ sliver F): ∃ V:F.Coeff≃ₗ[ℂ] F.Coeff, (∀ i,V i=decor F X i)∧ ∀ i, F.coeffSize (V.symm i) ≤ 2*F.coeffSize i:=by",
             "line": 35,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Marimba.lean",
-            "fragment": "L35-L47"
+            "fragment": "L35-L35"
           },
           "proof_context": {
             "declaration": "YM.MergeProof.cheaper",
@@ -58,7 +58,7 @@
               35,
               47
             ],
-            "conclusion": "If each basis image X i is within sliver F of the basis vector, then |i - T i| <= |i|/2, so T = decor F X is a linear equivalence with |T^{-1} i| <= 2|i|."
+            "conclusion": "`cheaper` gives an invertible `V` with `V i = decor F X i` and `|V⁻¹ i| ≤ 2|i|`."
           }
         }
       }
@@ -68,36 +68,75 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.MergeProof.solaris",
+        "declaration": "YM.MergeProof.Hearth",
         "module": "YM.MergeProof.Canopy",
         "lines": [
-          36,
-          46
+          31,
+          31
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.MergeProof.solaris"
+            "id": "YM.MergeProof.Hearth"
           },
           "snippet": {
-            "text": "lemma solaris {b:ℕ→ℝ}(he: Braze (C:=C) V b): ∃ E P U,Hearth (C:=C) V ζ E P U:=by\n    let Y(i):= sphere (S! i) ((X).card) (b i); let Z(i):= storms (BasisCost.price V) (BasisCost.price (T)) C i d; let hE(i):=Real.exp (((K i).supportExponent+2)*81); let E(i):= 4*(1+(S! i|>.columns))*Y i+hE i*Z i*ζ d i*(u i)⁻¹\n    have hw : ∀ᶠ N:ℕ in atTop, ∀ p:ℕ,∃ V':C.label d≃ₗ[ℂ] C.label d,∃ Z': (C.labels.level d).Index → C.label d, (∀ i:C.label d,V' i=decor F Z' i)∧(∀ i,(F).coeffSize (V'.symm i)  ≤  2*(F).coeffSize i)∧ ∀ j,matter V N p Z' j ζ E:=by\n       have hP:= (eventually_all_finset (X)).mpr (fun (x : Cover) (_:x∈X)=> eventually_all.mpr fun i:Axis=> Mark.lengths C.S (20*((x i).natAbs+1)))\n       filter_upwards [sanded hG C d (BasisCost.price V) (BasisCost.price (C.localSection d)) (zero_le_one.trans (BasisCost.price_pos _)) (zero_le_one.trans (BasisCost.price_pos _)),cover_tops (C:=C) hG X,mitt (C:=C) hG X, hP,he.arc,he.flight,he.hymns,eventually_gt_atTop (C.ref d)] with i ht hh hi hL hA hB hb hx p\n       have hlx(j:(C.labels.level d).Index):∃ w:C.label d,(F).coeffSize (Size.axis F j-w) ≤ sliver F∧∀ k m:ℕ,C.ref d  ≤  k→k < i→Stock.Tabs.opens C.path.levels 1 m k→∀ a:Motion,∀ hm:m  ≤  i,(center C.S p hm 0).rootTest (C.beta i p) (dance a (initial V C.path i p (Size.axis F j) 0-initial (T) C.path i p w 0))  ≤  cider C ζ d m k*E i*RelayDifference.flight C (-RelayDifference.gamma) (i,p):=by\n          obtain ⟨Y',t',hc',hz⟩:= inviting V hV H hx.le (p:=p) (fun v hv j=> hL v hv j p) hA hb.1 u ζ (hF.candle i) (h.grows _ _ hx.le).le (Classical.choice (hF.full i p)) ⟨hi p,hh p⟩ ht j\n          obtain ⟨v,hv,hT⟩:= figment C i p d B W u ψ φ δ ζ r D H h (initial V C.path i p (Size.axis F j) 0) Y' (Y i) t' (E i) hx hc'; rw [hz] at hv; exact ⟨_,le_of_mul_le_mul_left (hv.trans hB) (Real.rpow_pos_of_pos (Nat.cast_pos.mpr (C.S.block (i-1)).property) _), fun k m hi ht hb a hm=> hT m k hi ht hb a hm⟩\n       choose t he hT using hlx; obtain ⟨V',hV,ht⟩:= cheaper F t he; exact ⟨V',t,hV,ht,hT⟩\n    let candle (N p:ℕ)(V':C.label d≃ₗ[ℂ] C.label d)(Z': (C.labels.level d).Index→ C.label d):Prop:=(∀ i:C.label d,V' i=decor F Z' i)∧ (∀ i,(F).coeffSize (V'.symm i)  ≤  2*(F).coeffSize i)∧ ∀ j,matter V N p Z' j ζ E\n    have hh (N p:ℕ):∃ V' Z',(∃ v f,candle N p v f)→candle N p V' Z':=by by_cases h:∃ v f,candle N p v f; obtain ⟨v,f,h⟩:=h; exact ⟨v,f,fun _=>h⟩; exact ⟨LinearEquiv.refl ℂ _,fun _=>0,fun he=>(h he).elim⟩",
-            "line": 36,
+            "text": "   stamped : ∀ᶠ N:ℕ in atTop, ∀ p:ℕ, (∀ i:C.label d,(P N p) i=decor F (U N p) i) ∧ (∀ i,(F).coeffSize ((P N p).symm i)  ≤  2*(F).coeffSize i) ∧ ∀ j,matter V N p (U N p) j ζ E -- define below",
+            "line": 31,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Canopy.lean",
-            "fragment": "L36-L46"
+            "fragment": "L31-L31"
           },
           "proof_context": {
-            "declaration": "YM.MergeProof.solaris",
+            "declaration": "YM.MergeProof.Hearth",
             "lines": [
-              36,
-              54
+              30,
+              32
             ],
-            "conclusion": "Eventually in N and for every p, the basis matches from inviting and figment give V' = decor F Z' with coeffSize(V'^{-1} i) <= 2 coeffSize i and the matter (local error) bounds, collected in Hearth."
+            "conclusion": "Eventually in `N` and for every `p`, `P N p` is invertible with `|P⁻¹ i| ≤ 2|i|`, together with the per-axis comparison `matter`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.MergeProof.solarQ",
+        "module": "YM.FullVolume.Dusk.Realt",
+        "lines": [
+          24,
+          24
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.MergeProof.solarQ"
+          },
+          "snippet": {
+            "text": "lemma solarQ {b:ℕ→ℝ}(he: Braze (C:=C) V b): ∃ E P U,Hearth (C:=C) V ζ E P U:=by",
+            "line": 24,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Dusk/Realt.lean",
+            "fragment": "L24-L24"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.solarQ",
+            "lines": [
+              24,
+              42
+            ],
+            "conclusion": "The same existence statement of `Hearth`, used for ordered tails."
           }
         }
       }
@@ -112,7 +151,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, a judge ruled; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, a judge ruled; a re-rating agent agreed; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

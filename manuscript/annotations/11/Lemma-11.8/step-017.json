@@ -2,8 +2,8 @@
   "id": "Lemma 11.8 step 17",
   "kind": "proof_step",
   "status": "partial",
-  "relation": "relatedMatch",
-  "note": "The Lean proves the alias filter for the mass weight `damp` only, with summability in `touring`; the bounds for fine derivatives, the free interpolated field and the frame averages are not separately stated.",
+  "relation": "hasPart",
+  "note": "[L] proves the weighted bounds of the uninserted symbols in Stationary.gift_pay, with fine derivatives bounded by the alias weight in rugPay and the frame part by sideCost in net_pay. A bound of a free interpolated field by C mu, and frame averages bounded through the summable filter, are not found.",
   "subject": [
     {
       "location": {
@@ -51,36 +51,75 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Stationary.thin_pay",
-        "module": "YM.Next.STATIONARY.Spectral.AuxReferences",
+        "declaration": "YM.Stationary.gift_pay",
+        "module": "YM.Next.STATIONARY.Spectral.ComplexGap",
         "lines": [
-          450,
-          450
+          161,
+          167
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Stationary.thin_pay"
+            "id": "YM.Stationary.gift_pay"
           },
           "snippet": {
-            "text": "lemma thin_pay (p : Momentum) (l : Site L) (hl : Odd L.val) (hp : p∈strip (1/128:ℝ)) (hv : Nave p) : ‖damp (inch L) (aliasAt p l)‖ ≤ 2*((pdist l+1:ℝ)^2)⁻¹ := by",
-            "line": 450,
+            "text": "lemma gift_pay (B : Bed) (hp : B.metric.strip (inch P.L*σ) A) (he : p∈ strip σ) (hh : σ≤1) (ha : 0≤A) (κ : ℂ) :\n    serial (slabW G P.L|>.dual) (slabW G P.L) p p (giftQ G P B κ p) (giftCost G P.J A κ) := by\n  have hz := rugPay (G:=G) B hp he hh ha; have hf : p∈ strip 1 := fun i => (he i).trans_le hh\n  have hc : ∀ q, serial (altarTile P.L _) (slabW G P.L) q q (downX G P.L) 1 := fun q => serial_butt (altarTile P.L _) _\n  have hn q (h : q∈ strip 1) : serial (Slab.basic _) (slabW G P.L) q q (netY G P q) (sideCost G P.J) := net_pay h\n  have hx := (hc (-p)).slide; have hL := (hn _ (negResident hf)).slide; rw [neg_neg] at hx hL; rw [slide_basic] at hL\n  unfold giftQ; refine (((hx.bond hz).bond (hc p)).plus ((hL.bond (hn p hf)).costs κ)).mono ?_; unfold giftCost; rw [one_mul,mul_one,sq]",
+            "line": 161,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Spectral/AuxReferences.lean",
-            "fragment": "L450-L450"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Spectral/ComplexGap.lean",
+            "fragment": "L161-L167"
           },
           "proof_context": {
-            "declaration": "YM.Stationary.thin_pay",
+            "declaration": "YM.Stationary.gift_pay",
             "lines": [
-              450,
-              463
+              161,
+              167
             ],
-            "conclusion": "`thin_pay` bounds the alias weight `‖damp μ (aliasAt p l)‖` by `2 (pdist l + 1)⁻²`, the summable alias decay used for the averages."
+            "conclusion": "The uninserted quadratic symbol giftQ (curvature part plus penalty/frame part) has slabW-weighted norm at most giftCost on the strip."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.rugPay",
+        "module": "YM.Next.STATIONARY.Spectral.ComplexGap",
+        "lines": [
+          138,
+          150
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.rugPay"
+          },
+          "snippet": {
+            "text": "lemma rugPay (B : Bed) (hp : B.metric.strip (inch L*σ) A) (he : p∈strip σ) (hh : σ≤1) (ha : 0≤A) :\n    serial (altarTile L (Loc G 1)).dual (altarTile L _) p p (furnish L (rug G B) p) (bridgeCost G A) := by\n  have ht : p∈strip 1 := fun i => (he i).trans_le hh\n  have hc : 0≤ pageTax G 1 := mul_nonneg fest_pos (by norm_num)\n  let T l := pageD G 1 (aliasAt p (l:Site L))\n  refine woven_price _ (mul_nonneg (sq_nonneg _) (mul_nonneg fest_pos ha)) fun l => ?_\n  have h1 : vflux (T l) ≤ pageTax G 1*(5*hill p l) := (page_tax (aliasAt p l) _).trans (mul_le_mul_of_nonneg_left (hill_tilt l ht) hc)\n  have h2 : vflux ((pageD G 1 (-(aliasAt p l)))ᵀ) ≤ pageTax G 1*(5*hill p l) := by\n    rw [back_flux, ← show pageD G 1 (aliasAt (-p) (-l))=pageD G 1 (-aliasAt p l) from congr_arg (tintedLocal G) (rolls_symbol (alias_counter p l) 1), ← hill_turn p l]\n    exact (page_tax ..).trans (mul_le_mul_of_nonneg_left (hill_tilt _ (negResident ht)) hc)\n  have hK := fareH (G:=G) (alias_inside he l) hp ha\n  unfold rug\n  exact ((flux_power ..).trans (mul_le_mul ((flux_power ..).trans (mul_le_mul h2 hK (flux_nonneg _) ((flux_nonneg _).trans h2))) h1 (flux_nonneg _) (mul_nonneg ((flux_nonneg _).trans h2) ((flux_nonneg _).trans hK)))).trans_eq (by unfold bridgeCost; ring)",
+            "line": 138,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Spectral/ComplexGap.lean",
+            "fragment": "L138-L150"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.rugPay",
+            "lines": [
+              138,
+              150
+            ],
+            "conclusion": "Fine derivatives pageD at each alias are bounded by pageTax*5*hill p l (the alias weight omega_z), giving the curvature symbol's weighted bound via woven_price."
           }
         }
       }
@@ -95,11 +134,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from relatedMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {
-        "kind": "helper"
+        "kind": "chain"
       }
     }
   }

@@ -1,9 +1,9 @@
 {
   "id": "Lemma 19.8 step 4",
   "kind": "proof_step",
-  "status": "formalized",
-  "relation": "closeMatch",
-  "note": "Carried by net_select/selectIf, carpet with haloUnits, Hall.bought/most/halls and compensated_joint. Packaging differs: the allowance is license(carpet, i+1) and the factor 1/8 sits inside compensation.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "h_l = 16[1+l(b_l+b_{l+1}+1)^2]^4 is `carpet` with `haloUnits`, the single alpha below the allowances is a hypothesis of `Ballet`, and the grouping with fusions is `inductionLive`; the estimate (sigma+1)h_l = o(s_l) and the subpower argument for alpha_j are not in [L].",
   "subject": [
     {
       "location": {
@@ -24,45 +24,6 @@
     }
   ],
   "object": [
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.MergeProof.Ribbons.ManyCopies.net_select",
-        "module": "YM.OPE.Sweep.Net",
-        "lines": [
-          29,
-          49
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.MergeProof.Ribbons.ManyCopies.net_select"
-          },
-          "snippet": {
-            "text": "lemma net_select (f:I→Site n)(hg: ¬ Edition.Spaced b f) :\n    ∃ (J:Type) (_:Fintype J) (_:DecidableEq J) (L:Fibers I J),\n      L.twig (L.bunch i)=i ∧ Fintype.card J<Fintype.card I ∧ Edition.Spaced b (f ∘ L.twig) ∧ ∀ x:I,separation (f x) (f (L.twig (L.bunch x)))<b^2:=by\n    classical\n    let p(a : Finset I):= i∈a∧(a:Set I).Pairwise (fun x y=>b^2≤ separation (f x) (f y)); let S:= univ.filter p; have ht x:x∈S↔ p x:=mem_filter.trans (and_iff_right (mem_univ _))\n    have hξ:p {i}:= ⟨mem_singleton_self _,by simp⟩\n    obtain ⟨s,hp,hh⟩:= Finset.exists_max_image S Finset.card ⟨{i}, (ht _).2 hξ⟩; have hs: i∈s:=(ht s|>.1 hp).1; have he :=(ht s|>.1 hp).2\n    have hX (x:I) (hx:x∉s) : ∃ a∈s,separation (f x) (f a) < b^2:=by\n       by_contra! h; have hy:p (insert x s):=by\n         refine ⟨mem_insert_of_mem hs,fun i hi j hj hij=>?_⟩; rcases mem_insert.mp hi with hi|ht'; subst i\n         · exact h j ((mem_insert.mp hj).resolve_left hij.symm)\n         rcases mem_insert.mp hj with rfl|hh'; · rw [separation_comm]; exact h i ht'\n         exact he ht' hh' hij\n       have hu:=hh (insert x s) ((ht _).2 hy); rw [card_insert_of_notMem hx] at hu; omega\n    have h₀:∀ x, ∃ j : (↑s:Type), separation (f x) (f j.val)< b^2 ∧ (x∈s→j.val=x):=by\n       intro x; by_cases ht:x∈s\n       · exact ⟨⟨x,ht⟩, by simpa only [separation_self] using (pow_pos hb 2), fun _=>rfl⟩\n       obtain ⟨j,hj,H⟩:=hX x ht; exact ⟨⟨j,hj⟩,H,fun h=> (ht h).elim⟩\n    choose K hK hJ using h₀; let F:Fibers I (↑s:Type):= ⟨K,Subtype.val,fun x=> Subtype.ext (hJ x x.property)⟩\n    refine ⟨_,inferInstance,inferInstance,F,hJ i hs,?_ ,fun i j hij=> he i.property j.property (mt Subtype.ext hij),hK⟩\n    rw [Fintype.card_coe]; refine lt_of_le_of_ne (Finset.card_le_univ _) ?_; intro H; rw [Finset.eq_univ_of_card s H] at he; exact hg (fun i j hij=> he (mem_univ i) (mem_univ j) hij)",
-            "line": 29,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Sweep/Net.lean",
-            "fragment": "L29-L49"
-          },
-          "proof_context": {
-            "declaration": "YM.MergeProof.Ribbons.ManyCopies.net_select",
-            "lines": [
-              29,
-              49
-            ],
-            "conclusion": "A non-spaced family has a b^2-separated retained subfamily keeping the distinguished index, with strictly fewer groups, and every discarded point within b^2 of its representative."
-          }
-        }
-      }
-    },
     {
       "type": "lean",
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
@@ -97,7 +58,7 @@
               78,
               78
             ],
-            "conclusion": "carpet = 16*haloUnits = 16*(1+L(B+B'+1)^2)^4 bounds the cover number of a joined pair."
+            "conclusion": "`carpet A i = 16*haloUnits (block i) B B'` is the joining-cover bound h_l."
           }
         }
       }
@@ -107,36 +68,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.OPE.bought",
-        "module": "YM.OPE.Prices.Hall",
+        "declaration": "YM.OPE.haloUnits",
+        "module": "YM.OPE.Rough.Gate",
         "lines": [
-          20,
-          31
+          21,
+          21
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.OPE.bought"
+            "id": "YM.OPE.haloUnits"
           },
           "snippet": {
-            "text": "lemma bought (hG:G.Simple) (h: HaloGate C.path.levels) (N : ℕ) (hn:0<N): Note C.S (fun i=> license C.path δ N (carpet C.path i) (i+1)) 0:=by\n    let x i:= ((P'|>.budget (i+1)).supportExponent+1/2) * carpet C.path i\n    have hp : Note C.S (fun i=> Real.exp (x i)) 0:=by\n       refine ⟨fun i=> Real.exp_pos _,?_⟩; simp_rw [Real.log_exp]\n       have he:Tendsto (fun i=>16*(Real.sqrt (C.path.levels.clock.hatBeta i)/Λ i)) atTop (𝓝 0):= by simpa only [mul_zero] using! ((whence C hG).const_mul 16)\n       apply squeeze_zero' _ _ he\n       · exact Eventually.of_forall fun i=>div_nonneg (mul_nonneg (add_nonneg (P'|>.budget (i+1)).exponent_pos.le (by norm_num)) (Nat.cast_nonneg _)) (Shoot.scale_nn _ _)\n       filter_upwards with i; rw [← mul_div_assoc]; apply div_le_div_of_nonneg_right _ (Shoot.scale_nn _ _); let v:= haloUnits (C.S.block i) (P'|>.budget i).B (P'|>.budget (i+1)).B\n       calc _ ≤ 16*(( (P'|>.budget (i+1)).supportExponent+1) * v):= by unfold x carpet; push_cast; rw [mul_left_comm _ (16:ℝ)]; gcongr; norm_num\n            _ ≤ _:= mul_le_mul_of_nonneg_left (h i) (by norm_num)\n    have hr := (mintN C hG).1.scales C.path.levels.fits.mesh\n    unfold license; apply ((((hr.splits (Note.notes C.S (N:ℝ) (by positivity))).mills hr).splits hp).swapP (by norm_num))",
-            "line": 20,
+            "text": "def haloUnits (L : Side) (B B' : ℕ) : ℕ := (1 + L.val * (B+B'+1)^2)^4",
+            "line": 21,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Prices/Hall.lean",
-            "fragment": "L20-L31"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Rough/Gate.lean",
+            "fragment": "L21-L21"
           },
           "proof_context": {
-            "declaration": "YM.OPE.bought",
+            "declaration": "YM.OPE.haloUnits",
             "lines": [
-              20,
-              31
+              21,
+              21
             ],
-            "conclusion": "license(carpet i, i+1) is subpower (using the HaloGate entrance requirement and whence), and the running minimum v <= 1 below all these allowances is subpower by the initial-segment/tail argument."
+            "conclusion": "`haloUnits L B B' = (1 + L*(B+B'+1)^2)^4`."
           }
         }
       }
@@ -146,36 +107,75 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.MergeProof.Ribbons.ManyCopies.compensated_joint",
-        "module": "YM.OPE.Sweep.Induct",
+        "declaration": "YM.MergeProof.Ribbons.ManyCopies.Ballet",
+        "module": "YM.OPE.Sweep.Ballet",
         "lines": [
-          51,
-          68
+          45,
+          46
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.MergeProof.Ribbons.ManyCopies.compensated_joint"
+            "id": "YM.MergeProof.Ribbons.ManyCopies.Ballet"
           },
           "snippet": {
-            "text": "lemma compensated_joint {α:ℕ}{K:Fibers I J} (h: Fintype.card I ≤ H)(ht:Fintype.card J<Fintype.card I)(ha:0<a)(hx:a≤1)(hw:0<w)\n    (hr:a ≤ license A δ H α i) (hW:compensation A H i j (Fintype.card I) a w ≤ ∏ x,W x):\n    compensation A H i j (Fintype.card J) a w ≤ ∏ x,grouped A δ H α i W K x/8:=by\n    let y b:= compensation A H i j b a w; let p:= Fintype.card I; let q:= Fintype.card J; let t:= a/8\n    have hy b: 0< y b:=comp_pos ha hw; have hF:0<t:=div_pos ha (by norm_num); have hG:t ≤ 1:= by unfold t; linarith only [hx];\n    have hV: 0 < license A δ H α i:=ha.trans_le hr\n    have hg: a^H ≤ a^p:= pow_le_pow_of_le_one ha.le hx h\n    have hp: (8:ℝ)^q ≤ 8^H:= pow_le_pow_right₀ (by norm_num) (ht.le.trans h)\n    have hU: y q ≤ y p*t^H:=by\n       have hz:H*(H-p)+H ≤ H*(H-q):=by calc _ = H*(H-p+1):= by ring\n                                                                                     _ ≤ _:= Nat.mul_le_mul_left H (by omega)\n       have he:=pow_le_pow_of_le_one hF.le hG hz\n       unfold y compensation; change _ * t ^ _ * _ ≤ _ * t^_ *_* t^H\n       rw [mul_right_comm _ w, mul_assoc _ _ (t^H), ← pow_add]; refine mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left ?_ (pow_pos (div_pos (A.S.a_pos _) (A.S.a_pos _)) _|>.le)) hw.le; exact he\n    rw [prod_div_distrib,groupCash,cashIn_a, prod_const,card_univ,le_div_iff₀ (by positivity)]; refine le_trans (mul_le_mul_of_nonneg_left hp (hy q|>.le)) ?_\n    calc y q*(8:ℝ)^H ≤ (y p*t^H)*8^H := mul_le_mul_of_nonneg_right hU (by positivity)\n         _ = a^H * y p := by unfold t; rw [mul_assoc,← mul_pow,div_mul_cancel₀ _ (by norm_num),mul_comm]\n         _ ≤ _ := mul_le_mul (hg.trans (pow_le_pow_left₀ ha.le hr _)) hW (hy p|>.le) (pow_pos hV _|>.le)",
-            "line": 51,
+            "text": "    (hR:∀ k:ℕ,m+1 ≤ k→ k<j→ α ≤ license H δ (Fintype.card I) (carpet H k) (k+1))\n    (hΨ:α ≤ license H δ (Fintype.card I) l (m+1))",
+            "line": 45,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Sweep/Ballet.lean",
+            "fragment": "L45-L46"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.Ribbons.ManyCopies.Ballet",
+            "lines": [
+              36,
+              76
+            ],
+            "conclusion": "The single `α` is at most `license` at every level `m ≤ k < j` and at `m+1`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.MergeProof.Ribbons.ManyCopies.inductionLive",
+        "module": "YM.OPE.Sweep.Induct",
+        "lines": [
+          93,
+          95
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.MergeProof.Ribbons.ManyCopies.inductionLive"
+          },
+          "snippet": {
+            "text": "lemma inductionLive (hi:m ≤ i)(hJ:i ≤ j) :\n    ∃ (J:Type)(_ : Fintype J)(_ : DecidableEq J)(F:Fibers I J)(X:J→ℝ)(s:V×J→ℂ), F.twig (F.bunch i₀)=i₀ ∧ Edition.Spaced (Y' i).B (o i ∘ (partialGroup V F).twig) ∧\n      Live A N p E (fun i=>o i ∘ (partialGroup V F).twig) P v B (fun x hx U=>Fibers.reap (partialGroup V F) (Q x hx U)) δ χ i (hJ.trans hj) X s ∧ compensation A H i j (Fintype.card J) a (∏ x,W x)  ≤  ∏ x,X x:=by",
+            "line": 93,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Sweep/Induct.lean",
-            "fragment": "L51-L68"
+            "fragment": "L93-L95"
           },
           "proof_context": {
-            "declaration": "YM.MergeProof.Ribbons.ManyCopies.compensated_joint",
+            "declaration": "YM.MergeProof.Ribbons.ManyCopies.inductionLive",
             "lines": [
-              51,
-              68
+              93,
+              117
             ],
-            "conclusion": "A fusion from |I| to |J| < |I| groups is paid by factors alpha/8 in the compensation weight."
+            "conclusion": "Descending induction over levels produces fibers (groups) at each level with `Live` and the `compensation` bound on the product weight."
           }
         }
       }
@@ -190,7 +190,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

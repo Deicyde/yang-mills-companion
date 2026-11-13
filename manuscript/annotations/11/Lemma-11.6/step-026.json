@@ -2,8 +2,8 @@
   "id": "Lemma 11.6 step 26",
   "kind": "proof_step",
   "status": "partial",
-  "relation": "relatedMatch",
-  "note": "Polynomial jets of any length pass through a row-bounded kernel by `activated`, a different quantity from the weighted sup norm. No cubic remainder at j≥6 is stated, and convergence is part of the `Width` hypotheses, not derived from 𝔞<c_j.",
+  "relation": "hasPart",
+  "note": "[L] proves convergence of the polynomially weighted kernel sum in width_income (the case of no exponential weight, with the polynomial absorbed by the strip width) and its application to polynomial jets in royalties. The application to a cubic remainder when j>=6 is not there.",
   "subject": [
     {
       "location": {
@@ -29,36 +29,75 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.FreeResolvent.Mark.activated",
-        "module": "YM.Push.FREE_RESOLVENT.Growth",
+        "declaration": "YM.Planned.PrimaryIntegral295.Carrier.width_income",
+        "module": "YM.Planned.PRIMARY_INTEGRAL_295.Carrier",
         "lines": [
-          114,
-          128
+          57,
+          66
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.FreeResolvent.Mark.activated"
+            "id": "YM.Planned.PrimaryIntegral295.Carrier.width_income"
           },
           "snippet": {
-            "text": "lemma activated {x : τ → ℝ} {F : (τ → ℝ) → Matrix ι κ ℝ} {l : List α} (u : α → τ → ℝ)\n    (h : ContDiffAt ℝ l.length F x)\n    (hf : ∀ w : Fin l.length → τ, Bill (positions D p d) D a b (List.ofFn w) γ M\n            (jet (fun i : τ => Pi.single i 1) F (List.ofFn w) x))\n    (hM : 0 ≤ M) (hG : 0 ≤ G)\n    (ht : ∀ i∈l, ∀ j, ‖u i j‖ ≤ G*hill D o R (p j)) (hs : 0 < s) (hd : s+s ≤ d) (hv : D.Volume p s V) :\n    Bill (radial α D o R) D a b l γ (V^l.length * ((G*polynomial s R)^l.length*M)) (jet u F l x) := by\n  refine ⟨meter_rows u (fun w => (hf w).row) hM hG ht hs hd hv,?_⟩\n  let Q y := (F y).transpose\n  have he : jet u Q l x=(jet u F l x).transpose := jet_linear u l (Bundle.switch ι κ) h\n  rw [← he]; apply meter_rows u _ hM hG ht hs hd hv\n  intro w\n  have hx : ContDiffAt ℝ (List.ofFn w).length F x := by simpa\n  erw [jet_linear (A:=F) _ _ (Bundle.switch ι κ) hx]\n  exact (hf w).col",
-            "line": 114,
+            "text": "lemma width_income {σ C : ℝ} (hσ : 0<σ) {q : Cover→ℝ} (hq : Width σ C q) (n : ℕ) :\n    SumBudget (fun i : Cover => ‖q i‖ * liftCost n i) (widthCost σ n*C) := by\n  let g (x : Cover) := Real.exp (σ*size x)*‖q x‖\n  let p := widthCost σ n\n  have hp : 0 ≤ p := zero_le_one.trans (widthCost_ge hσ n)\n  have he : SumBudget (fun i => p*g i) (p*C) := ⟨fun i => mul_nonneg hp (hq.1 _),hq.2.1.mul_left _,by\n    rw [tsum_mul_left]; exact mul_le_mul_of_nonneg_left hq.2.2 hp⟩\n  apply budget_minor he (fun _ => mul_nonneg (norm_nonneg _) (liftCost_pos ..)); intro i\n  rw [mul_comm ‖q i‖]; refine (mul_le_mul_of_nonneg_right (widthBill σ hσ n _ (Nat.cast_nonneg (size i))) (norm_nonneg _)).trans_eq ?_\n  exact mul_assoc ..",
+            "line": 57,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/FREE_RESOLVENT/Growth.lean",
-            "fragment": "L114-L128"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Planned/PRIMARY_INTEGRAL_295/Carrier.lean",
+            "fragment": "L57-L66"
           },
           "proof_context": {
-            "declaration": "YM.FreeResolvent.Mark.activated",
+            "declaration": "YM.Planned.PrimaryIntegral295.Carrier.width_income",
             "lines": [
-              114,
-              128
+              57,
+              66
             ],
-            "conclusion": "Polynomial growth of the inputs G*(1+d)^R passes through a row-bounded kernel and its jets."
+            "conclusion": "The kernel sum against the polynomial weight liftCost n converges, because widthBill absorbs (1+|z|)^n into the exponential strip width sigma>0."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Planned.PrimaryIntegral295.Carrier.royalties",
+        "module": "YM.Planned.PRIMARY_INTEGRAL_295.Carrier",
+        "lines": [
+          73,
+          76
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Planned.PrimaryIntegral295.Carrier.royalties"
+          },
+          "snippet": {
+            "text": "lemma royalties (n : ℕ) (f : E4 → Axis → E) (h : f ∈ rangeLt (Axis → E) n) : ∃ M : ℝ, Carries (verdict f) n M := by\n  obtain ⟨M,hM,H⟩ := Place.band_growth h\n  exact ⟨M,hM,fun x a => (norm_le_pi_norm ..).trans ((H (seat x)).trans (mul_le_mul_of_nonneg_left\n    (pow_le_pow_left₀ (by positivity) (add_le_add_right (shade_seat x) _) n) hM))⟩",
+            "line": 73,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Planned/PRIMARY_INTEGRAL_295/Carrier.lean",
+            "fragment": "L73-L76"
+          },
+          "proof_context": {
+            "declaration": "YM.Planned.PrimaryIntegral295.Carrier.royalties",
+            "lines": [
+              73,
+              76
+            ],
+            "conclusion": "Polynomials of degree < n (rangeLt n) carry the weight (1+|x|)^n, so the weighted estimate applies to polynomial jets."
           }
         }
       }
@@ -73,11 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge changed it from noMatch; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge changed it from noMatch; re-judged after a second independent review, which changed it from relatedMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {
-        "kind": "helper"
+        "kind": "chain"
       }
     }
   }

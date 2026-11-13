@@ -1,9 +1,9 @@
 {
   "id": "Lemma 14.7 step 2",
   "kind": "proof_step",
-  "status": "formalized",
-  "relation": "closeMatch",
-  "note": "[L] carries this in YM.Source.TransferData.origin_unit, using the field unit_coord of Based. Sung.clocks supplies that field from Heard.unit, which the one-level step in Replay.lean re-establishes level by level. The difference is packaging: the induction is the Heard invariant carried through the construction, not an argument inside this proof.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "The unit identity, Z^{-1}u_d = a_N^d 1 and insertion one are in [L], but the unit identity enters as a field of `Based` (from the `units` hypothesis of the G08 input), and the density computation a_m^d ρ_m with its induction is not in these lines.",
   "subject": [
     {
       "location": {
@@ -24,6 +24,45 @@
     }
   ],
   "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Source.TransferData.Based",
+        "module": "YM.Source.Insertion",
+        "lines": [
+          112,
+          112
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Source.TransferData.Based"
+          },
+          "snippet": {
+            "text": "  unit_coord m : r ≤ m → m ≤ N → (T.entries m (unitVec F H N)).x = unitVec F H m",
+            "line": 112,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Source/Insertion.lean",
+            "fragment": "L112-L112"
+          },
+          "proof_context": {
+            "declaration": "YM.Source.TransferData.Based",
+            "lines": [
+              89,
+              114
+            ],
+            "conclusion": "`unit_coord`: x_m of the level-N unit is the level-m unit for r ≤ m ≤ N."
+          }
+        }
+      }
+    },
     {
       "type": "lean",
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
@@ -58,85 +97,7 @@
               121,
               130
             ],
-            "conclusion": "From unit_coord and reads, the inverse terminal map sends the reference unit to the level-N unit, and the inserted cylinder of the unit equals a_N^{-d} a_N^d = 1."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Extra.Histories.Sung.clocks",
-        "module": "YM.Extra.SOURCE_HISTORIES.Song",
-        "lines": [
-          104,
-          104
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Extra.Histories.Sung.clocks"
-          },
-          "snippet": {
-            "text": "  · have ht := h.earned i hi he; exact (ht.currents _).trans ht.unit",
-            "line": 104,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/SOURCE_HISTORIES/Song.lean",
-            "fragment": "L104-L104"
-          },
-          "proof_context": {
-            "declaration": "YM.Extra.Histories.Sung.clocks",
-            "lines": [
-              100,
-              113
-            ],
-            "conclusion": "At each level m the unit input has coordinate the level-m unit (Heard.currents and Heard.unit)."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Extra.Histories.reprise",
-        "module": "YM.Extra.SOURCE_HISTORIES.Replay",
-        "lines": [
-          213,
-          218
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Extra.Histories.reprise"
-          },
-          "snippet": {
-            "text": "  · change (Z (unitVec F H N)).x = _\n    have hc := hI (unitVec F H N)\n    rw [hq.unit,show F.core (unitVec F H (m+1))=0 by simp [unitVec,Size.unit_core]] at hc\n    rw [show (Z (unitVec F H N)).x = T.leads L (unitVec F H (m+1)) from sub_eq_zero.mp (Work.G08.size_separates _ _ (by simpa [Frame.coeffSize] using hc))]\n    change T.map (vowel F L _) = _\n    rw [show vowel F L (unitVec F H (m+1)) = unitVec F H m from unit_vowel ..]; simp [unitVec,T.unit]",
-            "line": 213,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/SOURCE_HISTORIES/Replay.lean",
-            "fragment": "L213-L218"
-          },
-          "proof_context": {
-            "declaration": "YM.Extra.Histories.reprise",
-            "lines": [
-              94,
-              223
-            ],
-            "conclusion": "The one-level step sends the level-(m+1) unit to the level-m unit with zero nonconstant part (unit_vowel, T.unit), re-establishing Heard.unit."
+            "conclusion": "With `reads`, `terminal.symm` sends the reference unit to the level-N unit, and factor scaling gives cylinder value 1 at every site."
           }
         }
       }
@@ -151,7 +112,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, a judge ruled; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, a judge ruled; a re-rating agent agreed; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

@@ -1,9 +1,9 @@
 {
   "id": "Lemma 11.7 step 1",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "Lean carries the free-link Haar density with J(0)=1 and the right-translation invariance used in the change of variables. The tree-gauge reduction (tree links as Haar translates of child gauge variables, invariance under block-root gauge transformations) is not a separate lemma here, and the constant J_*^{n_e} appears as `scale ^ card Free`.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Carried by Tree.Forest.pack (the reduction to product Haar on free links under root-fixing gauge invariance), LocalRatio, whose existence is proved by LocalH.Haar.actual, and Work.F05.load_eq/order_exposed. Differences: pack integrates out the tree links by a seam split followed by a two-sided Haar rearrangement of the free links, rather than by tree-ordered Haar translates, and the exponential-coordinate density is stated only on a chart ball.",
   "subject": [
     {
       "location": {
@@ -29,36 +29,75 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Work.F05.order_exposed",
-        "module": "YM.Work.F05.Measure",
+        "declaration": "YM.Tree.Forest.pack",
+        "module": "YM.Tree.Cut",
         "lines": [
-          96,
-          98
+          81,
+          111
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Work.F05.order_exposed"
+            "id": "YM.Tree.Forest.pack"
           },
           "snippet": {
-            "text": "lemma order_exposed {P : ChartRatio G} (h : LocalRatio P) (x : Bid.Dir G c)\n    (s : Set (AxisChart G B)) (hs : IsCompact s) (hV : s ⊆ parcel B P) :\n    (B.order G) (exposure B x '' s) = ∫⁻ y in s, ENNReal.ofReal (load B P y) := by",
-            "line": 96,
+            "text": "theorem pack (F : Config G f → X) (h : Integrable F (prior G f))\n    (he : ∀ k : Site f → G.El, (∀ i, k (g.embed i)=1) → ∀ U,F (Lattice.gauge k U)=F U) :\n    (∫ U : Config G f, F U ∂prior G f) = ∫ x : A.Slice G,F (A.drape x) ∂A.order G := by\n  let M : Measure (↥A.trunks → G.El) := Measure.pi (fun _ => G.probHaar)\n  letI : IsProbabilityMeasure M := by unfold M; infer_instance\n  have hS : MeasurePreserving A.seam (prior G f) (M.prod (A.order G)) := by\n    unfold prior M order\n    convert! measurePreserving_piEquivPiSubtypeProd  (fun _ : Edge (Site f) => G.probHaar) (fun i => i∈A.trunks)\n  rw [← hS.symm.integral_comp' F]\n  have H : Integrable (fun x => F (A.seam.symm x)) (M.prod (A.order G)) :=\n    (hS.symm.integrable_comp_emb A.seam.symm.measurableEmbedding).mpr h\n  rw [integral_prod _ H]; clear H\n  have hh (x : ↥A.trunks → G.El) : (∫ y,F (A.seam.symm (x,y))∂A.order G) = ∫ y,F (A.drape y) ∂A.order G := by\n    let k := A.foldAt (A.seam.symm (x,(1:A.Slice G)))\n    have HS : MeasurePreserving (A.rearrange k) (A.order G) (A.order G) :=\n      measurePreserving_pi _ _ fun i : A.Free => G.preserve_two_sided (k i.val.1) ((k (i.val.1+step i.val.2))⁻¹)\n    have hg (y : A.Slice G) : F (A.seam.symm (x,y))=F (A.drape (A.rearrange k y)) := by\n      rw [← he k (fun x => A.fold_root _ x)]\n      congr 1\n      funext i; by_cases e : i∈A.trunks\n      · have H : k=A.foldAt (A.seam.symm (x,y)) := A.names _ _ (fun z h ↦ by\n          let t : ↥A.trunks := ⟨z,h⟩\n          exact (congr_fun (congr_arg Prod.fst (A.seam.apply_symm_apply (x,(1:A.Slice G)))) t).trans (congr_fun (congr_arg Prod.fst (A.seam.apply_symm_apply (x,y))) t).symm)\n        exact Eq.trans (by rw [H]; exact A.compress _ _ e) (A.on_tree _ ⟨i,e⟩).symm\n      let t : A.Free := ⟨i,e⟩\n      rw [show A.drape _ i = _ from A.off_tree (A.rearrange k y) t]\n      change k i.1*A.seam.symm (x,y) i*(k _)⁻¹=k i.1*y t*(k _)⁻¹\n      rw [show A.seam.symm (x,y) i = y t from congr_fun (congr_arg Prod.snd (A.seam.apply_symm_apply (x,y))) t]\n    simp_rw [hg]\n    exact HS.integral_comp' (fun x ↦ F (A.drape x))\n  simp_rw [hh]; simp",
+            "line": 81,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Tree/Cut.lean",
+            "fragment": "L81-L111"
+          },
+          "proof_context": {
+            "declaration": "YM.Tree.Forest.pack",
+            "lines": [
+              81,
+              111
+            ],
+            "conclusion": "For F invariant under gauge transformations fixing the block roots, the integral over all links against product Haar equals the integral over free links (tree links set to 1) against product Haar."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.F05.load_eq",
+        "module": "YM.Work.F05.Measure",
+        "lines": [
+          28,
+          30
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.F05.load_eq"
+          },
+          "snippet": {
+            "text": "lemma load_eq (P : ChartRatio G) (y : AxisChart G B) :\n    load B P y = P.scale ^ Fintype.card B.Free * toll B P y := by\n  simp [load,toll,Finset.prod_mul_distrib]",
+            "line": 28,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/F05/Measure.lean",
-            "fragment": "L96-L98"
+            "fragment": "L28-L30"
           },
           "proof_context": {
-            "declaration": "YM.Work.F05.order_exposed",
+            "declaration": "YM.Work.F05.load_eq",
             "lines": [
-              96,
-              122
+              28,
+              30
             ],
-            "conclusion": "The counting measure `B.order G` of the image `exposure B x '' s` of free-link chart coordinates equals the integral of the density `load B P y = ∏ scale * J (y i)`, i.e. product Haar measure on free links in exponential coordinates."
+            "conclusion": "The chart density on free links is scale^{n_e} * prod_e J(z_e)."
           }
         }
       }
@@ -68,75 +107,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Stationary.treasury",
-        "module": "YM.Next.STATIONARY.Joint.HaarJac",
+        "declaration": "YM.Precision.LocalRatio",
+        "module": "YM.PCalc.Loop",
         "lines": [
-          96,
-          96
+          28,
+          38
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Stationary.treasury"
+            "id": "YM.Precision.LocalRatio"
           },
           "snippet": {
-            "text": "    have hT : MeasurePreserving m (F.order G) (F.order G) := measurePreserving_pi _ _ (fun i : F.Free => measurePreserving_mul_right G.probHaar ((d y)⁻¹ i))",
-            "line": 96,
+            "text": "structure LocalRatio (Ñ : ChartRatio G) : Prop where\n  scale : 0 < Ñ.scale\n  patch : 0 < Ñ.radius\n  inject : Set.InjOn G.lieExp (Metric.ball 0 Ñ.radius)\n  pos (x : G.Color) : x∈Metric.ball 0 Ñ.radius → 0 < Ñ.J x\n  anchored : Ñ.J 0=1\n  germ : ∀ x∈ Metric.ball (0:G.Color) Ñ.radius, ContDiffAt ℝ ω Ñ.J x\n  borel : Measurable Ñ.J\n  actual : Measure.map G.lieExp ((volume.restrict (Metric.ball 0 Ñ.radius)).withDensity (fun x : G.Color => ENNReal.ofReal (Ñ.scale*Ñ.J x))) =\n    G.probHaar.restrict (G.lieExp '' (Metric.ball 0 Ñ.radius))\n  isOpen : IsOpen (G.lieExp '' (Metric.ball 0 Ñ.radius))",
+            "line": 28,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Joint/HaarJac.lean",
-            "fragment": "L96-L96"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PCalc/Loop.lean",
+            "fragment": "L28-L38"
           },
           "proof_context": {
-            "declaration": "YM.Stationary.treasury",
+            "declaration": "YM.Precision.LocalRatio",
             "lines": [
-              63,
-              114
+              28,
+              38
             ],
-            "conclusion": "Right translation by `(d y)⁻¹` on each free link is measure preserving for `probHaar` (`measurePreserving_mul_right`)."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Stationary.treasury",
-        "module": "YM.Next.STATIONARY.Joint.HaarJac",
-        "lines": [
-          113,
-          113
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Stationary.treasury"
-          },
-          "snippet": {
-            "text": "  unfold H L at hh; rw [hx,load_eq,load_eq,show toll F P 0=1 by simp [toll,h.anchored],mul_one,mul_comm |(fderiv ℝ R y).det|] at hh",
-            "line": 113,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Joint/HaarJac.lean",
-            "fragment": "L113-L113"
-          },
-          "proof_context": {
-            "declaration": "YM.Stationary.treasury",
-            "lines": [
-              63,
-              114
-            ],
-            "conclusion": "The anchor `LocalRatio.anchored` gives `toll F P 0 = 1`, i.e. J(0)=1."
+            "conclusion": "In exponential coordinates, probability Haar is the pushforward of scale*J(x)dx on a ball, with J(0)=1 and J>0."
           }
         }
       }
@@ -151,7 +151,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

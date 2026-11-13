@@ -1,9 +1,9 @@
 {
   "id": "Section 12 display 9",
   "kind": "display",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "Floor gives H = c_dir I + rho^T rho and H^(0)=I, and `quadratic` the prescribed quadratic part through the row factor. The identity of the quadratic form with (1/2)<d_1 a, H d_1 a> is not stated as one fact.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] defines the action `quadratic` as c_dir·price plus ‖ρU‖²/2. YM.Precision.Floor gives H = c_dir I + ρᵀρ with Ĥ(0)=I, and `weights` derives the entrywise form `metric_zero`. The difference is packaging: the quadratic part appears as the nonlinear price plus row-factor square, not as the single form ½⟨d₁a, H d₁a⟩.",
   "subject": [
     {
       "location": {
@@ -58,7 +58,7 @@
               61,
               68
             ],
-            "conclusion": "`Floor` states `(M.full p n)^T (M.full p n) = M.metric.acts n` with `full` stacking `sqrt(c.direct) I` over the roots, and `M.metric.read 0 = 1`."
+            "conclusion": "`roots`: `(full p n)^T (full p n) = metric.acts n` with `full` stacking `sqrt(c_dir) I` over the row factor, so H = c_dir I + ρ^T ρ; `starts`: `metric.read 0 = 1`."
           }
         }
       }
@@ -97,7 +97,46 @@
               24,
               25
             ],
-            "conclusion": "The quadratic action is the sum over faces of `p.direct * price` plus `‖R.ell U b‖^2/2`."
+            "conclusion": "The leading quadratic action is Σ_faces (c_dir·price + ‖ρ U‖^2/2)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Push.PriceCompiler.Canonical.weights",
+        "module": "YM.Push.PRICE_COMPILER.Canonical",
+        "lines": [
+          140,
+          141
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Push.PriceCompiler.Canonical.weights"
+          },
+          "snippet": {
+            "text": "lemma weights {a A v : ℝ} {H : Bed} (h : H.roots.strip a A) (ha : 0 ≤ a) {p : Clip}\n    (hp : Floor H p 1 v A) {W : PathData G} (hw : W.row=row H) : W.metric_zero p := by",
+            "line": 140,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/PRICE_COMPILER/Canonical.lean",
+            "fragment": "L140-L141"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.PriceCompiler.Canonical.weights",
+            "lines": [
+              140,
+              176
+            ],
+            "conclusion": "For rows built from a Floor datum, `metric_zero` holds: c_dir δ + Σ s s = δ, i.e. Ĥ(0)=I."
           }
         }
       }
@@ -112,7 +151,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       }
     }

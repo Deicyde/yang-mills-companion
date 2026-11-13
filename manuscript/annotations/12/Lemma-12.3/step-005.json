@@ -1,9 +1,9 @@
 {
   "id": "Lemma 12.3 step 5",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "Lean carries the loop coefficients a_loop(z) as `loopRow` and the order-two vanishing as `loop_jets`. Both are hypotheses: they are not obtained by applying the two-leg part of Lemma C3 and removing the curl symbols.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] does the two-leg division in YM.Stationary.veins; YM.Stationary.reach_symbol (Loops/Curvature.lean) uses it to build the loop atoms. YM.Stationary.jet_moment derives Σa=0 and Σz_a a=0 from order two through vertical_moment. The difference: the moments are stated for the Fourier coefficient family, and PathData.loop_jets packages them separately for the atoms.",
   "subject": [
     {
       "location": {
@@ -29,36 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Push.Loops.loopRow",
-        "module": "YM.Push.LOOP_COEFFICIENT.LoopRow",
+        "declaration": "YM.Stationary.veins",
+        "module": "YM.Next.STATIONARY.Lift.Pathways",
         "lines": [
-          49,
-          49
+          203,
+          206
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Push.Loops.loopRow"
+            "id": "YM.Stationary.veins"
           },
           "snippet": {
-            "text": "def loopRow (W : PathData G) : Row (Sides G) (Sides G) := fun i j => packed (deltaPos W) (atomRow W i j)",
-            "line": 49,
+            "text": "lemma veins (G : Gauge) (σ : ℝ) (hs : 0<σ) : ∃ η K : ℝ, 0 < η ∧ η ≤ σ ∧ 0≤K ∧\n    ∀ (A : ℝ) (s : ℕ) (f : Picture G 1), 0 ≤ A → Features f σ A →\n    (∀ i j, Rays (s+2) (f i j ∘ axes)) →\n    ∃ R : Skin G 1, Shades R f η (A*K) ∧ ∀ a i, Rays s (readable (R a i) ∘ axes) := by",
+            "line": 203,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/LOOP_COEFFICIENT/LoopRow.lean",
-            "fragment": "L49-L49"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Lift/Pathways.lean",
+            "fragment": "L203-L206"
           },
           "proof_context": {
-            "declaration": "YM.Push.Loops.loopRow",
+            "declaration": "YM.Stationary.veins",
             "lines": [
-              49,
-              49
+              203,
+              211
             ],
-            "conclusion": "`loopRow W i j z` packs the loop-atom coefficients `atomRow W i j` of a fixed plaquette-orientation and colour pair by their displacement `z`, the Fourier coefficient `a_loop(z)`."
+            "conclusion": "A two-leg kernel vanishing to order s+2 is a double curl of a Skin whose entries vanish to order s, with analytic bounds."
           }
         }
       }
@@ -68,36 +68,75 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.RG.PathData.loop_jets",
-        "module": "YM.RG.PathActions",
+        "declaration": "YM.Stationary.jet_moment",
+        "module": "YM.Next.STATIONARY.Lift.Pathways",
         "lines": [
-          167,
-          169
+          267,
+          268
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.RG.PathData.loop_jets"
+            "id": "YM.Stationary.jet_moment"
           },
           "snippet": {
-            "text": "def loop_jets : Prop := ∀ i x, (∑' k, R.loop_coeff i x k) = 0 ∧ ∀ l : Axis,\n    (∑' k, R.loop_coeff i x k *\n      ((((R.loop k).leg 1).offset l - ((R.loop k).leg 0).offset l : ℤ) : ℝ)) = 0",
-            "line": 167,
+            "text": "lemma jet_moment (hw : Width σ A R) (hs : 0<σ) (ht : Rays 2 (readable R ∘ axes)) :\n    HasSum R 0 ∧ ∀ i : α, HasSum (fun x => R x*(x i:ℤ)) 0 := by",
+            "line": 267,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/RG/PathActions.lean",
-            "fragment": "L167-L169"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Lift/Pathways.lean",
+            "fragment": "L267-L268"
           },
           "proof_context": {
-            "declaration": "YM.RG.PathData.loop_jets",
+            "declaration": "YM.Stationary.jet_moment",
             "lines": [
-              167,
-              169
+              267,
+              286
             ],
-            "conclusion": "`loop_jets` states that the loop coefficients of each atom sum to zero and have zero first moments along each axis."
+            "conclusion": "An exponentially decaying coefficient family whose Fourier series vanishes to order 2 has Σ R = 0 and Σ R(x)·x_i = 0 for every axis i."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.vertical_moment",
+        "module": "YM.Next.STATIONARY.Lift.Pathways",
+        "lines": [
+          234,
+          236
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.vertical_moment"
+          },
+          "snippet": {
+            "text": "theorem vertical_moment (hw : Width σ A R) (hs : 0 < σ) (i : α) : Summable (fun x => R x*(x i:ℤ)) ∧\n    HasDerivAt (fun t : ℝ => readable R (axes (t • Pi.single i (1:ℝ))))\n      ((∑' x : Shift α, R x * (x i:ℤ) : ℝ) * Complex.I) 0 := by",
+            "line": 234,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Lift/Pathways.lean",
+            "fragment": "L234-L236"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.vertical_moment",
+            "lines": [
+              234,
+              265
+            ],
+            "conclusion": "For an exponentially weighted coefficient family the first moments are summable and equal (up to the factor i) the derivative at zero of its Fourier series."
           }
         }
       }
@@ -112,7 +151,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, a judge ruled; a re-rating agent disagreed and a judge changed it from relatedMatch; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, a judge ruled; a re-rating agent disagreed and a judge changed it from relatedMatch; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

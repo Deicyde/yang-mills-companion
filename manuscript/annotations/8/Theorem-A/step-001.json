@@ -1,9 +1,9 @@
 {
   "id": "Theorem A step 1",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "The lines fix the group and penalty and choose the run before the volume sequence, as the step says. The Wilson initialization starting the induction, its advance by RG and the trajectory selection by MT are not stated in these lines; they are buried in the selection lemma `constructionRun` calls.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] makes the choices in constructionRun/fundedRun, before any extraction order, and uses them in continuum_with_position_tests and YangMills.constructed. The difference: the Wilson initialization, the RG advance and the trajectory selection are bundled into one selection theorem rather than stated as separate stages.",
   "subject": [
     {
       "location": {
@@ -29,89 +29,11 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YangMills.constructed",
-        "module": "Construction",
-        "lines": [
-          15,
-          16
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YangMills.constructed"
-          },
-          "snippet": {
-            "text": "theorem constructed (g : GaugeGroup) (hg : g.IsSimple) (b : ℝ) (hb : 0 < b) :\n    ∃ C : YM.Family g.core, C.path.levels.clock.kernel.penalty = b ∧ C.Makes ∧",
-            "line": 15,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/Construction.lean",
-            "fragment": "L15-L16"
-          },
-          "proof_context": {
-            "declaration": "YangMills.constructed",
-            "lines": [
-              15,
-              40
-            ],
-            "conclusion": "`constructed` fixes a simple `g` and a penalty `b > 0` and returns a family `C` with `penalty = b` before any extraction order `p` is quantified."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YangMills.constructed",
-        "module": "Construction",
-        "lines": [
-          32,
-          33
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YangMills.constructed"
-          },
-          "snippet": {
-            "text": "  obtain ⟨C,penalty,makes,orders⟩ := Nonperturbative.existence.{u,v} g.core (GaugeGroup.coreSimple hg) b hb\n  refine ⟨C,penalty,makes,regular C hg makes,fun p => ?_⟩",
-            "line": 32,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/Construction.lean",
-            "fragment": "L32-L33"
-          },
-          "proof_context": {
-            "declaration": "YangMills.constructed",
-            "lines": [
-              15,
-              40
-            ],
-            "conclusion": "The family is taken from `Nonperturbative.existence` for this `b`, before `p` is introduced."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
         "declaration": "YM.Independent.constructionRun",
         "module": "YM.Independent.ConstructionRun",
         "lines": [
           14,
-          17
+          28
         ]
       },
       "role": "key",
@@ -121,14 +43,14 @@
             "id": "YM.Independent.constructionRun"
           },
           "snippet": {
-            "text": "theorem constructionRun {G : Gauge} (hG : G.Simple) {b : ℝ} (hb : 0 < b) :\n    ∃ (R : Run G) (T : Campaign R) (W : Campaign.Pillars R T),\n      R.family.path.levels.clock.kernel.penalty = b ∧\n      R2I.Funded (garment10 G) R T ∧ ActualRunNativeComponentRecipe.Attached R := by",
+            "text": "theorem constructionRun {G : Gauge} (hG : G.Simple) {b : ℝ} (hb : 0 < b) :\n    ∃ (R : Run G) (T : Campaign R) (W : Campaign.Pillars R T),\n      R.family.path.levels.clock.kernel.penalty = b ∧\n      R2I.Funded (garment10 G) R T ∧ ActualRunNativeComponentRecipe.Attached R := by\n  have hTrue : R2I.EventuallyPaid (fun _ : RG.Levels G => True) :=\n    fun _ _ _ V => ⟨V, Push.PriceCompiler.DelayLe.refl _, by intros; trivial⟩\n  obtain ⟨R,T,hb',hSelected,_,_,_,_,⟨W⟩,hf,_⟩ :=\n    R2I.RG05Joint.selectRunWithTreasuryPeriod_preselected_quote_orders_postnumeric\n      (RiderResourceDynamics.defaultDynamics G).cultivate (CustodyR.minted G)\n      (garment10 G) b hb hG hTrue\n      (fun s (_ : Precision.MapPrices) => NativeComponentRecipe.Choice s)\n      (fun s _ => NativeComponentRecipe.available hG s)\n      NativeComponentRecipe.floor NativeComponentRecipe.numeric\n      ActualRunNativeComponentRecipe.postnumeric\n  exact ⟨R,T,W,hb',hf,ActualRunNativeComponentRecipe.of_preselection R hSelected⟩",
             "line": 14,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Independent/ConstructionRun.lean",
-            "fragment": "L14-L17"
+            "fragment": "L14-L28"
           },
           "proof_context": {
             "declaration": "YM.Independent.constructionRun",
@@ -136,7 +58,46 @@
               14,
               28
             ],
-            "conclusion": "`constructionRun` selects the Wilson run with penalty `b` from its RG and lattice data, before any extraction order or observable (`fundedRun` is its choice)."
+            "conclusion": "For simple G and b > 0, a funded Wilson run with penalty b is selected (via selectRunWithTreasuryPeriod_preselected_quote_orders_postnumeric) before any extraction order."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Nonperturbative.continuum_with_position_tests",
+        "module": "YM.Nonperturbative.Continuum",
+        "lines": [
+          28,
+          48
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Nonperturbative.continuum_with_position_tests"
+          },
+          "snippet": {
+            "text": "theorem continuum_with_position_tests {G : Gauge} (hG : G.Simple) {b : ℝ} (hb : 0 < b) :\n    let R := fundedRun hG hb\n    R.family.path.levels.clock.kernel.penalty = b ∧\n    ∀ p : Extraction.Order, ∃ (q : Extraction.Order) (S : Table R.family.book)\n      (F : Final R.family (p.refine q) S) (L : EveryPhase.Almanac F)\n      (Q : Reader F.sector.derivatives F.sector.turns F.room.kernel.spin)\n      (M : Contacts.Devices F.sector.derivatives),\n      (Extraction.Order.mk Extraction.Sequence.full (p.refine q).per).Ordered R.family S ∧\n      FullVolume.PositionsUV R.family Extraction.Sequence.full ∧ Core.{u,v} hG F L Q ∧\n      OPE.Nesting.Uniform F Q ∧ M.basis = Q.port ∧ MultipleLight F M ∧\n      Nonempty (Contacts.Transport.SystemBasis M) ∧ Nonempty (Thresholds M) ∧\n      ∃ X : Climb.Scaling S, Pert.FirstExtension F X ∧ Pert.Position.FourMeters F X := by\n  obtain ⟨T,W,penalty,funded,_⟩ := (constructionRun hG hb).choose_spec\n  refine ⟨penalty,?_⟩\n  intro p\n  obtain ⟨q,_,S,F,X,L,Q,_,ordered,uv,first,reconstruction,trace,service,ope,nested,_,_⟩ :=\n    (R2IGoals.fromFunded.{u} W hG funded).refine p\n  obtain ⟨M,same,contacts,basis,thresholds⟩ := contacts_on F Q service.toServices\n  exact ⟨q,S,F,L,Q,M,ordered,uv,\n    Core.of_receipts hG F L Q reconstruction trace service.toServices ope,\n    nested,same,contacts,basis,thresholds,X,first,Pert.Position.four_on F X hG first⟩",
+            "line": 28,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Nonperturbative/Continuum.lean",
+            "fragment": "L28-L48"
+          },
+          "proof_context": {
+            "declaration": "YM.Nonperturbative.continuum_with_position_tests",
+            "lines": [
+              28,
+              48
+            ],
+            "conclusion": "With the run fundedRun fixed, each requested extraction order p is refined afterwards."
           }
         }
       }
@@ -151,7 +112,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, a judge ruled; a re-rating agent agreed; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, a judge ruled; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

@@ -1,9 +1,9 @@
 {
   "id": "Lemma 11.10 step 3",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "`after_contact`, applied in `lean_drift`, gives the second-order identity at 0 for log det(K+Gm) - log det K, with tr(K^-1 Gm) and the squared trace term. The full expansion with O(|v|^3) remainder and coefficients 1/2, -1/4 is not stated.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Carried by YM.Stationary.audited (Fourier form audit_open): [L] states the identity for the second derivative at zero, with the coefficients 1/2 and 1/2*1/2, rather than as an expansion with an O(|v|^3) remainder.",
   "subject": [
     {
       "location": {
@@ -29,75 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Stationary.after_contact",
-        "module": "YM.Next.STATIONARY.Joint.OnShell",
+        "declaration": "YM.Stationary.audited",
+        "module": "YM.Next.STATIONARY.Films.Contact",
         "lines": [
-          505,
-          508
+          369,
+          374
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Stationary.after_contact"
+            "id": "YM.Stationary.audited"
           },
           "snippet": {
-            "text": "lemma after_contact (h : Memo P 0) (he : Memo Q 0) (hp : (P 0).det≠0) (hy : Q 0=0) (u v) :\n    iteratedFDeriv ℝ 2 (fun y => Real.log ((P+Q) y).det) 0 ![u,v] =\n    iteratedFDeriv ℝ 2 (fun y => Real.log (P y).det) 0 ![u,v] + iteratedFDeriv ℝ 2 (fun y => ((P y)⁻¹ * Q y).trace) 0 ![u,v] -\n      ((P 0)⁻¹ * directionM Q 0 u * (P 0)⁻¹ * directionM Q 0 v).trace := by",
-            "line": 505,
+            "text": "lemma audited (B T : Bed) (he : Inputs S W (B.metric.acts f) (T.metric.acts c)) (hx : AnalyticAt ℝ (clouds t r R W) 0) (x y : Link G c) :\n    iteratedFDeriv ℝ 2 (narrative t W F ρ r R) 0 ![x,y]=\n      let J := -(uniformM (G:=G) (Precision.K (T.metric.acts c)))\n      (1/2:ℝ)*(iteratedFDeriv ℝ 2 (clears t r R W) 0 ![boardA G c x,boardB G c (J y)] +\n               iteratedFDeriv ℝ 2 (clears t r R W) 0 ![boardA G c y,boardB G c (J x)] -\n               (1/2:ℝ)* iteratedFDeriv ℝ 2 (clouds t r R W) 0 ![boardB G c (J x),boardB G c (J y)]) := by",
+            "line": 369,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Joint/OnShell.lean",
-            "fragment": "L505-L508"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Films/Contact.lean",
+            "fragment": "L369-L374"
           },
           "proof_context": {
-            "declaration": "YM.Stationary.after_contact",
+            "declaration": "YM.Stationary.audited",
             "lines": [
-              505,
-              529
+              369,
+              398
             ],
-            "conclusion": "For P, Q analytic with det P(0) nonzero and Q(0) = 0, the Hessian at 0 of log det(P+Q) equals that of log det P plus the Hessian of tr(P^-1 Q) minus tr(P(0)^-1 Q'(u) P(0)^-1 Q'(v))."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Stationary.lean_drift",
-        "module": "YM.Next.STATIONARY.Joint.Drift",
-        "lines": [
-          586,
-          587
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Stationary.lean_drift"
-          },
-          "snippet": {
-            "text": "  rw [(show iteratedFDeriv ℝ 2 (E∘pace F ρ W t) 0=_ from (HN.iteratedFDeriv ℝ 2).eq_of_nhds),\n    (show iteratedFDeriv ℝ 2 (P∘pace F ρ W t) 0=_ from (HQ.iteratedFDeriv ℝ 2).eq_of_nhds),after_contact hK hGm (hK'.symm ▸ hi.ne_zero) hGm']",
-            "line": 586,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Joint/Drift.lean",
-            "fragment": "L586-L587"
-          },
-          "proof_context": {
-            "declaration": "YM.Stationary.lean_drift",
-            "lines": [
-              498,
-              589
-            ],
-            "conclusion": "Along the stationary curve `pace`, the full and contact-removed log-determinants `majorBoon`, `coreBoon` are rewritten as log det(K+Gm) and log det K, and `after_contact` is applied to their Hessians."
+            "conclusion": "The second derivative at zero of the stationary determinant difference narrative equals 1/2 of the symmetrized first-order term (clears paired with J = -K) minus 1/4 of the quadratic term clouds."
           }
         }
       }
@@ -112,11 +73,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, a judge ruled; a re-rating agent disagreed and a judge changed it from relatedMatch; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, a judge ruled; a re-rating agent disagreed and a judge changed it from relatedMatch; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {
-        "kind": "chain"
+        "kind": "helper"
       }
     }
   }

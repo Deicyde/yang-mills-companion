@@ -1,9 +1,9 @@
 {
   "id": "Lemma 11.8 step 21",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "relatedMatch",
-  "note": "The Lean gets the strip inverse from the `Stable` perturbation estimate rather than an explicit Neumann series.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] obtains the weighted inverse on the strip in Stationary.shelter. The perturbation of half the real lower bound is done as a stability estimate (Stable.cove) for the perturbed operator, not as an explicit Neumann series.",
   "subject": [
     {
       "location": {
@@ -54,7 +54,7 @@
         "declaration": "YM.Stationary.shelter",
         "module": "YM.Next.STATIONARY.Spectral.Slabs",
         "lines": [
-          173,
+          140,
           174
         ]
       },
@@ -65,14 +65,14 @@
             "id": "YM.Stationary.shelter"
           },
           "snippet": {
-            "text": "  refine ⟨fun p hx=> (carryM_solid _).1 ((hq p hx).safe hv), fun p hx => ?_⟩\n  unfold serial; rw [carryM_back']; exact (hq p hx).bill hv",
-            "line": 173,
+            "text": "lemma shelter :\n    ∃ η D : ℝ, 0<η ∧ η≤σ ∧ 0≤D ∧ ∀ (α : Type) [Fintype α] [DecidableEq α]\n    (X Y : Slab α) (HX : X.Height σ C) (HY : Y.Height σ C)\n    (K : Momentum→CompM α α), Poster σ K → (∀ p∈strip σ, serial X Y p p (K p) A) →\n      (∀ p : Momentum, star p=p → Stable (carryM X Y p p (K p)) a) → Freezer X Y K η D := by\n  let k := C*A*C/(σ/2)\n  have hk : 0 ≤ k := by unfold k; positivity\n  let i := σ/2\n  let j := a/2 / (1+k)\n  have hv : 0 < a/2 := half_pos ha\n  have hh : 0 < 1+k := by linarith\n  refine ⟨min i j,(a/2)⁻¹,lt_min (half_pos hs) (div_pos hv hh),(min_le_left ..).trans (half_le_self hs.le),inv_nonneg.mpr hv.le, ?_⟩\n  intro α _ _ X Y HX HY K hz hg hl\n  have hq p (hq : p∈strip (min i j)) : Stable (carryM X Y p p (K p)) (a/2) := by\n    let x := ground p\n    have hp' := ground_near hq\n    have hr : p∈ ball x i := by rw [mem_ball,dist_eq_norm]; exact hp'.trans_le (min_le_left ..)\n    have hx := ground_real p\n    obtain ⟨P,h1,h2,h3⟩ := HX.feel x hx\n    obtain ⟨T,g1,g2,g3⟩ := HY.feel x hx\n    let Q := fun z => carryM P T z z (K z)\n    have hw z (hw : z∈ ball x σ) : vflux (Q z)≤ C*A*C := by\n      have hi := ((h3 z hw).2.bond (hg z (air_ride hx hw))).bond (g3 z hw).1\n      rwa [Matrix.one_mul, Matrix.mul_one] at hi\n    have hL z (hW : z∈ball x σ) : BillD Q z := ((BillD.take (h1 z hW) (P.whole z)).bond (hz.shape (air_ride hx hW))).bond (g1 z hW)\n    have hU : Q x=carryM X Y x x (K x) := by\n      unfold Q carryM; rw [h2 x (axes_of_real hx), g2 x (axes_of_real hx)]\n    have hV : Q p=carryM X Y p p (K p) := by unfold Q carryM; rw [h2 p rfl, g2 p rfl]\n    rw [← hV]; apply Stable.mono (Stable.cove (U:=Q x) (hU.symm ▸ hl x hx) (contour_matrix hs hL hw hr))\n    have hh' : k * ‖p-x‖ ≤ a/2 := calc\n      _ ≤ (1+k)*j := mul_le_mul (by linarith) (hp'.trans_le (min_le_right ..)).le (norm_nonneg _) hh.le\n      _ = _ := by unfold j; field_simp\n    change a/2 ≤ a-k*_; linarith\n  refine ⟨fun p hx=> (carryM_solid _).1 ((hq p hx).safe hv), fun p hx => ?_⟩\n  unfold serial; rw [carryM_back']; exact (hq p hx).bill hv",
+            "line": 140,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Spectral/Slabs.lean",
-            "fragment": "L173-L174"
+            "fragment": "L140-L174"
           },
           "proof_context": {
             "declaration": "YM.Stationary.shelter",
@@ -80,7 +80,7 @@
               140,
               174
             ],
-            "conclusion": "`shelter` concludes the inverse bound `serial` on the strip from `Stable … (a/2)` through `carryM_back'`."
+            "conclusion": "A real-momentum stability bound a plus a strip operator bound gives a Freezer (weighted inverse with norm <= (a/2)^{-1}) on a smaller strip, by comparison with the nearest real momentum through contour_matrix and Stable.cove."
           }
         }
       }
@@ -95,11 +95,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from relatedMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {
-        "kind": "direct"
+        "kind": "helper"
       }
     }
   }

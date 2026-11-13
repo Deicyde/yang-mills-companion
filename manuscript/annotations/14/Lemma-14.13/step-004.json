@@ -1,9 +1,9 @@
 {
   "id": "Lemma 14.13 step 4",
   "kind": "proof_step",
-  "status": "formalized",
-  "relation": "closeMatch",
-  "note": "[L] carries the step in Work.I03.answer (parents agree via camp_step, spacing at every finer level), MergeProof.Accent.tent and Geyser.at (rooted bounds on [k,N] at radius plumR, in the toll-weighted marker norm). Differences: the finer-level spacing comes from Tabs.open_later rather than B_{i+1}^2 <= 2B_i^2 and l_i >= 3, and the construction inputs are packaged in the Geyser structure.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "Lean has the spacing at level `k` (`hf`) and the application of the rooted clause (`occurs`); the passage to finer levels (`B_{i+1}^2 ≤ 2B_i^2`, `ℓ_i ≥ 3`) and the choice of the marker norm are not visible in `tent`.",
   "subject": [
     {
       "location": {
@@ -29,36 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Work.I03.answer",
-        "module": "YM.Work.I03",
+        "declaration": "YM.MergeProof.Accent.tent",
+        "module": "YM.MergeProof.Balloon",
         "lines": [
-          43,
-          63
+          33,
+          34
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Work.I03.answer"
+            "id": "YM.MergeProof.Accent.tent"
           },
           "snippet": {
-            "text": "theorem answer : YM.Bid.I03 := by\n  intro G C k hk ht m i ho N _ p hN\n  refine ⟨fun v => ?_, ?_, fun r hir _ x y hxy => ?_⟩\n  · rw [copy_home, camp, dif_pos hN, zero_add]\n  · intro j hj _ v\n    rw [← camp_step C p hj, Ratio.embed_parent]\n  · obtain ⟨hm, he⟩ := Tabs.open_later _ _ ht ho hir (zero_le_one.trans hk)\n    -- Distinct replication sites before embedding: torus separation ≥ 1.\n    have hs : 1 ≤ separation x y :=\n      Nat.pos_of_ne_zero fun H => hxy <|\n        (Corona.line_home x y).symm.trans (Corona.line_end x y H.le)\n    let Q := C.S.toDepth hm p\n    have hu : Q.count.val ≤ separation (Q.embed x) (Q.embed y) :=\n      (le_mul_of_one_le_right (Nat.zero_le _) hs).trans (Corona.below Q x y)\n    simp only [camp, dif_pos hm]\n    calc\n      _ = k * (C.path.levels.clock.coverSize r : ℝ)^2 := mul_comm ..\n      _ ≤ C.S.a m / C.S.a r := he\n      _ = (Q.count.val : ℝ) := (div_eq_iff (C.S.a_pos _).ne').mpr\n        ((C.S.embeds_scale Q).symm.trans (mul_comm ..))\n      _ ≤ (separation (Q.embed x) (Q.embed y) : ℝ) := by exact_mod_cast hu",
-            "line": 43,
+            "text": "   have hf: Edition.Spaced (P k|>.B) (f k):= fun i j hij=>by\n       have he':= hv.2.2 k le_rfl hN.le i j hij; rw [mul_one] at he'; exact_mod_cast he' -- coe maybe cast",
+            "line": 33,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/I03.lean",
-            "fragment": "L43-L63"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Balloon.lean",
+            "fragment": "L33-L34"
           },
           "proof_context": {
-            "declaration": "YM.Work.I03.answer",
+            "declaration": "YM.MergeProof.Accent.tent",
             "lines": [
-              43,
-              63
+              22,
+              47
             ],
-            "conclusion": "Replicated anchors have parents agreeing under each block map, and their separation is at least coverSize_r^2 at every level r from k on (via Tabs.open_later)."
+            "conclusion": "`hf : Spaced` shows the replicated anchors are spaced at least `B_k^2` in the level-`k` grid, from `Tabs.opens` and the `answer` data `hv`."
           }
         }
       }
@@ -71,8 +71,8 @@
         "declaration": "YM.MergeProof.Accent.tent",
         "module": "YM.MergeProof.Balloon",
         "lines": [
-          22,
-          47
+          38,
+          38
         ]
       },
       "role": "key",
@@ -82,14 +82,14 @@
             "id": "YM.MergeProof.Accent.tent"
           },
           "snippet": {
-            "text": "lemma tent (hm: Stock.Tabs.opens C.path.levels 1 m k)(hd:C.ref d ≤ m) (hN:k<N)(he:(F).coeffSize v≤a):\n    (Cells.center C.S p (hm.1.trans hN.le) 0).rootTest (C.beta N p) (C.O N p v 0) ≤ Real.exp (expense C a m k d):=by\n   let hn:m ≤ N:= hm.1.trans hN.le; let X:= b! hn 0\n   let w:= plumR C d a k; let f(j):=(Mix.camp C p m j); let nu(i:A):=dye (X.omega i) (X.hand i); let t(i:A):= item C d N p v (fun j=> f j i) (nu i)\n   let K:= Fintype.card A; let Y:= Stock.census A\n   have hp:Migrating C.path k p N f:= ⟨fun j hi _=> funext fun i=> Work.I03.camp_step C p (hm.1.trans hi) i⟩\n   have hv := Work.I03.answer G C 1 le_rfl B m k hm N hN.le p hn\n   have hs(i:A): X.copy i (C.O N p v 0)=t i:=by\n      funext U; have hh : f N i= X.copyMap i 0:= (hv.1 i).symm\n      unfold t item stepUp;change _=scalar (nu i) (C.O N p v 0 (pull _ (f N i) _)); simp_rw [nu,calling]; rw [hh,show X.copyMap i 0=X.translateBy i from ?_]; rfl\n      change (X.omega i).act 0+_= _; simp\n   have hf: Edition.Spaced (P k|>.B) (f k):= fun i j hij=>by\n       have he':= hv.2.2 k le_rfl hN.le i j hij; rw [mul_one] at he'; exact_mod_cast he' -- coe maybe cast\n   have hk:0<w:= stockpit C k d a ha\n   let z(i:A):=w\n   have hR:m≤k:=hm.1\n   have hj:= occurs (B:=Y) C N k p d H h f (fun _=>v) nu (w:=z) hN (hd.trans hR) (fun _=>hk) (fun _=>stocking C N k p d v a ha (hd.trans hR) hN.le H he) hp (fun i=> (Extra.Multi.Occupancy.of_injective (Edition.injected _ _ (P k|>.B_pos) hf) i).trans (hx _)) ⟨fun _ _ i _ j _=> hf i j⟩ (Stock.final A)\n   have hz : Poly.toll (R:=Stock.census A) z (Stock.final A)=w^K:=by simp [Poly.toll, K, z,Stock.final]\n   have hw := C.S.a_pos k\n   unfold Tiling.rootTest; change ‖moment (C.beta N p) (fun U=>∏ i:A,X.copy i _ U)‖^_ ≤ _; simp_rw [hs]\n   let W:= C.omega N p (fun U=>∏ i:A,t i U); let g:=(C.S.a m/C.S.a k)^4*Vac.treasury T k+ (6:ℝ)\n   rw [hz] at hj\n   refine (Stock.spacer ‖W‖ g w K (norm_nonneg _) hk Fintype.card_pos ?_).trans (by change Real.exp g/w ≤ Real.exp (g-_); rw [Real.exp_sub,Real.exp_log hk])\n   have he : (Fintype.card (Site (C.side k p)):ℝ)*Vac.treasury C.path.levels k+K* (6:ℝ)=K*g:=by\n       rw [Stock.tallies C.S m k p]; unfold K g; ring\n   exact hj.trans_eq (congr_arg Real.exp he)",
-            "line": 22,
+            "text": "   have hj:= occurs (B:=Y) C N k p d H h f (fun _=>v) nu (w:=z) hN (hd.trans hR) (fun _=>hk) (fun _=>stocking C N k p d v a ha (hd.trans hR) hN.le H he) hp (fun i=> (Extra.Multi.Occupancy.of_injective (Edition.injected _ _ (P k|>.B_pos) hf) i).trans (hx _)) ⟨fun _ _ i _ j _=> hf i j⟩ (Stock.final A)",
+            "line": 38,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Balloon.lean",
-            "fragment": "L22-L47"
+            "fragment": "L38-L38"
           },
           "proof_context": {
             "declaration": "YM.MergeProof.Accent.tent",
@@ -97,46 +97,7 @@
               22,
               47
             ],
-            "conclusion": "With that spacing (Drake) and radius plumR, occurs/Geyser.at give the attachment bound at all levels and the root-test estimate."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.MergeProof.Geyser.at",
-        "module": "YM.MergeProof.Badlands",
-        "lines": [
-          56,
-          71
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.MergeProof.Geyser.at"
-          },
-          "snippet": {
-            "text": "lemma Geyser.at (hh : Geyser C W u ψ φ δ ζ r D)(h:C.Makes)(he:C.ref d ≤ k)(hk:k≤N)(hm:Occupancy (f k) (r k))(hx:Migrating C.path k p N f)(hz:Drake B (P k).B (f k))\n    (hM:∀ i,purse i*paid C d k N p (s i) ≤ ζ d k)(hw:∀ i,0<purse i)(ht:∀ i:ℕ,k ≤ i →∀ hi:i<N,q i hi.le=(C.path.levels.clock.op i p).push ((C.path.rep N p (i+1)).beta) (q (i+1) hi))\n    (hv:q N le_rfl=birth B (C.path.rep N p N) Z) (hP: Integrable (q N le_rfl) (prior G (C.side N p))) : ∀ i:ℕ,k ≤ i→∀ hN:i≤N, Served (B! i) (f! i) (k! i) (q i hN) (f i) (march purse φ k i) (topPitch C.path N i) 1:=by\n    obtain ⟨M,hI,hS,hK,hY⟩:= (hh.aim d N p (he.trans hk)).lyrics\n    obtain ⟨v,hF,hX,hB,hb,hH⟩:= hh.heights d k N p he hk\n    let Y:= (C.factory d N p).terminal.symm ∘ s\n    have hp(m j):parcel C d m N p (s j)=(M.tone m).plays (Y j):=by unfold parcel; rw [hI];rfl\n    have hf:Brine C.path k δ φ:=⟨fun i _=> hh.stay.water _ (Nat.zero_le i),fun i _=> hh.stay.mint _ (Nat.zero_le i),fun i _=> hh.stay.split _ (Nat.zero_le i),fun i _=> hh.stay.support _ (Nat.zero_le i)⟩\n    have hZ: Sung T H N p C.params W k M:= ⟨hS.head,hk,fun j hi=> hS.earned _ (he.trans hi),fun j hi=> hS.step _ (he.trans hi)⟩\n    have hM'(i:V): purse i*bond H N p M k (Y i) ≤ ζ d k:=by\n       refine le_trans (le_of_eq (congr_arg (purse i* ·) ?_)) (hM i)\n       unfold Next.Rank.Spindle.paid Price.awake Price.columns -- inspect\n       rw [Size.smul]; unfold bond; congr 1;rw [← (hS.earned k he hk).currents (Y i)] -- hint\n       exact congr_arg (C.labels.level d).coeffSize (congr_arg Coefficient.x (hp k i).symm) -- maybe simplify\n    have ht:= pollinate C.path C.params W φ ψ (ζ d) u δ r D p N k (C.localSection d) M g Y f purse h.wilson hh.cost hh.back hk hw (h.sections d) hZ hf hX hh.mom hm hx hz hh.night hF hB hM' hb hH (fun i hi ht=> hK i (he.trans hi) ht) hY ht hv hP\n    intro i hi hN; simp_rw [Ktone,indexX,hp]; exact ht i hi hN",
-            "line": 56,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Badlands.lean",
-            "fragment": "L56-L71"
-          },
-          "proof_context": {
-            "declaration": "YM.MergeProof.Geyser.at",
-            "lines": [
-              56,
-              71
-            ],
-            "conclusion": "For every level i in [k,N], the pushed marker polynomial is Served, i.e. it has the rooted bounds at the marked radius."
+            "conclusion": "`occurs` is applied with the radius `plumR`, the rooted/attachment bound."
           }
         }
       }
@@ -151,11 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {
-        "kind": "chain"
+        "kind": "direct"
       }
     }
   }

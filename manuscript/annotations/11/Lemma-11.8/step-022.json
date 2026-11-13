@@ -1,9 +1,9 @@
 {
   "id": "Lemma 11.8 step 22",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "relatedMatch",
-  "note": "[L] bounds Taylor coefficients of the inverse along a one-parameter family (`rebounds`, with v = w by polarization) instead of differentiating A^{-1} in directions v, w, so it treats a different quantity.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] proves D G[v] = -G A_v G in Stationary.direction_inverse and both derivatives in Jam.rebounds. Jam.rebounds works with one-parameter jets (v = w, mixed directions by polarization) and writes the second derivative recursively.",
   "subject": [
     {
       "location": {
@@ -33,7 +33,7 @@
         "module": "YM.Next.STATIONARY.OneLoop.Weights",
         "lines": [
           125,
-          126
+          142
         ]
       },
       "role": "key",
@@ -43,14 +43,14 @@
             "id": "YM.Stationary.Jam.rebounds"
           },
           "snippet": {
-            "text": "lemma rebounds {X : ReelF α α} (h : Jam r X (A*a)) (he : IsUnit (X 0).det) (hv : vflux (X 0)⁻¹≤ C/a) (ha : 0<a) (hr : 0≤r) : Jam r (fun x=> (X x)⁻¹) ((inverseBill A C)/a) := by\n  let Y x := (X x)⁻¹",
+            "text": "lemma rebounds {X : ReelF α α} (h : Jam r X (A*a)) (he : IsUnit (X 0).det) (hv : vflux (X 0)⁻¹≤ C/a) (ha : 0<a) (hr : 0≤r) : Jam r (fun x=> (X x)⁻¹) ((inverseBill A C)/a) := by\n  let Y x := (X x)⁻¹\n  have hE : Prick Y := h.run.poles he\n  have hh : (fun x=> Y x*X x)=ᶠ[𝓝 0] fun _=>1 := by filter_upwards [(h.run.det.continuousAt).eventually_ne he.ne_zero] with x hx; exact Matrix.nonsing_inv_mul _ hx.isUnit\n  have hY := eq_neg_of_add_eq_zero_right ((jar_ini hE h.run).symm.trans ((jar_tape (n:=1) hh).trans (jar_const one_pos _)))\n  have hV : jarY 1 Y= -(Y 0 *jarY 1 X*Y 0) := by\n    have hh := congr_arg (· * Y 0) hY\n    rw [← Matrix.mul_nonsing_inv_cancel_right (X 0) (jarY 1 Y) he];\n    exact hh.trans (Matrix.neg_mul ..)\n  have ht' := h.prices 0 (by decide); rw [jar_now] at ht'\n  have hz : r^0 *vflux (Y 0) ≤ C/a := by simpa using hv\n  have h1 : r^1*vflux (jarY 1 Y) ≤ A*C^2/a := by rw [hV,flux_neg]; refine (sweeter (sweeter hz (h.prices 1 (by decide)) hr) hz hr).trans_eq (?_); field_simp\n  have hl : r^2*vflux (jarY 2 Y)≤ (2*A^2*C^3+C^2*A)/a := by\n    let U := Y 0*jarY 2 X +jarY 1 Y*jarY 1 X +jarY 1 Y * jarY 1 X\n    have ht : U + jarY 2 Y * X 0=0 := Eq.trans (by unfold U; rw [add_assoc (_ + _), ← jar_multi hE h.run]) ((jar_tape (n:=2) hh).trans (jar_const (by decide : 0<2) _))\n    have hx : jarY 2 Y= -(U*Y 0) := by\n      have hh := congr_arg (· * Y 0) (eq_neg_of_add_eq_zero_right ht); rw [← Matrix.mul_nonsing_inv_cancel_right (X 0) (jarY 2 Y) he]; exact hh.trans (Matrix.neg_mul ..)\n    have hL := sweeter h1 (h.prices 1 (by decide)) hr",
             "line": 125,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/OneLoop/Weights.lean",
-            "fragment": "L125-L126"
+            "fragment": "L125-L142"
           },
           "proof_context": {
             "declaration": "YM.Stationary.Jam.rebounds",
@@ -58,7 +58,46 @@
               125,
               151
             ],
-            "conclusion": "`rebounds` sets `Y x = (X x)⁻¹` for a matrix function `X` with `Jam r X (A·a)` and `vflux (X 0)⁻¹ ≤ C/a`."
+            "conclusion": "For Y = X^{-1}, jarY 1 Y = -(Y0 X1 Y0) and the second jet is given recursively, with inverse bounds inverseBill A C / a."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.direction_inverse",
+        "module": "YM.Next.STATIONARY.Joint.OnShell",
+        "lines": [
+          403,
+          413
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.direction_inverse"
+          },
+          "snippet": {
+            "text": "lemma direction_inverse {U : X→Funds k} {x} (h : Memo U x) (he : (U x).det ≠ 0) (y) :\n    directionM (fun a => (U a)⁻¹) x y= -((U x)⁻¹ * directionM U x y * (U x)⁻¹) := by\n  let F := fun a => (U a)⁻¹\n  have heq : (fun a => F a * U a) =ᶠ[𝓝 x] fun _ => (1:Funds k) := by\n    filter_upwards [h.det_val.continuousAt.eventually_ne he] with i hi\n    exact nonsing_inv_mul _ hi.isUnit\n  have hu : directionM (fun z => (U z)⁻¹ * U z) x y=0 := (directions_congr heq).trans (direction_zero ..)\n  rw [direction_prod (Memo.flip h he) h] at hu\n  have hp := eq_neg_of_add_eq_zero_left hu\n  have hv := congr_arg (fun b => b * (U x)⁻¹) hp\n  simpa only [Matrix.mul_nonsing_inv_cancel_right _ _ he.isUnit, neg_mul] using hv",
+            "line": 403,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Joint/OnShell.lean",
+            "fragment": "L403-L413"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.direction_inverse",
+            "lines": [
+              403,
+              413
+            ],
+            "conclusion": "The directional derivative of U^{-1} is -(U^{-1} DU[y] U^{-1})."
           }
         }
       }
@@ -73,11 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-check of closeMatch records changed it from closeMatch; a re-rating agent agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-check of closeMatch records changed it from closeMatch; a re-rating agent agreed; re-judged after a second independent review, which changed it from relatedMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {
-        "kind": "helper"
+        "kind": "chain"
       }
     }
   }

@@ -2,8 +2,8 @@
   "id": "Lemma 11.6 step 1",
   "kind": "proof_step",
   "status": "partial",
-  "relation": "hasPart",
-  "note": "[L] proves both minimizing choices real analytic near 0 (`scheme` by the real-analytic implicit function lemma, `prediction_cont` through the nearest projection); the frame quadratic part av|h_x-h_y|^2/2, its positive definiteness on h_0 = 0 and the predictor Hessian I are not stated.",
+  "relation": "relatedMatch",
+  "note": "[L] proves both minimizing choices real analytic near 0: the frame by YM.Push.scheme (real-analytic implicit function lemma on the fixed-point equation) and the predictor by prediction_cont (explicit nearest projection, lips). The difference: [L] uses no complexification and no Hessians; the quadratic part av|h_x−h_y|²/2, its positive definiteness on h_0 = 0 and the predictor Hessian I do not appear.",
   "subject": [
     {
       "location": {
@@ -58,7 +58,7 @@
               129,
               187
             ],
-            "conclusion": "The frame choice `hats` is real analytic near 0: the self-consistency equation `plant` (a nearest-point fixed point of the averaged `cloud`) is analytic and the real-analytic implicit function lemma `authored` applies with a trivial-kernel derivative."
+            "conclusion": "The frame choice hats is real analytic near 0: its self-consistency equation plant (nearest-point fixed point of the averaged cloud) is analytic, and the real-analytic implicit function lemma authored applies."
           }
         }
       }
@@ -72,7 +72,7 @@
         "module": "YM.PREC.Derivative",
         "lines": [
           95,
-          96
+          111
         ]
       },
       "role": "key",
@@ -82,14 +82,14 @@
             "id": "YM.Push.lips"
           },
           "snippet": {
-            "text": "lemma lips (t : S.Choices) : ∀ᶠ x : In G f in 𝓝 0,\n    S.prediction (represent x) t e = G.focus (bonds S e t.1 x) := by",
+            "text": "lemma lips (t : S.Choices) : ∀ᶠ x : In G f in 𝓝 0,\n    S.prediction (represent x) t e = G.focus (bonds S e t.1 x) := by\n  have hy (i) := (builds S h e t.1 i).continuousAt.tendsto\n  have hS : ContinuousAt (bonds S e t.1 (G:=G)) 0 := by\n    unfold bonds; apply ContDiffAt.continuousAt (𝕜:=ℝ) (n:=ω); apply ContDiffAt.sum; intro i _; exact (builds S h e t.1 i).const_smul (S.patch.weight i)\n  have ht := hS.tendsto; rw [bonds_zero _ h] at ht\n  have hw := S.patch.best_open (C:=S.kernel) (G:=G)\n  have he : ContinuousAt (deck S e t.1 (G:=G)) 0 := continuousAt_pi.mpr fun i =>\n    ((G.continuous_mat.isClosedEmbedding G.mat_injective).isEmbedding.tendsto_nhds_iff).mpr (hy i)\n  have hb : S.patch.usesBest S.kernel (deck S e t.1 (0 : In G f)) := by\n    apply lt_of_le_of_lt ((S.patch.bond_min _).choose_spec 1)\n    simpa [Patch.bondCost,deck_zero S h e t.1] using S.kernel.predictor_cut_pos\n  filter_upwards [he.tendsto.eventually (hw.mem_nhds hb),ht.eventually G.nearest_is_focus] with i hi hc\n  unfold StepData.prediction\n  change S.patch.predict S.kernel (deck S e t.1 i) _ = _\n  rw [Patch.predict, if_pos (show S.patch.usesBest _ _ from hi)]\n  exact hc _ ((min_iff S.patch.weight S.patch.weight_sum _ _).2 (S.patch.bond_min _).choose_spec)",
             "line": 95,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PREC/Derivative.lean",
-            "fragment": "L95-L96"
+            "fragment": "L95-L111"
           },
           "proof_context": {
             "declaration": "YM.Push.lips",
@@ -97,7 +97,7 @@
               95,
               111
             ],
-            "conclusion": "Near 0 the predictor equals `G.focus` (nearest projection) of the weighted average `bonds` of the connectors."
+            "conclusion": "Near 0 the predictor equals G.focus (nearest projection) of the weighted average bonds of the connectors."
           }
         }
       }
@@ -136,7 +136,7 @@
               118,
               124
             ],
-            "conclusion": "Hence the predictor `S.prediction (represent v)` is real analytic at 0."
+            "conclusion": "Hence the predictor S.prediction (represent v) is real analytic at 0."
           }
         }
       }
@@ -151,7 +151,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, a judge ruled; a re-rating agent disagreed and a judge kept it; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, a judge ruled; a re-rating agent disagreed and a judge changed it from hasPart; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

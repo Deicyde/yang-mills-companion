@@ -1,9 +1,9 @@
 {
   "id": "Lemma 13.18 step 12",
   "kind": "proof_step",
-  "status": "formalized",
-  "relation": "closeMatch",
-  "note": "[L] carries path convergence with a strict reserve in Reward.package, atom_stage and root_stage, assembled in Reward.ticket. The tail split e^{-(w'-w)l} is replaced by dominated convergence with the stronger-weight grain sum, and coordinate convergence is supplied upstream by turning.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "Path convergence as convergence of finitely many coefficients with uniformly small tails (`Notes`, `Transit`) is in [L]; the resolvent identity, the uniform inverse bound and the stronger-weight reserve w' > w are not.",
   "subject": [
     {
       "location": {
@@ -29,36 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.UVExtension.Reward.atom_stage",
-        "module": "YM.UVExtension.Reward.Lights",
+        "declaration": "YM.UVExtension.Roads.Unum.perfect",
+        "module": "YM.UVExtension.Wren.Stoke",
         "lines": [
-          39,
-          60
+          54,
+          55
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.UVExtension.Reward.atom_stage"
+            "id": "YM.UVExtension.Roads.Unum.perfect"
           },
           "snippet": {
-            "text": "lemma atom_stage {I:Type}{n:ℕ} [NeZero n](e:Chip G n → I) {f:ℕ→Projection.Ortho I}{z: Projection.Ortho I}{s c:ℝ}(h:HLimit f z){w:ℝ}(ht:w<s){r}(hp:0<r): ∀ᶠ i in atTop, Levies (issue (blend e s c (f i))) (issue (blend e s c z)) w r:=by\n  let K i (x:ℕ):= issue (blend e s c (f i-z)) x\n  have he i x : K i x= { (issue (blend e s c (f i)) x) with coeff:= (issue (blend e s c (f i)) x).coeff-(issue (blend e s c z) x).coeff }:=by\n    unfold K issue artery; congr 1; funext j; unfold blend; simp only [lp.coeFn_sub,Pi.sub_apply,mul_sub]\n  suffices H: ∀ᶠ i in atTop, SumBudget (fun x=> (K i x).budget w) r by\n    refine H.mono fun i hi=> ?_; unfold Levies; simp_rw [← he]; exact hi\n  have hz : HLimit (fun i=> f i-z) 0 := by\n    have H:= h.add (HLimit.strong (tendsto_const_nhds (x:=-z))); simpa only [add_neg_cancel] using! H\n  let P i x:= (K i x).budget w\n  obtain ⟨b,hb⟩:= hz.bound\n  have hv0 i : Summable (P i):= (budget_hyp _ _ _ _ ht).2.1\n  have hv x : Tendsto (fun i=> P i x) atTop (𝓝 0):=by\n    have hL i : P i x= (∑ j, |c*grain G n (-s) x*(f i-z) (e (x,j))|)*grain G n w x:=by\n      unfold P K Atom.budget Atom.magnitude; simp_rw [longWay,blend_coeff]; rfl\n    have hh j : Tendsto (fun i=> |c*grain G n (-s) x*(f i-z) (e (x,j))|) atTop (𝓝 0):=by\n      have ht:Tendsto (fun i=>(f i-z) (e (x,j))) atTop (𝓝 0):= hz.hit _\n      simpa only [mul_zero, abs_zero] using! (ht.const_mul _).abs\n    simp_rw [hL]; simpa only [sum_const_zero,zero_mul] using! (tendsto_finsetSum _ (fun i _=> hh i)).mul_const (grain G n w x)\n  have hm i x : 0 ≤ P i x:=by unfold P Atom.budget Atom.magnitude; positivity\n  have hh': Tendsto (fun i=>∑' x,P i x) atTop (𝓝 0):=by\n    simpa only [tsum_zero] using tendsto_tsum_of_dominated_convergence (((grainSum (G:=G) (n:=n) (sub_pos.mpr ht)).2.1).mul_left (|c| *b*Fintype.card (Ink G (n+1)))) hv (hb.mono fun i hi x=> by rw [Real.norm_of_nonneg (hm ..)]; exact strobe e s c (f i-z) b hi w x)\n  exact (hh'.eventually_le_const hp).mono fun i hi=> ⟨hm i,hv0 _,hi⟩",
-            "line": 39,
+            "text": "lemma perfect : (∃ t', Tendsto (fun i=> Item.coupon R (g i).atTopH (g i).W (g i).k (J i)) v (𝓝 t'))∧\n    Notes v (A.B.a.budget m) (drawer G _).reg (fun i=>(funds R g H J i).activities.E) ∧ Transit v (fun i j V=> (funds R g H J i).activities.K j V):=by",
+            "line": 54,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVExtension/Reward/Lights.lean",
-            "fragment": "L39-L60"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVExtension/Wren/Stoke.lean",
+            "fragment": "L54-L55"
           },
           "proof_context": {
-            "declaration": "YM.UVExtension.Reward.atom_stage",
+            "declaration": "YM.UVExtension.Roads.Unum.perfect",
             "lines": [
-              39,
-              60
+              54,
+              79
             ],
-            "conclusion": "If the coordinates converge (HLimit), the weighted coefficient sums at an exponent w < s tend to zero, by dominated convergence of the tsum with the stronger-weight grain sum as majorant."
+            "conclusion": "Coupons converge, and the activity data `E` and kernels `K` of the funds converge in the `Notes`/`Transit` sense (finite coefficients, uniform tails) along cutoffs."
           }
         }
       }
@@ -68,75 +68,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.UVExtension.Reward.package",
-        "module": "YM.UVExtension.Reward.Lights",
+        "declaration": "YM.UVExtension.Roads.Unum.spell",
+        "module": "YM.UVExtension.Wren.Sand",
         "lines": [
-          61,
-          69
+          43,
+          52
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.UVExtension.Reward.package"
+            "id": "YM.UVExtension.Roads.Unum.spell"
           },
           "snippet": {
-            "text": "lemma package {g:ℕ→Cube G}{x:Cube G}(h: Working D V P m) (hv:Buried V)(hz:HLimit g x): ∃ R w,(a.params m).width<w ∧ ∀ u<w, Envelope (fun i=> sat D V i m (g i)) R u:=by\n  obtain ⟨r,hr⟩:= hv.root m\n  let R:Bed:= { V.H m m with roots:=r }; let E:=label D m; let p:=a.clock.J m\n  refine ⟨E.path R x,min (P.α p) (D.widths m),lt_min h.width1 (h.width2.trans (half_lt_self E.width_pos)),fun u hh=> ⟨?_,fun ε he=> ?_⟩⟩\n  · exact Eventually.of_forall fun i=> ⟨fun _ _=> rfl,fun _=> rfl,fun _=> rfl,fun _=> rfl⟩\n  have hx:= root_stage (R:=R) hr (P.alpha_pos _) ((eventually_ge_atTop m).mono fun i hi=> ((h.beside i hi).2.1)) (hh.trans_le (min_le_left ..)) he\n  have hu':u<E.grainWidth:= hh.trans_le (min_le_right ..)\n  have hT := atom_stage (n:=1) Sum.inl (c:=E.coil) hz hu' he; have h3:=atom_stage (n:=2) (Sum.inr∘ Sum.inl) (c:=E.mold) hz hu' he; have h4:=atom_stage (n:=3) (Sum.inr∘Sum.inr) (c:=E.mold) hz hu' he\n  exact hx.and (hT.and (h3.and h4))",
-            "line": 61,
+            "text": "lemma spell : (∃ z, Tendsto (fun i=> Camp.compass S b m n x (t i)) v (𝓝 z))∧∃ z,Tendsto (fun i=>drawerE S (t i) m n (wood S b m n x (t i))) v (𝓝 z) :=by\n    let a:= A.B.a; let K i:= (S.fits (t i) n).charts m (hm i); let Q i:=mount R (t i) (m+1) n (x (t i)).val (b (t i)) 0; let H i:= Tour.oracle R (K i) _ (hp i) 0\n    obtain ⟨hs,hE,hK⟩:= Unum.perfect R h F U he hm hv hh K Q H (inputs R he m n hG S b x hp hB hX) hG\n    constructor\n    · unfold Camp.compass Tour.claim; simp_rw [dif_pos (hm _),dif_pos (hp _)]; exact hs\n    let f i:= (wood S b m n x (t i)).val\n    have hf i : f i= (K i).cores R _ (hp i):=by unfold f wood; rw [dif_pos (hm i),Tour.choiceV,dif_pos (hp i)] \n    have hp' i : (funds R K Q H i).activities.E=(f i).1 ∧ (funds R K Q H i).activities.K=(f i).2:=by rw [hf]; exact ⟨rfl,rfl⟩\n    simp_rw [(fun i=> (hp' i).1)] at hE; simp_rw [(fun i=>(hp' i).2)] at hK\n    exact Verso.visible (A.B.a.budget m) (A.B.a.clock.allowance m) (A.B.a.clock.forcedAllowance m) hE hK",
+            "line": 43,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVExtension/Reward/Lights.lean",
-            "fragment": "L61-L69"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVExtension/Wren/Sand.lean",
+            "fragment": "L43-L52"
           },
           "proof_context": {
-            "declaration": "YM.UVExtension.Reward.package",
+            "declaration": "YM.UVExtension.Roads.Unum.spell",
             "lines": [
-              61,
-              69
+              43,
+              52
             ],
-            "conclusion": "There are a limit path datum R and a w > the stage width such that path data converge in Envelope at every u < w (the strict reserve)."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.UVExtension.Reward.ticket",
-        "module": "YM.UVExtension.Reward.Lights",
-        "lines": [
-          74,
-          78
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.UVExtension.Reward.ticket"
-          },
-          "snippet": {
-            "text": "theorem ticket (h:Paid w a) (p:G.ColorIndex)(hz:LocalRatio Z)(hp:Ahead wavePulse ε)(hh:Mints D P V Q Z ε)(hr:Buried V):∃ T:Kin V Z, FullPaths T Q∧ Ends a T.path T.alpha:=by\n  obtain ⟨T,hT,y,hY,hv,x,α,hx,hy⟩:= turning h p hz hp hh hr\n  refine ⟨T,hT, ⟨fun i=> ⟨_,(hy _).2⟩,fun i=>?_⟩⟩\n  obtain ⟨R,w,hw,hW⟩:=package (hh.work i) hr (hy i).1\n  exact ⟨R,w,hw,fun t ht=> translate_data (hW _ ht) ((eventually_gt_atTop _).mono fun n hn=> (hv n i hn).symm)⟩",
-            "line": 74,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVExtension/Reward/Lights.lean",
-            "fragment": "L74-L78"
-          },
-          "proof_context": {
-            "declaration": "YM.UVExtension.Reward.ticket",
-            "lines": [
-              74,
-              78
-            ],
-            "conclusion": "The constructed kinetic data have converging prices and path fields with strict reserve (Ends), with coordinate convergence supplied by turning."
+            "conclusion": "The compass scalar and the step output converge along cutoffs, from `perfect` and `Verso.visible`."
           }
         }
       }
@@ -151,7 +112,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent disagreed and a judge changed it from relatedMatch; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent disagreed and a judge changed it from relatedMatch; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

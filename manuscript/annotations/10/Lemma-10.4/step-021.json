@@ -1,9 +1,9 @@
 {
   "id": "Lemma 10.4 step 21",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "relatedMatch",
-  "note": "Lean does not state the telescoping identity; it gets the same decomposition by induction on the list of factors, peeling one factor at each step with a `ring` identity.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] carries the telescoping identity as YM.Push.Mark.split_verse (with split_literal) and uses it in generation_ready. The difference: each induction step peels one factor with the ring identity ab - a'b' = (a-a')b + a'(b-b'), and the result is stated as membership in the span `multiplied` rather than as the explicit sum over i.",
   "subject": [
     {
       "location": {
@@ -33,7 +33,7 @@
         "module": "YM.Push.RELAY_MARK.Ideal",
         "lines": [
           81,
-          81
+          91
         ]
       },
       "role": "key",
@@ -43,14 +43,14 @@
             "id": "YM.Push.Mark.split_verse"
           },
           "snippet": {
-            "text": "lemma split_verse (a : List (Ink G)) : verse a-changed (eraseShell G) (verse a)∈multiplied G (syntaxRank a) := by",
+            "text": "lemma split_verse (a : List (Ink G)) : verse a-changed (eraseShell G) (verse a)∈multiplied G (syntaxRank a) := by\n  induction a with\n  | nil => simp [verse]\n  | cons b l ih=>\n    obtain ⟨q,p,hq,hp,H,he,H'⟩ := split_literal b\n    rw [show verse (b::l)=literal b.2 * verse l by simp [verse],map_mul,\n      show syntaxRank (b::l)=badge b+syntaxRank l by simp [syntaxRank]]\n    rw [H'] at he ⊢\n    have hv : literal b.2=literal p.2+literal q.2 := by rw [← he]; abel\n    rw [hv, show (literal p.2+literal q.2)*verse l - _ = literal q.2*verse l+literal p.2*(verse l-changed (eraseShell G) (verse l)) by ring]\n    exact Submodule.add_mem _ (Submodule.subset_span ⟨q,H,l,by rw [hq],rfl⟩) (hp ▸ multiplied_add ih p)",
             "line": 81,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/RELAY_MARK/Ideal.lean",
-            "fragment": "L81-L81"
+            "fragment": "L81-L91"
           },
           "proof_context": {
             "declaration": "YM.Push.Mark.split_verse",
@@ -58,7 +58,7 @@
               81,
               91
             ],
-            "conclusion": "For a product `verse a` of linear coordinates, `verse a - changed (eraseShell G) (verse a)` lies in `multiplied G (syntaxRank a)`, the span of products with one factor vanishing on the gauge directions."
+            "conclusion": "By induction (with split_literal), a product of literals minus its projected version lies in the span `multiplied` of products with one factor vanishing on the gauge-jet range, preceded by projected factors and followed by unprojected ones."
           }
         }
       }
@@ -68,36 +68,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Push.Mark.split_literal",
+        "declaration": "YM.Push.Mark.generation_ready",
         "module": "YM.Push.RELAY_MARK.Ideal",
         "lines": [
-          70,
-          71
+          93,
+          112
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Push.Mark.split_literal"
+            "id": "YM.Push.Mark.generation_ready"
           },
           "snippet": {
-            "text": "lemma split_literal (x : Ink G) : ∃ y z : Ink G, badge y=badge x ∧ badge z=badge x ∧ Gap y ∧\n    literal x.2-changed (eraseShell G) (literal x.2)=literal y.2 ∧ changed (eraseShell G) (literal x.2)=literal z.2 := by",
-            "line": 70,
+            "text": "lemma generation_ready (p : Label G d) (h : p∈Maxwell.equationIdeal G d) (m : ℕ × ℕ) (hp : p∈Grade m) : p.val∈multiplied G m := by\n  classical\n  let a := p.val\n  change a∈_\n  have ht : a-changed (eraseShell G) a=a := by rw [(erase_shell p).1 h,sub_zero]\n  rw [← ht]\n  -- Use expansion once, coefficients frozen\n  let l := a.support\n  let f (b : Key G →₀ ℕ) := (MvPolynomial.monomial b (1:ℂ))\n  let y (b) := MvPolynomial.coeff b a\n  have hx : a-changed (eraseShell G) a = ∑ b∈l,y b • (f b-changed (eraseShell G) (f b)) := calc\n    _ = (∑ b∈l,y b • f b)-changed (eraseShell G) (∑ b∈l,y b • f b) := by\n      have he : (∑ b∈l,y b • f b)=a := by\n        unfold f; simp only [MvPolynomial.smul_monomial,smul_eq_mul,mul_one]; exact a.support_sum_monomial_coeff\n      rw [he]\n    _ = _ := by simp only [map_sum, map_smul, smul_sub,Finset.sum_sub_distrib]\n  rw [hx]; refine Submodule.sum_mem _ fun i hi=> Submodule.smul_mem _ _ ?_\n  have hv : weight i=m := (pure_grade m p).mp hp (MvPolynomial.mem_support_iff.mp hi)\n  obtain ⟨v,hv',he⟩ := scripted i\n  rw [← hv,← he,show f i=verse v from hv'.symm]; exact split_verse v",
+            "line": 93,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/RELAY_MARK/Ideal.lean",
-            "fragment": "L70-L71"
+            "fragment": "L93-L112"
           },
           "proof_context": {
-            "declaration": "YM.Push.Mark.split_literal",
+            "declaration": "YM.Push.Mark.generation_ready",
             "lines": [
-              70,
-              79
+              93,
+              112
             ],
-            "conclusion": "Each linear coordinate splits as its erased part plus a part vanishing on the gauge directions, of the same badge."
+            "conclusion": "Every graded element of the equation ideal lies in this span at its bidegree."
           }
         }
       }
@@ -112,7 +112,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from relatedMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

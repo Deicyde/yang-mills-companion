@@ -1,9 +1,9 @@
 {
   "id": "Lemma 11.8 step 35",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "relatedMatch",
-  "note": "[L] bounds the change of the complex denominator by the imaginary displacement times (omega_z + t), not by a small multiple of omega_z^2, so it uses a different quantity to reach the factor-2 comparison.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] carries this in `shade_stone` (the change of the denominator is O(t·(ω_z+t)) with t ≤ μ/128, hence small against ω_z²+μ²), `soda_safe_cube` (modulus at least half the real weight), `thin_pay`, and `thin_doubled` with the bounded Bloch factors `plank_cap`/`plank_back`. Difference: the closeness is packaged as a factor-1/2 modulus lower bound.",
   "subject": [
     {
       "location": {
@@ -33,7 +33,7 @@
         "module": "YM.Next.STATIONARY.Spectral.RealGap",
         "lines": [
           570,
-          570
+          577
         ]
       },
       "role": "key",
@@ -43,14 +43,14 @@
             "id": "YM.Stationary.soda_safe_cube"
           },
           "snippet": {
-            "text": "lemma soda_safe_cube (h : 0<μ) (he : μ≤1) (hp : p∈strip (μ*(1/128))) : (1/2:ℝ)*pebWeight p μ ≤ ‖soda μ p‖ := by",
+            "text": "lemma soda_safe_cube (h : 0<μ) (he : μ≤1) (hp : p∈strip (μ*(1/128))) : (1/2:ℝ)*pebWeight p μ ≤ ‖soda μ p‖ := by\n  have ht : ‖soda μ (ground p)‖ = pebWeight p μ := by\n    unfold soda; rw [stone_real (ground_real _), shadeK, ground_up, ← Complex.ofReal_pow, ← Complex.ofReal_add,norm_real]; exact Real.norm_of_nonneg (peb_pos p h).le\n  have hc : soda μ p-soda μ (ground p)=stone p-stone (ground p) := by unfold soda; rw [add_sub_add_right_eq_sub]\n  have hx := norm_sub_norm_le (soda μ (ground p)) (soda μ p)\n  rw [ht,norm_sub_rev,hc] at hx\n  have hv := shade_stone _ _ (ground_near hp).le (by linarith : μ*(1/128)≤1); unfold pebWeight at *\n  nlinarith only [hv,hx, sq_nonneg (shadeK p-μ),sq_nonneg μ]",
             "line": 570,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Spectral/RealGap.lean",
-            "fragment": "L570-L570"
+            "fragment": "L570-L577"
           },
           "proof_context": {
             "declaration": "YM.Stationary.soda_safe_cube",
@@ -58,7 +58,7 @@
               570,
               577
             ],
-            "conclusion": "On the strip `μ/128`, `(1/2)·pebWeight p μ ≤ ‖soda μ p‖`: the complex denominator stays within a factor 2 of its real value."
+            "conclusion": "On the strip of width μ/128 the complex denominator `soda μ p` has modulus at least half the real weight `pebWeight p μ`, using `shade_stone` to bound its change from the real point."
           }
         }
       }
@@ -97,7 +97,7 @@
               560,
               569
             ],
-            "conclusion": "`‖stone p - stone (ground p)‖ ≤ 4t(shadeK p + 4t) + shadeK p·4t` for imaginary displacement `t ≤ 1`."
+            "conclusion": "`‖stone p - stone (ground p)‖ ≤ 4t(shadeK p + 4t) + shadeK p·4t` for imaginary displacement t ≤ 1."
           }
         }
       }
@@ -110,8 +110,8 @@
         "declaration": "YM.Stationary.thin_pay",
         "module": "YM.Next.STATIONARY.Spectral.AuxReferences",
         "lines": [
-          460,
-          460
+          452,
+          463
         ]
       },
       "role": "key",
@@ -121,14 +121,14 @@
             "id": "YM.Stationary.thin_pay"
           },
           "snippet": {
-            "text": "  have hd : (1/2:ℝ)*((n+1)*η)^2 ≤ D := (mul_le_mul_of_nonneg_left (le_trans (pow_le_pow_left₀ (by positivity) hh 2) (le_add_of_nonneg_right (sq_nonneg _))) (by norm_num)).trans (soda_safe_cube (inch_pos L) (inch_le L) (alias_inside hp l))",
-            "line": 460,
+            "text": "  · subst l\n    have h : pdist (0:Site L)=0 := by simp [pdist,Lattice.lift]\n    simpa [h] using soda_pay_t (inch_pos L) (inch_le L) (alias_inside hp (0:Site L))\n  let η := inch L; have hx : 0<η := inch_pos L\n  have hw := hv.heights hl' hl\n  let n : ℝ := pdist l; have hn : 1 ≤ n := by unfold n; exact_mod_cast pdist_pos hl'\n  have hh : (n+1)*η ≤ shadeK (aliasAt p l) := by unfold n η at *; nlinarith\n  let D := ‖soda η (aliasAt p l)‖\n  have hd : (1/2:ℝ)*((n+1)*η)^2 ≤ D := (mul_le_mul_of_nonneg_left (le_trans (pow_le_pow_left₀ (by positivity) hh 2) (le_add_of_nonneg_right (sq_nonneg _))) (by norm_num)).trans (soda_safe_cube (inch_pos L) (inch_le L) (alias_inside hp l))\n  have hD : 0<D := lt_of_lt_of_le (by positivity) hd\n  rw [damp,norm_mul,norm_pow,norm_inv, norm_real,Real.norm_of_nonneg (inch_pos L).le]; change η^2 * D⁻¹ ≤ 2*((n+1)^2)⁻¹\n  rw [← div_eq_mul_inv,← div_eq_mul_inv, div_le_div_iff₀ hD (by positivity)]; nlinarith only [hd]",
+            "line": 452,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Spectral/AuxReferences.lean",
-            "fragment": "L460-L460"
+            "fragment": "L452-L463"
           },
           "proof_context": {
             "declaration": "YM.Stationary.thin_pay",
@@ -136,7 +136,7 @@
               450,
               463
             ],
-            "conclusion": "`thin_pay` applies `soda_safe_cube` at each alias to get `‖soda η (aliasAt p l)‖ ≥ ½((n+1)η)²`."
+            "conclusion": "|μ²/(λ(θ_z)+μ²)| ≤ 2(dist(z)+1)^{-2} for each alias on the strip."
           }
         }
       }
@@ -146,36 +146,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Stationary.plank_cap",
-        "module": "YM.Next.STATIONARY.Spectral.Folding",
+        "declaration": "YM.Stationary.thin_doubled",
+        "module": "YM.Next.STATIONARY.Spectral.AuxReferences",
         "lines": [
-          57,
-          57
+          476,
+          484
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Stationary.plank_cap"
+            "id": "YM.Stationary.thin_doubled"
           },
           "snippet": {
-            "text": "lemma plank_cap (p : Momentum) (h : p∈strip σ) : vflux (plankTile L α p)≤ Real.exp (σ*4) := by",
-            "line": 57,
+            "text": "lemma thin_doubled (L : Side) (hl : Odd L.val) (hp : p∈strip (1/128:ℝ)) :\n    bags (Slab.basic _) (Slab.basic _) p p (furnish L (fun q : Momentum => damp (inch L) q^3 • (1:CompM α α)) p)\n      ((Real.exp (1/128*4)*((Fintype.card α:ℝ)*(8*jointMoney)))*Real.exp (1/128*4)) := by\n  unfold bags carryM Slab.basic; simp only [inv_one,Matrix.one_mul, Matrix.mul_one,furnish]\n  let f (l : Co L α) := damp (inch L) (aliasAt p l.1)^3\n  rw [show posterBlock L _ p= diagonal f by\n    ext ⟨i,a⟩ ⟨j,b⟩; unfold posterBlock fiber; by_cases h : i=j <;> by_cases h1 : a=b <;> simp [f,h,h1, Matrix.one_apply,Matrix.diagonal_apply]]\n  have ht : ∑ i, ‖f i‖ ≤ (Fintype.card α:ℝ)*(8*jointMoney) := by rw [Fintype.sum_prod_type]; simp only [f, Finset.sum_const,card_univ,nsmul_eq_mul]; rw [← Finset.mul_sum]; exact mul_le_mul_of_nonneg_left (budgetRun L hl hp) (Nat.cast_nonneg _)\n  exact (((Doubly.diagram f).credit2 ht).duet_top (plank_cap p hp)).duo (plank_back p hp)",
+            "line": 476,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Spectral/Folding.lean",
-            "fragment": "L57-L57"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Spectral/AuxReferences.lean",
+            "fragment": "L476-L484"
           },
           "proof_context": {
-            "declaration": "YM.Stationary.plank_cap",
+            "declaration": "YM.Stationary.thin_doubled",
             "lines": [
-              57,
-              68
+              476,
+              484
             ],
-            "conclusion": "The Bloch Fourier matrix `plankTile` has norm at most `exp (σ·4)` on the strip (with `plank_back` for its inverse)."
+            "conclusion": "The Bloch-packaged cube of the damping symbol is bounded via the alias sum `budgetRun` and the bounded Fourier factors `plank_cap`/`plank_back`."
           }
         }
       }
@@ -190,7 +190,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, a judge ruled; a re-check of closeMatch records changed it from closeMatch; a re-rating agent agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, a judge ruled; a re-check of closeMatch records changed it from closeMatch; a re-rating agent agreed; re-judged after a second independent review, which changed it from relatedMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

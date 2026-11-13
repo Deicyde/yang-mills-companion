@@ -1,9 +1,9 @@
 {
   "id": "Lemma 19.2 step 1",
   "kind": "proof_step",
-  "status": "formalized",
-  "relation": "closeMatch",
-  "note": "[L] carries the cited triangularity as the field Push.Local.Leading.triangular (bundled into the MergeProof.Triangle hypothesis with the marked error), and uses it in Columns.triangular_high, inv_triangular_high and low_le. Difference: it is a structure field in contrapositive form (nonzero entry implies lower grade), not a displayed matrix identity.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "Triangularity and the marked error are the `Triangle` hypothesis of the Lean step lemmas, and the physical quotient with corrected inclusions appears as `X.rise` in `limit_lower`. The citations of Lemmas E2.2 and F2 are not separate statements.",
   "subject": [
     {
       "location": {
@@ -29,36 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Push.Local.Leading",
-        "module": "YM.Push.LOCAL_SPLITTING.Leading",
+        "declaration": "YM.MergeProof.Triangle",
+        "module": "YM.OPE.Columns.Accounts",
         "lines": [
-          22,
-          26
+          20,
+          25
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Push.Local.Leading"
+            "id": "YM.MergeProof.Triangle"
           },
           "snippet": {
-            "text": "structure Leading (B : F.Coeff →ₗ[ℂ] F.Coeff) (c : ℝ) : Prop where\n  price : 1 ≤ c\n  cap (i j : F.Index) : ‖B (column F j) i‖ ≤ c\n  diagonal (i : F.Index) : 1 ≤ c * ‖B (column F i) i‖\n  triangular (i j : F.Index) (hN : j ≠ i) : B (column F j) i ≠ 0 → (F.grades j).1 < (F.grades i).1",
-            "line": 22,
+            "text": "structure Triangle (m : ℕ) (x y : F.Coeff → F.Coeff) : Prop where\n  leads : ∃ T : Heading F, (∃ c : ℝ, Push.Local.Leading T.map.toLinearMap c) ∧\n    (∀ v, F.coeffSize (T.map v) ≤ W.K (H.levels.clock.J (m+1))*F.coeffSize v ∧\n          F.coeffSize (T.map.symm v) ≤ W.K (H.levels.clock.J (m+1))*F.coeffSize v) ∧\n    ∀ v, F.coeffSize (y v - T.leads (H.S.block m) (x v)) ≤\n      barunit (H.S.block m) * F.coeffSize (F.core (x v))",
+            "line": 20,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/LOCAL_SPLITTING/Leading.lean",
-            "fragment": "L22-L26"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Columns/Accounts.lean",
+            "fragment": "L20-L25"
           },
           "proof_context": {
-            "declaration": "YM.Push.Local.Leading",
+            "declaration": "YM.MergeProof.Triangle",
             "lines": [
-              22,
-              27
+              20,
+              25
             ],
-            "conclusion": "A leading map has a nonzero bounded diagonal and is triangular: an off-diagonal entry B(column j)_i is nonzero only if grade j < grade i."
+            "conclusion": "`Triangle` bundles a `Leading` (triangular, diagonal) map `T.map`, its two-sided `K`-bound, and the marked error `barunit * coeffSize (core (x v))`."
           }
         }
       }
@@ -68,36 +68,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.OPE.Columns.low_le",
-        "module": "YM.OPE.Columns.Cone",
+        "declaration": "YM.OPE.Columns.limit_lower",
+        "module": "YM.OPE.Columns.Limit",
         "lines": [
           63,
-          68
+          66
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.OPE.Columns.low_le"
+            "id": "YM.OPE.Columns.limit_lower"
           },
           "snippet": {
-            "text": "lemma low_le {B : F.Coeff ≃ₗ[ℂ] F.Coeff} {c k : ℝ} (h : Leading B.toLinearMap c)\n    (hk : ∀ y, μ (B.symm y) ≤ k*μ y) (x : F.Coeff) : μ (P x) ≤ k*μ (P (B x)) := by\n  have he := inv_triangular_high e h (B x-P (B x)) (by rw [map_sub,project]; abel)\n  rw [map_sub,map_sub,LinearEquiv.symm_apply_apply] at he\n  rw [sub_eq_zero] at he\n  exact le_trans (le_of_eq (congr_arg μ he)) ((size_low _ _ _).trans (hk _))",
+            "text": "lemma limit_lower (v : Rowe C d) (x : C.label d) {b : Filter Cutoffs} [b.NeBot]\n    (he : e < d) (hp : b ≤ f.fuse)\n    (hw : ∀ᶠ i in b, low F e (((K!) i).symm (v i))=((K!) i).symm (v i))\n    (hx : Tendsto v b (𝓝 x)) : S.project d x ∈ LinearMap.range (X.rise he.le) := by",
             "line": 63,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Columns/Cone.lean",
-            "fragment": "L63-L68"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Columns/Limit.lean",
+            "fragment": "L63-L66"
           },
           "proof_context": {
-            "declaration": "YM.OPE.Columns.low_le",
+            "declaration": "YM.OPE.Columns.limit_lower",
             "lines": [
               63,
-              68
+              78
             ],
-            "conclusion": "Triangularity makes B and its inverse preserve the kernel of the low-degree projection, giving mu(Px) <= k mu(P(Bx))."
+            "conclusion": "A limit of vectors lying in the transported low plane has `S.project d x` in the range of `X.rise`, the corrected inclusion into the lower field."
           }
         }
       }
@@ -112,7 +112,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

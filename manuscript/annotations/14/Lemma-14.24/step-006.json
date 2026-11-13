@@ -2,8 +2,8 @@
   "id": "Lemma 14.24 step 6",
   "kind": "proof_step",
   "status": "partial",
-  "relation": "relatedMatch",
-  "note": "The recurrence is Perch.Exhibits (single majorant, alpha*z + M^{1/2} z^2, quadratic coefficient 1 instead of 2), and the start at the middle level comes from Peak.launched via v_conditioned. The start bound is a different quantity: Lean fixes it directly as M^{-3/4} (Peak.Meter output) rather than alpha_t^n C_j^{h_t(b)+2} E_t^G.",
+  "relation": "hasPart",
+  "note": "The recurrence a_i <= K a_(i+1) + c a_(i+1)^2 appears with abstract constants in `Exhibits` and `covers`; the initial bound a_l <= alpha_t^n C_j^(h_t(b)+2) E_t^G is missing, the start being the hypothesis `settled`.",
   "subject": [
     {
       "location": {
@@ -32,7 +32,7 @@
         "declaration": "YM.Next.Rank.Perch.Exhibits",
         "module": "YM.Next.RANK.Stepped",
         "lines": [
-          110,
+          123,
           124
         ]
       },
@@ -43,14 +43,14 @@
             "id": "YM.Next.Rank.Perch.Exhibits"
           },
           "snippet": {
-            "text": "def Exhibits (U : Config G (F.side N p) → veil (Fin v)) (q : Era) : Prop :=\n    let A := F.path.levels\n    let ℓ := middle A b k\n    let s := A.clock.hatBeta k\n    let S := Array.stamp (Ship.yard F b hN p) (F.beta N p) U\n    let d := fun _ : (Ship.yard F b hN p).Cell × Fin v => Ship.allowance A m k\n    ∀ j, width A b k ≤ j → ∀ H : j<ℓ,\n      let i : j+1 ≤ N := (show j+1 ≤ ℓ from H).trans ((before A b k).trans hN)\n      let u := A.clock.hatBeta (j+1)\n      let C := Y.flow S (j+1) i\n      let p₀ := readers (C:=F) (b:=b) (p:=p) X hN i\n      let p₁ := readers (C:=F) (b:=b) (p:=p) X hN ((Nat.le_succ j).trans i)\n      let z := spouse s q (ℓ-(j+1))\n      Notice (P (j+1)) p₀ C d q.coast.e z (z*w u) →\n        Notice (P j) p₁ ((A.clock.op j p).push (Y.changeβ (j+1)) C) d q.coast.e (q.α*z+Perch.bill (1/2) s*z^2) (Perch.gas q.coast u)",
-            "line": 110,
+            "text": "      Notice (P (j+1)) p₀ C d q.coast.e z (z*w u) →\n        Notice (P j) p₁ ((A.clock.op j p).push (Y.changeβ (j+1)) C) d q.coast.e (q.α*z+Perch.bill (1/2) s*z^2) (Perch.gas q.coast u)",
+            "line": 123,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Stepped.lean",
-            "fragment": "L110-L124"
+            "fragment": "L123-L124"
           },
           "proof_context": {
             "declaration": "YM.Next.Rank.Perch.Exhibits",
@@ -58,7 +58,7 @@
               110,
               124
             ],
-            "conclusion": "One step takes a Notice with bound z at level j+1 to a Notice at level j with bound alpha*z + bill(1/2) s * z^2."
+            "conclusion": "One level step maps the bound `z` to `q.α*z + bill(1/2) s*z^2`."
           }
         }
       }
@@ -68,75 +68,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Next.Rank.Peak.launched",
-        "module": "YM.Next.RANK.Memorandum",
+        "declaration": "YM.Next.Rank.Perch.covers",
+        "module": "YM.Next.RANK.Stepped",
         "lines": [
-          93,
-          113
+          163,
+          168
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Next.Rank.Peak.launched"
+            "id": "YM.Next.Rank.Perch.covers"
           },
           "snippet": {
-            "text": "theorem launched {x : Points v} (Q : ℕ) (Y : Course C N p k) (hN : k ≤ N) (t : Fin v → C.book.Token)\n    (B : Fin v → (standard C).Tag) (hx : Fit C.path.levels b k x) (ha : Allowed C.path.levels b k)\n    (hm : v ≤ m) (hu : Aurora J Q Y hN t B hx)\n    (hb : 8≤D.p.B) (hh : D.p.B^2+2*(Q*D.p.B)≤(C.path.levels.clock.coverSize k)^10) :\n    let A := C.path.levels\n    let T := Ship.yard C b hN p\n    let l := middle A b k\n    let HI : l ≤ N := (before A b k).trans hN\n    let X := Array.stamp T (C.beta N p) (Ship.invoice B t hx N p)\n    Notice D (readers (C:=C) (b:=b) (p:=p) x hN HI) (Y.flow X l HI) (fun _ => J.radius) J.e J.output J.hail := by\n  intro A T l HI X\n  obtain ⟨ι,κ,hι,hκ,H,K,W,hW,h,hB,hD⟩ := hu\n  let F := Ship.targets C B hx\n  let u := bareP (Ship.clients C t b k N p x)\n  have hz : F.part (quiet _)=0 := (Read.cumulative C (Station.tested C.path.levels b k x) B _).1\n  have hc : ∀ i : modes (Fin v),Continuous fun U => (u U).part i := raw_cont _ (fun i => Read.probes_cont i)\n  have hv : Y.flow X l HI= fun U => Poly.pass (Array.tilt T F)*dust D (Sum.elim H W) K U := by\n    change Y.flow (Array.stamp T (C.beta N p) (fun z => Poly.pass (-F)*u z)) l HI=_\n    rw [Array.flow_corr _ _ T hc F hz]; exact funext fun U => congr_arg (Poly.pass _ * ·) (congr_fun hD U)\n  rw [hv,catches T F hz]; have hy (i : T.Cell × flame (Fin v)) : sectionAt i = (W i).fires := (hW.lit i).symm\n  simp_rw [hy]; exact Dock.grant J (by simpa only [Fintype.card_fin] using hm) (alignment Y hN ha hx hb hh) hW h hB",
-            "line": 93,
+            "text": "      · have hp : ℓ-j=ℓ-(j+1)+1 := by omega\n        have ha : 0<a₀ := spouse_pos ..\n        change q.α*a₀+Perch.bill (1/2) s*a₀^2 ≤ spouse s q (ℓ-j)\n        have hb : Perch.bill (1/2) s*a₀ ≤ 1 := (mul_le_mul_of_nonneg_left (hv (j+1) (H.trans (Nat.le_succ j))) (show 0 ≤ Perch.bill (1/2) s from (Real.exp_pos _).le)).trans (by unfold Perch.bill; rw [← Real.exp_add]; apply Real.exp_le_one_iff.mpr; linarith only)\n        have hc : spouse s q (ℓ-j)=(q.α+1)*a₀ := by unfold a₀ spouse eager; rw [hp,pow_succ]; ring\n        rw [hc]; linarith only [mul_le_mul_of_nonneg_left hb ha.le]",
+            "line": 163,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Memorandum.lean",
-            "fragment": "L93-L113"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Stepped.lean",
+            "fragment": "L163-L168"
           },
           "proof_context": {
-            "declaration": "YM.Next.Rank.Peak.launched",
+            "declaration": "YM.Next.Rank.Perch.covers",
             "lines": [
-              93,
-              113
+              140,
+              176
             ],
-            "conclusion": "At the middle level l the stamped flow satisfies a Notice with bound J.output."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.PhysicalNext.InteractingRank.Soft.v_conditioned",
-        "module": "YM.PhysicalNext.AFTERNOON_INTERACTING_RANK_COMPARISON.Soft.Supra",
-        "lines": [
-          48,
-          53
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.PhysicalNext.InteractingRank.Soft.v_conditioned"
-          },
-          "snippet": {
-            "text": "  have hl := Peak.launched J M.Q Y hi t B ho a hm ht (hc.budget ▸ hu.span) (hc.budget ▸ hu.space)\n  apply Perch.covers Y P b x m hi hp.2 a hh hw\n  have he : spouse s D (l-l)=J.output := by dsimp only [spouse]; rw [Nat.sub_self,pow_zero,one_mul]; rfl\n  apply Perch.follows hl\n  · exact he.symm.le\n  exact hu.reserve.trans_eq (congr_arg (·*w q) he.symm)",
-            "line": 48,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/AFTERNOON_INTERACTING_RANK_COMPARISON/Soft/Supra.lean",
-            "fragment": "L48-L53"
-          },
-          "proof_context": {
-            "declaration": "YM.PhysicalNext.InteractingRank.Soft.v_conditioned",
-            "lines": [
-              29,
-              53
-            ],
-            "conclusion": "Peak.launched feeds Perch.covers as its starting bound, with J.output = spouse s D 0 = bill(-3/4) s = M^{-3/4}."
+            "conclusion": "`covers` shows `q.α*a₀ + bill(1/2) s*a₀^2 ≤ spouse s q (ℓ-j)`."
           }
         }
       }
@@ -151,7 +112,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent disagreed and a judge kept it; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent disagreed and a judge changed it from relatedMatch; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

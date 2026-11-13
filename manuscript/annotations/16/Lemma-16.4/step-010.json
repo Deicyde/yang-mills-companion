@@ -1,9 +1,9 @@
 {
   "id": "Lemma 16.4 step 10",
   "kind": "proof_step",
-  "status": "formalized",
-  "relation": "exactMatch",
-  "note": "Carried by Next.Rank.Station.width (middle minus surplus) and the centered tiling Next.Rank.Ship.yard at that level, used with the exponent in MergeProof.East.aspect.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "The width level w_alpha(k) = k - h_k(alpha) - v_k is `Station.width` (middle minus surplus), and `aspect` uses it at its exponents; the centered tiling at that level is not set up at these lines.",
   "subject": [
     {
       "location": {
@@ -90,7 +90,7 @@
               45,
               45
             ],
-            "conclusion": "width A b k = (k - height A b k) - surplus A k."
+            "conclusion": "`width A b k = middle A b k - surplus A k = (k - height A b k) - surplus A k`, the width level k - h_k(b) - v_k at exponent `b`."
           }
         }
       }
@@ -100,36 +100,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Next.Rank.Ship.yard",
-        "module": "YM.Next.RANK.Allowance",
+        "declaration": "YM.MergeProof.East.aspect",
+        "module": "YM.MergeProof.East.Medal",
         "lines": [
-          52,
-          54
+          65,
+          65
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Next.Rank.Ship.yard"
+            "id": "YM.MergeProof.East.aspect"
           },
           "snippet": {
-            "text": "def yard (C : Family G) {k N : ℕ} (b : ℝ) (hN : k ≤ N) (p : ℕ) : Tiling (C.side N p) :=\n  let A := C.path.levels\n  center C.S (m:=width A b k) p (((Station.wider A b k).trans (before A b k)).trans hN) 0",
-            "line": 52,
+            "text": "    let k:=f i; let K:= Next.Rank.Station.width A b k;let T:=Next.Rank.Station.width A d k",
+            "line": 65,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Allowance.lean",
-            "fragment": "L52-L54"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/East/Medal.lean",
+            "fragment": "L65-L65"
           },
           "proof_context": {
-            "declaration": "YM.Next.Rank.Ship.yard",
+            "declaration": "YM.MergeProof.East.aspect",
             "lines": [
-              52,
-              54
+              36,
+              76
             ],
-            "conclusion": "Ship.yard is the centered tiling at level width A b k."
+            "conclusion": "`aspect` sets the width levels `K = Station.width A b k` and `T = Station.width A d k` for the exponents `(P y).arc` and `(P w).arc`."
           }
         }
       }
@@ -144,7 +144,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

@@ -1,9 +1,9 @@
 {
   "id": "Lemma 16.6 step 6",
   "kind": "proof_step",
-  "status": "formalized",
-  "relation": "closeMatch",
-  "note": "Stations.equivalences gives the single sequence with Approaches (Rates.lean:52-53), whose Fades clause is the uniform bound over sup-norm-bounded tests on compacts. [L] keeps this tested form as its notion of convergence and does not restate it as local L^1 convergence; the two forms are equivalent.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "`equivalences` proves [L]'s version of the proposition for one scaling, as the tested convergence `Approaches`. The passage to local L^1 convergence by smooth approximation of the phase is not stated.",
   "subject": [
     {
       "location": {
@@ -29,50 +29,11 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Next.UVStress.Fades",
-        "module": "YM.Next.UV_STRESS.Weak",
-        "lines": [
-          24,
-          27
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Next.UVStress.Fades"
-          },
-          "snippet": {
-            "text": "structure Fades (K : ℕ → Points n → ℂ) : Prop where\n  smooth (k : ℕ) : ContDiffOn ℝ ∞ (K k) (conf n)\n  reads (s : Set (Points n)) : IsCompact s → s ⊆ conf n → ∀ M : ℝ, 0 < M → ∀ ε : ℝ, 0 < ε →\n    ∀ᶠ k : ℕ in atTop, ∀ t : Test n, tsupport t ⊆ s → (∀ x, ‖t x‖ ≤ M) → ‖t.applyTo (K k)‖ ≤ ε",
-            "line": 24,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/UV_STRESS/Weak.lean",
-            "fragment": "L24-L27"
-          },
-          "proof_context": {
-            "declaration": "YM.Next.UVStress.Fades",
-            "lines": [
-              24,
-              27
-            ],
-            "conclusion": "Convergence means: on each compact subset of the configuration space, tested values are eventually at most epsilon uniformly over all tests of sup norm at most M."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
         "declaration": "YM.Next.UVStress.Stations.equivalences",
         "module": "YM.Next.UV_STRESS.Invert",
         "lines": [
           132,
-          161
+          135
         ]
       },
       "role": "key",
@@ -82,14 +43,14 @@
             "id": "YM.Next.UVStress.Stations.equivalences"
           },
           "snippet": {
-            "text": "theorem Stations.equivalences (H : S.Hierarchy) (h : F.Ordered C S) (a : (Bel C.book).Hierarchy)\n    (ht : Stations C F a.spin) (hW : W.Inclusions S) (hp : W.Orientation H.spin)\n    (hV : V.Inclusions (Bel C.book)) (hf : V.Orientation a.spin) (dim : DimAbove S) :\n    ∃ X : Scaling S, Approaches (path X) (isoPanel X) ∧ Stable H.spin a.spin W V X := by\n  classical\n  obtain ⟨x,U,hU,hy,ha⟩ := Stations.build_curve (H:=H) h a ht\n  choose R hR hb hr using fun d => signed_section (H:=a) (Nat.le_succ d) hV hf\n  let Q k := corrected W V R (U k)\n  have hu d := solid (H:=H) (a:=a) U hp hf R hb hr hU d\n  have ha : Approaches x Q := adjusts H a hW hV x R ha\n  have he d : ∀ᶠ k : ℕ in atTop, Bijective (Q k d) := by\n    filter_upwards [MeterTest.injects H.smooth a ha d] with k hk\n    exact ⟨hk,(LinearMap.injective_iff_surjective_of_finrank_eq_finrank\n      (le_antisymm (LinearMap.finrank_le_finrank_of_injective hk) (dim d))).1 hk⟩\n  let M k d := if p : Bijective (Q k d) then LinearEquiv.ofBijective _ p else\n    LinearEquiv.ofBijective _ (he d).exists.choose_spec\n  let X : Scaling S := ⟨M,fun _ => 1,x.r,fun _ => one_pos,x.positive,x.shrinking,x.limits⟩\n  have hX (d) : ∀ᶠ k in atTop, isoPanel X k d=Q k d := by\n    filter_upwards [he d] with k hk\n    dsimp only [isoPanel,X,M]; rw [dif_pos hk]; rfl\n  have hv (k d e : ℕ) (h : d≤e) z : Q k e (V.rise h z)=W.rise h (Q k d z) :=\n    balanced H a _ hW hV R hR d e h z\n  refine ⟨X,⟨fun n v => ?_⟩,fun_kit hu hX hv ?_⟩\n  · refine (ha.values n v).congr (fun k => (smoothZoom H.smooth _ (X.positive k)).sub (smoothDisc a.smooth v)) ?_\n    filter_upwards [eventually_all.mpr (fun i : Fin n => hX (v i).1)] with k hk\n    intro y _; change tested _ _ _ _ - _ = tested _ _ _ _ - _\n    unfold tested; rw [show (panels (Q k) ∘ v)=panels (isoPanel X k) ∘ v from funext (fun i => by\n      change Sigma.mk (v i).1 (Q k _ _) = Sigma.mk (v i).1 (isoPanel X k (v i).1 (v i).2)\n      rw [hk])]; rfl\n  intro k; simpa only [Q,corrected] using hy k",
+            "text": "theorem Stations.equivalences (H : S.Hierarchy) (h : F.Ordered C S) (a : (Bel C.book).Hierarchy)\n    (ht : Stations C F a.spin) (hW : W.Inclusions S) (hp : W.Orientation H.spin)\n    (hV : V.Inclusions (Bel C.book)) (hf : V.Orientation a.spin) (dim : DimAbove S) :\n    ∃ X : Scaling S, Approaches (path X) (isoPanel X) ∧ Stable H.spin a.spin W V X := by",
             "line": 132,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/UV_STRESS/Invert.lean",
-            "fragment": "L132-L161"
+            "fragment": "L132-L135"
           },
           "proof_context": {
             "declaration": "YM.Next.UVStress.Stations.equivalences",
@@ -97,7 +58,46 @@
               132,
               181
             ],
-            "conclusion": "Produces one scaling X with Approaches (path X) (isoPanel X), i.e. Fades of the tested difference for every tuple, together with Stable."
+            "conclusion": "`equivalences` produces a scaling `X` with `Approaches (path X) (isoPanel X)` and `Stable`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.UVStress.Approaches",
+        "module": "YM.Next.UV_STRESS.Rates",
+        "lines": [
+          52,
+          53
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.UVStress.Approaches"
+          },
+          "snippet": {
+            "text": "structure Approaches (R : Zoom) (U : ℕ → Panel S) : Prop where\n  values (n : ℕ) (v : Fin n → (Bel C.book).Tag) : Fades (fun k => tested (R.r k) (U k) v - disc v)",
+            "line": 52,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/UV_STRESS/Rates.lean",
+            "fragment": "L52-L53"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.UVStress.Approaches",
+            "lines": [
+              52,
+              53
+            ],
+            "conclusion": "`Approaches` is the tested-difference convergence for every arity."
           }
         }
       }
@@ -112,7 +112,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

@@ -1,9 +1,9 @@
 {
   "id": "Lemma 11.6 step 19",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "The inequality `(1+|z|)^r ≤ C_r prod (1+|z_a|)^r` and the sum with exponent two are in `absorbs` and `decay_cost`, and the resulting kernel row bound is `Donate` for `r ≤ j-2`. The Fourier contour shift, the common smaller strip for finitely many words and the pole-free principal term are not stated at these lines.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Carried by absorbs/grade_le_mix and decay_cost, and by Secured.honored, which takes a common strip for the finitely many words (limited_lengths, staple) and passes through bankCost and matrix_cover. Differences: the order range is stated as r <= j-2 rather than as the two cases, the decay is a weighted ell^1 Width bound rather than a pointwise contour-shift estimate, and the principal alias is covered inside the alias sum, with no separate statement for it.",
   "subject": [
     {
       "location": {
@@ -58,7 +58,7 @@
               61,
               66
             ],
-            "conclusion": "`grade l ^ t * decay (r+t) l ≤ decay r l`, from `grade l ≤ mix l = prod (1 + |z_a|)`."
+            "conclusion": "grade l <= mix l, i.e. 1+|z| <= prod_a(1+|z_a|), hence grade^t * decay(r+t) <= decay r."
           }
         }
       }
@@ -68,36 +68,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Next.Free.decay_cost",
-        "module": "YM.Next.FREE_KERNELS.AliasWeights",
+        "declaration": "YM.Next.Free.Secured.honored",
+        "module": "YM.Next.FREE_KERNELS.Sprout",
         "lines": [
-          74,
-          91
+          113,
+          121
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Next.Free.decay_cost"
+            "id": "YM.Next.Free.Secured.honored"
           },
           "snippet": {
-            "text": "lemma decay_cost : ∃ C : ℝ, 0<C ∧ ∀ L : Side, (∑ i : Site L, decay 2 i) ≤ C := by\n  let C := 1+∑' i, priceAxis i\n  have hc (i : ℤ) : 0 ≤ priceAxis i := by unfold priceAxis; positivity\n  have hC : 0<C := lt_of_lt_of_le one_pos (by unfold C; simp only [le_add_iff_nonneg_right]; exact tsum_nonneg hc)\n  refine ⟨C^4, pow_pos hC _, fun L => ?_⟩\n  have he (l : Site L) : decay 2 l=∏ i, priceAxis (lift l i) := by\n    simp [decay,mix,up,priceAxis,Finset.prod_pow]\n  have hf (L : Side) : Function.Injective (fun i : ZMod L.val => i.valMinAbs) := fun i j h => by\n    simpa using congr_arg (fun z : ℤ => (z : ZMod L.val)) h\n  have hb (L : Side) : (∑ i : ZMod L.val, priceAxis i.valMinAbs) ≤ C := calc\n    _ = ∑ x ∈ univ.image ZMod.valMinAbs, priceAxis x := (Finset.sum_image ((hf L).injOn)).symm\n    _ ≤ _ := (priceAxis_sum.sum_le_tsum _ fun i _ => hc i).trans (by unfold C; linarith)\n  simp_rw [he]\n  unfold lift Site Four\n  rw [← Fintype.prod_sum (κ:= fun _ : Axis => Per L) (fun _ x => priceAxis (ZMod.valMinAbs x))]\n  calc\n    _ ≤ ∏ _ : Axis, C := Finset.prod_le_prod (fun i _ => Finset.sum_nonneg fun j _ => hc _) (fun _ _ => hb L)\n    _ = _ := by simp [Axis]",
-            "line": 74,
+            "text": "lemma honored [Fintype α] [Fintype β] (h : Secured f) (hj : 4≤j) (e : ℕ) :\n    ∃ σ C : ℝ, 0<σ ∧ 0<C ∧ ∀ (P : Flight j t) (u : List Axis), u.length ≤ j-2 →\n      (advanceC P.L (meshBook f e [] P) u).strip σ (C/(P.L.val:ℝ)^(e+u.length)) := by\n  letI : Fintype {l : List Axis // l.length≤j-2} := (limited_lengths (j-2)).fintype\n  obtain ⟨σ,C,hp,hC,H⟩ := staple (κ:={l : List Axis // l.length≤j-2})\n    (fun l σ C => ∀ P, (meshBook f e l.val P).strip σ (C/(P.L.val:ℝ)^(e+l.val.length)))\n    (fun l => bankCost h hj e l.property) (fun l _ _ _ _ hv hσ hp hC P a b =>\n        (hv P a b).mono hσ (div_le_div_of_nonneg_right hC (by positivity)))\n  exact ⟨σ,C,hp,hC,fun P u hu => by rw [traverse h hj e hu]; exact H ⟨u,hu⟩ _⟩",
+            "line": 113,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/AliasWeights.lean",
-            "fragment": "L74-L91"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/Sprout.lean",
+            "fragment": "L113-L121"
           },
           "proof_context": {
-            "declaration": "YM.Next.Free.decay_cost",
+            "declaration": "YM.Next.Free.Secured.honored",
             "lines": [
-              74,
-              91
+              113,
+              121
             ],
-            "conclusion": "`∑ l : Site L, decay 2 l ≤ C` uniformly in `L`: the remaining exponent two is summable."
+            "conclusion": "One strip width and one constant serve all difference words of length <= j-2 (finitely many, by limited_lengths and staple), and the r-th fine-difference kernels have exponentially decaying coefficients with weight C/L^{e+r}."
           }
         }
       }
@@ -107,36 +107,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Craft.Donate",
-        "module": "YM.Bid.Craft",
+        "declaration": "YM.Next.Free.matrix_cover",
+        "module": "YM.Next.FREE_KERNELS.MatrixPay",
         "lines": [
-          21,
-          22
+          104,
+          109
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Craft.Donate"
+            "id": "YM.Next.Free.matrix_cover"
           },
           "snippet": {
-            "text": "def Donate (T : Towers L) (α C : ℝ) (K : ℕ) := ∀ l : List Axis,l.length ≤ K →\n    (advanceC L T.A0 l).strip α (C/(L.val:ℝ)^(1+l.length)) ∧ (advanceC L T.T l).strip α (C/(L.val:ℝ)^(2+l.length))",
-            "line": 21,
+            "text": "lemma matrix_cover [Fintype α] [Fintype β] (h : Pay w f) {η : ℝ} (hp : 0 < η)\n    (hh : ∀ i (p : Momentum), p∈realCube η → ∀ x, p+reciprocal x ∈ realCube η → f i (p+reciprocal x)=f i p) :\n    ∃ σ C : ℝ, 0 < σ ∧ 0 < C ∧ ∀ i, (record (f i)).strip σ (C*w i) := by\n  obtain ⟨σ,C,he,hc,h⟩ := tapes_sound h.stapleMat hp (fun i p hg x hx => by\n    exact congr_fun (congr_fun (hh _ p hg x hx) _) _)\n  exact ⟨σ,C,he,hc,fun i a b => h (i,a,b)⟩",
+            "line": 104,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Bid/Craft.lean",
-            "fragment": "L21-L22"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/MatrixPay.lean",
+            "fragment": "L104-L109"
           },
           "proof_context": {
-            "declaration": "YM.Craft.Donate",
+            "declaration": "YM.Next.Free.matrix_cover",
             "lines": [
-              21,
-              22
+              104,
+              109
             ],
-            "conclusion": "`strip α (C / L^(1+length))` for difference words of length at most `K = j-2`."
+            "conclusion": "A strip-bounded periodic symbol family has kernels with exponential Width bounds C*w_i, which is the contour-shift step."
           }
         }
       }
@@ -151,7 +151,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

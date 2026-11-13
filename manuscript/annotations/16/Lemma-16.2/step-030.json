@@ -1,9 +1,9 @@
 {
   "id": "Lemma 16.2 step 30",
   "kind": "proof_step",
-  "status": "formalized",
-  "relation": "broadMatch",
-  "note": "Carried by Maxwell.Free.current_div, whose block ht kills the derivative-of-v terms using cross_trace (tracelessness) and cross_rotate_indices. [L] proves it for every drive in the Killing class (dilation, rotations, translations), not only the dilation field.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "`radial_motion` states the dilation motion with its flux; the vanishing of the free stress trace contracted with the extra derivative is not stated at these lines.",
   "subject": [
     {
       "location": {
@@ -51,75 +51,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Maxwell.Free.current_div",
-        "module": "YM.Next.MAXWELL.Current",
+        "declaration": "YM.Maxwell.Free.radial_motion",
+        "module": "YM.Next.MAXWELL.Taxes",
         "lines": [
-          151,
-          181
+          54,
+          60
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Maxwell.Free.current_div"
+            "id": "YM.Maxwell.Free.radial_motion"
           },
           "snippet": {
-            "text": "lemma current_div {f g : Field F} {U : Set E4} (H : Bianchi U f) (K : Bianchi U g) (hU : IsOpen U)\n    {v : Drive} (h : Killing v) {x : E4} (hx : x ∈ U) : (∑ a : Axis, grad a (current v f g a) x) =\n      ∑ b : Axis, v b x * ∑ c : Axis, (⟪divF f c x,g b c x⟫_ℝ + ⟪f b c x,divF g c x⟫_ℝ) := by\n  have hd (a b : Axis) : DifferentiableAt ℝ (cross f g a b) x := (cross_diff a b\n    (fun i l => H.smooth i l x hx) (fun i l => K.smooth i l x hx)).differentiableAt (by simp)\n  let w := grad timeAxis (v timeAxis) x\n  let T a b := grad a (v b) x * cross f g a b x\n  have he (a : Axis) : grad a (current v f g a) x = ∑ b : Axis,\n      (T a b + v b x * grad a (cross f g a b) x) := by\n    change fderiv ℝ (fun y => ∑ b : Axis, v b y * cross f g a b y) x _ = _\n    have hm (b : Axis) : DifferentiableAt ℝ (fun x => v b x * cross f g a b x) x :=\n      ((h.diff b).differentiable (by simp) x).mul (hd a b)\n    rw [fderiv_fun_sum (fun i _ => hm i),sum_apply]; apply Finset.sum_congr rfl; intro b _\n    rw [fderiv_fun_mul ((h.diff b).differentiable (by simp) x) (hd a b)]\n    simp [T,grad,D,add_comm, mul_comm]\n  simp_rw [he,Finset.sum_add_distrib]\n  have ht : ∑ a : Axis, ∑ b : Axis, T a b = 0 := by\n    let R := ∑ a : Axis, ∑ b : Axis, T a b\n    have hy : R+R = ∑ a : Axis, ∑ b : Axis, (T a b+T b a) := by\n      simp only [Finset.sum_add_distrib]; unfold R; rw [Finset.sum_comm (f := fun a b => T b a)]\n    have hw (a b : Axis) : T a b + T b a = if a=b then 2*w * cross f g a a x else 0 := by\n      unfold T\n      split_ifs with hb\n      · subst b; rw [h.diag a timeAxis x]; unfold w; ring\n      rw [h.off a b hb, cross_rotate_indices f g a b x, neg_mul]; simp\n    simp_rw [hw] at hy\n    simp only [Finset.sum_ite_eq, Finset.mem_univ, ↓reduceIte, ← Finset.mul_sum,\n      cross_trace f g x, mul_zero] at hy\n    change R = 0\n    linarith\n  rw [ht,zero_add,Finset.sum_comm]; simp_rw [← Finset.mul_sum, div_cross H K hU hx, Finset.sum_add_distrib]",
-            "line": 151,
+            "text": "lemma radial_motion : Motion (G:=G) (l:=0) (x:=x) (fromCenter 1 x) (metric G) χ where\n  symm := radial_K x\n  collide p q := centers_collide hχ Hχ hw p q _ (radial_K x)\n  flux p q y he ht := by\n    rw [radial_flux isOpen_compl_singleton (pulse_wave q.2 y) p.2 hχ Hχ (fun z hz => fun h : z=y => ht (h ▸ hz)) hw]\n    rw [K_symmetric _ _ he, K_sample _ _ (Ne.symm he)];\n    change _ = -sample (((p.1:ℝ)+2) • p.2) _ _; rw [sample_smulLeg,neg_mul]",
+            "line": 54,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/MAXWELL/Current.lean",
-            "fragment": "L151-L181"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/MAXWELL/Taxes.lean",
+            "fragment": "L54-L60"
           },
           "proof_context": {
-            "declaration": "YM.Maxwell.Free.current_div",
+            "declaration": "YM.Maxwell.Free.radial_motion",
             "lines": [
-              151,
-              181
+              54,
+              60
             ],
-            "conclusion": "For any Killing drive v, the terms with a derivative of v in the divergence of the stress current sum to zero (block ht), the diagonal part through the trace of the stress."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Maxwell.Free.cross_trace",
-        "module": "YM.Next.MAXWELL.Current",
-        "lines": [
-          53,
-          57
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Maxwell.Free.cross_trace"
-          },
-          "snippet": {
-            "text": "lemma cross_trace (f g : Field F) (x) : ∑ a : Axis, cross f g a a x = 0 := by\n  unfold cross\n  simp only [kr_eq, if_true, one_mul,Finset.sum_sub_distrib, Finset.sum_add_distrib, Finset.sum_const,\n    Finset.card_univ,Fintype.card_fin,nsmul_eq_mul,Nat.cast_ofNat]\n  ring",
-            "line": 53,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/MAXWELL/Current.lean",
-            "fragment": "L53-L57"
-          },
-          "proof_context": {
-            "declaration": "YM.Maxwell.Free.cross_trace",
-            "lines": [
-              53,
-              57
-            ],
-            "conclusion": "The polarized free stress cross f g has zero trace."
+            "conclusion": "`fromCenter 1 x` is a `Motion` for `metric G` (symmetric kernel, collisions, flux with weight `p.1+2`)."
           }
         }
       }
@@ -134,11 +95,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent disagreed and a judge changed it from relatedMatch; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent disagreed and a judge changed it from relatedMatch; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {
-        "kind": "chain"
+        "kind": "helper"
       }
     }
   }

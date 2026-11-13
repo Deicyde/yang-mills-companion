@@ -1,9 +1,9 @@
 {
   "id": "Lemma 11.8 step 10",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "relatedMatch",
-  "note": "The first bound is `Rjoint_cost` as stated, but the second is only a hypothesis of `stadium` here and is supplied elsewhere by `conquer` on the zero background, a different route.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] proves the first bound in Stationary.Rjoint_cost and the second in Stationary.conquer, which WilsonBulk.completion_choice supplies to the coercivity argument. Both are stated per Bloch momentum with explicit constants brake_cost and tribute2, the second on a complex strip.",
   "subject": [
     {
       "location": {
@@ -33,7 +33,7 @@
         "module": "YM.Next.STATIONARY.Spectral.RealGap",
         "lines": [
           541,
-          542
+          544
         ]
       },
       "role": "key",
@@ -43,14 +43,14 @@
             "id": "YM.Stationary.Rjoint_cost"
           },
           "snippet": {
-            "text": "lemma Rjoint_cost (P : Patch) (a : Phase (Co P.L (Loc G 0))) (h : star p=p) :\n    (slabW G P.L).rate p (shadeR G P p*ᵥ a) ≤ brake_cost P.J * slug (throneK G P.L p*ᵥ a) := by",
+            "text": "lemma Rjoint_cost (P : Patch) (a : Phase (Co P.L (Loc G 0))) (h : star p=p) :\n    (slabW G P.L).rate p (shadeR G P p*ᵥ a) ≤ brake_cost P.J * slug (throneK G P.L p*ᵥ a) := by\n  unfold brake_cost; apply (pow_le_pow_iff_left₀ (show 0 ≤ (slabW G P.L).rate p _ from slug_nonneg _) (mul_nonneg (Real.sqrt_nonneg _) (slug_nonneg _)) (by decide : 2≠0)).1\n  rw [shade_split,slabW, Slab.spade_rate,Slab.basic_rate,slug_neg,mul_pow,Real.sq_sqrt (by positivity)]; have h1 := Rfine_cost P a h; have h2 := Rcoarse_cost P a h; linarith only [h1,h2]",
             "line": 541,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Spectral/RealGap.lean",
-            "fragment": "L541-L542"
+            "fragment": "L541-L544"
           },
           "proof_context": {
             "declaration": "YM.Stationary.Rjoint_cost",
@@ -58,7 +58,7 @@
               541,
               544
             ],
-            "conclusion": "`Rjoint_cost` bounds the block norm of `shadeR p *ᵥ a` by `brake_cost J` times the `ℓ²` norm `slug (throneK p *ᵥ a)`, i.e. `‖Rφ‖_bl ≤ C‖(Δ₀+𝔪_μ)φ‖`."
+            "conclusion": "At real momenta the slabW norm of the joint gauge insertion shadeR a is at most brake_cost J times the l2 norm of throneK a, the symbol of Delta_0 + m_mu."
           }
         }
       }
@@ -68,36 +68,75 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Stationary.stadium",
-        "module": "YM.Next.STATIONARY.Spectral.RealGap",
+        "declaration": "YM.Stationary.conquer",
+        "module": "YM.Next.STATIONARY.Films.TraceDifference",
         "lines": [
-          650,
-          650
+          306,
+          307
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Stationary.stadium"
+            "id": "YM.Stationary.conquer"
           },
           "snippet": {
-            "text": "    (∀ p∈strip σ,serial (Slab.basic _) (slabW G P.L) p p (F p) D) →",
-            "line": 650,
+            "text": "lemma conquer : Charges (Slab.basic _) (slabW G P.L) (CanonR E false) σ (tribute2 G P.J C D) := by\n  apply Charges.plus (shearPaid hs h) (elevation_pay hp hs h hF)",
+            "line": 306,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Spectral/RealGap.lean",
-            "fragment": "L650-L650"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Films/TraceDifference.lean",
+            "fragment": "L306-L307"
           },
           "proof_context": {
-            "declaration": "YM.Stationary.stadium",
+            "declaration": "YM.Stationary.conquer",
             "lines": [
-              647,
-              664
+              306,
+              307
             ],
-            "conclusion": "The bound `‖F_μ w‖ ≤ C‖w‖_bl` is the hypothesis `serial (Slab.basic) (slabW) p p (F p) D` of `stadium`."
+            "conclusion": "The frame regulator CanonR (F_mu) is bounded from the slabW (bl) norm to the plain norm on the strip by tribute2 J C D."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.WilsonBulk.completion_choice",
+        "module": "YM.WilsonBulk.Spectral.Joint",
+        "lines": [
+          59,
+          69
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.WilsonBulk.completion_choice"
+          },
+          "snippet": {
+            "text": "  have hZ:= conquer hP hv (zero_spotlight G P v hu) (H _ v (min_le_right ..))\n  have hr: Poster v (regulatorF G P):= hZ.covered.tab\n  have hx: Poster v (forceK G P (regulatorF G P) K.penalty B):=\n    Poster.amounts (gift_lane B _ he hv) (hr.reverse.forge hr)\n  let n : ℕ→Side := fun i => ⟨i+1, Nat.zero_lt_succ _⟩\n  have hn : Tendsto (fun i => (n i).val) atTop atTop :=\n    tendsto_atTop_mono (fun i=> show i ≤ i+1 by omega) tendsto_id\n  let w : Armada n (fun i=>n i*P.L) P K:= ⟨fun _=>rfl⟩\n  refine ⟨hx.skinny hη', h P hJ hP B _ _ _ _ _ w hn he hF hr ?_ (fun i=> Classical.arbitrary _) (fun i=> regulator_turn _ hP _)⟩\n  rintro p hp\n  rw [← hJ]; exact (hZ.base hp).mono (le_abs_self _)",
+            "line": 59,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/WilsonBulk/Spectral/Joint.lean",
+            "fragment": "L59-L69"
+          },
+          "proof_context": {
+            "declaration": "YM.WilsonBulk.completion_choice",
+            "lines": [
+              44,
+              69
+            ],
+            "conclusion": "Applies conquer at the zero background (zero_spotlight) and feeds hZ.base into post_cert as the serial bound on F."
           }
         }
       }
@@ -112,7 +151,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-check of closeMatch records changed it from closeMatch; a re-rating agent agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-check of closeMatch records changed it from closeMatch; a re-rating agent agreed; re-judged after a second independent review, which changed it from relatedMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

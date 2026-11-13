@@ -1,9 +1,9 @@
 {
   "id": "Lemma 11.7 step 4",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "Lean has J_ax = |det Ds_y(y)| and positivity, with J(0)=1 coming from the anchor on `toll`, but it proves the pointwise identity via a density comparison rather than the product identity in z, and it has no statement Ds_0(0)=I. The Hessian chain rule appears only as a determinant identity, not as the matrix formula Q=(Ds)^*(I^*JI)Ds.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Carried by Stationary.treasury and Stationary.certified, with Work.F05.toll_pos. Differences: treasury gets the pointwise identity by comparing integrals over compact sets rather than from the product identity in z; the value one at zero comes from J(0)=1 (LocalRatio.anchored) rather than from Ds_0(0)=I; and the matrix factorization of Q is the internal step hk of certified, whose stated conclusion is its determinant.",
   "subject": [
     {
       "location": {
@@ -33,45 +33,6 @@
         "module": "YM.Next.STATIONARY.Joint.HaarJac",
         "lines": [
           63,
-          64
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Stationary.treasury"
-          },
-          "snippet": {
-            "text": "lemma treasury (U : Bid.Dir G c) (P : ChartRatio G) (h : LocalRatio P) (y : AxisChart G F) (hy : y∈parcel F P) :\n    toll F P y = |(fderiv ℝ (saver F y) y).det| := by",
-            "line": 63,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Joint/HaarJac.lean",
-            "fragment": "L63-L64"
-          },
-          "proof_context": {
-            "declaration": "YM.Stationary.treasury",
-            "lines": [
-              63,
-              114
-            ],
-            "conclusion": "At an axial point `y` in the parcel, `toll F P y = |det D(saver F y)(y)|`, i.e. J_ax = |det Ds_y(y)|."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Stationary.treasury",
-        "module": "YM.Next.STATIONARY.Joint.HaarJac",
-        "lines": [
-          106,
           114
         ]
       },
@@ -82,14 +43,14 @@
             "id": "YM.Stationary.treasury"
           },
           "snippet": {
-            "text": "    calc\n    _ = _ := (order_exposed F h U A hA (fun x hx => (h' hx).1)).symm\n    _ = (F.order G) (Q '' C) := hm\n    _ = ∫⁻ x in C, ENNReal.ofReal (L x) := order_exposed F h _ C hc hb\n    _ = ∫⁻ x in A, ENNReal.ofReal |(fderiv ℝ R x).det| * ENNReal.ofReal (L (R x)) := lintegral_image_eq_lintegral_abs_det_fderiv_mul volume hA.measurableSet (fun x hx => (ha x hx).hasFDerivWithinAt) hv _\n    _ = _ := by simp only [H, ENNReal.ofReal_mul (abs_nonneg _)]\n  have hh : L y=H y := le_antisymm (account_comp _ ht _ _ (fun A hA hs => (he A hA hs).symm) hg hf (by unfold H; rw [hx]; exact mul_nonneg (abs_nonneg _) (load_pos F h h0).le)) (account_comp _ ht _ _ he hf hg (load_pos F h hy).le)\n  unfold H L at hh; rw [hx,load_eq,load_eq,show toll F P 0=1 by simp [toll,h.anchored],mul_one,mul_comm |(fderiv ℝ R y).det|] at hh\n  exact mul_left_cancel₀ (pow_ne_zero _ h.scale.ne') hh",
-            "line": 106,
+            "text": "lemma treasury (U : Bid.Dir G c) (P : ChartRatio G) (h : LocalRatio P) (y : AxisChart G F) (hy : y∈parcel F P) :\n    toll F P y = |(fderiv ℝ (saver F y) y).det| := by\n  let X := AxisChart G F\n  let d := exposure F U\n  let R := saver F y\n  let L := load F P\n  let H (z : X) := |(fderiv ℝ R z).det| *  L (R z)\n  have hx : R y=0 := saver_zero F y\n  let T : Set X := {x : X | x∈parcel F P ∧ R x∈parcel F P ∧ ContDiffAt ℝ ω R x ∧\n      exposure F 0 (R x) = d x*(d y)⁻¹}\n  have hR : ContDiffAt ℝ ω R y := cologne F y\n  have ht : T∈𝓝 y := by\n    have he : IsOpen (parcel F P) := isOpen_set_pi finite_univ fun _ _ => Metric.isOpen_ball\n    have hn : Tendsto R _ (𝓝 0) := hx ▸ hR.continuousAt.tendsto\n    filter_upwards [he.mem_nhds hy,hn.eventually (parcel_zero F h),hR.eventually (by simp),spends F y] with v hv hp hu hz\n    refine ⟨hv,hp,hu,?_⟩\n    funext i; unfold R d; simp only [exposure, hz,buck,link_one,replica_one,Pi.one_apply,mul_one,Pi.mul_apply,Pi.inv_apply]; group\n  have h0 : (0:X)∈parcel F P := mem_of_mem_nhds (parcel_zero F h)\n  have hf := load_cont F h hy\n  have hg : ContinuousAt H y := by\n    apply ContinuousAt.mul\n    · exact ContinuousAt.abs (ContinuousLinearMap.continuous_det.continuousAt.comp (hR.fderiv_right (m:=ω) (by simp)).continuousAt)\n    exact ContinuousAt.comp (g:=L) (f:=R) (by rw [hx]; exact load_cont F h h0) hR.continuousAt\n  have he (A : Set X) (hA : IsCompact A) (h' : A⊆T) :\n      (∫⁻ x in A,ENNReal.ofReal (L x))=∫⁻ x in A,ENNReal.ofReal (H x) := by\n    let C := R '' A\n    let m := fun x : F.Slice G => x*(d y)⁻¹\n    let Q := exposure F (0:Bid.Dir G c)\n    have ha (x) (hx : x ∈ A) : HasFDerivAt R (fderiv ℝ R x) x := ((h' hx).2.2.1.differentiableAt (by simp)).hasFDerivAt\n    have hc : IsCompact C := hA.image_of_continuousOn fun x hx => (ha x hx).continuousAt.continuousWithinAt\n    have hQ : Continuous Q := (exposure_continuous F).comp (f:=fun x => (0,x)) (continuous_const.prodMk continuous_id)\n    have hv : InjOn R A := fun x hx y hy hab =>\n        exposure_inj F h U (h' hx).1 (h' hy).1 (mul_right_cancel (((h' hx).2.2.2).symm.trans ((congr_arg Q hab).trans (h' hy).2.2.2)))\n    have hT : MeasurePreserving m (F.order G) (F.order G) := measurePreserving_pi _ _ (fun i : F.Free => measurePreserving_mul_right G.probHaar ((d y)⁻¹ i))\n    have hm := hT.measure_preimage ((hc.image hQ).measurableSet.nullMeasurableSet (μ:=F.order G))\n    have hu : m ⁻¹' (Q '' C)=d '' A := by\n      have hp : Q '' C=m '' (d '' A) := by\n        unfold C\n        rw [Set.image_image,Set.image_image]\n        exact Set.EqOn.image_eq (f₁:=fun z => Q (R z)) (f₂:=fun z => m (d z)) fun z hz => (h' hz).2.2.2\n      rw [hp,(show Injective m from fun x y p => mul_right_cancel p).preimage_image]\n    rw [hu] at hm\n    have hb : C⊆parcel F P := by rintro _ ⟨x,hx,rfl⟩; exact (h' hx).2.1\n    calc\n    _ = _ := (order_exposed F h U A hA (fun x hx => (h' hx).1)).symm\n    _ = (F.order G) (Q '' C) := hm\n    _ = ∫⁻ x in C, ENNReal.ofReal (L x) := order_exposed F h _ C hc hb\n    _ = ∫⁻ x in A, ENNReal.ofReal |(fderiv ℝ R x).det| * ENNReal.ofReal (L (R x)) := lintegral_image_eq_lintegral_abs_det_fderiv_mul volume hA.measurableSet (fun x hx => (ha x hx).hasFDerivWithinAt) hv _\n    _ = _ := by simp only [H, ENNReal.ofReal_mul (abs_nonneg _)]\n  have hh : L y=H y := le_antisymm (account_comp _ ht _ _ (fun A hA hs => (he A hA hs).symm) hg hf (by unfold H; rw [hx]; exact mul_nonneg (abs_nonneg _) (load_pos F h h0).le)) (account_comp _ ht _ _ he hf hg (load_pos F h hy).le)\n  unfold H L at hh; rw [hx,load_eq,load_eq,show toll F P 0=1 by simp [toll,h.anchored],mul_one,mul_comm |(fderiv ℝ R y).det|] at hh\n  exact mul_left_cancel₀ (pow_ne_zero _ h.scale.ne') hh",
+            "line": 63,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Joint/HaarJac.lean",
-            "fragment": "L106-L114"
+            "fragment": "L63-L114"
           },
           "proof_context": {
             "declaration": "YM.Stationary.treasury",
@@ -97,7 +58,46 @@
               63,
               114
             ],
-            "conclusion": "The Haar change of variables for `saver F y` (`lintegral_image_eq_lintegral_abs_det_fderiv_mul`) and the anchor `toll F P 0 = 1` give `L y = H y`, hence the identity at y."
+            "conclusion": "Using right invariance of Haar (measurePreserving_mul_right) and the change of variables saver_y, toll F P y = prod_i J(y_i) = |det D saver_y(y)|."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.certified",
+        "module": "YM.Next.STATIONARY.Joint.HaarJac",
+        "lines": [
+          140,
+          161
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.certified"
+          },
+          "snippet": {
+            "text": "lemma certified (t : S.Choices) (h : Shell S t p R (represent x) (abode S F (represent x) a)) :\n    let K := damage (helmets _ _ _) (canon S t p R (represent x) (abode S F (represent x) a)) 0\n    (hessian F t p R x a).det=(fderiv ℝ (saver F a) a).det^2 * ((rangers F G)ᵀ*K*rangers F G).det := by\n  intro K\n  let Q := canon S t p R (represent x) (abode S F (represent x) a)\n  let L : AxisChart G F →L[ℝ] Vault G c f := (pad F).prod 0\n  let D := saver F a\n  have he : tested F t p R x =ᶠ[𝓝 a] Q ∘ (L ∘ D) := by\n    filter_upwards [saving x a] with b hb\n    rw [← merit_pin]; change _=muster S t p R (represent x) _; exact congr_arg (muster S t p R (represent x)) hb.symm\n  have hv : (L ∘ D) a=0 := by simp [D]\n  have hk : damage (countingBasis F G) (tested F t p R x) a=\n      (billsM (countingBasis F G) (helmets G c f) (L ∘L fderiv ℝ D a))ᵀ * K *billsM (countingBasis F G) (helmets G c f) (L ∘L fderiv ℝ D a) := by\n    rw [damage_congr _ he, damage_comp _ (helmets G c f) _ (L.contDiff.contDiffAt.comp a (cologne F a)) _,hv,(L.hasFDerivAt.comp a ((cologne F a).differentiableAt (by simp)).hasFDerivAt).fderiv]\n    · rw [hv]; exact h.1\n    rw [hv]; exact h.2\n  let A := billsM (countingBasis F G) (countingBasis F G) (fderiv ℝ (saver F a) a)\n  rw [show hessian F t p R x a = damage _ _ _ from hessian_eq ..,hk]\n  rw [show billsM _ _ (L ∘L fderiv ℝ D a)=rangers F G*A from bill_multiply _ (countingBasis F G) _ _ _]\n  rw [transpose_mul, show (Aᵀ*(rangers F G)ᵀ)* K * (rangers F G*A) = Aᵀ * ((rangers F G)ᵀ*K*rangers F G) * A by simp only [Matrix.mul_assoc], det_mul, det_mul,det_transpose,\n    show A.det=_ from (show A.det=(fderiv ℝ (saver F a) a).det from LinearMap.det_toMatrix ..)]\n  ring",
+            "line": 140,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Joint/HaarJac.lean",
+            "fragment": "L140-L161"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.certified",
+            "lines": [
+              140,
+              161
+            ],
+            "conclusion": "At a stationary point the slice Hessian equals A^T (rangers^T K rangers) A with A = D saver, by damage_comp with the second-derivative term dropped because fderiv = 0 (internal step hk), so its determinant is det(A)^2 det(rangers^T K rangers)."
           }
         }
       }
@@ -136,46 +136,7 @@
               37,
               38
             ],
-            "conclusion": "`toll B P y > 0` on the parcel, so J_ax is positive."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Stationary.certified",
-        "module": "YM.Next.STATIONARY.Joint.HaarJac",
-        "lines": [
-          140,
-          142
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Stationary.certified"
-          },
-          "snippet": {
-            "text": "lemma certified (t : S.Choices) (h : Shell S t p R (represent x) (abode S F (represent x) a)) :\n    let K := damage (helmets _ _ _) (canon S t p R (represent x) (abode S F (represent x) a)) 0\n    (hessian F t p R x a).det=(fderiv ℝ (saver F a) a).det^2 * ((rangers F G)ᵀ*K*rangers F G).det := by",
-            "line": 140,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Joint/HaarJac.lean",
-            "fragment": "L140-L142"
-          },
-          "proof_context": {
-            "declaration": "YM.Stationary.certified",
-            "lines": [
-              140,
-              161
-            ],
-            "conclusion": "For the stationary point the Hessian determinant factors as `(det D(saver F a) a)^2 * det(rangers^T K rangers)`: the chain rule with the second-derivative term dropped, at the level of determinants."
+            "conclusion": "The Jacobian product is positive on the chart ball."
           }
         }
       }
@@ -190,7 +151,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

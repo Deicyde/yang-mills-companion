@@ -1,9 +1,9 @@
 {
   "id": "Section 4 display 11",
   "kind": "display",
-  "status": "partial",
-  "relation": "relatedMatch",
-  "note": "[L] defines the O(4) action on the Taylor jets of the connection (`turn`, `rotated`), a different quantity from [M]'s action on curvature coordinates and derivatives; the formulas for hF_ab and h∂_a do not appear.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] carries the jet action on curvature components and derivatives as YM.Extra.FD.carry / reel (two-form indices via `bi`) and reel_gradient (derivative index), and the induced action R_d^Max on the Maxwell fields as YM.Extra.FD.ride / rideO via pullSol. The difference is the index convention: [L] contracts h's first index (with argument h^{-1}x) where [M] contracts h's first index on the summed side, i.e. the action by h versus its transpose.",
   "subject": [
     {
       "location": {
@@ -29,36 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Labels.Taylor.turn",
-        "module": "YM.Labels.Jet",
+        "declaration": "YM.Extra.FD.carry",
+        "module": "YM.Extra.FREE_DETECTOR_ALGEBRA.Covariance",
         "lines": [
-          69,
-          71
+          30,
+          39
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Labels.Taylor.turn"
+            "id": "YM.Extra.FD.carry"
           },
           "snippet": {
-            "text": "def turn (g : Ortho) : Taylor G j →ₗ[ℝ] Taylor G j where\n  toFun A := ⟨ fun i => ∑ k, g.val i k •\n    ((A.val k).compContinuousLinearMap fun _ ↦ (Ortho.motion g⁻¹).toContinuousLinearMap), by",
-            "line": 69,
+            "text": "def carry (s : Ortho) : TwoJet F j →ₗ[ℝ] TwoJet F j where\n  toFun Q := bi s.val (fun i m => byDir s (Q i m))\n  map_add' Q R := by\n    change bi s.val _ = _\n    rw [← map_add (bi s.val)]\n    congr 1\n  map_smul' t Q := by\n    change bi s.val _ = _\n    rw [← map_smul (bi s.val)]\n    congr 1",
+            "line": 30,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Labels/Jet.lean",
-            "fragment": "L69-L71"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/FREE_DETECTOR_ALGEBRA/Covariance.lean",
+            "fragment": "L30-L39"
           },
           "proof_context": {
-            "declaration": "YM.Labels.Taylor.turn",
+            "declaration": "YM.Extra.FD.carry",
             "lines": [
-              69,
-              96
+              30,
+              39
             ],
-            "conclusion": "`turn g` acts on a Taylor jet by the vector index through `g.val i k` and on the arguments by the motion of `g⁻¹`."
+            "conclusion": "O(4) acts on two-form (curvature) jets by `bi s.val` on both form indices, (bi s v)_{im} = sum_{a,b} s_{ia} s_{mb} v_{ab}, and by composition with the motion of s^{-1} on the derivative directions."
           }
         }
       }
@@ -68,36 +68,75 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Labels.rotated",
-        "module": "YM.Labels.Action",
+        "declaration": "YM.Extra.FD.reel_gradient",
+        "module": "YM.Extra.FREE_DETECTOR_ALGEBRA.Covariance",
         "lines": [
-          80,
-          80
+          75,
+          77
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Labels.rotated"
+            "id": "YM.Extra.FD.reel_gradient"
           },
           "snippet": {
-            "text": "def rotated (s : Ortho) : Pol G →ₐ[ℂ] Pol G := changed fun _ => Taylor.turn s⁻¹",
-            "line": 80,
+            "text": "theorem reel_gradient (s : Ortho) {f : Maxwell.Field F} {x}\n    (hf : ∀ i m, ContDiffAt ℝ ∞ (f i m) (mov s⁻¹ x)) (a i m : Axis) :\n    grad a (reel s f i m) x = tri s.val (fun i m a => grad a (f i m) (mov s⁻¹ x)) i m a := by",
+            "line": 75,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Labels/Action.lean",
-            "fragment": "L80-L80"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/FREE_DETECTOR_ALGEBRA/Covariance.lean",
+            "fragment": "L75-L77"
           },
           "proof_context": {
-            "declaration": "YM.Labels.rotated",
+            "declaration": "YM.Extra.FD.reel_gradient",
             "lines": [
-              80,
-              80
+              75,
+              93
             ],
-            "conclusion": "`rotated s` acts on polynomial labels by `Taylor.turn s⁻¹` on the connection jets."
+            "conclusion": "For the rotated two-form field `reel s f`, the derivative grad_a transforms as a third tensor index: grad_a (reel s f)_{im} = sum s_{iu} s_{mv} s_{ab} grad_b f_{uv} at s^{-1}x."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extra.FD.ride",
+        "module": "YM.Extra.FREE_DETECTOR_ALGEBRA.Rank",
+        "lines": [
+          99,
+          101
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extra.FD.ride"
+          },
+          "snippet": {
+            "text": "def ride (s : Ortho) (d : ℕ) : (freeTable F).Field d →ₗ[ℂ] (freeTable F).Field d :=\n    (exactField F d).symm.toLinearMap.comp (((pullSol s).toLinearMap.comp (writes F d)).codRestrict _ fun P =>\n      sector_rot ((exactField F d P).property) s)",
+            "line": 99,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/FREE_DETECTOR_ALGEBRA/Rank.lean",
+            "fragment": "L99-L101"
+          },
+          "proof_context": {
+            "declaration": "YM.Extra.FD.ride",
+            "lines": [
+              99,
+              101
+            ],
+            "conclusion": "The rotation action on the free Maxwell fields `(freeTable F).Field d` is induced by `pullSol s` on Wick polynomials (preserving `shellSector`), and `rideO` packages it as a linear equivalence with inverse `ride s⁻¹`."
           }
         }
       }
@@ -112,7 +151,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent disagreed and a judge kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent disagreed and a judge changed it from relatedMatch; re-judged after a second independent review, which changed it from relatedMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       }
     }

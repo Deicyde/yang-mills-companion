@@ -1,9 +1,9 @@
 {
   "id": "Theorem A step 9",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "The OPE and contact content are present as bundled predicates; the shared prescription of Lemma J1.1 and the real bases of the contact strata are not spelled out.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] carries the step in continuum_with_position_tests via contacts_on (shared prescription M.basis = Q.port, real basis Contacts.Transport.real_basis) and exports it in YangMills.constructed. The difference: clause (v) is split, with the OPE in the headline and contacts as the separate (hierarchy F Q).Contacts.",
   "subject": [
     {
       "location": {
@@ -29,36 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YangMills.constructed",
-        "module": "Construction",
+        "declaration": "YM.Nonperturbative.continuum_with_position_tests",
+        "module": "YM.Nonperturbative.Continuum",
         "lines": [
-          28,
-          28
+          43,
+          48
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YangMills.constructed"
+            "id": "YM.Nonperturbative.continuum_with_position_tests"
           },
           "snippet": {
-            "text": "        Headline.SeparatedOPE F Q ∧ Headline.NestedOPE F Q ∧ Headline.TraceExclusions.{u,v} F ∧",
-            "line": 28,
+            "text": "  obtain ⟨q,_,S,F,X,L,Q,_,ordered,uv,first,reconstruction,trace,service,ope,nested,_,_⟩ :=\n    (R2IGoals.fromFunded.{u} W hG funded).refine p\n  obtain ⟨M,same,contacts,basis,thresholds⟩ := contacts_on F Q service.toServices\n  exact ⟨q,S,F,L,Q,M,ordered,uv,\n    Core.of_receipts hG F L Q reconstruction trace service.toServices ope,\n    nested,same,contacts,basis,thresholds,X,first,Pert.Position.four_on F X hG first⟩",
+            "line": 43,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/Construction.lean",
-            "fragment": "L28-L28"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Nonperturbative/Continuum.lean",
+            "fragment": "L43-L48"
           },
           "proof_context": {
-            "declaration": "YangMills.constructed",
+            "declaration": "YM.Nonperturbative.continuum_with_position_tests",
             "lines": [
-              15,
-              40
+              28,
+              48
             ],
-            "conclusion": "`Headline.SeparatedOPE F Q` and `Headline.NestedOPE F Q` give the operator product expansions."
+            "conclusion": "One reader Q gives the OPE core (Core.of_receipts), and contacts_on builds contact devices M with M.basis = Q.port, MultipleLight, SystemBasis and Thresholds from the same services."
           }
         }
       }
@@ -71,8 +71,8 @@
         "declaration": "YangMills.constructed",
         "module": "Construction",
         "lines": [
-          29,
-          31
+          15,
+          40
         ]
       },
       "role": "key",
@@ -82,14 +82,14 @@
             "id": "YangMills.constructed"
           },
           "snippet": {
-            "text": "        M.basis = Q.port ∧ Contacts.Solstice.MultipleLight F M ∧\n        Nonempty (Contacts.Transport.SystemBasis M) ∧ Nonempty (Contacts.Solstice.Thresholds M) ∧\n        Pert.FirstExtension F X ∧ Pert.Position.FourMeters F X := by",
-            "line": 29,
+            "text": "theorem constructed (g : GaugeGroup) (hg : g.IsSimple) (b : ℝ) (hb : 0 < b) :\n    ∃ C : YM.Family g.core, C.path.levels.clock.kernel.penalty = b ∧ C.Makes ∧\n      WilsonRegularity (wilsonFamily C) ∧\n      ∀ p : Extraction.Order, ∃ (q : Extraction.Order) (S : Table C.book)\n        (F : Final C (p.refine q) S) (L : EveryPhase.Almanac F)\n        (Q : Reader F.sector.derivatives F.sector.turns F.room.kernel.spin)\n        (M : Contacts.Devices F.sector.derivatives) (X : Climb.Scaling S),\n        (hierarchy F Q).Properties (p.refine q).per ∧ (hierarchy F Q).Contacts ∧\n        (Extraction.Order.mk Extraction.Sequence.full (p.refine q).per).Ordered C S ∧\n        FullVolume.PositionsUV C Extraction.Sequence.full ∧ Spec.Calibrated C ∧\n        Independent.Core.{u,v} (GaugeGroup.coreSimple hg) F L Q ∧\n        Headline.Reconstruction F L ∧\n        (∀ i, (view (L.actors i)).Axioms) ∧\n        Headline.SeparatedOPE F Q ∧ Headline.NestedOPE F Q ∧ Headline.TraceExclusions.{u,v} F ∧\n        M.basis = Q.port ∧ Contacts.Solstice.MultipleLight F M ∧\n        Nonempty (Contacts.Transport.SystemBasis M) ∧ Nonempty (Contacts.Solstice.Thresholds M) ∧\n        Pert.FirstExtension F X ∧ Pert.Position.FourMeters F X := by\n  obtain ⟨C,penalty,makes,orders⟩ := Nonperturbative.existence.{u,v} g.core (GaugeGroup.coreSimple hg) b hb\n  refine ⟨C,penalty,makes,regular C hg makes,fun p => ?_⟩\n  obtain ⟨q,S,F,L,Q,M,X,ordered,uv,cal,core,recon,ope,nested,trace,same,contacts,basis,thresholds,first,four⟩ := orders p\n  exact ⟨q,S,F,L,Q,M,X,\n    ⟨wilsonLimit F Q ordered, publicReconstruction F Q L core.reconstruction,\n      publicOPE F Q ope, publicTrace F Q hg trace⟩,\n    contactDistribution F M contacts, ordered,uv,cal,core,recon,\n    fun i => view_axioms _ (core.reconstruction.isTheory i),\n    ope,nested,trace,same,contacts,basis,thresholds,first,four⟩",
+            "line": 15,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/Construction.lean",
-            "fragment": "L29-L31"
+            "fragment": "L15-L40"
           },
           "proof_context": {
             "declaration": "YangMills.constructed",
@@ -97,7 +97,7 @@
               15,
               40
             ],
-            "conclusion": "`M.basis = Q.port`, the multiple-light, system-basis and thresholds data and the first extension give the contact structure."
+            "conclusion": "The public hierarchy receives both the OPE property (publicOPE) and Contacts (contactDistribution) from the same F, Q and M."
           }
         }
       }
@@ -112,11 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {
-        "kind": "direct"
+        "kind": "chain"
       }
     }
   }

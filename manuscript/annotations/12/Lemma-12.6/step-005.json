@@ -1,9 +1,9 @@
 {
   "id": "Lemma 12.6 step 5",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "Lean has the cubic and quartic atoms matched through degree four with a bound depending on fixed data, applied as one step to both records, not cubic first and then quartic. The choice of `ℓ`, the identity-on-curls statement at `m = N` with zero loop atoms, and the placement of the clipping and unhealthy configurations by Lemma D3 are not at these lines.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] does the cubic-then-quartic division in YM.Stationary.assembly via `orbit_gate`, which first builds the cubic atoms and then divides the remaining difference into quartic atoms. YM.Push.Uniform.initial_main handles m=N. The differences: at m=N [L] has the exact identity mainTerm = Wilson.energy, and the largeness of ℓ is the threshold `u ≤ P.L.val` in YM.Stationary.transition_cap rather than part of these lines.",
   "subject": [
     {
       "location": {
@@ -33,7 +33,7 @@
         "module": "YM.Next.STATIONARY.Shape.ClassicalMatch",
         "lines": [
           561,
-          566
+          595
         ]
       },
       "role": "key",
@@ -43,14 +43,14 @@
             "id": "YM.Stationary.assembly"
           },
           "snippet": {
-            "text": "lemma assembly (G : Gauge) (σ σ₀ : ℝ) (A Z : ℝ) (hs : 0<σ) (hσ : 0<σ₀) (hz : 0≤ Z) :\n    ∃ τ C : ℝ, 0<τ ∧ τ≤σ ∧ 0≤C ∧ ∀ (m : ℕ → Side), Tendsto (fun i => (m i).val) atTop atTop →\n      ∀ (B : Bed) (p : Clip) (a b : ℝ), B.roots.strip σ₀ A → Floor B p 1 a b → p.direct ≤ Z → ∀ E : ∀ i, Link G (m i) → ℝ, (∀ i, Pointwise (E i)) →\n        (∀ i, Rays 3 (E i - inputSeries p (blank B G))) → ∀ M : ℝ, 1 ≤ M → HasRecord E σ M 2 → HasRecord E σ M 3 →\n      ∃ X : ℕ → Atom G 3, ∃ V : ℕ → Atom G 4, AtomWall X τ (M*C) ∧ AtomWall V τ (M*C) ∧\n        ∀ f : ℕ → Atom G 2, ∀ i, Rays 5 (E i - intended p (emitBase G B f X V)) := by",
+            "text": "lemma assembly (G : Gauge) (σ σ₀ : ℝ) (A Z : ℝ) (hs : 0<σ) (hσ : 0<σ₀) (hz : 0≤ Z) :\n    ∃ τ C : ℝ, 0<τ ∧ τ≤σ ∧ 0≤C ∧ ∀ (m : ℕ → Side), Tendsto (fun i => (m i).val) atTop atTop →\n      ∀ (B : Bed) (p : Clip) (a b : ℝ), B.roots.strip σ₀ A → Floor B p 1 a b → p.direct ≤ Z → ∀ E : ∀ i, Link G (m i) → ℝ, (∀ i, Pointwise (E i)) →\n        (∀ i, Rays 3 (E i - inputSeries p (blank B G))) → ∀ M : ℝ, 1 ≤ M → HasRecord E σ M 2 → HasRecord E σ M 3 →\n      ∃ X : ℕ → Atom G 3, ∃ V : ℕ → Atom G 4, AtomWall X τ (M*C) ∧ AtomWall V τ (M*C) ∧\n        ∀ f : ℕ → Atom G 2, ∀ i, Rays 5 (E i - intended p (emitBase G B f X V)) := by\n  let k := rowPrice σ₀ A\n  obtain ⟨v,P,hv,hP,H⟩ := column_price G 2 k Z hσ hz\n  obtain ⟨w,Q,hw,hQ,Y⟩ := column_price G 3 k Z hσ hz\n  let a := min σ (min v w)\n  have hb : a≤σ := min_le_left ..\n  have hh : a≤v := (min_le_right ..).trans (min_le_left ..)\n  have he : a≤w := (min_le_right ..).trans (min_le_right ..)\n  have ha : 0 < a := lt_min hs (lt_min hv hw)\n  obtain ⟨x,J,hx,hX,hJ,D⟩ := orbit_gate G a ha\n  refine ⟨x,(1+(P+Q))*J,hx,hX.trans hb,by positivity,fun m hm B p b z hB hu hp E hE hl M hM HF HG => ?_⟩\n  have h0 : 0≤M := zero_le_one.trans hM\n  let W := blank B G\n  have hW : W.Bounds p σ₀ k 0 := blank_cap hσ hB hu le_rfl le_rfl\n  have hc : BankRows W σ₀ k := hW.rows\n  obtain ⟨ht,U,hU,hU'⟩ := H p _ _ _ _ hp hW hc\n  obtain ⟨hα,S,hS,hS'⟩ := Y p _ _ _ _ hp hW hc\n  let F i := inputSeries p W (m:=m i)\n  have hs i : Pointwise (F i) := stain_knit _ _ hW\n  have hm' : HasRecord F v P 2 := ⟨U,hU,fun i => hU' _⟩\n  have hm'' : HasRecord F w Q 3 := ⟨S,hS,fun i => hS' _⟩\n  obtain ⟨X,V,h₁,h₂,h₃⟩ := D m hm (E-F) (fun i => (hE i).sub (hs i)) hl (M+P+Q) (by positivity)\n    ((((HF.mono ha hb le_rfl)).sub (hm'.mono ha hh le_rfl) (fun i => (hE i).analytic) (fun i => (hs i).analytic)).mono ha le_rfl (by linarith))\n    ((((HG.mono ha hb le_rfl)).sub (hm''.mono ha he le_rfl) (fun i => (hE i).analytic) (fun i => (hs i).analytic)).mono ha le_rfl (by linarith))\n  have hC : (M+P+Q)*J ≤ M*((1+(P+Q))*J) := by rw [← mul_assoc]; gcongr; nlinarith [mul_nonneg (sub_nonneg.mpr hM) (add_nonneg hP hQ)]\n  refine ⟨X,V,h₁.mono le_rfl hC,h₂.mono le_rfl hC,fun f i => ?_⟩\n  rw [intent]\n  convert h₃ i using 1\n  change _- (F i + turnSeries X + turnSeries V)=E i-F i-_-_\n  abel",
             "line": 561,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Shape/ClassicalMatch.lean",
-            "fragment": "L561-L566"
+            "fragment": "L561-L595"
           },
           "proof_context": {
             "declaration": "YM.Stationary.assembly",
@@ -58,7 +58,7 @@
               561,
               595
             ],
-            "conclusion": "`assembly`: given records of the input action at degrees 2 and 3 with bound `M`, there are cubic and quartic atoms `X, V` with `AtomWall … (M*C)` such that the action agrees with `intended` through `Rays 5`, i.e. through degree four, with bound independent of the input beyond `M`."
+            "conclusion": "If E minus the input series vanishes to order 3, there are cubic atoms X and quartic atoms V with bound M·C such that E minus the intended action with these atoms vanishes to order 5, i.e. the actions agree through degree four."
           }
         }
       }
@@ -68,75 +68,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Stationary.orbit_gate",
-        "module": "YM.Next.STATIONARY.Shape.ClassicalMatch",
+        "declaration": "YM.Push.Uniform.initial_main",
+        "module": "YM.Push.STATIONARY_UNIFORM.Wilson",
         "lines": [
-          534,
-          538
+          46,
+          48
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Stationary.orbit_gate"
+            "id": "YM.Push.Uniform.initial_main"
           },
           "snippet": {
-            "text": "lemma orbit_gate (G : Gauge) (σ : ℝ) (hp : 0<σ) : ∃ η C : ℝ, 0 < η ∧ η≤σ ∧ 0 ≤ C ∧ ∀ m : ℕ → Side,\n    Tendsto (fun i => (m i).val) atTop atTop → ∀ (F : ∀ i, Link G (m i)→ℝ),\n      (∀ i, Pointwise (F i)) → (∀ i, Rays 3 (F i)) → ∀ A, 0 ≤ A → HasRecord F σ A 2 → HasRecord F σ A 3 →\n    ∃ X : ℕ → Atom G 3, ∃ V : ℕ → Atom G 4, AtomWall X η (A*C) ∧ AtomWall V η (A*C) ∧\n      ∀ i, Rays 5 (F i-turnSeries X-turnSeries V) := by",
-            "line": 534,
+            "text": "lemma initial_main (he : p.direct=1) (V : Config G f) : mainTerm p (wil G) V=Wilson.energy V := by\n  have hh (s : Signed) : quadratic p (wil G) (pull s 0 V)=Wilson.energy V := by\n    rw [← energy_pull V s 0]; simp [quadratic,PathData.ell,PathData.ellTerms,wil,he,Wilson.energy]",
+            "line": 46,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Shape/ClassicalMatch.lean",
-            "fragment": "L534-L538"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/STATIONARY_UNIFORM/Wilson.lean",
+            "fragment": "L46-L48"
           },
           "proof_context": {
-            "declaration": "YM.Stationary.orbit_gate",
+            "declaration": "YM.Push.Uniform.initial_main",
             "lines": [
-              534,
-              556
+              46,
+              52
             ],
-            "conclusion": "`orbit_gate` removes the cubic and quartic parts `turnSeries X`, `turnSeries V` of a series that is `Rays 3`, leaving `Rays 5`."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Precision.ClassicalMatch",
-        "module": "YM.PCalc.Chart",
-        "lines": [
-          108,
-          109
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Precision.ClassicalMatch"
-          },
-          "snippet": {
-            "text": "def ClassicalMatch (B : Forest S.ratio) (p q : Clip) (R T : PathData G) (ρ : fieldDir G c 1 → AxisChart G B) := ∀ j, j≤4 → ∀ i : S.Choices,\n    SameJet j (fun x => tested B i p R x (ρ x)) (fun x => mainTerm q T (represent x))",
-            "line": 108,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PCalc/Chart.lean",
-            "fragment": "L108-L109"
-          },
-          "proof_context": {
-            "declaration": "YM.Precision.ClassicalMatch",
-            "lines": [
-              108,
-              109
-            ],
-            "conclusion": "`ClassicalMatch` says the jets of the tested action and of `mainTerm` agree for every order `j ≤ 4`."
+            "conclusion": "With direct coefficient 1 and the top path data wil (zero loop atoms), the main term equals the Wilson energy."
           }
         }
       }
@@ -151,7 +112,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

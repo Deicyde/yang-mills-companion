@@ -1,9 +1,9 @@
 {
   "id": "Lemma 11.6 step 18",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "Together they give `sum_z (1+|z|)^r prod (1+|z_a|)^(-j) ≤ C'` for `r ≤ j-2`, without the factor `l^{-1-r}`; that prefactor is in `Donate`.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Carried by Secured.propels (Strands.lean), which sums the alias terms using absorbs and decay_cost (AliasWeights.lean). Differences: the leading power is a general toll L^{-e} rather than ell^{-1}, and the sum runs over the centered aliases of a finite torus with a bound uniform in L, rather than over Z^4.",
   "subject": [
     {
       "location": {
@@ -29,36 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Next.Free.absorbs",
-        "module": "YM.Next.FREE_KERNELS.AliasWeights",
+        "declaration": "YM.Next.Free.Secured.propels",
+        "module": "YM.Next.FREE_KERNELS.Strands",
         "lines": [
-          61,
-          66
+          85,
+          107
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Next.Free.absorbs"
+            "id": "YM.Next.Free.Secured.propels"
           },
           "snippet": {
-            "text": "lemma absorbs (l : Site L) (t r : ℕ) : grade l ^ t * decay (r+t) l ≤ decay r l := by\n  rw [Nat.add_comm,decay_add, ← mul_assoc]\n  refine (mul_le_mul_of_nonneg_right ?_ (decay_pos _ r).le).trans (le_of_eq (one_mul _))\n  unfold decay\n  rw [← div_eq_mul_inv, div_le_one (pow_pos (mix_pos l) _)]\n  exact pow_le_pow_left₀ (grade_pos l).le (grade_le_mix l) t",
-            "line": 61,
+            "text": "lemma propels (h : Secured f) (hj : 4≤j) (e : ℕ) {u : List Axis} (hu : u.length≤j-2)\n    (F : ι → Flight j t) (r : ∀ i, Site (F i).L) :\n    Pay (fun i => ((((F i).L.val:ℝ)^(e+u.length))⁻¹)) fun i => spread f e u (F i) (r i) := by\n  refine ⟨fun i => by positivity, fun a b => ?_⟩\n  simp only [spread,Matrix.sum_apply,Matrix.smul_apply,smul_eq_mul]\n  let L (i : ι) := (F i).L\n  let y (i : ι) := (((L i).val:ℝ)^(e+u.length))⁻¹\n  let s (i) := (Finset.univ : Finset (Site (L i)))\n  obtain ⟨C,hC,hT⟩ := decay_cost\n  apply Moderate.sum_family s (fun i l => y i*decay 2 l) ⟨C,hC,fun i => (by\n    rw [← Finset.mul_sum,mul_comm C]; exact mul_le_mul_of_nonneg_left (hT (L i)) (by unfold y; positivity))⟩\n  let I := Σ i, {l // l∈s i}\n  let m (i : I) := F i.1\n  let q (i : I) := i.2.val\n  have he := differential_bound m q e u\n  have hp := residue_cost m q (fun i => r i.1)\n  have hc := (h.pay.tap a b).index (fun i => ⟨m i,q i⟩)\n  apply (hp.mul (he.mul hc)).raise_price\n  intro i\n  have hn : u.length+2≤j := by omega\n  dsimp only\n  rw [one_mul,mul_assoc]; apply mul_le_mul_of_nonneg_left _ (by positivity)\n  apply (mul_le_mul_of_nonneg_left (decay_anti _ (show 2+u.length≤j by omega)) (pow_nonneg (grade_pos _).le _)).trans (absorbs ..)",
+            "line": 85,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/AliasWeights.lean",
-            "fragment": "L61-L66"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/Strands.lean",
+            "fragment": "L85-L107"
           },
           "proof_context": {
-            "declaration": "YM.Next.Free.absorbs",
+            "declaration": "YM.Next.Free.Secured.propels",
             "lines": [
-              61,
-              66
+              85,
+              107
             ],
-            "conclusion": "`grade l ^ t * decay (r+t) l ≤ decay r l`."
+            "conclusion": "For a difference word u with |u| <= j-2, the alias-summed symbol spread f e u is bounded on the strip, uniformly in the flight, by L^{-(e+|u|)}, by combining the per-alias decay_j bound, the factor L^{-1}grade per difference, absorbs, and the uniform sum of decay 2."
           }
         }
       }
@@ -97,7 +97,7 @@
               74,
               91
             ],
-            "conclusion": "`∑ l : Site L, decay 2 l ≤ C` uniformly in the side `L`."
+            "conclusion": "The sum over aliases of prod_a (1+|z_a|)^{-2} is bounded uniformly in L."
           }
         }
       }
@@ -112,7 +112,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

@@ -1,9 +1,9 @@
 {
   "id": "Lemma 11.8 step 15",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "relatedMatch",
-  "note": "Coercivity is `Stable` of the completed form at real momenta, reached through `secure_cash`, not by squaring.",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "[L] proves real coercivity of the completed form, with a constant independent of the patch side, in Stationary.stadium, where secure_cash and on_the_tab carry out exactly the squaring of the triangle-inequality bound.",
   "subject": [
     {
       "location": {
@@ -33,7 +33,7 @@
         "module": "YM.Next.STATIONARY.Spectral.RealGap",
         "lines": [
           647,
-          651
+          664
         ]
       },
       "role": "key",
@@ -43,14 +43,14 @@
             "id": "YM.Stationary.stadium"
           },
           "snippet": {
-            "text": "lemma stadium (G : Gauge) (j : ℕ) (κ D ε : ℝ) (hh : 0<κ) (hc : 0 ≤ D) (hε : 0<ε) : ∃ y : ℝ,0<y∧∀ (P : Patch), P.J=j→ ∀ (B : Bed) (b : Clip) (F : Tactics G P)\n    (σ Ω A : ℝ), 0<σ → B.metric.strip (inch P.L*σ) Ω → (∀ n,Floor B b n ε A) → Poster σ F →\n    (∀ p, star p=p → F p*shadeR G P p=throneK G P.L p) → (∀ p, star p=p → (F (-p))ᵀ=(F p)ᴴ) →\n    (∀ p∈strip σ,serial (Slab.basic _) (slabW G P.L) p p (F p) D) →\n    ∀ p, star p=p → Stable (carryM ((slabW G P.L).dual) (slabW G P.L) p p (forceK G P F κ B p)) y := by",
+            "text": "lemma stadium (G : Gauge) (j : ℕ) (κ D ε : ℝ) (hh : 0<κ) (hc : 0 ≤ D) (hε : 0<ε) : ∃ y : ℝ,0<y∧∀ (P : Patch), P.J=j→ ∀ (B : Bed) (b : Clip) (F : Tactics G P)\n    (σ Ω A : ℝ), 0<σ → B.metric.strip (inch P.L*σ) Ω → (∀ n,Floor B b n ε A) → Poster σ F →\n    (∀ p, star p=p → F p*shadeR G P p=throneK G P.L p) → (∀ p, star p=p → (F (-p))ᵀ=(F p)ᴴ) →\n    (∀ p∈strip σ,serial (Slab.basic _) (slabW G P.L) p p (F p) D) →\n    ∀ p, star p=p → Stable (carryM ((slabW G P.L).dual) (slabW G P.L) p p (forceK G P F κ B p)) y := by\n  obtain ⟨η,hη,H⟩ := through_quotient G j κ ε hh hε\n  obtain ⟨Y,hY,J⟩ := secure_cash hη (show 0≤brake_cost j from Real.sqrt_nonneg _) hc\n  refine ⟨Y,hY,fun P hP B b F σ Ω A hs hb hp hx he hw hL p hv => ?_⟩\n  obtain ⟨x,hr,hq⟩ := Nave.roll p\n  let t := slabW G P.L\n  have hf : t.Bright := (Slab.Bright.spade altar_bright Slab.Bright.basic)\n  have ht : star x=x := hq.symm.metric hv\n  have hz : x∈strip σ := Work.F07.realStrip _ hs ht\n  have hB : forceK G P F κ B x=forceK G P F κ B p := (Poster.amounts (gift_lane B _ hb hs) (hx.reverse.forge hx)).shifts hq hz\n  rw [← hB]\n  apply hf.dual.stable hf hq; rw [forceK,hw x ht]\n  refine J _ _ _ _ _ (slab_real ht) (shadeR G P x) (F x) (hL x hz) (H P hP B b _ Ω A (mul_pos (inch_pos _) hs) hb hp x hr ht) fun u => ?_\n  rw [he x ht]; exact hP ▸ Rjoint_cost P u ht",
             "line": 647,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Spectral/RealGap.lean",
-            "fragment": "L647-L651"
+            "fragment": "L647-L664"
           },
           "proof_context": {
             "declaration": "YM.Stationary.stadium",
@@ -58,7 +58,46 @@
               647,
               664
             ],
-            "conclusion": "`stadium` gives `y > 0` depending only on `G j κ ε` (before the quantifier over patches of every side) with `Stable (carryM … (forceK … p)) y` at every real momentum, the real coercivity of the completed form."
+            "conclusion": "At every real momentum the completed form forceK is Stable with a constant y depending only on j, kappa, D, epsilon, chosen before the quantifier over patches of every side L."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.secure_cash",
+        "module": "YM.Next.STATIONARY.Spectral.RealGap",
+        "lines": [
+          617,
+          640
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.secure_cash"
+          },
+          "snippet": {
+            "text": "lemma secure_cash (h : 0<η) (hc : 0≤C) (he : 0≤D) : ∃ y : ℝ,0<y ∧ ∀ (α β : Type) [Fintype α] [DecidableEq α] [Fintype β] [DecidableEq β]\n    (U : CompM α α) (S : Slab α) (p : Momentum), (S.tile (-p))ᵀ=(S.tile p)ᴴ → ∀ (P : CompM α β) (V : CompM β α),\n      serial (Slab.basic _) S p p V D →\n      (∀ x, ∃ v,η*(S.rate p (x-P*ᵥ v))^2 ≤ (dotProduct (star x) (U *ᵥ x)).re) →\n      (∀ x, S.rate p (P*ᵥ x)≤ C*slug ((V*P)*ᵥ x)) →\n       Stable (carryM S.dual S p p (U+Vᴴ*V)) y := by\n  obtain ⟨y,hy,H⟩ := on_the_tab η C D h hc he\n  refine ⟨y,hy,fun α β _ _ _ _ U S p hS P V hp hu hx => ?_⟩\n  apply stable_real; intro i\n  let M := S.tile p\n  let x := M *ᵥ i\n  obtain ⟨u,hv⟩ := hu x\n  rw [← S.pole hS, Matrix.add_mulVec,dotProduct_add,Complex.add_re, ← Matrix.mulVec_mulVec,vested,slug_self]; change _ ≤ (dotProduct (star x) (U *ᵥ x)).re+slug (V *ᵥ x)^2\n  let a := P *ᵥ u\n  let b := x-a\n  apply H (slug i) (S.rate p b) (slug (V*ᵥ x)) _ (slug_nonneg _) (slug_nonneg _) (slug_nonneg _) (add_le_add_left hv _)\n  have hw : S.rate p a ≤ C*slug (V *ᵥ a) := by simpa only [a,mulVec_mulVec] using hx u\n  have hh := committee (p:=p) S x a; rw [show S.rate p x=slug i from Slab.cover_rate ..] at hh\n  have hb := Slab.serial_at hp b; rw [Slab.basic_rate] at hb\n  have hR : slug (V *ᵥ a)≤ slug (V *ᵥ x) + D * S.rate p (x-a) := by\n    have ht := slug_plus (V *ᵥ x) (- (V *ᵥ b))\n    rw [show V*ᵥ x + -(V *ᵥ b)=V *ᵥ a by unfold b; rw [Matrix.mulVec_sub]; abel,slug_neg] at ht\n    exact ht.trans (add_le_add_right hb _)\n  exact hh.trans (add_le_add_left (hw.trans (mul_le_mul_of_nonneg_left hR hc)) _)",
+            "line": 617,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Spectral/RealGap.lean",
+            "fragment": "L617-L640"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.secure_cash",
+            "lines": [
+              617,
+              640
+            ],
+            "conclusion": "on_the_tab squares p <= C(b+Ba)+a with eta a^2+b^2 <= d to get y p^2 <= d, and secure_cash uses it to derive Stable(U+V^*V) from transverse coercivity and the gauge bound."
           }
         }
       }
@@ -73,11 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a sample check changed it from closeMatch; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a sample check changed it from closeMatch; re-judged after a second independent review, which changed it from relatedMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {
-        "kind": "helper"
+        "kind": "chain"
       }
     }
   }

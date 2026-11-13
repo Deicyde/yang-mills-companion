@@ -1,9 +1,9 @@
 {
   "id": "Lemma 14.23 step 18",
   "kind": "proof_step",
-  "status": "formalized",
-  "relation": "closeMatch",
-  "note": "[L] carries the product-difference expansion in Particle.vertices (for an n-fold product, with bound card*xi*(base+xi)^card in place of (U+T)T+UT), the finite bound of the Wick-contraction error in Particle.accuracy, and the smallness against the source bound in Atlas.pedalling and Atlas.crushed.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "The product-difference identity and the bound of the Wick moment error by a finite expression in the factor bounds are carried; the specific bound (U+T)T+UT and the choice of b making the Gaussian polynomial smaller than every source bound are not.",
   "subject": [
     {
       "location": {
@@ -49,8 +49,8 @@
         "declaration": "YM.Next.Rank.Particle.vertices",
         "module": "YM.MergeProof.West.Teddy",
         "lines": [
-          60,
-          70
+          65,
+          66
         ]
       },
       "role": "key",
@@ -60,14 +60,14 @@
             "id": "YM.Next.Rank.Particle.vertices"
           },
           "snippet": {
-            "text": "  induction D using Finset.induction_on with\n  | empty => simp [pot,coin]\n  | @insert i D hi IH =>\n    change coin (pot _ H-pot _ Y) ≤ _*v^_\n    unfold pot; rw [prod_insert hi,prod_insert hi, card_insert_of_notMem hi]; push_cast\n    have hh (p q f g : poly (Fin n × (KeyIn G d ⊕ W))) : p*f-q*g=(p-q)*g+p*(f-g) := by ring\n    rw [hh]; apply (Rise.taller _ zero_le_one _ _).trans\n    have hq : coin (pot D Y) ≤ v^D.card := by\n      apply (purchased _ zero_le_one ..).trans; refine (Finset.prod_le_prod (fun i _ => Rise.sign _ (post i _) zero_le_one) (fun i _ => he i)).trans ?_; simp\n    rw [← map_sub]\n    apply (add_le_add (le_trans (funds _ zero_le_one ..) (mul_le_mul ((Rise.port ..).trans (paidX T i)) hq",
-            "line": 60,
+            "text": "    have hh (p q f g : poly (Fin n × (KeyIn G d ⊕ W))) : p*f-q*g=(p-q)*g+p*(f-g) := by ring\n    rw [hh]; apply (Rise.taller _ zero_le_one _ _).trans",
+            "line": 65,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/West/Teddy.lean",
-            "fragment": "L60-L70"
+            "fragment": "L65-L66"
           },
           "proof_context": {
             "declaration": "YM.Next.Rank.Particle.vertices",
@@ -75,7 +75,7 @@
               46,
               74
             ],
-            "conclusion": "By induction with p*f-q*g=(p-q)*g+p*(f-g), the difference of two products of polynomials is bounded by D.card*X.xi*(X.base+X.xi)^D.card."
+            "conclusion": "The inductive step uses `p*f-q*g=(p-q)*g+p*(f-g)` to bound the difference of two products of polynomials by `D.card*X.xi*(X.base+X.xi)^D.card`."
           }
         }
       }
@@ -114,85 +114,7 @@
               122,
               152
             ],
-            "conclusion": "The Wick moment of the product differs from its Gaussian blend by an explicit cost X.cost built from the factor and pairing bounds."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Next.Rank.Atlas.pedalling",
-        "module": "YM.Next.RANK.Presenter",
-        "lines": [
-          71,
-          76
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Next.Rank.Atlas.pedalling"
-          },
-          "snippet": {
-            "text": "lemma pedalling (x : Points n) (h : G.Simple) (H : C.Makes) (hb : 0 < b) (hD : saves C d+3 ≤ b) (hx : x∈conf n) :\n    ∀ᶠ k in atTop, Period b w degree x k := by\n  let Y:= C.path.levels\n  filter_upwards [passing_all h H degree w b hb hD,clockwise degree Y h hb x hx d, Glimmer.accumulate ℕ atTop _ (Read.maxProfile C x (joint w))\n    (profile_tends _ _ (Maxwell.table_smooth C.labels) hx (Station.tuning Y x h hb)) Y.clock.hatBeta (Station.hat_rate Y h)] with k h1 h2 h3\n  exact ⟨h1,fun hp => ⟨h2 hp,h3⟩⟩",
-            "line": 71,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Presenter.lean",
-            "fragment": "L71-L76"
-          },
-          "proof_context": {
-            "declaration": "YM.Next.Rank.Atlas.pedalling",
-            "lines": [
-              71,
-              76
-            ],
-            "conclusion": "For b fixed with saves C d+3 <= b, eventually in k the Period condition holds, making the Gaussian comparison error plus s^{-3/2} at most s^{-31/32}."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Next.Rank.Atlas.crushed",
-        "module": "YM.Next.RANK.Presenter",
-        "lines": [
-          87,
-          103
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Next.Rank.Atlas.crushed"
-          },
-          "snippet": {
-            "text": "lemma crushed (hp : Period b w degree x k) (g : Fit C.path.levels b k x) {T' : C.label d→ₗ[ℂ] C.label d} (hV : Heating C k N p d degree V T')\n    (t : Fin n→C.label d) (hi : k≤N) (ht : ∀ i, Price.Solves C (Station.mag C.path.levels b k) d k N p T' (w i) (t i))\n    (hb : Bell C.path.levels X d degree g) (D : Demand) (slot : ℕ) (h : Clipped b X V c Y x t hi degree D slot) :\n    Arrangements hi c Y (joint w) (asked t) g D slot := by\n  let A := C.path.levels; let T:= Ship.yard C b hi p; let S := clim A k\n  let f:= Ship.targets C (joint w) g\n  intro hv hs; obtain ⟨α,β,bα,bβ,H,K,W,h1,hbg,h2,h3,h4⟩ := h hv hs\n  refine ⟨α,β,bα,bβ,H,K,W,h1,hbg,h2,fun i => ⟨(h3 i).1,(h3 i).2,fun U HH => ?_⟩⟩\n  obtain ⟨y,hy,hh⟩ := h4 i.1 U HH\n  obtain ⟨hc,hp⟩ := hp; obtain ⟨Q,L⟩ := hp g\n  let u:= Station.choose A b k x\n  let D' := Cumulus X u (before A b k) V t y\n  have he : ‖D'-f‖+bill (-3/2) S ≤ bill (-31/32) S := L _ _ _ (cumulates X V u (before A b k) t y)\n    (Read.cumulative C (Station.tested A b k x) (joint w) (Ship.fitting g)) (fun s => sizes w g degree hi hV hb y hy hc t ht Q s)\n  let v:= (W i).value U; let z:= Peak.view T f i; let a:= (Array.reorient T i.1 D').part i.2.val\n  change ‖v+z‖ ≤ _\n  rw [show v+z=(a+z)+(v-a) by ring]; exact (norm_add_le ..).trans ((add_le_add (honor (C:=C) i.1 _ _ i.2) (hh _)).trans he)",
-            "line": 87,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Presenter.lean",
-            "fragment": "L87-L103"
-          },
-          "proof_context": {
-            "declaration": "YM.Next.Rank.Atlas.crushed",
-            "lines": [
-              87,
-              103
-            ],
-            "conclusion": "Under Period, the source value error is bounded by honor plus the cumulant error, giving the required source bound."
+            "conclusion": "The Wick moment of the product differs from its Gaussian blend by an explicit cost built from the pairing bounds."
           }
         }
       }
@@ -208,7 +130,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge changed it from noMatch; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge changed it from noMatch; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

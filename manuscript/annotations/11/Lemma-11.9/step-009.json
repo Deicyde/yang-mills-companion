@@ -1,9 +1,9 @@
 {
   "id": "Lemma 11.9 step 9",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "`column_price` sums the path series under the exponential path bound and gives `Firm` kernel bounds. The expansion of independent polynomial connection jets through weight four is not stated.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Carried by YM.Stationary.column_price (used in YM.Stationary.greyson): [L] expands the transported action in Taylor coefficients of link coordinates at the identity and sums under the path budget, rather than in independently varying polynomial connection jets graded by weight.",
   "subject": [
     {
       "location": {
@@ -55,7 +55,7 @@
         "module": "YM.Next.STATIONARY.Shape.ClassicalMatch",
         "lines": [
           332,
-          335
+          359
         ]
       },
       "role": "key",
@@ -65,14 +65,14 @@
             "id": "YM.Stationary.column_price"
           },
           "snippet": {
-            "text": "theorem column_price (G : Gauge) (t : ℕ) {σ : ℝ} (C Z : ℝ) (hs : 0<σ) (hz : 0 ≤ Z) :\n    ∃ η A, 0 < η ∧ 0 ≤ A ∧ ∀ (p : Clip) (R : PathData G) (u K Λ : ℝ), p.direct ≤ Z → R.Bounds p u K Λ → BankRows R σ C →\n    (∀ m : Side, AnalyticAt ℝ (inputSeries p R (m:=m)) 0) ∧ ∃ L : Picture G t, (∀ i j, Firm η A (L i j)) ∧\n        ∀ m : Side, Recorded L (inputSeries p R (m:=m)) 0 := by",
+            "text": "theorem column_price (G : Gauge) (t : ℕ) {σ : ℝ} (C Z : ℝ) (hs : 0<σ) (hz : 0 ≤ Z) :\n    ∃ η A, 0 < η ∧ 0 ≤ A ∧ ∀ (p : Clip) (R : PathData G) (u K Λ : ℝ), p.direct ≤ Z → R.Bounds p u K Λ → BankRows R σ C →\n    (∀ m : Side, AnalyticAt ℝ (inputSeries p R (m:=m)) 0) ∧ ∃ L : Picture G t, (∀ i j, Firm η A (L i j)) ∧\n        ∀ m : Side, Recorded L (inputSeries p R (m:=m)) 0 := by\n  obtain ⟨x,B,hx,hB,H⟩ := all_ages G 2 t hs\n  obtain ⟨h,b,hb,T,ht,Hu⟩ := Wilson_stream G t\n  let γ := min 1 x\n  have hG : 0 < γ := lt_min zero_lt_one hx\n  let q := Z*b+gramCost G C*B\n  have he : 0 ≤ gramCost G C := by unfold gramCost; rw [← sq C]; positivity\n  refine ⟨γ, reflectBill t γ*q,hG,mul_nonneg (by unfold reflectBill; positivity) (add_nonneg (by positivity) (mul_nonneg he hB)),fun p R u K Λ hp hw hg => ?_⟩\n  obtain ⟨V,L,Lh,HL⟩ := H _ (gramPath R) _ (gram_budget R hg)\n  let a (m : Side) := p.direct • WilsonQ G m+chorus (fun i => aTerm (gramPath R i)) m\n  let P := (p.direct:ℂ) • T+L\n  have hh m : AnalyticAt ℝ (a m) 0 := (((analyticAt_const (v:=p.direct)).mul (h m)).add (V m))\n  have hh' (i j) : Firm γ q (P i j) := by\n    have Hx : ‖(p.direct:ℂ)‖=p.direct := by simp [abs_of_nonneg p.quadratic_pos.le]\n    exact (((Firm.const hG (p.direct:ℂ)).mul ((ht _ _).mono hG (min_le_left ..) le_rfl)).mono hG le_rfl\n      (mul_le_mul_of_nonneg_right (Hx.trans_le hp) hb)).add ((Lh _ _).mono hG (min_le_right ..) le_rfl)\n  have Hq m (v : Link G m) : inputSeries p R v=Patch.average fun s => a m (orderTurn s v) := by\n    unfold inputSeries secondTerm; simp_rw [flip_links,quadratic_write _ _ hw]; rfl\n  refine ⟨fun m => ?_, bleed P, fun i j => bleed_cap hG hh' i j,fun m => ?_⟩\n  · rw [funext (Hq m)]; unfold Patch.average; apply ContDiffAt.analyticAt\n    refine ContDiffAt.mul contDiffAt_const (ContDiffAt.sum fun i _ => ?_)\n    refine ContDiffAt.comp (f:=⇑(orderTurn (G:=G) (m:=m) i)) _ ?_ (orderTurn _).contDiff.contDiffAt\n    rw [map_zero]; exact (hh m).contDiffAt\n  rw [funext (Hq m)]; exact bleed_record (hh m) hh'\n    ((((Hu m).weigh p.direct (h m))).both ((analyticAt_const (v:=p.direct)).mul (h m)) (V m) (HL m))",
             "line": 332,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Shape/ClassicalMatch.lean",
-            "fragment": "L332-L335"
+            "fragment": "L332-L359"
           },
           "proof_context": {
             "declaration": "YM.Stationary.column_price",
@@ -80,7 +80,7 @@
               332,
               359
             ],
-            "conclusion": "`column_price` gives, under the path bounds `R.Bounds` and `BankRows`, an analytic `inputSeries` whose degree-t kernels are `Firm`-bounded and `Recorded`, summing the path series."
+            "conclusion": "For path data with Bounds and BankRows, the input action inputSeries is analytic and its Taylor coefficients (direct Wilson part plus the path chorus over gramPath) are uniformly Firm-bounded, by summing path atoms under the path budget."
           }
         }
       }
@@ -95,7 +95,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, a judge ruled; a re-rating agent disagreed and a judge changed it from relatedMatch; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, a judge ruled; a re-rating agent disagreed and a judge changed it from relatedMatch; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

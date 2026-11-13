@@ -1,9 +1,9 @@
 {
   "id": "Lemma 12.9 step 10",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "`rebounds` differentiates X^{-1} X = 1 for the inverse and `shrimper` gives q_a = i k_a + O(kappa^2); the vertex orders appear only as `Floe` fields, not as a statement.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] gets the inverse derivative bounds by differentiating X⁻¹X=1 in YM.Stationary.Jam.rebounds, lifted to families in Fiesta.inv, and gets q_a = ik_a + O(κ²) from YM.Stationary.shrimper. The difference is packaging: the bounds use a general weight and scale T, not the explicit powers (κ+μ)^{-2,-3,-4}.",
   "subject": [
     {
       "location": {
@@ -29,36 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Stationary.Jam.rebounds",
+        "declaration": "YM.Stationary.Fiesta.inv",
         "module": "YM.Next.STATIONARY.OneLoop.Weights",
         "lines": [
-          125,
-          151
+          193,
+          195
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Stationary.Jam.rebounds"
+            "id": "YM.Stationary.Fiesta.inv"
           },
           "snippet": {
-            "text": "lemma rebounds {X : ReelF α α} (h : Jam r X (A*a)) (he : IsUnit (X 0).det) (hv : vflux (X 0)⁻¹≤ C/a) (ha : 0<a) (hr : 0≤r) : Jam r (fun x=> (X x)⁻¹) ((inverseBill A C)/a) := by\n  let Y x := (X x)⁻¹\n  have hE : Prick Y := h.run.poles he\n  have hh : (fun x=> Y x*X x)=ᶠ[𝓝 0] fun _=>1 := by filter_upwards [(h.run.det.continuousAt).eventually_ne he.ne_zero] with x hx; exact Matrix.nonsing_inv_mul _ hx.isUnit\n  have hY := eq_neg_of_add_eq_zero_right ((jar_ini hE h.run).symm.trans ((jar_tape (n:=1) hh).trans (jar_const one_pos _)))\n  have hV : jarY 1 Y= -(Y 0 *jarY 1 X*Y 0) := by\n    have hh := congr_arg (· * Y 0) hY\n    rw [← Matrix.mul_nonsing_inv_cancel_right (X 0) (jarY 1 Y) he];\n    exact hh.trans (Matrix.neg_mul ..)\n  have ht' := h.prices 0 (by decide); rw [jar_now] at ht'\n  have hz : r^0 *vflux (Y 0) ≤ C/a := by simpa using hv\n  have h1 : r^1*vflux (jarY 1 Y) ≤ A*C^2/a := by rw [hV,flux_neg]; refine (sweeter (sweeter hz (h.prices 1 (by decide)) hr) hz hr).trans_eq (?_); field_simp\n  have hl : r^2*vflux (jarY 2 Y)≤ (2*A^2*C^3+C^2*A)/a := by\n    let U := Y 0*jarY 2 X +jarY 1 Y*jarY 1 X +jarY 1 Y * jarY 1 X\n    have ht : U + jarY 2 Y * X 0=0 := Eq.trans (by unfold U; rw [add_assoc (_ + _), ← jar_multi hE h.run]) ((jar_tape (n:=2) hh).trans (jar_const (by decide : 0<2) _))\n    have hx : jarY 2 Y= -(U*Y 0) := by\n      have hh := congr_arg (· * Y 0) (eq_neg_of_add_eq_zero_right ht); rw [← Matrix.mul_nonsing_inv_cancel_right (X 0) (jarY 2 Y) he]; exact hh.trans (Matrix.neg_mul ..)\n    have hL := sweeter h1 (h.prices 1 (by decide)) hr\n    rw [hx, flux_neg]; refine (sweeter (summer (summer (sweeter hz (h.prices 2 le_rfl) hr) hL hr) hL hr) hz hr).trans_eq ?_; field_simp; ring\n  have hA : 0≤ A := nonneg_of_mul_nonneg_left h.units ha\n  have hC : 0 ≤ C := by have hh : 0 ≤ C/a := ((flux_nonneg _).trans hv); rwa [le_div_iff₀ ha, zero_mul] at hh\n  have hp : 0≤2*A^2*C^3+C^2*A := by positivity\n  have hP : 0≤ A*C^2 := by positivity\n  change Jam r Y _; refine ⟨hE,fun i hi =>?_⟩; interval_cases i\n  · rw [jar_now]; exact hz.trans (div_le_div_of_nonneg_right (by unfold inverseBill; linarith) ha.le)\n  · exact h1.trans (div_le_div_of_nonneg_right (by unfold inverseBill; linarith) ha.le)\n  exact hl.trans (div_le_div_of_nonneg_right (by unfold inverseBill; linarith) ha.le)",
-            "line": 125,
+            "text": "lemma inv (h : Fiesta ρ T X) (hp : ∀ i,0<T i ∧ IsUnit (X i 0).det) (hx : ∃ A : ℝ,0≤A∧ ∀ i,vflux (X i 0)⁻¹≤ A / T i) : Fiesta ρ (fun i => (T i)⁻¹) (fun i z=> (X i z)⁻¹) := by\n  obtain ⟨A,hA,hk,hU⟩ := h; obtain ⟨B,hB,hX⟩ := hx; refine ⟨inverseBill A B,by unfold inverseBill; positivity,fun i=>⟨(hk i).1,inv_nonneg.mpr (hk i).2⟩,fun i=>?_⟩\n  rw [← div_eq_mul_inv]; exact (hU i).rebounds (hp i).2 (hX i) (hp i).1 (hk i).1",
+            "line": 193,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/OneLoop/Weights.lean",
-            "fragment": "L125-L151"
+            "fragment": "L193-L195"
           },
           "proof_context": {
-            "declaration": "YM.Stationary.Jam.rebounds",
+            "declaration": "YM.Stationary.Fiesta.inv",
             "lines": [
-              125,
-              151
+              193,
+              195
             ],
-            "conclusion": "The derivative bounds of an inverse `X⁻¹` follow from differentiating `X⁻¹ X = 1` (`jar_ini`, `jarY 1 Y = -(Y 0 * jarY 1 X * Y 0)`), giving `inverseBill A C / a`."
+            "conclusion": "If a family X has weighted derivative (Jam) bounds at scale T and its inverse at zero is bounded by A/T, then the inverse family has weighted bounds at scale T⁻¹; via Jam.rebounds this comes from differentiating X⁻¹X=1."
           }
         }
       }
@@ -97,7 +97,7 @@
               170,
               182
             ],
-            "conclusion": "`q_i(p) - I p_i` has `Rays 2`, i.e. vanishes to order 2: `q_a = i k_a + O(κ^2)`."
+            "conclusion": "q_a(p) - i p_a vanishes to order 2."
           }
         }
       }
@@ -112,7 +112,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

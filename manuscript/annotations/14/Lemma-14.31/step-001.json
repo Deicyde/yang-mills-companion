@@ -2,8 +2,8 @@
   "id": "Lemma 14.31 step 1",
   "kind": "proof_step",
   "status": "partial",
-  "relation": "relatedMatch",
-  "note": "Lean obtains separation and occupancy at finer levels in Accent.desal, propagating them from the base level by Brine.split, rather than by comparing the physical separation over a_i with the growth of B_i^2. Base-level Drake and Occupancy (and Drake at the stopping level) are hypotheses of Sever.echoes.",
+  "relation": "hasPart",
+  "note": "The base level is fixed as a parameter of `echoes`/`arrives`, and the occupancy, separation and allowance facts enter as hypotheses; the derivation that distinct ancestral sites are at least B_i^2 apart at fine levels is not there.",
   "subject": [
     {
       "location": {
@@ -29,50 +29,11 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.MergeProof.Accent.desal",
-        "module": "YM.MergeProof.Paddle",
-        "lines": [
-          47,
-          63
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.MergeProof.Accent.desal"
-          },
-          "snippet": {
-            "text": "lemma desal (hn:Migrating A k p N o)(hS:Drake B (P k).B (o k))(hx:Monotone r)(hO:Occupancy (o k) (r k)): Matchup A r δ p N k o W B:=by\n   have hM m (hi:k ≤ m) (hp:m<N): (A.levels.clock.op m p).ratio.parent ∘ o (m+1)=o m:=by rw [← hn.mare m hi hp]; exact funext fun i=> Ratio.embed_parent ..\n   have hε:∀ m:ℕ,k ≤ m→m≤N → Occupancy (o m) (r k):=by\n      intro m he hp; induction he with\n      | refl =>exact hO\n      | step hi ih=>rename_i m; intro x; let f:=(A.levels.clock.op m p).ratio\n                    have hρ:= ih (show m ≤ N by omega) (f.parent x); apply le_trans (Finset.card_le_card _) hρ\n                    intro j hj; refine Finset.mem_filter.mpr ⟨Finset.mem_univ _,?_⟩; rw [← hM _ hi hp];simp only [Function.comp_apply]; exact congr_arg f.parent (Finset.mem_filter.mp hj).2\n   have hΔ:∀ m:ℕ,k ≤ m → m≤N→Drake B (P m).B (o m):=by\n      intro m he hp; induction he with\n      | refl=> exact hS\n      | step hi ih=>rename_i m; let f:=(A.levels.clock.op m p).ratio\n                    rw [← hn.mare m hi hp]; refine ⟨fun s ht i hi' j hj hij=> ?_⟩; exact (h.split _ hi).trans ((Nat.mul_le_mul_left f.count.val ((ih (show m≤N by omega)).spread s ht i hi' j hj hij)).trans (Corona.below f ..))\n   refine ⟨fun i he hp j=> march_pos A k δ φ w hw h i he _,fun m hi hp x=> (hε m hi hp x).trans (hx hi),fun i hi hp x=> (hε (i+1) (hi.trans i.le_succ) hp x).trans (hx hi), hM, fun i hi hm=>?_⟩\n   have hw':=march_pos A k δ φ w hw h i hi; have hv:=hΔ _ hi hm.le\n   apply hv.palms (v:=fun j=>δ i*W (i+1) j) _ hw' (fun j=>mul_pos (h.water i hi).2 (march_pos _ _ _ _ w hw h _ (hi.trans i.le_succ) j)) (h.support _ hi); intro j\n   simp only [march,if_pos hi]; exact ((mul_one (W i j)).symm.trans_le (mul_le_mul_of_nonneg_left (h.mint _ hi) (hw' j|>.le))).trans_eq (by ring)",
-            "line": 47,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Paddle.lean",
-            "fragment": "L47-L63"
-          },
-          "proof_context": {
-            "declaration": "YM.MergeProof.Accent.desal",
-            "lines": [
-              47,
-              63
-            ],
-            "conclusion": "From separation (Drake) and occupancy at the base level k, both propagate to every finer level m <= N: occupancy through parent maps, separation through Brine.split, (B_{m+1})^2 <= L_m (B_m)^2."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
         "declaration": "YM.FullVolume.Sever.echoes",
         "module": "YM.FullVolume.Fields.Peat",
         "lines": [
           42,
-          64
+          45
         ]
       },
       "role": "key",
@@ -82,14 +43,14 @@
             "id": "YM.FullVolume.Sever.echoes"
           },
           "snippet": {
-            "text": "lemma echoes (a:B.Mode): ‖pilot C d s p N o g a-Cresting C d s p N j o g a‖ ≤ refreeze C.path.levels p k x y a Z/(brisk (P j).B/2):=by\n    let F:= seed C d s p N o g; let f:=harp C d s p N o g; let φ':=chill C d s p N o g\n    let J:= Accent.birth B (Q N) F; have ht : k ≤ N:= (hf.trans hV).le\n    obtain ⟨G',H,Hg⟩:= hh.past C d N k p W u ψ φ δ ζ r D s o g Z h hs he ht hx hy hz hM hw -- hG syntax. implicit.\n    have hK(i):Nectar C.path u D p N k o X f G' F i:=H i\n    let w:= X; have hS:= desal C.path r k p N δ φ o Z hw hh.stay B hy hz hh.mom hx; let Y:= gust C.path N p N J\n    have hxF(i:V):Continuous (F i):=by unfold F seed item stepUp Motion.scalar;split; exact ((C.continuousO ..).comp (continuous_pull ..)).star; exact (C.continuousO ..).comp (continuous_pull ..)\n    have hj : Integrable J (prior G _):=by\n       apply (Continuous.integrable_of_hasCompactSupport ?_ (HasCompactSupport.of_compactSpace _)); unfold J Accent.birth\n       have hz:= show Continuous (Q N).eval from (by rw [(h.starts ..).2];exact bare_cont _)\n       exact (Complex.continuous_ofReal.comp hz).smul (Poly.pass_cont.comp (continuous_finsetSum _ (fun i _=>(smeasure (B.fire i)).comp (hxF i)))) -- smeasure is continuous\n    have hh₀ : Y N le_rfl=J:=gust_base ..\n    obtain ⟨hf',hu,hg⟩:= Frost.upper C.path r δ u D p N o w f G' F (q:=Y) h ht hS hh.night hK (fun j _ he=> gust_step C.path N p N J he) hh₀ (hh₀.symm ▸ hj) j hf.le hV.le\n    have hM:= Hg j hf.le hV.le\n    have hA:topPitch C.path N j=(P j).supportExponent:=if_neg hV.ne; rw [hA] at hg\n    have hT (i:V): Wakes C.path k j N p (fun m=>o m i) (fun m=> w m i) (fun m=> f m i) (fun m=> G' m i) D hV.le:=⟨fun m hm he=> (hK i).stocked _ hm (he.trans hV.le),fun m hm he=> (hK i).sways m hm (he.trans hV),fun m hm he=>(hK i).feeds m hm (he.trans hV)⟩\n    have hF := desal C.path r k p j δ φ o Z hw hh.stay B ⟨fun i hi he=>hy.mare i hi (he.trans hV)⟩ hz hh.mom hx\n    have hρ : w k = Z:= marines k φ Z hw\n    have hP:= omissions C.path N p h hV.le hh.night hT hf hF ha (hh.stay.support j hf.le) hc hX hq (by rw [hM]; exact hφ) (show Vault (X j) (f j) (tapes C.path p N G' j) t v from by rw [hM]; exact heJ) (show Vault (X k) (f k) (tapes C.path p N G' k) _ _ from (by rw [show X k= Z from hρ,Hg k le_rfl ht]; exact hp)) hg a\n    rw [hM,hρ] at hP\n    have hk:pilot C d s p N o g a= stamp C.path N p j (Y j hV.le) a:= by\n       rw [show pilot C d s p N o g a= _ from equality C p N h _ hxF a]; unfold stamp; let L:= (Poly.get a).restrictScalars ℝ; congr 1; exact ((L.integral_comp_comm hf').trans ((congr_arg L (gust_sum C.path N p N J hj hV.le)).trans (L.integral_comp_comm hj).symm)).symm\n    rw [hk]; exact hP",
+            "text": "lemma echoes (a:B.Mode): ‖pilot C d s p N o g a-Cresting C d s p N j o g a‖ ≤ refreeze C.path.levels p k x y a Z/(brisk (P j).B/2):=by\n    let F:= seed C d s p N o g; let f:=harp C d s p N o g; let φ':=chill C d s p N o g\n    let J:= Accent.birth B (Q N) F; have ht : k ≤ N:= (hf.trans hV).le\n    obtain ⟨G',H,Hg⟩:= hh.past C d N k p W u ψ φ δ ζ r D s o g Z h hs he ht hx hy hz hM hw -- hG syntax. implicit.",
             "line": 42,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Fields/Peat.lean",
-            "fragment": "L42-L64"
+            "fragment": "L42-L45"
           },
           "proof_context": {
             "declaration": "YM.FullVolume.Sever.echoes",
@@ -97,7 +58,46 @@
               42,
               64
             ],
-            "conclusion": "The multiple-source comparison takes base-level Occupancy, Drake and Migrating as hypotheses and uses desal."
+            "conclusion": "`echoes` fixes a base level `k` with `k <= N`, `k < j`, and obtains the base-level data (occupancy, separation `Drake`, positive allowances) from its hypotheses via `hh.past`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.PhysicalNext.Repeat.Legato.Bandage.Rising.arrives",
+        "module": "YM.FullVolume.Fields.Timber",
+        "lines": [
+          74,
+          76
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.PhysicalNext.Repeat.Legato.Bandage.Rising.arrives"
+          },
+          "snippet": {
+            "text": "lemma arrives (hk:k ≤ r)(a:U.Mode): CauchySeq fun n=> pilot (C' n) v z p (f n) o s a :=by\n    choose w hw using fun i=> J.creditP hG b T hx hz (v i) (hc i) (z i) r (hr i)\n    let x i:= ζ (v i) r/(|w i|+1); have hu i:0<x i:= div_pos (hp i) (by positivity)",
+            "line": 74,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Fields/Timber.lean",
+            "fragment": "L74-L76"
+          },
+          "proof_context": {
+            "declaration": "YM.PhysicalNext.Repeat.Legato.Bandage.Rising.arrives",
+            "lines": [
+              74,
+              103
+            ],
+            "conclusion": "`arrives` takes the base level `r` above the reference levels and fixes the allowances `ζ` used for the weights."
           }
         }
       }
@@ -112,7 +112,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

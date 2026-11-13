@@ -1,9 +1,9 @@
 {
   "id": "Lemma 12.3 step 15",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "The zero-loop start and the absolute convergence (summable budgets) are carried; the fourth-order Wilson matching and the single choice of kernels for all periods are not stated in these lines.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "PricedKernels.first proves the zero-loop start (StartAtoms with loop budget 0) and the order-4 jet match with Wilson.energy, and Kin.Planned indexes paths by N,m only, so one choice serves all periods; absolute convergence comes from summable atom budgets (PathData.atom_dominated, Song.allocated) rather than from the explicit bounds |F_s|<=2 and 2^k|a|.",
   "subject": [
     {
       "location": {
@@ -29,10 +29,49 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
+        "declaration": "YM.UVNext.PricedKernels.first",
+        "module": "YM.UVNext.PRICED_KERNELS.Crews",
+        "lines": [
+          109,
+          123
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVNext.PricedKernels.first"
+          },
+          "snippet": {
+            "text": "theorem first {q : Before} {X : MapPrices} {c : ℕ → Clip} {g : LayoutPrices} {R : Charges}\n    (hP : P = issue G q (flatOf X) c (g.requests (covering G R))) {l} (hv : Rewired P a X l B V) (N : ℕ) :\n    let H := V.H N N; let p := (a.params N).clip; let Q := choice (G:=G) H p\n    StartAtoms P a N Q ∧ Billed P a V N N Q ∧ Budgeted a N Q ∧\n      ∀ n : Side,∀ j ≤ 4, SameJet j (fun x => mainTerm p Q (represent (x : Bid.Dir G n))) (fun x => Wilson.energy (represent x)) := by\n  have hc : Canonical.Quotes (P.frozen G) P.opening P.amount := hP ▸ (linear_paths _ _ _ _ _).1\n  intro H p Q\n  have hh : StartAtoms P a N Q := on_budget h hP N\n  have hu := charge_canonical h hv.finalCosts hc N N le_rfl Q rfl\n  have hw : 2*(a.params N).width ≤ P.opening.born (a.clock.J N) := by rw [params_eq h.paid]; exact P.opening.born_ge _\n  obtain ⟨he,hg⟩ := hu.merge (hh hw) (Or.inl (le_refl _))\n  have he' : P.amount.born (a.clock.J N) ≤ (a.params N).paths := by rw [params_eq h.paid]; exact P.amount.born_le _\n  have hx := hg.mono (a.params N).width_pos le_rfl he' ((show (0:ℝ) ≤ 2 by norm_num).trans (cap_ge a N)) he' he'\n  have ht : Budgeted a N Q := hx.bounds he le_rfl le_rfl le_rfl\n  exact ⟨hh,hu,ht,fun L => peak (n:=L) (G:=G) _ _ (hv.sameTrain.base N).1 (Canonical.direct_le_one ht.metric)⟩",
+            "line": 109,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/PRICED_KERNELS/Crews.lean",
+            "fragment": "L109-L123"
+          },
+          "proof_context": {
+            "declaration": "YM.UVNext.PricedKernels.first",
+            "lines": [
+              109,
+              123
+            ],
+            "conclusion": "At the top level N the canonical path choice satisfies StartAtoms (loop budget 0), is billed and budgeted, and its main term has the same jets up to order 4 as the Wilson energy."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
         "declaration": "YM.Precision.Kin.Planned",
         "module": "YM.PCalc.Loop",
         "lines": [
-          102,
+          96,
           102
         ]
       },
@@ -43,14 +82,14 @@
             "id": "YM.Precision.Kin.Planned"
           },
           "snippet": {
-            "text": "  initial N b : ( (M.path N N).loop b).coeff=0",
-            "line": 102,
+            "text": "  links N m : m ≤ N → Attached (C.H N m) (M.path N m)\n  cap N m : m ≤ N →\n    let j:=a.params m\n    (M.path N m).Bounds j.clip j.width j.paths (a.clock.loopCap m)\n  peak N p : ∀ j, j ≤ 4 → SameJet j (fun x => mainTerm (a.params N).clip (M.path N N) (represent (x:fieldDir G (a.S.side N p) 1)))\n      (fun x => Wilson.energy (represent x))\n  initial N b : ( (M.path N N).loop b).coeff=0",
+            "line": 96,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PCalc/Loop.lean",
-            "fragment": "L102-L102"
+            "fragment": "L96-L102"
           },
           "proof_context": {
             "declaration": "YM.Precision.Kin.Planned",
@@ -58,7 +97,7 @@
               93,
               115
             ],
-            "conclusion": "`initial` states that the top path has zero loop coefficients for every `b`."
+            "conclusion": "Paths M.path N m are indexed by N,m only (shared by all periods p), with bounds, fourth-order Wilson jet matching at the top (peak) and zero initial loop coefficients (initial)."
           }
         }
       }
@@ -68,36 +107,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.RG.PathData.Bounds",
-        "module": "YM.RG.PathActions",
+        "declaration": "YM.PhysicalNext.Repeat.Song.allocated",
+        "module": "YM.PhysicalNext.RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP.Song.Procession",
         "lines": [
-          173,
-          185
+          52,
+          53
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.RG.PathData.Bounds"
+            "id": "YM.PhysicalNext.Repeat.Song.allocated"
           },
           "snippet": {
-            "text": "structure Bounds (c : Clip) (σ C Λ : ℝ) : Prop where\n  width : 0 < σ\n  rows (p : PlaqAxes) : SumBudget (fun i ↦ |(R.row p i).1| * Real.exp (σ * (R.row p i).2.length)) C\n  two : SumBudget (fun i ↦ (R.loop i).budget σ) Λ\n  three : SumBudget (fun i ↦ (R.cubic i).budget σ) C\n  four : SumBudget (fun i ↦ (R.quartic i).budget σ) C\n  invariant (i : ℕ) : (R.loop i).Invariant ∧ (R.cubic i).Invariant ∧ (R.quartic i).Invariant\n  symTerms (p q : PlaqAxes) : Summable fun k => if (R.row p k).2.plaq = q then (R.row p k).1 else 0\n  metric : R.metric_zero c\n  loopTerms (i x) : Summable (R.loop_coeff i x) ∧ ∀ l : Axis,\n    Summable (fun k => R.loop_coeff i x k *\n      ((((R.loop k).leg 1).offset l - ((R.loop k).leg 0).offset l : ℤ) : ℝ))\n  loop_normal : R.loop_jets",
-            "line": 173,
+            "text": "lemma allocated (β : ℝ) (hs : 0<σ) (h : SumBudget (fun i=> (A i).budget σ) C) : HasSum\n    (fun i : Stave (n:=n)=> masked p.threshold (pitch A i).support (tuneAtom A β i) U) (β * billOf p A U) := by",
+            "line": 52,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/RG/PathActions.lean",
-            "fragment": "L173-L185"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Song/Procession.lean",
+            "fragment": "L52-L53"
           },
           "proof_context": {
-            "declaration": "YM.RG.PathData.Bounds",
+            "declaration": "YM.PhysicalNext.Repeat.Song.allocated",
             "lines": [
-              173,
-              185
+              52,
+              58
             ],
-            "conclusion": "`Bounds` packages the row, loop (`two`), cubic and quartic weighted sums at width `σ` with the invariance, `symTerms`, `metric`, `loopTerms` and `loop_normal` fields."
+            "conclusion": "Atom series with summable budgets have a HasSum, i.e. the path action converges absolutely."
           }
         }
       }
@@ -112,7 +151,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

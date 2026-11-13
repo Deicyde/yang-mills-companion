@@ -1,9 +1,9 @@
 {
   "id": "Lemma 14.13 step 14",
   "kind": "proof_step",
-  "status": "formalized",
-  "relation": "closeMatch",
-  "note": "[L] carries this in MergeProof.Accent.punctual (bounds 3 and 1 via scratch), steer (two more per mark), vista and occurs, used by tent. The difference: the bound for a mode i carries 6 per mark of the whole census V, not per mark of I_0; tent applies it to the full mode, where the two agree.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "`occurs` gives the combined bound exp(|Λ|·treasury + |V|·6) after coefficient extraction. The separate bounds 3 (singleton), 1 (forced profile) and 2 per mark (local sums) are not stated.",
   "subject": [
     {
       "location": {
@@ -29,89 +29,11 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.MergeProof.Accent.punctual",
-        "module": "YM.MergeProof.Traps",
-        "lines": [
-          37,
-          41
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.MergeProof.Accent.punctual"
-          },
-          "snippet": {
-            "text": "lemma punctual (h:C.Makes) (hk:C.ref d≤k) (hv:k ≤ N)(hV:∀ i,w i*moneys C d k N p (s i) ≤ a)(hw:∀ i,0 < w i) : Vault w (fun i=>indexX C d N p (s i) (fun j=>o j i) (t i) k) (fun i=>Ktone C d N p (s i) (fun j=>o j i) (t i) k) (3*a) a:=by\n    have hg(i:V)(U):= scratch C (s i) k p N (t i) (fun j=>o j i) h hk hv U\n    constructor\n    · intro i U; apply (mul_le_mul_of_nonneg_left (hg _ U|>.1) (hw i|>.le)).trans; rw [mul_left_comm (w i) 3]; exact mul_le_mul_of_nonneg_left (hV i) (by norm_num)\n    intro i U; rw [← mul_sum]; exact (mul_le_mul_of_nonneg_left ((hg i U).2) (hw i|>.le)).trans (hV i)",
-            "line": 37,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Traps.lean",
-            "fragment": "L37-L41"
-          },
-          "proof_context": {
-            "declaration": "YM.MergeProof.Accent.punctual",
-            "lines": [
-              37,
-              41
-            ],
-            "conclusion": "Weighted singleton exponential terms are at most 3a and forced profiles at most a (Vault w ... (3*a) a), with a = fly <= 1 (fly_le)."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.MergeProof.Accent.steer",
-        "module": "YM.MergeProof.Newell",
-        "lines": [
-          41,
-          63
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.MergeProof.Accent.steer"
-          },
-          "snippet": {
-            "text": "lemma steer (hr:∀ i,0<r i)(hx:Served A F g X o r e f)(h:A.activities.Valid A.p t u) (hv:Vault r F g x y) (he:0 ≤ e) (U) : Poly.price r (X U) ≤ Real.exp (A.exponent U+Fintype.card V*(x+y+2*f)+Fintype.card (Site n)*u) :=by\n   obtain ⟨H,K,hH,hc,hK,rfl⟩:= hx; let a:ℝ:= Fintype.card V; let s:ℝ:=Fintype.card (Site n)\n   let J:=Mach B (fun i=> F i U)+ ∑ i,H i U; let T (p):= bar A.activities B U p+Mach B (fun i=> g i p U)+K p U\n   have hg' : ∑ i,Poly.price r (bar A.activities B U i)≤ s*u:=by\n      apply harvest (Y:=Config G n) (F:=fun i U=>bar A.activities B U i) (J:=Site n) (vacant A.activities _ B h r hr) hr A.p.exponent_pos.le U id; intro i hi\n      have ht:= (granular A.activities _ B (o:=o) h i).permits U hi; obtain ⟨j,hj⟩:=ht.2.1.mono ht.2.2; exact ⟨j,hj⟩\n   have hv' := harvest hK hr he U o fun i hi=> touchdown (hH.flag i|>.1.toBorne) U hi ((hH.flag i).2 U)\n   have hd: Poly.price r J≤a*(x+f):=by\n      have hx:= harvest hc hr he U o fun i hi=> touchdown (hH.exp i|>.1.toBorne) U hi ((hH.exp i).2 U)\n      rw [mul_add]; refine (Poly.addition hr ..).trans (add_le_add ((Poly.batch hr ..).trans ?_) ((Poly.batch hr ..).trans hx))\n      · simp_rw [Poly.solo,Poly.solo_toll]; apply le_trans (Finset.sum_le_sum (fun i _=>hv.exp i U)); simp [a] -- Goals\n   have hP: ∑ i,Poly.price r (T i) ≤ s*u+a*y+a*f:=by\n      have h1 : ∑ i:Box n,Poly.price r (Mach B (fun j=>g j i U)) ≤ a*y:=by\n           apply le_trans (Finset.sum_le_sum (fun i _=> Poly.batch hr ..))\n           simp_rw [Poly.solo,Poly.solo_toll]; rw [sum_comm]; apply le_trans (Finset.sum_le_sum (fun i _=>hv.forces i U)); simp [a]\n      apply le_trans (Finset.sum_le_sum (fun i (_:i∈(univ:Finset (Box n)))=>poly _ _ _)) -- replace\n      rw [Finset.sum_add_distrib,Finset.sum_add_distrib]; exact add_le_add (add_le_add hg' h1) hv'\n   change Poly.price r ((Real.exp (A.exponent U):ℂ) • (Poly.pass J * _)) ≤ Real.exp (_ + a*_+s*u)\n   rw [Poly.adapted,Complex.norm_real,Real.norm_of_nonneg (Real.exp_pos _).le]\n   refine mul_le_mul_of_nonneg_left (Poly.multiplication hr (Poly.pass J) (field T (flags A.p.threshold U))) (Real.exp_pos _).le |>.trans ((mul_le_mul_of_nonneg_left (mul_le_mul ((Poly.pass_budget hr _).trans (Real.exp_monotone hd)) ((grid_pay T (flags A.p.threshold U) hr).trans (Real.exp_monotone hP)) (Poly.nonnegative hr _) (Real.exp_pos _).le) (Real.exp_pos _).le).trans_eq ?_)\n   rw [← Real.exp_add _ (s*u+a*y+a*f),← Real.exp_add]; congr 1; ring\nwhere\n poly (p q v:Poly B): Poly.price r (p+q+v)≤ Poly.price r p+Poly.price r q+Poly.price r v:= (Poly.addition hr ..).trans (add_le_add_left (Poly.addition hr ..) _)",
-            "line": 41,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Newell.lean",
-            "fragment": "L41-L63"
-          },
-          "proof_context": {
-            "declaration": "YM.MergeProof.Accent.steer",
-            "lines": [
-              41,
-              63
-            ],
-            "conclusion": "The weighted marker norm of the full density is at most exp(exponent + |V|(x+y+2f) + |sites| u): x singletons, y forced, f each for connected regular terms and the eligible forced sum."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
         "declaration": "YM.MergeProof.Accent.occurs",
         "module": "YM.MergeProof.Glacier",
         "lines": [
           32,
-          44
+          33
         ]
       },
       "role": "key",
@@ -121,14 +43,14 @@
             "id": "YM.MergeProof.Accent.occurs"
           },
           "snippet": {
-            "text": "lemma occurs {B:Census V} (hQ:k<N)(hK:C.ref d≤k)(hw:∀ i,0<w i)(hr:∀ i,w i*moneys C d k N p (s i)≤ fly C.path.levels d k)\n    (hp:Migrating C.path k p N o)(hv:Occupancy (o k) (r k))(hx: Drake B (C.path.levels.budget k).B (o k))(i:B.Mode): ‖C.omega N p (fun V=> ∏ j∈ i.val,U j V)‖* Poly.toll w i ≤ Real.exp (Fintype.card (Site (C.side k p))* Vac.treasury C.path.levels k+ Fintype.card V*(6:ℝ)):=by\n    let τ : Course C N p k:= ⟨C.path.β N p,hQ.le,fun i _ _=>rfl,fun i h=> Overlay.beta_positive H.wilson h⟩; let b:= Accent.birth B (R N) U; let q:=τ.flow b\n    have hq:∀ i:ℕ,k ≤ i→∀ h:i<N,q i h.le=(C.path.levels.clock.op i p).push ((R (i+1)).beta) (q (i+1) h):=by\n       intro i hi hj; unfold q; rw [τ.flow_step _ i hj,τ.same (i+1) (hi.trans i.le_succ) hj]\n    have hN:q N le_rfl=b:=τ.flow_self b\n    have ha: Integrable (q N le_rfl) (prior G (C.side N p)):=by\n       rw [hN]; exact ((hatCont C N p U (generics C N p d o s t) (show Continuous (R N).eval by rw [(H.wilson.starts ..).2]; exact bare_cont _) B).integrable_of_hasCompactSupport (HasCompactSupport.of_compactSpace _))\n    have hS := h.at C d N k p W u ψ φ δ (fly C.path.levels) r D s o t w H hK hQ.le hv hp hx (fun i=>(mul_le_mul_of_nonneg_left (le_mul_of_one_le_left (paid_pos ..) (col_ge C k)) (hw i|>.le)).trans (hr i)) hw hq hN ha k le_rfl hQ.le\n    have he : topPitch C.path N k=(C.path.levels.budget k).supportExponent:= if_neg hQ.ne; rw [marines k φ w hw,he] at hS\n    have hi:=punctual C N k p d s t H hK hQ.le (o:=o) (fun j=>(hr j).trans (fly_le C k d)) hw\n    refine (vista _ B N p k U hq hN ha H.wilson hQ.le i (continuous_integrable _ (continuous_finsetProd _ fun i _=> generics C N p d o s t i)) hS hi hw (C.path.levels.budget k|>.exponent_pos.le)).trans_eq ?_\n    ring_nf",
+            "text": "lemma occurs {B:Census V} (hQ:k<N)(hK:C.ref d≤k)(hw:∀ i,0<w i)(hr:∀ i,w i*moneys C d k N p (s i)≤ fly C.path.levels d k)\n    (hp:Migrating C.path k p N o)(hv:Occupancy (o k) (r k))(hx: Drake B (C.path.levels.budget k).B (o k))(i:B.Mode): ‖C.omega N p (fun V=> ∏ j∈ i.val,U j V)‖* Poly.toll w i ≤ Real.exp (Fintype.card (Site (C.side k p))* Vac.treasury C.path.levels k+ Fintype.card V*(6:ℝ)):=by",
             "line": 32,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Glacier.lean",
-            "fragment": "L32-L44"
+            "fragment": "L32-L33"
           },
           "proof_context": {
             "declaration": "YM.MergeProof.Accent.occurs",
@@ -136,7 +58,7 @@
               32,
               44
             ],
-            "conclusion": "After integration and division by the partition function, the coefficient of each mode is bounded by exp(|Lambda_k| treasury + 6|V|)."
+            "conclusion": "`occurs` bounds `‖omega ∏ U_j‖ * toll w i` by `exp (card (Site k) * treasury k + card V * 6)`, combining the unmarked partition ratio and the per-mark total 6."
           }
         }
       }
@@ -151,11 +73,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {
-        "kind": "chain"
+        "kind": "helper"
       }
     }
   }

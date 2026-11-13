@@ -1,9 +1,9 @@
 {
   "id": "Lemma 14.5 step 8",
   "kind": "proof_step",
-  "status": "formalized",
-  "relation": "closeMatch",
-  "note": "In YM.PhysicalNext.Repeat.Cub.ledgerHere the common local error is Doors.rate L = L^{-2/5}, the value item (E-graph) fixes, given explicitly rather than as eta_m. The degree-d subtraction before rescaling shows in the comparison with T.leads L (vowel scaling applied to the extracted coefficients).",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "The common local error eta is an abstract parameter of `Buys` constrained by `tiny` rather than eta_m fixed from Lemma E1.1; the subtraction of the local polynomial through degree d before rescaling is not stated in these lines.",
   "subject": [
     {
       "location": {
@@ -51,75 +51,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Extra.Histories.Doors.rate",
-        "module": "YM.Extra.SOURCE_HISTORIES.Reserve",
+        "declaration": "YM.Extra.Histories.Buys",
+        "module": "YM.Extra.SOURCE_HISTORIES.Replay",
         "lines": [
-          30,
-          30
+          47,
+          50
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Extra.Histories.Doors.rate"
+            "id": "YM.Extra.Histories.Buys"
           },
           "snippet": {
-            "text": "def rate (L : Side) := (L.val:ℝ) ^ (-(2/5 : ℝ))",
-            "line": 30,
+            "text": "structure Buys (H : History G) (F : Labels.Frame G d) (W : Worth) (m : ℕ) (C η : ℝ) : Prop where\n  cost : 1 ≤ C\n  epsilon : 0 ≤ η\n  tiny : η*(1+(H.levels.params (m+1)).columns)*orbitCost F ≤ barunit (H.S.block m)",
+            "line": 47,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/SOURCE_HISTORIES/Reserve.lean",
-            "fragment": "L30-L30"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/SOURCE_HISTORIES/Replay.lean",
+            "fragment": "L47-L50"
           },
           "proof_context": {
-            "declaration": "YM.Extra.Histories.Doors.rate",
+            "declaration": "YM.Extra.Histories.Buys",
             "lines": [
-              30,
-              30
+              47,
+              51
             ],
-            "conclusion": "rate L = L^{-2/5}."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.PhysicalNext.Repeat.Cub.ledgerHere",
-        "module": "YM.FullVolume.Panel.Port",
-        "lines": [
-          91,
-          111
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.PhysicalNext.Repeat.Cub.ledgerHere"
-          },
-          "snippet": {
-            "text": "lemma ledgerHere (hd: d+3≤ T):\n   ∃ Vj:Extra.Histories.Heading F, ∀ (Xk:Wing→Prop), (∀ (i:Support n₁)(he:0∈i), Xk (.logKey (Blush.found 0 i he))) → MergeProof.Matric.Plate.Prints Πt H! N n m (hol G) tap Vj (E J) (Doors.rate ((H!).S.block m)) (2*(Real.exp ((H!).rep N n (m+1)).p.supportExponent* Cub.title G vT)) DO Xk :=by\n  -- copy Glass\n  let Tx:= A.B.a; let i:= Tx.clock.J m; let j:=Tx.clock.J (m+1); let L':=D.L j; let K₀:= Tx.budget m; let K':= Tx.budget (m+1)\n  let R₀:= localSection G d; let H':= (A.B.bake.make meshT); let V₀ :=H'.rep N n m; let V₁:=H'.rep N n (m+1); let a:= K'.threshold; let b:= K₀.threshold\n  have hz := step_paid A.B.a m\n  have hδ : d+3≤ i:=hd; have hq: d ≤ i:= (Nat.le_add_right d 3).trans hδ\n  have hj:d ≤ j:= hq.trans hz.1\n  obtain ⟨T'⟩:= hT _ _ (A.B.valid.pays m) i d (first_le A.B.valid m) hz hδ\n  let W:= M.p.kernel; have hb' : Blend 2 a b:= T'.scaleP _ _ rfl (Circlet.shifting (A:=A) (m:=m)).1\n  have hi:= Tx.clock.adm m; have hj':=Tx.clock.adm (m+1); let P':=Warehouse.flight (Issue.trail V) N m; let k:= Seal.donne R₀ (sound G d) W.penalty_pos hi (Next.Foundations.valuation G d) P' hj hb'\n  let uP:= matrix R₀ (sound G d) (Carrier.stored P' W.penalty W.penalty_pos hi) a b\n  let cap:= Seal.cap R₀ (sound G d) W.penalty_pos hi (Next.Foundations.valuation G d) hj' hj (one_le_two (α:=ℝ))\n  have he':(H!).S.block m=L:=PriceCompiler.block_eq A.B.valid m\n  let ν:=(H!).rep N n m\n  refine ⟨k,fun Xk hx=>?_⟩ -- hp with arg ht. apply Volley turnout\n  have hβ: (Rt).p= K' := (H.knows _ z.2).1.point\n  have hE:Real.exp ((H!).rep N n (m+1)).p.supportExponent=Real.exp (Rt).p.supportExponent:=by rw [ht]\n  rw [he',hE]; let ay:= E j; let u0:= Doors.rate L; let t':=2*(Real.exp (Rt).p.supportExponent*ε0)\n  let W':= (A.B.bake.make meshT); let K0:= W'.rep N n (m+1)\n  apply printsWave Πt H! N n m (hol G) (K z) L tap ht he'; constructor",
-            "line": 91,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Panel/Port.lean",
-            "fragment": "L91-L111"
-          },
-          "proof_context": {
-            "declaration": "YM.PhysicalNext.Repeat.Cub.ledgerHere",
-            "lines": [
-              91,
-              150
-            ],
-            "conclusion": "Plate.Prints is produced with the single local error zeta = Doors.rate L for all marks, and the main mark is compared with T.leads L x, the leading map applied after the vowel rescaling."
+            "conclusion": "`Buys H F W m C η` takes the common local error `η` as a parameter with `0 ≤ η` and `η*(1+columns)*orbitCost ≤ barunit (block m)`."
           }
         }
       }
@@ -134,11 +95,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, a judge ruled; a re-rating agent disagreed and a judge changed it from hasPart; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, a judge ruled; a re-rating agent disagreed and a judge kept it; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {
-        "kind": "chain"
+        "kind": "helper"
       }
     }
   }

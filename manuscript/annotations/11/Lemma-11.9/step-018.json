@@ -1,9 +1,9 @@
 {
   "id": "Lemma 11.9 step 18",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "relatedMatch",
-  "note": "The Lean fixes the joint tangent `saluteLe K` and builds the curve with it, so it never needs to identify the axial tangent with the tree representative up to a gauge direction.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] identifies the axial tangent in `Work.F04.tangent` (the `Guessed` property, supplied to this proof as `TicketPost.guards`) and puts the infinitesimal joint gauge correction into `soldier` via `salute`, so that `soldier_known` gives tangent `endorse W`. Difference: the identification enters as the hypothesis `Guessed`, derived separately and transported between levels by `guessed_match`.",
   "subject": [
     {
       "location": {
@@ -51,36 +51,114 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Stationary.verge",
-        "module": "YM.Next.STATIONARY.Joint.FourPoint",
+        "declaration": "YM.Stationary.soldier_known",
+        "module": "YM.Next.STATIONARY.Joint.Regulator",
         "lines": [
-          279,
-          279
+          596,
+          612
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Stationary.verge"
+            "id": "YM.Stationary.soldier_known"
           },
           "snippet": {
-            "text": "lemma verge (x) : fieldT (soldier F K t ρ) x=saluteLe K x := by",
-            "line": 279,
+            "text": "lemma soldier_known (hk : Guessed F W ρ) : fderiv ℝ (soldier F W t ρ) 0=endorse (G:=G) W := by\n  let K := uniformM (G:=G) (straighten S F W)\n  let D := uniformM (G:=G) W\n  ext1 x\n  have e0 : arm G c 1 (0:Link G c)=0 := by rw [map_zero]\n  let Y := fun v : ℝ => liftedUp F W ρ (v • x)\n  have eY : Y 0=1 := by simp [Y,lift_origin h]\n  let Q := fun v : ℝ => encamp F ρ (v • x)\n  let E := uniformM (extracted S F W) x\n  have hx := hk (arm G c 1 x)\n  have hQ i : HasDerivAt (fun v => G.mat ((Q v).1 i)) (G.colorMat (edgeColor E i)) 0 := by\n    let p := arm G c 1 x\n    let q := fun v : ℝ => (v • p,ρ (v • p))\n    let F' := fun a : Work.F03.ChartVars F G => G.mat (Work.F03.live F a i)\n    let L : Bid.Dir G c × AxisChart G F := (p,relative (S:=S) F W p)\n    have hu := ray_swap (V:=F') ((Work.F03.live_smooth F (G:=G) i).differentiableAt (by simp))\n      (Work.F03.live_rate F i L) (u:=q) (by simp [q,h.1]) ((ray_id p).prodMk hx)",
+            "line": 596,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Joint/FourPoint.lean",
-            "fragment": "L279-L279"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Joint/Regulator.lean",
+            "fragment": "L596-L612"
           },
           "proof_context": {
-            "declaration": "YM.Stationary.verge",
+            "declaration": "YM.Stationary.soldier_known",
             "lines": [
-              279,
-              280
+              596,
+              656
             ],
-            "conclusion": "`verge` says the tangent of the stationary curve `soldier F K t ρ` is `saluteLe K`."
+            "conclusion": "Given `Guessed F W ρ`, the derivative at 0 of the gauge-repaired stationary curve `soldier` is `endorse W`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.salute",
+        "module": "YM.Next.STATIONARY.Joint.Regulator",
+        "lines": [
+          566,
+          566
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.salute"
+          },
+          "snippet": {
+            "text": "def salute (x : Link G c) := switchSite (uniformM (straighten S F W) x)",
+            "line": 566,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Joint/Regulator.lean",
+            "fragment": "L566-L566"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.salute",
+            "lines": [
+              566,
+              566
+            ],
+            "conclusion": "The tree tangent repair generator taking the tree gauge back to the Fourier representative."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.F04.tangent",
+        "module": "YM.Work.F04",
+        "lines": [
+          88,
+          92
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.F04.tangent"
+          },
+          "snippet": {
+            "text": "lemma tangent (H : Forest S.ratio) (p : Clip) (W : PathData G) (a : ℝ) (ha : 0 < a)\n    (hg : PriceGap H p W a) (B C : Bed) (U : Matrix (Body 1 f) (Body 1 c) ℝ)\n    (hd : Inputs S U (B.metric.acts f) (C.metric.acts c))\n    (hq : Comptroller H B p W) (ρ) (h : Critical H p W ρ) (t : S.Choices) (x : Dir G c) :\n    fderiv ℝ ρ 0 x = relative H U x := by",
+            "line": 88,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/F04.lean",
+            "fragment": "L88-L92"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.F04.tangent",
+            "lines": [
+              88,
+              126
+            ],
+            "conclusion": "The derivative at 0 of the stationary axial chart ρ is `relative H U x`, the tree representative of the input matrix minus its linear copy (the content of `Guessed`)."
           }
         }
       }
@@ -95,11 +173,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, a judge ruled; a re-rating agent agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, a judge ruled; a re-rating agent agreed; re-judged after a second independent review, which changed it from relatedMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {
-        "kind": "helper"
+        "kind": "chain"
       }
     }
   }

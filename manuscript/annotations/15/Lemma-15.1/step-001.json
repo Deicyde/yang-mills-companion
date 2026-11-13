@@ -2,8 +2,8 @@
   "id": "Lemma 15.1 step 1",
   "kind": "proof_step",
   "status": "partial",
-  "relation": "narrowMatch",
-  "note": "[L] does the step at order zero only: room/no_wrap_tie place compacts of the generic set in NoHit for large p, and extendsBound passes the uniform value bound Bound.volume to the fixed-volume limits, with volume_oscillates for equicontinuity. The bounds for Delta_l with a derivative list l and the convergence of interpolants to derivatives of f_{p,v} are absent.",
+  "relation": "hasPart",
+  "note": "`room` and `no_wrap_hit` place compact subsets of Conf_n in NoHit for large p, and `Bound.volume` with `extendsBound` gives a uniform bound on values only; the derivative bound on Delta_l of the lattice moment and the convergence of the interpolants to the derivatives of f_{p,v} are not stated.",
   "subject": [
     {
       "location": {
@@ -24,6 +24,123 @@
     }
   ],
   "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extraction.room",
+        "module": "YM.Extraction.Patch",
+        "lines": [
+          67,
+          67
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extraction.room"
+          },
+          "snippet": {
+            "text": "theorem room {K : Set (Points n)} (H : IsCompact K) : ∀ᶠ p : ℕ in atTop, K ⊆ Inside S p n := by",
+            "line": 67,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extraction/Patch.lean",
+            "fragment": "L67-L67"
+          },
+          "proof_context": {
+            "declaration": "YM.Extraction.room",
+            "lines": [
+              67,
+              75
+            ],
+            "conclusion": "`room` puts a compact set inside `Inside S p n` for all large p."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extraction.no_wrap_hit",
+        "module": "YM.Extraction.Patch",
+        "lines": [
+          47,
+          47
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extraction.no_wrap_hit"
+          },
+          "snippet": {
+            "text": "theorem no_wrap_hit {p : ℕ} {x} (h : x ∈ Inside S p n) : x ∈ NoHit S p n ↔ x ∈ conf n := by",
+            "line": 47,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extraction/Patch.lean",
+            "fragment": "L47-L47"
+          },
+          "proof_context": {
+            "declaration": "YM.Extraction.no_wrap_hit",
+            "lines": [
+              47,
+              57
+            ],
+            "conclusion": "`no_wrap_hit` identifies `NoHit S p n` with `conf n` at points inside the period box."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extraction.Bound",
+        "module": "YM.Extraction.Integrate",
+        "lines": [
+          29,
+          30
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extraction.Bound"
+          },
+          "snippet": {
+            "text": "  volume (n : ℕ) (v : Fin n → C.book.Token) (K : Set (Points n)) (hp : IsCompact K) (hx : K ⊆ conf n) :\n    ∃ D : ℝ, 0 ≤ D ∧ g.late (fun N p => ∀ b, tag (C.S.a N) b ∈ K → ‖lifted C N p v b‖ ≤ D)",
+            "line": 29,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extraction/Integrate.lean",
+            "fragment": "L29-L30"
+          },
+          "proof_context": {
+            "declaration": "YM.Extraction.Bound",
+            "lines": [
+              25,
+              30
+            ],
+            "conclusion": "`Bound.volume` gives, for compact K inside `conf n`, a constant D such that the lattice values `lifted C N p v b` are bounded by D for tagged points in K, late in (N, p)."
+          }
+        }
+      }
+    },
     {
       "type": "lean",
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
@@ -58,46 +175,7 @@
               140,
               153
             ],
-            "conclusion": "At each generic point, the fixed-volume limits are eventually bounded by a constant D from Bound.volume, uniform over late (N,p), after passing to the mesh limit at fixed p (f.evaluated)."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Extraction.volume_oscillates",
-        "module": "YM.Extraction.Lipschitz",
-        "lines": [
-          116,
-          138
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Extraction.volume_oscillates"
-          },
-          "snippet": {
-            "text": "lemma volume_oscillates (H : TransferLip C f) (n : ℕ) {P} (Hp : f.Meshes C P) (v : Fin n → C.book.Token) :\n    oscillation (generic n) (fun i x => (P (f.per i)).read x v) := by\n  intro K hU hk ε hε\n  obtain ⟨T,hT,hKT,hTg⟩ := exists_compact_between hk (genericOpen n) hU\n  obtain ⟨d,hd,H⟩ := H.expanding n _ hT hTg v (ε/2) (by positivity)\n  refine ⟨d,hd,?_⟩\n  unfold Order.late at H\n  filter_upwards [H, f.per.cofinal.eventually (room C.S hT)] with i hi hr x hx y hy hD\n  let p := f.per i\n  have he (x : Points n) (hx : x ∈ K) : x ∈ Cyclic C.S p n :=\n    (no_wrap_tie C.S (hr (interior_subset (hKT hx)))).mpr (hU hx)\n  let a (j : ℕ) := C.S.a (f.mesh j)\n  let r (x : Points n) (j : ℕ) := address (a j) x\n  let w j := tag (a j) (n := n)\n  have hu (x) : Tendsto (fun i => w i (r x i)) atTop (𝓝 x) := (chosen (S := C.S) x).comp f.mesh.cofinal\n  have hh (x hx) := f.evaluated C Hp p n v x (he x hx) (r x) (hu x)\n  have ht : dist ((P (f.per i)).read x v) ((P (f.per i)).read y v) ≤ ε/2 := by\n    apply le_of_tendsto ((hh x hx).dist (hh y hy))\n    have hp := ((hu x).dist (hu y)).eventually (gt_mem_nhds hD)\n    filter_upwards [hi, hp,(hu x).eventually (mem_interior_iff_mem_nhds.mp (hKT hx)),\n      (hu y).eventually (mem_interior_iff_mem_nhds.mp (hKT hy))] with j ht hu hv hw\n    exact (ht (r x j) (r y j) hv hw hu).le\n  linarith",
-            "line": 116,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extraction/Lipschitz.lean",
-            "fragment": "L116-L138"
-          },
-          "proof_context": {
-            "declaration": "YM.Extraction.volume_oscillates",
-            "lines": [
-              116,
-              138
-            ],
-            "conclusion": "The fixed-volume limits are equicontinuous on compacts of the generic set, uniformly in late volumes, from the lattice TransferLip estimate."
+            "conclusion": "At a generic point, the limit values `(P (f.per i)).read x v` are bounded by D eventually in i, using `room`, `no_wrap_tie` and `Order.evaluated`."
           }
         }
       }
@@ -112,7 +190,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

@@ -1,9 +1,9 @@
 {
   "id": "Theorem 7.2 step 1",
   "kind": "proof_step",
-  "status": "formalized",
-  "relation": "closeMatch",
-  "note": "[L] carries the symmetry and centering facts in trace_real, trace_turn, self_adjoint, pinned_scalar and pinned_centered, and the generic-pair asymptotic in Verse.tagline. Differences: |x|<100 and sep>1/100 appear as `generic 2` with a `Scaling.window 100` neighbourhood, the subsequence comes from a `Scribe` datum, and the reality of e_tr holds because the limit constant `award G` is defined as a real number rather than via the reflection identity E2.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "Reality, O(4) invariance, hermiticity, scalarity, centering and the generic-pair preparation are all present; the reality of the constant e_tr is not stated separately (`center_plus` gives a complex constant, `theta` subtracts the vacuum value).",
   "subject": [
     {
       "location": {
@@ -46,45 +46,6 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Trace.Verse.tagline",
-        "module": "YM.TraceExtension.Verse.Day",
-        "lines": [
-          50,
-          69
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Trace.Verse.tagline"
-          },
-          "snippet": {
-            "text": "lemma tagline (h:G.Simple)(h₁:Scribe f J V Z F.sector 𝓛 F.room.kernel H) {x:Points 2}(hh:x∈generic 2)(ht:Scaling.window 100 2∈𝓝 x) : Tendsto (fun i=> clue (J.r i) • euclidean F (J.r i*width (fad (V i) x))) atTop (𝓝 (↑(award G/(width x)^8):ℂ)):=by\n    let U:= selected F; let H':= F.phase.phase; let R:= H'.decomposition; let a(i):= ZoomValue J (BQ Z V) (center F) i; let P:(Bel C.book).Field 4:= (4*d2 G) • OScale C.book; let p:=tendsto_id (x:=atTop (α:=ℕ)); clear p\n    obtain ⟨Y,hq⟩:=h₁.meters\n    have he:= rainbow hq F.room hb R H'.still H'.states H'.chosen F.α.atPoint (selected_respects F) h hh ht (fun i _=> a i) (fun _=> P) (fun _=> h₁.goal U)\n    let x0:= width x; let H4:=3*(G.lieDim:ℝ)/Real.pi^4*x0⁻¹^8\n    have hp: x 0≠x 1:= (show Injective x.ofLp from generic_conf _ hh).ne (by decide)\n    have hv: ((S').classMoment (S') (fun _=> 4) x (fun _=> P))= (4*d2 G)^2 • (↑H4:ℂ):=by\n       unfold P; rw[priced]; have hx:= wick_norm (L:=C.book) hp; unfold H4; rw [inv_pow]; exact congr_arg _ hx\n    have hz:= (h₁.clock.pow 2).smul he\n    rw [hv, smul_smul] at hz\n    have hk(ψ : ℝ) : (G.slopeConstant⁻¹ ^2 * ((4*d2 G)^2)) • (ψ:ℂ)= (↑(4*(d2 G^2/b0 G^2)*ψ:ℝ):ℂ):=by rw [beta_eq,Complex.real_smul]; push_cast;ring\n    rw [hk,show 4*(d2 G^2/b0 G^2)*H4= award G/(width x)^8 from by unfold award H4 x0;ring] at hz\n    refine hz.congr' ?_\n    filter_upwards [h₁.grows.eventually_gt_atTop 0, (rounds hq h x).eventually ((genericOpen 2).mem_nhds hh), (rounds hq h x).eventually ht] with i hi hy ht\n    let r:= J.r i; let Q:=fad (V i) x; let s:= rum (V i) x; let w:= BQ Z V i; have hr: s=r • Q:=by unfold s; rw [raw, (hq.season i).2]\n    have hr' : width s=r*width Q:= by rw [hr,width,PiLp.smul_apply,PiLp.smul_apply,← smul_sub,norm_smul,Real.norm_of_nonneg (J.positive i).le]\n    have hc:s∈conf 2:=generic_conf _ (mixed hq _ i hy ht.2).usable\n    let t:=center F\n    change (LogZoom J i/w)^2 • (S.classMoment (selected F) _ s fun _ :Fin 2=> J.U i 4 (a i))=_; rw [show J.U i 4 (a i)=(w*r^(4:ℕ)) • t from LinearEquiv.apply_symm_apply ..,priced,axis_shape F s hc,hr',smul_smul, show (LogZoom J i/w)^2*(w*r^(4:ℕ))^2=clue r from ?_]\n    change (Real.log r⁻¹/w)^2*_=_; unfold clue; have hw:w≠0:= hi.ne'; field_simp",
-            "line": 50,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Verse/Day.lean",
-            "fragment": "L50-L69"
-          },
-          "proof_context": {
-            "declaration": "YM.Trace.Verse.tagline",
-            "lines": [
-              50,
-              69
-            ],
-            "conclusion": "For a generic pair x with a radius-100 window neighbourhood, clue(r_i) times the Euclidean trace two-point at r_i times the width of the lattice-adjusted point fad(V i) x tends to the real constant award G/|x|^8 along the Scribe subsequence, using the free Wick normalization and slope identity."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
         "declaration": "YM.TraceExtension.trace_real",
         "module": "YM.TraceExtension.Centered",
         "lines": [
@@ -114,7 +75,46 @@
               69,
               71
             ],
-            "conclusion": "The centered trace theta is fixed by conjugation (trace_real) and by every O(4) rotation (trace_turn)."
+            "conclusion": "`theta T J` is fixed by the real structure `S.conj`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.trace_turn",
+        "module": "YM.TraceExtension.Centered",
+        "lines": [
+          73,
+          74
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.trace_turn"
+          },
+          "snippet": {
+            "text": "lemma trace_turn (hp : Tensorial X J) (hr : X.Laws P rs) (K : Ortho) : X.act 4 K (theta T J) = theta T J := by\n    unfold theta centerIn; rw [map_sub,map_smul,stressTrace_turn hp,hr.identity]",
+            "line": 73,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Centered.lean",
+            "fragment": "L73-L74"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.trace_turn",
+            "lines": [
+              73,
+              74
+            ],
+            "conclusion": "`theta T J` is invariant under every `K : Ortho`."
           }
         }
       }
@@ -153,7 +153,124 @@
               58,
               59
             ],
-            "conclusion": "The continued label pinned F is J-self-adjoint, Lorentz scalar (pinned_scalar) and has zero vacuum expectation (pinned_centered)."
+            "conclusion": "`F.action.J (pinned F) = pinned F`, the continued label is Hermitian."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.pinned_scalar",
+        "module": "YM.TraceExtension.WilsonTrace",
+        "lines": [
+          61,
+          63
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.pinned_scalar"
+          },
+          "snippet": {
+            "text": "lemma pinned_scalar (g : Lorentz) : F.action.spin.rail g (pinned F)=pinned F :=\n    scalar_rail F.realization.qt.letters F.phase.transport.spots\n      (trace_turn F.phase.transport.spin F.phase.transport.spots) g",
+            "line": 61,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/WilsonTrace.lean",
+            "fragment": "L61-L63"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.pinned_scalar",
+            "lines": [
+              61,
+              63
+            ],
+            "conclusion": "`pinned F` is fixed by every Lorentz transformation."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.pinned_centered",
+        "module": "YM.TraceExtension.WilsonTrace",
+        "lines": [
+          65,
+          67
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.pinned_centered"
+          },
+          "snippet": {
+            "text": "lemma pinned_centered (φ : Probe E4) : inner ℂ F.action.operators.vacuum\n    (excitation F.action.operators (pinned F) φ) = 0 :=\n    vev_boundary F.action (selected_hierarchy F) (selected_respects F) F.realization.chosen F.realization.qt _ φ",
+            "line": 65,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/WilsonTrace.lean",
+            "fragment": "L65-L67"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.pinned_centered",
+            "lines": [
+              65,
+              67
+            ],
+            "conclusion": "The vacuum expectation of the excitation by `pinned F` vanishes for every probe."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Trace.Verse.tagline",
+        "module": "YM.TraceExtension.Verse.Day",
+        "lines": [
+          50,
+          50
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Trace.Verse.tagline"
+          },
+          "snippet": {
+            "text": "lemma tagline (h:G.Simple)(h₁:Scribe f J V Z F.sector 𝓛 F.room.kernel H) {x:Points 2}(hh:x∈generic 2)(ht:Scaling.window 100 2∈𝓝 x) : Tendsto (fun i=> clue (J.r i) • euclidean F (J.r i*width (fad (V i) x))) atTop (𝓝 (↑(award G/(width x)^8):ℂ)):=by",
+            "line": 50,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Verse/Day.lean",
+            "fragment": "L50-L50"
+          },
+          "proof_context": {
+            "declaration": "YM.Trace.Verse.tagline",
+            "lines": [
+              50,
+              69
+            ],
+            "conclusion": "`tagline` states the generic-pair limit along the scaling sequence `J.r i`, the preparation of the asymptotic."
           }
         }
       }
@@ -169,7 +286,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

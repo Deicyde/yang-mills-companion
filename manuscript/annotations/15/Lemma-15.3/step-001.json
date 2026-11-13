@@ -1,9 +1,9 @@
 {
   "id": "Lemma 15.3 step 1",
   "kind": "proof_step",
-  "status": "formalized",
-  "relation": "closeMatch",
-  "note": "[L] carries the subpower bound in Work.I04.columns_receipt (split at a level, tail controlled by logCost and J^{-2} -> 0) with Extra.Multi.coord_bound, and the diagonal extraction in Next.Extract.include_projections and common. The difference: the uniform bounds of Lemma E2.6 and of the coupling bands enter as the Affordable/Reserve inputs, and idempotence of the limits is packaged in projected_limit.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "`finish` and `answer` take the limiting projections of the relay bins from the hypotheses `RelayCosts`, `Detector`, `Projected`; the subpower derivation with log C_J <= J^-2 log l and the countable diagonal extraction are missing.",
   "subject": [
     {
       "location": {
@@ -29,153 +29,75 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Work.I04.columns_receipt",
-        "module": "YM.Work.I04",
-        "lines": [
-          24,
-          62
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Work.I04.columns_receipt"
-          },
-          "snippet": {
-            "text": "theorem columns_receipt (a : Levels G) :\n    (fun i => ∑ m ∈ Finset.range i, Real.log (a.params (m+1)).columns) =o[atTop] a.S.scale := by\n  let f : ℕ → ℝ := fun i => ∑ m ∈ Finset.range i, Real.log (a.params (m+1)).columns\n  have hf (i) : 0 ≤ f i :=\n    Finset.sum_nonneg fun m _ => Real.log_nonneg (a.params (m+1)).columns_ge\n  change f =o[atTop] a.S.scale\n  refine isLittleO_iff.mpr ?_\n  intro ε hε\n  have hz : Tendsto (fun i : ℕ => ((a.clock.J (i+1) : ℝ)^2)⁻¹) atTop (𝓝 0) :=\n    tendsto_inv_atTop_zero.comp\n      ((tendsto_pow_atTop (n := 2) (by decide)).comp\n        (tendsto_natCast_atTop_atTop.comp (a.fits.deep.comp (tendsto_add_atTop_nat 1))))\n  -- Tail increment control and absorption of a finite prefix, as for\n  -- the drift in Shoot.trajectory.\n  obtain ⟨j,hj⟩ := eventually_atTop.mp (hz.eventually (ge_mem_nhds (half_pos hε)))\n  have htail (i : ℕ) (hi : j ≤ i) :\n      f i ≤ f j + ε/2 * (a.S.scale i - a.S.scale j) := by\n    induction i, hi using Nat.le_induction with\n    | base => rw [sub_self, mul_zero, add_zero]\n    | succ i hi H =>\n      let X := a.params (i+1)\n      have hcol : Real.log X.columns ≤\n          Real.log (1 + X.paths + X.width⁻¹ + X.columns + X.clip.relaxation + X.supportExponent) :=\n        Real.log_le_log (lt_of_lt_of_le zero_lt_one X.columns_ge) (by\n          linarith only [X.paths_pos, (inv_pos.mpr X.width_pos), X.clip.radius_pos, X.price_pos])\n      have hL : 0 < Real.log (a.S.block i).val := Real.log_pos (by\n        exact_mod_cast (show 1 < (a.S.block i).val from\n          lt_of_lt_of_le (by norm_num) (a.S.block_large i)))\n      have he : Real.log (a.params (i+1)).columns ≤ ε/2 * Real.log (a.S.block i).val :=\n        hcol.trans ((div_le_iff₀ hL).mp ((a.fits.logCost i).trans (hj i hi)))\n      have step : f (i+1) = f i + Real.log (a.params (i+1)).columns :=\n        Finset.sum_range_succ _ _\n      rw [step, Schedule.scale_succ]\n      linarith only [he, H]\n  have hc := (a.S.divergent.const_mul_atTop (half_pos hε)).eventually_ge_atTop (f j)\n  filter_upwards [eventually_ge_atTop j, hc] with i hi hb\n  have hhead : f j ≤ ε/2 * a.S.scale i := hb\n  rw [Real.norm_eq_abs, Real.norm_eq_abs, abs_of_nonneg (hf i), abs_of_nonneg (Shoot.scale_nn a i)]\n  linarith only [hhead, htail i hi, mul_nonneg hε.le (Shoot.scale_nn a j)]",
-            "line": 24,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/I04.lean",
-            "fragment": "L24-L62"
-          },
-          "proof_context": {
-            "declaration": "YM.Work.I04.columns_receipt",
-            "lines": [
-              24,
-              62
-            ],
-            "conclusion": "sum_{m<i} log columns_{m+1} = o(scale_i), by a tail estimate with J_{m+1}^{-2} -> 0 and absorption of a finite prefix."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Extra.Multi.coord_bound",
-        "module": "YM.Extra.MULTISOURCE_BOUNDS.Columns",
-        "lines": [
-          175,
-          183
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Extra.Multi.coord_bound"
-          },
-          "snippet": {
-            "text": "theorem coord_bound (H : C.Makes) (v : C.label d) (hm : C.ref d ≤ m) (hm' : m ≤ N) :\n    (C.labels.level d).coeffSize (coord C N p m v).x ≤ wallet C m * (C.labels.level d).coeffSize v := by\n  induction m,hm using Nat.le_induction with\n  | base => rw [H.calibrated d N p hm' |>.reads,LinearEquiv.apply_symm_apply]\n            exact le_mul_of_one_le_left (BasisCost.coeff_nonneg _) (wallet_ge ..)\n  | succ m hm ih =>\n    rw [wallet,prod_range_succ,mul_comm _ (col C (m+1)),mul_assoc]\n    refine ((H.calibrated d N p (hm.trans (by omega : m≤N))).back m hm hm' _).trans ?_\n    exact mul_le_mul_of_nonneg_left (ih (by omega : m≤N)) (zero_le_one.trans (col_ge ..))",
-            "line": 175,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/MULTISOURCE_BOUNDS/Columns.lean",
-            "fragment": "L175-L183"
-          },
-          "proof_context": {
-            "declaration": "YM.Extra.Multi.coord_bound",
-            "lines": [
-              175,
-              183
-            ],
-            "conclusion": "The inverse terminal coordinate is at most the column product wallet times the coefficient size."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Next.Extract.include_projections",
-        "module": "YM.Next.EXTRACTION.Relay",
-        "lines": [
-          86,
-          93
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Next.Extract.include_projections"
-          },
-          "snippet": {
-            "text": "theorem include_projections (S : Table C.book) (b : Presentation C) (h : Affordable b f) :\n    ∃ g : Order, ∃ R : Bin S, ∃ z, Projected b (f.refine g) R z := by\n  have he : Reserve (X := CoordMap C) f (fun _ _ => True) (fun d N p => b.step d (N,p)) :=\n    Reserve.of_norm (fun _ => Eventually.of_forall fun _ => trivial) (fun d p _ => h.rows d p) h.outer\n  obtain ⟨g,z,y,H⟩ := he.gather\n  let R : Bin S := fun d =>\n    ⟨b.step d, y d, b.projected d, projected_limit (b.step d) (y d) (b.projected d) (Order.along (H.limits d))⟩\n  exact ⟨g,R,z,fun _ => rfl,H⟩",
-            "line": 86,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/EXTRACTION/Relay.lean",
-            "fragment": "L86-L93"
-          },
-          "proof_context": {
-            "declaration": "YM.Next.Extract.include_projections",
-            "lines": [
-              86,
-              93
-            ],
-            "conclusion": "From norm bounds (finite-dimensional compactness), one common refinement makes every projection step converge in both stages to projections."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Next.Extract.common",
+        "declaration": "YM.Next.Extract.finish",
         "module": "YM.Next.EXTRACTION.Base",
         "lines": [
-          111,
-          122
+          79,
+          84
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Next.Extract.common"
+            "id": "YM.Next.Extract.finish"
           },
           "snippet": {
-            "text": "theorem common {ι : Type*} [Countable ι] {X : ι → Type*} [∀ i, TopologicalSpace (X i)]\n    [∀ i, FirstCountableTopology (X i)] [∀ i, T2Space (X i)] {A : ι → ℕ → Prop} {Y : ∀ i, ℕ → ℕ → X i}\n    (h : C.Makes) (c : CenterPort C f) (H : Reserve f A Y)\n    (b : Presentation C) (he : Affordable b f) (hr : ∀ d, RelayCosts b f d) (hd : ∀ d, Detector b f d) :\n    ∃ g : Order, (∃ u y, Keeps (f.refine g) A Y u y) ∧\n    ∃ (S : Table C.book) (M : ℕ → Table C.book) (R : Bin S), (∃ z, Projected b (f.refine g) R z) ∧\n    ∃ (T : Table C.book) (W : DiffPlan T), Base C (f.refine g) S M R T W := by\n  obtain ⟨g,S,M,hg,u,y,hw⟩ := raw h c H\n  have hp := Tails.refine f g\n  obtain ⟨a,R,z,hz,T,W,ha⟩ := from_raw h (hp.center c) hg b (hp.affordable he)\n    (fun d => hp.relay (hr d)) (fun d => hp.detects (hd d))\n  exact ⟨g.refine a,⟨u,y,(Tails.refine _ a).keeps hw⟩,S,M,R,⟨z,hz⟩,T,W,ha⟩",
-            "line": 111,
+            "text": "theorem finish (h : C.Makes) (c : CenterPort C f) (p : RawLimits C f S M) (he : Projected b f R z)\n    (hr : ∀ d, RelayCosts b f d) (hd : ∀ d, Detector b f d) :\n    ∃ T : Table C.book, ∃ W : DiffPlan T, Base C f S M R T W := by\n  have hv : ∀ d, RelayBin C R f d := fun d => he.ready d (hr d)\n  have hx (i : Live S) (d : ℕ) : Bin.shortage R i d :=\n    shortage_of_detector i p.integral (he.approaches d) (he.same d).symm (hd d)",
+            "line": 79,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/EXTRACTION/Base.lean",
-            "fragment": "L111-L122"
+            "fragment": "L79-L84"
           },
           "proof_context": {
-            "declaration": "YM.Next.Extract.common",
+            "declaration": "YM.Next.Extract.finish",
             "lines": [
-              111,
-              122
+              79,
+              92
             ],
-            "conclusion": "The same extraction retains any countable bank of bounded data (comparison lifts, couplings) with ordered limits."
+            "conclusion": "`finish` takes the stage-wise hypotheses `RelayCosts`, `Detector` and `Projected` and turns them into the relay bins `RelayBin` and the shortage bound `Bin.shortage` for every degree `d`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.D04.answer",
+        "module": "YM.Work.D04",
+        "lines": [
+          213,
+          214
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.D04.answer"
+          },
+          "snippet": {
+            "text": "  intro T W D G C S F H h c hh R hr hs\n  refine ⟨fun d => ⟨(hr d).P, ?_⟩, hs, ?_, ?_⟩",
+            "line": 213,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/D04.lean",
+            "fragment": "L213-L214"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.D04.answer",
+            "lines": [
+              212,
+              240
+            ],
+            "conclusion": "`answer` takes the projection `(hr d).P` of each relay bin as the limit object."
           }
         }
       }
@@ -190,7 +112,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent disagreed and a judge changed it from relatedMatch; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent disagreed and a judge changed it from relatedMatch; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

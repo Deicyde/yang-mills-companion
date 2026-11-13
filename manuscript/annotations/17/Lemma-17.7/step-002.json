@@ -1,9 +1,9 @@
 {
   "id": "Lemma 17.7 step 2",
   "kind": "proof_step",
-  "status": "formalized",
-  "relation": "closeMatch",
-  "note": "Work.C03 carries the step: defined_exists builds F_n and extends it by zero, defined_region gives continuity, holomorphy and agreement at imaginary times, and defined_power gives the polynomial bound with parameter k/8. Independence of the buffer parameter is proved in Work.C02.answer for all strict complex times, by heat-semigroup padding (matrix_pad) instead of the identity theorem.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "Holomorphy, continuity in space and agreement at imaginary times (the identity-theorem input) are in `Region`; the operator formula for F_n^xi, independence of eps, extension by zero outside ordered times and the eps=delta/8 bound have no Lean counterpart.",
   "subject": [
     {
       "location": {
@@ -29,36 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Work.C03.defined_exists",
-        "module": "YM.Work.C03",
+        "declaration": "YM.Boundary.Waves.Region",
+        "module": "YM.Boundary.Contour",
         "lines": [
-          218,
-          226
+          71,
+          77
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Work.C03.defined_exists"
+            "id": "YM.Boundary.Waves.Region"
           },
           "snippet": {
-            "text": "lemma defined_exists {A : Spread C} (hB : Slice A B) : ∃ F : Waves S, B.Defined F := by\n  classical\n  let F : Waves S := {\n    F n z x := if h : z ∈ strict n then (matrix_multi B (exists_lit h).choose z x).choose else 0\n  }\n  refine ⟨F, fun n z hz p hp x v => ?_⟩\n  change (if h : z ∈ strict n then (matrix_multi B (exists_lit h).choose z x).choose else 0) v = _\n  rw [dif_pos hz, (matrix_multi B _ z x).choose_spec]\n  exact hB.same x v _ p hz (exists_lit hz).choose_spec hp",
-            "line": 218,
+            "text": "structure Region (T : Table L) : Prop where\n  together (n : ℕ) (v : Fin n → S.Union) : ContinuousOn (fun p : Times n × SpacePoints n =>\n    P.F n p.1 p.2 v) (strict n ×ˢ univ)\n  hol (n : ℕ) (v : Fin n → S.Union) (x : SpacePoints n) :\n    DifferentiableOn ℂ (fun z => P.F n z x v) (strict n)\n  roots (n : ℕ) (v : Fin n → S.Tag) (x : SpacePoints n) (y : Heights n) (hy : y ∈ east n) :\n    P.F n (fun i => ↑(y i)*I) x (fun i => S.pin (v i).1 (v i).2) = S.useAt T (place x y) v",
+            "line": 71,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/C03.lean",
-            "fragment": "L218-L226"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Boundary/Contour.lean",
+            "fragment": "L71-L77"
           },
           "proof_context": {
-            "declaration": "YM.Work.C03.defined_exists",
+            "declaration": "YM.Boundary.Waves.Region",
             "lines": [
-              218,
-              226
+              71,
+              77
             ],
-            "conclusion": "Defines the continuation F_n(z,x) as the buffered matrix element for an admissible bar parameter p on strict times and 0 outside, independent of p by the Slice field `same`."
+            "conclusion": "`Region` states joint continuity and holomorphy in the times on `strict n` and the agreement of the continuation with the Euclidean correlation `useAt` at imaginary times."
           }
         }
       }
@@ -68,114 +68,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Work.C03.defined_region",
-        "module": "YM.Work.C03",
+        "declaration": "YM.EveryPhase.strict_evaluation",
+        "module": "YM.EveryPhase.Pages",
         "lines": [
-          228,
-          243
+          193,
+          196
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Work.C03.defined_region"
+            "id": "YM.EveryPhase.strict_evaluation"
           },
           "snippet": {
-            "text": "lemma defined_region {A : Spread C} (hB : Slice A B) {F : Waves S} (hF : B.Defined F) : F.Region T := by\n  refine ⟨fun n v u hu => ?_,fun n v x u hu => ?_,fun n v x y hy => ?_⟩\n  · obtain ⟨p,hp⟩ := exists_lit hu.1\n    apply ContinuousAt.continuousWithinAt\n    apply (matrix_cont B v hp).congr_of_eventuallyEq\n    filter_upwards [(continuous_fst.tendsto u).eventually (eventually_lit hp)] with t ht using\n      hF n _ (lit_strict ht) p ht t.2 v\n  · obtain ⟨p,hp⟩ := exists_lit hu\n    exact ((matrix_diff B v x hp).congr_of_eventuallyEq ((eventually_lit hp).mono (fun t ht =>\n      hF n t (lit_strict ht) p ht x v))).differentiableWithinAt\n  · let z (i : Fin n) := (y i:ℂ)*Complex.I\n    have hi : (fun i => (z i).im)=y := by simp [z]\n    have hz : z ∈ strict n := show (fun i => (z i).im) ∈ east n from hi.symm ▸ hy\n    obtain ⟨p,hp⟩ := exists_lit hz\n    rw [hF n z hz p hp]\n    exact hB.pure p y x v hy (hi ▸ (show Small.enough (fun i => (z i).im) p from hp))",
-            "line": 228,
+            "text": "lemma strict_evaluation (x : Points n) (v : Fin n → S.Union) {y : Heights n} (hy : y∈east n) :\n    Continuous (fun i => (L.contours i).waves.restricted v y x) ∧\n     (∫ i, (L.contours i).waves.restricted v y x ∂F.α.space.μ)=F.B.waves.restricted v y x := by\n  obtain ⟨k,hk,δ,hδ,H⟩ := path_open y x hy",
+            "line": 193,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/C03.lean",
-            "fragment": "L228-L243"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Pages.lean",
+            "fragment": "L193-L196"
           },
           "proof_context": {
-            "declaration": "YM.Work.C03.defined_region",
+            "declaration": "YM.EveryPhase.strict_evaluation",
             "lines": [
-              228,
-              243
+              193,
+              228
             ],
-            "conclusion": "F is continuous, holomorphic in time on strict times, and equals the Schwinger function at imaginary times."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Work.C03.defined_power",
-        "module": "YM.Work.C03",
-        "lines": [
-          200,
-          216
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Work.C03.defined_power"
-          },
-          "snippet": {
-            "text": "lemma defined_power {A : Spread C} (hB : Slice A B) {F : Waves S} (hF : B.Defined F) : F.Breathes := by\n  intro n v\n  choose Q d hQ h using fun i => hB.stature.price (v i)\n  let P (i : Fin n) := Q i * 8^d i\n  have hP i : 0 ≤ P i := by have := hQ i; unfold P; positivity\n  have hn := Finset.prod_nonneg (s:=Finset.univ) (fun i _ => hP i)\n  refine ⟨∑ i, d i, ‖C.omega‖ * ((∏ i, P i) * ‖C.omega‖), by positivity, fun y k hk hb x => ?_⟩\n  let p := logD k\n  have hp : Small.enough y p := enough_logD hk hb\n  have he : lit (shift x y) p := by simpa [lit,shift] using hp\n  have hi i : ‖B.bar p (v i)‖ ≤ P i * k⁻¹^d i := by\n    apply (h i p ⟨hp.1,hp.2.1⟩).trans_eq\n    unfold p P; rw [coe_logD hk,inv_div,div_eq_mul_inv,mul_pow,mul_assoc]\n  calc ‖F.restricted v y x‖ = ‖B.matrix p n (shift x y) (trace x) v‖ := by rw [Waves.restricted, hF n _ (lit_strict he) p he]\n       _ ≤ ‖C.omega‖ * ((∏ i, ‖B.bar p (v i)‖) * ‖C.omega‖) := norm_matrix B p v _ _ he\n       _ ≤ ‖C.omega‖ * ((∏ i, (P i * k⁻¹^d i)) * ‖C.omega‖) := by gcongr with i; exact hi i\n       _ = _ := by rw [Finset.prod_mul_distrib, Finset.prod_pow_eq_pow_sum]; ring",
-            "line": 200,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/C03.lean",
-            "fragment": "L200-L216"
-          },
-          "proof_context": {
-            "declaration": "YM.Work.C03.defined_power",
-            "lines": [
-              200,
-              216
-            ],
-            "conclusion": "With p=logD k (k/8), |F_n(x^4+iy,x)| ≤ C k^{-Σd_i} when the gaps are at least k."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Work.C02.answer",
-        "module": "YM.Work.C02",
-        "lines": [
-          168,
-          177
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Work.C02.answer"
-          },
-          "snippet": {
-            "text": "theorem answer : YM.Bid.C02 := by\n  intro G L S T V P A B H hB\n  refine ⟨hB, fun p y x v hy hp => root H.adopted hB.bits x y v hy hp, ?_⟩\n  intro n z x p q l _ hq hl\n  obtain h|h|h := lt_trichotomy q l\n  · obtain ⟨u,rfl⟩ := exists_add_of_le h.le\n    exact (matrix_pad H hB hq.1 (by simpa using h) z x p hl).symm\n  · rw [h]\n  obtain ⟨u,rfl⟩ := exists_add_of_le h.le\n  exact matrix_pad H hB hl.1 (by simpa using h) z x p hq",
-            "line": 168,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/C02.lean",
-            "fragment": "L168-L177"
-          },
-          "proof_context": {
-            "declaration": "YM.Work.C02.answer",
-            "lines": [
-              168,
-              177
-            ],
-            "conclusion": "Proves the Slice property `same`: the buffered matrix element does not depend on the admissible buffer parameter (via matrix_pad), and `pure`: it equals the Schwinger function at imaginary times."
+            "conclusion": "At strict heights the continued function is continuous in the phase and its phase average is the mixed one."
           }
         }
       }
@@ -190,7 +112,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

@@ -1,9 +1,9 @@
 {
   "id": "Lemma 11.5 step 26",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "relatedMatch",
-  "note": "[L] proves the two normal equations `Inputs` (with the transfer conditions) for the explicit alias columns of `duo` in `tangent`, rather than deriving them from the normal equations of the covariance recursion with a gradient matched to the rooted predictor.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] carries the two normal equations as the Inputs fields proved in YM.Next.Free.Flight.tangent, and the gradient choice matching the rooted predictor as YM.Precision.extracted in YM.Precision.stationed. The difference: the equations are stated first for straight-link averaging `mean S` and then transferred to `probe S`, and they come from alias-wise symbol identities.",
   "subject": [
     {
       "location": {
@@ -33,7 +33,7 @@
         "module": "YM.Next.FREE_KERNELS.Primal",
         "lines": [
           63,
-          67
+          118
         ]
       },
       "role": "key",
@@ -43,14 +43,14 @@
             "id": "YM.Next.Free.Flight.tangent"
           },
           "snippet": {
-            "text": "lemma tangent :\n    let k := K.penalty; let W := pulse k P.wing; let W' := pulse k P.land; let S := visit P K hc\n    let V := duo k P; let A := installed (P.visitRatio hc) V.A0; let T := installed (P.visitRatio hc) V.T\n    Inputs S A ((record W).acts f) ((record W').acts c) ∧\n      T.transpose * d 1 f = d 1 c * mean S ∧ T*((record W').acts c)*d 1 c=(record W).acts f*d 1 f*A := by",
+            "text": "lemma tangent :\n    let k := K.penalty; let W := pulse k P.wing; let W' := pulse k P.land; let S := visit P K hc\n    let V := duo k P; let A := installed (P.visitRatio hc) V.A0; let T := installed (P.visitRatio hc) V.T\n    Inputs S A ((record W).acts f) ((record W').acts c) ∧\n      T.transpose * d 1 f = d 1 c * mean S ∧ T*((record W').acts c)*d 1 c=(record W).acts f*d 1 f*A := by\n  intro k W W' S V A T\n  have hj : 4≤j := P.legal\n  have hk : 0<k := K.penalty_pos\n  let A' p := P.fromBank (pilot k) 1 p; let T' p := P.fromBank (wire k) 2 p\n  let r := P.visitRatio hc\n  obtain ⟨hA,hT⟩ := secure_both k hk hj ht\n  have hX : Runs (readings r (TypeFace 1)) (rotations c (TypeFace 1)) A (solo c A') := P.sail_run hc hA hj 1\n  have hY : Runs (readings r (TypeFace 2)) (rotations c (TypeFace 2)) T (solo c T') := P.sail_run hc hT hj 2\n  have hQ := phi_run P K hc\n  let Q p := downAlias fun l : Site P.L => toll P.L 3 • flux P 1 (aliasAt p l)\n  have hv : stageVolume c/stageVolume f=(stageVolume P.L)⁻¹ := by rw [ratio_volume r]; change stageVolume c / (stageVolume c * stageVolume P.L) = _; field_simp [stage_ne]\n  have hq : Runs (readings r (TypeFace 1)) (rotations c (TypeFace 1)) (mean S).transpose (solo c Q) := by\n    have hh := hQ.back (rotations_crew c _) (readings_crew _ _)\n    rw [hv] at hh; unfold solo at hh; rw [fiber_H,fiber_weight] at hh\n    have hd (p : Site c) := adjust_adj P _ (show physical (mon p) from real_frequency p)\n    simp_rw [hd] at hh; exact hh\n  have hK := runs_rotor_fine _ hk hj P.wing r P.odd\n  have hK' := runs_rotor _ hk ht P.land c\n  have hd := (cobound_true 1).fine r P.odd\n  have hd' := (cobound_true 1).coarse c\n  have hm (p : Site c) := base_subset_realCube zone_pos (mon_mem c p)\n  refine ⟨⟨?_,?_⟩,?_,?_⟩\n  · have hh : braceAll r (rotor 1 k P.wing)*solo c A'=solo c Q * solo c (rotor 1 k P.land) := by\n      unfold braceAll solo; rw [fiber_mult,fiber_mult]\n      congr! 2 with p\n      unfold A' Q fromBank; rw [alias_after,alias_then]; exact congr_arg downAlias (funext fun l => (scaled_tri P k hk (hm p) l).1)\n    have he := hK.product hX; rw [hh] at he; exact he.lands (hq.product hK') (rotations_crew c _)\n  · have he := hQ.product hX\n    have hu := (Runs.nil (rotations c (TypeFace 1))).minus (hK'.smult k⁻¹)\n    have hh : solo c (going P)*solo c A'=1-(↑(k⁻¹):ℂ) • solo c (rotor 1 k P.land) := by\n      unfold solo; rw [fiber_mult,fiber_weight,← fiber_one, fiber_less]; congr! 2 with p\n      rw [Complex.ofReal_inv]; exact scaled_mul P k hk (hm p)\n    rw [hh] at he; exact he.lands hu (rotations_crew c _)\n  · have h1 := (hd.back (readings_crew _ _) (readings_crew _ _)).product hY\n    have h2 := hq.product (hd'.back (rotations_crew _ _) (rotations_crew _ _))\n    rw [div_self (stage_ne f),one_smul] at h1; rw [div_self (stage_ne c),one_smul] at h2\n    have hh : (braceAll r (signal 1 1))ᴴ * solo c T'= solo c Q * (solo c (signal 1 1))ᴴ := by\n      unfold braceAll solo; simp only [fiber_H,fiber_mult]\n      congr! 2 with p\n      unfold Q T' fromBank; rw [alias_after,alias_then]; congr! 2 with l\n      rw [← mirage_herm _ _ (alias_real (hm p).1 _),← mirage_herm _ _ (hm p).1]; exact (scaled_tri P k hk (hm p) l).2.1\n    rw [hh] at h1; have he := h1.lands h2 (rotations_crew c _)\n    apply transpose_injective; simp only [transpose_mul, transpose_transpose]; exact he\n  have hW := (heart_true _ hk hj P.wing).1.fine r P.odd\n  have hW' := (heart_true _ hk ht P.land).1.coarse c\n  have h1 := (hY.product hW').product hd'; have h2 := (hW.product hd).product hX\n  have hh : solo c T'*solo c W'*solo c (signal 1 1)=braceAll r W*braceAll r (signal 1 1)*solo c A' := by\n    unfold solo braceAll; simp only [fiber_mult]; congr! 2 with p\n    unfold T' A' fromBank; rw [alias_then,alias_then,alias_after]\n    exact congr_arg downAlias (funext fun l => (scaled_tri P k hk (hm p) l).2.2)\n  change Runs _ _ _ (solo c T'*solo c W'*_) at h1; rw [hh] at h1; exact h1.lands h2 (rotations_crew c _)",
             "line": 63,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/Primal.lean",
-            "fragment": "L63-L67"
+            "fragment": "L63-L118"
           },
           "proof_context": {
             "declaration": "YM.Next.Free.Flight.tangent",
@@ -58,7 +58,7 @@
               63,
               118
             ],
-            "conclusion": "The explicit alias columns `A0` and `T` of `duo` satisfy `Inputs` (the two normal equations) and the two transfer conditions for the unmodified metrics `pulse`."
+            "conclusion": "For the installed pilot kernel A, Inputs holds: K_f A = mean^T K_c and mean A = 1 - k^{-1} K_c, together with the two transfer identities."
           }
         }
       }
@@ -68,36 +68,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Precision.Inputs",
+        "declaration": "YM.Precision.stationed",
         "module": "YM.PREC.TreeMatch",
         "lines": [
-          76,
-          79
+          81,
+          91
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Precision.Inputs"
+            "id": "YM.Precision.stationed"
           },
           "snippet": {
-            "text": "structure Inputs (S : StepData c f) (W : Matrix (Body 1 f) (Body 1 c) ℝ) (H : Matrix (Body 2 f) (Body 2 f) ℝ)\n    (H' : Matrix (Body 2 c) (Body 2 c) ℝ) : Prop where\n  primal : K H*W=(mean S).transpose*K H'\n  dual : mean S*W=1-S.kernel.penalty⁻¹ • K H'",
-            "line": 76,
+            "text": "lemma stationed (i : Inputs S W H H') :\n    probe S*extracted S F W=1-S.kernel.penalty⁻¹ • K H' ∧\n    K H*extracted S F W = (probe S).transpose*K H' := by\n  constructor\n  · rw [← i.dual]\n    apply Matrix.toLin'.injective\n    apply LinearMap.ext; intro x\n    change (probe S*extracted S F W) *ᵥ x=(mean S*W) *ᵥ x\n    rw [← mulVec_mulVec,extracted, add_mulVec,← mulVec_mulVec, mulVec_add, root_gradient, centers, mulVec_neg,probe, add_mulVec, ← mulVec_mulVec, add_neg_cancel_right, mulVec_mulVec]\n  rw [extracted, Matrix.mul_add, ← Matrix.mul_assoc _ (d 0 f), K_kills]; rw [Matrix.zero_mul, add_zero]\n  rw [probe, transpose_add, Matrix.add_mul,i.primal,transpose_mul,Matrix.mul_assoc, K_orthogonal,Matrix.mul_zero,add_zero]",
+            "line": 81,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PREC/TreeMatch.lean",
-            "fragment": "L76-L79"
+            "fragment": "L81-L91"
           },
           "proof_context": {
-            "declaration": "YM.Precision.Inputs",
+            "declaration": "YM.Precision.stationed",
             "lines": [
-              76,
-              79
+              81,
+              91
             ],
-            "conclusion": "`Inputs` states `K H W = (mean S)ᵀ K H'` and `mean S * W = 1 - k⁻¹ K H'`."
+            "conclusion": "From Inputs, after adding the gradient that matches the rooted predictor (extracted), probe*T = 1 - k^{-1} K_c and K_f T = probe^T K_c."
           }
         }
       }
@@ -112,7 +112,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, a judge ruled; a re-rating agent agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, a judge ruled; a re-rating agent agreed; re-judged after a second independent review, which changed it from relatedMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

@@ -2,8 +2,8 @@
   "id": "Lemma 19.9 step 3",
   "kind": "proof_step",
   "status": "partial",
-  "relation": "relatedMatch",
-  "note": "Lean carries the strong convergence of the time-axis OS semigroup to the ground projection in OS.Semigroup.emerges and uses it in Ground.receives for the compression limits. It argues without spectral resolution: the identity with the integral of e^{-2t lambda} is replaced by a norm-monotonicity Cauchy argument.",
+  "relation": "hasPart",
+  "note": "`emerges` gives the strong convergence of the OS semigroup to the projection onto its fixed space, proved without spectral theory; the identity of the squared norm with ∫ e^{-2tλ} d⟨E_λψ,ψ⟩ is not stated.",
   "subject": [
     {
       "location": {
@@ -33,7 +33,7 @@
         "module": "YM.OS.Core",
         "lines": [
           38,
-          60
+          38
         ]
       },
       "role": "key",
@@ -43,14 +43,14 @@
             "id": "YM.OS.Semigroup.emerges"
           },
           "snippet": {
-            "text": "theorem emerges (x : H) : Tendsto (fun t => S.E t x) atTop (𝓝 (S.orth x)) := by\n  let f t := S.E t x\n  have he : Antitone (fun t => ‖f t‖^2) := fun _ _ h => sq_le_sq₀ (norm_nonneg _) (norm_nonneg _)\n    |>.mpr (S.norm_decrease x h)\n  let c := ⨅ t, ‖f t‖^2\n  have hb : BddBelow (range fun t => ‖f t‖^2) := ⟨0,by rintro z ⟨y,rfl⟩; exact sq_nonneg _⟩\n  have hl : Tendsto (fun t => ‖f t‖^2) atTop (𝓝 c) := tendsto_atTop_ciInf he hb\n  have hi (u v) : inner ℂ (f u) (f v) = inner ℂ x (f (u+v)) := by unfold f; rw [S.swing,S.time]; rfl\n  have hh (u v) (h : u ≤ v) : dist (f u) (f v) ^ 2 ≤ ‖f u‖^2 - ‖f v‖^2 := by\n    let t := (u+v)/2\n    have ht : t≤v := by unfold t; rw [div_le_iff₀ (by positivity)]; rw [mul_two]; gcongr\n    have hw : t+t=u+v := by simp [t]\n    rw [dist_eq_norm,norm_sub_sq (𝕜 := ℂ),hi u v,← hw, ← hi,inner_self_eq_norm_sq]\n    linarith [he ht]\n  have ht : CauchySeq f := by\n    apply Metric.cauchySeq_iff'.mpr\n    intro ε hp\n    obtain ⟨N,hN⟩ := (hl.eventually (gt_mem_nhds\n      (show c<c+ε^2 from lt_add_of_pos_right _ (pow_pos hp 2)))).exists\n    refine ⟨N,fun i h => ?_⟩\n    apply (sq_lt_sq₀ dist_nonneg hp.le).mp\n    have hn := hh N i h; rw [dist_comm] at hn\n    have hy : c≤‖f i‖^2 := ciInf_le hb i",
+            "text": "theorem emerges (x : H) : Tendsto (fun t => S.E t x) atTop (𝓝 (S.orth x)) := by",
             "line": 38,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OS/Core.lean",
-            "fragment": "L38-L60"
+            "fragment": "L38-L38"
           },
           "proof_context": {
             "declaration": "YM.OS.Semigroup.emerges",
@@ -58,46 +58,7 @@
               38,
               78
             ],
-            "conclusion": "S.E t x tends to S.orth x as t -> infinity: the OS semigroup converges strongly to the projection onto its fixed space, proved by monotonicity of norms and a Cauchy argument without spectral theory."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.OS.Ground.receives",
-        "module": "YM.Ground.Moments",
-        "lines": [
-          26,
-          39
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.OS.Ground.receives"
-          },
-          "snippet": {
-            "text": "lemma receives (H : Steady V) (v : ℕ → V.H) (x : V.H) (h : Tendsto v atTop (𝓝 x)) (u : ℕ → ℝ≥0) (hu : Tendsto u atTop atTop)\n    (s : ℕ → Cross timeAxis) : Tendsto (fun i => V.flow.U (s i) (V.flow.E (u i) (v i))) atTop (𝓝 (V.flow.orth x)) := by\n  apply Metric.tendsto_nhds.mpr; intro ε he\n  have hh := (V.flow.emerges x).comp hu\n  filter_upwards [Metric.tendsto_nhds.mp h (ε/2) (by positivity),Metric.tendsto_nhds.mp hh (ε/2) (by positivity)] with i hi hp\n  apply lt_of_le_of_lt (dist_triangle _ (V.flow.U (s i) (V.flow.E (u i) x)) _)\n  have hx : V.flow.U (s i) (V.flow.orth x)=V.flow.orth x := H (V.D.orthogonalProjectionOnto x) _\n  suffices he : dist (V.flow.E (u i) (v i)) (V.flow.E (u i) x) ≤ dist (v i) x by\n    simp_rw [dist_eq_norm] at *\n    conv => enter [1,2]; rw [← hx]\n    rw [← map_sub,V.flow.unitary,← map_sub (V.flow.U (s i)),V.flow.unitary]\n    simp only [Function.comp_apply] at hp;linarith\n  rw [dist_eq_norm, ← map_sub (V.flow.E _),dist_eq_norm]\n  exact ((V.flow.E (u i)).le_opNorm _).trans (mul_le_of_le_one_left (norm_nonneg _) (V.flow.shrinks _))",
-            "line": 26,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Ground/Moments.lean",
-            "fragment": "L26-L39"
-          },
-          "proof_context": {
-            "declaration": "YM.OS.Ground.receives",
-            "lines": [
-              26,
-              39
-            ],
-            "conclusion": "Using emerges, translated and time-evolved vectors converge to the projection, the strong limit inserted in the multi-cluster train/compression construction."
+            "conclusion": "`S.E t x` tends to `S.orth x` as t tends to infinity, the strong convergence of the OS semigroup to the projection onto its fixed space `S.ground`."
           }
         }
       }
@@ -112,11 +73,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge changed it from noMatch; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge changed it from noMatch; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {
-        "kind": "chain"
+        "kind": "helper"
       }
     }
   }

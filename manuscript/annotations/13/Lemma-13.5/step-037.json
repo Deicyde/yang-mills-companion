@@ -1,9 +1,9 @@
 {
   "id": "Lemma 13.5 step 37",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "The lines give the incoming activity bound at rate -1/2, weakened from -11/10. The separate bound C_j(eps^reg)^2 for a second occurrence is not stated.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] carries this inside Brim.royaltyB: incomingE_rate (eps ~ beta^{-11/10}) is weakened to rate -1/2 and fed to blends, giving a remainder linear in tau (at most incomingE) times a rate -1/2 factor. The difference: [L] does not display the intermediate bound C_j(eps^reg)^2.",
   "subject": [
     {
       "location": {
@@ -55,7 +55,7 @@
         "module": "YM.PhysicalNext.RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP.Brim.Lode",
         "lines": [
           53,
-          54
+          55
         ]
       },
       "role": "key",
@@ -65,14 +65,14 @@
             "id": "YM.PhysicalNext.Repeat.Brim.royaltyB"
           },
           "snippet": {
-            "text": "  have hj:= incomingE_rate G L\n  have hy := blends n A h hN hV hδ (hj.weaken (show -(11/10:ℝ)≤ -(1/2) by norm_num)) (by norm_num) (waft G L D' _)",
+            "text": "  have hj:= incomingE_rate G L\n  have hy := blends n A h hN hV hδ (hj.weaken (show -(11/10:ℝ)≤ -(1/2) by norm_num)) (by norm_num) (waft G L D' _)\n  refine ⟨_,hy,?_⟩",
             "line": 53,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Brim/Lode.lean",
-            "fragment": "L53-L54"
+            "fragment": "L53-L55"
           },
           "proof_context": {
             "declaration": "YM.PhysicalNext.Repeat.Brim.royaltyB",
@@ -80,7 +80,7 @@
               33,
               100
             ],
-            "conclusion": "`incomingE_rate` gives the incoming activity bound `incomingE` rate -11/10, weakened to rate -1/2."
+            "conclusion": "The comparison rate function is produced by blends from the incoming activity rate incomingE_rate (-11/10, weakened to -1/2), so the local remainder is bounded by tau*|B s| with B of rate -1/2."
           }
         }
       }
@@ -95,7 +95,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent disagreed and a judge changed it from relatedMatch; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent disagreed and a judge changed it from relatedMatch; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

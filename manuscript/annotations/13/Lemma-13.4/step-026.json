@@ -1,9 +1,9 @@
 {
   "id": "Lemma 13.4 step 26",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "Absolute summability of the abstract weights is there; the sectors and differentiated terms are covered only through the abstract factor family.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] proves absolute summability by its own tree bound, YM.Push.AbsoluteSums.Gas.price_log (with Ursell.budget_root), applied in Song.summon on the chain to Boulevard.lays. The difference: the attachment smallness enters as the Ready field of Cash.Renewed (derived in Renewed.anew) rather than through the site-count estimate, and differentiated terms are carried by the supBounds of Collection.Local.",
   "subject": [
     {
       "location": {
@@ -51,50 +51,11 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Ac.forest",
-        "module": "YM.Ac.Tree",
-        "lines": [
-          89,
-          92
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Ac.forest"
-          },
-          "snippet": {
-            "text": "lemma forest {f : ι → ℝ} {a γ} (ha : 0≤ a) (hf : ∀ i, 0 ≤ f i) (hh : Hit X M f (a+1) γ)\n    (hp : (M+M+1:ℕ)^4*(γ:ℝ) ≤ 1) (hG : 0≤γ) (x : Site n) :\n    SumBudget (roots X M f a x) (Real.exp γ-1) := by\n  have he (i : Finset ι) : 0≤roots X M f a x i := by",
-            "line": 89,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Ac/Tree.lean",
-            "fragment": "L89-L92"
-          },
-          "proof_context": {
-            "declaration": "YM.Ac.forest",
-            "lines": [
-              89,
-              127
-            ],
-            "conclusion": "`forest` shows the summability (`SumBudget`) of the rooted weights."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
         "declaration": "YM.Push.AbsoluteSums.Gas.price_log",
         "module": "YM.Push.ABSOLUTE_SUMS.Log",
         "lines": [
           114,
-          121
+          120
         ]
       },
       "role": "key",
@@ -104,14 +65,14 @@
             "id": "YM.Push.AbsoluteSums.Gas.price_log"
           },
           "snippet": {
-            "text": "theorem price_log (hr : Hard R) {n : Side} (X : ι → Support n) (B : ℕ)\n    (ht : Tests R X) {a γ δ q : ℝ} (ha : 0 ≤ a)\n    (h : Ready X B (fun i => ‖w i‖) a γ δ q) :\n    SumBudget (fun s => ‖value R w s‖) (Real.exp ((n.val^4:ℕ)*γ)) ∧\n    SumBudget (fun i => ‖term R w i‖) (((n.val^4:ℕ)*γ)*(1-q)⁻¹) ∧\n    Real.exp (logSum R w) = total R w ∧ 0 < total R w ∧ Real.log (total R w) = logSum R w := by\n  have hX i : (X i).Nonempty := by obtain ⟨x,hx,-⟩ := ht i i (hr.diag i); exact ⟨x,hx⟩\n  have hb := actual_values R w X B hX ha h",
+            "text": "theorem price_log (hr : Hard R) {n : Side} (X : ι → Support n) (B : ℕ)\n    (ht : Tests R X) {a γ δ q : ℝ} (ha : 0 ≤ a)\n    (h : Ready X B (fun i => ‖w i‖) a γ δ q) :\n    SumBudget (fun s => ‖value R w s‖) (Real.exp ((n.val^4:ℕ)*γ)) ∧\n    SumBudget (fun i => ‖term R w i‖) (((n.val^4:ℕ)*γ)*(1-q)⁻¹) ∧\n    Real.exp (logSum R w) = total R w ∧ 0 < total R w ∧ Real.log (total R w) = logSum R w := by\n  have hX i : (X i).Nonempty := by obtain ⟨x,hx,-⟩ := ht i i (hr.diag i); exact ⟨x,hx⟩",
             "line": 114,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/ABSOLUTE_SUMS/Log.lean",
-            "fragment": "L114-L121"
+            "fragment": "L114-L120"
           },
           "proof_context": {
             "declaration": "YM.Push.AbsoluteSums.Gas.price_log",
@@ -119,7 +80,46 @@
               114,
               149
             ],
-            "conclusion": "`price_log` states `SumBudget` of `||value||` and of `||term||` for the gas."
+            "conclusion": "Under Hard and the Ready attachment condition, the cluster values and connected terms of the hard overlap gas are absolutely summable with explicit budgets, exp(logSum) = total and log total = logSum."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Push.AbsoluteSums.Ursell.budget_root",
+        "module": "YM.Push.ABSOLUTE_SUMS.Clusters",
+        "lines": [
+          121,
+          124
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Push.AbsoluteSums.Ursell.budget_root"
+          },
+          "snippet": {
+            "text": "lemma budget_root (ht : Tests R X) {w u : ι → ℝ} {a γ δ q b : ℝ} (hu : ∀ i, 0 ≤ u i)\n    (h : Ready X B w a γ δ q) (he : SumBudget (charge X B u (a+δ)) b)\n    (m : ℕ) (i : Option (Fin m)) :\n    SumBudget (fun z : Tuple ι m => atVertex R (charge X B w a) (charge X B u a) i z) (b*q^m) := by",
+            "line": 121,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/ABSOLUTE_SUMS/Clusters.lean",
+            "fragment": "L121-L124"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.AbsoluteSums.Ursell.budget_root",
+            "lines": [
+              121,
+              138
+            ],
+            "conclusion": "Rooted tree sums of charged weights at a vertex are bounded by b*q^m."
           }
         }
       }
@@ -134,7 +134,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

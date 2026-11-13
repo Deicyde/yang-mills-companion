@@ -1,9 +1,9 @@
 {
   "id": "Lemma 18.5 step 37",
   "kind": "proof_step",
-  "status": "formalized",
-  "relation": "closeMatch",
-  "note": "[L] carries the construction in Terrace.springs (lensP, scout, expenses), applied in Slate.rungs. Terrace.spend defines lambda_i as rho.comp (t_i), as in [M]. Terrace.scout uses v_eq itself rather than v_eq - t_i s_i v_eq as the kernel-direction basis vector and never states rank two explicitly.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "The Lean builds right inverses with `s_i t_i = I` and their convergence and derives `s_i → s`; the kernel line generator `v^eq - t s v^eq`, the rank-two argument and the definition lambda_i = rho_tr t_i are not there (the functionals `μ` are obtained abstractly from `expenses`).",
   "subject": [
     {
       "location": {
@@ -32,8 +32,8 @@
         "declaration": "YM.Trace.Terrace.springs",
         "module": "YM.TraceExtension.Terrace.Lease",
         "lines": [
-          34,
-          47
+          38,
+          42
         ]
       },
       "role": "key",
@@ -43,14 +43,14 @@
             "id": "YM.Trace.Terrace.springs"
           },
           "snippet": {
-            "text": "lemma springs (v:ℕ→ Bowl (C.labels.level 5)) (hv:Tendsto v atTop (𝓝 (Stem5 (U#))))\n    (hk:Tendsto (fun i=> hueK A (Stern V i) • s i (v i)) atTop (𝓝 0))(hw: Tendsto (fun i=> hueK A (Stern V i)*Lease U# hG (v i)) atTop (𝓝 0)) : Prosper V hG a s:=by\n    let x(i):= hueK (A) (Stern V i); have hP(i:ℕ): 0<x i:=wake ..; have hC:Tendsto x atTop atTop:= ((Zn.awe (by norm_num : 0 < (1/5:ℝ))).comp (hrate _ hG)|>.comp ( (Sstar (A)).comp hq.growth))\n    have hx : Tendsto (fun i=> s i (v i)) atTop (𝓝 0):=by\n        have he := (tendsto_inv_atTop_zero.comp hC).smul hk; rw[zero_smul] at he; exact he.congr (fun i=> inv_smul_smul₀ (hP i).ne' _)\n    obtain ⟨U,t,hU,hT,hK⟩:= lensP hZ H hb hr hq K θ hG hp\n    let B':= LinearMap.toContinuousLinearMap U; let f:=LinearMap.toContinuousLinearMap (Vbase a.spin); let t'(i):=LinearMap.toContinuousLinearMap (t i)\n    have ht:Tendsto t' atTop (𝓝 B'):=by refine fitV (E:=↥(TableOne a.spin)) (H:=↥(Bowl (U#))) t' B' ?_; exact hT\n    have hr: f.comp B'=ContinuousLinearMap.id ℝ _:= ContinuousLinearMap.ext hU\n    have hR:∀ᶠ i in atTop, (s i).comp (t' i)=ContinuousLinearMap.id ℝ _:= hK.mono fun i hi=>ContinuousLinearMap.ext hi\n    let F':= (U#); let F₀:= Stem5 (U#); let ξ:= Lease (U#) hG\n    have hh:= scout (H:=↥(TableOne a.spin)) (E:=↥(Bowl (U#))) f s B' t' F₀ v ht hr hR hv hx (Stem5_alive _ hG) (fun y=> Stem5_kernel (a:=a.spin) y hG)\n    obtain ⟨m,M,h₁,h₂⟩:= expenses (H:=↥(TableOne a.spin)) (E:=↥(Bowl (U#))) f s B' t' F₀ v x ξ ht hR hv hh (Stem5_alive _ hG) (fun p=> Stem5_kernel (a:=a.spin) p hG) hr (by exact hk) (by exact hw)\n    refine ⟨hh,m,M,h₁,h₂.1,?_⟩; change ∀ e:ℝ,0<e → ∀ᶠ i in atTop,∀ y, ‖x i*(m i (s i y) - ξ y)‖ ≤ _; exact h₂.2",
-            "line": 34,
+            "text": "        have he := (tendsto_inv_atTop_zero.comp hC).smul hk; rw[zero_smul] at he; exact he.congr (fun i=> inv_smul_smul₀ (hP i).ne' _)\n    obtain ⟨U,t,hU,hT,hK⟩:= lensP hZ H hb hr hq K θ hG hp\n    let B':= LinearMap.toContinuousLinearMap U; let f:=LinearMap.toContinuousLinearMap (Vbase a.spin); let t'(i):=LinearMap.toContinuousLinearMap (t i)\n    have ht:Tendsto t' atTop (𝓝 B'):=by refine fitV (E:=↥(TableOne a.spin)) (H:=↥(Bowl (U#))) t' B' ?_; exact hT\n    have hr: f.comp B'=ContinuousLinearMap.id ℝ _:= ContinuousLinearMap.ext hU",
+            "line": 38,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Terrace/Lease.lean",
-            "fragment": "L34-L47"
+            "fragment": "L38-L42"
           },
           "proof_context": {
             "declaration": "YM.Trace.Terrace.springs",
@@ -58,7 +58,7 @@
               34,
               47
             ],
-            "conclusion": "lensP gives right inverses t_i with s_i t_i = id converging to B' with s B' = id; scout gives s_i -> Vbase; expenses gives functionals m_i with the Prosper rate."
+            "conclusion": "Right inverses `t i` of `s i` with `s i ∘ t i = id` eventually and `t i → t`, `Vbase ∘ t = id`."
           }
         }
       }
@@ -68,114 +68,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Trace.Terrace.scout",
-        "module": "YM.TraceExtension.Terrace.Delta",
+        "declaration": "YM.Trace.Terrace.Prosper",
+        "module": "YM.TraceExtension.Terrace.Lease",
         "lines": [
-          31,
-          40
+          27,
+          28
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Trace.Terrace.scout"
+            "id": "YM.Trace.Terrace.Prosper"
           },
           "snippet": {
-            "text": "lemma scout (hh:∀ y:E,f y=0↔ ∃ a:ℝ,y=a • x) : Tendsto v atTop (𝓝 f):=by\n    obtain ⟨A,hA⟩:= plumage f U x h hh hr\n    let V(i):= (u i).comp f + A.smulRight (w i)\n    have he₁ : Tendsto V atTop (𝓝 (1:E→L[ℝ] E)):=by\n       refine fitV _ _ (fun y=>?_)\n       exact (by change Tendsto (fun i=>(u i) (f y)+A y • (w i)) atTop (𝓝 y); nth_rw 3 [hA y]; exact (beak u (fun _=>f y) U (f y) he tendsto_const_nhds).add (hp.const_smul _))\n    refine revise V v f he₁ ?_\n    apply fitV; intro y; have hz:= hx.const_smul (A y); have hu: Tendsto (fun i=> f y+ A y • v i (w i)) atTop (𝓝 (f y)):=by simpa only[smul_zero,add_zero] using hz.const_add (f y)\n    refine hu.congr' (hR.mono fun i hi=>?_)\n    change _=v i (u i (f y)+ A y • w i); rw [map_add,map_smul,show v i (u i (f y))= _ from DFunLike.congr_fun hi (f y)]; rfl",
-            "line": 31,
+            "text": "structure Prosper (V:∀ i,Vane C i)(h:G.Simple)(a:(Cells.standard C).Hierarchy)(s:ℕ→Bowl (C.labels.level 5) →L[ℝ] (TableOne a.spin)) : Prop where\n   alpha : Tendsto s atTop (𝓝 (Vbase a.spin).toContinuousLinearMap)",
+            "line": 27,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Terrace/Delta.lean",
-            "fragment": "L31-L40"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Terrace/Lease.lean",
+            "fragment": "L27-L28"
           },
           "proof_context": {
-            "declaration": "YM.Trace.Terrace.scout",
+            "declaration": "YM.Trace.Terrace.Prosper",
             "lines": [
-              31,
-              40
+              27,
+              30
             ],
-            "conclusion": "The bases t_i f + A(.) w_i (right inverse plus kernel-direction vector) converge to the identity, giving s_i -> f."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Trace.Terrace.spend",
-        "module": "YM.TraceExtension.Terrace.Delta",
-        "lines": [
-          61,
-          62
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Trace.Terrace.spend"
-          },
-          "snippet": {
-            "text": "lemma spend (e:ℕ→ℝ)(ρ:E→L[ℝ]ℝ) (he:Tendsto u atTop (𝓝 U))(hR:∀ᶠ i in atTop,(v i).comp (u i)=ContinuousLinearMap.id ℝ H) (hp:Tendsto w atTop (𝓝 x))(hv:Tendsto v atTop (𝓝 f))(h:x≠0)(hh:∀ y:E,f y=0 ↔ ∃ a:ℝ,y=a • x)(hr:f.comp U=ContinuousLinearMap.id ℝ H) (hV:Tendsto (fun i=>e i • v i (w i)) atTop (𝓝 0))(hL:Tendsto (fun i=> e i*ρ (w i)) atTop (𝓝 0)): ∃ (μ:ℕ → H →L[ℝ] ℝ) (m:H →L[ℝ] ℝ), Tendsto μ atTop (𝓝 m) ∧ Tendsto (fun i=>e i • ((μ i).comp (v i)-ρ)) atTop (𝓝 0) :=by\n    exact ⟨fun i=>ρ.comp (u i),ρ.comp U,((show Continuous (fun x:H→L[ℝ] E=>ρ.comp x) from continuous_const.clm_comp continuous_id)).continuousAt.tendsto.comp he,permute f v U u x w _ e he hR hp hv h hh hr hV hL⟩",
-            "line": 61,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Terrace/Delta.lean",
-            "fragment": "L61-L62"
-          },
-          "proof_context": {
-            "declaration": "YM.Trace.Terrace.spend",
-            "lines": [
-              61,
-              62
-            ],
-            "conclusion": "The functionals are mu_i = rho . t_i, i.e. lambda_i = rho_tr t_i."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Trace.Slate.rungs",
-        "module": "YM.TraceExtension.Slate.Garnet",
-        "lines": [
-          62,
-          68
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Trace.Slate.rungs"
-          },
-          "snippet": {
-            "text": "lemma rungs : Prosper V h H s:=by\n    let k:= Stern V; let x i:= (A).clock.hatBeta (k i); let g:= medium L X Z ∘ k\n    obtain ⟨hx,he⟩:= aspiring P h hb hu hz hp hL; have hℓ : Tendsto k atTop atTop:= (Sstar A).comp hq.growth\n    refine springs hz P hb ht hq hM θ h hY g (hx.comp hℓ) ?_ (he.comp hℓ)\n    let F:=(A); apply tendsto_zero_iff_norm_tendsto_zero.mpr; have hb':= legacy P h θ K ht hM hb hu hz hp Hδ hr hA hL hq H' HF hq' hJ hP ho hY 1\n    refine squeeze_zero' (Eventually.of_forall fun i=> norm_nonneg _) ?_ (show Tendsto _ _ _ from tendsto_zero_iff_norm_tendsto_zero.mp hb')\n    filter_upwards [hℓ.eventually ((hrate F h).eventually ((ferry (waveM (1/5:ℝ))) 1 zero_lt_one))] with i hi; change ‖hueK F (k i) • ((s i (g i)).val:Axis→ (Cells.standard C).Field 5)‖ ≤ ‖(H! _ ^ (1:ℕ)) • ((s i (g i)).val:Axis→ (Cells.standard C).Field 5)‖; rw [norm_smul,norm_smul,pow_one,Real.norm_of_nonneg (show 0 ≤ hueK F (k i) from Zn.wake ..|>.le),Real.norm_of_nonneg (bell ..|>.le)]; exact mul_le_mul_of_nonneg_right (hi.2.trans (Real.rpow_one _).le) (norm_nonneg _)",
-            "line": 62,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Slate/Garnet.lean",
-            "fragment": "L62-L68"
-          },
-          "proof_context": {
-            "declaration": "YM.Trace.Slate.rungs",
-            "lines": [
-              62,
-              68
-            ],
-            "conclusion": "Prosper holds for the actual sequence s."
+            "conclusion": "`s i → Vbase`, the limit of the maps s_i."
           }
         }
       }
@@ -190,7 +112,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

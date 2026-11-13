@@ -1,9 +1,9 @@
 {
   "id": "Lemma 16.3 step 1",
   "kind": "proof_step",
-  "status": "formalized",
-  "relation": "closeMatch",
-  "note": "The setup is in Maxwell.Free.erasing (fixed family with vanishing Ward sums, weight-four rise), the form b_x is bond G x 0 on shellSector G 4, and the Kelvin/Wick identity is Maxwell.Free.corridor, used through low_motion. Difference: the weight-four space is the Wick-polynomial shell sector and the comparison is written with the rotation reflectPol (house y * house x).",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "`erasing` makes the same setup (it fixes the family with vanishing Ward sums, `silence`, and the weight-four rise); there is no bilinear form b_x, and the Kelvin/Wick content appears only as the commutation statement of `low_motion`.",
   "subject": [
     {
       "location": {
@@ -58,7 +58,7 @@
               48,
               118
             ],
-            "conclusion": "erasing fixes the family T u v with all Ward sums vanishing (silence of the branded P u v) and the weight-four rise R."
+            "conclusion": "`erasing` fixes the family `T u v` (the map Δ) with all Ward sums vanishing and turns that into `hw`, the branded `T u v` being `silence`, with `R` the weight-four rise."
           }
         }
       }
@@ -68,36 +68,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Maxwell.Free.corridor",
+        "declaration": "YM.Maxwell.Free.low_motion",
         "module": "YM.Next.MAXWELL.Depth",
         "lines": [
-          131,
-          148
+          162,
+          166
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Maxwell.Free.corridor"
+            "id": "YM.Maxwell.Free.low_motion"
           },
           "snippet": {
-            "text": "lemma corridor (h : G.Simple) {x y : E4} (hx : x≠0) (hy : y≠0) (he : ‖x‖=‖y‖) (p q : WickPol G)\n    (hp : p ∈ shellSector G 4) (hq : q ∈ shellSector G 4) :\n    bond G x 0 p q=bond G y 0 (reflectPol (house y * house x) p) q := by\n  have H : ∀ p∈Floor G,∀ q∈Floor G, bond G x 0 (reflectPol (house x) p) q=bond G y 0 (reflectPol (house y) p) q := by\n    intro p hp; induction hp using Submodule.span_induction with\n    | mem u h =>\n      obtain ⟨p,rfl⟩ := h\n      intro v hv; induction hv using Submodule.span_induction with\n      | mem v h => obtain ⟨q,rfl⟩ := h; exact bond_rotate_same_list p q hx hy he\n      | zero => simp\n      | add p q _ _ h k => rw [map_add,map_add,h,k]\n      | smul c p _ h => rw [map_smul,map_smul,h]\n    | zero => simp\n    | add p q _ _ h k => intro u hu; rw [map_add,map_add,map_add,map_add,LinearMap.add_apply,LinearMap.add_apply,h u hu,k u hu]\n    | smul t p _ h => intro u hu; rw [map_smul,map_smul,map_smul,map_smul,LinearMap.smul_apply,LinearMap.smul_apply,h u hu]\n  have hr := H _ (fits_floor h (closed_sector hp (house x)).1) _ (fits_floor h hq)\n  rw [← pol_mul, ← pol_mul, show house x * house x=1 by nth_rw 1 [← house_inv]; exact inv_mul_cancel _,pol_one] at hr\n  exact hr",
-            "line": 131,
+            "text": "lemma low_motion (h : G.Simple) {d} (hd : 4≤d) {T : Module.End ℂ (WickPol G)} (H : silence G d T)\n    (ht : ∀ p ∈ shellSector G 4,T p∈shellSector G 4)\n    (a : Axis) {r : ℝ} (hr : 0 < r) {v : E4} (hv : ‖v‖=r) {p : WickPol G} (hp : p∈shellSector G 4) :\n    let x := (-r) • basis a\n    reflectPol (house x * house v) (T p) = T (reflectPol (house x * house v) p) := by",
+            "line": 162,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/MAXWELL/Depth.lean",
-            "fragment": "L131-L148"
+            "fragment": "L162-L166"
           },
           "proof_context": {
-            "declaration": "YM.Maxwell.Free.corridor",
+            "declaration": "YM.Maxwell.Free.low_motion",
             "lines": [
-              131,
-              148
+              162,
+              181
             ],
-            "conclusion": "On the weight-four shell sector, bond G x 0 p q = bond G y 0 (reflectPol (house y * house x) p) q for nonzero x, y with |x| = |y|."
+            "conclusion": "A silent `T` preserving the weight-four shell sector commutes with `reflectPol (house x * house v)` on that sector; this is the Kelvin/Wick two-point content."
           }
         }
       }
@@ -112,7 +112,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

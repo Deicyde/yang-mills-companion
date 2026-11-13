@@ -1,9 +1,9 @@
 {
   "id": "Lemma 11.9 step 19",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "relatedMatch",
-  "note": "The Lean constructs a stationary curve with the prescribed tangent outright, not as a joint gauge transform of the axial stationary curve.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] builds the gauge transform of the axial curve as `soldier` (via `liftedUp`/`salute`), proves it stationary in `pension` (packaged as `mural`), and computes its tangent `endorse W` in `soldier_known` (`verge`). Difference: the curve is taken in centred log coordinates (`retract`), and the tangent uses the `Guessed` identification as a hypothesis.",
   "subject": [
     {
       "location": {
@@ -51,36 +51,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Stationary.mural",
-        "module": "YM.Next.STATIONARY.Joint.FourPoint",
+        "declaration": "YM.Stationary.soldier",
+        "module": "YM.Next.STATIONARY.Joint.Regulator",
         "lines": [
-          274,
-          274
+          571,
+          572
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Stationary.mural"
+            "id": "YM.Stationary.soldier"
           },
           "snippet": {
-            "text": "lemma mural (K : Matrix (Body 1 f) (Body 1 c) ℝ) : Stayed (merit S t p R) (soldier F K t ρ) :=",
-            "line": 274,
+            "text": "def soldier (t : S.Choices) (ρ : Bid.Dir G c → AxisChart G F) (x : Link G c) :=\n    retract (recruit S t (liftedUp F W ρ x))",
+            "line": 571,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Joint/FourPoint.lean",
-            "fragment": "L274-L274"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Joint/Regulator.lean",
+            "fragment": "L571-L572"
           },
           "proof_context": {
-            "declaration": "YM.Stationary.mural",
+            "declaration": "YM.Stationary.soldier",
             "lines": [
-              274,
-              275
+              571,
+              572
             ],
-            "conclusion": "`mural` says the curve `soldier F K t ρ` is stationary for `merit` (`Stayed`)."
+            "conclusion": "The curve is the joint gauge transform (`wages` with `salute`) of the axial stationary curve `encamp F ρ`, in centred log coordinates."
           }
         }
       }
@@ -90,36 +90,75 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Stationary.verge",
-        "module": "YM.Next.STATIONARY.Joint.FourPoint",
+        "declaration": "YM.Stationary.pension",
+        "module": "YM.Next.STATIONARY.Joint.Regulator",
         "lines": [
-          279,
-          279
+          669,
+          680
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Stationary.verge"
+            "id": "YM.Stationary.pension"
           },
           "snippet": {
-            "text": "lemma verge (x) : fieldT (soldier F K t ρ) x=saluteLe K x := by",
-            "line": 279,
+            "text": "lemma pension : ∀ᶠ z in 𝓝 0, fderiv ℝ (fun x : Vault G c f => merit S t p R (z,x)) (soldier F W t ρ z)=0 := by\n  let U x := enroll S t (Stationary.extend (x : Vault G c f))\n  have hu : Thaw U 0 := (Thaw.through (v:=id) contDiffAt_id).to_cap hb t (congrArg Prod.fst extend_zero)\n  have he : ∀ᶠ x in 𝓝 0, Thaw U x := by\n    have A := eventually_all.mpr fun i => (hu.1 i).eventually (by simp)\n    have B := eventually_all.mpr fun i => (hu.2 i).eventually (by simp)\n    exact A.and B\n  let D := soldier F W t ρ\n  have hv : Tendsto D (𝓝 0) (𝓝 0) := by\n    rw [← soldier_zero (W:=W) h hb t]; exact (soldier_diff h hb t).continuousAt.tendsto\n  filter_upwards [veteran_status (W:=W) h hb t hp,wage_live h hb (W:=W) t,hv.eventually he] with z hz hu hV\n  exact hz.chain hV hu",
+            "line": 669,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Joint/FourPoint.lean",
-            "fragment": "L279-L279"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Joint/Regulator.lean",
+            "fragment": "L669-L680"
           },
           "proof_context": {
-            "declaration": "YM.Stationary.verge",
+            "declaration": "YM.Stationary.pension",
             "lines": [
-              279,
-              280
+              669,
+              680
             ],
-            "conclusion": "`verge` gives its tangent `saluteLe K x`."
+            "conclusion": "The gauge-transformed curve remains stationary: the fibre derivative of `merit` vanishes along it near 0."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.soldier_known",
+        "module": "YM.Next.STATIONARY.Joint.Regulator",
+        "lines": [
+          596,
+          612
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.soldier_known"
+          },
+          "snippet": {
+            "text": "lemma soldier_known (hk : Guessed F W ρ) : fderiv ℝ (soldier F W t ρ) 0=endorse (G:=G) W := by\n  let K := uniformM (G:=G) (straighten S F W)\n  let D := uniformM (G:=G) W\n  ext1 x\n  have e0 : arm G c 1 (0:Link G c)=0 := by rw [map_zero]\n  let Y := fun v : ℝ => liftedUp F W ρ (v • x)\n  have eY : Y 0=1 := by simp [Y,lift_origin h]\n  let Q := fun v : ℝ => encamp F ρ (v • x)\n  let E := uniformM (extracted S F W) x\n  have hx := hk (arm G c 1 x)\n  have hQ i : HasDerivAt (fun v => G.mat ((Q v).1 i)) (G.colorMat (edgeColor E i)) 0 := by\n    let p := arm G c 1 x\n    let q := fun v : ℝ => (v • p,ρ (v • p))\n    let F' := fun a : Work.F03.ChartVars F G => G.mat (Work.F03.live F a i)\n    let L : Bid.Dir G c × AxisChart G F := (p,relative (S:=S) F W p)\n    have hu := ray_swap (V:=F') ((Work.F03.live_smooth F (G:=G) i).differentiableAt (by simp))\n      (Work.F03.live_rate F i L) (u:=q) (by simp [q,h.1]) ((ray_id p).prodMk hx)",
+            "line": 596,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Joint/Regulator.lean",
+            "fragment": "L596-L612"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.soldier_known",
+            "lines": [
+              596,
+              656
+            ],
+            "conclusion": "Its tangent at 0 is `endorse W`."
           }
         }
       }
@@ -134,7 +173,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, a judge ruled; a re-rating agent agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, a judge ruled; a re-rating agent agreed; re-judged after a second independent review, which changed it from relatedMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {
