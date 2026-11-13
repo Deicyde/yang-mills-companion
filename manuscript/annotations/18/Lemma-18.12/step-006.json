@@ -1,9 +1,9 @@
 {
   "id": "Lemma 18.12 step 6",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "ghat_-(p) = ghat_+(-p) is `plus_minus`; the claim that the sector factors i^k give exactly these signs is not in [L].",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] carries g_-(p) = g_+(-p) as Photons.plus_minus, and the sector sign bookkeeping in inner_series_out and sectors, which yield the paired_at = adjoint_at identity of local_position. Difference: [L] cancels the i^k sector factors inside the coherent series rather than absorbing them into a rotated amplitude y = i^k Y.",
   "subject": [
     {
       "location": {
@@ -58,7 +58,85 @@
               14,
               14
             ],
-            "conclusion": "`Probe.hat f p = testPlus f (-p)`, the relation g-hat_-(p) = g-hat_+(-p)."
+            "conclusion": "Probe.hat f p = testPlus f (-p), i.e. the minus transform is the plus transform at -p."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.Photons.paired_at",
+        "module": "YM.TraceExtension.Fock.VacuumLocal",
+        "lines": [
+          85,
+          86
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.Photons.paired_at"
+          },
+          "snippet": {
+            "text": "def paired_at (q : Wave n) (g : Fin n→ Probe E4) :=\n    (∫ p,q p * frontList (Probe.hat ∘ g) p ∂photons n)",
+            "line": 85,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Fock/VacuumLocal.lean",
+            "fragment": "L85-L86"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.Photons.paired_at",
+            "lines": [
+              85,
+              86
+            ],
+            "conclusion": "The two sides of the remote identity: the wave paired with hat-transforms against its conjugate paired with plus-transforms."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.Photons.inner_series_out",
+        "module": "YM.TraceExtension.Fock.Coefficients",
+        "lines": [
+          54,
+          66
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.Photons.inner_series_out"
+          },
+          "snippet": {
+            "text": "lemma inner_series_out (h : TestList m) (x : Ambient m) : HasSum\n    (fun n : ℕ => (I^n/(↑(Real.sqrt (n.factorial:ℝ)):ℂ)) * star (earlier (fun _ : Fin n => h) x))\n    (inner ℂ (bareCoherent (-h)) x) := by\n    have h1 (n : ℕ) (t : Tags m n) p : pureTest (fun _=>-h) t p = (-1:ℂ)^n * pureTest (fun _=>h) t p := by\n        unfold pureTest; simp_rw [← neg_one_smul ℂ h,photon_smul,Finset.prod_mul_distrib]; simp only [Finset.prod_const,Finset.card_univ,Fintype.card_fin]\n    have ht (n : ℕ) : earlier (fun _ : Fin n=>-h) x = (-1:ℂ)^n * earlier (fun _: Fin n =>h) x := by\n        unfold earlier; simp_rw [h1, mul_left_comm (star _), integral_const_mul]; rw [Finset.mul_sum]\n    have hy := (inner_series (-h) x).star\n    rw [Complex.star_def,inner_conj_symm] at hy\n    convert! hy using 1; ext n; simp only [ht,Complex.star_def,map_mul,map_div₀,map_pow,map_neg,map_one,Complex.conj_ofReal,conj_I]\n    have he : (-I)^n * (-1:ℂ)^n=I^n := by rw [← mul_pow]; simp\n    conv_lhs => rw [← he]\n    ring",
+            "line": 54,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Fock/Coefficients.lean",
+            "fragment": "L54-L66"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.Photons.inner_series_out",
+            "lines": [
+              54,
+              66
+            ],
+            "conclusion": "Expanding inner(coherent(-h), x) gives the n-th sector with factor I^n, via (-I)^n(-1)^n = I^n."
           }
         }
       }
@@ -73,11 +151,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {
-        "kind": "helper"
+        "kind": "chain"
       }
     }
   }

@@ -2,8 +2,8 @@
   "id": "Lemma 13.9 step 4",
   "kind": "proof_step",
   "status": "partial",
-  "relation": "hasPart",
-  "note": "[L] proves the skew part vanishes (J=0) and reads the colour coefficient from a test vector, by an identity chain with `hI` and `hW`; the claims that ad(JX) is both self-adjoint and skew-adjoint and that JX is central are not established.",
+  "relation": "relatedMatch",
+  "note": "[L] gets J = 0 and the colour coefficient in StressFlux.bilinear_real and VerifiedReset.label_color, but argues differently: a cyclic identity gives A([x,y],z) = 0 and commutators span. It does not use the self-/skew-adjointness of ad(JX) or the centrality of JX.",
   "subject": [
     {
       "location": {
@@ -32,7 +32,7 @@
         "declaration": "YM.StressFlux.bilinear_real",
         "module": "YM.Push.STRESS_FLUX.Color",
         "lines": [
-          73,
+          68,
           76
         ]
       },
@@ -43,14 +43,14 @@
             "id": "YM.StressFlux.bilinear_real"
           },
           "snippet": {
-            "text": "  have hW (x y z : G.Color) : A (G.ad x y) z = - A (G.ad y x) z := by nth_rw 1 [ad_antisym]; simp\n  have he (x y z : G.Color) : A (G.ad x y) z = 0 := by linarith [hI x y z,hW x z y,hI z x y,hW z y x,hI y z x,hW y x z]\n  apply invariant_scalar H B (fun x y => sub_eq_zero.mp ?_) hi\n  exact LinearMap.congr_fun (linear_zero H (A.flip y) (fun _ _ => he _ _ _)) x",
-            "line": 73,
+            "text": "lemma bilinear_real (H : G.Simple) (B : G.Color →ₗ[ℝ] G.Color →ₗ[ℝ] ℝ)\n    (hi : ∀ x y z, B (G.ad x y) z = - B y (G.ad x z)) : ∃ c : ℝ, ∀ x y, B x y = c * ⟪x,y⟫_ℝ := by\n  let A := B - B.flip\n  have hS (x y : G.Color) : A x y = - A y x := by dsimp [A]; ring\n  have hI (x y z : G.Color) : A (G.ad x y) z = A (G.ad x z) y := by dsimp [A]; rw [hi,hi x z]; ring\n  have hW (x y z : G.Color) : A (G.ad x y) z = - A (G.ad y x) z := by nth_rw 1 [ad_antisym]; simp\n  have he (x y z : G.Color) : A (G.ad x y) z = 0 := by linarith [hI x y z,hW x z y,hI z x y,hW z y x,hI y z x,hW y x z]\n  apply invariant_scalar H B (fun x y => sub_eq_zero.mp ?_) hi\n  exact LinearMap.congr_fun (linear_zero H (A.flip y) (fun _ _ => he _ _ _)) x",
+            "line": 68,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/STRESS_FLUX/Color.lean",
-            "fragment": "L73-L76"
+            "fragment": "L68-L76"
           },
           "proof_context": {
             "declaration": "YM.StressFlux.bilinear_real",
@@ -58,7 +58,46 @@
               68,
               76
             ],
-            "conclusion": "The skew part vanishes (`he`, via `hW` and `hI`), so the form is a scalar multiple of the inner product and the color coefficient is the one given by a unit test vector (`coeff`)."
+            "conclusion": "An ad-invariant real bilinear form on a simple Lie algebra is a scalar multiple of the inner product; its antisymmetric part vanishes because A(ad x y, z) = 0 by a cyclic identity and commutators span (linear_zero)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.AnalyticBridge.VerifiedReset.label_color",
+        "module": "YM.AnalyticBridge.VERIFIED_RESET_STEP.Projection",
+        "lines": [
+          34,
+          40
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.AnalyticBridge.VerifiedReset.label_color"
+          },
+          "snippet": {
+            "text": "lemma label_color {f : Pot G n} (o : Site n) (hG : G.Simple) (hf : p.Regular X f) (b c : PlaqAxes) (x y : G.Color) :\n    logHessian f ((wedge b x).field o) ((wedge c y).field o) = coeff f o b c * inner ℝ x y := by\n  let M := labelForm f o b c\n  have h (g : G.El) (x y : G.Color) : M (G.adjoint g x) (G.adjoint g y) = M x y := by\n    change logHessian f _ _ = _; rw [wedge_adj,wedge_adj,hessian_color hG hf]; rfl\n  obtain ⟨t,ht⟩ := bilinear_real hG M (bilinear_infinitesimal M h)\n  change M x y = M (spike G) (spike G) * _; simp_rw [ht,real_inner_self_eq_norm_sq,spike_norm hG]; ring",
+            "line": 34,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/VERIFIED_RESET_STEP/Projection.lean",
+            "fragment": "L34-L40"
+          },
+          "proof_context": {
+            "declaration": "YM.AnalyticBridge.VerifiedReset.label_color",
+            "lines": [
+              34,
+              40
+            ],
+            "conclusion": "Applying bilinear_real to the colour form of the Hessian gives its coefficient, read off at the unit test vector spike G."
           }
         }
       }
@@ -73,11 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent disagreed and a judge kept it; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent disagreed and a judge changed it from hasPart; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {
-        "kind": "direct"
+        "kind": "chain"
       }
     }
   }

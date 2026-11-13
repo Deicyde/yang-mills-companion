@@ -1,9 +1,9 @@
 {
   "id": "Lemma 16.12 step 1",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "The derivative limit is `Bid.A04`. The charge limit with factor ξ^{-1} is `Bid.A05`, and the normalized rotation limit is given per d with U chosen in `lens`. The passage via ξ_k/c_star → 1 to both limits along one sequence for all d is not stated.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Bid.A04 (proved by Work.A04.answer) carries the derivative limit. Work.A05.answer, through gets_rotation, derives the rotation limit from the charge limits. [L] states the rotation limit with xi_k^{-1} normalisation and target kappa times the free leaf, so the conversion through xi_k/c_star → 1 is absorbed into the normalisation; the convergence of xi is proved separately in YM/Trace/Measuring.lean:89.",
   "subject": [
     {
       "location": {
@@ -58,7 +58,7 @@
               51,
               53
             ],
-            "conclusion": "`Watches`: for scalings tracking beyond thresholds, `ConLap` says `r_k` times the transported derivative tends to `R.T.W.deriv`, the free derivative."
+            "conclusion": "States the derivative limit ConLap with radius normalisation X.r, proved as YM.Work.A04.answer."
           }
         }
       }
@@ -68,75 +68,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Bid.A05",
-        "module": "YM.Bid.Angular",
+        "declaration": "YM.Work.A05.answer",
+        "module": "YM.Work.A05",
         "lines": [
-          55,
-          59
+          95,
+          121
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Bid.A05"
+            "id": "YM.Work.A05.answer"
           },
           "snippet": {
-            "text": "def A05 : Prop := ∀ {G : Gauge} {C : Family G} {S : Table C.book} (H : S.Hierarchy) (V : DiffPlan S),\n    V.Inclusions S → V.Derivatives S → ∀ (R : MaxwellData C) (J : S.Stress) (d : ℕ)  (p : Climb.Parts S) (Y : Ward.SpinRows S),\n    Pre H V J p Y →\n    Watches J R.T H.spin R.hT.spin V (fun X => (ConLap X p d ((R.T.κ:ℝ) • R.T.W.deriv) (fun i => X.r i/X.xi i)) ∧\n      ∀ j : Spin.Ind, Tendsto (fun i => (X.xi i)⁻¹ • (Spin.transport Y (X.U i d) j)) atTop (𝓝 (R.T.κ • Spin.leaf R.T.K.lie d j)))",
-            "line": 55,
+            "text": "theorem answer : YM.Bid.A05 := by\n  intro G C S H V _ _ T J d p Y h\n  classical\n  obtain ⟨s,hs⟩ := Observer.exists_reads T.hT (d+1)\n  obtain ⟨t,ht⟩ := Observer.exists_reads T.hT d\n  obtain ⟨D,N,R,hR,hB⟩ := Observer.enough_all (s ∪ t) d\n  refine ⟨D,N,0,R,hR,fun X E n m r hE hn _ hr hz => ?_⟩\n  have ha (o) (ho : o ∈ s) := hB _ hE _ hn _ hr o (Finset.mem_union_left t ho)\n  have hb (o) (ho : o ∈ t) := hB _ hE _ hn _ hr o (Finset.mem_union_right s ho)\n  constructor\n  · unfold Bid.ConLap\n    refine tendsto_pi_nhds.mpr fun b => ?_\n    apply clm_convergence; intro u\n    refine recover_on s (fun o => o.test (d+1)) hs (fun o k => o.moving X (d+1) k) ?_ _ _ ?_\n    · intro o ho v\n      have hw := ha o ho\n      exact o.reads_converge X hz.thick ((Nat.le_succ _).trans hw.total) hw.rest hw.fits (d+1) hw.caps v\n    intro o ho\n    exact o.gets_translation H.smooth T.T T.hT.smooth T.lit h.raw X (ha o ho) hz.thick hz.loc b u\n  intro j; apply clm_convergence; intro u\n  refine recover_on t (fun o => o.test d) ht (fun o k => o.moving X d k) ?_ _ _ ?_\n  · intro o ho v\n    have hw := hb o ho\n    exact o.reads_converge X hz.thick ((Nat.le_succ _).trans hw.total) hw.rest hw.fits d\n      ((Nat.le_succ d).trans hw.caps) v\n  intro o ho\n  exact o.gets_rotation H.smooth T.T T.hT.smooth T.lit h.raw X (hb o ho) hz.thick hz.loc j u",
+            "line": 95,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Bid/Angular.lean",
-            "fragment": "L55-L59"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/A05.lean",
+            "fragment": "L95-L121"
           },
           "proof_context": {
-            "declaration": "YM.Bid.A05",
+            "declaration": "YM.Work.A05.answer",
             "lines": [
-              55,
-              59
+              95,
+              121
             ],
-            "conclusion": "`Watches`: the same derivative limit with factor `r/ξ` and `(X.ξ i)⁻¹ • transport Y (X.U i d) j → κ • leaf` for the spin rows."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Org.Commission",
-        "module": "YM.Org.Twist",
-        "lines": [
-          33,
-          34
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Org.Commission"
-          },
-          "snippet": {
-            "text": "  lens : V.Inclusions S → V.Derivatives S → ∀ c, Crystal H.basis.kernel V I.J I.p I.Y c →\n    (∀ n (x : Points n), x∈conf n → Still V (c⁻¹ • I.Y) x) → ∀ d, ∃ U w, Spin.Tilt W.T.K H.basis.kernel.spin W.hT.spin (c⁻¹ • I.Y) d U w",
-            "line": 33,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Org/Twist.lean",
-            "fragment": "L33-L34"
-          },
-          "proof_context": {
-            "declaration": "YM.Org.Commission",
-            "lines": [
-              29,
-              43
-            ],
-            "conclusion": "`lens` gives, for every `d`, `U` and `w` with `Spin.Tilt` for `c⁻¹ • I.Y`, the rotation-generator limit."
+            "conclusion": "Proves the translation shell limit with normalisation r/xi and the rotation limit xi_i^{-1}·transport → kappa·leaf from the charge limits (gets_translation, gets_rotation)."
           }
         }
       }
@@ -151,7 +112,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

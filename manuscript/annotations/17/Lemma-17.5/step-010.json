@@ -1,9 +1,9 @@
 {
   "id": "Lemma 17.5 step 10",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "Inclusions, derivatives, stress laws and E7 are carried; the integrability of separated-support integrals is not in these lines (it is the first part of `RPSmear` in B08), and the buffered-slab route of the stress shell is replaced by `has_evaluator`.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Split across Work.B09.answer (inclusions, derivatives and shell laws for every character, via has_evaluator), Work.B11.answer and B10.answer (the bound by the operator norm and E7, including derivative labels) and B08 (separated-support integrability). The buffered-slab operator integral appears in [L] as the evaluator construction has_evaluator.",
   "subject": [
     {
       "location": {
@@ -58,7 +58,7 @@
               12,
               15
             ],
-            "conclusion": "Each phase table satisfies `Inclusions`, `Derivatives` and `StressLaws`, via a continuous evaluator `has_evaluator`."
+            "conclusion": "For every character with the given whole-word values, the evaluator (has_evaluator) satisfies inclusions, derivatives and the flux (stress shell) laws."
           }
         }
       }
@@ -97,7 +97,7 @@
               75,
               89
             ],
-            "conclusion": "`OneCap (p i)`: each phase table has the polynomial cap bound |S^xi| <= C r^-A, from the operator norm bound `phase_cap`."
+            "conclusion": "Character values obey a polynomial bound K^n n^{Bn} r^{-Bn} on spaced configurations via phase_cap, char_norm and slot_norm (|character| ≤ operator norm)."
           }
         }
       }
@@ -136,7 +136,46 @@
               95,
               105
             ],
-            "conclusion": "`OneCap` upgrades to `Capped`, the bounds for derivative labels (E7)."
+            "conclusion": "The zeroth-order cap upgrades to bounds for derivative labels (E7)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.B08.answer",
+        "module": "YM.Work.B08",
+        "lines": [
+          206,
+          209
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.B08.answer"
+          },
+          "snippet": {
+            "text": "theorem answer : YM.Bid.B08 := by\n  intro G C S V A P X H _ hv _ p hp α\n  have hr := allGram (hp.HOnly α) (timeGram A P H hv (hp.threads α))\n  exact ⟨hr, smear (hp.basics α) (hp.HOnly α) (hp.smooth α) hr⟩",
+            "line": 206,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/B08.lean",
+            "fragment": "L206-L209"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.B08.answer",
+            "lines": [
+              206,
+              209
+            ],
+            "conclusion": "Gives the Gram positivity and the smeared form, including integrability of separated-support paired integrals (pairedIntegrable)."
           }
         }
       }
@@ -151,7 +190,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

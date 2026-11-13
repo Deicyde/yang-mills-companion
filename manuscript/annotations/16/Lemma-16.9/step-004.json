@@ -1,9 +1,9 @@
 {
   "id": "Lemma 16.9 step 4",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "`off_label` reflects the integration variable and kills the wrong-parity components (equivalent to the parity projection) and `blows` reads the word as a collinear cluster; the support condition, the Laplace factor and the Fourier scaling bounds are missing.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Carried in pick_price (Yard.lean): off_label does the reflection, fan_out the finite parity projection, and exterior_size (Vanishing.lean) the scaled-profile estimates. [L] states the support/Laplace-factor input as a frequency-support condition on the profile's transform (pose_far, hf in track_sale), and its bounds are Budget exponents, not explicit constants.",
   "subject": [
     {
       "location": {
@@ -58,7 +58,7 @@
               29,
               47
             ],
-            "conclusion": "Reflecting the integration variable in axis `k` (`reads_mirror`, with the sign product `-1`) shows the integral of every component whose parity differs from `spar a b` vanishes exactly."
+            "conclusion": "Reflecting the integration variable in an axis k makes the integral vanish for every sign component of the spectator weight with the wrong parity in k."
           }
         }
       }
@@ -68,36 +68,75 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Outer.blows",
+        "declaration": "YM.Outer.pick_price",
         "module": "YM.Next.ROTATIONS.Yard",
         "lines": [
-          105,
-          114
+          49,
+          77
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Outer.blows"
+            "id": "YM.Outer.pick_price"
           },
           "snippet": {
-            "text": "lemma blows (a b l d : Axis) (hd : d≠a) (hh : a≠b) (P : DiffPlan S) (hP : P.Derivatives S) (H : S.Hierarchy) (hi : P.Orientation H.spin)\n    (J : Stress S) (hr : RawTensor H.spin J) (C : Conserved P H.spin J) (q : Fin m→S.Tag) (x : Points m) (hx : x∈conf m) (ht : onLine l x) :\n    (∀ᶠ n in atTop, Integrable (breeze J q x a b l d n)) ∧ Budget (-1) (fun n => ∫ y,breeze J q x a b l d n y) := by\n  obtain ⟨B,hB,h⟩ := collimated J H q x hx l ht d b\n  obtain ⟨hA,hC⟩ := pick_price a b l d hd hh P hP H hi J hr C B hB\n  have he n : (fun y : E4 => readsCluster S B (pick (J d b)) y * Complex.ofReal (Analysis.D (basis d) (petal a b l n) y)) =ᵐ[volume] breeze J q x a b l d n := by\n    have hu : ∀ᵐ p : E4,p∉ Set.range x.ofLp := by rw [ae_iff]; simpa only [Classical.not_not, setOf_mem_eq] using (finite_range _).measure_zero _\n    filter_upwards [hu] with p hp\n    unfold breeze; rw [h p (Work.A01.conf_cons hx fun i he => hp ⟨i,he.symm⟩),mul_comm]\n  exact ⟨hA.mono fun n hn => hn.congr (he n),hC.same (Eventually.of_forall fun n => integral_congr_ae (he n))⟩",
-            "line": 105,
+            "text": "lemma pick_price (a b l d : Axis) (hd : d≠a) (hh : a≠b) (P : DiffPlan S) (hP : P.Derivatives S) (H : S.Hierarchy) (hi : P.Orientation H.spin) (J : Stress S) (hr : RawTensor H.spin J) (C : Conserved P H.spin J) (B : Weight L)\n    (hu : ∀ i∈other l,Pressed i B) :\n    let T n := fun q : E4 => readsCluster S B (pick (J d b)) q * Complex.ofReal (Analysis.D (basis d) (petal a b l n) q)\n    (∀ᶠ n in atTop, Integrable (T n)) ∧ Budget (-1) (fun n => ∫ q, T n q) := by\n  intro T\n  let V i := Classical.choice (realization H i)\n  obtain ⟨A,hA,hx,ht⟩ := enters_weights H _ _ (shines J H hr d b)\n  let f := canvas (shiftPlot d (orchard a)); have hf : ∀ p : ℝ,hat (f d) p≠0 → 1≤|p| := pose_far a d hd\n  let R (B : Weight L) n := fun q : E4 => readsCluster S B A q * positionTest (tracks (chart a b l) d n f) q\n  let D (B : Weight L) := (∀ᶠ n in atTop, Integrable (R B n)) ∧ Budget (-101) (fun n => integral volume (R B n))\n  have hp : D B := by\n    refine fan_out l D (fun U C H h => ?_) (fun B h e H' => ?_) B hu\n    · have he (n : ℕ) q : R (U+C) n q=R U n q+R C n q := by unfold R; rw [reads_add_l,add_mul]\n      rcases H with ⟨hI,hU⟩; rcases h with ⟨hj,hj'⟩\n      refine ⟨?_, (hU.add hj').same ?_⟩\n      · filter_upwards [hI,hj] with n hv ht; rw [funext (he n)]; exact hv.add ht\n      filter_upwards [hI,hj] with n hv ht; rw [funext (he n),integral_add hv ht]\n    have hk : chart a b l d < 0 := (chart_bounds a b l d).2.trans_lt (by norm_num)\n    refine ⟨(track_sale _ d (V d) H B A _ _ (H' _) (hx _) f hk hf).mono fun _ H => H.1,?_⟩\n    by_cases hz : e=spar a b\n    · subst e\n      exact exterior_size a b l d hd hh P hP V H hi J hr C B A hA H' h hx ht f hf\n    obtain ⟨k,hk⟩ := Function.ne_iff.mp hz\n    exact (no_budget (X:=ℂ) (-101)).same (.of_forall fun n => (off_label B A H a b l d hd k _ (H' _) (hx _) hk n).symm)\n  have he n : T n= fun q => (fuel 100 n:ℂ) * R B n q := by\n    ext1 q; unfold T R; rw [hA.1,track_pose,mul_left_comm]\n  rcases hp with ⟨h,h'⟩\n  simp_rw [he]; exact ⟨h.mono fun n hn => hn.const_mul _, (((budget_fuel 100).of_r.prod h').rise (le_of_eq (by ring))).same\n    (.of_forall fun n => (integral_const_mul ..).symm)⟩",
+            "line": 49,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Yard.lean",
-            "fragment": "L105-L114"
+            "fragment": "L49-L77"
           },
           "proof_context": {
-            "declaration": "YM.Outer.blows",
+            "declaration": "YM.Outer.pick_price",
             "lines": [
-              105,
-              114
+              49,
+              77
             ],
-            "conclusion": "`collimated` reads the spectator word on the line as a collinear cluster, and `pick_price` bounds the `d≠a` terms by `Budget (-1)`."
+            "conclusion": "For d≠a, splits the collinear spectator weight into sign components (fan_out), kills the wrong-parity ones by off_label, bounds the remaining one by exterior_size (Budget -101) and multiplies by the prefactor fuel 100 to get Budget -1."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.exterior_size",
+        "module": "YM.Next.ROTATIONS.Vanishing",
+        "lines": [
+          68,
+          98
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.exterior_size"
+          },
+          "snippet": {
+            "text": "lemma exterior_size (a b l d : Axis) (hd : d≠a) (hh : a≠b) (P : DiffPlan S) (hP : P.Derivatives S) (V : ∀ i, Chamber S i) (H : S.Hierarchy) (hi : P.Orientation H.spin)\n    (J : Stress S) (hr : RawTensor H.spin J) (C : Conserved P H.spin J) (B A : Weight L) (he : equalRead S A (pick (J d b)))\n    (hB : ∀ i,Own B i (spar a b i)) (hu : ∀ i∈other l,Pressed i B) (hA : ∀ i,Own A i (spar d b i)) (hg : ∀ i,Pressed i A)\n    (f : Panels) (hf : ∀ p : ℝ,hat (f d) p≠0 → 1≤|p|) :\n    Budget (-101) (fun n => ∫ q, readsCluster S B A q * positionTest (tracks (chart a b l) d n f) q) := by\n  let w := chart a b l; let e := signValue (spar a b d)*signValue (spar d b d)\n  have hk i := chart_bounds a b l i\n  change ∀ i,-300≤w i ∧ w i ≤ -100 at hk\n  have hw i : w i < 0 := lt_of_le_of_lt (hk i).2 (by norm_num)\n  have hj : ‖e‖=1 := by unfold e; rw [norm_mul]; cases spar a b d <;> cases spar d b d <;> simp [signValue]\n  have hy := track_sale w d (V d) H B A _ _ (hB d) (hA d) f (hw d) hf\n  have hz := ice w d (V d) H B A f hf 300 (fun i => (hk i).1) (hw d) e hj (-101)\n  have hl := mixesLine a b l hh\n  have hW i : 1+w i ≤ 0 := by linarith [(hk i).2]\n  have hG : Colors Finset.univ (fun _ => center) := fun _ _ => ⟨center_ends,center_plus,center_even⟩\n  let u := if d=l then (1:ℝ) else -(1+w l)+1\n  let X := jar w d f e\n  have hX : ∀ᶠ n in atTop, fits (V d) B A (X n) := hy.mono fun n hn j => (hn.2.1 j).indicator (cove_m ..)\n  let T := due w d (-3000)\n  have hT : Budget u (fun n => integral (ν (V d) B) (T n)) := line_cost V H l _ B hB hl.1 hl.2 hu d (fun i => 1+w i) hW 1 (-3000) (by norm_num) (by norm_num) _ hG\n  have hY n : Integrable (T n) (ν (V d) B) := cost_int V d B _ (fuel_pos ..) _ _\n  have ht : u≤150 := by\n    have he : -150 ≤ w l := chart_here ..; unfold u; split_ifs <;> linarith\n  have hp : Budget (-101) (fun n => cross (V d) B A (X n)) := by\n    by_cases hc:d=b\n    · subst b\n      have hA : Own A d false := by simpa [spar] using hA d\n      have hD : w d= -100 := chart_there ..\n      let z := fun n => coneWeight d (fuel (-99) n) (homes w n)\n      obtain ⟨hm,hs⟩ := mass V H J P hP hi hr C d A he hA (hg d) (fun i => 1+w i) (-99) (by norm_num)\n        (fun i _ => by linarith [(hk i).2]) _ hG 1 (by norm_num)",
+            "line": 68,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Vanishing.lean",
+            "fragment": "L68-L98"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.exterior_size",
+            "lines": [
+              68,
+              120
+            ],
+            "conclusion": "Bounds the right-parity component using the Fourier-scaled profiles (track_sale), a profile transform supported where |p|≥1 (pose_far), line_cost and mass, giving Budget -101."
           }
         }
       }
@@ -112,7 +151,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent disagreed and a judge changed it from relatedMatch; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent disagreed and a judge changed it from relatedMatch; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

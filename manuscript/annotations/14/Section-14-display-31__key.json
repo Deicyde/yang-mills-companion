@@ -2,8 +2,8 @@
   "id": "Section 14 display 31",
   "kind": "display",
   "status": "partial",
-  "relation": "hasPart",
-  "note": "The cases |I| = 1 and |I| = 2 of the formula are present: the singleton moment and the pair moment minus the product of the means. The general partition sum with weights (-1)^(|P|-1)(|P|-1)! is not written; [L] determines C^Max for any arity only through `Expands`.",
+  "relation": "narrowMatch",
+  "note": "[L] has only the two-slot case. Tests.cumulant and Columns.Trials.cumulant define the singleton means and the connected pair moment directly as definitions, not as coefficients of log G^Max. The general partition formula with weights (-1)^{|P|-1}(|P|-1)! is absent.",
   "subject": [
     {
       "location": {
@@ -24,6 +24,45 @@
     }
   ],
   "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Cells.Columns.Trials.cumulant",
+        "module": "YM.Cells.Corrected",
+        "lines": [
+          84,
+          86
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Cells.Columns.Trials.cumulant"
+          },
+          "snippet": {
+            "text": "def cumulant (k : ℕ) (i c s t) := (standard C).useAt (standard C)\n  (points ![Z.tested k i s, Z.tested k i t])\n    ![⟨d,X.basis (names (X := X) i c s)⟩,⟨d,X.basis (names (X := X) i c t)⟩] - Z.singleton k i c s * Z.singleton k i c t",
+            "line": 84,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Cells/Corrected.lean",
+            "fragment": "L84-L86"
+          },
+          "proof_context": {
+            "declaration": "YM.Cells.Columns.Trials.cumulant",
+            "lines": [
+              84,
+              86
+            ],
+            "conclusion": "The pair cumulant is defined as the pair moment minus the product of the two singleton means."
+          }
+        }
+      }
+    },
     {
       "type": "lean",
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
@@ -58,46 +97,7 @@
               64,
               66
             ],
-            "conclusion": "`cumulant` is the mark polynomial with singleton coefficients `one` and pair coefficients `pair`, and no other modes."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Push.Corrected.Tests.pair",
-        "module": "YM.Push.CORRECTED_COLUMNS.Program",
-        "lines": [
-          61,
-          62
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Push.Corrected.Tests.pair"
-          },
-          "snippet": {
-            "text": "def pair (k : ℕ) (i : Row X) (c : AxisX X) (s t : Mark X i) := (standard C).useAt (standard C)\n  (points ![Y.reads k i s, Y.reads k i t]) ![⟨d,label X i c s⟩,⟨d,label X i c t⟩] - Y.one k i c s * Y.one k i c t",
-            "line": 61,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/CORRECTED_COLUMNS/Program.lean",
-            "fragment": "L61-L62"
-          },
-          "proof_context": {
-            "declaration": "YM.Push.Corrected.Tests.pair",
-            "lines": [
-              61,
-              62
-            ],
-            "conclusion": "`pair k i c s t` is the two-point moment minus the product `one s * one t`, the connected pair moment."
+            "conclusion": "The cumulant mark polynomial has singleton coefficients `one` and pair coefficients `pair` (moment minus product of means) and no other modes."
           }
         }
       }
@@ -112,7 +112,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       }
     }

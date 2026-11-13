@@ -1,9 +1,9 @@
 {
   "id": "Lemma 19.2 step 9",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "The product `J_m`, the bare coefficient bound and the reannouncement as a degree `i-1` observable are there. The matching to selected insertions by Lemma E-local-comparison and the removal of its error by Lemma F1b are not stated here.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] carries this in Columns.weight_cost and reannounce, then in Limit.belongs, where ExtensionCost.matched gives the matching lower-degree coefficients and brace removes the error. Difference: J_m is `juice`, and the healthy-derivative and supremum bounds are packaged in the RawProtected predicate.",
   "subject": [
     {
       "location": {
@@ -50,7 +50,7 @@
         "module": "YM.OPE.Columns.Reannounce",
         "lines": [
           37,
-          39
+          62
         ]
       },
       "role": "key",
@@ -60,14 +60,14 @@
             "id": "YM.OPE.Columns.weight_cost"
           },
           "snippet": {
-            "text": "lemma weight_cost (v : Rowe C d) {M : ℝ} (hM : ∀ᶠ i in l.fuse, ‖v i‖ ≤ M)\n    (ht : ∀ᶠ i in l.fuse, low F e (((K!) i).symm (v i))=((K!) i).symm (v i))\n    (he : e<d) : Slow C l (fun i => ((α i.1:ℂ)^(d-e))⁻¹ • (((K!) i).symm (v i))) := by",
+            "text": "lemma weight_cost (v : Rowe C d) {M : ℝ} (hM : ∀ᶠ i in l.fuse, ‖v i‖ ≤ M)\n    (ht : ∀ᶠ i in l.fuse, low F e (((K!) i).symm (v i))=((K!) i).symm (v i))\n    (he : e<d) : Slow C l (fun i => ((α i.1:ℂ)^(d-e))⁻¹ • (((K!) i).symm (v i))) := by\n  let b := ((α) (C.ref d)^(d-e))⁻¹ * ((F).extra+1:ℕ) * M\n  apply (((slow_juice (C:=C) (l:=l)).mul (Slow.const b))).reduce\n  filter_upwards [ht,hM, (cutoff_grows l).eventually_ge_atTop (C.ref d)] with i hi hx' hk\n  let x:= ((K!) i).symm (v i); let a:= (α) i.1; let t:= d-e; let u:= (α) (C.ref d)\n  have hy : OPE.Columns.trace C d i.1 i.2 (C.ref d) x = v i := (readTerminal hx hk x).trans (((K!) i).apply_symm_apply _)\n  have hJ:=juice_pos Q i.1\n  have ha : 0 < a := C.S.a_pos i.1; have hu : 0 < u := C.S.a_pos _\n  have hp : (u/a)^t * ‖x‖ ≤ (J i.1)*(((F).extra+1:ℕ)*M) := calc\n    _ ≤ (u/a)^t * (F).coeffSize x := mul_le_mul_of_nonneg_left (Size.norm_le ..) (by positivity)\n    _ ≤ (J i.1)*(F).coeffSize (v i) := by\n      have hw := top_shrunk (p:=i.2) T hx hi he le_rfl hk; rw [hy] at hw; exact hw\n    _ ≤ _ := mul_le_mul_of_nonneg_left ((Size.le_norm F (v i)).trans (by\n            rw [show Fintype.card ((F).Index)=_ from Fintype.card_fin ((F).extra+1)];\n            exact mul_le_mul_of_nonneg_left hx' (by positivity))) (by linarith)\n  change ‖((a:ℂ)^t)⁻¹ • x‖ ≤ ‖J i.1 * b‖\n  rw [norm_smul,norm_inv,norm_pow, Complex.norm_real,Real.norm_of_nonneg ha.le]\n  refine le_trans ?_ (Real.le_norm_self _)\n  dsimp only [b]\n  rw [div_pow,div_eq_mul_inv,mul_assoc] at hp\n  change _ ≤ J i.1 * ((u^t)⁻¹ * ((F).extra+1:ℕ) * M)\n  calc\n    _ = (u^t)⁻¹ * (u^t * ((a^t)⁻¹ * ‖x‖)) := by rw [inv_mul_cancel_left₀ (by positivity : u^t ≠ 0)]\n    _ ≤ _ := (mul_le_mul_of_nonneg_left hp (by positivity : 0 ≤ (u^t)⁻¹)).trans_eq (by ring)",
             "line": 37,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Columns/Reannounce.lean",
-            "fragment": "L37-L39"
+            "fragment": "L37-L62"
           },
           "proof_context": {
             "declaration": "YM.OPE.Columns.weight_cost",
@@ -75,7 +75,7 @@
               37,
               62
             ],
-            "conclusion": "A bounded low-plane label has bare weighted coefficients `(a^(d-e))^-1 * x` growing at most like `juice`, a subpower."
+            "conclusion": "Bounded plane vectors have bare coefficients, divided by a^{d-e}, bounded by juice (the product of column constants) times a constant, so they are subpower (Slow)."
           }
         }
       }
@@ -89,7 +89,7 @@
         "module": "YM.OPE.Columns.Reannounce",
         "lines": [
           64,
-          66
+          81
         ]
       },
       "role": "key",
@@ -99,14 +99,14 @@
             "id": "YM.OPE.Columns.reannounce"
           },
           "snippet": {
-            "text": "lemma reannounce (hG : G.Simple) (v : Rowe C d) {M : ℝ} (hM : ∀ᶠ i in l.fuse, ‖v i‖ ≤ M)\n    (ht : ∀ᶠ i in l.fuse, low F e (((K!) i).symm (v i))=((K!) i).symm (v i))\n    (he : e<d) : RawProtected C l (Bid.upper C v) e := by",
+            "text": "lemma reannounce (hG : G.Simple) (v : Rowe C d) {M : ℝ} (hM : ∀ᶠ i in l.fuse, ‖v i‖ ≤ M)\n    (ht : ∀ᶠ i in l.fuse, low F e (((K!) i).symm (v i))=((K!) i).symm (v i))\n    (he : e<d) : RawProtected C l (Bid.upper C v) e := by\n  let w : Rowe C d := fun i => ((α i.1:ℂ)^(d-e))⁻¹ • v i\n  have hw : dollar C l w := (dollar_slow w).2 ((weight_cost T hx v hM ht he).reduce\n    (Eventually.of_forall fun i => by simp [w]))\n  have hp : RawProtected C l (Bid.upper C w) d := RawProtected.upper hx hG w hw\n  have heq (N p : ℕ) (o) : unpriced C (Bid.upper C v) e N p o=unpriced C (Bid.upper C w) d N p o := by\n    unfold unpriced Bid.upper\n    simp only [w, ((C.linearO ..).map_smul ..)] -- arguments inferred?\n    unfold Push.RelayDifference.weight; rw [smul_smul]\n    congr 1\n    have hh : d = e+(d-e) := by omega\n    apply Eq.symm\n    rw [mul_inv_eq_iff_eq_mul₀]\n    · nth_rw 1 [hh]; rw [pow_add]\n    exact pow_ne_zero _ (Complex.ofReal_ne_zero.mpr (C.S.a_pos _).ne')\n  simpa only [RawProtected,heq] using hp",
             "line": 64,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Columns/Reannounce.lean",
-            "fragment": "L64-L66"
+            "fragment": "L64-L81"
           },
           "proof_context": {
             "declaration": "YM.OPE.Columns.reannounce",
@@ -114,7 +114,7 @@
               64,
               81
             ],
-            "conclusion": "The degree-`d` bare output of the low plane is re-announced as a protected degree-`e` output, `RawProtected C l (Bid.upper C v) e`."
+            "conclusion": "Rescaling by a^e instead of a^d turns the same degree-d cylinders into a RawProtected degree-e observable."
           }
         }
       }
@@ -124,36 +124,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.OPE.Columns.juice",
-        "module": "YM.OPE.Columns.Plane",
+        "declaration": "YM.OPE.Columns.belongs",
+        "module": "YM.OPE.Columns.Limit",
         "lines": [
-          47,
-          47
+          33,
+          46
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.OPE.Columns.juice"
+            "id": "YM.OPE.Columns.belongs"
           },
           "snippet": {
-            "text": "def juice (H : Levels G) (n : ℕ) := ∏ i ∈ Finset.range n, (H.params (i+1)).columns",
-            "line": 47,
+            "text": "  have hm := onions L.family T.tabs T.system hG T.reissue (Bid.upper C v)\n    (reannounce T L.family hG v hz hw he) (Stencilled.upper L.family v)\n    (Eventually.of_forall fun i => C.continuousO ..)\n  let P (i : Shot C.book) := Shot.core i (d:=d) A L.arrives.born x\n  have ht (i : Shot C.book) :\n      Tendsto (uncurry (targetB (Bid.upper C v) i)) b (𝓝 (P i)) := by\n    refine (arcing ((i.ready L.arrives.born L.arrives.census.integral d).mono_left hp) hx).congr ?_\n    rintro ⟨N,p⟩; exact (ExtensionCost.upper_scan ..).symm\n  obtain ⟨y,hy⟩ := ExtensionCost.matched hp Work.D01.answer Work.D02.answer L.family L.center R (L.carries e)\n    (ExtensionCost.sober_upper v) hm ht\n  obtain ⟨u,-,hu⟩ := brace (fun i => snapshots i e) (fun i => Shot.core i A L.arrives.born)\n    (((L.pinned.p e).slides).mono_left hp)\n    (Bin.exactC R L.arrives.census.integral (L.pinned.p e) (L.pinned.q e))\n    (fun i => (i.ready L.arrives.born L.arrives.census.integral _).mono_left hp) y hy",
+            "line": 33,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Columns/Plane.lean",
-            "fragment": "L47-L47"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Columns/Limit.lean",
+            "fragment": "L33-L46"
           },
           "proof_context": {
-            "declaration": "YM.OPE.Columns.juice",
+            "declaration": "YM.OPE.Columns.belongs",
             "lines": [
-              47,
-              47
+              28,
+              61
             ],
-            "conclusion": "`juice H n = prod_{i<n} columns (i+1)` is `J_m`."
+            "conclusion": "ExtensionCost.matched supplies lower-degree coefficients matching that observable, and brace removes the error in every separated spectator test."
           }
         }
       }
@@ -169,7 +169,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

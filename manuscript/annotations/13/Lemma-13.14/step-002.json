@@ -1,9 +1,9 @@
 {
   "id": "Lemma 13.14 step 2",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "The output is the finish built with `delta`, it evaluates to the early density (`actual`) and retains the bounds (`savory`); |Delta| <= 1 is replaced by `threshold^2*|delta| <= c` and the identification with the reset scalar of Lemma C8 is not in these lines.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] carries this in Directed.links (|Delta|<=1 and the identity give the drift), Lyrics.supplier and Pass.cycle (finite induction). Delta is defined directly as the coupling difference minus alpha (Pass.Delta), not identified with a scalar root.",
   "subject": [
     {
       "location": {
@@ -46,153 +46,114 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.PhysicalNext.Repeat.Apse.writtenN",
-        "module": "YM.FullVolume.Orbit.Stardust",
+        "declaration": "YM.Input.Directed.links",
+        "module": "YM.PCalc.Band",
         "lines": [
-          50,
-          50
+          57,
+          63
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.PhysicalNext.Repeat.Apse.writtenN"
+            "id": "YM.Input.Directed.links"
           },
           "snippet": {
-            "text": "lemma writtenN (x:ℝ) : (H.moment Y).activities= (finish T (e).clip B₀ (shelves (H.listing Y) T B₀) (branch (H.listing Y) T (e).clip B₀ (H.source Y) γ) 0 x).activities:=rfl",
+            "text": "lemma links {N m p} (hk : m<N) {u v} (h : Move B N m p u v) : B.bake.Relays N m p u v := by\n  refine ⟨h.ident,?_,h.step⟩\n  obtain ⟨h₁,h₂⟩ := abs_le.mp h.δ\n  have he := B.support.kinetic N m hk\n  apply abs_le.mpr\n  obtain ⟨ht,hi⟩ := (abs_le.mp <| le_sub_iff_add_le.mpr he)\n  constructor <;> linarith",
+            "line": 57,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PCalc/Band.lean",
+            "fragment": "L57-L63"
+          },
+          "proof_context": {
+            "declaration": "YM.Input.Directed.links",
+            "lines": [
+              57,
+              63
+            ],
+            "conclusion": "A Move carries the exact normalized identity (ident) and |u.beta - v.beta - alpha| <= 1 (field delta); links derives from these the drift bound of Relays via the kinetic support bound."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.PhysicalNext.Repeat.Roof.Lyrics.supplier",
+        "module": "YM.FullVolume.C.Songbook",
+        "lines": [
+          76,
+          88
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.PhysicalNext.Repeat.Roof.Lyrics.supplier"
+          },
+          "snippet": {
+            "text": "lemma supplier (hG:G.Simple) : V.tunes.Issues N n:=by\n  constructor\n  · obtain ⟨hf,h⟩:= V.origins N n\n    refine ⟨V.start N n,hf,fun β hβ=>?_⟩; obtain ⟨he,hv,hr,hL⟩:= h β hβ\n    exact ⟨he,(V.altitude).2 hv,hr.1,hr.2,⟨hr.inits,hL⟩,by rw [he]⟩\n  intro m hm a s H Q hv hh\n  obtain ⟨X,hr,hX⟩:= (V.prim N m n hm).spores a s H Q hv fun x hx=> ⟨(V.altitude).1 (hh x hx).1,(hh x hx).2⟩\n  obtain ⟨hf,hF⟩:= X.moves hG hm\n  refine ⟨X.result,hf,fun x hx=>?_⟩\n  obtain ⟨h,hK,hp,hV⟩:= hF x hx\n  exact ⟨(V.altitude).2 h.bundle,h.ident,(A.B.links hm h).drift,⟨h,⟨a,s,Q,X,x,hx,rfl,rfl⟩,by\n    change |(X.result x).beta-(Q x).beta - A.B.kin.alpha N m|≤_\n    unfold predictor at hK; rwa [sub_add_eq_sub_sub] at hK⟩,⟨hm,hX _ hx⟩⟩",
+            "line": 76,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/C/Songbook.lean",
+            "fragment": "L76-L88"
+          },
+          "proof_context": {
+            "declaration": "YM.PhysicalNext.Repeat.Roof.Lyrics.supplier",
+            "lines": [
+              76,
+              88
+            ],
+            "conclusion": "On each step the output curve (from Spring.moves) satisfies Lives, the identity, the drift from links, and the scalar bound |beta_out-beta_in-alpha| <= predictor."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.PhysicalNext.Repeat.Pass.cycle",
+        "module": "YM.FullVolume.Table.Whiz",
+        "lines": [
+          50,
+          55
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.PhysicalNext.Repeat.Pass.cycle"
+          },
+          "snippet": {
+            "text": "lemma cycle : Nonempty (Circle N n V):=by\n  obtain ⟨p,hp⟩:= at_top (N:=N) (n:=n) R he hr\n  let step (m:ℕ) (h:m<N)(T:Team (stageP A.B.a (m+1) n)) := (passage g (V m h) T).choose\n  let W (m:ℕ)(hv:m≤N): Team (stageP A.B.a m n):= Nat.decreasingInduction (motive:=fun m h=>Team (stageP A.B.a m n)) step p hv\n  refine ⟨⟨W,?_,?_⟩⟩; · rwa [show W N le_rfl=p from Nat.decreasingInduction_self ..]\n  intro m hm; rw [show W m hm.le=step m hm (W (m+1) hm) from Nat.decreasingInduction_succ_left ..]; exact (passage g (V m hm) _).choose_spec",
             "line": 50,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Orbit/Stardust.lean",
-            "fragment": "L50-L50"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Table/Whiz.lean",
+            "fragment": "L50-L55"
           },
           "proof_context": {
-            "declaration": "YM.PhysicalNext.Repeat.Apse.writtenN",
+            "declaration": "YM.PhysicalNext.Repeat.Pass.cycle",
             "lines": [
               50,
-              50
+              55
             ],
-            "conclusion": "The output moment's activities are `finish` of the `branch` built with the incoming source and the `delta` scalar, i.e. the Lemma 13.12 output."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.PhysicalNext.Repeat.Apse.savory",
-        "module": "YM.FullVolume.Orbit.Stardust",
-        "lines": [
-          52,
-          52
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.PhysicalNext.Repeat.Apse.savory"
-          },
-          "snippet": {
-            "text": "lemma savory : Lives (Roof.spatial A).bake N m n (H.moment Y):= by",
-            "line": 52,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Orbit/Stardust.lean",
-            "fragment": "L52-L52"
-          },
-          "proof_context": {
-            "declaration": "YM.PhysicalNext.Repeat.Apse.savory",
-            "lines": [
-              52,
-              58
-            ],
-            "conclusion": "The output moment `Lives`: path bounds and valid labels are retained for the output."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.AnalyticBridge.VerifiedReset.Collection.Local.actual",
-        "module": "YM.AnalyticBridge.VERIFIED_RESET_STEP.Evaluation",
-        "lines": [
-          93,
-          95
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.AnalyticBridge.VerifiedReset.Collection.Local.actual"
-          },
-          "snippet": {
-            "text": "lemma actual (hn : 20 < n.val) (hF : Fees G p c σ C α H w δ γ) (β τ : ℝ) :\n    (finish R c p (shelves X R p) (branch X R c p v α) (β+α+delta (X.read v)) (vac v τ)).eval = earlyValue X R c p v β τ α := by\n  ext U; rw [branch,(h.renew g hx hc hw α hn hF).unshifted]; exact h.raw_evaluator g hx hc hw α hn β τ U",
-            "line": 93,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/VERIFIED_RESET_STEP/Evaluation.lean",
-            "fragment": "L93-L95"
-          },
-          "proof_context": {
-            "declaration": "YM.AnalyticBridge.VerifiedReset.Collection.Local.actual",
-            "lines": [
-              93,
-              95
-            ],
-            "conclusion": "The finished representation with kinetic shift `β+α+delta` evaluates to the early density."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.AnalyticBridge.VerifiedReset.Averaging.delta_bound",
-        "module": "YM.AnalyticBridge.VERIFIED_RESET_STEP.Isotropy",
-        "lines": [
-          103,
-          103
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.AnalyticBridge.VerifiedReset.Averaging.delta_bound"
-          },
-          "snippet": {
-            "text": "lemma delta_bound (hG : G.Simple) (h : Projects A p c) : p.threshold^2 * |delta A| ≤ c := by",
-            "line": 103,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/VERIFIED_RESET_STEP/Isotropy.lean",
-            "fragment": "L103-L103"
-          },
-          "proof_context": {
-            "declaration": "YM.AnalyticBridge.VerifiedReset.Averaging.delta_bound",
-            "lines": [
-              103,
-              112
-            ],
-            "conclusion": "`threshold^2 * |delta A| <= c`, bound on the drift correction."
+            "conclusion": "Finite (decreasing) induction from the top team builds teams at all levels m <= N linked by Passage."
           }
         }
       }
@@ -208,7 +169,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

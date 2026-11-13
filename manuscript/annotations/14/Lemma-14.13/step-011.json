@@ -1,9 +1,9 @@
 {
   "id": "Lemma 14.13 step 11",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "The merged carrier has support the union of the marked supports, each containing its origin, so it contains all marked anchors; that the spatial anchor is always one of the marks is not stated.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] carries the support assertion in the Borne structure (field scope: modes only use marks whose anchors lie in the support) and in touchdown, both used by steer. The difference: the anchor statement is the existence of a mark j with o j in the support, and the scoping is a field of Borne, carried through Served.",
   "subject": [
     {
       "location": {
@@ -51,36 +51,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Push.GridApprox.Attach.Plan",
-        "module": "YM.Push.GRID_APPROXIMATION.AttachDefs",
+        "declaration": "YM.MergeProof.Accent.Borne",
+        "module": "YM.MergeProof.Accent",
         "lines": [
-          53,
-          58
+          13,
+          17
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Push.GridApprox.Attach.Plan"
+            "id": "YM.MergeProof.Accent.Borne"
           },
           "snippet": {
-            "text": "structure Plan {P : Rep G n} (a : Bands R P) where\n  Y : V → Support n\n  c : V → ℂ\n  F : V → Config G n → ℂ\n  good i : P.p.Regular (Y i) (F i)\n  origin i : a.origins i∈ Y i",
-            "line": 53,
+            "text": "structure Borne (o:V→Site n)(P:Support n)(f:Config G n→Poly B)(t:ℝ):Prop where\n   home:UsesFinal t P f\n   turns:GaugeInvariant f\n   me i:Measurable fun U=> (f U).part i\n   scope U: GridApprox.Nil.Scoped (A:= {i| o i∈P}) (f U)",
+            "line": 13,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/GRID_APPROXIMATION/AttachDefs.lean",
-            "fragment": "L53-L58"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Accent.lean",
+            "fragment": "L13-L17"
           },
           "proof_context": {
-            "declaration": "YM.Push.GridApprox.Attach.Plan",
+            "declaration": "YM.MergeProof.Accent.Borne",
             "lines": [
-              53,
-              58
+              13,
+              17
             ],
-            "conclusion": "Each marked cylinder carries its support `Y i` and an origin `a.origins i` in `Y i`."
+            "conclusion": "A term on support P has polynomial value scoped to the marks whose anchors lie in P (field scope)."
           }
         }
       }
@@ -90,36 +90,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Push.GridApprox.Attach.Spares",
-        "module": "YM.Push.GRID_APPROXIMATION.AttachDefs",
+        "declaration": "YM.MergeProof.Accent.touchdown",
+        "module": "YM.MergeProof.Newell",
         "lines": [
-          96,
-          103
+          38,
+          40
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Push.GridApprox.Attach.Spares"
+            "id": "YM.MergeProof.Accent.touchdown"
           },
           "snippet": {
-            "text": "structure Spares where\n  tag : Block I → ℕ\n  injective : Injective tag\n  full j : (P.activities.forced (tag j)).support = sheet I j.val\n  flags j : (P.activities.forced (tag j)).inventory = flagsFor P j.val\n  plain j U : (P.activities.forced (tag j)).extraTest U\n  idle j : P.activities.K (tag j)=0\n  marks j i : a.entries (tag j) i = 0",
-            "line": 96,
+            "text": "lemma touchdown {S:Support n} {f:Config G n→Poly B} (h:Borne o S f t)(U) (hp:f U≠0) (ht:rises (f U)): ∃ j,o j∈ S:=by\n   obtain ⟨i,hi⟩:∃ i,(f U).part i ≠ 0:=by by_contra! hQ; apply hp; ext i; rw [hQ]; rfl\n   obtain ⟨j,hj⟩:= Finset.card_pos.mp (Nat.lt_of_lt_of_le (by decide:0<2) (ht i hi)); exact ⟨j,h.place i U hi (mem_image_of_mem o hj)⟩",
+            "line": 38,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/GRID_APPROXIMATION/AttachDefs.lean",
-            "fragment": "L96-L103"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Newell.lean",
+            "fragment": "L38-L40"
           },
           "proof_context": {
-            "declaration": "YM.Push.GridApprox.Attach.Spares",
+            "declaration": "YM.MergeProof.Accent.touchdown",
             "lines": [
-              96,
-              103
+              38,
+              40
             ],
-            "conclusion": "The carrier of the merged block has support `sheet I j`, the union of the supports of its marked cylinders, so it contains all their origins."
+            "conclusion": "A nonzero connected term has some marked anchor o j in its support."
           }
         }
       }
@@ -134,7 +134,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge kept it; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge changed it from hasPart; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

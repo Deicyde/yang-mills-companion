@@ -1,9 +1,9 @@
 {
   "id": "Lemma 19.8 step 14",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "The two weight conditions (by eventual rate comparisons, with margin (d+1/8)(a-b) rather than [M]'s exponents with 1/16) and the 2 E_m, 2 S_k/varpi bounds on the tail are in [L]. The claim that reflection and conjugation preserve the majorants has no Lean statement.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Carried by OPE.funding through terminalAfford and ManyCopies.joins. Lean states the conclusions as rates (RateIs/RateLE) in T and covers all cells and cutoffs on the common tail by proving the bound for every N p eventually, with no separate reflection/conjugation statement.",
   "subject": [
     {
       "location": {
@@ -29,50 +29,11 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.OPE.terminalAfford",
-        "module": "YM.OPE.Prices.Circuit",
-        "lines": [
-          40,
-          42
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.OPE.terminalAfford"
-          },
-          "snippet": {
-            "text": "lemma terminalAfford (hk:Height C.S l T k b)(hm:Height C.S l T m a)(hT:Tendsto T l atTop)(hu:b<a) (hp:RateIs l T x y)(d:ℕ)(he:RateIs l T e (-d*a-y))(hw:RateIs l T w z)(h:z<(d+1/8)*(a-b)+y) : ∀ᶠ i in l,\n    march (fun _:Unit=>w i) η (k i) (m i) () ≤ δ (m i)*(x i/(16*X (m i))) ∧\n    32*(1+(C.path.levels.params (m i)).columns)*w i*‖alto C.path (k i) d‖*(e i/gainChart C.path (m i) (k i)) ≤ τ d (k i)/2:=by",
-            "line": 40,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Prices/Circuit.lean",
-            "fragment": "L40-L42"
-          },
-          "proof_context": {
-            "declaration": "YM.OPE.terminalAfford",
-            "lines": [
-              40,
-              49
-            ],
-            "conclusion": "Eventually both weight conditions hold, `march ... ≤ δ*(x/(16 X))` and the `32*(1+columns)` residual condition, from a rate margin `z < (d+1/8)(a-b)+y`."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
         "declaration": "YM.OPE.funding",
         "module": "YM.OPE.Prices.Circuit",
         "lines": [
-          84,
-          86
+          64,
+          87
         ]
       },
       "role": "key",
@@ -82,14 +43,14 @@
             "id": "YM.OPE.funding"
           },
           "snippet": {
-            "text": "    refine ⟨fun N p hn hz r he hw hi₀ hi₁=> ?_,(ha i).1.trans hPi.le,hK.trans ((ha i).1.trans hPi.le),hS.le⟩\n    -- careful let V etc introduction reflexive\n    exact joins C N (m i) p t (k i) (P i) i₀ (z i) (fun p=> plumR C (d p) (B p) (j i)) r (ha i).1 hPi.le hn hS.le d s h L.system L.literal (hχ t) L.tabs (ha i) (hK.trans (ha i).1) hd (fun p=>paid_new C N _ _ (d p) h (s p) (B p) (hf p) (le_add_of_nonneg_left zero_le_one) (hd p) hn) (fun p=>stockpit _ _ _ _ (hf p)) hr he (hf' _) hw (hy.pos (j i)) (hF (j i)) (fun q₀ hi hp=> hY (j i) q₀ hp.le) _ (fun _=>rfl) hi₀ hi₁ hx le_rfl (Real.exp_pos _)",
-            "line": 84,
+            "text": "lemma funding (hk:Height C.S l T k b)(hm:Height C.S l T m a)(hj:Height C.S l T j c)(hT:Tendsto T l atTop)(he:b<a)(ht:a<c) (hΩ:∀ᶠ i in l, Push.GridApprox.room C.path.levels (k i) (m i) (lensScope C t)) :\n    ∃ g o : ι→ℝ, RateIs l T g ((Z')-t*a) ∧ RateLE l T o (-(X')) ∧\n       (∀ᶠ i in l,0<o i) ∧ ∀ᶠ i in l, PriceAt C (g i) (o i) t d s (k i) (m i) (j i):=by\n    let P:= Stock.Tabs.chosen C.path.levels 1 L.tabs ∘ k; have hP:Height C.S l T P b:= hk.stock L.tabs\n    have ha:∀ i,Stock.Tabs.opens C.path.levels 1 (k i) (P i):=fun i=>Stock.Tabs.opened ..\n    let M:= Fintype.card I; have hM: 0 < M:= Fintype.card_pos_iff.mpr ⟨i₀⟩\n    obtain ⟨y,hy,hF,hY⟩:= halls hG L.halos M hM\n    obtain ⟨χ,hχ⟩:= L.productCuts.mother\n    let B (i:I):= 1+(C.labels.level (d i)).coeffSize (s i); have hf i:0<B i:= add_pos_of_pos_of_nonneg one_pos (Work.G08.size_nonneg ..)\n    let x i:= initial C.path δ η (m i) (j i) (y (j i)) (∏ p,plumR C (d p) (B p) (j i)) M\n    have hx:RateIs l T x (-(Z')):= (Height.gathered hm hj hT (height0 hy hj) (Height.plumBudget d B hf hj hT hG) hG M).swap (by unfold M; ring)\n    let e i:= terminalCost C t (m i) (x i); let g i:=2*e i; let z i:= Real.exp ((X')*T i); have hZ:=RateIs.exp (X') hT; have hg:= key_cost hm hT hx hG t; have hp:= terminalAfford hG L hP hm hT he hx t hg hZ (by linarith only [he]); let o i:=2*(stakes C (k i) (P i) / z i)\n    refine ⟨g, o, ((RateIs.const hT zero_lt_two).mul hg).swap (by ring),?_ , Eventually.of_forall (fun i=>mul_pos zero_lt_two (div_pos (Real.exp_pos _) (Real.exp_pos _))),?_⟩\n    · simp_rw [o,div_eq_mul_inv]; simpa only [zero_add] using! ((RateLE.const (2:ℝ) hT).mul ((stock_price L.tabs hG hk hT).mul (hZ.inv.pays hT)))\n    have hb:=briar C hG L.accounting; have hm':= hm.step C.path.levels.fits.mesh; let S i:= m i+1; have hW' := (((height0 hb hm').power 2).add (RateIs.const hT one_pos) hT).mul hm'.mesh\n    filter_upwards [hk.mesh.overtakes (hW'.pays hT) hT (by simp; linarith),hP.earlier he hT hm, hm'.earlier ht hT hj, hp, hx.pos, hΩ, hk.grows.eventually_ge_atTop (C.ref t), eventually_all.mpr (fun x=>hj.grows.eventually_ge_atTop (C.ref (d x)))] with i hψ hPi hS hp hx hr hK hd\n    have hf'(p:ℕ): ((P' (S i)).B^2+1:ℕ) ≤ (C.S.toDepth (((ha i).1.trans hPi.le).trans (Nat.le_succ (m i))) p).count.val:= by\n       let v:= C.S.toDepth (((ha i).1.trans hPi.le).trans (m i|>.le_succ)) p; have hl: ((P' (S i)).B:ℝ)^2+1 ≤ v.count.val:=by\n          apply le_of_mul_le_mul_right _ (C.S.a_pos (S i)); exact hψ.le.trans_eq ((C.S.embeds_scale v).symm.trans (mul_comm ..))\n       exact_mod_cast hl\n    refine ⟨fun N p hn hz r he hw hi₀ hi₁=> ?_,(ha i).1.trans hPi.le,hK.trans ((ha i).1.trans hPi.le),hS.le⟩\n    -- careful let V etc introduction reflexive\n    exact joins C N (m i) p t (k i) (P i) i₀ (z i) (fun p=> plumR C (d p) (B p) (j i)) r (ha i).1 hPi.le hn hS.le d s h L.system L.literal (hχ t) L.tabs (ha i) (hK.trans (ha i).1) hd (fun p=>paid_new C N _ _ (d p) h (s p) (B p) (hf p) (le_add_of_nonneg_left zero_le_one) (hd p) hn) (fun p=>stockpit _ _ _ _ (hf p)) hr he (hf' _) hw (hy.pos (j i)) (hF (j i)) (fun q₀ hi hp=> hY (j i) q₀ hp.le) _ (fun _=>rfl) hi₀ hi₁ hx le_rfl (Real.exp_pos _)\n      hp.1 le_rfl hp.2",
+            "line": 64,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Prices/Circuit.lean",
-            "fragment": "L84-L86"
+            "fragment": "L64-L87"
           },
           "proof_context": {
             "declaration": "YM.OPE.funding",
@@ -97,7 +58,46 @@
               64,
               87
             ],
-            "conclusion": "`funding` applies `joins` for every `N p` on the tail to get the coefficient bound `2*e` and the root bound `2*(stakes/z)`."
+            "conclusion": "With Z' = (sum d)c + 4|I|(c-a) and terminal weight z = exp(((t+1/16)(a-b) - Z')T), terminalAfford checks both weight conditions and joins gives coefficient bound 2e and root bound 2*stakes/z, for all N p, eventually along the filter."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.terminalAfford",
+        "module": "YM.OPE.Prices.Circuit",
+        "lines": [
+          40,
+          49
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.terminalAfford"
+          },
+          "snippet": {
+            "text": "lemma terminalAfford (hk:Height C.S l T k b)(hm:Height C.S l T m a)(hT:Tendsto T l atTop)(hu:b<a) (hp:RateIs l T x y)(d:ℕ)(he:RateIs l T e (-d*a-y))(hw:RateIs l T w z)(h:z<(d+1/8)*(a-b)+y) : ∀ᶠ i in l,\n    march (fun _:Unit=>w i) η (k i) (m i) () ≤ δ (m i)*(x i/(16*X (m i))) ∧\n    32*(1+(C.path.levels.params (m i)).columns)*w i*‖alto C.path (k i) d‖*(e i/gainChart C.path (m i) (k i)) ≤ τ d (k i)/2:=by\n    obtain ⟨hs,hη⟩:= mintN C hG; have hz:=height0 hs hm; obtain ⟨hG',hD⟩:= gainRate d hm hk\n    have hx' := key_cost hm hT hp hG d\n    have hB:= ((RateIs.const (c:=16) hT (by norm_num)).mul (height0 (banket C hG) hm)); have hZ:=hz.mul (hp.div hB)\n    have hU:=flyRate hG hk d; have hW:= ((RateIs.const (c:=32) hT (by norm_num)).mul ((RateIs.const hT one_pos).add (height0 (fuNote C) hm) hT)).mul hw\n    have hW':= (hw.mul ((hm.mesh.div hk.mesh).power (d+1))).mul ((flyRate hG hm d).div hU); have ha : z-(d+1)*(a-b)<y:= by linarith only [hu,h];\n    filter_upwards [hZ.overtakes (hW'.pays hT) hT (by push_cast; linarith only [ha]), (hU.div (RateIs.const hT zero_lt_two)).overtakes (((hW.mul hD).mul (he.div hG')).pays hT) hT (by rw [max_self]; linarith), hk.grows.eventually_ge_atTop (C.ref d), hk.earlier hu hT hm, hw.pos] with i h₁ h₂ hk hm hb using\n      ⟨(seeing C d L.system hb (m i) (k i) hk hm.le).trans h₁.le,h₂.le⟩",
+            "line": 40,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Prices/Circuit.lean",
+            "fragment": "L40-L49"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.terminalAfford",
+            "lines": [
+              40,
+              49
+            ],
+            "conclusion": "Eventually both weight conditions hold, from the rate margin z < (d+1/8)(a-b)+y."
           }
         }
       }
@@ -112,7 +112,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, a judge ruled; a re-rating agent agreed; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, a judge ruled; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

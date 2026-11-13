@@ -1,9 +1,9 @@
 {
   "id": "Lemma 18.5 step 39",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "The Lean has the three estimates (L-comparison, the B = Xi, D comparison for every p, and the consequence), but the first comparison is stated only as →0 without the rate o(E^-1) and the use R_i/E_i → 0 is replaced by `sizeQ'` and `PaymentR`.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] proves eq:I-divergence as Over.mere and Over.transferX, with Over.pairingD and Shelves.gapC as the two equation estimates. The statements are split by PaceBook component, and the PaymentR certificate with Over.sizeQ' replaces the explicit use of R_i/E_i -> 0.",
   "subject": [
     {
       "location": {
@@ -33,7 +33,7 @@
         "module": "YM.TraceExtension.Chart.Dray",
         "lines": [
           46,
-          46
+          55
         ]
       },
       "role": "key",
@@ -43,14 +43,14 @@
             "id": "YM.Trace.Over.pairingD"
           },
           "snippet": {
-            "text": "lemma pairingD : Tendsto (fun i=> BQ Z V i • BeamC (H:=H) H' J V Z ho' i L - s i (Shine5 Z X (P! i))) atTop (𝓝 0):=by",
+            "text": "lemma pairingD : Tendsto (fun i=> BQ Z V i • BeamC (H:=H) H' J V Z ho' i L - s i (Shine5 Z X (P! i))) atTop (𝓝 0):=by\n    let b:= BQ Z V; let R:=fun i=> H! (P! i); let x:=fun i=> BeamC (H:=H) H' J V Z ho' i L; let z(i):= s i (Shine5 Z L.Z (P! i));let v(i):= s i (Shine5 Z X (P! i)); let y:=fun i=>s i (medium L X Z (P! i))\n    have hg (i:ℕ):0<b i:=measured hb P hz _\n    have hB(i): |b i|≤2*(R i)^1:=by rw[abs_of_pos (hg i),pow_one];exact dex hb P hz _\n    have hζ:∀ᶠ i:ℕ in atTop, 0 ≤ R i^(1:ℕ):=Eventually.of_forall fun i=>pow_nonneg (bell ..|>.le) _\n    have hz₁:= invest (X:=fun i=> x i-z i) (c:=2) (E:=TableOne H.spin) zero_le_two (Eventually.of_forall hB) hζ (gapC P h θ K ht hM hT hb hu hz hq H' HF hq' hJ hY ho' hc hL he 1)\n    have hz₂:= invest (X:=y) (c:=2) (E:=TableOne H.spin) zero_le_two (Eventually.of_forall hB) hζ (legacy P h θ K ht hM hb hu hz hp Hδ hr hA hL hq H' HF hq' hJ hP ho hY 1)\n    have hz(i): b i • y i=v i-b i • z i:=by\n        let f:=P! i;change b i • s i ((b i)⁻¹ • Shine5 Z X f - _)= _; rw [map_sub,map_smul,smul_sub,smul_inv_smul₀ (hg i).ne']\n    have ht:= hz₁.sub hz₂; rw [sub_zero] at ht; exact ht.congr (fun i=>by change b i • (x i-z i) - b i • y i=b i • x i-v i; rw[hz,smul_sub];abel)",
             "line": 46,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Chart/Dray.lean",
-            "fragment": "L46-L46"
+            "fragment": "L46-L55"
           },
           "proof_context": {
             "declaration": "YM.Trace.Over.pairingD",
@@ -58,7 +58,7 @@
               46,
               55
             ],
-            "conclusion": "`β_i K_i B_i^L - s_i Σ_{k_i} → 0` (`BQ • BeamC - s (Shine5 Z X) → 0`)."
+            "conclusion": "BQ * BeamC - s_i(Shine5 X) -> 0: beta_i K_i B_i^L - s_i Sigma_{k_i} -> 0."
           }
         }
       }
@@ -97,7 +97,46 @@
               57,
               59
             ],
-            "conclusion": "`H!^p • (Optics .. - s (Shine5 ..)) → 0`, the analogue of K_i B^B - s_i div_raw B = o(b^-p)."
+            "conclusion": "H!^p (Optics - s_k Shine5) -> 0 for every p, the B = Xi, D comparison at o(b^-p)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Trace.Over.mere",
+        "module": "YM.TraceExtension.Chart.Token",
+        "lines": [
+          76,
+          88
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Trace.Over.mere"
+          },
+          "snippet": {
+            "text": "lemma mere : Tendsto (fun k=>taxA A (P! k) * (μ k (Optics H' H S₁ ho' J V Z k (tub H' V P' k))-rho h (bareVector (BornZ i)))) atTop (𝓝 0):=by\n   let TT(k):=taxA A (P! k); let f:= Shine5 Z P'.Z; let U(i):= f (P! i); let V':= Vivid (Zᵣ) (BornZ i); let g(k):= s k (U k); let p(k):=Optics H' H S₁ ho' J V Z k (tub H' V P' k)\n   have htQ:Tendsto (P!) atTop atTop:=(Sstar A).comp hq.growth; have hU:Tendsto U atTop (𝓝 V'):=by\n       have hu:= continuous_snd.continuousAt.tendsto.comp (tiara P h hb hu hz hv); change Tendsto f atTop (𝓝 V') at hu; exact hu.comp htQ\n   have he':Tendsto (fun k=> TT k • (p k-g k)) atTop (𝓝 0):=by\n       let b i:= H! (P! i)^(1:ℕ); refine invest (E:=TableOne H.spin) zero_le_one (g:=b) ?_ (Eventually.of_forall (fun i=> pow_nonneg (bell ..|>.le) _)) (gapC P h θ K ht hM hT hb hu hz hq H' HF hq' hJ hY ho' hc hv he 1); filter_upwards [htQ.eventually (timid (C:=C) h (1/5))] with k hk; exact (abs_of_nonneg (Zn.wake ..|>.le)).trans_le (by unfold b;rw [one_mul,pow_one];exact hk)\n   obtain ⟨q,Hq,hp⟩:= hr'.lean; let v:= Lease Zᵣ h; have hx := (liftB (E:=TableOne H.spin) hp he'); simp_rw [map_sub] at hx\n   have hh :Tendsto (fun k=> TT k*(μ k (g k)-v (U k))) atTop (𝓝 0):=by\n       apply Metric.tendsto_nhds.mpr; intro ε hε; let c:= ‖V'‖+1; have hc:0 < c:=add_pos_of_nonneg_of_pos (norm_nonneg _) zero_lt_one\n       filter_upwards [hU.norm.eventually (gt_mem_nhds (lt_add_one _)), hr'.lead (ε/c) (div_pos hε hc)] with i hi hI; rw [dist_zero_right]; apply (hI (U i)).trans_lt; exact (mul_lt_mul_of_pos_left (show ‖U i‖<c from hi) (div_pos hε hc)).trans_eq (div_mul_cancel₀ _ hc.ne')\n   have hY:= diadem P h hb hu hz hv |>.comp htQ; have hv':v V'=rho h (bareVector (BornZ i)):= leaseV ..\n   have hm:= (hx.add hh).add hY; simp only[zero_add] at hm; exact hm.congr (fun k=>by change TT k*(μ k (p k)-μ k (g k))+TT k*(μ k (g k)-v (U k))+TT k*(v (U k)-v V')=TT k*_; rw [hv']; ring\n       )",
+            "line": 76,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Chart/Token.lean",
+            "fragment": "L76-L88"
+          },
+          "proof_context": {
+            "declaration": "YM.Trace.Over.mere",
+            "lines": [
+              76,
+              88
+            ],
+            "conclusion": "taxA*(mu_k(Optics...) - rho(bareVector(BornZ i))) -> 0, combining gapC, the PaymentR rate and diadem."
           }
         }
       }
@@ -111,7 +150,7 @@
         "module": "YM.TraceExtension.Chart.Dray",
         "lines": [
           63,
-          63
+          77
         ]
       },
       "role": "key",
@@ -121,14 +160,14 @@
             "id": "YM.Trace.Over.transferX"
           },
           "snippet": {
-            "text": "lemma transferX : Tendsto (fun i=> μ i (BQ Z V i • BeamC (H:=H) H' J V Z ho' i L)) atTop (𝓝 (-G.slopeConstant)) := by",
+            "text": "lemma transferX : Tendsto (fun i=> μ i (BQ Z V i • BeamC (H:=H) H' J V Z ho' i L)) atTop (𝓝 (-G.slopeConstant)) := by\n    let X' i:= BQ Z V i • BeamC (H:=H) H' J V Z ho' i L; let Y i:= Shine5 Z X (P! i); let u(i):=Lease Zᵣ h (Y i)\n    let V'(i):=s i (Y i);have hv:Tendsto (Stern V) atTop atTop:=(Sstar A).comp hq.growth\n    obtain ⟨q,Hq,hQ⟩:=hm.lean; obtain ⟨c,hc',hc₁,hc₂⟩:=penumbra P h hb hu hz hp\n    have hc₃:Tendsto (fun i=> μ i (X' i)-μ i (V' i)) atTop (𝓝 0):=by\n        have hx:Tendsto (fun i=>(1:ℝ) • (X' i-V' i)) atTop (𝓝 0):=by simp only[one_smul]; exact pairingD P h θ K ht hM hT hb hu hz hp Hδ hr hA hL hq H' HF hq' hJ hP ho hY ho' hc he\n        have h:= liftB (E:=TableOne H.spin) hQ hx; simpa only [one_mul, map_sub] using! h\n    have hP:Tendsto u atTop (𝓝 (-G.slopeConstant)):= hc₂.comp hv\n    have hp₁:Tendsto (fun i=> μ i (V' i)-u i) atTop (𝓝 0):=by\n       apply Metric.tendsto_nhds.mpr; intro ε hε; let d:= ε/(1+c); have he0:0< d:= div_pos hε (add_pos_of_pos_of_nonneg zero_lt_one hc');\n       filter_upwards [hv.eventually hc₁,hm.lead d he0] with i hi hI; let k:= (P! i); have ht :0< taxA A k:= Zn.wake ..; have hx:= hI (Y i); rw[dist_zero_right]; apply lt_of_mul_lt_mul_left (a:=taxA A k) _ ht.le\n       apply lt_of_le_of_lt (b:=d*c*taxA A k)\n       · rw [norm_mul,Real.norm_of_nonneg (show 0 ≤ taxA A (P! i) from ht.le)] at hx; exact le_trans (le_trans hx (mul_le_mul_of_nonneg_left (le_trans hi (mul_le_mul_of_nonneg_left (river_k ..) hc')) he0.le)) (mul_assoc ..).symm.le\n       have hy := div_mul_cancel₀ ε (show 1+c≠0 from (add_pos_of_pos_of_nonneg zero_lt_one hc').ne'); change d*(1+c)=ε at hy; rw [mul_comm _ ε]; gcongr; linarith only [hy,he0]\n    have hx:=(hc₃.add hp₁).add hP; rw[add_zero, zero_add] at hx; exact hx.congr (fun i=>by change _-_+(_-_)+u i= _; abel)",
             "line": 63,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Chart/Dray.lean",
-            "fragment": "L63-L63"
+            "fragment": "L63-L77"
           },
           "proof_context": {
             "declaration": "YM.Trace.Over.transferX",
@@ -136,7 +175,7 @@
               63,
               77
             ],
-            "conclusion": "`μ_i(β K B^L) → -slopeConstant`, which is (I-divergence)."
+            "conclusion": "mu_i(BQ * BeamC) -> -slope, using pairingD and penumbra."
           }
         }
       }
@@ -151,7 +190,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

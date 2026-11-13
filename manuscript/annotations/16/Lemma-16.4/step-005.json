@@ -1,9 +1,9 @@
 {
   "id": "Lemma 16.4 step 5",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "Boundedness on cutoff tails and the unit, conjugation and signed (mirror) laws are in `w_right`; the inverse estimate with explicit `K_{k,d}`, the factor 2 for the readout error and the injectivity argument are not stated.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Carried by Price.at_current/reference_size, Price.Tested.cost/bijective, East.sun with pure_start/purer/rider, and MergeProof.East.w_right; shrink_min bounds the inverse threshold. Difference: [L] allows relative readout error up to 1/2 (Tested.score) rather than less than 1/4; the inverse cost is still 2.",
   "subject": [
     {
       "location": {
@@ -24,6 +24,45 @@
     }
   ],
   "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Rank.East.sun",
+        "module": "YM.MergeProof.East.Ladle",
+        "lines": [
+          41,
+          51
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Rank.East.sun"
+          },
+          "snippet": {
+            "text": "lemma sun (x:C.label d): ∃ A : ℝ,∀ N p T,k ≤ N→Tested C d k N p T→ ‖ladd C b k N p d T x‖≤A:= by\n    let L:= F; let v:= weightTag C d b x; let r:= 2*C.path.levels.clock.monitor k;let R:= L.coeffSize (L.scaled r v)\n    refine ⟨outward C d k * C.S.a k^d*(2*R),fun N p T hk hT=>?_⟩\n    let Y:= ladd C b k N p d T x; let a:= shrink C k N p; have ht : 0<a:= shrink_pos C h hk p;have hz:a⁻¹≤r:= shrink_min C h hk p\n    have hQ : L.scaled a (T Y)=v:= poured h hr hk b T hT x\n    have hB: T Y=L.scaled a⁻¹ v:= by have he:=L.scaled_inv (inv_ne_zero ht.ne') (T Y); rw [inv_inv,hQ] at he; exact he.symm\n    have he : L.coeffSize (T Y) ≤ R:= by\n       rw [hB]; unfold R Frame.coeffSize; have h' : 0<r:= (inv_pos.mpr ht).trans_le hz\n       apply Finset.sum_le_sum; intro j _; rw [Frame.scaled_apply,Frame.scaled_apply,norm_mul,norm_mul,Complex.norm_real,Real.norm_of_nonneg (by positivity),Complex.norm_real,Real.norm_of_nonneg (by positivity)]; gcongr\n    refine (show ‖Y‖ ≤ L.coeffSize Y from (pi_norm_le_iff_of_nonneg (Work.G08.size_nonneg L _)).2 (fun i=> Finset.single_le_sum (fun _ _=> norm_nonneg _) (Finset.mem_univ i))).trans ((reference_size C h hr hk p Y).trans ?_)\n    exact mul_le_mul_of_nonneg_left ((hT.cost C T Y).trans (mul_le_mul_of_nonneg_left he zero_le_two)) (mul_nonneg (zero_le_one.trans (outward_nn ..)) (pow_nonneg (C.S.a_pos _).le _))",
+            "line": 41,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/East/Ladle.lean",
+            "fragment": "L41-L51"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Rank.East.sun",
+            "lines": [
+              41,
+              51
+            ],
+            "conclusion": "The lift ladd preserves unit, conjugation and signed reflections (pure_start, purer, rider), and is bounded by outward * a_k^d * 2R independently of N, p."
+          }
+        }
+      }
+    },
     {
       "type": "lean",
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
@@ -58,7 +97,46 @@
               46,
               66
             ],
-            "conclusion": "`w_right` shows the cut maps of `wok` are bounded in operator norm on tails (`F.late`), send the unit to the scalar `0`, commute with conjugation (`star`) and with the mirror group."
+            "conclusion": "The lifts are bounded on cutoff tails and satisfy the unit, conjugation and signed laws."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Rank.Price.Tested",
+        "module": "YM.Next.RANK.Matrices",
+        "lines": [
+          67,
+          72
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Rank.Price.Tested"
+          },
+          "snippet": {
+            "text": "structure Tested (d k N p : ℕ) (read : C.label d →ₗ[ℂ] C.label d) : Prop where\n  unit : read (C.refUnit d) = (C.labels.level d).e0\n  preserves v : read (star v) = star (read v)\n  score v :\n    let F := C.labels.level d; let a := awake C d k N p v\n    F.coeffSize (a-read v) ≤ F.coeffSize a/2",
+            "line": 67,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Matrices.lean",
+            "fragment": "L67-L72"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Rank.Price.Tested",
+            "lines": [
+              67,
+              72
+            ],
+            "conclusion": "The inverse estimate is iterated level by level (at_current), readouts with relative coefficient error at most 1/2 cost at most factor 2 to invert, and are bijective."
           }
         }
       }
@@ -73,11 +151,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {
-        "kind": "direct"
+        "kind": "chain"
       }
     }
   }

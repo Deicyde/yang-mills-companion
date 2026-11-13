@@ -1,9 +1,9 @@
 {
   "id": "Lemma 13.6 step 37",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "The fixed powers, the cover bound, the comparison 23/20 > 11/10, the bound b^{-7/16} with read radius 2e and vanishing on healthy sets are all present; the claim about the site norm at exponent σ+2 for the logarithmic corrections was not located.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] carries the closing estimates in Trio.skyward, Trio.scaleMeters, Roof.compar, Rain.worthy and Trio.twigs/cheap. The difference: 'tends to zero in the site norm at exponent sigma+2' is the explicit eventual bound beta^{-1/8} from Trio.cheap.",
   "subject": [
     {
       "location": {
@@ -33,7 +33,7 @@
         "module": "YM.PhysicalNext.RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP.Trio.Ninety",
         "lines": [
           54,
-          54
+          57
         ]
       },
       "role": "key",
@@ -43,14 +43,14 @@
             "id": "YM.PhysicalNext.Repeat.Trio.skyward"
           },
           "snippet": {
-            "text": "lemma skyward : Rate G L (-(23/20)) (fun x=> planks G L b σ x):= by",
+            "text": "lemma skyward : Rate G L (-(23/20)) (fun x=> planks G L b σ x):= by\n  have hb := (rows G L b).2.2.1\n  apply sparks G L (f:=fun i x=> |Slide.ray i| * (_) ); intro i\n  simpa only [zero_add] using! ((((Bolt.still ((2:ℝ)^σ.order)).times (((Bolt.still 1).joins hb).nod (σ.power*σ.order))).uses.mul (Trio.frost G L b σ i)).mul_left |Slide.ray i|)",
             "line": 54,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Trio/Ninety.lean",
-            "fragment": "L54-L54"
+            "fragment": "L54-L57"
           },
           "proof_context": {
             "declaration": "YM.PhysicalNext.Repeat.Trio.skyward",
@@ -58,7 +58,7 @@
               54,
               57
             ],
-            "conclusion": "`Rate G L (-(23/20)) planks`: the bound is `b^{-23/20+o(1)}` with the other factors fixed polynomials in `1+z` (`rows`)."
+            "conclusion": "The reflected-term bound planks has rate beta^{-23/20}, its prefactors being fixed powers of 1+B."
           }
         }
       }
@@ -97,7 +97,7 @@
               28,
               30
             ],
-            "conclusion": "The cover number of a neighbourhood of radius at most `2*base b B` is at most `(maxFixed b + maxFixed b + 1)^4`, a stage constant."
+            "conclusion": "The cover number of a neighbourhood of radius at most 2*base b B is at most (2 maxFixed b + 1)^4, a stage constant."
           }
         }
       }
@@ -110,8 +110,8 @@
         "declaration": "YM.PhysicalNext.Repeat.Roof.compar",
         "module": "YM.PhysicalNext.RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP.Roof.Porch",
         "lines": [
-          21,
-          23
+          20,
+          24
         ]
       },
       "role": "key",
@@ -121,14 +121,14 @@
             "id": "YM.PhysicalNext.Repeat.Roof.compar"
           },
           "snippet": {
-            "text": "    let u:=gold G L x; let z:= Height.away P\n    z*u+u+ z*(planks G L b P x* Real.exp (stout P * coverTicket b)) ≤ (1/2:ℝ)*(Time.credit G P*δE x):= by\n  have ht : Rate G L (-(23/20)) (gold G L) := Rate.power",
-            "line": 21,
+            "text": "lemma compar (G : Gauge) (L:Side) (b : ℕ) (P: RG.Stage): ∀ᶠ x in atTop,\n    let u:=gold G L x; let z:= Height.away P\n    z*u+u+ z*(planks G L b P x* Real.exp (stout P * coverTicket b)) ≤ (1/2:ℝ)*(Time.credit G P*δE x):= by\n  have ht : Rate G L (-(23/20)) (gold G L) := Rate.power\n  have hh := (((ht.mul_left (away P)).add ht).add (((Trio.skyward G L b P).mul_right (Real.exp (stout P * coverTicket b))).mul_left (away P)))",
+            "line": 20,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Roof/Porch.lean",
-            "fragment": "L21-L23"
+            "fragment": "L20-L24"
           },
           "proof_context": {
             "declaration": "YM.PhysicalNext.Repeat.Roof.compar",
@@ -136,7 +136,7 @@
               20,
               33
             ],
-            "conclusion": "The regular bound (with `planks` and `gold`) is at most `1/2 * credit * δE x`, where `δE (betaF) = betaF^(-(11/10))`, using `-(23/20) < -(11/10)`."
+            "conclusion": "Eventually, the regular bound built from gold and planks is at most (1/2) credit * deltaE x, deltaE having exponent -11/10."
           }
         }
       }
@@ -175,7 +175,7 @@
               57,
               77
             ],
-            "conclusion": "`lights` is `Tidy` on `neighbors (2*e) p`, is nonzero only if the set is not `Healthy`, and satisfies `‖lights‖ ≤ tempe`."
+            "conclusion": "The localization correction is tidy on N_{2e}(p), vanishes unless N_{2e}(p) is unhealthy, and has sup at most tempe."
           }
         }
       }
@@ -185,36 +185,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.PhysicalNext.Repeat.Trio.twigs",
+        "declaration": "YM.PhysicalNext.Repeat.Trio.cheap",
         "module": "YM.PhysicalNext.RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP.Trio.Ninety",
         "lines": [
-          50,
-          50
+          59,
+          61
         ]
       },
       "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.PhysicalNext.Repeat.Trio.twigs"
+            "id": "YM.PhysicalNext.Repeat.Trio.cheap"
           },
           "snippet": {
-            "text": "lemma twigs (ht:t=-(7/16:ℝ)): Rate G L t (lossFee G L t b σ):= by",
-            "line": 50,
+            "text": "lemma cheap (ht:t=-(7/16:ℝ)): ∀ᶠ x in atTop,Marlin.tithe (2*base b (radiusB x)) (lossFee G L t b σ x) ⟨σ.power,σ.order, σ.supportExponent,1,1,σ.power_ge,σ.order_ge,σ.price_pos,Nat.zero_lt_one,zero_lt_one,le_rfl⟩ (coverTicket b) ≤ betaF G x L ^(-(1/8):ℝ):= by\n  have ht' := ((balls G L ((rows G L b).2.2.2)).mul (twigs G L t b σ ht)).mul_right (Real.exp ((σ.supportExponent+1+1)*coverTicket b)) (-(1/8):ℝ) (by rw [ht]; norm_num)\n  filter_upwards [ht'] with x hv; exact (le_abs_self _).trans hv",
+            "line": 59,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Trio/Ninety.lean",
-            "fragment": "L50-L50"
+            "fragment": "L59-L61"
           },
           "proof_context": {
-            "declaration": "YM.PhysicalNext.Repeat.Trio.twigs",
+            "declaration": "YM.PhysicalNext.Repeat.Trio.cheap",
             "lines": [
-              50,
-              51
+              59,
+              61
             ],
-            "conclusion": "`Rate G L (-(7/16)) lossFee`, the uncentered bound `b^{-7/16}` on `L_x`."
+            "conclusion": "With lossFee of rate beta^{-7/16} (twigs) and cover number at most coverTicket, the site norm at exponent supportExponent+2 of the corrections is eventually at most beta^{-1/8}."
           }
         }
       }
@@ -229,7 +229,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

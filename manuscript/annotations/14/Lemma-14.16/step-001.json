@@ -1,9 +1,9 @@
 {
   "id": "Lemma 14.16 step 1",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "Lean builds the exact one-mark representation (`Cream`, from `inviting`, with the stencil enlarged by the local section) and reads off the coefficient. The radial Taylor readout through degree e, its bound as a linear map on a finite jet space, and the healthy/forced split are not stated.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Carried by RelayDifference.newPersist (general observable, stencil X ∪ T.stencil, readout bound price_of_readout) and MergeProof.inviting (section basis inputs), packaged as the Cream structure with a Sluggish E. The regular and forced bounds are folded into one E, the forced part entering through the attainment bound rather than a separate E'.",
   "subject": [
     {
       "location": {
@@ -46,11 +46,50 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
+        "declaration": "YM.Push.RelayDifference.newPersist",
+        "module": "YM.FullVolume.Forward",
+        "lines": [
+          15,
+          66
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Push.RelayDifference.newPersist"
+          },
+          "snippet": {
+            "text": "theorem newPersist (hc:C.Makes) (K : G.Simple) (hZ:∀ N p:ℕ,Nonempty (Keeper (C.path.rep N p N).p (C.path.rep N p N).activities)) (hp: Sluggish C (fun j => Real.exp ((C.path.levels.budget j.1).supportExponent))) (hu:∀ i,0  <  u i)(hx:Sluggish C fun i=> (u i.1)⁻¹) (hv:Sluggish C fun i=> ζ d i.1)(hr:∀ i,C.ref d ≤ i → 0 ≤ ζ d i)\n    (h:Tucked F d)(ht:∀ᶠ i in FullVolume.mesh,Continuous (F i.1 i.2 0)) : ∃ E:Cutoffs → ℝ, Sluggish C E ∧ ∀ᶠ i in FullVolume.mesh,C.ref d  ≤  i.1 ∧ ∃ Z t Q, Cream C i.1 i.2 d u ζ (F i.1 i.2 0) Z Q t (E i):=by\n  classical\n  let H := C.path\n  let L := C.labels.level d\n  let T := C.localSection d\n  obtain ⟨X,hX,c,b,hc',hb,H'⟩ := h\n  let D := X ∪ T.stencil\n  obtain ⟨k,hk,h₁⟩ := price_of_readout C.params L\n  obtain ⟨t,ht',h₂⟩ := offmask C d\n  let score (j : Cutoffs) := k*c j\n  let r (j : Cutoffs) := badCost C d j.1 t (score j) (b j)\n  let g (j : Cutoffs) := regCost C j.1 (score j) (c j)\n  let M : ℝ := 2*D.card\n  let A (j : Cutoffs) := Real.exp ((H.levels.params j.1).supportExponent) ^ (81:ℕ)\n  let Att (j : Cutoffs):= A j* Real.exp (162:ℝ)*r j\n  let box (j : Cutoffs) := A j*(g j+r j*M)\n  let total (j : Cutoffs) := 1 + (box j + score j); let BaseE (j : Cutoffs):=4*(1+(C.path.levels.params j.1).columns)*total j; let E (j : Cutoffs):= BaseE j + Att j*(ζ d j.1)*(u j.1)⁻¹\n  have hs : Sluggish C (fun j=> score j):=(Sluggish.const k).mul hc'; have ho:Sluggish C r:= hb.add (((Sluggish.const (C:=C) ((2:ℝ)*t)).mul (borrowed (W:=Opening.seats C d) (seats_slow K))).mul hs); have hA := Sluggish.pow hp 81\n  have hm: Sluggish C total := (Sluggish.const (C:=C) (1:ℝ)).add ((hA.mul ((hc'.add (pillars.mul hs)).add (ho.mul (Sluggish.const M)))).add hs)\n  refine ⟨E,(((((Sluggish.const (C:=C) (4:ℝ)).mul ((Sluggish.const _).add pillars)).mul hm)).add (((((hA.mul (Sluggish.const _)).mul ho).mul hv)).mul hx)),?_⟩\n  filter_upwards [deepen.eventually (cover_tops (C:=C) K D), ht, deepen.eventually_ge_atTop (C.ref d),deepen.eventually (mitt (C:=C) K D),H'] with i hi hP hI hJ hV\n  let N:=i.1; let p:=i.2; let z:= D; let o:= (0:Site (C.side N p)); let Y:=regional D o; let C':=C.path.rep N p N; let P:= C.path.levels.budget N; let v':= C.path.levels.clock.forcedAllowance N\n  have hY:regional X o ⊆ Y := Finset.image_subset_image Finset.subset_union_left\n  obtain ⟨hy,hC,hB,hL⟩:= hV o; have hG:=regular_larger hy hY; have hc'' := bound_larger hC hY; obtain ⟨Z,h,Zr,hK,hV, S,hS,Hx⟩:= saving C hc hI Y (Classical.choice (hZ N p)) (hJ p) (Finset.image_subset_image Finset.subset_union_right) F ⟨hG,hc'',hB,hL⟩ ht' h₂ (score:=score i) (fun z hz => h₁ _ o Y P _ _ (Nat.le_of_succ_le ((hc.stages d).2 N hI).1) ((hc.stages d).2 N hI).2 hG hc'' z hz)\n  have hY': (Y.card:ℝ) ≤ D.card:=by exact_mod_cast Finset.card_image_le\n  have hp: (coverNumber P.B Y:ℝ) ≤ 81:=by exact_mod_cast hi p; -- exponent.N\n  let a:ℝ:= Real.exp (P.supportExponent*coverNumber P.B Y)\n  have he : a  ≤  A i:=by unfold a A;rw [← Real.exp_nat_mul]; apply Real.exp_monotone; push_cast;change _ ≤ 81*P.supportExponent;nlinarith only [hp,P.exponent_pos, mul_le_mul_of_nonneg_left hp P.exponent_pos.le]\n  have hf : 0  ≤  v':=(Real.exp_pos _).le; have hz:Real.sqrt v' ≤ 1:=Real.sqrt_le_one.mpr (Extra.Histories.Doors.stain_le (C.path.levels.clock.hatBeta N))\n  have hg : 0  ≤  score i := (coeff_pos L _).trans Zr; have hr' : 0 ≤  r i:= add_nonneg hB (mul_nonneg (mul_nonneg (mul_nonneg (by norm_num) (zero_le_one.trans ht')) (seats_nonneg ..)) hg); have hb:0  ≤  A i:= le_trans (Real.exp_pos _).le he\n  have hφ:0  ≤  g i:= add_nonneg hC.1 (mul_nonneg (zero_le_one.trans (C.path.levels.params N).columns_ge) hg)\n  have hv: 2*(Y.card:ℝ)*Real.sqrt v' ≤  M:= by\n    exact (mul_le_of_le_one_right (mul_nonneg zero_le_two (Nat.cast_nonneg _)) hz).trans (mul_le_mul_of_nonneg_left hY' zero_le_two)\n  have hf: quicksilver P Y (g i) (r i) v'  ≤  box i:=by\n    change a*g i+2*(Y.card:ℝ)*_* (a*r i)  ≤  A i*(g i+r i*M)\n    rw [mul_add (A i)]\n    exact add_le_add (mul_le_mul_of_nonneg_right he hφ) ((mul_le_mul hv (mul_le_mul_of_nonneg_right he hr') (mul_nonneg (Real.exp_pos _).le hr') (show 0  ≤  M by unfold M; positivity)).trans_eq (by ring))\n  have hU:YM.Push.Local.reservedMass P Y (r i)  ≤  Att i:=by\n    unfold YM.Push.Local.reservedMass\n    apply mul_le_mul_of_nonneg_right _ hr'; rw [add_mul,Real.exp_add]; apply mul_le_mul he _ (Real.exp_pos _).le hb; apply Real.exp_monotone; linarith only [hp]\n  have hy:0  <  total i:=by\n    have hx:0  ≤  M:=by unfold M; positivity\n    exact add_pos_of_pos_of_nonneg zero_lt_one (add_nonneg (mul_nonneg hb (add_nonneg hφ (mul_nonneg hr' hx))) hg)\n  have hAtt: 0 ≤  Att i:=(mul_nonneg (Real.exp_pos _).le hr').trans hU\n  have hE:BaseE i  ≤  E i:=le_add_of_nonneg_right (mul_nonneg (mul_nonneg hAtt (hr N hI)) (inv_pos.mpr (hu N)).le)\n  refine ⟨hI,Z,box i,total i,h,Extra.Histories.rem_mono hK hf, (add_le_add_left Zr _).trans (le_trans (add_comm ..).le (le_add_of_nonneg_left zero_le_one)),hy,hE, ⟨S,Att i,stackFee hS hU,?_,Hx⟩,hV,hP⟩\n  have hO:= hu N\n  apply le_trans _ (mul_le_mul_of_nonneg_left (show BaseE i + Att i*ζ d N*(u N)⁻¹ ≤ E i from le_rfl) hO.le)\n  have hm: 0  ≤  BaseE i:=mul_nonneg (mul_nonneg (by norm_num) (add_nonneg zero_le_one (zero_le_one.trans (C.path.levels.params _).columns_ge))) hy.le\n  rw [mul_add,show u N * (Att i*ζ d N*(u N)⁻¹)=Att i*ζ d N from by field_simp]\n  exact le_add_of_nonneg_left (mul_nonneg hO.le hm)",
+            "line": 15,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Forward.lean",
+            "fragment": "L15-L66"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.RelayDifference.newPersist",
+            "lines": [
+              15,
+              66
+            ],
+            "conclusion": "For a tucked trial observable, with stencil enlarged by the section stencil, a Sluggish E exists such that eventually there is a one-mark representation Cream with the readout bound from price_of_readout and support weight exp(supportExponent)^81 from cover_tops, all bounds <= E."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
         "declaration": "YM.MergeProof.inviting",
         "module": "YM.MergeProof.Parterre",
         "lines": [
-          24,
-          26
+          20,
+          58
         ]
       },
       "role": "key",
@@ -60,14 +99,14 @@
             "id": "YM.MergeProof.inviting"
           },
           "snippet": {
-            "text": "    let Q:= sphere (C.path.levels.params N) ((V.stencil ∪ (C.localSection d).stencil).card) b; let s:= storms (BasisCost.price V) (BasisCost.price (C.localSection d)) C N d\n    let E:=4*(1+(C.path.levels.params N).columns)*Q + Real.exp (((K).supportExponent+2)*81)*s*(ζ d N)*(u N)⁻¹\n    ∃ Z t, Cream C N p d u ζ (initial V C.path N p (Size.axis F j) 0) Z Q t E ∧ Z.x= Size.axis F j:=by",
-            "line": 24,
+            "text": "lemma inviting {b:ℝ} (h:C.Makes)(hN:C.ref d  ≤  N)(he : ∀ y∈ V.stencil∪(C.localSection d).stencil,∀ i:Axis,20*((y i).natAbs+1)  ≤  (C.side N p).val)(hb:Credit V (K).order (K).power b) (hv:0  ≤  b) (u:ℕ→ℝ)(ζ:ℕ→ℕ→ℝ)\n    (ha:0 < u N)(hz:0  ≤  ζ d N) (c:Keeper (C.path.rep N p N).p (C.path.rep N p N).activities)\n    (hr:let D:=regional X o; D.card*C.path.levels.clock.forcedAllowance N ≤ 1∧coverNumber (K).B D ≤ 81)\n    (hs:Real.sqrt (C.path.levels.clock.forcedAllowance N)*storms (BasisCost.price V) (BasisCost.price (C.localSection d)) C N d ≤ 1) (j:(C.labels.level d).Index) :\n    let Q:= sphere (C.path.levels.params N) ((V.stencil ∪ (C.localSection d).stencil).card) b; let s:= storms (BasisCost.price V) (BasisCost.price (C.localSection d)) C N d\n    let E:=4*(1+(C.path.levels.params N).columns)*Q + Real.exp (((K).supportExponent+2)*81)*s*(ζ d N)*(u N)⁻¹\n    ∃ Z t, Cream C N p d u ζ (initial V C.path N p (Size.axis F j) 0) Z Q t E ∧ Z.x= Size.axis F j:=by\n   intro Q s E\n   let T':= T; let M:= regional X o; let P:=C.path.rep N p N; let R:= K; let J:= C.path.levels.params N; let x:=Size.axis F j; let t':= (C.path.levels.budget N).threshold; let L:=F; let a:=L.scaled t'⁻¹ x; let z:= L.coords.symm a; let y:=V.places a o\n   have hp:R.threshold=t':=rfl; have he' : Reads C.params o M z y:=by\n      have hu : V.footprint o⊆ M:=Finset.image_subset_image Finset.subset_union_left\n      have hx : Nonwrapping M o:=by\n         let Y:SectionData L:= ⟨X,0⟩; exact nonwrapping_placement Y o he\n      have hz:= fun i h=> he i (Finset.mem_union_left _ h); unfold Reads; rw [if_pos hx]\n      have hh:= placed_reads V o hz hV a\n      rw [Reads,if_pos (nonwrapping_placement V o hz)] at hh; exact hh\n   have hc : T'.footprint o⊆ M:= Finset.image_subset_image Finset.subset_union_right; have hQ : R.Regular (V.footprint o) y ∧ R.supBounds o (V.footprint o) y b :=by\n      have he:= BasisCost.analytic V R x o (hb R rfl rfl _ o); rw [show L.coeffSize x=1 from Size.size_axis .., mul_one] at he; exact he\n   have hT:(C.path.levels.budget N).Regular (T'.footprint o) (T'.places (L.coords z) o) ∧ R.supBounds o (T'.footprint o) (T'.places (L.coords z) o) J.columns:=by\n      have he:= BasisCost.analytic T' R x o (h.priced d N p hN 0); rw [show L.coeffSize x=1 from Size.size_axis ..,mul_one] at he; rw [show L.coords z = a from L.coords.apply_symm_apply _]; exact he\n   have hE : V.footprint o⊆ M:= Finset.image_subset_image Finset.subset_union_left\n   let i := BasisCost.price V; let w := BasisCost.price T'; let c':= b+J.columns; let v:=Opening.seats C d N; have hi : 0 ≤ i:=zero_le_one.trans (BasisCost.price_pos _); have hw : 0  ≤  w:= zero_le_one.trans (BasisCost.price_pos _); have hZ : 0 ≤  s:= add_nonneg (mul_nonneg hi (seats_nonneg ..)) (mul_nonneg (mul_nonneg zero_le_two hw) (seats_nonneg ..))\n   have hPt :0 ≤ c':= add_nonneg hv (zero_le_one.trans J.columns_ge)\n   have hα:∀ U,‖y U‖ ≤ i*v:= fun U=> (BasisCost.full V a o U).trans (mul_le_mul_of_nonneg_left ((sits C d N x).trans_eq (by rw [Size.size_axis,mul_one])) hi)\n   have hc' : L.scaled t' (L.coords z)=x:= by rw [show L.coords z=a from L.coords.apply_symm_apply _]; exact L.scaled_inv R.threshold_pos.ne' _\n   obtain ⟨Y,hY,ht,Hx,hx,hF⟩:= presses N d p M o y c h hN z he' hc (BasisCost.price_pos T') (fun v _ i U=> BasisCost.full T' v i U) hr.1 (regular_larger hQ.1 hE) (mul_nonneg hi (show 0  ≤  v from Opening.seats_nonneg ..)) hα (score:=1) (show L.coeffSize (L.scaled t' (L.coords z))  ≤  1 from hc'.symm ▸ (Size.size_axis ..).le) (bound_sub (regular_larger hQ.1 hE) (regular_larger hT.1 hc) (bound_larger hQ.2 hE) (bound_larger hT.2 hc)) -- wrong equality\n   rw [show badCost C d N _ _ _=s from by unfold badCost s storms i v T'; rw [mul_one]] at hx hF; have hy:Y.x=x:=hY.trans hc'; obtain ⟨y',hA,hL⟩:= hF\n   let B0:= C.path.levels.clock.forcedAllowance N; refine ⟨Y,quicksilver R M c' s B0,⟨ht,hx,?_,sphere_pos J _ hv, ?_,⟨y',_,hA,?_,hL⟩, ?_,?_⟩,hy⟩\n   · rw [hy, show L.coeffSize x=1 from Size.size_axis L j]; have hf : (M.card:ℝ)  ≤  ((X).card:ℝ):=by exact_mod_cast Finset.card_image_le\n     let S:= Real.exp (R.supportExponent* (coverNumber R.B M)); let Z:= Real.exp (81*R.supportExponent)\n     have hS:S  ≤  Z:=Real.exp_monotone (le_trans (mul_le_mul_of_nonneg_left (show (coverNumber R.B M:ℝ) ≤ 81 from by exact_mod_cast hr.2) R.exponent_pos.le) (mul_comm ..).le)\n     change 1+(S*c'+2*(M.card:ℝ)*Real.sqrt B0*(S*s))  ≤  2 + Z*(c'+2*((X).card:ℝ))\n     have hz := mul_le_mul_of_nonneg_left hs (Nat.cast_nonneg M.card); change (M.card:ℝ)*(Real.sqrt B0*s)  ≤  _ at hz; nlinarith only [hz,mul_le_mul_of_nonneg_left hz (Real.exp_pos (R.supportExponent* (coverNumber R.B M))).le,hf,mul_le_mul hS hf (Nat.cast_nonneg _) (Real.exp_pos _|>.le), mul_le_mul_of_nonneg_right hS hPt]\n   · apply le_add_of_nonneg_right; positivity\n   · have hR: (YM.Push.Local.reservedMass R M s)  ≤  Real.exp ((R.supportExponent+2)*81)*s:= mul_le_mul_of_nonneg_right (Real.exp_monotone (by gcongr; exact add_nonneg R.exponent_pos.le zero_le_two; exact_mod_cast hr.2)) hZ\n     apply (mul_le_mul_of_nonneg_right hR hz).trans; unfold E; rw [mul_add]; let x:= Real.exp ((R.supportExponent+2)*81)*s\n     rw [show u N * (x* ζ d N*(u N)⁻¹) = x*ζ d N from by field_simp]; exact le_add_of_nonneg_left (mul_nonneg ha.le (mul_nonneg (mul_nonneg (by norm_num) (add_nonneg zero_le_one (zero_le_one.trans J.columns_ge))) (sphere_pos _ _ hv).le))\n   · intro U; rw [Hx]; let z:ℂ:=(C.S.a N:ℂ)^d; change _ = z*_* (z⁻¹*y U); rw [mul_comm z _,mul_assoc,mul_inv_cancel_left₀]; exact pow_ne_zero _ (Complex.ofReal_ne_zero.mpr (C.S.a_pos _).ne')\n   unfold initial; apply Continuous.const_smul; exact (V.continuous_evaluate _).comp (continuous_pi fun _=>continuous_apply _)",
+            "line": 20,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Parterre.lean",
-            "fragment": "L24-L26"
+            "fragment": "L20-L58"
           },
           "proof_context": {
             "declaration": "YM.MergeProof.inviting",
@@ -75,85 +114,7 @@
               20,
               58
             ],
-            "conclusion": "From a basis axis `Size.axis F j` it produces a `Cream` representation `Z` (one-mark form with remainder bound `t`, `Z.x = Size.axis F j`) of the initial insertion, with sphere bound `Q` and total bound `E`."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.MergeProof.prepared_rows",
-        "module": "YM.FullVolume.Paid",
-        "lines": [
-          47,
-          49
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.MergeProof.prepared_rows"
-          },
-          "snippet": {
-            "text": "lemma prepared_rows {F:Trial C} (hG:G.Simple)(hF:Fridge C u ζ)(hp : ∀ᶠ i in FullVolume.mesh, Continuous (F i.1 i.2 0)) (hv:Stencil F) (he:Tucked F d) : ∃ v:Rowe C d, Coin C v ∧ Owed (upper C v - F) (flight C (-(1/16))) := by\n  obtain ⟨E,hE,hh⟩ := newPersist H hG hF.full (borrowed (W:=fun i=> Real.exp ((C.path.levels.budget i).supportExponent)) (roof_of_tabs B)) hF.candle (borrowed (W:=fun i=>(u i)⁻¹) (hF.path _)) (borrowed (W:=fun i => ζ d i) (hF.smoke d _)) (fun i hi => (h.grows _ _ hi).le) he hp\n  exact readyCoin H B h hE hv hh",
-            "line": 47,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Paid.lean",
-            "fragment": "L47-L49"
-          },
-          "proof_context": {
-            "declaration": "YM.MergeProof.prepared_rows",
-            "lines": [
-              47,
-              49
-            ],
-            "conclusion": "On full tails a continuous stencilled `Tucked F` is represented by `newPersist`, and `readyCoin` turns the representation into a coefficient `v` with `Coin v` and `Owed (upper v - F)`."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.MergeProof.pudding",
-        "module": "YM.MergeProof.Biscuit",
-        "lines": [
-          56,
-          58
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.MergeProof.pudding"
-          },
-          "snippet": {
-            "text": "    obtain ⟨M,hM,hH,hZ,hY⟩:= (h.costs.aim d N p hl).lyrics; have hp: ∀ i≥ℓ,∀ hm:i<N, (∃ η:ℝ,Tones (C.localSection d) C.path N p C.params (ψ i) i η (D N p i hm)) ∧ Carol L T N p i (D N p i hm) (M.tone (i+1)) (M.tone i) (ψ i):=fun i hi hf=>⟨h.listens _ _ _ i hi hf,hZ i hi hf⟩\n    obtain ⟨V,hV,hr,hs,hc',hb,HQ,hv⟩:= antilles (L) (T) N p C.params W M (D N p) ψ le_rfl hl le_rfl H.wilson hH hp Z hc.form hc.pay hc.charge h.costs.cost h.costs.back\n    let a:= (V ℓ).a; let v:= (X).terminal a; let c:=(C.path.levels.params N).columns",
-            "line": 56,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Biscuit.lean",
-            "fragment": "L56-L58"
-          },
-          "proof_context": {
-            "declaration": "YM.MergeProof.pudding",
-            "lines": [
-              52,
-              77
-            ],
-            "conclusion": "`antilles` builds the coefficient `v` as the terminal readout of the representation `Z` at the finest level."
+            "conclusion": "For basis inputs of a section, Cream holds with Z.x the basis vector, cover number at most 81 and support weight exp(81*supportExponent)."
           }
         }
       }
@@ -169,7 +130,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

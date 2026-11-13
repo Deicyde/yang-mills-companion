@@ -2,8 +2,8 @@
   "id": "Lemma 13.16 step 11",
   "kind": "proof_step",
   "status": "partial",
-  "relation": "hasPart",
-  "note": "The weighted scalar bound Σrho_i <= g_* b_m is proved by telescoping (`header`) the per-step bounds of `trade`, which raises the threshold, with increments bounded below by `income`; the intermediate Σrho_i <= C_G eta beta^{9/10} by integral comparison is not stated.",
+  "relation": "relatedMatch",
+  "note": "[L] proves the weighted scalar bound in Muse.header by telescoping per-step bounds from Muse.trade against increments of beta^{31/32} (Muse.income), not by integral comparison giving C_G eta_par beta^{9/10} followed by division by b_m. The constant is glint = 1/128.",
   "subject": [
     {
       "location": {
@@ -24,45 +24,6 @@
     }
   ],
   "object": [
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.PhysicalNext.Repeat.Muse.header",
-        "module": "YM.FullVolume.Gain.Quotes",
-        "lines": [
-          70,
-          74
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.PhysicalNext.Repeat.Muse.header"
-          },
-          "snippet": {
-            "text": "     intro i; induction i with\n       | zero=> rw [Finset.sum_range_zero]; exact mul_nonneg tintP.1.le (mul_nonneg (Pass.widthP (hK _|>.2.1.floor)).le (hK _|>.2.1.floor.le))\n       | succ i ih=>\n         rw [sum_range_succ]; have hu:= hK i|>.1; unfold stow fn brace; rw [params_eq hz,beta_eq hz,show (a.budget i).threshold=Instrument.plain.t (a.clock.hatBeta i) from (Deployment.clock_eqns a.clock i).2.2.2.2.2.2]\n         refine (add_le_add ih hu).trans_eq ?_; unfold brace; unfold Pressure.betaF α; ring",
-            "line": 70,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Gain/Quotes.lean",
-            "fragment": "L70-L74"
-          },
-          "proof_context": {
-            "declaration": "YM.PhysicalNext.Repeat.Muse.header",
-            "lines": [
-              58,
-              75
-            ],
-            "conclusion": "By induction `∑ i<m, stow ≤ glint*brace m`, telescoping the per-step bounds."
-          }
-        }
-      }
-    },
     {
       "type": "lean",
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
@@ -97,7 +58,7 @@
               35,
               54
             ],
-            "conclusion": "Per step `2*fn ≤ glint*(salary(x+a)-salary x)` with `glint = 1/128`, eventually."
+            "conclusion": "Eventually in the coupling, the per-step scalar 2*chores/t^2 = c*x^{-1/10} is at most glint*(salary(x+a) - salary(x)), where salary x = x^{31/32}."
           }
         }
       }
@@ -136,7 +97,46 @@
               24,
               32
             ],
-            "conclusion": "The increment of `salary x = x^(31/32)` over a step `a` is at least `a*(31/32)*2^(-1/32)*normedWidth x` (mean-value theorem)."
+            "conclusion": "Mean value theorem: increments of x^{31/32} over a step of size a are at least a*(31/32)*2^{-1/32}*x^{-1/32}."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.PhysicalNext.Repeat.Muse.header",
+        "module": "YM.FullVolume.Gain.Quotes",
+        "lines": [
+          58,
+          75
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.PhysicalNext.Repeat.Muse.header"
+          },
+          "snippet": {
+            "text": "lemma header (V:Delays Y)(hv:0<v)(q:ℝ):∃ Z:Delays Y,DelayLe V Z ∧ ∀ X:Delays Y,DelayLe Z X→∀ (P:Bar X)(W:Wait P)(a:Levels G), Paid W a→ Search a q v:=by\n   let α j:= G.slopeConstant*Real.log (K.L j).val\n   have hp (j:ℕ): 0< α j:= mul_pos (Gauge.slopeConstant_pos g) (Real.log_pos ?_) -- block need >1 check!\n   ·\n     obtain ⟨x,-,hb,hx⟩:= collect_upper V.betaEntry _ (fun j=> eventually_transitions j _ _ (fun i _=> ((trade G (S.profile i) (hp j) hv).and (Pass.yet.and ((tendsto_rpow_atTop (show 0<(1/256:ℝ) by norm_num)).eventually_ge_atTop (q/2))))))\n     refine ⟨{V with betaEntry:=x},⟨hb,le_rfl,le_rfl,le_rfl⟩,fun L h X W a hz=> ?_⟩\n     have hK i:= hx (a.clock.J (i+1)) _ ((h.beta _).trans (hz.pays i)) _ (step_paid a i);\n     refine ⟨fun i=> (hK i).2.1,fun i=>(hK i).2.2,?_,?_⟩\n     · intro i; rw [brace,brace,clipS (hK _|>.2.1.floor),clipS (hK _|>.2.1.floor)]; apply Real.rpow_le_rpow (hK _|>.2.1.floor.le) _ (by norm_num)\n       induction i with\n       | zero=>rfl\n       | succ i ih=> rw [beta_eq hz]; exact ih.trans (le_add_of_nonneg_right (hp _|>.le))\n     intro i; induction i with\n       | zero=> rw [Finset.sum_range_zero]; exact mul_nonneg tintP.1.le (mul_nonneg (Pass.widthP (hK _|>.2.1.floor)).le (hK _|>.2.1.floor.le))\n       | succ i ih=>\n         rw [sum_range_succ]; have hu:= hK i|>.1; unfold stow fn brace; rw [params_eq hz,beta_eq hz,show (a.budget i).threshold=Instrument.plain.t (a.clock.hatBeta i) from (Deployment.clock_eqns a.clock i).2.2.2.2.2.2]\n         refine (add_le_add ih hu).trans_eq ?_; unfold brace; unfold Pressure.betaF α; ring\n   exact_mod_cast (show 1<(K.L j).val from lt_of_lt_of_le (by norm_num) (K.large j).size)",
+            "line": 58,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Gain/Quotes.lean",
+            "fragment": "L58-L75"
+          },
+          "proof_context": {
+            "declaration": "YM.PhysicalNext.Repeat.Muse.header",
+            "lines": [
+              58,
+              75
+            ],
+            "conclusion": "By induction the sum of the per-step scalars below m is at most glint*brace m, telescoping the bounds of trade."
           }
         }
       }
@@ -151,7 +151,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

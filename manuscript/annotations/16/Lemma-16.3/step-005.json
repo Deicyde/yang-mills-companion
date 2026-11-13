@@ -1,9 +1,9 @@
 {
   "id": "Lemma 16.3 step 5",
   "kind": "proof_step",
-  "status": "partial",
-  "relation": "hasPart",
-  "note": "The Lean covers the shell insertion, the commutator in the null space, the all-degree quarter-turn commutation and `Corners.none` giving T=0. The last sentence, selecting a finite separating subfamily by reducing the common kernel, is not in `erasing`; it is `Work.A07.finite_rows`, a generic lemma used elsewhere.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Carried by Maxwell.Free.erasing with commute_ghost, ghosts_out, complete_turn and Corners.none; the finite selection is Work.A07.finite_rows. Differences: quarter-turn commutation goes through ODE uniqueness along oneParameter rather than differentiating the commutator, and the finite subfamily is a separate generic lemma.",
   "subject": [
     {
       "location": {
@@ -32,7 +32,7 @@
         "declaration": "YM.Maxwell.Free.erasing",
         "module": "YM.Next.MAXWELL.AwayTeam",
         "lines": [
-          101,
+          97,
           118
         ]
       },
@@ -43,14 +43,14 @@
             "id": "YM.Maxwell.Free.erasing"
           },
           "snippet": {
-            "text": "  apply Corners.none T H.alt\n  intro a b u v hb; apply LinearMap.ext; intro p\n  let k := Corners.quarter a b\n  obtain ⟨p,rfl⟩ := ((gear F).act d k.ortho).surjective p\n  rw [← show (gear F).act d k.ortho _=_ from (hi u v a b hb p)]\n  refine complete_turn F ?_ a b hb p\n  intro s p\n  let f := address F d p\n  have hg := address_in F d p\n  have hS (n) (x : Points (n+1)) (hx : x∈ conf _) :\n      ∃ χ V,Table.Window x χ ∧ Motion (x:=x 0) (l:=0) V (wheel G s) χ := by\n    obtain ⟨χ,hχ⟩ := Work.A01.exists_window x hx; exact ⟨χ,_,hχ,rotational_motion hχ.1 hχ.2.1 hχ.2.2.1 s⟩\n  have he := sub_eq_zero.mp (ghosts_out (Submodule.sub_mem _ (wheel_holds s (brand_fit F (T u v) f)) (brand_fit F (T u v) _))\n    (commute_ghost hd (hw u v) (hp u v) hS f hg (wheel_holds _ hg)))\n  apply address_inj F d\n  change address F d (scopeRise F d s _)=address F d (T u v (scopeRise F d s p))\n  rw [scopeRewrite,← brand_eval,← brand_eval,scopeRewrite]\n  exact he",
-            "line": 101,
+            "text": "  have hp u v a b : P u v (polStress G a b)=0 := by\n    calc\n      _ = address F d (T u v (R (original F a b))) := by rw [← brand_eval,address_rise,inertia]\n      _ = _ := by rw [ha,map_zero]\n  apply Corners.none T H.alt\n  intro a b u v hb; apply LinearMap.ext; intro p\n  let k := Corners.quarter a b\n  obtain ⟨p,rfl⟩ := ((gear F).act d k.ortho).surjective p\n  rw [← show (gear F).act d k.ortho _=_ from (hi u v a b hb p)]\n  refine complete_turn F ?_ a b hb p\n  intro s p\n  let f := address F d p\n  have hg := address_in F d p\n  have hS (n) (x : Points (n+1)) (hx : x∈ conf _) :\n      ∃ χ V,Table.Window x χ ∧ Motion (x:=x 0) (l:=0) V (wheel G s) χ := by\n    obtain ⟨χ,hχ⟩ := Work.A01.exists_window x hx; exact ⟨χ,_,hχ,rotational_motion hχ.1 hχ.2.1 hχ.2.2.1 s⟩\n  have he := sub_eq_zero.mp (ghosts_out (Submodule.sub_mem _ (wheel_holds s (brand_fit F (T u v) f)) (brand_fit F (T u v) _))\n    (commute_ghost hd (hw u v) (hp u v) hS f hg (wheel_holds _ hg)))\n  apply address_inj F d\n  change address F d (scopeRise F d s _)=address F d (T u v (scopeRise F d s p))\n  rw [scopeRewrite,← brand_eval,← brand_eval,scopeRewrite]\n  exact he",
+            "line": 97,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/MAXWELL/AwayTeam.lean",
-            "fragment": "L101-L118"
+            "fragment": "L97-L118"
           },
           "proof_context": {
             "declaration": "YM.Maxwell.Free.erasing",
@@ -58,46 +58,7 @@
               48,
               118
             ],
-            "conclusion": "For every degree `d`, `complete_turn` (commutation with infinitesimal rotations gives commutation with quarter turns) plus `commute_ghost` (the angular-shell Ward argument, `ghosts_out`) and `Corners.none` give `T=0`."
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Maxwell.Free.complete_turn",
-        "module": "YM.Next.MAXWELL.AwayTeam",
-        "lines": [
-          29,
-          46
-        ]
-      },
-      "role": "key",
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Maxwell.Free.complete_turn"
-          },
-          "snippet": {
-            "text": "lemma complete_turn {T : Module.End ℂ ((Model F).Field d)}\n    (h : ∀ u p,(gear F).lie d u (T p)=T ((gear F).lie d u p))\n    (i j : Axis) (he : i≠j) (p : (Model F).Field d) :\n    (gear F).act d (Corners.quarter i j).ortho (T p) = T ((gear F).act d (Corners.quarter i j).ortho p) := by\n  let u := Ortho.plane i j\n  let f := fun s => (gear F).act d (oneParameter u s)\n  let A t := f t (T p)\n  let C t := T (f t p)\n  let M := ((gear F).lie d u).toContinuousLinearMap\n  let L := (LinearMap.toContinuousLinearMap T).restrictScalars ℝ\n  have hp (s) : HasDerivAt A (M (A s)) s := circle_ode F u _ _\n  have ht (s : ℝ) : HasDerivAt C (M (C s)) s := by\n    change HasDerivAt C ((gear F).lie d u (T _)) s\n    rw [h]; exact L.hasFDerivAt.comp_hasDerivAt s (circle_ode F u p s)\n  rw [Corners.sendsTime i j he]\n  exact congr_fun (ODE_solution_unique_univ (s := fun _ => Set.univ) (fun (_ : ℝ) => M.lipschitz.lipschitzOnWith)\n    (fun t => ⟨hp t, mem_univ _⟩) (fun t => ⟨ht t,mem_univ _⟩) (show A 0=C 0 from by\n      simp [A,C,f,Work.A13.oneParameter_zero,(gear_port F).fixes])) _",
-            "line": 29,
-            "truncated": false
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/MAXWELL/AwayTeam.lean",
-            "fragment": "L29-L46"
-          },
-          "proof_context": {
-            "declaration": "YM.Maxwell.Free.complete_turn",
-            "lines": [
-              29,
-              46
-            ],
-            "conclusion": "Commutation with the Lie action of every skew generator implies commutation with the quarter-turn action, by ODE uniqueness along `oneParameter`."
+            "conclusion": "With T killing the stress, the angular Ward commutator lies in the ghost space and is removed, so T commutes with infinitesimal rotations, hence with quarter turns, and Corners.none gives T = 0 in all degrees."
           }
         }
       }
@@ -136,7 +97,124 @@
               104,
               150
             ],
-            "conclusion": "For silent `T` vanishing on the stress, `rewired L (T p) - T (rewired L p)` lies in `ghost G d`."
+            "conclusion": "Inserting the stress flux shell around the distinguished point puts the commutator of the motion with T in ghost G d."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Maxwell.Free.ghosts_out",
+        "module": "YM.Next.MAXWELL.Statistic",
+        "lines": [
+          80,
+          99
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Maxwell.Free.ghosts_out"
+          },
+          "snippet": {
+            "text": "lemma ghosts_out {p : WickPol G} (hp : p∈shellSector G d) (h : p∈ghost G d) : p=0 := by\n  by_contra H\n  let t := points (fun _ : Fin 1 => basis timeAxis)\n  have hx : Table.Pairing.single t timeAxis := ⟨injective_of_subsingleton _,fun _ => by simp [t,Axis]⟩\n  have he := detects timeAxis (basis timeAxis) (by simp) p H\n  let s := Table.Pairing.closedUp timeAxis t t\n  let q := mirrorBar (Signed.reflect timeAxis) p\n  let r := Equiv.swap (0 : Fin 2) 1\n  have hv := Table.Pairing.spans hx hx\n  change 0 < moment G s (Fin.append (fun _ => q) (fun _ => p)) at he\n  rw [exchangeSites r hv] at he\n  have heq : (Fin.append (fun _ : Fin 1 => q) (fun _ : Fin 1 => p) ∘ r)=Fin.cons p (fun _ => q) := by\n    ext1 i; fin_cases i <;> simp [r] <;> rfl\n  rw [heq] at he\n  change 0 < (moment G (Points.rearrange r (Table.Pairing.closedUp timeAxis t t))) (Fin.cons p fun _ => q) at he\n  rw [show moment G _ (Fin.cons (α:=fun _ : Fin 2 => WickPol G) p (fun _ => q))=0 from\n    h 1 _ _ (fun _ => ?_) (Points.rearrange_in r hv)] at he\n  · exact lt_irrefl _ he\n  obtain ⟨v,hv⟩ := hp\n  rw [show q = reflectPol _ (realForm p) from rfl,← hv,← real_eats,← pulls_label]; exact LinearMap.mem_range_self _ _",
+            "line": 80,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/MAXWELL/Statistic.lean",
+            "fragment": "L80-L99"
+          },
+          "proof_context": {
+            "declaration": "YM.Maxwell.Free.ghosts_out",
+            "lines": [
+              80,
+              99
+            ],
+            "conclusion": "A shell-sector polynomial in the ghost space is zero, by strict two-point positivity."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Maxwell.Free.complete_turn",
+        "module": "YM.Next.MAXWELL.AwayTeam",
+        "lines": [
+          29,
+          46
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Maxwell.Free.complete_turn"
+          },
+          "snippet": {
+            "text": "lemma complete_turn {T : Module.End ℂ ((Model F).Field d)}\n    (h : ∀ u p,(gear F).lie d u (T p)=T ((gear F).lie d u p))\n    (i j : Axis) (he : i≠j) (p : (Model F).Field d) :\n    (gear F).act d (Corners.quarter i j).ortho (T p) = T ((gear F).act d (Corners.quarter i j).ortho p) := by\n  let u := Ortho.plane i j\n  let f := fun s => (gear F).act d (oneParameter u s)\n  let A t := f t (T p)\n  let C t := T (f t p)\n  let M := ((gear F).lie d u).toContinuousLinearMap\n  let L := (LinearMap.toContinuousLinearMap T).restrictScalars ℝ\n  have hp (s) : HasDerivAt A (M (A s)) s := circle_ode F u _ _\n  have ht (s : ℝ) : HasDerivAt C (M (C s)) s := by\n    change HasDerivAt C ((gear F).lie d u (T _)) s\n    rw [h]; exact L.hasFDerivAt.comp_hasDerivAt s (circle_ode F u p s)\n  rw [Corners.sendsTime i j he]\n  exact congr_fun (ODE_solution_unique_univ (s := fun _ => Set.univ) (fun (_ : ℝ) => M.lipschitz.lipschitzOnWith)\n    (fun t => ⟨hp t, mem_univ _⟩) (fun t => ⟨ht t,mem_univ _⟩) (show A 0=C 0 from by\n      simp [A,C,f,Work.A13.oneParameter_zero,(gear_port F).fixes])) _",
+            "line": 29,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/MAXWELL/AwayTeam.lean",
+            "fragment": "L29-L46"
+          },
+          "proof_context": {
+            "declaration": "YM.Maxwell.Free.complete_turn",
+            "lines": [
+              29,
+              46
+            ],
+            "conclusion": "Commuting with the Lie action implies commuting with each coordinate quarter turn."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.A07.finite_rows",
+        "module": "YM.Work.A07",
+        "lines": [
+          27,
+          48
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.A07.finite_rows"
+          },
+          "snippet": {
+            "text": "theorem finite_rows {I E F : Type*} [AddCommGroup E] [Module ℝ E]\n    [FiniteDimensional ℝ E] [AddCommGroup F] [Module ℝ F]\n    (f : I → E →ₗ[ℝ] F) (h : ∀ x : E, (∀ i, f i x = 0) → x = 0) :\n    ∃ s : Finset I, Injective (LinearMap.pi (fun i : s => f i.1)) := by\n  classical\n  let K (s : Finset I) := ⨅ i : s, LinearMap.ker (f i.1)\n  have ex : ∃ n : ℕ, ∃ s : Finset I, Module.finrank ℝ (K s) = n := ⟨_, ∅, rfl⟩\n  obtain ⟨s, hs⟩ := Nat.find_spec ex\n  refine ⟨s, LinearMap.ker_eq_bot.mp (LinearMap.ker_eq_bot'.mpr ?_)⟩\n  intro x hx\n  have hmem : x ∈ K s := (Submodule.mem_iInf _).mpr fun j =>\n    LinearMap.mem_ker.mpr (congr_fun hx j)\n  refine h x fun i => ?_\n  -- Inserting any further row leaves the intersection equal.\n  have le : K (insert i s) ≤ K s := le_iInf fun j =>\n    iInf_le_of_le (⟨j.1, Finset.mem_insert_of_mem j.2⟩ : (insert i s : Finset I)) le_rfl\n  have he : K (insert i s) = K s := Submodule.eq_of_le_of_finrank_le le\n    (hs ▸ Nat.find_min' ex (show ∃ s', Module.finrank ℝ (K s') = Module.finrank ℝ (K (insert i s)) from\n      ⟨_, rfl⟩))\n  rw [← he] at hmem\n  exact LinearMap.mem_ker.mp ((Submodule.mem_iInf _).mp hmem\n    (⟨i, Finset.mem_insert_self ..⟩ : (insert i s : Finset I)))",
+            "line": 27,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/A07.lean",
+            "fragment": "L27-L48"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.A07.finite_rows",
+            "lines": [
+              27,
+              48
+            ],
+            "conclusion": "On a finite-dimensional space, a separating family of linear maps has a finite separating subfamily (by minimising the common kernel dimension)."
           }
         }
       }
@@ -151,7 +229,7 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which kept it; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a re-rating agent agreed; re-judged after a second independent review, which changed it from hasPart; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
       },
       "proof": {

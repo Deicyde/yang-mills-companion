@@ -8,10 +8,10 @@
  "provenance": "machine: a sonnet mapper and a sonnet verifier per batch, independently; an opus judge on disagreement and on one in five agreed noMatch records; two opus skeptics per claim that the text is wrong; records of the weakest classes re-judged after a second independent review (a blind opus judge, an opus ruling where it disagreed); no person reviewed",
  "counts": {
   "broadMatch": 22,
-  "closeMatch": 98,
+  "closeMatch": 101,
   "exactMatch": 203,
-  "hasPart": 9,
-  "narrowMatch": 15,
+  "hasPart": 5,
+  "narrowMatch": 16,
   "noMatch": 1,
   "relatedMatch": 7
  },
@@ -15648,68 +15648,30 @@
    "context": "text",
    "enclosing": null,
    "kind": "display",
-   "relation": "hasPart",
-   "class": "Partial",
+   "relation": "closeMatch",
+   "class": "Faithful",
    "ends": [
     {
-     "decl": "YM.Lattice.separation",
-     "file": "YM/Lattice/Site.lean",
-     "lines": [
-      81,
-      81
-     ],
-     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Lattice/Site.lean#L81-L81",
-     "snippet": "def separation (x y : Site n) := pdist (x-y)",
-     "conclusion": "`separation x y` is the torus max-distance of two sites, `pdist (x-y)`, with `pdist` the sup over axes of the minimal-absolute lift (`lift`), which equals the minimum over lattice translates of the sup norm.",
-     "proof_context": {
-      "declaration": "YM.Lattice.separation",
-      "lines": [
-       81,
-       81
-      ],
-      "conclusion": "`separation x y` is the torus max-distance of two sites, `pdist (x-y)`, with `pdist` the sup over axes of the minimal-absolute lift (`lift`), which equals the minimum over lattice translates of the sup norm."
-     }
-    },
-    {
-     "decl": "YM.Lattice.pdist",
-     "file": "YM/Lattice/Site.lean",
-     "lines": [
-      78,
-      78
-     ],
-     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Lattice/Site.lean#L78-L78",
-     "snippet": "def pdist (x : Site n) := Finset.univ.sup fun i : Axis => (lift x i).natAbs",
-     "conclusion": "`pdist` takes the coordinatewise minimal-absolute lift in `ZMod n` and then the sup of absolute values, the inner `min_z |.|_infty`.",
-     "proof_context": {
-      "declaration": "YM.Lattice.pdist",
-      "lines": [
-       78,
-       78
-      ],
-      "conclusion": "`pdist` takes the coordinatewise minimal-absolute lift in `ZMod n` and then the sup of absolute values, the inner `min_z |.|_infty`."
-     }
-    },
-    {
-     "decl": "YM.Extraction.Gaps.gridSeparation",
+     "decl": "YM.Extraction.Gaps.someFine",
      "file": "YM/Extraction/Gaps.lean",
      "lines": [
-      151,
-      152
+      28,
+      29
      ],
-     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extraction/Gaps.lean#L151-L152",
-     "snippet": "lemma gridSeparation {p N : ℕ} {u : Fin n → Cover} (x : Fin n → Site (S.side N p)) (h : x = wrap _ ∘ u) {r : ℝ}\n    (he : someFine S p r (tag (S.a N) u)) : ∀ i j, i≠j → r ≤ S.a N * separation (x j) (x i) := by",
-     "conclusion": "A lower bound `r <= S.a N * separation (x j) (x i)` for every pair `i != j` is the physical-unit, all-pairs use of the separation.",
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extraction/Gaps.lean#L28-L29",
+     "snippet": "def someFine {n : ℕ} (p : ℕ) (s : ℝ) (x : Points n) := ∀ i j, i≠j → ∃ a,\n    off S p (distances x i j a) s",
+     "conclusion": "someFine p s x: for every pair i != j some axis a has physical coordinate difference at distance at least s from every multiple of the period length, i.e. min over pairs of the torus sup-distance is at least s; allFine requires this on every axis.",
      "proof_context": {
-      "declaration": "YM.Extraction.Gaps.gridSeparation",
+      "declaration": "YM.Extraction.Gaps.someFine",
       "lines": [
-       151,
-       158
+       28,
+       29
       ],
-      "conclusion": "A lower bound `r <= S.a N * separation (x j) (x i)` for every pair `i != j` is the physical-unit, all-pairs use of the separation."
+      "conclusion": "someFine p s x: for every pair i != j some axis a has physical coordinate difference at distance at least s from every multiple of the period length, i.e. min over pairs of the torus sup-distance is at least s; allFine requires this on every axis."
      }
     }
    ],
-   "note": "`separation` is the pairwise torus max-distance in lattice units, the inner minimum over z; the minimum over pairs i != j, the factor a_N and the value +infinity for one slot are not a named quantity in [L].",
+   "note": "[L] uses the torus separation only through the threshold predicate YM.Extraction.Gaps.someFine, in physical units. For all pairs i != j it asks for an axis whose periodic distance is at least s, which is equivalent to sep_tor >= s. The lattice-unit pairwise distance YM.Lattice.separation (pdist of the difference) is related to it by Gaps.gridSeparation. [L] has no named quantity for the minimum over pairs.",
    "confidence": "medium",
    "verification": {
     "batch": "D14-1",
@@ -15724,7 +15686,7 @@
     "disagreement": "class Partial vs Faithful",
     "judge": "hasPart",
     "ruling": "mapper",
-    "source": "judge",
+    "source": "judge+rereview",
     "complete": true,
     "s5": {
      "how": "sweep agreed",
@@ -15733,10 +15695,10 @@
      "was": "hasPart"
     },
     "rereview": {
-     "kind": "kept",
+     "kind": "rejudged",
      "from": "hasPart",
      "source": "re-judged after a second independent review (whole class: blind opus judge, opus ruling on disagreement)",
-     "why": "the blind judge agreed on the class"
+     "why": "Because the per-axis minima over translates commute with the maximum over axes, someFine is exactly the condition sep_tor >= s, an equivalent packaging of the display, not just a part of it."
     }
    }
   },
@@ -17682,9 +17644,28 @@
    "context": "text",
    "enclosing": null,
    "kind": "display",
-   "relation": "hasPart",
-   "class": "Partial",
+   "relation": "narrowMatch",
+   "class": "Deviates",
    "ends": [
+    {
+     "decl": "YM.Cells.Columns.Trials.cumulant",
+     "file": "YM/Cells/Corrected.lean",
+     "lines": [
+      84,
+      86
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Cells/Corrected.lean#L84-L86",
+     "snippet": "def cumulant (k : ℕ) (i c s t) := (standard C).useAt (standard C)\n  (points ![Z.tested k i s, Z.tested k i t])\n    ![⟨d,X.basis (names (X := X) i c s)⟩,⟨d,X.basis (names (X := X) i c t)⟩] - Z.singleton k i c s * Z.singleton k i c t",
+     "conclusion": "The pair cumulant is defined as the pair moment minus the product of the two singleton means.",
+     "proof_context": {
+      "declaration": "YM.Cells.Columns.Trials.cumulant",
+      "lines": [
+       84,
+       86
+      ],
+      "conclusion": "The pair cumulant is defined as the pair moment minus the product of the two singleton means."
+     }
+    },
     {
      "decl": "YM.Push.Corrected.Tests.cumulant",
      "file": "YM/Push/CORRECTED_COLUMNS/Program.lean",
@@ -17694,37 +17675,18 @@
      ],
      "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/CORRECTED_COLUMNS/Program.lean#L64-L66",
      "snippet": "def cumulant (k : ℕ) (i : Row X) (c : AxisX X) : Marks.Algebra (Mark X i) :=\n  Poly.inject fun v => (∑ s : Mark X i, if v.val={s} then Y.one k i c s else 0) +\n    ∑ s : Mark X i, ∑ t : Mark X i, if s<t ∧ v.val={s,t} then Y.pair k i c s t else 0",
-     "conclusion": "`cumulant` is the mark polynomial with singleton coefficients `one` and pair coefficients `pair`, and no other modes.",
+     "conclusion": "The cumulant mark polynomial has singleton coefficients `one` and pair coefficients `pair` (moment minus product of means) and no other modes.",
      "proof_context": {
       "declaration": "YM.Push.Corrected.Tests.cumulant",
       "lines": [
        64,
        66
       ],
-      "conclusion": "`cumulant` is the mark polynomial with singleton coefficients `one` and pair coefficients `pair`, and no other modes."
-     }
-    },
-    {
-     "decl": "YM.Push.Corrected.Tests.pair",
-     "file": "YM/Push/CORRECTED_COLUMNS/Program.lean",
-     "lines": [
-      61,
-      62
-     ],
-     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/CORRECTED_COLUMNS/Program.lean#L61-L62",
-     "snippet": "def pair (k : ℕ) (i : Row X) (c : AxisX X) (s t : Mark X i) := (standard C).useAt (standard C)\n  (points ![Y.reads k i s, Y.reads k i t]) ![⟨d,label X i c s⟩,⟨d,label X i c t⟩] - Y.one k i c s * Y.one k i c t",
-     "conclusion": "`pair k i c s t` is the two-point moment minus the product `one s * one t`, the connected pair moment.",
-     "proof_context": {
-      "declaration": "YM.Push.Corrected.Tests.pair",
-      "lines": [
-       61,
-       62
-      ],
-      "conclusion": "`pair k i c s t` is the two-point moment minus the product `one s * one t`, the connected pair moment."
+      "conclusion": "The cumulant mark polynomial has singleton coefficients `one` and pair coefficients `pair` (moment minus product of means) and no other modes."
      }
     }
    ],
-   "note": "The cases |I| = 1 and |I| = 2 of the formula are present: the singleton moment and the pair moment minus the product of the means. The general partition sum with weights (-1)^(|P|-1)(|P|-1)! is not written; [L] determines C^Max for any arity only through `Expands`.",
+   "note": "[L] has only the two-slot case. Tests.cumulant and Columns.Trials.cumulant define the singleton means and the connected pair moment directly as definitions, not as coefficients of log G^Max. The general partition formula with weights (-1)^{|P|-1}(|P|-1)! is absent.",
    "confidence": "medium",
    "verification": {
     "batch": "D14-2",
@@ -17735,7 +17697,7 @@
     "mapper": "hasPart",
     "verifier": "hasPart",
     "agreed": true,
-    "source": "mapper+verifier",
+    "source": "mapper+verifier+rereview",
     "complete": true,
     "s5": {
      "how": "sweep agreed",
@@ -17744,10 +17706,10 @@
      "was": "hasPart"
     },
     "rereview": {
-     "kind": "kept",
+     "kind": "rejudged",
      "from": "hasPart",
      "source": "re-judged after a second independent review (whole class: blind opus judge, opus ruling on disagreement)",
-     "why": "the blind judge agreed on the class"
+     "why": "[L] gives a special case (arity at most two) of a general formula, which is a narrower fact, rather than one part of a conjunction."
     }
    }
   },
@@ -20975,49 +20937,49 @@
    "context": "statement",
    "enclosing": "Lemma 18.3",
    "kind": "display",
-   "relation": "hasPart",
-   "class": "Partial",
+   "relation": "closeMatch",
+   "class": "Faithful",
    "ends": [
     {
      "decl": "YM.Next.UVStress.travels_jet",
      "file": "YM/Next/UV_STRESS/Focus.lean",
      "lines": [
       183,
-      189
+      196
      ],
-     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/UV_STRESS/Focus.lean#L183-L189",
-     "snippet": "lemma travels_jet (H : S.Hierarchy) (h : W.Derivatives S) (L : (Bel C.book).Hierarchy) (hp : V.Derivatives (Bel C.book))\n    (X : Scaling S) (ht : Approaches (path X) (isoPanel X)) (v : ℕ → Ribbon (Bel C.book) t) (x : Ribbon (Bel C.book) t)\n    (hv : ∀ i, Tendsto (fun k => v k i) atTop (𝓝 (x i)))\n    (j : ℕ) (s : Set (Points n)) (hs : IsCompact s) (hu : s ⊆ conf n) (ε : ℝ) (he : 0<ε) :\n    ∀ᶠ k in atTop, ∀ y∈s,\n      ‖iteratedFDeriv ℝ j (tested (X.r k) (isoPanel X k) (hang t (v k))) y - iteratedFDeriv ℝ j (disc (hang t x)) y‖ ≤ ε := by\n  filter_upwards [(closed_path H h L hp X ht n).jets (show Travels n X _ from ⟨t,v,x,hv,rfl⟩) s hs hu j he] with k hk y hy",
-     "conclusion": "For a scaling `X` satisfying `Approaches`, tags `v_k → x` and a compact `s ⊆ conf n`, every fixed jet of the rescaled correlation at `r_k y` is eventually within `ε` of the Maxwell one, uniformly on `s`.",
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/UV_STRESS/Focus.lean#L183-L196",
+     "snippet": "lemma travels_jet (H : S.Hierarchy) (h : W.Derivatives S) (L : (Bel C.book).Hierarchy) (hp : V.Derivatives (Bel C.book))\n    (X : Scaling S) (ht : Approaches (path X) (isoPanel X)) (v : ℕ → Ribbon (Bel C.book) t) (x : Ribbon (Bel C.book) t)\n    (hv : ∀ i, Tendsto (fun k => v k i) atTop (𝓝 (x i)))\n    (j : ℕ) (s : Set (Points n)) (hs : IsCompact s) (hu : s ⊆ conf n) (ε : ℝ) (he : 0<ε) :\n    ∀ᶠ k in atTop, ∀ y∈s,\n      ‖iteratedFDeriv ℝ j (tested (X.r k) (isoPanel X k) (hang t (v k))) y - iteratedFDeriv ℝ j (disc (hang t x)) y‖ ≤ ε := by\n  filter_upwards [(closed_path H h L hp X ht n).jets (show Travels n X _ from ⟨t,v,x,hv,rfl⟩) s hs hu j he] with k hk y hy\n  specialize hk y hy\n  -- symmetry/derivative closure is inside conf\n  have hh := ((smoothZoom H.smooth (panels (isoPanel X k) ∘ (hang t (v k))) (X.positive k)) _ (hu hy)).contDiffAt\n    ((conf_open _).mem_nhds (hu hy))\n  have hF := cont_disc L (hang t x) (hu hy)\n  rw [← iteratedFDeriv_sub_apply (show ContDiffAt ℝ (j : WithTop ℕ∞) (tested (X.r k) (isoPanel X k) (hang t (v k))) y from\n    hh.of_le (WithTop.coe_le_coe.mpr le_top)) (hF.of_le (WithTop.coe_le_coe.mpr le_top))]; exact hk",
+     "conclusion": "For a scaling with Approaches, labels v_k→x and compact s in the configuration space, the j-th derivative of tested(r_k, U_k, v_k) minus that of the free correlation is eventually at most epsilon uniformly on s.",
      "proof_context": {
       "declaration": "YM.Next.UVStress.travels_jet",
       "lines": [
        183,
        196
       ],
-      "conclusion": "For a scaling `X` satisfying `Approaches`, tags `v_k → x` and a compact `s ⊆ conf n`, every fixed jet of the rescaled correlation at `r_k y` is eventually within `ε` of the Maxwell one, uniformly on `s`."
+      "conclusion": "For a scaling with Approaches, labels v_k→x and compact s in the configuration space, the j-th derivative of tested(r_k, U_k, v_k) minus that of the free correlation is eventually at most epsilon uniformly on s."
      }
     },
     {
-     "decl": "YM.Next.UVStress.comparison_jets",
-     "file": "YM/Next/UV_STRESS/Focus.lean",
+     "decl": "YM.MergeProof.East.pays_sky",
+     "file": "YM/TraceExtension/Prom/Zoom/Running.lean",
      "lines": [
-      208,
-      212
+      25,
+      31
      ],
-     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/UV_STRESS/Focus.lean#L208-L212",
-     "snippet": "lemma comparison_jets (H : S.Hierarchy) (h : W.Derivatives S) (L : (Bel C.book).Hierarchy) (hp : V.Derivatives (Bel C.book))\n    (X : Scaling S) (ht : Approaches (path X) (isoPanel X)) (N d m : ℕ) (R : ℝ) (hr : 0<R) : X.jets N d m R := by\n  intro n _ j _ v hv ε he\n  exact travels_jet H h L hp X ht (t:=fun i => (v i).1) (fun _ i => (v i).2) (fun i => (v i).2)\n    (fun _ => tendsto_const_nhds) j _ (window_closed ..) (fun _ h => spaced_conf (inv_pos.mpr hr) h.1) ε he",
-     "conclusion": "From `Approaches`, `X.jets N d m R` holds: the jet comparison is uniform on the window of `Conf_n`.",
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Prom/Zoom/Running.lean#L25-L31",
+     "snippet": "theorem pays_sky (hG:G.Simple)(hX: Scrim C W u ψ φ δ (fly C.path.levels) r L) {z:ℕ →ℝ}\n   (hZ:∀ i j, i≤j→ generator G i≤z j) (h : ∀ d,FiresSky B H O J d (z d))(hD:DimAbove S) (𝓛:Ultrafilter (ℕ×ℕ))(hℓ:(𝓛:Filter _)≤ F.fuse) (s:ℕ→ℝ)(hS:Tendsto s atTop (𝓝 0))(hp:∀ i,0<s i): ∃ f:ℕ→ℕ,StrictMono f ∧ ∃ X:Scaling S,X.r=s ∘ f ∧ StarPath F a X hs 𝓛:= by\n   obtain ⟨v,V,hF,h',hκ,hV⟩:= wakesSky B H O J F a P hs.smooth he hG hX hZ h s hS hp\n   let X:Zoom:=⟨s∘v,(fun _=> hp _),h', hS.comp hF.tendsto_atTop⟩\n   obtain ⟨Y,hY,hA,hu,hZ⟩:= dockedSky hs P a H X V (fun i=> (hV i).1) (fun i=> (hV i).2) 𝓛 hℓ hD\n   have hr:Y.r=s ∘ v:= congr_arg Zoom.r hY\n   exact ⟨v,hF,Y,hr,⟨hA,hu,V,hκ,fun i=> ⟨(hV i).1,(hV i).2.trans (congr_fun hr i).symm⟩, hZ⟩⟩",
+     "conclusion": "Every positive null sequence s has a strictly increasing f and a scaling X with X.r=s∘f satisfying StarPath, including Approaches.",
      "proof_context": {
-      "declaration": "YM.Next.UVStress.comparison_jets",
+      "declaration": "YM.MergeProof.East.pays_sky",
       "lines": [
-       208,
-       212
+       25,
+       31
       ],
-      "conclusion": "From `Approaches`, `X.jets N d m R` holds: the jet comparison is uniform on the window of `Conf_n`."
+      "conclusion": "Every positive null sequence s has a strictly increasing f and a scaling X with X.r=s∘f satisfying StarPath, including Approaches."
      }
     }
    ],
-   "note": "[L] states the uniform comparison for the rescaled continuum correlation at r_k y of a compact set, assuming `Approaches`; the convergence of lattice correlations at the rounded points r_i x^(i) is not stated.",
+   "note": "travels_jet (Focus.lean) carries the display for all jet orders, applied along the subsequence and scaling from pays_sky, which supplies Approaches. [L] evaluates the correlation at r_i x itself, not at the rounded grid points r_i x^(i). The rounding error vanishes uniformly by the first-jet convergence.",
    "confidence": "medium",
    "verification": {
     "batch": "D18",
@@ -21032,7 +20994,7 @@
     "disagreement": "class Partial vs Faithful",
     "judge": "hasPart",
     "ruling": "mapper",
-    "source": "judge",
+    "source": "judge+rereview",
     "complete": true,
     "s5": {
      "how": "sweep agreed",
@@ -21041,10 +21003,10 @@
      "was": "hasPart"
     },
     "rereview": {
-     "kind": "kept",
+     "kind": "rejudged",
      "from": "hasPart",
      "source": "re-judged after a second independent review (whole class: blind opus judge, opus ruling on disagreement)",
-     "why": "the blind judge agreed on the class"
+     "why": "The rounding to x^(i) is a nameable difference in a uniformly continuous evaluation, not a missing part of the comparison, and pays_sky supplies the Approaches hypothesis."
     }
    }
   },
@@ -21831,8 +21793,8 @@
    "context": "text",
    "enclosing": null,
    "kind": "display",
-   "relation": "hasPart",
-   "class": "Partial",
+   "relation": "closeMatch",
+   "class": "Faithful",
    "ends": [
     {
      "decl": "YM.Trace.Det.marke",
@@ -21843,33 +21805,52 @@
      ],
      "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Det/Port.lean#L62-L62",
      "snippet": "def marke (p:Clip)(R:PathData G)(μ:ℝ)(U:Config G f):= Real.log (stock p R μ U).det/2 - Real.log (ammo μ U).det",
-     "conclusion": "`marke p R μ U = log det (stock p R μ U) / 2 - log det (ammo μ U)`, i.e. Γ_μ.",
+     "conclusion": "marke = log det(flare + mail mail^T + mu^2 I)/2 - log det(ammo mu): the regulated Gamma_mu.",
      "proof_context": {
       "declaration": "YM.Trace.Det.marke",
       "lines": [
        62,
        62
       ],
-      "conclusion": "`marke p R μ U = log det (stock p R μ U) / 2 - log det (ammo μ U)`, i.e. Γ_μ."
+      "conclusion": "marke = log det(flare + mail mail^T + mu^2 I)/2 - log det(ammo mu): the regulated Gamma_mu."
      }
     },
     {
-     "decl": "YM.Trace.Det.stock",
-     "file": "YM/TraceExtension/Det/Port.lean",
+     "decl": "YM.Trace.Loft.ridge",
+     "file": "YM/TraceExtension/Loft/Fluent.lean",
      "lines": [
-      61,
-      61
+      9,
+      9
      ],
-     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Det/Port.lean#L61-L61",
-     "snippet": "def stock (p:Clip)(R:PathData G)(μ:ℝ)(U:Config G f):=flare p R U+mail U*(mail U)ᵀ+μ^2 • (1:Funds _)",
-     "conclusion": "`stock = flare + mail * mailᵀ + μ^2 • 1`, the matrix H + d d^* + μ^2 I.",
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Loft/Fluent.lean#L9-L9",
+     "snippet": "def ridge (p:Clip)(M:PathData G)(μ:ℝ)(f:Side):= suite fun d i=> yard d i q (marke p M μ∘ input G f)",
+     "conclusion": "ridge = suite over d != i of the volume-normalised coefficient yard of marke: R_Lambda(mu) = Q(Gamma_mu).",
      "proof_context": {
-      "declaration": "YM.Trace.Det.stock",
+      "declaration": "YM.Trace.Loft.ridge",
       "lines": [
-       61,
-       61
+       9,
+       9
       ],
-      "conclusion": "`stock = flare + mail * mailᵀ + μ^2 • 1`, the matrix H + d d^* + μ^2 I."
+      "conclusion": "ridge = suite over d != i of the volume-normalised coefficient yard of marke: R_Lambda(mu) = Q(Gamma_mu)."
+     }
+    },
+    {
+     "decl": "YM.Trace.Loft.ridge_deriv",
+     "file": "YM/TraceExtension/Loft/Fluent.lean",
+     "lines": [
+      47,
+      47
+     ],
+     "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Loft/Fluent.lean#L47-L47",
+     "snippet": "lemma ridge_deriv (hs:M.Bounds p σ C D)(hm:0 < μ)(h:(Det.stock p M μ (1:Config G f)).det ≠ 0): HasDerivAt (fun t:ℝ=> ridge q p M t f) (-(μ:ℂ)*suite (fun d i=>umbra d i q p M μ f)) μ:=by",
+     "conclusion": "d/dmu ridge = -mu * suite umbra, so -mu R' = mu^2 suite umbra.",
+     "proof_context": {
+      "declaration": "YM.Trace.Loft.ridge_deriv",
+      "lines": [
+       47,
+       60
+      ],
+      "conclusion": "d/dmu ridge = -mu * suite umbra, so -mu R' = mu^2 suite umbra."
      }
     },
     {
@@ -21881,18 +21862,18 @@
      ],
      "url": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Loft/Awake.lean#L10-L10",
      "snippet": "abbrev seaD (p:Clip)(R:PathData G)(q:G.ColorIndex)(f:Side)(μ:ℝ):ℂ:=(μ:ℂ)^(2:ℕ)*suite (fun d i=> umbra d i q p R μ f)",
-     "conclusion": "`seaD μ = μ^2 * suite (umbra ..)`, the μ^2-weighted resolvent-trace coefficient that equals -μ R'(μ) after differentiating Γ_μ.",
+     "conclusion": "seaD mu = mu^2 * suite umbra, the quantity D_Lambda(mu).",
      "proof_context": {
       "declaration": "YM.Trace.Loft.seaD",
       "lines": [
        10,
        10
       ],
-      "conclusion": "`seaD μ = μ^2 * suite (umbra ..)`, the μ^2-weighted resolvent-trace coefficient that equals -μ R'(μ) after differentiating Γ_μ."
+      "conclusion": "seaD mu = mu^2 * suite umbra, the quantity D_Lambda(mu)."
      }
     }
    ],
-   "note": "Γ_μ is the definition marke, with ammo for d^*d+μ^2. R_Λ(μ) = Q(Γ_μ) is not defined as such in Lean, and D_Λ = -μR_Λ' appears only through the differentiated form seaD with the resolvent traces in umbra.",
+   "note": "[L] defines Gamma_mu as Det.marke, R_Lambda as Loft.ridge (Q applied to marke) and D_Lambda as Loft.seaD. The real part in Q is taken later (.re in coastMark), and D_Lambda is defined as mu^2 suite umbra, with -mu R' = D_Lambda proved by Loft.ridge_deriv rather than taken as the definition.",
    "confidence": "medium",
    "verification": {
     "batch": "D18",
@@ -21903,7 +21884,7 @@
     "mapper": "hasPart",
     "verifier": "hasPart",
     "agreed": true,
-    "source": "mapper+verifier",
+    "source": "mapper+verifier+rereview",
     "complete": true,
     "s5": {
      "how": "sweep agreed",
@@ -21912,10 +21893,10 @@
      "was": "hasPart"
     },
     "rereview": {
-     "kind": "kept",
+     "kind": "rejudged",
      "from": "hasPart",
      "source": "re-judged after a second independent review (whole class: blind opus judge, opus ruling on disagreement)",
-     "why": "the blind judge agreed on the class"
+     "why": "Loft.ridge in Fluent.lean defines R_Lambda = Q(Gamma_mu) and ridge_deriv ties -mu R' to seaD, so the claim that R_Lambda is not defined in [L] is wrong."
     }
    }
   },
