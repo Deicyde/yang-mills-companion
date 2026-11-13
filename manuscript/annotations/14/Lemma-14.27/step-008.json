@@ -1,19 +1,21 @@
 {
   "id": "Lemma 14.27 step 8",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "`rank_upper` makes the same independence-plus-dimension-count step (injective, rank at most n, so surjective), and `trained` gives the detection bound; [L] states the averaging limit as `∀ᶠ k, ∀ᶠ b → 0+` rather than reducing rho_av after fixing the level, and the constant has the form `M*n*A*L` instead of C_det.",
   "subject": [
     {
       "location": {
         "page": 153,
         "rect": [
           0.11962,
-          0.41291,
+          0.41347,
           0.76357,
-          0.17399
+          0.17343
         ]
       },
-      "title": "Lemma 14.27 step 8: Text, p. 153, not yet judged",
+      "title": "Lemma 14.27 step 8: Text, p. 153",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 14.27 step 8"
@@ -21,7 +23,164 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.rank_upper",
+        "module": "YM.FullVolume.Stand",
+        "lines": [
+          42,
+          56
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.rank_upper"
+          },
+          "snippet": {
+            "text": "lemma rank_upper {a: E →L[ℂ] E} {f: Fin n→E} {A:ℝ} (h:∀ i, ‖f i‖ ≤ A) {M L:ℝ}(hM:‖a‖ ≤ M) (_hP:0≤L) (g:E→ₗ[ℂ] Size m)\n    (h':∀ x: Size n, ‖x‖≤ L*‖g (a (arrange f x))‖) (hp: Module.finrank ℂ (LinearMap.range a.toLinearMap) ≤ n) (hA: 0 ≤ A):\n    ∀ x:E, ‖a x‖ ≤ M*n*A*L*‖g (a x)‖:= by\n  let F:= (LinearMap.rangeRestrict a.toLinearMap).comp (arrange f)\n  have hf: Injective F:=by\n    apply LinearMap.ker_eq_bot.mp; apply LinearMap.ker_eq_bot'.mpr; intro x hx\n    have he: a (arrange f x)=0:= congr_arg Subtype.val hx\n    simpa [he] using h' x\n  have hs : Surjective F:= (LinearMap.injective_iff_surjective_of_finrank_eq_finrank (Nat.le_antisymm (LinearMap.finrank_le_finrank_of_injective hf) (by simpa [Size] using hp))).1 hf\n  intro x\n  obtain ⟨t,ht⟩:= hs (a.toLinearMap.rangeRestrict x)\n  have ht: a (arrange f t)=a x:= congr_arg Subtype.val ht\n  rw [←ht]; refine (a.le_opNorm _).trans ((mul_le_mul hM (capacity t f A h) (norm_nonneg _) ((norm_nonneg a).trans hM)).trans ?_)\n  have hv : 0≤M:= (norm_nonneg a).trans hM\n  exact (mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left (h' t) (Nat.cast_nonneg _)) hA) hv).trans_eq (by ring)",
+            "line": 42,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Stand.lean",
+            "fragment": "L42-L56"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.rank_upper",
+            "lines": [
+              42,
+              56
+            ],
+            "conclusion": "`rank_upper` shows that injectivity of the lifted-trial map, `finrank (range a) ≤ n`, and tests within a bound give `‖a x‖ ≤ M n A L ‖g (a x)‖` for all `x`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.trained",
+        "module": "YM.FullVolume.Lit",
+        "lines": [
+          51,
+          53
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.trained"
+          },
+          "snippet": {
+            "text": "lemma trained (l:List Axis):\n    ∀ᶠ k:ℕ in atTop, ∀ᶠ b:ℝ in 𝓝[>] 0, ∃ Z:ℝ,0≤Z ∧ ∀ᶠ i in mesh,∀ x:C.label d,\n        ‖a.step d i x‖ ≤ Z *‖probe T k i b l (a.step d i x)‖:=by",
+            "line": 51,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Lit.lean",
+            "fragment": "L51-L53"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.trained",
+            "lines": [
+              51,
+              91
+            ],
+            "conclusion": "`trained` gives eventually in `k`, for small `b`, a constant `Z` with `‖a.step d i x‖ ≤ Z * ‖probe T k i b l (a.step d i x)‖` for all `x`, eventually in `mesh`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.weighed",
+        "module": "YM.FullVolume.Lit",
+        "lines": [
+          22,
+          22
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.weighed"
+          },
+          "snippet": {
+            "text": "lemma weighed (i:Cutoffs): Module.finrank ℂ (LinearMap.range (a.step d i).toLinearMap) ≤ Y.dim+1:=by",
+            "line": 22,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Lit.lean",
+            "fragment": "L22-L22"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.weighed",
+            "lines": [
+              22,
+              47
+            ],
+            "conclusion": "`weighed` bounds `finrank (range (a.step d i))` by `Y.dim + 1`, the number of trial lifts."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.probesUp",
+        "module": "YM.FullVolume.Maintain",
+        "lines": [
+          57,
+          59
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.probesUp"
+          },
+          "snippet": {
+            "text": "lemma probesUp {ε:ℝ}(hε:0<ε)(k:ℕ):\n    ∀ᶠ b:ℝ in 𝓝[>] 0, ∀ᶠ i in mesh, ∀ (j : Fin X.amount) (c:Fin (X.dim+1)),\n        dist (probe T k i b l (boostsAt T k c i) j) (monitor (siblings T k j) i (Bid.upper C (boostsAt T k c)) (loc T k j i)) ≤ ε := by",
+            "line": 57,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Maintain.lean",
+            "fragment": "L57-L59"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.probesUp",
+            "lines": [
+              57,
+              78
+            ],
+            "conclusion": "The averaged trial tests stay within `ε` of the unaveraged ones for small `b`, uniformly in the cutoff."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +190,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

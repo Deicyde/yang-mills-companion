@@ -1,7 +1,9 @@
 {
   "id": "Lemma 19.1 step 13",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Zero coefficient, linearity of the density and the identity for every `v` are there; the bound `(1+C_i)ηq_0` is carried as the cost `e + l.charge (-b)` with `charge (-b) ≤ c*e` (`hj`), and the fixed supports are the finite set `E` of `Accord.plays`.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.11962,
           0.47062,
           0.76012,
-          0.07134
+          0.07158
         ]
       },
-      "title": "Lemma 19.1 step 13: Text, p. 220, not yet judged",
+      "title": "Lemma 19.1 step 13: Text, p. 220",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 19.1 step 13"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extra.Histories.Relay.acclaim",
+        "module": "YM.MergeProof.Accord",
+        "lines": [
+          52,
+          55
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extra.Histories.Relay.acclaim"
+          },
+          "snippet": {
+            "text": "  have hk : Keyed H N p A i P := by\n    refine ⟨Hn,Hp,?_⟩\n    change (beside U (l.plays (-b))).x=0; rw [reckon,show (l.plays (-b)).x=_ from hl.currents _,map_neg]\n    rw [show (M.tone i).index b=U.x from l.index.apply_symm_apply _]; exact add_neg_cancel _",
+            "line": 52,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Accord.lean",
+            "fragment": "L52-L55"
+          },
+          "proof_context": {
+            "declaration": "YM.Extra.Histories.Relay.acclaim",
+            "lines": [
+              25,
+              118
+            ],
+            "conclusion": "`Keyed ... i P`: the new remainder has coefficient zero (`beside U (l.plays (-b))` has `x = 0`) and the format and bound `hn`, `hp`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extra.Histories.Relay.acclaim",
+        "module": "YM.MergeProof.Accord",
+        "lines": [
+          93,
+          99
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extra.Histories.Relay.acclaim"
+          },
+          "snippet": {
+            "text": "    have hc : (P.bar M v).density 0 B R=blast H N p i d (g Q.sil)+ f u := by\n      change (beside P.sil _).density _ B R = _\n      have hc := plus HR Hp (hl.earns (P.a+v)).2 B\n      rw [hc, plus HR hP (hl.earns (-b)).2 B,hD]\n      rw [show P.a+v = b+u by unfold P u; simp [add_comm, add_assoc]]\n      change _ + f (-b) + f (b+u)=_+f u\n      rw [hf.map_add, (show f (-b) = -f b from (IsLinearMap.mk' f hf).map_neg b)]; abel",
+            "line": 93,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Accord.lean",
+            "fragment": "L93-L99"
+          },
+          "proof_context": {
+            "declaration": "YM.Extra.Histories.Relay.acclaim",
+            "lines": [
+              25,
+              118
+            ],
+            "conclusion": "`hc` gives the density of the recentred family as `blast` of the fine density plus `f u` by linearity of the column density."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
       }
     }
   }

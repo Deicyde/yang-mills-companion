@@ -1,32 +1,34 @@
 {
   "id": "Lemma 19.22 step 26",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean states that crossing terms vanish against a mask test supported off the diagonal, giving equality of the full expression with the block product; it does not state agreement on overlaps of two sectors.",
   "subject": [
     {
       "location": {
         "page": 237,
         "rect": [
           0.12026,
-          0.73213,
+          0.73263,
           0.75948,
-          0.03458
+          0.03415
         ]
       },
-      "title": "Lemma 19.22 step 26: Text, p. 237, not yet judged",
+      "title": "Lemma 19.22 step 26: Text, p. 237",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 19.22 step 26",
           "quads": [
             [
               0.12026,
-              0.73213,
+              0.73263,
               0.87974,
-              0.73213,
+              0.73263,
               0.87974,
-              0.7488,
+              0.74966,
               0.12026,
-              0.7488
+              0.74966
             ],
             [
               0.12026,
@@ -34,16 +36,95 @@
               0.83497,
               0.74881,
               0.83497,
-              0.7667,
+              0.76678,
               0.12026,
-              0.7667
+              0.76678
             ]
           ]
         }
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Normal.System.refines",
+        "module": "YM.Contacts.Score.Formula",
+        "lines": [
+          97,
+          98
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Normal.System.refines"
+          },
+          "snippet": {
+            "text": "  apply Finset.sum_subset (Finset.filter_subset ..); intro a _ hi; obtain ⟨b,hb,u,hu,y,hy,hxy,c,hc,d,hd,hcu,hdy⟩:= crossing (P:=a) (Q:=Q) (fun h=> hi (Finset.mem_filter.mpr ⟨Finset.mem_univ _,h⟩))\n  rw [parcel,split_last _ hb p ((S.compatible P s).stands a),mul_assoc, all_off (f:=v) (K:=normalOn P b) (?_) (S.translatesOrigin P s b),mul_zero]; intro x hx hp; have h := Submodule.starProjection_apply_eq_zero_iff (normalOn P b) |>.2 hx; exact hv _ hp _ hu _ hy (Ne.symm hxy) _ hcu _ hdy ((collapsed_iff ..).1 ((local_collapse (le_trans (plane_le (a.subset hb)) hg) x).2 h) _ hc _ hd)",
+            "line": 97,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Score/Formula.lean",
+            "fragment": "L97-L98"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Normal.System.refines",
+            "lines": [
+              92,
+              98
+            ],
+            "conclusion": "Each crossing term is multiplied by a mask test supported off the crossing diagonal and vanishes by `all_off`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Normal.System.refines",
+        "module": "YM.Contacts.Score.Formula",
+        "lines": [
+          92,
+          94
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Normal.System.refines"
+          },
+          "snippet": {
+            "text": "lemma refines (v : SmoothTests E) (Q : Pieces g) (hg : plane g ≤ LinearMap.range P.toLinearMap)\n    (hv : ∀ x∈ tsupport v.val, ∀ i∈Q.parts, ∀ j∈Q.parts,i≠j → ∀ a∈ i,∀ b∈ j,(P x) a≠(P x) b) :\n    S.full P s g*instructionScore E A (mask v) = parcel (S.full P s) Q * instructionScore E A (mask v) := by",
+            "line": 92,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Score/Formula.lean",
+            "fragment": "L92-L94"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Normal.System.refines",
+            "lines": [
+              92,
+              98
+            ],
+            "conclusion": "On tests supported where the blocks of `Q` are separated, `S.full * mask v = parcel (S.full) Q * mask v`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -53,8 +134,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
       }
     }
   }

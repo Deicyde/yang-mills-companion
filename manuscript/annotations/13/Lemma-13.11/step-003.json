@@ -1,7 +1,9 @@
 {
   "id": "Lemma 13.11 step 3",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "narrowMatch",
+  "note": "[M] fixes c_j, theta and the entry threshold so that the sum is at most epsilon^reg/1024 by letting t^3/epsilon^reg tend to 0; the Lean has only the abstract inequality `regularNeed <= delta` as a hypothesis of `renew` and does not choose the constants.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.11962,
           0.68486,
           0.76011,
-          0.09467
+          0.09507
         ]
       },
-      "title": "Lemma 13.11 step 3: Text, p. 106, not yet judged",
+      "title": "Lemma 13.11 step 3: Text, p. 106",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 13.11 step 3"
@@ -21,7 +23,47 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.AnalyticBridge.VerifiedReset.Collection.Fees",
+        "module": "YM.AnalyticBridge.VERIFIED_RESET_STEP.Investor",
+        "lines": [
+          49,
+          51
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.AnalyticBridge.VerifiedReset.Collection.Fees"
+          },
+          "snippet": {
+            "text": "structure Fees (G : Gauge) (p : BudgetPoint) (c : Clip) (σ C α H w δ γ : ℝ) : Prop where\n  regular : regularNeed G p c σ C α H ≤ δ\n  hard : ∃ m κ, softNeed G p c σ C α H ≤ m ∧ Payments.Rates p.B γ w m κ",
+            "line": 49,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/VERIFIED_RESET_STEP/Investor.lean",
+            "fragment": "L49-L51"
+          },
+          "proof_context": {
+            "declaration": "YM.AnalyticBridge.VerifiedReset.Collection.Fees",
+            "lines": [
+              49,
+              51
+            ],
+            "conclusion": "`Fees.regular` takes `regularNeed <= delta` as a hypothesis."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +73,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents agreed on the class but cited different declarations; the mapper's kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
       }
     }
   }

@@ -1,19 +1,21 @@
 {
   "id": "Lemma 19.22 step 2",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] has the unregrouped form full = punct - sum_w R_w punct T_{L-1-w}; [M]'s regrouping into (1 - sum R) punct f + sum R punct (1 - T) f is the same sum rearranged and is not stated as a lemma. Here `depth` is `degree + 1 - 4(card-1)`, matching L_h.",
   "subject": [
     {
       "location": {
         "page": 236,
         "rect": [
           0.12026,
-          0.64829,
+          0.64869,
           0.75948,
-          0.02002
+          0.01962
         ]
       },
-      "title": "Lemma 19.22 step 2: Text, p. 236, not yet judged",
+      "title": "Lemma 19.22 step 2: Text, p. 236",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 19.22 step 2"
@@ -21,7 +23,125 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Normal.System.equation_subtract",
+        "module": "YM.Contacts.Score.Formula",
+        "lines": [
+          55,
+          55
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Normal.System.equation_subtract"
+          },
+          "snippet": {
+            "text": "lemma equation_subtract (hg : 1 < g.card) : S.cumulant P s g= S.subtractAt P s g (S.punctured P s g) := by",
+            "line": 55,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Score/Formula.lean",
+            "fragment": "L55-L55"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Normal.System.equation_subtract",
+            "lines": [
+              55,
+              59
+            ],
+            "conclusion": "For `1 < g.card` the cumulant is `subtractAt` applied to the punctured expression."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Normal.System.full_formula",
+        "module": "YM.Contacts.Score.Formula",
+        "lines": [
+          60,
+          60
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Normal.System.full_formula"
+          },
+          "snippet": {
+            "text": "lemma full_formula (hg : g.Nonempty) : S.full P s g= S.punctured P s g+ S.cumulant P s g := partition_cases hg",
+            "line": 60,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Score/Formula.lean",
+            "fragment": "L60-L60"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Normal.System.full_formula",
+            "lines": [
+              60,
+              60
+            ],
+            "conclusion": "The full expression is the punctured expression plus the cumulant."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Normal.System.subtractAt",
+        "module": "YM.Contacts.Score.Formula",
+        "lines": [
+          43,
+          43
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Normal.System.subtractAt"
+          },
+          "snippet": {
+            "text": "def subtractAt (g : Group k) (F : Score E A) := - ∑ w:Fin (S.depth g), reshape (S.reader g w) F * instructionScore E A (taylor (normalOn P g) s ((S.depth g) - 1-w.val))",
+            "line": 43,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Score/Formula.lean",
+            "fragment": "L43-L43"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Normal.System.subtractAt",
+            "lines": [
+              43,
+              43
+            ],
+            "conclusion": "`subtractAt` is minus the sum over `w < depth` of the reader at degree `w` times `taylor` of order `depth-1-w`, applied to the punctured score."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +151,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

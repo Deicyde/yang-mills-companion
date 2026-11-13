@@ -1,7 +1,9 @@
 {
   "id": "Lemma 12.5 step 6",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean states the homotopy identity at real momenta with `B` existential (built as the sum `X + Y` in the induction), together with strip and jet bounds; the explicit sum of `h_a R_{a-1}...R_1 f` is not stated.",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.04756
         ]
       },
-      "title": "Lemma 12.5 step 6: Display, p. 79, not yet judged",
+      "title": "Lemma 12.5 step 6: Display, p. 79",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 12.5 step 6"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.allcombs",
+        "module": "YM.Next.STATIONARY.Lift.Koszul",
+        "lines": [
+          520,
+          523
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.allcombs"
+          },
+          "snippet": {
+            "text": "private lemma allcombs {σ A : ℝ} (hs : 0<σ) (ha : 0 ≤ A) (l : List Axis) (f : SheetLeg α ξ r) {s : ℕ} (hf : CostWall σ A f)\n    (hv : Cycles (projected m') r f) (hk : JetWall s f) {U} (hU : Uniforms ξ α m' U) (hw : wall U f) :\n    ∃ B : SheetLeg α ξ (r+1), CostWall (σ/4) (A*(l.length*priceDivision α σ)) B ∧ JetWall (s-1) B ∧\n      wall U B ∧ ∀ p : Corn α, f (axes p)=cob r (projected m') B (axes p)+purge m' f l (axes p) := by",
+            "line": 520,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Lift/Koszul.lean",
+            "fragment": "L520-L523"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.allcombs",
+            "lines": [
+              520,
+              535
+            ],
+            "conclusion": "There is `B` with `f (axes p) = cob B (axes p) + purge f l (axes p)`, where `purge` is the composite of the `comb` remainders, `R_4 R_3 R_2 R_1 f` for the four axes."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.purge",
+        "module": "YM.Next.STATIONARY.Lift.Koszul",
+        "lines": [
+          516,
+          518
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.purge"
+          },
+          "snippet": {
+            "text": "private def purge (f : SheetLeg α ξ r) : List Axis → SheetLeg α ξ r\n  | [] => f\n  | i::l => purge (comb m' i f) l",
+            "line": 516,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Lift/Koszul.lean",
+            "fragment": "L516-L518"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.purge",
+            "lines": [
+              516,
+              518
+            ],
+            "conclusion": "`purge` composes `comb` along the list of axes."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

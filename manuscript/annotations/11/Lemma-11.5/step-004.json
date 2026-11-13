@@ -1,7 +1,9 @@
 {
   "id": "Lemma 11.5 step 4",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "Lean defines the two-form metric directly and proves its reduced one-form as a Schur complement (`rotor_law`) with the Lagrange-type matrix identity `blade_price`; the minimum over phi with weights w_a is never stated, so the closed form is reached as a different quantity.",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.0449
         ]
       },
-      "title": "Lemma 11.5 step 4: Display, p. 51, not yet judged",
+      "title": "Lemma 11.5 step 4: Display, p. 51",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 11.5 step 4"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Free.rotor_law",
+        "module": "YM.Next.FREE_KERNELS.Signal",
+        "lines": [
+          103,
+          105
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Free.rotor_law"
+          },
+          "snippet": {
+            "text": "lemma rotor_law : rotor S k v p=fieldI S k v p -\n    (scaleR S k v p)⁻¹ • (fieldI S k v p * signal S 0 p * mirage S 0 p * fieldI S k v p) := by\n  let a := scaleR S k v p; have ha : a≠0 := scaleR_live S k hk v hp he",
+            "line": 103,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/Signal.lean",
+            "fragment": "L103-L105"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Free.rotor_law",
+            "lines": [
+              103,
+              120
+            ],
+            "conclusion": "`rotor` (mirage * pulse * signal, the one-form quadratic form of the two-form metric) equals `fieldI` minus `(scaleR)⁻¹ fieldI signal mirage fieldI`, the Schur complement of the diagonal precision after eliminating the gradient."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Free.blade_price",
+        "module": "YM.Next.FREE_KERNELS.Masks",
+        "lines": [
+          88,
+          92
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Free.blade_price"
+          },
+          "snippet": {
+            "text": "lemma blade_price (x y t : Axis → ℂ) :\n    (wedge 1 x).transpose*mask 2 t*wedge 1 y=(∑ i, x i*(t i*y i)) • mask 1 t -\n      mask 1 t * wedge 0 y * (wedge 0 x).transpose * mask 1 t := by\n  rw [Matrix.mul_assoc,mask_insert,← Matrix.mul_assoc,crossed, sub_mul, smul_mul_assoc, one_mul,\n    mask_insert,mask_nil,Matrix.mul_one]",
+            "line": 88,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/Masks.lean",
+            "fragment": "L88-L92"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Free.blade_price",
+            "lines": [
+              88,
+              92
+            ],
+            "conclusion": "The matrix identity (wedge 1 x)^T mask 2 t (wedge 1 y) = (sum x t y) mask 1 t - mask 1 t (wedge 0 y)(wedge 0 x)^T mask 1 t, the Lagrange identity behind the closed form."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

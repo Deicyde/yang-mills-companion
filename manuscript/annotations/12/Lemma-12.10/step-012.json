@@ -1,19 +1,21 @@
 {
   "id": "Lemma 12.10 step 12",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] states the bound with the abstract price `funds` for `c_pre ε`, derived from `vacuumError <= sites*funds/2` plus `higher_estimate` and `pays_cubic`.",
   "subject": [
     {
       "location": {
         "page": 88,
         "rect": [
           0.12026,
-          0.51419,
+          0.51472,
           0.75948,
-          0.03636
+          0.03583
         ]
       },
-      "title": "Lemma 12.10 step 12: Display, p. 88, not yet judged",
+      "title": "Lemma 12.10 step 12: Display, p. 88",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 12.10 step 12"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVNext.CouplingReset.pays_surplus",
+        "module": "YM.UVNext.COUPLING_RESET.Precision",
+        "lines": [
+          124,
+          127
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVNext.CouplingReset.pays_surplus"
+          },
+          "snippet": {
+            "text": "lemma pays_surplus (hg : ∀ j x, W.betaEntry j ≤ x → ∀ i, StepStages j i → CubicGate D q j i x) {x : ℝ}\n    (hm : m < N) (hV : flags (B.a.budget m).threshold V = ∅)\n    (h : |vacuumError B N Q V x| ≤ sites (B.a.S.side m p) * (funds B.a m q / 2)) : let A := board B N F\n    |predictor B N Q x * A.leg V + A.background V - contrast (target Q) V x| ≤ sites (B.a.S.side m p) * funds B.a m q := by",
+            "line": 124,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/COUPLING_RESET/Precision.lean",
+            "fragment": "L124-L127"
+          },
+          "proof_context": {
+            "declaration": "YM.UVNext.CouplingReset.pays_surplus",
+            "lines": [
+              124,
+              143
+            ],
+            "conclusion": "`|predictor*leg V + background V - contrast (target Q) V x| <= sites n * funds`, i.e. `|b_u K_pr + L_m(V) - log H(1)/H(V)| <= |Λ| c_pre ε`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVNext.CouplingReset.Income",
+        "module": "YM.UVNext.COUPLING_RESET.Advance",
+        "lines": [
+          78,
+          85
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVNext.CouplingReset.Income"
+          },
+          "snippet": {
+            "text": "structure Income (B : Directed G I Z K P) (N m p : ℕ) (q : ResetPrices) (s : Set ℝ) (Q : In B.a m p)\n    (V : Config G (B.a.S.side m p)) (F : Terms B.a m p) : Prop where\n  catalog : Catalog (board B N F) s (window B.a m q) (B.a.clock.allowance m) (B.a.clock.forcedAllowance m)\n  pos : ∀ x∈s, 0 < target Q x 1 ∧ 0 < target Q x V\n  surplus : ∀ x∈s, let A := board B N F\n    |predictor B N Q x * A.leg V + A.background V - contrast (target Q) V x| ≤ sites (B.a.S.side m p) * funds B.a m q\n  slow : ∀ x∈s, ∀ a∈window B.a m q, ∀ b∈window B.a m q,\n    |(board B N F).add V x b - (board B N F).add V x a| ≤ sites (B.a.S.side m p) * funds B.a m q * |b-a|",
+            "line": 78,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/COUPLING_RESET/Advance.lean",
+            "fragment": "L78-L85"
+          },
+          "proof_context": {
+            "declaration": "YM.UVNext.CouplingReset.Income",
+            "lines": [
+              78,
+              85
+            ],
+            "conclusion": "`surplus` field of `Income`: the same bound with `A.leg V`, `A.background V` and `contrast`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

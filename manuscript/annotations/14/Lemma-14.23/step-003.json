@@ -1,7 +1,9 @@
 {
   "id": "Lemma 14.23 step 3",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean defines the Gaussian contraction `milk Q` through creation operators instead of the series Σ(Δ_C)^j/(2^j j!), and proves no equivalence with that series. The inverse H_{-C} follows from the semigroup law `warms` with `milk 0 = id`.",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.04248
         ]
       },
-      "title": "Lemma 14.23 step 3: Display, p. 146, not yet judged",
+      "title": "Lemma 14.23 step 3: Display, p. 146",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 14.23 step 3"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Rank.Normal.milk",
+        "module": "YM.Next.RANK.Gaussian",
+        "lines": [
+          77,
+          77
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Rank.Normal.milk"
+          },
+          "snippet": {
+            "text": "def milk : Module.End ℂ (poly V) := ((LinearMap.applyₗ (R:=ℂ)) 1).comp (make Q).toLinearMap",
+            "line": 77,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Gaussian.lean",
+            "fragment": "L77-L77"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Rank.Normal.milk",
+            "lines": [
+              77,
+              77
+            ],
+            "conclusion": "`milk Q` is the Gaussian (Wick) contraction operator for covariance `Q`, built as the algebra map sending `X i` to the creation operator `X i + slit (Q.cov i)`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Rank.Normal.warms",
+        "module": "YM.Next.RANK.Gaussian",
+        "lines": [
+          96,
+          102
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Rank.Normal.warms"
+          },
+          "snippet": {
+            "text": "lemma warms (P : Symmetric V) (p : poly V) : milk P (milk Q p)=milk (P+Q) p := by\n  induction p using MvPolynomial.induction_on with\n  | C c => simp\n  | add p q hp hq => simp only [_root_.map_add,hp,hq]\n  | mul_X p i hp =>\n    rw [mul_comm p,feeds, _root_.map_add,feeds,feeds,← skims,hp]\n    change _ = _ + slit (P.cov i+Q.cov i) _; rw [slit_linear]; abel",
+            "line": 96,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Gaussian.lean",
+            "fragment": "L96-L102"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Rank.Normal.warms",
+            "lines": [
+              96,
+              102
+            ],
+            "conclusion": "`milk P (milk Q p) = milk (P+Q) p`, with `froze` giving `milk 0 = id`, so `milk (-Q)` inverts `milk Q`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

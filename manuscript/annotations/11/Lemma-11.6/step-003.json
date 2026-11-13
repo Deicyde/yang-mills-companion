@@ -1,9 +1,9 @@
 {
   "id": "Lemma 11.6 step 3",
   "kind": "proof_step",
-  "status": "not_formalized",
-  "relation": "noMatch",
-  "note": "[L] has no `tau_x(y)`, no `h_x'` and no `M_m a`, `F_m a` split of the coarse average `Q_m`; the coarse comparison is a single `bills` map.",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "`tau` is exactly minus the average over z and o of the route integrals, `derivative` gives h'_x(y)=τ_x(y)-τ_x(0) through `tap`, and `probe = mean + d 0 c * fixRoot` with `mean` the straight-link average is 𝒬_m=𝓜_m+d_0𝓕_m. Spreading the three formulas over separate declarations is not a difference.",
   "subject": [
     {
       "location": {
@@ -29,22 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Bid.stretch",
-        "module": "YM.Bid.Station",
+        "declaration": "YM.Precision.tau",
+        "module": "YM.PREC.FrameResponse",
         "lines": [
-          34,
-          36
+          57,
+          59
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Bid.stretch"
+            "id": "YM.Precision.tau"
+          },
+          "snippet": {
+            "text": "def tau (x : Site c) (a : S.patch.Points) : form 1 f →ₗ[ℝ] ℝ :=\n    -((Fintype.card S.patch.Points:ℝ)⁻¹ • ∑ b : S.patch.Points,\n      (Fintype.card Lattice.Order:ℝ)⁻¹ • ∑ i : Lattice.Order, integralLink (atPoint S x a) (route a.val b.val i))",
+            "line": 57,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Bid/Station.lean",
-            "fragment": "L34-L36"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PREC/FrameResponse.lean",
+            "fragment": "L57-L59"
+          },
+          "proof_context": {
+            "declaration": "YM.Precision.tau",
+            "lines": [
+              57,
+              59
+            ],
+            "conclusion": "`tau S x a` is minus the average over patch points b and routes o of the integral of the field along `route a b o`, from the offset `atPoint S x a`: the map τ_x(y)."
           }
         }
       }
@@ -54,22 +68,75 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Bid.bills",
-        "module": "YM.Bid.Station",
+        "declaration": "YM.Push.derivative",
+        "module": "YM.PREC.Derivative",
         "lines": [
           38,
-          38
+          39
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Bid.bills"
+            "id": "YM.Push.derivative"
+          },
+          "snippet": {
+            "text": "lemma derivative (t : S.SitesChoice) (v : S.patch.Points) (x : In G f) :\n    HasDerivAt (fun u : ℝ => hats S y t (u • x) v) (G.colorMat (tap S y v x - tap S y S.patch.center x)) 0 := by",
+            "line": 38,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Bid/Station.lean",
-            "fragment": "L38-L38"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PREC/Derivative.lean",
+            "fragment": "L38-L39"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.derivative",
+            "lines": [
+              38,
+              68
+            ],
+            "conclusion": "The frame derivative at patch point `v` equals `tap S y v x - tap S y center x`, with `tap_line` identifying `tap` with `tau`; this is h'_x(y)=τ_x(y)-τ_x(0)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Precision.probe",
+        "module": "YM.PREC.FrameResponse",
+        "lines": [
+          68,
+          68
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Precision.probe"
+          },
+          "snippet": {
+            "text": "def probe : Matrix (Body 1 c) (Body 1 f) ℝ := mean S+d 0 c * fixRoot S",
+            "line": 68,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PREC/FrameResponse.lean",
+            "fragment": "L68-L68"
+          },
+          "proof_context": {
+            "declaration": "YM.Precision.probe",
+            "lines": [
+              68,
+              68
+            ],
+            "conclusion": "`probe S = mean S + d 0 c * fixRoot S` with `fixRoot` built from `adjusted` (τ at the centre minus the weighted average of τ), the decomposition 𝒬_m = 𝓜_m + d_0 𝓕_m."
           }
         }
       }
@@ -84,8 +151,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge kept it; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

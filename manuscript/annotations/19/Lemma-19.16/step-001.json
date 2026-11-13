@@ -1,7 +1,9 @@
 {
   "id": "Lemma 19.16 step 1",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The iterated coefficient's own bound is not a field of `CoefIntegral` (only `ask` for the direct and `dual` for the difference, with both integrable), and the measurability is proved by continuity on the open set `V` and `measure_eval` rather than by the joint-measurability argument of Lemma 19.13.",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.10849
         ]
       },
-      "title": "Lemma 19.16 step 1: Text, p. 233, not yet judged",
+      "title": "Lemma 19.16 step 1: Text, p. 233",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 19.16 step 1"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Nesting.coefficient_joint",
+        "module": "YM.OPE.Nesting.Integration",
+        "lines": [
+          73,
+          94
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Nesting.coefficient_joint"
+          },
+          "snippet": {
+            "text": "lemma coefficient_joint {n:ℕ}{p:Fin n→Tree} (v:(fork n p).Leaf→S.Tag) (m:ℕ)(c:R.channels m)(D:(fork n p).Inner→ℕ):\n    ∀ᶠ r:ℝ in 𝓝[>]0, ∀ (s:(fork n p|>.Inner)→ℝ),Tapered _ r 1 s → ∀ (μ:Measure K)(B:ℝ)(q:K→ℂ)(z:Envelope K (fork n p)), Integrable q μ→ (∫ i, ‖q i‖ ∂μ) ≤ B→ AEMeasurable z μ→\n       (∀ᵐ i ∂μ, q i≠0→Accept r M η s (z i)) → CoefIntegral U R v m c D B ε s z q μ:=by\n    let t:=fork n p; let g₁(x:Tree.Plot t):=Kernel.output U R x v c; let g₂(x:Tree.Plot t):=Kernel.chord U R x v c D; let g₀(x:Tree.Plot t):=g₁ x-g₂ x\n    let V:=(Kernel.aperture U R t m D) ∩ {z| orbitMargin R.port m (Tree.profile z) (z|>anchor)}\n    have he:IsOpen V:= Kernel.stencil U R .. |>.inter (Kernel.collar_open U R m)\n    have hc:ContinuousOn g₁ V:= fun x hx=>(Kernel.output_smooth U R v c hx.2).continuousAt.continuousWithinAt\n    have h':ContinuousOn g₂ V:= fun x hx=>(Kernel.chord_smooth U R v c D hx.1).continuousAt.continuousWithinAt\n    have hm:Measurable (V.indicator g₁):=by\n       convert hc.measurable_piecewise (continuousOn_const (c:=(0:ℂ))) he.measurableSet using 1; ext i; by_cases h:i∈V <;> simp [Set.indicator,Set.piecewise,h,g₀]\n    have hm':Measurable (V.indicator g₀):= by\n       convert (hc.sub h').measurable_piecewise (continuousOn_const (c:=(0:ℂ))) he.measurableSet using 1; ext i; by_cases h:i∈V <;> simp [Set.indicator,Set.piecewise,h,g₀]\n    filter_upwards [Limits.coe_power U R h hM hη hε v m c D] with r h s hx μ B f z hf hB hz hl\n    let a:=bothToll (wages v) ε m D s; let b:= toll (wages v) ε m s\n    have ht := hl.mono (q:=fun i=> f i≠0→ z i∈V) fun i hi hg=>⟨(h s (z i) (hi hg)).2.1,(h s (z i) (hi hg)).1⟩\n    have hvs (g:Tree.Plot t→ℂ){c:ℝ}(hh:∀ᵐ i ∂μ,f i≠0→‖g (z i)‖ ≤ c)(hm:Measurable (V.indicator g))(hc:0≤c):= measure_eval f g z V c B hf hz ht hm hh hc hB\n    obtain ⟨h₁,h₁'⟩:=hvs g₁ (hl.mono fun i hi hf=>h _ _ (hi hf) |>.2.2.1) hm (hx.pay_nonneg ..)\n    obtain ⟨h₀,h₀'⟩:=hvs g₀ (hl.mono fun i hi hf=>h _ _ (hi hf) |>.2.2.2) hm' (hx.pay_both_nonneg ..)\n    have h₂: (fun i=>f i*g₂ (z i))=(fun i=>f i*g₁ (z i)-f i*g₀ (z i)):=funext fun i=>by dsimp only [g₀]; rw [mul_sub,sub_sub_cancel]\n    have hp: Integrable (fun i=>f i*g₂ (z i)) μ:= h₂ ▸ h₁.sub h₀\n    refine ⟨h₁,hp,h₁',(?_ : ‖ (∫ i, f i*g₁ (z i) ∂μ) - (∫ i, f i*g₂ (z i) ∂μ)‖ ≤ _)⟩\n    rw [← integral_sub h₁ hp]; exact (show (fun i=> f i * g₀ (z i)) = (fun i=> f i * g₁ (z i) - f i * g₂ (z i)) from funext (fun i=>mul_sub ..)) ▸ h₀'",
+            "line": 73,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Nesting/Integration.lean",
+            "fragment": "L73-L94"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Nesting.coefficient_joint",
+            "lines": [
+              73,
+              94
+            ],
+            "conclusion": "For `Accept`ed geometries almost everywhere the weighted direct and iterated coefficients are integrable, with bounds `B*toll` and `B*bothToll` for the integral and the difference (`CoefIntegral`), thresholds taken from `coe_power`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Nesting.all_weighted",
+        "module": "YM.OPE.Nesting.Profiles",
+        "lines": [
+          47,
+          64
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Nesting.all_weighted"
+          },
+          "snippet": {
+            "text": "lemma all_weighted : ∀ᶠ r:ℝ in 𝓝[>]0,∀ (s:((fork n f).Inner→ℝ))(μ:Measure K)(B:ℝ)(u:K→ℂ), Tapered (fork n f) r 1 s → Integrable u μ→ (∫ i, ‖u i‖ ∂μ) ≤ B →\n    ∀ (z:Tree.Envelope K (fork n f))(y:K→J→E4), AEMeasurable z μ → AEMeasurable y μ → (∀ᵐ i ∂μ,u i≠0→Accept r M η s (z i) ∧ Buffer (z i) (y i) δ) →\n    let estimate:=JointEstimate U R m (voices v) (voices w) (B *(Tree.toll (wages v) ε (m+1:ℝ) s) ) μ u (TestedProfile (fork n f) z y)\n    (∀ t:K→U.α.space.X, AEMeasurable t μ →estimate (.some ∘ t)) ∧ estimate (fun _=>none):=by\n    filter_upwards [raw_wave U R h hM hη hε v w hδ,Limits.tested_power U R h hM hη hδ hε v w m] with r ht he s μ B u hs hf hq z y hz hy H\n    let t:=fork n f; let p:K→ Loc t.Leaf J:= TestedProfile t z y\n    have hp:AEMeasurable p μ:= ((Kernel.plot_smooth (J:=J) (t:=t)).continuous.measurable).comp_aemeasurable (hz.prodMk hy)\n    let b (m:ℝ):= Tree.toll (wages v) ε m s\n    let guard:= guardZone (I:=t.Leaf) (J:=J) U R m\n    have test {Y:Type}[MeasurableSpace Y] (g:Y→Viewers U)\n         (hx:Measurable (fun z:Loc t.Leaf J × Y=> guard.indicator (fun t=> formula U R t.1 t.2.1 (voices v) t.2.2 (voices w) m (g z.2)) z.1))\n         (hx':Measurable (fun z:Loc t.Leaf J × Y=> guard.indicator (fun t=> whole (spectator U (g z.2)) t.1 (voices v) t.2.2 (voices w)) z.1))\n         (phase:K→Y)(h:AEMeasurable phase μ): JointEstimate U R m (voices v) (voices w) (B*b (m+1)) μ u p (g ∘ phase):=by\n           apply price_measurable U R _ _ p phase g m (c:=b (m+1)) (A:=b 0) (B:=B) hx hx' hp h hf hq _ _ _ (hs.pay_nonneg ..)\n           · exact H.mono fun i hi hw=>(he s (z i) (y i) (hi hw).1 (hi hw).2).1\n           · exact H.mono fun i hi hw=>(he s (z i) (y i) (hi hw).1 (hi hw).2).2.2 (g (phase i))\n           exact H.mono fun i hi hw=>(ht s (z i) (y i) (hi hw).1 (hi hw).2) (g (phase i))\n    exact ⟨fun y hy=>test (Y:=U.α.space.X) some (mixed_meas ..) (clip_mixed ..) y hy, test (Y:=Unit) (fun _=>none) ((indicator_meas ..).comp measurable_fst) ((clip_whole ..).comp measurable_fst) (fun _=>()) aemeasurable_const⟩",
+            "line": 47,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Nesting/Profiles.lean",
+            "fragment": "L47-L64"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Nesting.all_weighted",
+            "lines": [
+              47,
+              64
+            ],
+            "conclusion": "The weighted tested estimate has bound `B * toll (m+1)` for every a.e.-measurable phase map and for the mixed state."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

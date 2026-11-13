@@ -1,28 +1,30 @@
 {
   "id": "Lemma 17.3 step 13",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The residual is dominated by the even kernel `Mlamp` of the subtracted dyad, whose lower bound `lower` carries the `(1+E)^{-2m}` factor. The control of the residual by the pairing bound and sign transfer is inside `one_mode` and `walk`, not in these lines.",
   "subject": [
     {
       "location": {
         "page": 193,
         "rect": [
           0.12026,
-          0.69288,
+          0.69312,
           0.76155,
-          0.05354
+          0.05378
         ]
       },
-      "title": "Lemma 17.3 step 13: Text, p. 193, not yet judged",
+      "title": "Lemma 17.3 step 13: Text, p. 193",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 17.3 step 13",
           "quads": [
             [
               0.6498,
-              0.69288,
+              0.69312,
               0.87974,
-              0.69288,
+              0.69312,
               0.87974,
               0.71274,
               0.6498,
@@ -30,13 +32,13 @@
             ],
             [
               0.12026,
-              0.71323,
+              0.71378,
               0.88182,
-              0.71323,
+              0.71378,
               0.88182,
-              0.7289,
+              0.72882,
               0.12026,
-              0.7289
+              0.72882
             ],
             [
               0.12026,
@@ -44,16 +46,95 @@
               0.19897,
               0.72891,
               0.19897,
-              0.74642,
+              0.74689,
               0.12026,
-              0.74642
+              0.74689
             ]
           ]
         }
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.versus",
+        "module": "YM.Next.ROTATIONS.Odd",
+        "lines": [
+          139,
+          142
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.versus"
+          },
+          "snippet": {
+            "text": "lemma versus (m : ℕ) (s : ℝ) (hs : 1≤s) (f : Profile) (hf : Ends f) (ht : Reflects true f) (R : ℝ)\n    (hr : 1≤R) (hT : Room f R) : ∃ C : ℝ,0≤C ∧ ∀ (w E : ℝ), 0<w → R*w≤s → Room (width w center) s → 0≤E →\n    ‖Lap (-1) (stamp (Tail m s (width w f))) E‖ ≤ C*Mlamp m s (width w center) E := by\n  obtain ⟨C,hC,H⟩ := parcel m s hs f ht R hr hT",
+            "line": 139,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Odd.lean",
+            "fragment": "L139-L142"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.versus",
+            "lines": [
+              139,
+              171
+            ],
+            "conclusion": "The odd residual `Lap (-1) (stamp (Tail m s (width w f))) E` is bounded by `C * Mlamp m s (width w center) E` for all `E ≥ 0`, including zero."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.lower",
+        "module": "YM.Next.ROTATIONS.Energy",
+        "lines": [
+          133,
+          135
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.lower"
+          },
+          "snippet": {
+            "text": "lemma lower (m : ℕ) (s w E) (hs : 1≤s) (hw : 0<w) (hr : Room (width w center) s) (hE : 0≤E) :\n    (2:ℝ)⁻¹^m * (E+w)⁻¹ * ((1+E)⁻¹)^(2*m) ≤ Mlamp m s (width w center) E := by\n  let f (E : ℝ) := (2:ℝ)⁻¹^m * (E+w)⁻¹ * ((1+E)⁻¹)^(2*m)",
+            "line": 133,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Energy.lean",
+            "fragment": "L133-L135"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.lower",
+            "lines": [
+              133,
+              145
+            ],
+            "conclusion": "The even kernel is bounded below by `2^{-m}(E+w)^{-1}(1+E)^{-2m}`, including `E=0`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -63,8 +144,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

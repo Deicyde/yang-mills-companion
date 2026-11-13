@@ -1,7 +1,9 @@
 {
   "id": "Lemma 14.22 step 1",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "broadMatch",
+  "note": "From the strictly positive reflected two-point value, `scanner_inj` proves full rank (injectivity) for every basis and every pair x ≠ y. That is more general than [M]'s rows at perturbed generic points, and needs neither the perturbation nor the greedy lowering of the kernel dimension.",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.14271
         ]
       },
-      "title": "Lemma 14.22 step 1: Text, p. 145, not yet judged",
+      "title": "Lemma 14.22 step 1: Text, p. 145",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 14.22 step 1"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extra.FD.scanner_inj",
+        "module": "YM.Extra.FREE_DETECTOR_ALGEBRA.Columns",
+        "lines": [
+          104,
+          115
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extra.FD.scanner_inj"
+          },
+          "snippet": {
+            "text": "theorem scanner_inj (d : ℕ) (b : Module.Basis ι ℂ (W d)) (x y : E4) (hx : x≠y) :\n    Injective (fun v : W d => fun i => readsTwo F d x y v (b i)) := by\n  intro v w he\n  by_contra h\n  let B := readsTwo F d x y\n  have hz : B v = B w := b.ext (fun i => congr_fun he i)\n  have hp := faceTest_eq F d x y (v-w) (v-w)\n  have he : 0 < duplex x y (writes F d (v-w)) (writes F d (v-w)) :=\n    (reflected_positive hx _).2 (by rw [map_sub]; exact sub_ne_zero.mpr ((writes_inj F d).ne h))\n  change B (v-w) _ = _ at hp\n  rw [map_sub,hz,sub_self] at hp\n  rw [← hp] at he; simp at he",
+            "line": 104,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/FREE_DETECTOR_ALGEBRA/Columns.lean",
+            "fragment": "L104-L115"
+          },
+          "proof_context": {
+            "declaration": "YM.Extra.FD.scanner_inj",
+            "lines": [
+              104,
+              115
+            ],
+            "conclusion": "For every basis `b` and pair `x != y`, `v -> (readsTwo x y v (b i))_i` is injective, using `reflected_positive` for strict positivity of the reflected two-point value."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extra.FD.vane",
+        "module": "YM.Extra.FREE_DETECTOR_ALGEBRA.Vane",
+        "lines": [
+          25,
+          38
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extra.FD.vane"
+          },
+          "snippet": {
+            "text": "def vane (B : RStage F d) (x y : E4) (he : couple x y∈generic _) : Cells.Columns C S d where\n  dim := B.m\n  H := table_spin C.labels\n  basis := B.b\n  realBasis := B.real_i\n  initial := B.unit_\n  amount := B.m+1\n  row i := colPair _ i x y he\n  full := by\n    let z (i : Fin (B.m+1)) := colPair _ i x y he\n    have hc (p) (i) : (z i).tests (freeTable F) B.b p=readsTwo F d x y p (B.b i) := by\n      rw [scan_used]; apply congr_arg ((freeTable F).useAt (freeTable F) (couple x y)); ext1 j; fin_cases j <;> rfl\n    change Injective fun p i => (z i).tests (freeTable F) B.b p\n    simp_rw [hc]; exact scanner_inj F d B.b x y (pair_ne _ _ (generic_conf _ he))",
+            "line": 25,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/FREE_DETECTOR_ALGEBRA/Vane.lean",
+            "fragment": "L25-L38"
+          },
+          "proof_context": {
+            "declaration": "YM.Extra.FD.vane",
+            "lines": [
+              25,
+              38
+            ],
+            "conclusion": "The readings at a generic pair `couple x y` form a finite row system whose injectivity is `scanner_inj`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

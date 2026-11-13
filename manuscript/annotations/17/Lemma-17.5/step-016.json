@@ -1,19 +1,21 @@
 {
   "id": "Lemma 17.5 step 16",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] takes the phase chambers D i as given by `OS.realization` rather than constructing the heat semigroup in this step; the dominated-convergence step is the same.",
   "subject": [
     {
       "location": {
         "page": 196,
         "rect": [
           0.12026,
-          0.82185,
+          0.82193,
           0.75948,
-          0.05424
+          0.05416
         ]
       },
-      "title": "Lemma 17.5 step 16: Text, p. 196, not yet judged",
+      "title": "Lemma 17.5 step 16: Text, p. 196",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 17.5 step 16"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OS.Cluster.exp_real",
+        "module": "YM.Phase.Unique",
+        "lines": [
+          59,
+          75
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OS.Cluster.exp_real"
+          },
+          "snippet": {
+            "text": "  haveI := p.normalized\n  let w (i : R.X) := ‖amplitude (D i) b‖^2\n  have hw i : 0≤w i := sq_nonneg _\n  let F s (i : R.X) := (current (T i) b s).re\n  have hu k : Continuous (F k) := Complex.continuous_re.comp (champ P H k b hv p).1\n  have ht i : Tendsto (fun j => F j i) atTop (𝓝 (w i)) := Complex.continuous_re.continuousAt.tendsto.comp (trail (D i) b)\n  have he s : ∀ᵐ i ∂R.μ, ‖F s i‖ ≤ F 0 i := by\n    apply Eventually.of_forall; intro i\n    unfold F; rw [magnitude (D i),magnitude (D i),Complex.ofReal_re,Complex.ofReal_re, Real.norm_eq_abs, abs_of_nonneg (sq_nonneg _)]\n    exact pow_le_pow_left₀ (norm_nonneg _) (((D i).flow.norm_decrease ((D i).GNS.plant b)) (by exact_mod_cast Nat.zero_le s : ((0:ℕ):ℝ≥0)≤ (s:ℝ≥0))) 2\n  have Hz := (hu 0).integrable_of_hasCompactSupport (μ := R.μ) (HasCompactSupport.of_compactSpace _)\n  have hm := tendsto_integral_of_dominated_convergence (μ := R.μ) (F 0) (fun n => (hu n).aestronglyMeasurable) Hz he\n    (f:= w) (Eventually.of_forall ht)\n  have hf k : (∫ i, F k i ∂R.μ) = (current S b k).re := by\n    rw [← (champ P H k b hv p).2]; exact (integral_re ((champ P H k b hv p).1.integrable_of_hasCompactSupport (μ:=R.μ) (HasCompactSupport.of_compactSpace _)))\n  have hi : (∫ i, w i ∂R.μ)=‖amplitude V b‖^2 := by\n    simp_rw [hf] at hm; exact tendsto_nhds_unique hm (Complex.continuous_re.continuousAt.tendsto.comp (trail V b))",
+            "line": 59,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Phase/Unique.lean",
+            "fragment": "L59-L75"
+          },
+          "proof_context": {
+            "declaration": "YM.OS.Cluster.exp_real",
+            "lines": [
+              57,
+              86
+            ],
+            "conclusion": "The heat entries `current (T i) b s` are continuous, dominated by the zero-time value and tend to ||amplitude (D i) b||^2; dominated convergence and `barycenter` give the mixture integral."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Org.Phase.Loom.cleanse",
+        "module": "YM.Org.Phase",
+        "lines": [
+          60,
+          76
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Org.Phase.Loom.cleanse"
+          },
+          "snippet": {
+            "text": "lemma cleanse : ∃ α : Selection S, Materializes (C:=C) X α s.kernel.spin := by\n  obtain ⟨V⟩ := OS.realization s.kernel timeAxis\n  obtain ⟨A,hA⟩ := H.first h V\n  have hp : Stall X V A f := H.sale h V A hA\n  have hv : Steady V := fun x i => inert V s.kernel X.turns h.motion _ x\n  obtain ⟨u,hu⟩ := hp.characters\n  obtain ⟨R,hR⟩ := OS.Ground.resolution A X.turns h.motion s.kernel u hu\n  have ht := hp.drives R hR\n  obtain ⟨p,B⟩ := ht.emits\n  -- choose fixed α chambers before selecting uniqueness. Denote D.\n  let D (i : R.X) : Chamber (p i) timeAxis := Classical.choice (OS.realization (B.loci i) _)\n  obtain ⟨q,hq⟩ := ht.horizon B D\n  obtain ⟨i,hi⟩ := Cluster.selects A D q hq s.kernel hv B.loci hR B.reads\n  obtain ⟨W,hW⟩ := ht.bags B i (D i)\n  refine ⟨⟨V,A,R,p,i,D i,W⟩,h,hA,hv,hR,B.reads,B.loci,B.translations,fun j d => ?_,B.incl,B.deriv,B.fluxes,hW,hi⟩\n  obtain ⟨x,T,H'⟩ := s.corrected d\n  exact Retain.lift_detect T H' A R (hp.funds d x T H') hR (B.reads j) (B.loci j).laws.toSymmetric (B.sees j)",
+            "line": 60,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Org/Phase.lean",
+            "fragment": "L60-L76"
+          },
+          "proof_context": {
+            "declaration": "YM.Org.Phase.Loom.cleanse",
+            "lines": [
+              60,
+              76
+            ],
+            "conclusion": "The phase chambers `D i` come from `OS.realization`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

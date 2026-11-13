@@ -1,18 +1,18 @@
 {
   "id": "Lemma 18.3 step 15",
   "kind": "proof_step",
-  "status": "not_formalized",
-  "relation": "noMatch",
-  "note": "The displacement lemma's positional bound product-of-roots times 4 n_ar/delta_n is not applied in the compared declarations.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "`comparable` bounds the positional difference by (n+1)*4*A^(n+1)/r times the tag distance, with a uniform root A in place of the product of the separate roots.",
   "subject": [
     {
       "location": {
         "page": 205,
         "rect": [
           0.15714,
-          0.56526,
+          0.56585,
           0.67264,
-          0.01788
+          0.01781
         ]
       },
       "title": "Lemma 18.3 step 15: Text, p. 205",
@@ -29,72 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.MergeProof.East.pays_sky",
-        "module": "YM.TraceExtension.Prom.Zoom.Running",
+        "declaration": "YM.Extraction.Difference.comparable",
+        "module": "YM.Extraction.Equicontinuity",
         "lines": [
-          25,
-          31
+          115,
+          121
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.MergeProof.East.pays_sky"
+            "id": "YM.Extraction.Difference.comparable"
+          },
+          "snippet": {
+            "text": "private theorem comparable (h : C.Makes) {n : ℕ} (v : Fin (n+1) → C.book.Token)\n    {A r t : ℝ} (ha : 0 ≤ A) (hr : 0<r) (K L : Set (Points (n+1))) (p N D : ℕ) (hd : D≤N) (H : Permit v A D N p)\n    (he : ∀ y∈L, allFine C.S p (4*r) y) (hv : C.S.a D < r) (Ks : cthickening t K ⊆ L)\n    (x y : positions (n+1)) (hy : tag (C.S.a N) y ∈ K)\n    (hx : dist (tag (C.S.a N) x) (tag (C.S.a N) y) ≤ min r t) :\n    dist (lifted C N p v x) (lifted C N p v y) ≤\n      ((n+1:ℕ)* (4:ℝ)) *((A^(n+1)/r)*dist (tag (C.S.a N) x) (tag (C.S.a N) y)) := by",
+            "line": 115,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Prom/Zoom/Running.lean",
-            "fragment": "L25-L31"
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Next.UVStress.comparison_jets",
-        "module": "YM.Next.UV_STRESS.Focus",
-        "lines": [
-          208,
-          212
-        ]
-      },
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Next.UVStress.comparison_jets"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extraction/Equicontinuity.lean",
+            "fragment": "L115-L121"
           },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/UV_STRESS/Focus.lean",
-            "fragment": "L208-L212"
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Next.UVStress.travels_jet",
-        "module": "YM.Next.UV_STRESS.Focus",
-        "lines": [
-          183,
-          196
-        ]
-      },
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Next.UVStress.travels_jet"
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/UV_STRESS/Focus.lean",
-            "fragment": "L183-L196"
+          "proof_context": {
+            "declaration": "YM.Extraction.Difference.comparable",
+            "lines": [
+              115,
+              163
+            ],
+            "conclusion": "The lifted position difference is at most (n+1)*4*(A^(n+1)/r) times the tag distance."
           }
         }
       }
@@ -109,8 +73,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge changed it from noMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
       }
     }
   }

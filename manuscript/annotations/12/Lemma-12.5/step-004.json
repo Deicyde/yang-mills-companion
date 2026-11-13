@@ -1,7 +1,9 @@
 {
   "id": "Lemma 12.5 step 4",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean states the identity at real momenta only (`Corn`), with analyticity carried by `CostWall`, so it is equivalent to [M]'s identity on the strip by the identity theorem. The proof goes through the whole-tensor quotient rather than the `q_a D_a v - e_a ^ D_a δ'v` expansion.",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.02312
         ]
       },
-      "title": "Lemma 12.5 step 4: Display, p. 79, not yet judged",
+      "title": "Lemma 12.5 step 4: Display, p. 79",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 12.5 step 4"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.cob_comb_core",
+        "module": "YM.Next.STATIONARY.Lift.Koszul",
+        "lines": [
+          396,
+          397
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.cob_comb_core"
+          },
+          "snippet": {
+            "text": "    (symbol r (projected m' (axes p))).transpose *ᵥ ((left ℂ r i) *ᵥ D) =\n      (fun A => f (axes p) A x)-(fun A => comb m' i f (axes p) A x) := by",
+            "line": 396,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Lift/Koszul.lean",
+            "fragment": "L396-L397"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.cob_comb_core",
+            "lines": [
+              392,
+              431
+            ],
+            "conclusion": "At real momenta with `divZ ≠ 0`, `δ(e_a ^ D)` equals `f - comb f`, the identity `δ h_a f = f - R_a f`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.cob_step",
+        "module": "YM.Next.STATIONARY.Lift.Koszul",
+        "lines": [
+          462,
+          478
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.cob_step"
+          },
+          "snippet": {
+            "text": "  have hy : ∀ p : Corn α, cob r (projected m') B (axes p)=f (axes p)-g (axes p) := by\n    intro p; funext a x\n    let l (p : Corn α) := cob r (projected m') B (axes p) a x\n    have H : ContinuousAt l p := by\n      suffices h : ∀ p, ContinuousAt l p from h p\n      rw [← continuous_iff_continuousAt]\n      unfold l cob Matrix.mulVec dotProduct\n      refine continuous_finsetSum _ (fun j hj => ?_)\n      refine Continuous.mul ?_ (continuous_iff_continuousAt.mpr fun v => ((hB j x).analytic_real v).continuousAt)\n      simp only [symbol,q,wedge,projected,Function.comp_apply,Matrix.transpose_apply,Matrix.sum_apply, Matrix.smul_apply]\n      apply continuous_finsetSum; intro i _; dsimp only [axes]; fun_prop\n    have H' := ((hf a x).analytic_real p).continuousAt.sub ((hg a x).analytic_real p).continuousAt\n    refine tendsto_nhds_unique_of_eventuallyEq (H.tendsto.comp (shadows p (m' i)))\n      (H'.tendsto.comp (shadows p (m' i))) ?_\n    filter_upwards [shadow_fee p (m' i)] with t ht\n    let q := shadow p (m' i) t\n    exact congr_fun (cob_comb_core m' i hv q ht (fun b => D b x (axes q)) _ (funext fun b => hh b x q)) a",
+            "line": 462,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Lift/Koszul.lean",
+            "fragment": "L462-L478"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.cob_step",
+            "lines": [
+              435,
+              514
+            ],
+            "conclusion": "`cob B = f - comb f` at every real momentum, by continuity from the momenta with nonzero divisor."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

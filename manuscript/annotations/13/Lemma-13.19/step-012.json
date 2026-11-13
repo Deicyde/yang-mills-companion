@@ -1,7 +1,9 @@
 {
   "id": "Lemma 13.19 step 12",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The Lean proves the ball preservation, the contraction by 1/2 and the unique fixed point by Banach's theorem; the sharper constant 5/32 and the successive-differences geometric series are not stated.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.12026,
           0.50822,
           0.75995,
-          0.07134
+          0.07228
         ]
       },
-      "title": "Lemma 13.19 step 12: Text, p. 118, not yet judged",
+      "title": "Lemma 13.19 step 12: Text, p. 118",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 13.19 step 12"
@@ -21,7 +23,125 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.Amp.Rally.payable",
+        "module": "YM.FullVolume.Amp.Sieve",
+        "lines": [
+          41,
+          47
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.Amp.Rally.payable"
+          },
+          "snippet": {
+            "text": "lemma payable : ∃! U: Box n A, ‖U‖≤lux ∧ K.danceB b U=U:=by\n  let S:=Metric.closedBall (0:Box n A) lux; let C:S→S:= fun x=> ⟨K.danceB b x,(mem_closedBall_zero_iff).2 (K.danceN hb ((mem_closedBall_zero_iff).mp x.property))⟩\n  have hh:ContractingWith (1/2) C:= ⟨by norm_num,LipschitzWith.of_dist_le_mul fun x y=>by\n    rw [Subtype.dist_eq,Subtype.dist_eq,dist_eq_norm,dist_eq_norm]; exact (K.danceD (mem_closedBall_zero_iff.mp x.property) (mem_closedBall_zero_iff.mp y.property) b).trans_eq (by norm_num)⟩\n  haveI : Nonempty S:=⟨0,Metric.mem_closedBall_self tintP.2.le⟩\n  haveI : CompleteSpace S := Metric.isClosed_closedBall.completeSpace_coe\n  let x:= hh.fixedPoint C; refine ⟨x,⟨mem_closedBall_zero_iff.mp x.property,congr_arg Subtype.val (hh.fixedPoint_isFixedPt)⟩,fun y hy=>?_⟩; let z:S:= ⟨y,mem_closedBall_zero_iff.mpr hy.1⟩; exact congr_arg Subtype.val (hh.fixedPoint_unique (Subtype.ext hy.2 : C z=z))",
+            "line": 41,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Amp/Sieve.lean",
+            "fragment": "L41-L47"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.Amp.Rally.payable",
+            "lines": [
+              41,
+              47
+            ],
+            "conclusion": "`danceB` maps the closed ball of radius `lux` to itself and contracts by 1/2, hence a unique fixed point of norm ≤ `lux`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.Amp.Rally.danceD",
+        "module": "YM.FullVolume.Amp.Sieve",
+        "lines": [
+          28,
+          38
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.Amp.Rally.danceD"
+          },
+          "snippet": {
+            "text": "lemma danceD (b:Beam ℝ) : ‖K.danceB b U-K.danceB b V‖≤(1/2:ℝ)*‖U-V‖:=by\n  have he:0≤(1/2:ℝ)*‖U-V‖:= by positivity\n  refine max_le ((pi_norm_le_iff_of_nonneg he).mpr (fun i=>?_)) ((pi_norm_le_iff_of_nonneg he).mpr (K.runD h ht)); dsimp only [danceB, Prod.fst_sub,Pi.sub_apply]; rw [← smul_sub, norm_smul, norm_inv]\n  have ha:=K.fee₁ i; rw [Real.norm_of_nonneg (zero_le_one.trans ha)]\n  apply (mul_le_of_le_one_left (norm_nonneg _) (inv_le_one_of_one_le₀ ha)).trans\n  let y U:=(∑ k∈prior n i,K.moveB U k)\n  rw [sub_sub_sub_comm,←smul_sub,←smul_sub,sub_sub_sub_cancel_left]\n  apply (norm_sub_le ..).trans; rw [norm_smul,norm_smul,norm_inv,Real.norm_of_nonneg (K.wPos i).le]; refine le_trans (b:=4*glint*‖U-V‖+2*lux*‖U-V‖) (add_le_add ?_ ?_) ?_\n  · rw [norm_sub_rev]; exact show _ ≤ 4*glint*‖U-V‖ from (inv_mul_le_iff₀ (K.wPos i)).mpr ((K.sumD h ht i).trans_eq (by ring))\n  · exact show _≤ 2*lux*‖U-V‖ from (mul_le_of_le_one_left (norm_nonneg _) (K.wtP i)).trans ((sprintD _ _ (perN h _).1 (perN ht _).1).trans (mul_le_mul_of_nonneg_left (perD _|>.1) (by norm_num [lux])))\n  rw [←add_mul]; exact mul_le_mul_of_nonneg_right (by norm_num [lux,glint]) (norm_nonneg _)",
+            "line": 28,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Amp/Sieve.lean",
+            "fragment": "L28-L38"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.Amp.Rally.danceD",
+            "lines": [
+              28,
+              38
+            ],
+            "conclusion": "`danceB` is 1/2-Lipschitz, via `4*glint+2*lux ≤ 1/2`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.Amp.Rally.danceN",
+        "module": "YM.FullVolume.Amp.Shelf",
+        "lines": [
+          89,
+          89
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.Amp.Rally.danceN"
+          },
+          "snippet": {
+            "text": "lemma danceN : ‖K.danceB b U‖≤lux:= max_le ((pi_norm_le_iff_of_nonneg tintP.2.le).mpr (K.angleN hb h)) ((pi_norm_le_iff_of_nonneg tintP.2.le).mpr (K.runsN h))",
+            "line": 89,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Amp/Shelf.lean",
+            "fragment": "L89-L89"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.Amp.Rally.danceN",
+            "lines": [
+              89,
+              89
+            ],
+            "conclusion": "`danceB` maps the ball to itself: `‖danceB b U‖ ≤ lux`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +151,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

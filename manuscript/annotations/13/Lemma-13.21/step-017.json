@@ -1,19 +1,21 @@
 {
   "id": "Lemma 13.21 step 17",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "broadMatch",
+  "note": "The Lean majorant carries the factor `weight c beta = beta * share * bulk c <= beta`, a mild strengthening of M's majorant with beta replaced by |beta - beta_0|. The addresses and tests do not depend on beta because `payload` fixes them.",
   "subject": [
     {
       "location": {
         "page": 121,
         "rect": [
           0.12026,
-          0.3688,
+          0.36935,
           0.75948,
-          0.03713
+          0.03657
         ]
       },
-      "title": "Lemma 13.21 step 17: Text, p. 121, not yet judged",
+      "title": "Lemma 13.21 step 17: Text, p. 121",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 13.21 step 17"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.WilsonStartup.Start.differenceE",
+        "module": "YM.Extra.WILSON_STARTUP.Curve",
+        "lines": [
+          51,
+          61
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.WilsonStartup.Start.differenceE"
+          },
+          "snippet": {
+            "text": "lemma differenceE (ht : b.threshold ≤ threshold G b.order b.power) (i : Sheet n) :\n    variesRegular (G:=G) b (eInfo i) (written c i x) (written c i y) (‖weight c x - weight c y‖*item G b) := by\n  have hp := item_pos G b\n  refine ⟨by positivity,?_⟩\n  intro U hU l hl hD\n  cases i with\n  | inr i => simp [written,hp.le, mul_nonneg]\n  | inl i =>\n    change ‖leftDerivs (weight c x • i.accrual) l U - leftDerivs (weight c y • i.accrual) l U‖ ≤ _\n    rw [left_mult,left_mult,← sub_mul,norm_mul]; gcongr\n    exact (accrual_fit i ht).2 U hU l hl hD",
+            "line": 51,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/WILSON_STARTUP/Curve.lean",
+            "fragment": "L51-L61"
+          },
+          "proof_context": {
+            "declaration": "YM.WilsonStartup.Start.differenceE",
+            "lines": [
+              51,
+              61
+            ],
+            "conclusion": "The regular activities at couplings `x` and `y` differ by a regular majorant `||weight c x - weight c y|| * item G b`, with the same address and support."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.WilsonStartup.charge_range",
+        "module": "YM.Extra.WILSON_STARTUP.Packets",
+        "lines": [
+          70,
+          77
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.WilsonStartup.charge_range"
+          },
+          "snippet": {
+            "text": "theorem charge_range (h : c.direct ≤ 1) (U : Config G n) (D : Support n) :\n    charge c b D U ∈ Set.Icc 0 (share * ((Fintype.card (Key n) : ℝ)*2)) := by\n  unfold charge\n  have he := fun i : Key n => due_range c b h (i.frame U) i.root\n  refine ⟨mul_nonneg share_pos.le (Finset.sum_nonneg fun i _ => by split <;> first | exact (he i).1 | exact le_rfl),?_⟩\n  refine mul_le_mul_of_nonneg_left ?_ share_pos.le\n  rw [show (Fintype.card (Key n) : ℝ)*2 = ∑ _i : Key n,(2:ℝ) by simp]\n  exact Finset.sum_le_sum fun i _ => by split <;> first | exact (he i).2 | norm_num",
+            "line": 70,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/WILSON_STARTUP/Packets.lean",
+            "fragment": "L70-L77"
+          },
+          "proof_context": {
+            "declaration": "YM.WilsonStartup.charge_range",
+            "lines": [
+              70,
+              77
+            ],
+            "conclusion": "`charge c b D U` lies in `[0, share * (card Key * 2)]`, so d_I is nonnegative and bounded at fixed volume."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

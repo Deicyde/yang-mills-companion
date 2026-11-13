@@ -1,49 +1,130 @@
 {
   "id": "Lemma 16.11 step 8",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "[M] derives centering from covariance, S_1(R_4(h)J)=S_1(J)=0; [L] (`ignite`) instead re-centers the averaged tensor by subtracting its one-point expectation times the unit.",
   "subject": [
     {
       "location": {
         "page": 187,
         "rect": [
           0.12026,
-          0.35984,
+          0.36078,
           0.75948,
-          0.03373
+          0.03333
         ]
       },
-      "title": "Lemma 16.11 step 8: Text, p. 187, not yet judged",
+      "title": "Lemma 16.11 step 8: Text, p. 187",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 16.11 step 8",
           "quads": [
             [
               0.55416,
-              0.35984,
+              0.36078,
               0.87974,
-              0.35984,
+              0.36078,
               0.87974,
-              0.37605,
+              0.37642,
               0.55416,
-              0.37605
+              0.37642
             ],
             [
               0.12026,
-              0.37607,
+              0.37632,
               0.50311,
-              0.37607,
+              0.37632,
               0.50311,
-              0.39356,
+              0.39411,
               0.12026,
-              0.39356
+              0.39411
             ]
           ]
         }
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVNext.FreeStress.ignite",
+        "module": "YM.UVNext.FREE_STRESS_CERTIFICATE.Choose",
+        "lines": [
+          98,
+          110
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVNext.FreeStress.ignite"
+          },
+          "snippet": {
+            "text": "  let j₀ : KernelSpace T.hT.spin := ⟨reCenter S A, enters T.hT _ (sym_mem.mpr ⟨hA.symmetric,hA.real,haH⟩)⟩\n  have hJ : currentDiv T.T.W T.hT.spin T.lit.hers j₀=0 := by\n    apply (linear_cons ..).mpr\n    refine ⟨(sym_mem.mp (kernel_mem.mp j₀.property).1).1,(sym_mem.mp (kernel_mem.mp j₀.property).1).2.1,?_⟩\n    intro b\n    change ∑ a, T.T.W.deriv 4 a (centering S 4 _)=0\n    have hd := T.T.W.unit_drop T.hT.laws T.lit.pales T.hT.smooth 4\n    simp only [value_center, map_sub,map_smul,hd,smul_zero,sub_zero,hA.divergence]\n  let down (i j) := -expectation S 4 (A i j)\n  have he : j₀.val = A+fossil down := by\n    funext i j\n    change centering S 4 (A i j) = A i j + down i j • (Bel C.book).unit 4\n    rw [value_center]; simp [down,sub_eq_add_neg]",
+            "line": 98,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/FREE_STRESS_CERTIFICATE/Choose.lean",
+            "fragment": "L98-L110"
+          },
+          "proof_context": {
+            "declaration": "YM.UVNext.FreeStress.ignite",
+            "lines": [
+              80,
+              134
+            ],
+            "conclusion": "The averaged tensor is re-centered as `j₀ = reCenter S A`, with `j₀.val = A + fossil down` and `down = -expectation S 4 (A i j)`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.StressFlux.Centers",
+        "module": "YM.Push.STRESS_FLUX.Conserved",
+        "lines": [
+          52,
+          54
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.StressFlux.Centers"
+          },
+          "snippet": {
+            "text": "structure Centers (J : S.Stress) : Prop where\n  center (x : Points 1) a b : oneStress S J x a b = 0\n  alive : J ≠ 0",
+            "line": 52,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/STRESS_FLUX/Conserved.lean",
+            "fragment": "L52-L54"
+          },
+          "proof_context": {
+            "declaration": "YM.StressFlux.Centers",
+            "lines": [
+              52,
+              54
+            ],
+            "conclusion": "`Centers J` says the one-point stress `oneStress S J x a b` vanishes and `J ≠ 0`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -53,8 +134,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

@@ -1,19 +1,21 @@
 {
   "id": "Lemma 13.10 step 3",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "[M] defines the recursion T^(n+1) = v exp(sum T^(n)) for rooted trees; the Lean bounds the same sum by a packing induction (`pouch`, `all_pack`) with no tree recursion.",
   "subject": [
     {
       "location": {
         "page": 105,
         "rect": [
           0.12026,
-          0.74826,
+          0.74399,
           0.75948,
-          0.04504
+          0.0493
         ]
       },
-      "title": "Lemma 13.10 step 3: Display, p. 105, not yet judged",
+      "title": "Lemma 13.10 step 3: Display, p. 105",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 13.10 step 3"
@@ -21,7 +23,47 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Ac.forest",
+        "module": "YM.Ac.Tree",
+        "lines": [
+          89,
+          127
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Ac.forest"
+          },
+          "snippet": {
+            "text": "lemma forest {f : ι → ℝ} {a γ} (ha : 0≤ a) (hf : ∀ i, 0 ≤ f i) (hh : Hit X M f (a+1) γ)\n    (hp : (M+M+1:ℕ)^4*(γ:ℝ) ≤ 1) (hG : 0≤γ) (x : Site n) :\n    SumBudget (roots X M f a x) (Real.exp γ-1) := by\n  have he (i : Finset ι) : 0≤roots X M f a x i := by\n    unfold roots; split\n    · exact mul_nonneg (Real.exp_pos _).le (prod_nonneg fun i _ => hf i)\n    exact le_rfl\n  let Y := ({x} : Support n)\n  have hy (s : Finset (Finset ι)) : (∑ i∈s,roots X M f a x i) ≤ Real.exp γ-1 := by\n    let A := s.biUnion id\n    let F := (pouch X A Y)\n    let v := fun i => f i * Real.exp (a*coverNumber M (X i))\n    let g := fun p : Finset ι => ∏ i∈p,v i\n    let u := s.filter (fun p => Spark X p ∧ x∈p.biUnion X)\n    have hU := step X M hf hh A Y fun P _ y => all_pack X M hf hh hp hG P y\n    have hC : ∑ p∈F.erase ∅,g p ≤ Real.exp γ-1 := by\n      have hs : (∅:Finset ι) ∈ F := (op _ _ _).mpr ⟨empty_subset _,fun _ hi => absurd hi (notMem_empty _)⟩\n      rw [le_sub_iff_add_le, show (1:ℝ) = g ∅ by simp [g], sum_erase_add F _ hs]\n      simpa only [F, g,v,film,Y, card_singleton, Nat.cast_one, one_mul] using hU\n    calc\n      _ = ∑ i ∈ u,roots X M f a x i := by\n        symm; apply sum_subset (filter_subset ..)\n        intro s hs hh'; have hj : ¬ (Spark X s ∧ x∈s.biUnion X) := fun H => hh' (mem_filter.mpr ⟨hs,H⟩)\n        exact if_neg hj\n      _ ≤ ∑ i ∈ u, g i := by\n        refine sum_le_sum fun i hi => ?_\n        have h := (mem_filter.mp hi).2\n        unfold roots; rw [if_pos h]; simp only [g,v,prod_mul_distrib,← Real.exp_sum,← mul_sum]\n        rw [mul_comm]; gcongr\n        · exact prod_nonneg fun i _ => hf i\n        exact_mod_cast cover X M h.1\n      _ ≤ _ := by\n        apply le_trans _ hC; apply sum_le_sum_of_subset_of_nonneg\n        · intro j hj; obtain ⟨hj',hr,hp⟩ := mem_filter.mp hj; obtain ⟨b,h1,h2⟩ := mem_biUnion.mp hp\n          refine mem_erase.mpr ⟨hr.1.ne_empty,(op _ _ _).mpr ⟨fun k hk => mem_biUnion.mpr ⟨j,hj',hk⟩,?_⟩⟩\n          exact fun i hi => ⟨b,h1,⟨x,mem_singleton_self _,h2⟩,hr.2 b h1 i hi⟩\n        intro i _ _; exact prod_nonneg fun j _ => (mul_nonneg (hf j) (Real.exp_pos _).le)\n  have ht := summable_of_sum_le (f:=roots X M f a x) he hy\n  exact ⟨he,ht,ht.tsum_le_of_sum_le hy⟩",
+            "line": 89,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Ac/Tree.lean",
+            "fragment": "L89-L127"
+          },
+          "proof_context": {
+            "declaration": "YM.Ac.forest",
+            "lines": [
+              89,
+              127
+            ],
+            "conclusion": "The sum over connected (`Spark`) selections containing `x` of the weight `exp(a * cover) * prod f` is at most `exp gamma - 1`, proved through `step`/`all_pack` on packings."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +73,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents agreed on the class but cited different declarations; the mapper's kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
       }
     }
   }

@@ -1,7 +1,9 @@
 {
   "id": "Lemma 13.11 step 6",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "The relaxed-health factor and the Delta-clover cost are bounded; the paid-by-path-decay condition R^rel w^path >= 12 and the limit (1+B)^4 m_j -> 0 are not stated, being replaced by `Fees.hard` as hypothesis.",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.04184
         ]
       },
-      "title": "Lemma 13.11 step 6: Text, pp. 106–107, not yet judged",
+      "title": "Lemma 13.11 step 6: Text, pp. 106–107",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 13.11 step 6#0"
@@ -27,10 +29,10 @@
           0.11962,
           0.0956,
           0.76011,
-          0.05644
+          0.05668
         ]
       },
-      "title": "Lemma 13.11 step 6: Text, pp. 106–107, not yet judged",
+      "title": "Lemma 13.11 step 6: Text, pp. 106–107",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 13.11 step 6#1"
@@ -38,7 +40,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.AnalyticBridge.VerifiedReset.Collection.Local.quote_soft",
+        "module": "YM.AnalyticBridge.VERIFIED_RESET_STEP.Investor",
+        "lines": [
+          84,
+          91
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.AnalyticBridge.VerifiedReset.Collection.Local.quote_soft"
+          },
+          "snippet": {
+            "text": "lemma quote_soft (i : LKey n) (U : Config G n) : ‖loses X R c p v α Δ i U‖ ≤ quoteL R p c α Δ u i := by\n  rcases i with i|⟨a,d⟩\n  · exact fault_sup _ g (hs i) (h1 i) U\n  refine (Low.loan_bound R c d 0 p (factor*α) (factor*Δ) _).trans ?_\n  change shapeLoss _ _ _ _ _ _ * |d.mark R c| ≤ hitPower p G α Δ * (Real.exp _ * |d.mark R c|)\n  rw [shapeLoss, ← mul_assoc (hitPower ..), ← mul_add, abs_mul factor, abs_mul factor, abs_of_pos factor_pos]; unfold hitPower\n  have he (x : ℝ) := mul_le_of_le_one_left (abs_nonneg x) factor_le\n  have hb := pair_nonneg G p; have hp := p.threshold_pos; gcongr <;> exact he _",
+            "line": 84,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/VERIFIED_RESET_STEP/Investor.lean",
+            "fragment": "L84-L91"
+          },
+          "proof_context": {
+            "declaration": "YM.AnalyticBridge.VerifiedReset.Collection.Local.quote_soft",
+            "lines": [
+              84,
+              91
+            ],
+            "conclusion": "The soft (K) logarithm terms are bounded by `hitPower * (exp(length/relaxation) * |mark|)`, including the relaxed-health factor `exp(l/R^rel)`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.AnalyticBridge.VerifiedReset.Collection.softNeed",
+        "module": "YM.AnalyticBridge.VERIFIED_RESET_STEP.Investor",
+        "lines": [
+          27,
+          27
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.AnalyticBridge.VerifiedReset.Collection.softNeed"
+          },
+          "snippet": {
+            "text": "def softNeed (G : Gauge) (p : BudgetPoint) (c : Clip) (σ C α H : ℝ) := softReset G p H + hitNeed p G α H * lowHard p c σ C",
+            "line": 27,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/VERIFIED_RESET_STEP/Investor.lean",
+            "fragment": "L27-L27"
+          },
+          "proof_context": {
+            "declaration": "YM.AnalyticBridge.VerifiedReset.Collection.softNeed",
+            "lines": [
+              27,
+              27
+            ],
+            "conclusion": "`softNeed` is the need these costs must fit under."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -49,8 +130,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents agreed on the class but cited different declarations; the mapper's kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

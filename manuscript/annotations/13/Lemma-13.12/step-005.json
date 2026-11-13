@@ -1,7 +1,9 @@
 {
   "id": "Lemma 13.12 step 5",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] carries the summing and cancellation as `path_split` and feeds it into an exponent identity relating output and input exponents; it does not print the displayed exponent term by term.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.12026,
           0.77321,
           0.76155,
-          0.04005
+          0.03547
         ]
       },
-      "title": "Lemma 13.12 step 5: Text, p. 107, not yet judged",
+      "title": "Lemma 13.12 step 5: Text, p. 107",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 13.12 step 5"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.AnalyticBridge.VerifiedReset.Collection.path_split",
+        "module": "YM.AnalyticBridge.VERIFIED_RESET_STEP.Rewrites",
+        "lines": [
+          77,
+          79
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.AnalyticBridge.VerifiedReset.Collection.path_split"
+          },
+          "snippet": {
+            "text": "lemma path_split (h : R.Bounds c σ C Λ) (hw : Width p c σ) (hc : Decent c p) (α Δ : ℝ) (U : Config G n) :\n    (α+Δ)* kinetic R c p U + (layer (fade R c p Δ) U + layer (upperFade R p α Δ) U) =\n      α*layer (fun d : Low => d.maskedPlain R c 0 p) U + Δ*(∑ o, heads p o U) + layer (fun d : Low => d.loan R c 0 p α Δ) U := by",
+            "line": 77,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/VERIFIED_RESET_STEP/Rewrites.lean",
+            "fragment": "L77-L79"
+          },
+          "proof_context": {
+            "declaration": "YM.AnalyticBridge.VerifiedReset.Collection.path_split",
+            "lines": [
+              77,
+              93
+            ],
+            "conclusion": "`(α+Δ)*kinetic` plus the low and high fades equals `α*layer maskedPlain + Δ*∑ heads + layer loan`: the high fades cancel the `(α+Δ)` summit term and the low terms are summed."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.AnalyticBridge.VerifiedReset.Collection.Local.exponent",
+        "module": "YM.AnalyticBridge.VERIFIED_RESET_STEP.Evaluation",
+        "lines": [
+          71,
+          82
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.AnalyticBridge.VerifiedReset.Collection.Local.exponent"
+          },
+          "snippet": {
+            "text": "lemma exponent (hn : 20 < n.val) (β τ : ℝ) (U : Config G n) : let Δ := delta (X.read v)\n    let t := branch X R c p v α; let Y := shelves X R p; let T := trunk R c p Y t (β+α+Δ) (vac v τ)\n    T.exponent U + (∑' i, t.logarithm i U) = (frozen X R c p v β τ).exponent U - α*receipt R c p U := by\n  intro Δ t Y T\n  change vac v τ * sites n - R.inChannels c p (β+α+Δ) U - _ + _ = (τ*sites n - R.inChannels _ _ β U - _)-_\n  rw [vac,sub_mul,div_mul_cancel₀ _ (sites_pos n).ne', channels_split U (β+α+Δ),channels_split U β]\n  have hh := h.first_split g hn U\n  have he := h.additive g hx α Δ U\n  have ht := h.throw_sum g hx hc hw α Δ U\n  have hz := path_split hx hw hc α Δ U\n  dsimp only [T,trunk,t,Y,branch,receipt,frozen]\n  dsimp [Δ] at *; linarith",
+            "line": 71,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/VERIFIED_RESET_STEP/Evaluation.lean",
+            "fragment": "L71-L82"
+          },
+          "proof_context": {
+            "declaration": "YM.AnalyticBridge.VerifiedReset.Collection.Local.exponent",
+            "lines": [
+              71,
+              82
+            ],
+            "conclusion": "The output exponent plus the sum of the logarithms equals the input exponent minus `α*receipt`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

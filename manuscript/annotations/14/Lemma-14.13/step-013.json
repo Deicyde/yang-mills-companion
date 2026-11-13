@@ -1,18 +1,18 @@
 {
   "id": "Lemma 14.13 step 13",
   "kind": "proof_step",
-  "status": "not_formalized",
-  "relation": "noMatch",
-  "note": "The `tent` and `occurs` statements and proofs contain no separate counterpart of this internal expansion step; it is absorbed in the cited expansion lemma applied in `occurs`.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "Products of the marker algebra combine modes by disjoint union (`merges`, `part_mul`), the reason given; no lemma states that restricting the mark set commutes with the construction.",
   "subject": [
     {
       "location": {
         "page": 137,
         "rect": [
           0.12026,
-          0.44319,
+          0.44338,
           0.76294,
-          0.03418
+          0.03454
         ]
       },
       "title": "Lemma 14.13 step 13: Text, p. 137",
@@ -22,9 +22,9 @@
           "quads": [
             [
               0.71227,
-              0.44319,
+              0.44338,
               0.87974,
-              0.44319,
+              0.44338,
               0.87974,
               0.46067,
               0.71227,
@@ -32,13 +32,13 @@
             ],
             [
               0.12026,
-              0.46068,
+              0.46124,
               0.8832,
-              0.46068,
+              0.46124,
               0.8832,
-              0.47737,
+              0.47792,
               0.12026,
-              0.47737
+              0.47792
             ]
           ]
         }
@@ -51,22 +51,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.MergeProof.Accent.tent",
-        "module": "YM.MergeProof.Balloon",
+        "declaration": "YM.Marker.Poly.merges",
+        "module": "YM.Marker.Console",
         "lines": [
-          22,
-          47
+          61,
+          61
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.MergeProof.Accent.tent"
+            "id": "YM.Marker.Poly.merges"
+          },
+          "snippet": {
+            "text": "def merges (x y z : R.Mode) := Disjoint x.val y.val ∧ x.val∪ y.val=z.val",
+            "line": 61,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Balloon.lean",
-            "fragment": "L22-L47"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Marker/Console.lean",
+            "fragment": "L61-L61"
+          },
+          "proof_context": {
+            "declaration": "YM.Marker.Poly.merges",
+            "lines": [
+              61,
+              61
+            ],
+            "conclusion": "Marker modes multiply by disjoint union (`Disjoint x y /\\ x ∪ y = z`)."
           }
         }
       }
@@ -76,22 +90,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.MergeProof.Accent.occurs",
-        "module": "YM.MergeProof.Glacier",
+        "declaration": "YM.Marker.Poly.part_mul",
+        "module": "YM.Marker.Weight",
         "lines": [
-          32,
-          44
+          19,
+          19
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.MergeProof.Accent.occurs"
+            "id": "YM.Marker.Poly.part_mul"
+          },
+          "snippet": {
+            "text": "lemma part_mul (a b : Poly R) (i) : (a*b).part i=∑ x,∑ y,if merges x y i then a.part x*b.part y else 0 := product a b i",
+            "line": 19,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Glacier.lean",
-            "fragment": "L32-L44"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Marker/Weight.lean",
+            "fragment": "L19-L19"
+          },
+          "proof_context": {
+            "declaration": "YM.Marker.Poly.part_mul",
+            "lines": [
+              19,
+              19
+            ],
+            "conclusion": "The `i`-th mode of a product is the sum over merging pairs of the products of coefficients."
           }
         }
       }
@@ -106,8 +134,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge changed it from noMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

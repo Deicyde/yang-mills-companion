@@ -1,7 +1,9 @@
 {
   "id": "Lemma 11.13 step 3",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "`recolored` proves the identity by expanding at m_Y + g z on the active coordinates, `adjusted` gives the residual linear term and `chartCost_eq` the determinant factor g^n; the window data `W : Stencils S` is a free parameter, so the identity holds for either prescription.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.11962,
           0.80591,
           0.76357,
-          0.05424
+          0.05479
         ]
       },
-      "title": "Lemma 11.13 step 3: Text, p. 73, not yet judged",
+      "title": "Lemma 11.13 step 3: Text, p. 73",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 11.13 step 3"
@@ -21,7 +23,125 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.SectorChange.recolored",
+        "module": "YM.SectorNext.GAUSSIAN_SECTOR_CHANGE.Change",
+        "lines": [
+          73,
+          93
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.SectorChange.recolored"
+          },
+          "snippet": {
+            "text": "lemma recolored {J} {o σ Λ E} (h : T.up.Bounds o σ E Λ) (hh : 0<R.beta)\n    (C : Gaussian.Table (Rows.In x A F (G:=G))) (m : LinkArray G (Frozen A x F) → Prices G (Active A x F))\n    (Y : LinkArray G (Frozen A x F)) (z : Prices G (Active A x F)) :\n    prefactor S G R.beta * dyed (J:=J) T x V k A R W F D q d C m Y z = Real.exp (force C z/2) *\n      regularized D A F V k q J d (garments T x V k A R) Y (displaced (m Y) (coupling R.beta) z) := by\n  let g := coupling R.beta\n  let a := (m Y + g • z)\n  let y := tape a\n  let U := physical A F V Y y\n  let e := guide T x V k W A F q d Y a\n  have he : fee T x V k A U = averaged (residual T x V k W A F q d Y U a) + e := by\n    rw [exact_fee, compose_residual _ _ _ _ _ _ _ _ _ _ h]\n  have ht := adjusted T x V k W A F q d Y C (m Y) z (coupling_pos hh)\n  change adjustment T x V k W A F q d Y C (m Y) g z = force C z / 2 - e/g^2 at ht\n  change prefactor .. * (reserve q J d y*doors q d y*D.bill A k U V*S.likelihood U k *\n    exposed R (till x) U*Real.exp (-R.beta*averaged (residual T x V k W A F q d Y U a)+_)) =\n      Real.exp _*((reserve q J d y*doors q d y)*((D.bill A k U V*S.likelihood U k)*garments T x V k A R U))\n  have hb : e/g^2 = R.beta*e := by rw [div_eq_mul_inv,by_coupling hh]; ring\n  rw [ht,hb, show -R.beta*averaged (residual T x V k W A F q d Y U a)+(force C z/2-R.beta*e)=\n    force C z/2-R.beta*fee T x V k A U by rw [he]; ring,sub_eq_add_neg, Real.exp_add, ← neg_mul,garments]\n  ring",
+            "line": 73,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/SectorNext/GAUSSIAN_SECTOR_CHANGE/Change.lean",
+            "fragment": "L73-L93"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.SectorChange.recolored",
+            "lines": [
+              73,
+              93
+            ],
+            "conclusion": "`recolored` proves the transported-integrand identity by expanding the fee at `a = m Y + g z` (`exact_fee`, `compose_residual`), on the active coordinates `Rows.In x A F`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.SectorChange.Rows.adjusted",
+        "module": "YM.SectorNext.GAUSSIAN_SECTOR_CHANGE.Remainder",
+        "lines": [
+          128,
+          146
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.SectorChange.Rows.adjusted"
+          },
+          "snippet": {
+            "text": "lemma adjusted (C : Gaussian.Table (In (G:=G) x A F)) (m z : Prices G (Active A x F)) {g : ℝ} (hg : 0<g) :\n    adjustment T x V k W A F q d Y C m g z = force C z/2 - guide T x V k W A F q d Y (m+g • z)/g^2 := by\n  let L := move T x V k W A F\n  let w := direct T x V k W A F q d Y m\n  let v := L *ᵥ z\n  have he : direct T x V k W A F q d Y (m+g • z)=w+g • v := by\n    unfold direct w v L; rw [mulVec_add,mulVec_smul, direct]; abel\n  have hh : gram T x V k W A F *ᵥ m + blame T x V k W A F q d Y = L.transpose *ᵥ w := by\n    unfold gram blame L w direct; rw [mulVec_add,mulVec_mulVec]\n  have hx (a b : Vec (In x A F (G:=G))) : ((gram T x V k W A F *ᵥ a) ⬝ᵥ b) = ((L *ᵥ b) ⬝ᵥ (L *ᵥ a)) := by\n    unfold gram L; rw [← mulVec_mulVec,dotProduct_comm,Matrix.dotProduct_transpose_mulVec,dotProduct_comm]\n  unfold adjustment eta force guide\n  rw [he, hh, smul_dotProduct, dotProduct_comm (L.transpose *ᵥ w), Matrix.dotProduct_transpose_mulVec, sub_mulVec,\n    dotProduct_sub,dotProduct_comm z (gram T x V k W A F *ᵥ z),hx]\n  simp only [add_dotProduct,dotProduct_add,dotProduct_smul,smul_dotProduct,smul_eq_mul,dotProduct_comm v w]\n  change -((w ⬝ᵥ w)/2)/_ + _ + _ = _\n  change -((w ⬝ᵥ w)/2)/g^2 + -g⁻¹ * (w ⬝ᵥ v) + ((z ⬝ᵥ _) - (v ⬝ᵥ v))/2 =\n    _ - ((w ⬝ᵥ w) + g*(w ⬝ᵥ v) + g*((w ⬝ᵥ v)+g*(v ⬝ᵥ v)))/2/g^2\n  field_simp; ring",
+            "line": 128,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/SectorNext/GAUSSIAN_SECTOR_CHANGE/Remainder.lean",
+            "fragment": "L128-L146"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.SectorChange.Rows.adjusted",
+            "lines": [
+              128,
+              146
+            ],
+            "conclusion": "`adjusted` proves by expanding the quadratic that `adjustment` equals `force C z/2 - guide(m+g z)/g^2`, including the linear residual term."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.SectorChange.chartCost_eq",
+        "module": "YM.SectorNext.GAUSSIAN_SECTOR_CHANGE.Counting",
+        "lines": [
+          106,
+          109
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.SectorChange.chartCost_eq"
+          },
+          "snippet": {
+            "text": "lemma chartCost_eq (C : Table (ι × G.ColorIndex)) {g : ℝ} (hg : 0<g) :\n    chartCost C g = g ^ Fintype.card (ι × G.ColorIndex) * coat C := by\n  unfold chartCost coat Gaussian.dome\n  rw [Real.sqrt_mul (by positivity),Real.sqrt_sq hg.le,mul_comm _ g,mul_pow,mul_assoc]",
+            "line": 106,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/SectorNext/GAUSSIAN_SECTOR_CHANGE/Counting.lean",
+            "fragment": "L106-L109"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.SectorChange.chartCost_eq",
+            "lines": [
+              106,
+              109
+            ],
+            "conclusion": "`chartCost_eq` rewrites the prefactor as `g^n * coat C`, the determinant factor."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +151,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

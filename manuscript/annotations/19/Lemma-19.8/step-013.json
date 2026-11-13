@@ -1,19 +1,21 @@
 {
   "id": "Lemma 19.8 step 13",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The rates omega = e^{-Z T + o(T)}, E_m = e^{(Z - t theta)T + o(T)} and the choice varpi = exp{[(t+1/16)(theta-theta_-) - Z]T} are stated as `RateIs` statements along a filter rather than as o(T) in the exponent.",
   "subject": [
     {
       "location": {
         "page": 227,
         "rect": [
           0.12026,
-          0.57437,
+          0.57555,
           0.75948,
-          0.05424
+          0.05305
         ]
       },
-      "title": "Lemma 19.8 step 13: Text, p. 227, not yet judged",
+      "title": "Lemma 19.8 step 13: Text, p. 227",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 19.8 step 13"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.funding",
+        "module": "YM.OPE.Prices.Circuit",
+        "lines": [
+          73,
+          75
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.funding"
+          },
+          "snippet": {
+            "text": "    let x i:= initial C.path δ η (m i) (j i) (y (j i)) (∏ p,plumR C (d p) (B p) (j i)) M\n    have hx:RateIs l T x (-(Z')):= (Height.gathered hm hj hT (height0 hy hj) (Height.plumBudget d B hf hj hT hG) hG M).swap (by unfold M; ring)\n    let e i:= terminalCost C t (m i) (x i); let g i:=2*e i; let z i:= Real.exp ((X')*T i); have hZ:=RateIs.exp (X') hT; have hg:= key_cost hm hT hx hG t; have hp:= terminalAfford hG L hP hm hT he hx t hg hZ (by linarith only [he]); let o i:=2*(stakes C (k i) (P i) / z i)",
+            "line": 73,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Prices/Circuit.lean",
+            "fragment": "L73-L75"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.funding",
+            "lines": [
+              64,
+              87
+            ],
+            "conclusion": "The initial weight has rate `-(Z')` by `Height.gathered`, `e` is `terminalCost`, `g = 2*e`, and `o = 2*(stakes/z)` with `z = exp(X'*T)`, which is the terminal weight varpi."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.MergeProof.Ribbons.ManyCopies.rootY",
+        "module": "YM.OPE.Sweep.Camp",
+        "lines": [
+          44,
+          44
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.MergeProof.Ribbons.ManyCopies.rootY"
+          },
+          "snippet": {
+            "text": "lemma rootY (hΩ:∀ i,loops C j p (o i) (m+1)=0) (i:v×I) : (y) (m+1) i=ξ (m+1) i.1:=by dsimp only; rw [bit C J j p (m+1) (o i.snd) (by omega) _,biteT C J j p (m+1) (o i.snd) (by omega),hΩ]; simp [affine]",
+            "line": 44,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Sweep/Camp.lean",
+            "fragment": "L44-L44"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.Ribbons.ManyCopies.rootY",
+            "lines": [
+              44,
+              44
+            ],
+            "conclusion": "At level `m+1` all representatives `y (m+1) i` equal the common root `ξ (m+1) i.1`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

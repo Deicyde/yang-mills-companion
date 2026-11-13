@@ -1,28 +1,29 @@
 {
   "id": "Lemma 19.14 step 13",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "exactMatch",
   "subject": [
     {
       "location": {
         "page": 232,
         "rect": [
           0.12026,
-          0.32113,
+          0.322,
           0.75995,
-          0.03459
+          0.03427
         ]
       },
-      "title": "Lemma 19.14 step 13: Text, p. 232, not yet judged",
+      "title": "Lemma 19.14 step 13: Text, p. 232",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 19.14 step 13",
           "quads": [
             [
               0.20413,
-              0.32113,
+              0.322,
               0.88022,
-              0.32113,
+              0.322,
               0.88022,
               0.33903,
               0.20413,
@@ -30,20 +31,99 @@
             ],
             [
               0.12026,
-              0.33904,
+              0.33896,
               0.87974,
-              0.33904,
+              0.33896,
               0.87974,
-              0.35572,
+              0.35627,
               0.12026,
-              0.35572
+              0.35627
             ]
           ]
         }
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Nesting.Composite.nShot_rate",
+        "module": "YM.OPE.Nesting.NestRates",
+        "lines": [
+          49,
+          51
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Nesting.Composite.nShot_rate"
+          },
+          "snippet": {
+            "text": "lemma nShot_rate {t:Tree}{z:Tree.Envelope L t}(v:t.Leaf → S.Tag){a:t.Inner→ℝ}{D:t.Inner→ℕ} {κ:ℝ}\n    (h_g:gapBelow t a D γ)(hg:Regular l T t κ a z)(p:Stage U R (boundNow t D) t) :\n     let k:= expense U R κ a v p; RateLE l T (nShot U R t z v D p) k ∧ RateLE l T (fun i=>flash U R t z v p i-nShot U R t z v D p i) (k-γ):=by",
+            "line": 49,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Nesting/NestRates.lean",
+            "fragment": "L49-L51"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Nesting.Composite.nShot_rate",
+            "lines": [
+              49,
+              61
+            ],
+            "conclusion": "By induction on the tree the staged finite coefficient `nShot` has rate at most `expense` and its difference from the direct `flash` has rate at most `expense - γ`, a single gain."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Nesting.Composite.prod_drop",
+        "module": "YM.OPE.Nesting.PriceDrop",
+        "lines": [
+          41,
+          41
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Nesting.Composite.prod_drop"
+          },
+          "snippet": {
+            "text": "lemma prod_drop {J:Type} (Z:Finset J)(x y:J→L→ℂ)(a:J→ℝ)(hx:∀j∈Z, RateLE l T (x j) (a j))(hy:∀j∈Z, RateLE l T (y j) (a j)) (he:∀ j∈Z,RateLE l T (fun i=> x j i - y j i) (a j-γ)) : RateLE l T (fun i=> (∏ j∈Z, x j i)-(∏ j∈Z,y j i)) ((∑ j∈Z,a j)-γ):=by",
+            "line": 41,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Nesting/PriceDrop.lean",
+            "fragment": "L41-L41"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Nesting.Composite.prod_drop",
+            "lines": [
+              41,
+              48
+            ],
+            "conclusion": "The product difference gains one `γ`, not a product of gains."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -53,8 +133,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents agreed on the class but cited different declarations; the mapper's kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

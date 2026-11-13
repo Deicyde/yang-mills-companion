@@ -1,7 +1,8 @@
 {
   "id": "Lemma 18.6 step 3",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "exactMatch",
   "subject": [
     {
       "location": {
@@ -13,7 +14,7 @@
           0.02296
         ]
       },
-      "title": "Lemma 18.6 step 3: Text, p. 214, not yet judged",
+      "title": "Lemma 18.6 step 3: Text, p. 214",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 18.6 step 3"
@@ -21,7 +22,47 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.cone_laplace",
+        "module": "YM.TraceExtension.ConeLaplace",
+        "lines": [
+          137,
+          150
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.cone_laplace"
+          },
+          "snippet": {
+            "text": "lemma cone_laplace (A s : ℝ) (ha : 0 ≤ A) (hs : 0<s) :\n    lag (coneMeasure A) (s • basis timeAxis) univ=ENNReal.ofReal (A*s⁻¹ ^ 8) := by\n    let a := A/(1536*Real.pi)\n    have hf : 0 ≤ a := by unfold a; positivity\n    rw [lag,withDensity_apply _ MeasurableSet.univ, restrict_univ,coneMeasure,lintegral_withDensity_eq_lintegral_mul _ (_:Measurable _) (lagWeight_meas ..)]\n    swap\n    · exact Measurable.ennreal_ofReal (by fun_prop)\n    convert cone_tonelli a s hf hs using 1\n    · apply lintegral_congr; intro x\n      rw [Pi.mul_apply, ENNReal.ofReal_mul (by positivity : 0 ≤ a * m x ^2)]\n      congr 1\n      have he : inner ℝ (s • basis timeAxis) x = s*time x := by rw [real_inner_smul_left,basis_inner]; rfl\n      rw [← ENNReal.ofReal_coe_nnreal]; congr 1; change Real.exp (-(inner ℝ (s • basis timeAxis) x)) = _; rw [he,neg_mul]\n    congr 1; dsimp only [a]; field_simp",
+            "line": 137,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/ConeLaplace.lean",
+            "fragment": "L137-L150"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.cone_laplace",
+            "lines": [
+              137,
+              150
+            ],
+            "conclusion": "`lag (coneMeasure A) (s • basis timeAxis) univ = ofReal (A * s⁻¹^8)`, computed by integrating the cone density in time and spatial radius (`cone_tonelli`)."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +72,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents agreed on the class but cited different declarations; the mapper's kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
       }
     }
   }

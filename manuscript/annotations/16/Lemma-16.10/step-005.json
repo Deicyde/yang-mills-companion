@@ -10,9 +10,9 @@
         "page": 185,
         "rect": [
           0.12026,
-          0.34577,
+          0.34601,
           0.75996,
-          0.12266
+          0.12243
         ]
       },
       "title": "Lemma 16.10 step 5: Text, p. 185",
@@ -33,7 +33,7 @@
         "module": "YM.Climb.Peaks",
         "lines": [
           66,
-          80
+          78
         ]
       },
       "role": "key",
@@ -43,20 +43,20 @@
             "id": "YM.Climb.fixed_kernel"
           },
           "snippet": {
-            "text": "lemma fixed_kernel (P : Select L d) {V : Scaling S} {h a} (Z : Subs P V)\n    (W : DiffPlan S) (K : DiffPlan (Bel L)) (hx : V.Align W K h a (d+1)) (H : Ens P K a) (X Y : Parts S)\n    (hp : ColorLaw X W h) (hq : ColorLaw Y W h) (he : leaves X d ≠ 0) (hu : Tendsto Z.moves atTop (𝓝 P.reads))\n    (hw : ∀ᶠ i in atTop, Z.moves i (V.aisle i d (leaves X d))=0 ∧ Z.moves i (V.aisle i d (leaves Y d))=0) :\n    ∃ c : ℝ, leaves Y d=c • leaves X d := by\n  have hx' : ∀ᶠ i in atTop,∀ y ∈ Colors K a d, Z.moves i y=0 → y ≠ 0 → ∀ z∈ Colors K a d,Z.moves i z=0 → ∃ c : ℝ,z=c • y :=\n    survive (M:=V0 L d) (R:=Fin P.m→ℂ) (Colors K a d) P.reads Z.moves hu (leaves K.deriv d) H.vec H.nz  (fun x hx => H.identifies x hx)\n  obtain ⟨i,hi,hX,hY⟩ := (hx'.and hw).exists\n  let T := V.aisle i d\n  have ht : T (leaves X d) ∈ Colors K a d := V.toColor hx (hp.sight _) (Nat.lt_succ_self _) i\n  obtain ⟨c,hc⟩ := hi _ ht hX (show T (leaves X d)≠0 from fun e => he (V.aisle_ext i d (e.trans T.map_zero.symm))) _\n    (V.toColor hx (hq.sight _) (Nat.lt_succ_self _) i) hY\n  exact ⟨c,V.aisle_ext i d (hc.trans (map_smul T _ _).symm)⟩\n\n/-- Each d uses one setup of P.Selections, enough rows with rescaling. ColorLaw Persists. -/",
+            "text": "lemma fixed_kernel (P : Select L d) {V : Scaling S} {h a} (Z : Subs P V)\n    (W : DiffPlan S) (K : DiffPlan (Bel L)) (hx : V.Align W K h a (d+1)) (H : Ens P K a) (X Y : Parts S)\n    (hp : ColorLaw X W h) (hq : ColorLaw Y W h) (he : leaves X d ≠ 0) (hu : Tendsto Z.moves atTop (𝓝 P.reads))\n    (hw : ∀ᶠ i in atTop, Z.moves i (V.aisle i d (leaves X d))=0 ∧ Z.moves i (V.aisle i d (leaves Y d))=0) :\n    ∃ c : ℝ, leaves Y d=c • leaves X d := by\n  have hx' : ∀ᶠ i in atTop,∀ y ∈ Colors K a d, Z.moves i y=0 → y ≠ 0 → ∀ z∈ Colors K a d,Z.moves i z=0 → ∃ c : ℝ,z=c • y :=\n    survive (M:=V0 L d) (R:=Fin P.m→ℂ) (Colors K a d) P.reads Z.moves hu (leaves K.deriv d) H.vec H.nz  (fun x hx => H.identifies x hx)\n  obtain ⟨i,hi,hX,hY⟩ := (hx'.and hw).exists\n  let T := V.aisle i d\n  have ht : T (leaves X d) ∈ Colors K a d := V.toColor hx (hp.sight _) (Nat.lt_succ_self _) i\n  obtain ⟨c,hc⟩ := hi _ ht hX (show T (leaves X d)≠0 from fun e => he (V.aisle_ext i d (e.trans T.map_zero.symm))) _\n    (V.toColor hx (hq.sight _) (Nat.lt_succ_self _) i) hY\n  exact ⟨c,V.aisle_ext i d (hc.trans (map_smul T _ _).symm)⟩",
             "line": 66,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Climb/Peaks.lean",
-            "fragment": "L66-L80"
+            "fragment": "L66-L78"
           },
           "proof_context": {
             "declaration": "YM.Climb.fixed_kernel",
             "lines": [
               66,
-              80
+              78
             ],
             "conclusion": "`fixed_kernel` shows that the mixed kernel of the finite tests, near the free matrix, has dimension at most one, so `leaves Y d = c • leaves X d`."
           }

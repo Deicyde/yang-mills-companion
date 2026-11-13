@@ -1,7 +1,9 @@
 {
   "id": "Lemma 14.1 step 4",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Same quantity with ℓ_i=`block i`, B_i=`coverSize i`, q_{i+1}=`Vac.fiat`, s=`scale`. [L] states it eventually in i for every ε, derived from the entry conditions, where [M] says it holds on each stage as the entry is postponed.",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.02221
         ]
       },
-      "title": "Lemma 14.1 step 4: Display, p. 125, not yet judged",
+      "title": "Lemma 14.1 step 4: Display, p. 125",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 14.1 step 4"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stock.Tabs",
+        "module": "YM.Overlay.Prior",
+        "lines": [
+          17,
+          18
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stock.Tabs"
+          },
+          "snippet": {
+            "text": "  cheap : ∀ ε : ℝ, 0<ε → ∀ᶠ i : ℕ in atTop,\n      ((a.S.block i).val * ((a.clock.coverSize i:ℝ)^2))^ (4:ℕ)*YM.Vac.fiat G (a.params (i+1)) (a.clock.hatBeta (i+1)) ≤ ε*a.S.scale (i+1)",
+            "line": 17,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Overlay/Prior.lean",
+            "fragment": "L17-L18"
+          },
+          "proof_context": {
+            "declaration": "YM.Stock.Tabs",
+            "lines": [
+              15,
+              18
+            ],
+            "conclusion": "`cheap`: for every ε>0, eventually `(block i * coverSize i ^2)^4 * fiat(params (i+1), hatBeta (i+1)) ≤ ε * scale (i+1)`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stock.consumes",
+        "module": "YM.Overlay.Schedule",
+        "lines": [
+          120,
+          129
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stock.consumes"
+          },
+          "snippet": {
+            "text": "  intro ε hε\n  have hb := a.fits.deep.comp (tendsto_add_atTop_nat 1)\n  have ht : Tendsto (fun i : ℕ => (a.clock.J (i+1):ℝ)⁻¹) atTop (𝓝 0) :=\n    tendsto_inv_atTop_zero.comp (tendsto_natCast_atTop_atTop.comp hb)\n  filter_upwards [ht.eventually (ge_mem_nhds hε), hb.eventually (eventually_gt_atTop C.first)] with i hh h'\n  change a.clock.J (i+1)>C.first at h'\n  apply le_trans _ (mul_le_mul_of_nonneg_right hh (Shoot.scale_nn a (i+1)))\n  rw [hi,Schedule.scale_succ]; unfold Calendar.coverSize Calendar.hatBeta Levels.params Calendar.params\n  simp only [h.bar, h.stage,show a.clock.schedule=a.S from rfl]; rw [he]\n  exact hc.2 _ h' _ _ (Shoot.scale_nn a i) (h.paysHigher i h')",
+            "line": 120,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Overlay/Schedule.lean",
+            "fragment": "L120-L129"
+          },
+          "proof_context": {
+            "declaration": "YM.Stock.consumes",
+            "lines": [
+              111,
+              129
+            ],
+            "conclusion": "`Stock.consumes` derives `cheap` from `Fits.deep`, `paysHigher` and the pricing hypothesis `Priced`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

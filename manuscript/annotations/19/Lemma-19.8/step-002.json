@@ -1,19 +1,21 @@
 {
   "id": "Lemma 19.8 step 2",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "Lean bounds the cover number of two sites at each level instead of moving a marker through at most h cover balls.",
   "subject": [
     {
       "location": {
         "page": 226,
         "rect": [
           0.12026,
-          0.55484,
+          0.55524,
           0.75948,
-          0.02002
+          0.01962
         ]
       },
-      "title": "Lemma 19.8 step 2: Text, p. 226, not yet judged",
+      "title": "Lemma 19.8 step 2: Text, p. 226",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 19.8 step 2"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.MergeProof.Ribbons.ManyCopies.joins",
+        "module": "YM.OPE.Sweep.Camp",
+        "lines": [
+          82,
+          84
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.MergeProof.Ribbons.ManyCopies.joins"
+          },
+          "snippet": {
+            "text": "    have hE (i:v×I): coverNumber (P' (m+1)).B ({(y) (m+1) (i.1,i₀),(y) (m+1) i}:Support _)  ≤  carpet H m:=by\n       rw [rootY C m p J k o hf hk hΩ,rootY C m p J k o hf hk hΩ]; refine (pairCover (P' (m+1)).B_pos (ξ _ i.1) (ξ _ i.1) 0 (by simp only [separation_self,zero_mul,le_refl])).trans ?_\n       simp only [two_mul,add_zero, zero_add,one_pow]; unfold carpet OPE.haloUnits; exact Nat.succ_le_of_lt (by positivity) -- arg position",
+            "line": 82,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Sweep/Camp.lean",
+            "fragment": "L82-L84"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.Ribbons.ManyCopies.joins",
+            "lines": [
+              54,
+              94
+            ],
+            "conclusion": "`hE` bounds the cover number of the pair of sites by `carpet`, via `pairCover`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.MergeProof.Ribbons.ManyCopies.pairCover",
+        "module": "YM.OPE.Sweep.Net",
+        "lines": [
+          64,
+          64
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.MergeProof.Ribbons.ManyCopies.pairCover"
+          },
+          "snippet": {
+            "text": "lemma pairCover (x y : Site n)(a:ℕ)(h:separation x y ≤ a*b) : coverNumber b ({x,y}:Support n) ≤ (2*a+1)^4:=by",
+            "line": 64,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Sweep/Net.lean",
+            "fragment": "L64-L64"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.Ribbons.ManyCopies.pairCover",
+            "lines": [
+              64,
+              69
+            ],
+            "conclusion": "`pairCover`: `coverNumber b {x,y} <= (2a+1)^4` when the separation is at most `a*b`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents agreed on the class but cited different declarations; the mapper's kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

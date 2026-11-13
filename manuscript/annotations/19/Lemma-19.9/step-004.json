@@ -1,9 +1,9 @@
 {
   "id": "Lemma 19.9 step 4",
   "kind": "proof_step",
-  "status": "not_formalized",
-  "relation": "noMatch",
-  "note": "Identifying the compression limit of translated copies with a moment of (U*U)^n is part of [M]'s root argument; [L] has no such moment identification in these rate proofs.",
+  "status": "formalized",
+  "relation": "broadMatch",
+  "note": "`receives` inserts the strong limit between slabs and `arcs` identifies the limit of separated translated words with the vacuum moment of the compression-algebra product, for arbitrary word lists rather than only (U*U)^n.",
   "subject": [
     {
       "location": {
@@ -29,22 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.OPE.coefficient_rough",
-        "module": "YM.OPE.Schemes.Corridor",
+        "declaration": "YM.OS.Ground.receives",
+        "module": "YM.Ground.Moments",
         "lines": [
-          22,
-          25
+          26,
+          39
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.OPE.coefficient_rough"
+            "id": "YM.OS.Ground.receives"
+          },
+          "snippet": {
+            "text": "lemma receives (H : Steady V) (v : ℕ → V.H) (x : V.H) (h : Tendsto v atTop (𝓝 x)) (u : ℕ → ℝ≥0) (hu : Tendsto u atTop atTop)\n    (s : ℕ → Cross timeAxis) : Tendsto (fun i => V.flow.U (s i) (V.flow.E (u i) (v i))) atTop (𝓝 (V.flow.orth x)) := by\n  apply Metric.tendsto_nhds.mpr; intro ε he\n  have hh := (V.flow.emerges x).comp hu\n  filter_upwards [Metric.tendsto_nhds.mp h (ε/2) (by positivity),Metric.tendsto_nhds.mp hh (ε/2) (by positivity)] with i hi hp\n  apply lt_of_le_of_lt (dist_triangle _ (V.flow.U (s i) (V.flow.E (u i) x)) _)\n  have hx : V.flow.U (s i) (V.flow.orth x)=V.flow.orth x := H (V.D.orthogonalProjectionOnto x) _\n  suffices he : dist (V.flow.E (u i) (v i)) (V.flow.E (u i) x) ≤ dist (v i) x by\n    simp_rw [dist_eq_norm] at *\n    conv => enter [1,2]; rw [← hx]\n    rw [← map_sub,V.flow.unitary,← map_sub (V.flow.U (s i)),V.flow.unitary]\n    simp only [Function.comp_apply] at hp;linarith\n  rw [dist_eq_norm, ← map_sub (V.flow.E _),dist_eq_norm]\n  exact ((V.flow.E (u i)).le_opNorm _).trans (mul_le_of_le_one_left (norm_nonneg _) (V.flow.shrinks _))",
+            "line": 26,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Schemes/Corridor.lean",
-            "fragment": "L22-L25"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Ground/Moments.lean",
+            "fragment": "L26-L39"
+          },
+          "proof_context": {
+            "declaration": "YM.OS.Ground.receives",
+            "lines": [
+              26,
+              39
+            ],
+            "conclusion": "Applying `V.flow.E (u i)` to a convergent sequence `v i`, then a translation `V.flow.U (s i)`, converges to `V.flow.orth x`, using `emerges` between the slabs."
           }
         }
       }
@@ -54,22 +68,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.OPE.Orbits.algebra_rate",
-        "module": "YM.OPE.Orbits.Separated",
+        "declaration": "YM.OS.Ground.arcs",
+        "module": "YM.Ground.Moments",
         "lines": [
-          30,
-          35
+          138,
+          148
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.OPE.Orbits.algebra_rate"
+            "id": "YM.OS.Ground.arcs"
+          },
+          "snippet": {
+            "text": "lemma arcs (H : Steady V) (Y : S.Hierarchy) (q : List (Car L)) (h : line q) :\n    (∀ᶠ i in atTop, distinct (all q i)) ∧\n    Tendsto (fun i => S.expect (all q i)) atTop (𝓝 (inner ℂ V.omega0 ((starU P (q.map Prod.fst)).val V.omega0))) := by\n  have hp : line (q.map fix) := List.pairwise_map.mpr (h.imp (by\n    intro p s h\n    let a := (Spread.Resolution.place_exists p.1.property).choose\n    let b := (Spread.Resolution.place_exists s.1.property).choose\n    apply Tendsto.congr (fun i => ?_) (tendsto_atTop_add_const_right _ (a timeAxis - b timeAxis) h)\n    simp [fix, a,b]; ring))\n  have ht := inside P H Y (q.map fix) (by rintro i hi; obtain ⟨p,-,rfl⟩ := List.mem_map.mp hi; exact fixes p) hp\n  rwa [show all (q.map fix) = all q from funext fun i => fixes_y q i,fixes_star P H] at ht",
+            "line": 138,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Orbits/Separated.lean",
-            "fragment": "L30-L35"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Ground/Moments.lean",
+            "fragment": "L138-L148"
+          },
+          "proof_context": {
+            "declaration": "YM.OS.Ground.arcs",
+            "lines": [
+              138,
+              148
+            ],
+            "conclusion": "For separated translated words `q`, `S.expect (all q i)` tends to the vacuum expectation of the product `starU P q` of the compression algebra elements."
           }
         }
       }
@@ -84,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge changed it from noMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

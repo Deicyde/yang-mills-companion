@@ -1,32 +1,34 @@
 {
   "id": "Lemma 19.14 step 6",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean states the exponent bookkeeping inside `Comparable`/`Tree.cost` rather than as a separate sum over `j_u`.",
   "subject": [
     {
       "location": {
         "page": 232,
         "rect": [
           0.12026,
-          0.13335,
+          0.1339,
           0.75996,
           0.0517
         ]
       },
-      "title": "Lemma 19.14 step 6: Text, p. 232, not yet judged",
+      "title": "Lemma 19.14 step 6: Text, p. 232",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 19.14 step 6",
           "quads": [
             [
               0.12026,
-              0.13335,
+              0.1339,
               0.88022,
-              0.13335,
+              0.1339,
               0.88022,
-              0.16714,
+              0.16817,
               0.12026,
-              0.16714
+              0.16817
             ],
             [
               0.12026,
@@ -34,16 +36,95 @@
               0.7411,
               0.16715,
               0.7411,
-              0.18505,
+              0.1856,
               0.12026,
-              0.18505
+              0.1856
             ]
           ]
         }
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Nesting.Fusion.comparable_bundle",
+        "module": "YM.OPE.Nesting.Fusion",
+        "lines": [
+          33,
+          39
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Nesting.Fusion.comparable_bundle"
+          },
+          "snippet": {
+            "text": "lemma comparable_bundle (P:Fin n→Menu S L) (hP:∀ j,Comparable l T (Tree.down j z) (Tree.topAge (fork n f) κ a) (Tree.cost (f j) (Tree.topAge (fork n f) κ a) (Tree.childAge j a) (wages (Tree.childWages j v))) (P j)):Comparable l T z (Tree.topAge (fork n f) κ a) (V (fork n f) κ a (wages v)) (fuse P) := by\n   intro k\n   have hQ:= Eligible.products P injective_id hT (fun j=>Comparable.earns (hP j) le_rfl) le_rfl h\n   obtain ⟨hz,hk,-⟩:= hQ k\n   refine ⟨hz,hk,(RateLE.prod (S:=Finset.univ) hT (fun j _=> (hP j (k j)).2.2)).mono ?_⟩\n   rw [Finset.sum_sub_distrib,← Finset.sum_mul]; change (∑ j,Tree.cost (f j) (Tree.topAge (fork n f) κ a) (Tree.childAge j a) (wages (Tree.childWages j v))) - (∑ j:Fin n, ((P j).pick (k j)|>.cost))*(Tree.topAge (fork n f) κ a) ≤ _\n   rw [← Atom.bundle_cost]; rfl",
+            "line": 33,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Nesting/Fusion.lean",
+            "fragment": "L33-L39"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Nesting.Fusion.comparable_bundle",
+            "lines": [
+              33,
+              39
+            ],
+            "conclusion": "The fused menu's rate is the sum of the child rates minus the total picked degree times the parent age, which is the telescoping of `-j_u a_u` against `j_u a_v`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Nesting.cost_loaded",
+        "module": "YM.OPE.Nesting.Reload",
+        "lines": [
+          23,
+          28
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Nesting.cost_loaded"
+          },
+          "snippet": {
+            "text": "lemma cost_loaded (hk:κ≤k) (m:ℕ):Comparable l T z κ Ω (loadedRaw U R z v (Tree.center z) m):=by\n    have h₁(j:Cut R m):(loadedRaw U R z v (Tree.center z) m|>.pick j) = punctum (oneTag U R j.1 j.2) ((Menu.raw z v).charge R j.1 j.snd (Tree.center z)) (Tree.center z):=by\n         exact congr_arg (fun p=> punctum (oneTag U R j.1 j.2) p (Tree.center z)) (funext fun q=> Eq.trans (one_mul (_:ℂ)) ((raw_charge z v R j.1 j.2 (Tree.center z) q).symm))\n    intro j; change Cut R m at j; rw [h₁]\n    refine ⟨⟨fun _=> t.topSeat,rfl⟩,Kept.sole l T (Tree.center z) κ, (hd.output j.1.val j.2).mono ?_⟩\n    rw [punctum_cost]; exact sub_le_sub_left (mul_le_mul_of_nonneg_left hk j.1.val.cast_nonneg) _",
+            "line": 23,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Nesting/Reload.lean",
+            "fragment": "L23-L28"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Nesting.cost_loaded",
+            "lines": [
+              23,
+              28
+            ],
+            "conclusion": "Each loaded output of degree `j <= m` costs at most the base rate with `j * k` subtracted, so nonnegative degrees never raise the exponent."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -53,8 +134,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

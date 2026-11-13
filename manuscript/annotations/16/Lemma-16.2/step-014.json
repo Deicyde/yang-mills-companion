@@ -1,49 +1,91 @@
 {
   "id": "Lemma 16.2 step 14",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "Lean shows the common annihilator of the kernel forms is zero by descending induction on the probe order with radial derivatives of the kernel, and does not build a Maxwell wave.",
   "subject": [
     {
       "location": {
         "page": 173,
         "rect": [
           0.1198,
-          0.48932,
+          0.49074,
           0.75994,
-          0.03419
+          0.03298
         ]
       },
-      "title": "Lemma 16.2 step 14: Text, p. 173, not yet judged",
+      "title": "Lemma 16.2 step 14: Text, p. 173",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 16.2 step 14",
           "quads": [
             [
               0.31447,
-              0.48932,
+              0.49074,
               0.87974,
-              0.48932,
+              0.49074,
               0.87974,
-              0.50639,
+              0.50691,
               0.31447,
-              0.50639
+              0.50691
             ],
             [
               0.1198,
-              0.5064,
+              0.50696,
               0.26889,
-              0.5064,
+              0.50696,
               0.26889,
-              0.52351,
+              0.52371,
               0.1198,
-              0.52351
+              0.52371
             ]
           ]
         }
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Maxwell.Free.ranging",
+        "module": "YM.Next.MAXWELL.Flavor",
+        "lines": [
+          145,
+          165
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Maxwell.Free.ranging"
+          },
+          "snippet": {
+            "text": "lemma ranging (p : Flavor j) (l : ℕ) (H : ∀ (z:E4), z≠0 → ∀ q : Flavor l, fare c p q z=0) : p=0 := by\n  induction l with\n  | zero => exact payment c H\n  | succ l ih =>\n    apply ih\n    intro x hx q\n    let P := flavor j c p\n    let Q := flavor l c q\n    have he := K_right_D P Q (x := x) (y := 0) hx x\n    have hp := kernel_pole P Q\n    have hw := pole_power hp hx\n    rw [← consecutive x q c, K,sub_zero,show legKernel _ _ x=0 from H _ hx _] at he\n    let L := fun y : E4 => x-y\n    have hf : HasFDerivAt L (-(ContinuousLinearMap.id ℝ E4)) 0 := by\n      convert! ((hasFDerivAt_id (0:E4) (𝕜:=ℝ)).const_sub x) using 1\n    have hl : L 0=x := sub_zero _\n    have hh : DifferentiableAt ℝ (legKernel P Q) (L 0) := by rw [hl]; exact (kernel_smooth P Q hx).differentiableAt (by simp)\n    change fderiv ℝ (legKernel P Q ∘ L) 0 x=0 at he\n    rw [fderiv_comp _ hh hf.differentiableAt,hf.fderiv,hl,ContinuousLinearMap.comp_apply] at he\n    change fderiv ℝ (legKernel P Q) x (-x)=0 at he; rw [map_neg,neg_eq_zero] at he; change D x _ x=_ at he; rw [hw] at he\n    exact (smul_eq_zero.mp he).resolve_left (neg_ne_zero.mpr (by positivity))",
+            "line": 145,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/MAXWELL/Flavor.lean",
+            "fragment": "L145-L165"
+          },
+          "proof_context": {
+            "declaration": "YM.Maxwell.Free.ranging",
+            "lines": [
+              145,
+              165
+            ],
+            "conclusion": "If `fare c p q z = 0` for all `z≠0` and all order-`l` probes `q`, then `p=0`, by induction lowering `l`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -53,8 +95,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents agreed on the class but cited different declarations; the mapper's kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
       }
     }
   }

@@ -1,19 +1,21 @@
 {
   "id": "Lemma 17.7 step 4",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean's direction is `rate n`, i ↦ i from 0, instead of rho_j=j from 1, so its generator differs from A by a multiple of the total time derivative, and `Lines` holds for every direction. The Taylor terms `coal t k = (-t)^k/k!` and `moves k = clock^k` match the displayed formula.",
   "subject": [
     {
       "location": {
         "page": 199,
         "rect": [
           0.12026,
-          0.33394,
+          0.3337,
           0.76293,
-          0.05736
+          0.0576
         ]
       },
-      "title": "Lemma 17.7 step 4: Text, p. 199, not yet judged",
+      "title": "Lemma 17.7 step 4: Text, p. 199",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 17.7 step 4"
@@ -21,7 +23,164 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.C04.lines",
+        "module": "YM.Work.C04",
+        "lines": [
+          173,
+          173
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.C04.lines"
+          },
+          "snippet": {
+            "text": "lemma lines (h : F.Region T) (hb : F.Breathes) : F.Lines := by",
+            "line": 173,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/C04.lean",
+            "fragment": "L173-L173"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.C04.lines",
+            "lines": [
+              173,
+              219
+            ],
+            "conclusion": "From `Region` and `Breathes`, `F.Lines` holds, i.e. the derivative identity for `psi` along every height direction."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Boundary.Waves.Lines",
+        "module": "YM.Shift.Ridge",
+        "lines": [
+          80,
+          81
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Boundary.Waves.Lines"
+          },
+          "snippet": {
+            "text": "def Lines : Prop := ∀ n (v : Fin n → S.Union) (f : Joint n) (y a : Heights n) (i : ℝ), y+i • a∈east n →\n    HasDerivAt (fun t : ℝ => F.psi v (y+t • a) f) (F.psi v (y+i • a) (clock a f)) i",
+            "line": 80,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Shift/Ridge.lean",
+            "fragment": "L80-L81"
+          },
+          "proof_context": {
+            "declaration": "YM.Boundary.Waves.Lines",
+            "lines": [
+              80,
+              81
+            ],
+            "conclusion": "`t ↦ psi v (y+t•a) f` has derivative `psi v (y+i•a) (clock a f)` where `clock a = -i ∂_{dawn a}`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Boundary.Waves.desired",
+        "module": "YM.Shift.Breath",
+        "lines": [
+          27,
+          28
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Boundary.Waves.desired"
+          },
+          "snippet": {
+            "text": "def desired (v : Fin n → S.Union) (m : ℕ) (y : Heights n) (f : Joint n) := F.pol v y f 1 m -∫ s : ℝ in Ioc 0 1,\n    F.wind v m y f s",
+            "line": 27,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Shift/Breath.lean",
+            "fragment": "L27-L28"
+          },
+          "proof_context": {
+            "declaration": "YM.Boundary.Waves.desired",
+            "lines": [
+              27,
+              28
+            ],
+            "conclusion": "`desired` is the Taylor expression `pol` at height `y+rate n` minus the integral of `wind` over `(0,1]`, the boundary formula."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Boundary.Waves.meant",
+        "module": "YM.Shift.Breath",
+        "lines": [
+          50,
+          51
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Boundary.Waves.meant"
+          },
+          "snippet": {
+            "text": "theorem meant (ha : F.Along) (h : F.Lines) (v : Fin n → S.Union) (y : Heights n) (hy : y∈east n)\n    (f : Joint n) (m : ℕ) : F.desired v m y f= F.psi v y f := by",
+            "line": 50,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Shift/Breath.lean",
+            "fragment": "L50-L51"
+          },
+          "proof_context": {
+            "declaration": "YM.Boundary.Waves.meant",
+            "lines": [
+              50,
+              66
+            ],
+            "conclusion": "Under `Along` and `Lines`, `desired v m y f = psi v y f` for ordered `y`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +190,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

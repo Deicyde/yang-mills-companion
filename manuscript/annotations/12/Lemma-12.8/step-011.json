@@ -1,7 +1,9 @@
 {
   "id": "Lemma 12.8 step 11",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The Lean carries the first two jets of a Film through the same coarse spaces `Loc G 1` and `Loc G 0` and takes the factor `card` of those spaces; the bound for each factor is `CharterR.costs` and `CoastF.costs` rather than a named Lemma B7.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.12026,
           0.61711,
           0.75948,
-          0.05424
+          0.05242
         ]
       },
-      "title": "Lemma 12.8 step 11: Text, p. 83, not yet judged",
+      "title": "Lemma 12.8 step 11: Text, p. 83",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 12.8 step 11"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.Ledger.origin",
+        "module": "YM.Next.STATIONARY.Films.ThinTrace",
+        "lines": [
+          220,
+          220
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.Ledger.origin"
+          },
+          "snippet": {
+            "text": "lemma origin (h : Charges X Y F σ C) : Ledger X Y F σ ((Fintype.card α:ℝ)*C) := ⟨fun {p} w => bags.crew (h.base w), fun i p q w => bags.crew (h.detail i w),fun i j p q r w => bags.crew (h.stamp i j w)⟩",
+            "line": 220,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Films/ThinTrace.lean",
+            "fragment": "L220-L220"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.Ledger.origin",
+            "lines": [
+              220,
+              220
+            ],
+            "conclusion": "A `Charges` bound on a film turns into a `Ledger` bound with the factor `card alpha` of the intermediate space, for the value and both jets."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.house_owed",
+        "module": "YM.Next.STATIONARY.Films.TraceDifference",
+        "lines": [
+          404,
+          408
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.house_owed"
+          },
+          "snippet": {
+            "text": "lemma house_owed : Ledger (slabW G P.L|>.dual) (slabW G P.L) (houseF E false K.penalty) σ (payLedger G P.J C K.penalty) := by\n  have hv := CharterR.costs h hp\n  have hb := CoastF.costs h hp K.penalty\n  have hc := hv.rear; rw [slide_basic] at hc\n  exact ((Ledger.origin hb).freights hc hs).freight hv hs",
+            "line": 404,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Films/TraceDifference.lean",
+            "fragment": "L404-L408"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.house_owed",
+            "lines": [
+              404,
+              408
+            ],
+            "conclusion": "`houseF` is bounded in `Ledger` by `payLedger`, which carries `card (Loc G 1)` and does not depend on the volume."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents agreed on the class but cited different declarations; the mapper's kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

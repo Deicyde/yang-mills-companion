@@ -1,19 +1,21 @@
 {
   "id": "Lemma 14.31 step 4",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The two-mark and anchor-in-support conditions enter through the hypotheses `Borne o (s i) (Y i) t`, `rises` and `Drake`. The conclusion is the covering estimate for a nonzero mode.",
   "subject": [
     {
       "location": {
         "page": 158,
         "rect": [
           0.12026,
-          0.72657,
+          0.72622,
           0.75948,
-          0.03805
+          0.03839
         ]
       },
-      "title": "Lemma 14.31 step 4: Text, p. 158, not yet judged",
+      "title": "Lemma 14.31 step 4: Text, p. 158",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 14.31 step 4"
@@ -21,7 +23,47 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.Sever.worth",
+        "module": "YM.FullVolume.Fields.Sever",
+        "lines": [
+          32,
+          36
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.Sever.worth"
+          },
+          "snippet": {
+            "text": "lemma worth {h:ℕ}{Y:I→ Config G n→Poly B}{s:I→Support n} (ht:Drake B h o)(hv:8≤ h)(he:∀ i,Borne o (s i) (Y i) t)(hp:∀ i U,rises (Y i U))(i:I)(hk:Y i≠0): brisk h≤ Real.exp (coverNumber h (s i)):=by\n    obtain ⟨u,hu,x,hx⟩:∃ U,Y i U≠0∧ ∃ x,(Y i U).part x ≠ 0 :=by\n        obtain ⟨U,hU⟩:= Function.ne_iff.mp hk; refine ⟨U,hU,?_⟩; by_contra! ha; apply hU; exact Marker.Poly.ext (f:=Y i U) (g:=0) fun x=> ha x\n    have hp':=hp i u x hx; have hA := Work.I01.answer n V o h hv x.val (ht.spread x hp') hp' (s i) ((he i).place x u hx); have hb: h ≤ 64*coverNumber h (s i):=(Nat.le_mul_of_pos_right _ (Nat.lt_of_lt_of_le zero_lt_two hp')).trans hA\n    apply Real.exp_monotone; apply (div_le_iff₀ (by norm_num)).mpr; rw [mul_comm]; exact_mod_cast hb",
+            "line": 32,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Fields/Sever.lean",
+            "fragment": "L32-L36"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.Sever.worth",
+            "lines": [
+              32,
+              36
+            ],
+            "conclusion": "`worth` gives for every nonzero higher-mode function `Y i` supported in `s i` that `brisk h <= exp (coverNumber h (s i))`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +73,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
       }
     }
   }

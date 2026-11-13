@@ -1,19 +1,21 @@
 {
   "id": "Lemma 14.1 step 20",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The period is 4(M+k+1) as in [M]'s L_p = 4(M_per+p+1), with M including the minimum length and the first-stage bills. The needed inequalities are asked for as `Paid.volume`, `Fits.sizeT` and `Fits.fitsPatch` rather than listed here.",
   "subject": [
     {
       "location": {
         "page": 126,
         "rect": [
           0.12026,
-          0.27821,
+          0.27868,
           0.76036,
-          0.03713
+          0.03666
         ]
       },
-      "title": "Lemma 14.1 step 20: Text, p. 126, not yet judged",
+      "title": "Lemma 14.1 step 20: Text, p. 126",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 14.1 step 20"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.Supply.Wait.engine",
+        "module": "YM.PhysicalNext.RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP.Pane.Divisors",
+        "lines": [
+          41,
+          43
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.Supply.Wait.engine"
+          },
+          "snippet": {
+            "text": "  let M := B.minLength + (range (n+1)).sup (fun i => Y.bill p.first (s i))\n  let A := E.book M Y\n  have e (i) : A.schedule.scale i = s i := E.extent_scale ..",
+            "line": 41,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Pane/Divisors.lean",
+            "fragment": "L41-L43"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.Supply.Wait.engine",
+            "lines": [
+              26,
+              135
+            ],
+            "conclusion": "`M := B.minLength + sup (bill p.first (s i))` and `A := E.book M Y` fix the offset used in the period sequence."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.Supply.Wait.engine",
+        "module": "YM.PhysicalNext.RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP.Pane.Divisors",
+        "lines": [
+          68,
+          70
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.Supply.Wait.engine"
+          },
+          "snippet": {
+            "text": "        change _ ≤ 4*(M+k+1)*(A.schedule.denominator i).val\n        have hb : Y.bill p.first (s i) ≤ 4*(M+k+1) := by omega\n        exact hb.trans (Nat.le_mul_of_pos_right _ (A.schedule.denominator i).property)",
+            "line": 68,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Pane/Divisors.lean",
+            "fragment": "L68-L70"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.Supply.Wait.engine",
+            "lines": [
+              26,
+              135
+            ],
+            "conclusion": "The period at index `k` is `4*(M+k+1)`, divisible by 4 and increasing."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
       }
     }
   }

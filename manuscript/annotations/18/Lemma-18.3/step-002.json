@@ -1,9 +1,9 @@
 {
   "id": "Lemma 18.3 step 2",
   "kind": "proof_step",
-  "status": "not_formalized",
-  "relation": "noMatch",
-  "note": "The explicit separation k(n) and the exponent choice for degree D and arity bound n_ar have no counterpart; the Lean comparison `Scaling.jets` is stated for fixed degree d and arity N with no exponents.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "Lean has no k(n); the room for marked transports is the `height`/`surplus` margin in `Station.width`, and the exponents for D and n_ar are chosen by `raises`.",
   "subject": [
     {
       "location": {
@@ -29,22 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.MergeProof.East.pays_sky",
-        "module": "YM.TraceExtension.Prom.Zoom.Running",
+        "declaration": "YM.Next.Rank.Station.width",
+        "module": "YM.Next.RANK.Station",
         "lines": [
-          25,
-          31
+          45,
+          45
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.MergeProof.East.pays_sky"
+            "id": "YM.Next.Rank.Station.width"
+          },
+          "snippet": {
+            "text": "def width (A : Levels G) (b : ℝ) (k : ℕ) := middle A b k - surplus A k",
+            "line": 45,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Prom/Zoom/Running.lean",
-            "fragment": "L25-L31"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Station.lean",
+            "fragment": "L45-L45"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Rank.Station.width",
+            "lines": [
+              45,
+              45
+            ],
+            "conclusion": "The window start `width A b k = middle - surplus` leaves a logarithmic margin below the radius level (`height` ~ (b+2) log M, `surplus` ~ 10 log B)."
           }
         }
       }
@@ -54,22 +68,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Next.UVStress.comparison_jets",
-        "module": "YM.Next.UV_STRESS.Focus",
+        "declaration": "YM.Next.Rank.Station.bump",
+        "module": "YM.Next.RANK.Station",
         "lines": [
-          208,
-          212
+          37,
+          37
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Next.UVStress.comparison_jets"
+            "id": "YM.Next.Rank.Station.bump"
+          },
+          "snippet": {
+            "text": "def bump (u b s : ℝ) := want u ((YM.Vac.Numbers.P s)^b * (YM.Vac.Numbers.P s)^2)",
+            "line": 37,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/UV_STRESS/Focus.lean",
-            "fragment": "L208-L212"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Station.lean",
+            "fragment": "L37-L37"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Rank.Station.bump",
+            "lines": [
+              37,
+              37
+            ],
+            "conclusion": "`bump u b s` counts blocks needed to exceed P(s)^b P(s)^2."
           }
         }
       }
@@ -79,22 +107,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Next.UVStress.travels_jet",
-        "module": "YM.Next.UV_STRESS.Focus",
+        "declaration": "YM.MergeProof.East.raises",
+        "module": "YM.MergeProof.East.Gran",
         "lines": [
-          183,
-          196
+          14,
+          22
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Next.UVStress.travels_jet"
+            "id": "YM.MergeProof.East.raises"
+          },
+          "snippet": {
+            "text": "lemma raises (d n:ℕ): ∃ c:Fin 3→ℝ, (∀ i,d+6 ≤ c i) ∧ ∃ ξ,Checks (c 0) (c 1) (c 2) ξ n d:=by\n    -- b-e=gap1; b-c offset arc σ\n    let x : ℝ := 7*d*n+1\n    let y := 6+x\n    let a:ℝ:= 10 + d + x + ((y*d)*n)+y+7\n    let l : Fin 3→ℝ:=![a,a-7,a-y]; have hL:0<x:=by positivity\n    refine ⟨l,fun i=> ?_,-x,?_⟩\n    · fin_cases i <;> (simp [l]; dsimp only [a,y,x]; nlinarith)\n    change Checks a (a-7) (a-y) (-x) n d; refine ⟨by linarith,by linarith,by unfold y; linarith,by unfold x; linarith only,?_⟩; dsimp only [a,y,x]; linarith [Nat.cast_nonneg (α:=ℝ) d, (show 0<x from hL)]",
+            "line": 14,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/UV_STRESS/Focus.lean",
-            "fragment": "L183-L196"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/East/Gran.lean",
+            "fragment": "L14-L22"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.East.raises",
+            "lines": [
+              14,
+              22
+            ],
+            "conclusion": "For each degree d and arity n, exponents with `Checks` and all ≥ d+6 are chosen."
           }
         }
       }
@@ -109,8 +151,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge changed it from noMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

@@ -1,7 +1,9 @@
 {
   "id": "Lemma 19.8 step 1",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "The product of the insertions and the separation of the stencils at level j are in `joins` and `PriceAt`; the identity of the coefficient of the product with the product insertion times the density is not stated.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.1198,
           0.48348,
           0.75994,
-          0.07134
+          0.07174
         ]
       },
-      "title": "Lemma 19.8 step 1: Text, p. 226, not yet judged",
+      "title": "Lemma 19.8 step 1: Text, p. 226",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 19.8 step 1"
@@ -21,7 +23,125 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.MergeProof.Ribbons.ManyCopies.joins",
+        "module": "YM.OPE.Sweep.Camp",
+        "lines": [
+          75,
+          75
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.MergeProof.Ribbons.ManyCopies.joins"
+          },
+          "snippet": {
+            "text": "    let p':= C.S.a (m+1)^d*(x m*(4*(1/A))); let g u:=∏ i,f i u; let q (i:v) u:=∏ a',F (i,a') u; let Y:=gust C.path N p N (birth (Bud v) (R N) q) m (h!).le",
+            "line": 75,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Sweep/Camp.lean",
+            "fragment": "L75-L75"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.Ribbons.ManyCopies.joins",
+            "lines": [
+              54,
+              94
+            ],
+            "conclusion": "`g u = ∏ i, f i u` is the product of the inputs and `q i u = ∏ a', F (i,a') u` its copies."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.MergeProof.Ribbons.ManyCopies.joins",
+        "module": "YM.OPE.Sweep.Camp",
+        "lines": [
+          71,
+          71
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.MergeProof.Ribbons.ManyCopies.joins"
+          },
+          "snippet": {
+            "text": "    have hSp:Edition.Spaced (P' j).B ((y) j):= (hX j hm le_rfl).together (hZ j hm) (show Edition.Spaced (P' j).B (fun i=> bites C J j p (o i) j (0,true)) from (by rw [show (fun i=> bites C J j p (o i) j (0,true))= o from funext fun i=>(biteT C J j p j (o i) (by omega)).trans (Ribbons.same C j p (o i))];exact hy))",
+            "line": 71,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Sweep/Camp.lean",
+            "fragment": "L71-L71"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.Ribbons.ManyCopies.joins",
+            "lines": [
+              54,
+              94
+            ],
+            "conclusion": "The level-`j` points are `Edition.Spaced`, so the stencils are separated."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.PriceAt",
+        "module": "YM.OPE.Prices.Circuit",
+        "lines": [
+          52,
+          56
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.PriceAt"
+          },
+          "snippet": {
+            "text": "structure PriceAt (C:Family G)(g o : ℝ)(n : ℕ) (d : I→ℕ)(s:(i:I)→ C.label (d i))(J m j:ℕ) : Prop where\n    quote (N p:ℕ)(hn:j<N)(hm:J ≤ N) : ∀ (r:I→Site (C.side j p)), (∀ i,loops C j p (r i) (m+1)=0) → Next.Rank.Edition.Spaced (C.path.levels.budget j).B r →\n       let V:= Cells.center C.S p hm 0; let f (i:I):=C.O N p (s i) ((C.S.toDepth hn.le p).embed (r i)); (∀ i, Cells.Interior (V.chamber 0) (f i))→ (∀ z:C.label n, Cells.Interior (V.chamber 0) (C.O N p z 0)) →\n       ∃ z:C.label n, let g': Config G (C.side N p)→ℂ:= (fun u=>∏ i,f i u)-C.O N p z 0;\n       Next.UVStress.quota C n m N p z ≤ g ∧ Cells.Interior (V.chamber 0) g' ∧ V.rootTest (C.beta N p) g' ≤ o",
+            "line": 52,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Prices/Circuit.lean",
+            "fragment": "L52-L56"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.PriceAt",
+            "lines": [
+              52,
+              59
+            ],
+            "conclusion": "`PriceAt.quote` takes spaced sites `r i`, forms the product `fun u => prod f i u` of the insertions `C.O N p (s i) (embed (r i))` and states the quota and root bounds for the difference with `C.O N p z 0`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +151,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

@@ -1,7 +1,9 @@
 {
   "id": "Lemma 18.5 step 44",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The weight is H!(P! i)^p (the scale-b analogue) and the statement covers all B not equal to some true, not only B=L,Xi; the averaged-functionals and left-inverse argument is not in [L], and the coupling claim is `gamut` (beta_i/b_i->1).",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.07592
         ]
       },
-      "title": "Lemma 18.5 step 44: Text, p. 213, not yet judged",
+      "title": "Lemma 18.5 step 44: Text, p. 213",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 18.5 step 44"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Trace.Shelves.muteP",
+        "module": "YM.TraceExtension.Shelves.Pear",
+        "lines": [
+          74,
+          74
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Trace.Shelves.muteP"
+          },
+          "snippet": {
+            "text": "lemma muteP (p:ℕ)(hl: B≠some true): Tendsto (fun i=> H! (P! i) ^ p • ∑ a:Axis, Phase4 J V Z i (baron S P' (P! i)) a a) atTop (𝓝 0):=by",
+            "line": 74,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Shelves/Pear.lean",
+            "fragment": "L74-L74"
+          },
+          "proof_context": {
+            "declaration": "YM.Trace.Shelves.muteP",
+            "lines": [
+              74,
+              77
+            ],
+            "conclusion": "`muteP` shows `(H! (P! i))^p • ∑ a, Phase4 J V Z i (baron S P' (P! i)) a a` tends to 0 for every p, i.e. the trace of the transported tensor vanishes faster than every inverse power, for B not equal to `some true`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Trace.Terrace.gamut",
+        "module": "YM.TraceExtension.Terrace.Dusk",
+        "lines": [
+          89,
+          89
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Trace.Terrace.gamut"
+          },
+          "snippet": {
+            "text": "lemma gamut (h:G.Simple) : Tendsto (fun i=>Z.β i/(A).clock.hatBeta i) atTop (𝓝 1):=by",
+            "line": 89,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Terrace/Dusk.lean",
+            "fragment": "L89-L89"
+          },
+          "proof_context": {
+            "declaration": "YM.Trace.Terrace.gamut",
+            "lines": [
+              89,
+              95
+            ],
+            "conclusion": "`gamut` shows `Z.β i / hatBeta i` tends to 1 for simple G."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

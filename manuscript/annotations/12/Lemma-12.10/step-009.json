@@ -1,19 +1,21 @@
 {
   "id": "Lemma 12.10 step 9",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] states the bound for face chords (the slot norm enters through `atomVolume`) rather than a separate slot-norm statement.",
   "subject": [
     {
       "location": {
         "page": 88,
         "rect": [
           0.12026,
-          0.40045,
+          0.40164,
           0.75992,
-          0.03285
+          0.03143
         ]
       },
-      "title": "Lemma 12.10 step 9: Text, p. 88, not yet judged",
+      "title": "Lemma 12.10 step 9: Text, p. 88",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 12.10 step 9"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVNext.CouplingReset.chord_le",
+        "module": "YM.UVNext.COUPLING_RESET.Precision",
+        "lines": [
+          31,
+          35
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVNext.CouplingReset.chord_le"
+          },
+          "snippet": {
+            "text": "lemma chord_le {P : BudgetPoint} {U : Config G n} (hu : flags P.threshold U = ∅) (p : Face (Per n)) :\n    G.chord (faceValue U p) ≤ P.threshold := by\n  by_contra! ht\n  have h := (flags_spec P.threshold U p.1).mpr ⟨p,List.mem_toFinset.mpr (List.mem_cons_self),ht⟩\n  simp [hu] at h",
+            "line": 31,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/COUPLING_RESET/Precision.lean",
+            "fragment": "L31-L35"
+          },
+          "proof_context": {
+            "declaration": "YM.UVNext.CouplingReset.chord_le",
+            "lines": [
+              31,
+              35
+            ],
+            "conclusion": "On a flag-free configuration every face value has chord at most `P.threshold`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVNext.CouplingReset.higher_estimate",
+        "module": "YM.UVNext.COUPLING_RESET.Precision",
+        "lines": [
+          52,
+          69
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVNext.CouplingReset.higher_estimate"
+          },
+          "snippet": {
+            "text": "lemma higher_estimate {P : BudgetPoint} {D : PathData G} {A : Clip} {σ C Λ : ℝ} (hD : D.Bounds A σ C Λ)\n    {V : Config G n} (hV : flags P.threshold V = ∅) :\n    |kinetic D A P V - secondTerm A D V| ≤ sites n * (2*C*P.threshold^3) := by\n  obtain ⟨-, -, hb⟩ := unmasked_precision D A hV\n  have hC : 0 ≤ C := (tsum_nonneg hD.three.1).trans hD.three.2.2\n  have he (s : Signed) (x : Site n) :\n      |PathData.atomSeries D.cubic P (pull s 0 V) x + PathData.atomSeries D.quartic P (pull s 0 V) x| ≤ 2*C*P.threshold^3 := by\n    refine (abs_add_le ..).trans ((add_le_add (atomVolume _ _ _ _ hD.width hD.three)\n      (atomVolume _ _ _ _ hD.width hD.four)).trans ?_)\n    have ht := pow_le_pow_of_le_one P.threshold_pos.le P.threshold_le (by norm_num : (3:ℕ) ≤ 4)\n    linarith only [mul_le_mul_of_nonneg_left ht hC]\n  simp only [kinetic,secondTerm,Patch.average,hb]\n  rw [← mul_sub]; change |(Fintype.card Signed : ℝ)⁻¹ * _| ≤ _\n  rw [abs_mul,abs_of_nonneg (inv_nonneg.mpr (Nat.cast_nonneg _)),inv_mul_le_iff₀ (Nat.cast_pos.mpr Fintype.card_pos),\n    Finset.sum_add_distrib,add_sub_cancel_left]\n  refine (Finset.abs_sum_le_sum_abs ..).trans ((Finset.sum_le_sum fun s (_ : s∈Finset.univ) =>\n    (Finset.abs_sum_le_sum_abs ..).trans (Finset.sum_le_sum fun x _ => he s x)).trans_eq ?_)\n  simp [sites]",
+            "line": 52,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/COUPLING_RESET/Precision.lean",
+            "fragment": "L52-L69"
+          },
+          "proof_context": {
+            "declaration": "YM.UVNext.CouplingReset.higher_estimate",
+            "lines": [
+              52,
+              69
+            ],
+            "conclusion": "The cubic and quartic atom sums are bounded per site by `2*C*P.threshold^3` using `threshold <= 1`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

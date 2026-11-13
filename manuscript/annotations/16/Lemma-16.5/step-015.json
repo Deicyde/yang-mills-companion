@@ -1,7 +1,9 @@
 {
   "id": "Lemma 16.5 step 15",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The cancellation of the response term by `ht` is the same; [L] works at points whose test points are `generic` in the arena rather than the enlarged annulus with nonzero coordinates.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.11962,
           0.73396,
           0.76012,
-          0.05423
+          0.05368
         ]
       },
-      "title": "Lemma 16.5 step 15: Text, p. 179, not yet judged",
+      "title": "Lemma 16.5 step 15: Text, p. 179",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 16.5 step 15"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.MergeProof.Ribbons.stencil_pay",
+        "module": "YM.MergeProof.West.Stencil",
+        "lines": [
+          14,
+          17
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.MergeProof.Ribbons.stencil_pay"
+          },
+          "snippet": {
+            "text": "lemma stencil_pay (q:ℕ)(hp:∀ i,(I i).t ≤ q)\n   (ht : ∀ t:S.Field B, (∑ i:ι,g i*(I i).tester S B t)=0):\n ∃ A:ℝ,0 ≤ A∧ ∀ (d h:ℕ)(b:C.book.Ref d)(T:C.book.Ref 4)(m j:ℕ)(ε:ℝ), ShellNode C q j m B d h b T F ε → ∀ x:Lattice.Cover, C.S.gridPoint j x∈ arena ((R) m) → (∀ i,(I i).point j x∈generic _) →\n    ‖∑ i:ι, g i * ((((R) m:ℂ)^h) * (I i).asked (S.project 4 T) (S.project d b) (C.S.gridPoint j x))‖ ≤ ε*A:=by",
+            "line": 14,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/West/Stencil.lean",
+            "fragment": "L14-L17"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.Ribbons.stencil_pay",
+            "lines": [
+              14,
+              38
+            ],
+            "conclusion": "`stencil_pay` bounds `‖∑ i, g i * (r^h * asked ...)‖ <= ε * A` at grid points of the arena whose test points are generic."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.MergeProof.Ribbons.stencil_pay",
+        "module": "YM.MergeProof.West.Stencil",
+        "lines": [
+          35,
+          38
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.MergeProof.Ribbons.stencil_pay"
+          },
+          "snippet": {
+            "text": "       _ = ‖∑ i:ι, g i*(f i-(I i).tester S B Y)‖:= by simp_rw [mul_sub,Finset.sum_sub_distrib,ht,sub_zero]; rfl\n       _ ≤ _:= (norm_sum_le ..).trans (by\n            rw [Finset.mul_sum]; apply Finset.sum_le_sum; intro i _; rw [norm_mul]\n            exact (mul_le_mul_of_nonneg_left (hy i) (norm_nonneg _)).trans_eq (by ring))",
+            "line": 35,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/West/Stencil.lean",
+            "fragment": "L35-L38"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.Ribbons.stencil_pay",
+            "lines": [
+              14,
+              38
+            ],
+            "conclusion": "The calc subtracts `∑ g i * tester Y = 0` (from `ht`) and sums the per-test bounds."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
       }
     }
   }

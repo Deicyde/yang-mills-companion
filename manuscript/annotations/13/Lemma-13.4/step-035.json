@@ -1,19 +1,21 @@
 {
   "id": "Lemma 13.4 step 35",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The gas is over finite sets of compatible labels for an abstract hard-core relation `R`, here with overlap of supports through `Tests`; the empty selection and `z_M` are the abstract `w`.",
   "subject": [
     {
       "location": {
         "page": 94,
         "rect": [
           0.12026,
-          0.68774,
+          0.68781,
           0.76194,
-          0.04716
+          0.04708
         ]
       },
-      "title": "Lemma 13.4 step 35: Text, p. 94, not yet judged",
+      "title": "Lemma 13.4 step 35: Text, p. 94",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 13.4 step 35"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Push.AbsoluteSums.Gas.price_log",
+        "module": "YM.Push.ABSOLUTE_SUMS.Log",
+        "lines": [
+          114,
+          121
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Push.AbsoluteSums.Gas.price_log"
+          },
+          "snippet": {
+            "text": "theorem price_log (hr : Hard R) {n : Side} (X : ι → Support n) (B : ℕ)\n    (ht : Tests R X) {a γ δ q : ℝ} (ha : 0 ≤ a)\n    (h : Ready X B (fun i => ‖w i‖) a γ δ q) :\n    SumBudget (fun s => ‖value R w s‖) (Real.exp ((n.val^4:ℕ)*γ)) ∧\n    SumBudget (fun i => ‖term R w i‖) (((n.val^4:ℕ)*γ)*(1-q)⁻¹) ∧\n    Real.exp (logSum R w) = total R w ∧ 0 < total R w ∧ Real.log (total R w) = logSum R w := by\n  have hX i : (X i).Nonempty := by obtain ⟨x,hx,-⟩ := ht i i (hr.diag i); exact ⟨x,hx⟩\n  have hb := actual_values R w X B hX ha h",
+            "line": 114,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/ABSOLUTE_SUMS/Log.lean",
+            "fragment": "L114-L121"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.AbsoluteSums.Gas.price_log",
+            "lines": [
+              114,
+              149
+            ],
+            "conclusion": "`price_log` concerns `total R w`, the sum of `value R w s` over finite label sets, and `logSum R w`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Push.AbsoluteSums.Gas.Hard",
+        "module": "YM.Push.ABSOLUTE_SUMS.Gas",
+        "lines": [
+          16,
+          18
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Push.AbsoluteSums.Gas.Hard"
+          },
+          "snippet": {
+            "text": "structure Hard : Prop where\n  diag : ∀ i, R i i\n  symm : ∀ i j, R i j → R j i",
+            "line": 16,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/ABSOLUTE_SUMS/Gas.lean",
+            "fragment": "L16-L18"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.AbsoluteSums.Gas.Hard",
+            "lines": [
+              16,
+              18
+            ],
+            "conclusion": "`Hard R` is the reflexive symmetric incompatibility relation of the hard-core gas."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents agreed on the class but cited different declarations; the mapper's kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

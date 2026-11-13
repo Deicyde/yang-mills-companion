@@ -1,7 +1,9 @@
 {
   "id": "Lemma 14.19 step 2",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[M] cites the local comparison for smallness and states subpower growth of the inverse change; the Lean splits these into `embark` and the `Slow` bound `hy` in `marshal`. Tolerance and interior-root details are internal to `embark`.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.12026,
           0.82302,
           0.75981,
-          0.05423
+          0.05447
         ]
       },
-      "title": "Lemma 14.19 step 2: Text, p. 143, not yet judged",
+      "title": "Lemma 14.19 step 2: Text, p. 143",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 14.19 step 2"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.MergeProof.embark",
+        "module": "YM.MergeProof.Canyon",
+        "lines": [
+          41,
+          42
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.MergeProof.embark"
+          },
+          "snippet": {
+            "text": "lemma embark (he:Slow C f x): Bid.close C f (upper C Y - hallmarks V x):=by\n    let Q (a:ρ) := hallmarks T (fun j=> Motion.patch F a.1 (U j.1 j.2 a.2)) - hallmarks V (fun j=> Motion.patch F a.1 (s' a.2)); let S(a:ρ)(j:Cutoffs):=Motion.chips F (x j) a",
+            "line": 41,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Canyon.lean",
+            "fragment": "L41-L42"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.embark",
+            "lines": [
+              41,
+              64
+            ],
+            "conclusion": "`embark` says the observable differs from the auxiliary section `hallmarks V x` by a `Bid.close` error for any `Slow` family."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.MergeProof.marshal",
+        "module": "YM.MergeProof.Chaletbin",
+        "lines": [
+          48,
+          50
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.MergeProof.marshal"
+          },
+          "snippet": {
+            "text": "   have hy : Slow C f y:=by\n     apply ((Slow.const (C:=C) (f:=f) (2:ℝ)).mul (coords_slow _ hc)).reduce\n     filter_upwards [(cutoff_grows f).eventually h.stamped] with i hi; exact ((Size.norm_le _ _).trans ((hi i.2).2.1 ((Z' i).symm (x i)))).trans (Real.le_norm_self _)",
+            "line": 48,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Chaletbin.lean",
+            "fragment": "L48-L50"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.marshal",
+            "lines": [
+              41,
+              54
+            ],
+            "conclusion": "`marshal` shows the pulled-back coefficients `y` are `Slow`, i.e. of subpower growth."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

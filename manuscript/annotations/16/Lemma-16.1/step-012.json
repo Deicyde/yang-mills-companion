@@ -1,7 +1,9 @@
 {
   "id": "Lemma 16.1 step 12",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "[L] never states the identities between the degree-five contractions and the derivatives of P_bb and Q_tot - 2P_bb. It evaluates the divergence of the three tensors directly on the tests through `slide`, using the same Leibniz rule.",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.0375
         ]
       },
-      "title": "Lemma 16.1 step 12: Display, p. 171, not yet judged",
+      "title": "Lemma 16.1 step 12: Display, p. 171",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 16.1 step 12"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVNext.FreeStress.listens_to",
+        "module": "YM.UVNext.FREE_STRESS_CERTIFICATE.Tangent",
+        "lines": [
+          115,
+          116
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVNext.FreeStress.listens_to"
+          },
+          "snippet": {
+            "text": "lemma listens_to (a t i j b g c e f m : Axis) :\n    hearing F (camera t) c e f m 5 (W.deriv 4 a (flat F i j b g)) = loud G * (↑(slide a t i j b g c e f m) : ℂ) := by",
+            "line": 115,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/FREE_STRESS_CERTIFICATE/Tangent.lean",
+            "fragment": "L115-L116"
+          },
+          "proof_context": {
+            "declaration": "YM.UVNext.FreeStress.listens_to",
+            "lines": [
+              115,
+              140
+            ],
+            "conclusion": "`listens_to` evaluates the derivative of a product of two curvature components by the Leibniz sample `slide`, as an integer table against the test."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVNext.FreeStress.slide",
+        "module": "YM.UVNext.FREE_STRESS_CERTIFICATE.Tangent",
+        "lines": [
+          76,
+          78
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVNext.FreeStress.slide"
+          },
+          "snippet": {
+            "text": "def slide (r t a b i k c e f m : Axis) : ℤ :=\n    rotate (ray r t) a b c e * rotate (curve t) i k f m + rotate (curve t) a b c e * rotate (ray r t) i k f m +\n    (rotate (ray r t) a b f m * rotate (curve t) i k c e + rotate (curve t) a b f m * rotate (ray r t) i k c e)",
+            "line": 76,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/FREE_STRESS_CERTIFICATE/Tangent.lean",
+            "fragment": "L76-L78"
+          },
+          "proof_context": {
+            "declaration": "YM.UVNext.FreeStress.slide",
+            "lines": [
+              76,
+              78
+            ],
+            "conclusion": "`slide` is the Leibniz sum of the derivatives of the two factors of `F_ij F_km` tested against `F_ab F_ab`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents agreed on the class but cited different declarations; the mapper's kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

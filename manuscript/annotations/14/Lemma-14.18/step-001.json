@@ -1,7 +1,9 @@
 {
   "id": "Lemma 14.18 step 1",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The count `dim V - dim I = dim Maxwell space` is used inside `savings` for the ideal `B` and the free table field `T.Field d`; the invariant averaging and the Bianchi remark are inside the definitions (`Maxwell.projectionExact`, `freeTable`) and not in these lines.",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.10262
         ]
       },
-      "title": "Lemma 14.18 step 1: Text, p. 143, not yet judged",
+      "title": "Lemma 14.18 step 1: Text, p. 143",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 14.18 step 1"
@@ -21,7 +23,47 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.MergeProof.Accent.savings",
+        "module": "YM.MergeProof.Powder",
+        "lines": [
+          40,
+          47
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.MergeProof.Accent.savings"
+          },
+          "snippet": {
+            "text": "   have he := LinearEquiv.finrank_eq (v.submoduleMap B)\n   have hz := LinearEquiv.finrank_eq (W.coords.submoduleMap B)\n   have ha : Module.finrank ℂ (T.Field d)+Module.finrank ℂ (T.null d) = Module.finrank ℂ (C.label d):= (T.null d).finrank_quotient_add_finrank\n   have hz' : Module.finrank ℂ (T.null d)=Module.finrank ℂ B:=\n      (congr_arg (fun L : Submodule ℂ (C.label d)=> Module.finrank ℂ L) hg).trans hz.symm\n   rw [hz'] at ha\n   change _ ≤ Module.finrank ℂ (B.map v.toLinearMap)+ Module.finrank ℂ (T.Field d)\n   rw [← he, Nat.add_comm,ha]",
+            "line": 40,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Powder.lean",
+            "fragment": "L40-L47"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.Accent.savings",
+            "lines": [
+              19,
+              47
+            ],
+            "conclusion": "With `null d = equation ideal` (via `hg`) and `Field d` the quotient, `finrank label = finrank Field + finrank null` and `finrank null = finrank (equationIdeal)`, giving the dimension count."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +73,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
       }
     }
   }

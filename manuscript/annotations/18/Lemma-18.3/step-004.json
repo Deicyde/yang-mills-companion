@@ -1,9 +1,9 @@
 {
   "id": "Lemma 18.3 step 4",
   "kind": "proof_step",
-  "status": "not_formalized",
-  "relation": "noMatch",
-  "note": "The ordering of the exponent gaps and the backward-stopping construction of comparison windows have no counterpart; `pays_sky` produces the subsequence from `wakesSky` and `dockedSky` without windows or powers of M_n.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "Lean chooses an explicit triple in `raises` (a, a-7, a-y with c = -x) rather than choosing the gaps one after another, builds the windows through exact `height`/`surplus` ceilings rather than overshoot estimates, and gets the cell side M^{b+5} a_k from `echo_scale`.",
   "subject": [
     {
       "location": {
@@ -46,22 +46,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.MergeProof.East.pays_sky",
-        "module": "YM.TraceExtension.Prom.Zoom.Running",
+        "declaration": "YM.MergeProof.East.raises",
+        "module": "YM.MergeProof.East.Gran",
         "lines": [
-          25,
-          31
+          14,
+          22
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.MergeProof.East.pays_sky"
+            "id": "YM.MergeProof.East.raises"
+          },
+          "snippet": {
+            "text": "lemma raises (d n:ℕ): ∃ c:Fin 3→ℝ, (∀ i,d+6 ≤ c i) ∧ ∃ ξ,Checks (c 0) (c 1) (c 2) ξ n d:=by\n    -- b-e=gap1; b-c offset arc σ\n    let x : ℝ := 7*d*n+1\n    let y := 6+x\n    let a:ℝ:= 10 + d + x + ((y*d)*n)+y+7\n    let l : Fin 3→ℝ:=![a,a-7,a-y]; have hL:0<x:=by positivity\n    refine ⟨l,fun i=> ?_,-x,?_⟩\n    · fin_cases i <;> (simp [l]; dsimp only [a,y,x]; nlinarith)\n    change Checks a (a-7) (a-y) (-x) n d; refine ⟨by linarith,by linarith,by unfold y; linarith,by unfold x; linarith only,?_⟩; dsimp only [a,y,x]; linarith [Nat.cast_nonneg (α:=ℝ) d, (show 0<x from hL)]",
+            "line": 14,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Prom/Zoom/Running.lean",
-            "fragment": "L25-L31"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/East/Gran.lean",
+            "fragment": "L14-L22"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.East.raises",
+            "lines": [
+              14,
+              22
+            ],
+            "conclusion": "Explicit α0,α1,α2 and c with `Checks` and α_j ≥ d+6 (arity d+2)."
           }
         }
       }
@@ -71,22 +85,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Next.UVStress.travels_jet",
-        "module": "YM.Next.UV_STRESS.Focus",
+        "declaration": "YM.Next.Rank.Station.width",
+        "module": "YM.Next.RANK.Station",
         "lines": [
-          183,
-          196
+          45,
+          45
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Next.UVStress.travels_jet"
+            "id": "YM.Next.Rank.Station.width"
+          },
+          "snippet": {
+            "text": "def width (A : Levels G) (b : ℝ) (k : ℕ) := middle A b k - surplus A k",
+            "line": 45,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/UV_STRESS/Focus.lean",
-            "fragment": "L183-L196"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Station.lean",
+            "fragment": "L45-L45"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Rank.Station.width",
+            "lines": [
+              45,
+              45
+            ],
+            "conclusion": "Window start `middle - surplus`, with `height`/`surplus` the two backward stops."
           }
         }
       }
@@ -96,22 +124,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Trace.Over.gang",
-        "module": "YM.TraceExtension.Chart.Line",
+        "declaration": "YM.MergeProof.East.echo_scale",
+        "module": "YM.MergeProof.East.Nitre",
         "lines": [
-          49,
-          56
+          22,
+          24
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Trace.Over.gang"
+            "id": "YM.MergeProof.East.echo_scale"
+          },
+          "snippet": {
+            "text": "lemma echo_scale (A:Levels G)(hG:G.Simple)(b:ℝ)(hb:0<b) : ∀ᶠ k:ℕ in atTop,\n    Allowed A b k → wheel A k ≤ A.clock.monitor k →\n      A.S.a (width A b k)/A.S.a k ≤ bill (b+5) (clim A k):=by",
+            "line": 22,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Chart/Line.lean",
-            "fragment": "L49-L56"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/East/Nitre.lean",
+            "fragment": "L22-L24"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.East.echo_scale",
+            "lines": [
+              22,
+              45
+            ],
+            "conclusion": "Eventually, the cell side `a(width A b k)/a k` is at most `bill (b+5) (clim A k)`, i.e. M^{b+5}."
           }
         }
       }
@@ -127,8 +169,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, a judge ruled on the search; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, a judge ruled on the search; a deeper re-search disagreed and a judge changed it from noMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

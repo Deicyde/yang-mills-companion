@@ -1,7 +1,9 @@
 {
   "id": "Lemma 12.8 step 1",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] proves the vanishing of alpha_b of the contact difference with the same a*b, reflected and a^2 shape, but only under the sequence hypothesis `Tendsto m atTop atTop` and via `Rays` (big-O along rays) rather than as an explicit O(|xi|^3)+O(|xi|^4) bound at each volume.",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.07428
         ]
       },
-      "title": "Lemma 12.8 step 1: Text, pp. 82–83, not yet judged",
+      "title": "Lemma 12.8 step 1: Text, pp. 82–83",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 12.8 step 1#0"
@@ -27,10 +29,10 @@
           0.12026,
           0.0962,
           0.76294,
-          0.05423
+          0.05502
         ]
       },
-      "title": "Lemma 12.8 step 1: Text, pp. 82–83, not yet judged",
+      "title": "Lemma 12.8 step 1: Text, pp. 82–83",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 12.8 step 1#1"
@@ -38,7 +40,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.drift_tip",
+        "module": "YM.Next.STATIONARY.Films.LeadingRay",
+        "lines": [
+          803,
+          817
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.drift_tip"
+          },
+          "snippet": {
+            "text": "  have heq (v : Track) : stock (Y a a (axes v))=(1/2:ℂ)*((W v + W (-v))-(1/2:ℂ)*V v) := by\n    have hc := active (F:=U) hp he T hk hC hΩ hm a a (fun i u q hh=> signing_here (Q.tags i) (X.decor i) (X.mat i) hu h (X.health i) hd (X.guards i) hS (X.event i) (X.shades i) _ T (X.sworn i) (T.metric.rights _ _ hk hΩ.le) u q hh a a hC) (axes v) (axes_real v)\n    unfold V W B x M; simp only [axes_flip]; exact hc\n  have hx j : Rays 2 (fun k => x k j) := tax_ray _ hk hΩ a j\n  have hW : Rays 3 W := rays_total (f:=fun i x' => x x' i*M i x') (fun i=> (hx i).mul (star_low hp he i (H i) a))\n  have hV : Rays 4 V := by\n    refine rays_total (f:=fun i v=> _) fun i => (halo_neg (hx i)).mul (t:=2) (g:=fun v => ∑ j,x v j*B i j v) ?_\n    refine rays_total (s:=2) (f:=fun j v => x v j *B i j v) fun j=> (hx j).mul (g:=B i j) (rays_zero ?_)\n    exact star_analytic hp (he.pay he) ..\n  have hf : Rays 3 F := by\n    intro v\n    have H' := hW.add (halo_neg hW) v; have hm := (hV.weaker (by norm_num : 3≤4)) v\n    change (fun t : ℝ => (2:ℂ)⁻¹ * stock (Y a a (axes (t • v)))) =O[cutRay] _\n    simp_rw [heq]; exact (((H'.sub (hm.const_mul_left _)).const_mul_left _).const_mul_left _)\n  have ht := (rays_jet (speedy_fits hC hp i) 3).1 hf 2 (by omega)",
+            "line": 803,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Films/LeadingRay.lean",
+            "fragment": "L803-L817"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.drift_tip",
+            "lines": [
+              789,
+              818
+            ],
+            "conclusion": "The `changeCue` figure (full completed Hessian minus the contact-removed one) equals a sum of products of an order-2 penalty-derivative factor `x` with an order-1 mixed factor (`W`, `Rays 3`) plus a product of two `x` factors (`V`, `Rays 4`), so it is O(|v|^3) and its `alphaPay` vanishes."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.quoting",
+        "module": "YM.Next.STATIONARY.Loops.HessianMatch",
+        "lines": [
+          85,
+          86
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.quoting"
+          },
+          "snippet": {
+            "text": "  have hd := drift_tip X hk hl hx hp hS (hy.mono (half_le_self he.le)) h hv hz (hM.bound hK) i\n  unfold changeCue at hd; rw [alpha_delta hl hM hK i, sub_eq_zero] at hd",
+            "line": 85,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Loops/HessianMatch.lean",
+            "fragment": "L85-L86"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.quoting",
+            "lines": [
+              67,
+              96
+            ],
+            "conclusion": "`drift_tip` and `alpha_delta` give `alphaPay i (profitable medalCue) = alphaPay i (profitable coreCue)`, i.e. removing the contact term leaves alpha_b unchanged."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -49,8 +130,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

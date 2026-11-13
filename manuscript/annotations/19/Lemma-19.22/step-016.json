@@ -1,19 +1,21 @@
 {
   "id": "Lemma 19.22 step 16",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] proves the remainder bound along a single axis with a `Jet` seminorm and transfers it to the normal space of `K` on a compact set, instead of quoting the integral form of Taylor's remainder on a shell.",
   "subject": [
     {
       "location": {
         "page": 237,
         "rect": [
           0.12026,
-          0.47079,
+          0.47047,
           0.75948,
-          0.02134
+          0.02166
         ]
       },
-      "title": "Lemma 19.22 step 16: Text, p. 237, not yet judged",
+      "title": "Lemma 19.22 step 16: Text, p. 237",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 19.22 step 16"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Normal.axis_remainder",
+        "module": "YM.Contacts.Normal.AxisTaylor",
+        "lines": [
+          59,
+          59
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Normal.axis_remainder"
+          },
+          "snippet": {
+            "text": "lemma axis_remainder (h : ContDiff ℝ ∞ g)(U : Set ℝ) (H : Jet n (T ×ˢ U) g r) (i j : ℕ)(hj : (i+1)+j≤ n) (a : ℝ) (ha : 0 ≤ a) (he : Icc 0 a ⊆ U) : Jet j T (fun x=> (g-(vertical E).atoms i g) (x,a)) (r*a^(i+1)):=by",
+            "line": 59,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Normal/AxisTaylor.lean",
+            "fragment": "L59-L59"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Normal.axis_remainder",
+            "lines": [
+              59,
+              71
+            ],
+            "conclusion": "The Taylor remainder `g - atoms i g` along the axis at height `a >= 0` has `Jet j` bound `r*a^(i+1)` when `(i+1)+j <= n`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Normal.from_compact",
+        "module": "YM.Contacts.Normal.CompactReserves",
+        "lines": [
+          34,
+          34
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Normal.from_compact"
+          },
+          "snippet": {
+            "text": "lemma from_compact (T : Set E)(hT : IsCompact T)(U : ℝ)(hU : 0 ≤ U)(m n : ℕ) : ∃ c ≥ (1:ℝ), BillOn K n m U c T:= by",
+            "line": 34,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Normal/CompactReserves.lean",
+            "fragment": "L34-L34"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Normal.from_compact",
+            "lines": [
+              34,
+              43
+            ],
+            "conclusion": "On a compact set the normal-direction Taylor remainder satisfies `BillOn`, the uniform bound used for shell estimates, derived from `axis_remainder`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents agreed on the class but cited different declarations; the mapper's kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

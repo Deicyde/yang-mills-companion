@@ -1,19 +1,21 @@
 {
   "id": "Lemma 14.11 step 4",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The Lean takes the interiority of the intermediate stencils as hypothesis `hs` (margin 2*span, supplied by `figure`) and inducts over a Finset of axes instead of i = 0..4.",
   "subject": [
     {
       "location": {
         "page": 134,
         "rect": [
           0.12026,
-          0.32769,
+          0.32824,
           0.76294,
-          0.10556
+          0.105
         ]
       },
-      "title": "Lemma 14.11 step 4: Text, p. 134, not yet judged",
+      "title": "Lemma 14.11 step 4: Text, p. 134",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 14.11 step 4"
@@ -21,7 +23,47 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extraction.Around.interior_from",
+        "module": "YM.Extraction.Around",
+        "lines": [
+          101,
+          129
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extraction.Around.interior_from"
+          },
+          "snippet": {
+            "text": "  choose v j hj hv hr hz hx hg ha using fun i : Axis => bracket C.S h X o H i\n  let Q (w : Axis → ℕ) i := v i (w i) i\n  have ht w (hw : ∀ i, w i ≤ d) : Q w∈X.margin 0 (2*d) := by\n    refine ⟨fun a => (hr a _ (hw a)).1 a,?_⟩\n    intro i; exact (hr i _ (hw i)).2 i\n  have hp (p : Axis → ℕ) (i : Axis) (l : ℕ) (hl : l+1 ≤ d) : Q (update p i (l+1)) = Q (update p i l) + step i := by\n    funext b; by_cases he : b=i <;> simp [Q,he,hz i l hl]\n  let S (q : Axis → ℕ) := X.rootTest (C.beta N p) (C.seen u (Q q))\n  have hb (D : Finset Axis) (w : Axis → ℕ) (hw : ∀ i, w i ≤ d) (hR : ∀ i∉D, w i=0 ∨ w i=d) : S w ≤ A := by\n    induction D using Finset.induction_on generalizing w with\n    | empty =>\n      apply swept X u Hm (ht w hw).1 h _ he A hc\n      rw [belongs]; intro i\n      rcases hR i (by simp) with e|e <;> unfold Q <;> rw [e]\n      exacts [hg i, ha i]\n    | @insert i D hi ih =>\n      let W (x) := update w i x\n      let F (x : ℕ) := C.seen u (Q (W x))\n      have HH (x) (h : x ≤ d) : ∀ k, W x k ≤ d := fun k => by by_cases he:k=i <;> simp [W,he,hw,h]\n      have he (x : ℕ) (h : x=0 ∨ x=d) (t) (ht:t∉D) : W x t=0 ∨ W x t=d := by\n        by_cases hf:t=i; subst t;simpa [W]\n        simpa [W,hf] using hR t (by simp [hf,ht])\n      have hx' := X.pathway (C.beta N _) (seamless Hm ..) F d i (fun x hx => hs _ (ht _ (HH _ hx)))\n        (fun x hx => ?_) A (ih _ (HH _ (Nat.zero_le _)) (he _ (Or.inl rfl))) (ih _ (HH d le_rfl) (he _ (Or.inr rfl)))\n        _ (hw i)\n      · change S (update w i (w i))≤A at hx'; simpa using hx'\n      funext U; unfold F W; rw [hp w i x hx]; exact (C.translation ..).symm\n  suffices he : o=Q j from he ▸ hb Finset.univ _ hj (by simp)\n  ext i; simp [Q,hv]",
+            "line": 101,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extraction/Around.lean",
+            "fragment": "L101-L129"
+          },
+          "proof_context": {
+            "declaration": "YM.Extraction.Around.interior_from",
+            "lines": [
+              95,
+              129
+            ],
+            "conclusion": "Each coordinate of the anchor is bracketed by two fine-center values and the endpoint bound is carried across axes by induction on a finite set of axes, using `swept` at the base and `pathway` in each axis."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +73,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
       }
     }
   }

@@ -28,7 +28,7 @@
           0.11818,
           0.0962,
           0.76157,
-          0.03713
+          0.03791
         ]
       },
       "title": "Lemma 13.17 step 10: Text, pp. 114–115",
@@ -88,7 +88,7 @@
         "module": "YM.FullVolume.Amp.Pin",
         "lines": [
           46,
-          56
+          54
         ]
       },
       "role": "key",
@@ -98,20 +98,20 @@
             "id": "YM.FullVolume.Amp.vacant"
           },
           "snippet": {
-            "text": "lemma vacant {j:ℕ}(hj:j<s.card) : (∑ T∈s.powerset,signed s T • f (x+ leanW s u r T+(j:ℝ) • spine s u r T))=0:=by\n  obtain ⟨a,ha,h⟩:= hu j hj\n  let H(T:Finset I):= f (x+leanW s u r T +(j:ℝ) • spine s u r T)\n  have hh t (ht:t∈(s.erase a|>.powerset)): H (insert a t)=H t:=by\n    have hV:a∉t:= fun h=> notMem_erase _ _ (mem_powerset.mp ht h)\n    unfold H leanW spine; rw [sum_insert hV,sum_insert hV,h, smul_add]; simp only [neg_smul]; congr 1; abel\n  change (∑ T∈ _, _ • H T)=0\n  have hp : (∑ T∈ s.powerset,signed s T • H T)= ∑ T∈(s.erase a).powerset,signed (s.erase a) T • (H (insert a T)-H T):=by simpa only [insert_erase ha] using unfoldP (s.erase a) H (notMem_erase a s)\n  exact hp.trans (sum_eq_zero fun t ht=> by rw [hh t ht,sub_self,smul_zero])\nomit hu\ninclude he",
+            "text": "lemma vacant {j:ℕ}(hj:j<s.card) : (∑ T∈s.powerset,signed s T • f (x+ leanW s u r T+(j:ℝ) • spine s u r T))=0:=by\n  obtain ⟨a,ha,h⟩:= hu j hj\n  let H(T:Finset I):= f (x+leanW s u r T +(j:ℝ) • spine s u r T)\n  have hh t (ht:t∈(s.erase a|>.powerset)): H (insert a t)=H t:=by\n    have hV:a∉t:= fun h=> notMem_erase _ _ (mem_powerset.mp ht h)\n    unfold H leanW spine; rw [sum_insert hV,sum_insert hV,h, smul_add]; simp only [neg_smul]; congr 1; abel\n  change (∑ T∈ _, _ • H T)=0\n  have hp : (∑ T∈ s.powerset,signed s T • H T)= ∑ T∈(s.erase a).powerset,signed (s.erase a) T • (H (insert a T)-H T):=by simpa only [insert_erase ha] using unfoldP (s.erase a) H (notMem_erase a s)\n  exact hp.trans (sum_eq_zero fun t ht=> by rw [hh t ht,sub_self,smul_zero])",
             "line": 46,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Amp/Pin.lean",
-            "fragment": "L46-L56"
+            "fragment": "L46-L54"
           },
           "proof_context": {
             "declaration": "YM.FullVolume.Amp.vacant",
             "lines": [
               46,
-              56
+              54
             ],
             "conclusion": "For j < n the signed sum over T of f at the j-th point vanishes, by pairing T with T∪{a} where r a = j."
           }
@@ -127,7 +127,7 @@
         "module": "YM.FullVolume.Amp.Pin",
         "lines": [
           57,
-          61
+          60
         ]
       },
       "role": "key",
@@ -137,20 +137,20 @@
             "id": "YM.FullVolume.Amp.diagonal"
           },
           "snippet": {
-            "text": "lemma diagonal (T:Finset I) (ht:T∈s.powerset): leanW s u r T+(s.card:ℝ) • spine s u r T=∑ i∈T,u i:= by\n  unfold spine leanW; rw [Finset.smul_sum,← sum_add_distrib]; apply sum_congr rfl; intro i hi\n  have hp := sub_ne_zero_of_ne ((Nat.cast_lt.mpr (he i (mem_powerset.mp ht hi)): (r i:ℝ)<s.card).ne')\n  unfold stiff; rw [← add_smul,add_comm,← sub_eq_add_neg,smul_smul,mul_inv_cancel₀ hp,one_smul]\ninclude hu",
+            "text": "lemma diagonal (T:Finset I) (ht:T∈s.powerset): leanW s u r T+(s.card:ℝ) • spine s u r T=∑ i∈T,u i:= by\n  unfold spine leanW; rw [Finset.smul_sum,← sum_add_distrib]; apply sum_congr rfl; intro i hi\n  have hp := sub_ne_zero_of_ne ((Nat.cast_lt.mpr (he i (mem_powerset.mp ht hi)): (r i:ℝ)<s.card).ne')\n  unfold stiff; rw [← add_smul,add_comm,← sub_eq_add_neg,smul_smul,mul_inv_cancel₀ hp,one_smul]",
             "line": 57,
             "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Amp/Pin.lean",
-            "fragment": "L57-L61"
+            "fragment": "L57-L60"
           },
           "proof_context": {
             "declaration": "YM.FullVolume.Amp.diagonal",
             "lines": [
               57,
-              61
+              60
             ],
             "conclusion": "`leanW T + n • spine T = ∑_{i∈T} u i`, i.e. each h_i has coefficient one at the point j = n."
           }

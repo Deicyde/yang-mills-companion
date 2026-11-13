@@ -1,19 +1,21 @@
 {
   "id": "Lemma 18.12 step 5",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Expansion, polarization and the shrinking-f dominated-convergence limit (`atom`, `tendsto_integral_filter_of_dominated_convergence`) are all in Lean, and transversality is `positioned`; the one difference is that Lean states the equation for the amplitude without the i^k normalization, with no unitary.",
   "subject": [
     {
       "location": {
         "page": 217,
         "rect": [
           0.12026,
-          0.29506,
+          0.29616,
           0.75995,
-          0.08845
+          0.08735
         ]
       },
-      "title": "Lemma 18.12 step 5: Text, p. 217, not yet judged",
+      "title": "Lemma 18.12 step 5: Text, p. 217",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 18.12 step 5"
@@ -21,7 +23,125 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.Photons.local_position",
+        "module": "YM.TraceExtension.Fock.VacuumLocal",
+        "lines": [
+          95,
+          96
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.Photons.local_position"
+          },
+          "snippet": {
+            "text": "lemma local_position (s : Tags m n) (g : Fin n→ Probe E4) (hc : ∀ i, Remote (g i)) :\n    paired_at (Y.wave ⟨n,s⟩) g=adjoint_at (Y.wave ⟨n,s⟩) g := by",
+            "line": 95,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Fock/VacuumLocal.lean",
+            "fragment": "L95-L96"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.Photons.local_position",
+            "lines": [
+              95,
+              139
+            ],
+            "conclusion": "For `Remote` tests g_j (compact support in `spacelike`) the sector wave `q` satisfies `paired_at q g = adjoint_at q g`, the display eq:I-remote with `Probe.hat` and `testPlus` for g-hat_- and g-hat_+."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.Photons.sectors",
+        "module": "YM.TraceExtension.Fock.Coefficients",
+        "lines": [
+          75,
+          77
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.Photons.sectors"
+          },
+          "snippet": {
+            "text": "lemma sectors (f : Test4) (x y : Ambient m) (hf : OnVac f x y) (h : TestList m)\n    (hp : ∀ i, HasCompactSupport ⇑(h i)) (hR : ∀ i, Probe.bar (h i)=h i) (hw : ∀ i, Fields.causal f (h i)) (n : ℕ) :\n    star (earlier (fun _ : Fin n => h) x)=earlier (fun _ : Fin n => h) y := by",
+            "line": 75,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Fock/Coefficients.lean",
+            "fragment": "L75-L77"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.Photons.sectors",
+            "lines": [
+              75,
+              94
+            ],
+            "conclusion": "The equality for coherent vectors gives, by expansion in a real parameter times h, the equality of every k-th sector contraction `star (earlier (h,..,h) x) = earlier (h,..,h) y`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.Photons.sectors_local",
+        "module": "YM.TraceExtension.Fock.RealTests",
+        "lines": [
+          115,
+          117
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.Photons.sectors_local"
+          },
+          "snippet": {
+            "text": "lemma sectors_local (f : Test4) (x y : Ambient m) (p : PhysicalWave x) (q : PhysicalWave y) (h : OnVac f x y)\n    (g : Fin n→ TestList m) (hc : ∀ i,g i ∈ localized m f) :\n    star (earlier (barList ∘ g) x) = earlier g y := by",
+            "line": 115,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Fock/RealTests.lean",
+            "fragment": "L115-L117"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.Photons.sectors_local",
+            "lines": [
+              115,
+              128
+            ],
+            "conclusion": "Polarization (`polar_identity`) and complexification extend the diagonal equality to independent slot tests `g i` in `localized m f`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +151,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

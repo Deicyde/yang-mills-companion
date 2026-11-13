@@ -1,9 +1,9 @@
 {
   "id": "Lemma 11.6 step 23",
   "kind": "proof_step",
-  "status": "not_formalized",
-  "relation": "noMatch",
-  "note": "The weights `e^{a|y|}(1+|y|)^h` and the weighted sup norm have no counterpart; `Laurent.Width` weights kernel coefficients, not inputs.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "Lean defines the exponential factor (`envelopeW`) and the polynomial factor (`hill`) in separate files. Their product w_{𝔞,h} and the sup norm ‖v‖_{𝔞,h} are not defined; Lean uses the weighted ℓ¹ `Width` instead.",
   "subject": [
     {
       "location": {
@@ -29,22 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Laurent.Width",
-        "module": "YM.Laurent.Eval",
+        "declaration": "YM.Next.Free.envelopeW",
+        "module": "YM.Next.FREE_KERNELS.Tariff",
         "lines": [
-          104,
-          104
+          21,
+          21
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Laurent.Width"
+            "id": "YM.Next.Free.envelopeW"
+          },
+          "snippet": {
+            "text": "def envelopeW (η : ℝ) (z : Cover) := Real.exp (η*size z)",
+            "line": 21,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Laurent/Eval.lean",
-            "fragment": "L104-L104"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/Tariff.lean",
+            "fragment": "L21-L21"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Free.envelopeW",
+            "lines": [
+              21,
+              21
+            ],
+            "conclusion": "`envelopeW η z = exp(η * size z)` is the exponential part e^{𝔞|y|} of the weight."
           }
         }
       }
@@ -54,22 +68,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Craft.Donate",
-        "module": "YM.Bid.Craft",
+        "declaration": "YM.FreeResolvent.Mark.hill",
+        "module": "YM.Push.FREE_RESOLVENT.Growth",
         "lines": [
-          21,
-          22
+          25,
+          25
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Craft.Donate"
+            "id": "YM.FreeResolvent.Mark.hill"
+          },
+          "snippet": {
+            "text": "def hill (D : Cost X) (o : X) (P : ℕ) (x : X) := (1+D.d x o)^P",
+            "line": 25,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Bid/Craft.lean",
-            "fragment": "L21-L22"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/FREE_RESOLVENT/Growth.lean",
+            "fragment": "L25-L25"
+          },
+          "proof_context": {
+            "declaration": "YM.FreeResolvent.Mark.hill",
+            "lines": [
+              25,
+              25
+            ],
+            "conclusion": "`hill D o P x = (1 + D.d x o)^P` is the polynomial part (1+|y|)^h of the weight."
           }
         }
       }
@@ -84,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge changed it from noMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

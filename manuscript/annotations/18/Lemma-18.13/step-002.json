@@ -1,19 +1,21 @@
 {
   "id": "Lemma 18.13 step 2",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean states the negation over all open Q, W instead of producing A, B, and applies the Regions form of Lemma 18.12 with P = id rather than the ball statement at r/2. The compactness step sits in `localball`, run in the converse direction.",
   "subject": [
     {
       "location": {
         "page": 218,
         "rect": [
           0.12026,
-          0.48886,
+          0.48894,
           0.75996,
-          0.03713
+          0.03705
         ]
       },
-      "title": "Lemma 18.13 step 2: Text, p. 218, not yet judged",
+      "title": "Lemma 18.13 step 2: Text, p. 218",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 18.13 step 2"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.Photons.Regions.localball",
+        "module": "YM.TraceExtension.Fock.Regions",
+        "lines": [
+          26,
+          31
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.Photons.Regions.localball"
+          },
+          "snippet": {
+            "text": "    obtain ⟨s,t,hs,ht,hS,hT,hw⟩:=generalized_tube_lemma hx hy he (by\n       rintro ⟨x,y⟩ ⟨hv,hv'⟩; rcases mem_iUnion.mp hv' with ⟨i,hi⟩; exact hh i x hv y hi)\n    obtain ⟨Q,hQ,hxQ,hC⟩:= hx.exists_isOpen_closure_subset (U:=s∩ball 0 r)\n        (inter_mem (hs.mem_nhdsSet.mpr hS) (isOpen_ball.mem_nhdsSet.mpr hb))\n    obtain ⟨L,hL,hYL,hE⟩:= hy.exists_isOpen_closure_subset (U:=t) (ht.mem_nhdsSet.mpr hT)\n    have hv:=h Q L hQ hL (fun x hx=> (hC hx).2) (fun x hx y hy=> hw (show (x,y)∈s×ˢt from ⟨(hC hx).1,hE hy⟩)) f g hxQ hf (fun i x hx=> hYL (mem_iUnion.mpr ⟨i,hx⟩)) hg hR",
+            "line": 26,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Fock/Regions.lean",
+            "fragment": "L26-L31"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.Photons.Regions.localball",
+            "lines": [
+              19,
+              35
+            ],
+            "conclusion": "From a test in the ball, the tube lemma and `exists_isOpen_closure_subset` give open `Q`, `W` with closures spacelike separated and `closure Q ⊆ ball 0 r` carrying the supports."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.Photons.smell",
+        "module": "YM.TraceExtension.Fock.Occult",
+        "lines": [
+          16,
+          16
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.Photons.smell"
+          },
+          "snippet": {
+            "text": "    intro ht; apply regions_excludes hr hb hp X; refine ⟨ContinuousLinearMap.id ℂ _, ?_,fun _=>rfl,?_⟩",
+            "line": 16,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Fock/Occult.lean",
+            "fragment": "L16-L16"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.Photons.smell",
+            "lines": [
+              12,
+              21
+            ],
+            "conclusion": "The averaged statement is reduced to `regions_excludes` with `P = id`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

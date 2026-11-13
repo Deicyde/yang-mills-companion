@@ -1,7 +1,9 @@
 {
   "id": "Lemma 16.9 step 5",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "Lean states the pointwise bound for the product of the three scaled factors in one lemma (with the factor `fuel 3 n`) and does not state the one-factor bound with `ψ(p_j/w_j)` separately.",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.02461
         ]
       },
-      "title": "Lemma 16.9 step 5: Display, p. 184, not yet judged",
+      "title": "Lemma 16.9 step 5: Display, p. 184",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 16.9 step 5"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.tracks",
+        "module": "YM.Next.ROTATIONS.Frost",
+        "lines": [
+          50,
+          51
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.tracks"
+          },
+          "snippet": {
+            "text": "def tracks (w : Axis→ℝ) (d : Axis) (n : ℕ) (f : Panels) :=\n    update (fun j => large (fuel (w j) n) (f j)) d (frozen (fuel (w d) n) (f d))",
+            "line": 50,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Frost.lean",
+            "fragment": "L50-L51"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.tracks",
+            "lines": [
+              50,
+              51
+            ],
+            "conclusion": "`tracks w d n f` rescales each spatial profile by `fuel (w j) n` (`large`) and the `d` slot by `frozen`, the Fourier-scaled factors."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.track_size",
+        "module": "YM.Next.ROTATIONS.Cove",
+        "lines": [
+          33,
+          35
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.track_size"
+          },
+          "snippet": {
+            "text": "lemma track_size (w : Axis→ℝ) (d : Axis) (f : Panels) (e : ℂ) (he : ‖e‖=1)\n    (h : ∀ p : ℝ,hat (f d) p≠0 → 1≤|p|) : ∃ M : ℝ,0≤M ∧ ∀ (n : ℕ) (p : E4), 0≤p d → p∈cove w d n →\n    ‖jar w d f e n p‖ ≤ M*fuel 3 n*crop (other d) (homes w n) p*Real.exp (-(p d/fuel (w d) n)) := by",
+            "line": 33,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Cove.lean",
+            "fragment": "L33-L35"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.track_size",
+            "lines": [
+              33,
+              42
+            ],
+            "conclusion": "The product of the scaled transforms is bounded by `M * fuel 3 n * crop … * exp(-(p d / fuel (w d) n))`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents agreed on the class but cited different declarations; the mapper's kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

@@ -1,7 +1,9 @@
 {
   "id": "Lemma 17.3 step 21",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The displayed inequality is not stated as one formula: Lean compares integrands pointwise and then integrates, and its `d_0` is `toll` times the integral of `fee * crop` for a positive normalization `toll`. The restriction `E≤1` sits in `coneWeight` and the transverse profile `H^{(d)}` in `crop (other i)`.",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.04079
         ]
       },
-      "title": "Lemma 17.3 step 21: Display, p. 194, not yet judged",
+      "title": "Lemma 17.3 step 21: Display, p. 194",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 17.3 step 21"
@@ -21,7 +23,125 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.mass",
+        "module": "YM.Next.ROTATIONS.Mass",
+        "lines": [
+          163,
+          171
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.mass"
+          },
+          "snippet": {
+            "text": "  have hs n : ∀ᵐ p ∂μ,W n p ≤ A' n*g n p := by\n    filter_upwards [before (V i) A] with p he\n    have hz : 0 ≤ crop (other i) (mails w f n) p := crop_nonneg _ _ (fun i _ => bill_plus (hH i) _ _) p\n    unfold W coneWeight; split_ifs with hx\n    · have ht := hp _ _ (hw' n) (hw1 n) he hx\n      unfold A' g; rw [← mul_assoc]; apply mul_le_mul_of_nonneg_right _ hz\n      refine le_trans (le_of_eq ?_) (mul_le_mul_of_nonneg_left ht (show 0 ≤ c⁻¹*fuel a n^2 by positivity))\n      field_simp\n    exact mul_nonneg (show 0 ≤ c⁻¹*fuel a n^2 by positivity) (mul_nonneg (fee_pos m _ _ _ (hw' n) (hw1 n) he) hz)",
+            "line": 163,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Mass.lean",
+            "fragment": "L163-L171"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.mass",
+            "lines": [
+              115,
+              180
+            ],
+            "conclusion": "Pointwise `coneWeight i (fuel a n) (mails w f n) p ≤ c⁻¹ fuel² * (fee m (fuel a n) 0 (p i) * crop (other i) ...)`, from `grant`, on `p i ≤ 1`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.mass",
+        "module": "YM.Next.ROTATIONS.Mass",
+        "lines": [
+          154,
+          157
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.mass"
+          },
+          "snippet": {
+            "text": "  have hh : Budget (δ+a*2) (fun n => ∫ p,g n p ∂μ) := by\n    refine (hCash.times toll⁻¹).same (Eventually.of_forall fun i => ?_)\n    change toll⁻¹*(hole M m 0 _ _ _ _ i)= _\n    rw [py i,← mul_assoc, inv_mul_cancel₀ toll_pos.ne',one_mul]",
+            "line": 154,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Mass.lean",
+            "fragment": "L154-L157"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.mass",
+            "lines": [
+              115,
+              180
+            ],
+            "conclusion": "`∫ fee * crop` against `ν (V i) A` is `Budget (δ+a*2)`, the bound `d_0 = O(λ^δ W²)`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.grant",
+        "module": "YM.Next.ROTATIONS.Dyad",
+        "lines": [
+          124,
+          125
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.grant"
+          },
+          "snippet": {
+            "text": "lemma grant (m : ℕ) : ∃ C : ℝ,0<C ∧ ∀ E w : ℝ, 0<w → w≤1 → 0≤E → E≤1 →\n    C*E*w^2/(E+w)^4 ≤ fee m w 0 E := by",
+            "line": 124,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Dyad.lean",
+            "fragment": "L124-L125"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.grant",
+            "lines": [
+              124,
+              151
+            ],
+            "conclusion": "The lower bound `C*E*w^2/(E+w)^4 ≤ fee m w 0 E` that gives the left side of the display."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +151,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

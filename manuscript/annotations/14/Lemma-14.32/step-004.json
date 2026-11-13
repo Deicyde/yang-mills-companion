@@ -1,19 +1,21 @@
 {
   "id": "Lemma 14.32 step 4",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Both choose a compact neighbourhood of K in the noncollision domain and get a Lipschitz bound from bounded differences by telescoping. [L] states the bound with the Euclidean distance of the tagged points, eventually in N, and does not name a separation lower bound explicitly.",
   "subject": [
     {
       "location": {
         "page": 159,
         "rect": [
           0.12026,
-          0.86008,
+          0.86016,
           0.76036,
-          0.03713
+          0.03705
         ]
       },
-      "title": "Lemma 14.32 step 4: Text, pp. 159–160, not yet judged",
+      "title": "Lemma 14.32 step 4: Text, pp. 159–160",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 14.32 step 4#0"
@@ -30,7 +32,7 @@
           0.04006
         ]
       },
-      "title": "Lemma 14.32 step 4: Text, pp. 159–160, not yet judged",
+      "title": "Lemma 14.32 step 4: Text, pp. 159–160",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 14.32 step 4#1"
@@ -38,7 +40,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.circulating",
+        "module": "YM.FullVolume.Tuned",
+        "lines": [
+          40,
+          41
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.circulating"
+          },
+          "snippet": {
+            "text": "  obtain ⟨t,ht,hT⟩:= hK.exists_cthickening_subset_open (nohitOpen ..) hU\n  obtain ⟨r,B,hr,hB,H⟩:= M.localLip v l p hT hK.cthickening",
+            "line": 40,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Tuned.lean",
+            "fragment": "L40-L41"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.circulating",
+            "lines": [
+              38,
+              54
+            ],
+            "conclusion": "`circulating` takes a closed thickening of the compact set inside `NoHit` and obtains `r`, `B` from `localLip` on it."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.FixedBounds.localLip",
+        "module": "YM.FullVolume.Region",
+        "lines": [
+          46,
+          54
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.FixedBounds.localLip"
+          },
+          "snippet": {
+            "text": "  obtain ⟨r,hr,hT⟩ := he.exists_cthickening_subset_open (nohitOpen C.S p n) hk\n  choose f hf hF using fun j:MotionIndex n=> confines h v (j::l) p hT he.cthickening\n  obtain ⟨b,hb,hB⟩:= ((eventually_ge_atTop (0:ℝ)).and (eventually_all.mpr fun j=>eventually_ge_atTop (f j))).exists\n  refine ⟨r,b*Fintype.card (MotionIndex n),hr,mul_nonneg hb (Nat.cast_nonneg _),?_⟩\n  filter_upwards [eventually_all.mpr hF] with i hi x y hx hy\n  let t:= C.S.a i; let F:= gKernel C v l i p\n  refine stroll (C.S.a_pos _) F _ _ _ _ hb hy (fun u j hu=> ?_)\n  rw [dist_eq_norm,unique_units F (C.S.a_pos _) j u,norm_smul, Real.norm_of_nonneg (C.S.a_pos _).le]\n  exact mul_le_mul_of_nonneg_left ((hi j u (mem_cthickening_of_dist_le _ _ _ _ hx hu)).trans (hB j)) (C.S.a_pos _).le",
+            "line": 46,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Region.lean",
+            "fragment": "L46-L54"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.FixedBounds.localLip",
+            "lines": [
+              42,
+              54
+            ],
+            "conclusion": "`localLip` turns the `FixedBounds` bounds on one more difference into a Lipschitz bound by telescoping (`stroll`) along coordinate steps on a thickening of `K`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -49,8 +130,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

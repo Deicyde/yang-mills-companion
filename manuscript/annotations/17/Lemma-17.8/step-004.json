@@ -1,19 +1,21 @@
 {
   "id": "Lemma 17.8 step 4",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] states the setup with abstract constants M, R and obtains the uniform mass bound from continuity on a compact space, where [M] uses the common distribution bounds. The projection `Q_xi` is `momentum.region zeroE`.",
   "subject": [
     {
       "location": {
         "page": 201,
         "rect": [
           0.12026,
-          0.62957,
+          0.63012,
           0.76244,
-          0.09069
+          0.09014
         ]
       },
-      "title": "Lemma 17.8 step 4: Text, p. 201, not yet judged",
+      "title": "Lemma 17.8 step 4: Text, p. 201",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 17.8 step 4"
@@ -21,7 +23,125 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.light_bound",
+        "module": "YM.EveryPhase.Light",
+        "lines": [
+          222,
+          226
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.light_bound"
+          },
+          "snippet": {
+            "text": "    ∃ M : ℝ, 0 ≤ M ∧ ∀ i u, u∈Ioc (0:ℝ) 1 → (νletter L i w).real (lowE u) ≤ M*u^2 := by\n  obtain ⟨M,hM,hμ⟩ := word_bound L w\n  obtain ⟨N,hN,hν⟩ := word_bound L (reverseP F.action.J w)\n  obtain ⟨R,hR⟩ := late L w h\n  let A := fee R (M+N) * (Probe.pref Space3)⁻¹ * (2*Real.pi)",
+            "line": 222,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Light.lean",
+            "fragment": "L222-L226"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.light_bound",
+            "lines": [
+              221,
+              232
+            ],
+            "conclusion": "Uniform mass bounds for the word measure and its reversed word `reverseP J w`, and a spatial radius `R` beyond which the averaged commutator vanishes, are obtained for all characters."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.word_bound",
+        "module": "YM.EveryPhase.Light",
+        "lines": [
+          197,
+          206
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.word_bound"
+          },
+          "snippet": {
+            "text": "theorem word_bound (w : SumOfWords S) : ∃ M : ℝ, 0 ≤ M ∧ ∀ i, (νletter L i w).real univ ≤ M := by\n  let p i := (νletter L i w).real univ\n  have he (i) : (p i:ℂ)=inner ℂ (stands (L.actors i).operators w) (stands (L.actors i).operators w) := by\n    unfold p νletter; rw [(L.actors i).momentum.at_pair MeasurableSet.univ,(L.actors i).momentum.all]; rfl\n  have hp : Continuous p := by\n    have hh : p = fun i => (inner ℂ _ _).re := funext fun i =>\n      Eq.symm (congrArg Complex.re (he i).symm)\n    rw [hh]; exact Complex.continuous_re.comp (sum_pair L w w)\n  obtain ⟨M,hM⟩ := (isCompact_range hp).bddAbove\n  exact ⟨max 0 M,le_max_left _ _, fun i => (hM (mem_range_self i)).trans (le_max_right _ _)⟩",
+            "line": 197,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Light.lean",
+            "fragment": "L197-L206"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.word_bound",
+            "lines": [
+              197,
+              206
+            ],
+            "conclusion": "`(νletter L i w).real univ` is bounded uniformly in `i` (continuity of the Gram pairing on the compact character space)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.νletter",
+        "module": "YM.EveryPhase.Light",
+        "lines": [
+          173,
+          174
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.νletter"
+          },
+          "snippet": {
+            "text": "def νletter (i : F.α.space.X) (A : SumOfWords S) :=\n    (L.actors i).momentum.diagonal (stands (L.actors i).operators A)",
+            "line": 173,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Light.lean",
+            "fragment": "L173-L174"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.νletter",
+            "lines": [
+              173,
+              174
+            ],
+            "conclusion": "`νletter L i A` is the momentum diagonal measure of the word vector `stands A`, the `μ_{AΩ}` of the step."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +151,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

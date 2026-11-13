@@ -1,7 +1,9 @@
 {
   "id": "Lemma 13.15 step 1",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean packages the set-up as the single predicate `Climate` (R=b^(1/256), chi=b^(-1/32), upsilon=b^(-1/128)) and makes it eventual; the cited lemmas are not listed and the aperture inequality is the `dust` field rather than a separate display.",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.0342
         ]
       },
-      "title": "Lemma 13.15 step 1: Text, p. 111, not yet judged",
+      "title": "Lemma 13.15 step 1: Text, p. 111",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 13.15 step 1"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.PhysicalNext.Repeat.Pass.Climate",
+        "module": "YM.FullVolume.Table.Atlas",
+        "lines": [
+          31,
+          35
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.PhysicalNext.Repeat.Pass.Climate"
+          },
+          "snippet": {
+            "text": "structure Climate (x:ℝ) : Prop where\n   floor : 0<x\n   grade : 1 ≤ grand x\n   steps : joy x ≤1\n   dust : 128*grand x*normedWidth x ≤ joy x",
+            "line": 31,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Table/Atlas.lean",
+            "fragment": "L31-L35"
+          },
+          "proof_context": {
+            "declaration": "YM.PhysicalNext.Repeat.Pass.Climate",
+            "lines": [
+              31,
+              35
+            ],
+            "conclusion": "`Climate x` records the readiness condition `128*grand x*normedWidth x ≤ joy x` with `grand x = x^(1/256)` and `joy x = x^(-1/128)`, the latter being the scale parameter upsilon."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.PhysicalNext.Repeat.Pass.yet",
+        "module": "YM.FullVolume.Table.Atlas",
+        "lines": [
+          36,
+          42
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.PhysicalNext.Repeat.Pass.yet"
+          },
+          "snippet": {
+            "text": "lemma yet : ∀ᶠ x in atTop,Climate x:=by\n  have hp: (1/256:ℝ)-(1/32)-(-(1/128)) < 0:= by norm_num\n  have he:= (tendsto_rpow_neg_atTop (y:=-( (1/256:ℝ)-(1/32)-(-(1/128)))) (by linarith)).eventually (gt_mem_nhds (show 0 < ((1:ℝ)/128) by norm_num))\n  filter_upwards [he,eventually_gt_atTop (1:ℝ)] with x hx hy; have hv:= zero_lt_one.trans hy; have hg:= Real.rpow_pos_of_pos hv (-(1/128):ℝ); have hW:= widthP hv; simp only [neg_neg] at hx\n  refine ⟨hv,(Real.one_lt_rpow hy (by norm_num)).le, Real.rpow_le_one_of_one_le_of_nonpos hy.le (by norm_num),?_⟩\n  rw [Real.rpow_sub hv,show ((1/256:ℝ)-(1/32))= 1/256+(-(1/32)) from rfl,Real.rpow_add hv] at hx\n  have ht:= (div_lt_iff₀ hg).1 hx; change grand x * normedWidth x < _ at ht; linarith",
+            "line": 36,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Table/Atlas.lean",
+            "fragment": "L36-L42"
+          },
+          "proof_context": {
+            "declaration": "YM.PhysicalNext.Repeat.Pass.yet",
+            "lines": [
+              36,
+              42
+            ],
+            "conclusion": "`yet` shows `Climate x` holds eventually, raising the threshold with the exponent test `1/256-1/32+1/128<0`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

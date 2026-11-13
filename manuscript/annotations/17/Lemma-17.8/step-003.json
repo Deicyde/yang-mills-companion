@@ -1,7 +1,9 @@
 {
   "id": "Lemma 17.8 step 3",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] reaches surjectivity by the same skeleton (permute equal times, perturb, closed range, density of word vectors). The norm/mixed-pairing comparison through the Laplace formula sits inside the `Show.Reveals` hypothesis of `ordered_covered`, not in these lines.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.11962,
           0.54109,
           0.76357,
-          0.08845
+          0.089
         ]
       },
-      "title": "Lemma 17.8 step 3: Text, p. 201, not yet judged",
+      "title": "Lemma 17.8 step 3: Text, p. 201",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 17.8 step 3"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.onto",
+        "module": "YM.EveryPhase.Surjective",
+        "lines": [
+          181,
+          218
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.onto"
+          },
+          "snippet": {
+            "text": "  have covered (b : Future C.book timeAxis) : V.GNS.plant b∈ J.range := by\n    obtain ⟨n,d,⟨p,f⟩,rfl⟩ := Work.B14.addresses b\n    let y (i : Fin n) := YM.time (p.val i)\n    let l : Equiv.Perm (Fin n) := Tuple.sort y\n    let k := Points.rearrange l p.val\n    let t : Work.B14.Address C.book timeAxis (d ∘ l) :=\n      (⟨k,Points.rearrange_in l p.property.1,fun i => p.property.2 _⟩,fun i => f (l i))\n    have he : List.Perm (Work.B14.mkFuture _ t).val (Work.B14.mkFuture d (p,f)).val :=\n      l.ofFn_comp_perm fun i => ((p.val i), (⟨d i,f i⟩ : C.book.Token))\n    have hh : V.GNS.plant (Work.B14.mkFuture d (p,f))=V.GNS.plant (Work.B14.mkFuture _ t) :=\n      plant_ext fun q => Table.order T hs (twoSides q.property (Work.B14.mkFuture _ t).property)\n        (he.append_left _)\n    rw [hh]\n    let r i := YM.time (k i)\n    have hK : Monotone r := Tuple.monotone_sort y\n    let g (e : ℝ≥0) := place (trace k) (r+(e:ℝ) • rate n)\n    have hm u i : YM.time (g u i)=(r+(u:ℝ) • rate n) i := by simp only [g,place,points_apply,time_position]\n    have hG (u : ℝ≥0) (hx : 0<u) : StrictMono (fun i => YM.time (g u i)) := by\n      simp_rw [hm]; exact dawns (show r∈sunrise n from hK) (show 0<(u:ℝ) from hx)\n    have hg : g 0=k := by ext1; simp [g,place,trace,r]\n    have hl (u : ℝ≥0) : single (g u) timeAxis := by\n      rcases u.coe_nonneg.eq_or_lt with hu|hu\n      · have he : u=0 := Subtype.ext hu.symm\n        rw [he,hg]; exact t.1.2\n      refine ⟨fun i j hq => (hG u hu).injective (congrArg YM.time hq), fun i => ?_⟩\n      change 0 < YM.time (g u i)\n      rw [hm]\n      change 0 < r i+(u:ℝ)*(i.val:ℝ)\n      exact add_pos_of_pos_of_nonneg (p.property.2 _) (by positivity)\n    let F (u : ℝ≥0) : Work.B14.Address C.book timeAxis (d ∘ l) := (⟨g u, hl u⟩,t.2)\n    have hx : Continuous F := by\n      have he : Continuous g := by unfold g place points position; fun_prop\n      exact (he.subtype_mk _).prodMk continuous_const\n    have hf : F 0=t := Prod.ext (Subtype.ext hg) rfl\n    rw [← hf]\n    apply (rangeClosed H).mem_of_tendsto ((((Work.B14.plant_cont V.GNS hs hp (d ∘ l)).comp hx).tendsto (0:ℝ≥0)).mono_left (nhdsWithin_le_nhds (s:=Ioi 0)))\n    filter_upwards [self_mem_nhdsWithin] with i hI\n    exact ordered_covered H h hs hr ht hi _ (fun j => ⟨(d ∘ l) j,t.2 j⟩) (hl i) (hG i hI)",
+            "line": 181,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Surjective.lean",
+            "fragment": "L181-L218"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.onto",
+            "lines": [
+              178,
+              223
+            ],
+            "conclusion": "Every positive-time word vector `plant b` lies in the closed range of `J`: times are sorted by a permutation, perturbed to strictly increasing times, and `ordered_covered` plus closedness of the range give membership; density finishes surjectivity."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.reaches",
+        "module": "YM.EveryPhase.Projection",
+        "lines": [
+          20,
+          25
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.reaches"
+          },
+          "snippet": {
+            "text": "lemma reaches (i : F.α.space.X) : Surjective (L.J i) := by\n  obtain ⟨Y,hY,h⟩ := (L.cards i).reveals\n  obtain ⟨hv,hx⟩ := h _ (L.cores i).induced\n  rw [← L.spins i] at hv\n  exact onto (L.links i) hv (L.pantries i).adopted.laws.toSymmetric (L.pantries i).adopted.smooth\n    (L.pantries i).present hx (hY.symm ▸ (L.cards i).corner)",
+            "line": 20,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Projection.lean",
+            "fragment": "L20-L25"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.reaches",
+            "lines": [
+              20,
+              25
+            ],
+            "conclusion": "`J i` is surjective for every character, by `onto`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

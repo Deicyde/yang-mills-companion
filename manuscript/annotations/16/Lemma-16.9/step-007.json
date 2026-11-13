@@ -1,7 +1,9 @@
 {
   "id": "Lemma 16.9 step 7",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "`balanced_mul`, applied with t = 3+w d, bounds the cross term by Budget(t+(a+b)/2) given the budgets a, b of the two weight integrals; [L] states the bound after the budgets of I(B;-3000) and I(J;omega) are inserted, not as the inequality with the integrals and the constant C.",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.02192
         ]
       },
-      "title": "Lemma 16.9 step 7: Display, p. 184, not yet judged",
+      "title": "Lemma 16.9 step 7: Display, p. 184",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 16.9 step 7"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.balanced_mul",
+        "module": "YM.Next.ROTATIONS.Cove",
+        "lines": [
+          19,
+          23
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.balanced_mul"
+          },
+          "snippet": {
+            "text": "lemma balanced_mul (B A : Weight L) (f : ℕ→E4→ℂ) (hf : ∀ᶠ n in atTop,fits V B A (f n)) (a b : ℝ)\n    (x y : ℕ→E4 → ℝ) (hx : ∀ n,Integrable (x n) (ν V B)) (hy : ∀ n, Integrable (y n) (ν V A))\n    (ha : Budget a (fun n => integral (ν V B) (x n))) (hb : Budget b (fun n => integral (ν V A) (y n))) (t M : ℝ) (hM : 0≤ M)\n    (hp : ∀ n, ∀ p : E4, 0≤p d → 0≤x n p ∧ 0≤y n p ∧ ‖f n p‖^2 ≤ (M*fuel t n)^2*(x n p*y n p)) :\n    Budget (t+(a+b)/2) (fun n => cross V B A (f n)) := by",
+            "line": 19,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Cove.lean",
+            "fragment": "L19-L23"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.balanced_mul",
+            "lines": [
+              19,
+              30
+            ],
+            "conclusion": "The cross term is `Budget (t+(a+b)/2)` where `a`, `b` are the budgets of the two weight integrals."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.exterior_size",
+        "module": "YM.Next.ROTATIONS.Vanishing",
+        "lines": [
+          113,
+          113
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.exterior_size"
+          },
+          "snippet": {
+            "text": "    refine (balanced_mul (V d) B A X hX u 1 T z hY (fun n => cost_int V d A _ (fuel_pos ..) _ _) hT hF (3+w d) M hM (fun n p H => ⟨due_nn _ _ _ _ p H,due_nn _ _ _ _ p H,hN n p H⟩)).rise ?_",
+            "line": 113,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Vanishing.lean",
+            "fragment": "L113-L113"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.exterior_size",
+            "lines": [
+              68,
+              120
+            ],
+            "conclusion": "`balanced_mul` is applied with `t=3+w d` (`shear_size`) to the off-diagonal term, giving `λ^{3+ω}` times the square root of the product of the two budgets."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

@@ -1,7 +1,9 @@
 {
   "id": "Lemma 14.11 step 1",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The Lean requires `span` to divide the side and works for either tiling kind, and the interior condition is assumed in the budget; M states the aligned case with a_k/a_N odd.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.12026,
           0.0962,
           0.76244,
-          0.08845
+          0.08853
         ]
       },
-      "title": "Lemma 14.11 step 1: Text, p. 134, not yet judged",
+      "title": "Lemma 14.11 step 1: Text, p. 134",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 14.11 step 1"
@@ -21,7 +23,47 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extraction.Around.swept",
+        "module": "YM.Extraction.Around",
+        "lines": [
+          62,
+          93
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extraction.Around.swept"
+          },
+          "snippet": {
+            "text": "  set v := homeFor C.S h X\n  let V := center C.S p h v\n  let x (i : X.Cell) := X.copyMap i o\n  choose f hf using fun i => show ∃ j : V.Cell, x i= V.copyMap j v from turns C.S h X H he i\n  have hm : Injective f := by\n    intro i j hp\n    have ht := X.enumerate i hx\n    have hs := X.enumerate j hx\n    rw [show X.copyMap i o=X.copyMap j o from (hf i).trans (hp ▸ (hf j).symm)] at ht\n    exact (X.which_chamber ht).symm.trans (X.which_chamber hs)\n  let Z (i) := (way V (f i))\n  let W (i) := token C.book u (way X i)\n  let B (i) := token C.book (W i) ((Z i).1⁻¹,(Z i).2)\n  have ht i : token C.book (B i) (way V (f i)) = W i := isotropy ..\n  have hh i := hc (((Z i).1⁻¹ * (way X i).1),(way X i).2.xor (Z i).2)\n  have he i : centeredBudget C (B i) A k N p := by dsimp only [B,W]; rw [orientation]; exact hh i\n  let β := C.beta N p\n  have hr i : C.ref (B i).1 ≤ N ∧ Interior (V.chamber 0) (C.seen (B i) v) ∧ V.rootTest β (C.seen (B i) v) ≤ A := by\n    obtain ⟨ha,t,hb⟩ := he i\n    exact ⟨t,hb v⟩\n  have hx' : ∀ i, (B i).1=u.1 := by intro;simp [B,W]\n  have Hs : C.ref u.1 ≤ N := hx' 0 ▸ (hr 0).1\n  let F (i : X.Cell) := C.seen (B i) v\n  have hp i : X.copy i (C.seen u o)=V.copy (f i) (F i) := by unfold F;rw [Spin.uses Hm X i _ _ Hs,\n    Spin.uses Hm V (f i) v _ ((hr i).1),ht,show X.copyMap i o=V.copyMap (f i) v from hf i]\n  have hn := (V.planted (seamless Hm ..) f hm F (fun i => (hr i).2.1)).trans\n    (Finset.prod_le_prod (fun i _ => V.root_nonneg β _) fun i _ => (hr i).2.2)\n  have hD := hn\n  simp only [← hp, Finset.prod_const,Finset.card_univ] at hD\n  haveI : Nonempty X.Cell := ⟨0⟩\n  apply le_of_pow_le_pow_left₀ (Fintype.card_pos (α := X.Cell)).ne' ((V.root_nonneg β _).trans ((hr 0).2.2))\n  rw [Tiling.powering]; exact hD",
+            "line": 62,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extraction/Around.lean",
+            "fragment": "L62-L93"
+          },
+          "proof_context": {
+            "declaration": "YM.Extraction.Around.swept",
+            "lines": [
+              57,
+              93
+            ],
+            "conclusion": "At an aligned center, the coarse copies are sent to distinct fine cells (`f` injective), the chessboard bound `planted` is applied with the other cells given the budget, and the root is at most A."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +73,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
       }
     }
   }

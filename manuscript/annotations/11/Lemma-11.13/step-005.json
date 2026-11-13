@@ -1,19 +1,21 @@
 {
   "id": "Lemma 11.13 step 5",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "The explicit score -tr(Gamma^{-1}dGamma)/2 + z^T Gamma^{-1}dGamma Gamma^{-1} z/2 - z^T Gamma^{-1} dz is not stated; `oriflamme` bounds the jets of the log-det and inverse-covariance quadratic terms by `Brush` composition, and `logdet_variation`/`inv_variation` sit in another part of [L].",
   "subject": [
     {
       "location": {
         "page": 73,
         "rect": [
           0.12026,
-          0.89416,
+          0.89345,
           0.75948,
-          0.02081
+          0.02152
         ]
       },
-      "title": "Lemma 11.13 step 5: Display, p. 73, not yet judged",
+      "title": "Lemma 11.13 step 5: Display, p. 73",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 11.13 step 5"
@@ -21,7 +23,47 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.ConnectedActivityE6.Blaze.Flux.oriflamme",
+        "module": "YM.AnalyticNext.CONNECTED_ACTIVITY_JETS_E6.Mesoglea",
+        "lines": [
+          57,
+          69
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.ConnectedActivityE6.Blaze.Flux.oriflamme"
+          },
+          "snippet": {
+            "text": "  let α y := WithLp.ofLp (Ω y); let g (y) := -(dotProduct (α y) ((A y)⁻¹ *ᵥ α y)/2)\n  have hx := hp.inverter (isUnit_iff_ne_zero.mpr hA.det_pos.ne') hv he.disc\n  have ht := driftP j v\n  have hg : Brush j r 1 g x := by\n    have hg :0 ≤ D:=hx.pos\n    have hF := ((((Brush.spree (x:=x) univ _ (fun (_:ι)=> W * (b*W)) (add_nonneg (zero_le_one (α:=ℝ)) (add_nonneg hg zero_le_one)) (fun i _=>\n      (hw i).paints (beam_vec hx hW zero_le_one (u:=α) hw i))).trim)) )\n    simp only [sum_const, nsmul_eq_mul,card_univ] at hF\n    exact (semi hF).opposite\n  let L y:=Real.log (A y).det - Real.log (A x).det; let P y := - (L y /2)+(g y-g x)\n  have hP : Brush j (z+(r+r)) 1 P x := by\n    have hv:Brush j z 1 L x:= (crystalLog F hF hp hA hv he.disc).trim\n    exact (semi hv).opposite.gathering (hg.separating ((Brush.certified zero_le_one (g x)).climb hg.bound le_rfl))",
+            "line": 57,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/Mesoglea.lean",
+            "fragment": "L57-L69"
+          },
+          "proof_context": {
+            "declaration": "YM.ConnectedActivityE6.Blaze.Flux.oriflamme",
+            "lines": [
+              47,
+              76
+            ],
+            "conclusion": "The jets of the log-det term and of the inverse-covariance quadratic form (via `hp.inverter`) are bounded, which is what the displayed derivative formula is used for."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +73,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
       }
     }
   }

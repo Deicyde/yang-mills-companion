@@ -1,18 +1,18 @@
 {
   "id": "Lemma 13.5 step 20",
   "kind": "proof_step",
-  "status": "not_formalized",
-  "relation": "noMatch",
-  "note": "No lines of the key proof or its helpers carry this step; [L] takes the corresponding bound as an abstract hypothesis or rate.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Stated as: every surviving slot has weight at least 2 (all jets with a weight-one slot vanish), not as a claim about the first possible curvature.",
   "subject": [
     {
       "location": {
         "page": 96,
         "rect": [
           0.11962,
-          0.84267,
+          0.84338,
           0.76012,
-          0.03459
+          0.03443
         ]
       },
       "title": "Lemma 13.5 step 20: Text, p. 96",
@@ -22,23 +22,23 @@
           "quads": [
             [
               0.58386,
-              0.84267,
+              0.84338,
               0.87974,
-              0.84267,
+              0.84338,
               0.87974,
-              0.86015,
+              0.86067,
               0.58386,
-              0.86015
+              0.86067
             ],
             [
               0.11962,
-              0.86016,
+              0.86073,
               0.21098,
-              0.86016,
+              0.86073,
               0.21098,
-              0.87725,
+              0.87781,
               0.11962,
-              0.87725
+              0.87781
             ]
           ]
         }
@@ -51,47 +51,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.PhysicalNext.Repeat.Brim.pressings",
-        "module": "YM.PhysicalNext.RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP.Brim.Level",
+        "declaration": "YM.PhysicalNext.JointLoad.Heir.Seed.four",
+        "module": "YM.PhysicalNext.V9_JOINT_ENDPOINT_LOAD.Heir.Ghost",
         "lines": [
-          61,
-          91
+          107,
+          114
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.PhysicalNext.Repeat.Brim.pressings"
+            "id": "YM.PhysicalNext.JointLoad.Heir.Seed.four"
+          },
+          "snippet": {
+            "text": "  intro m a v hA\n  by_cases hV : ∃ i, a i ≤ 1\n  · obtain ⟨i,hi⟩ := hV\n    have hv : π (v i) = 0 := Prod.ext rfl (funext fun j => ((hA.1 i).2.2 j (by omega)))\n    have hm : m ≤ 4 := le_trans (by simpa using Finset.sum_le_sum (s:=Finset.univ) (f:=fun _ => 1) (fun j _ => (hA.1 j).1)) hA.2\n    rw [(hP.iteratedFDeriv (𝕜:=ℝ) m).eq_of_nhds,jets_linear π (hD.of_le (show (m:ℕ∞ω) ≤ 4 by exact_mod_cast hm)),ContinuousMultilinearMap.compContinuousLinearMap_apply]\n    exact ContinuousMultilinearMap.map_coord_zero _ i hv\n  have hv (i) : 2 ≤ a i := by have h := not_exists.mp hV i; omega",
+            "line": 107,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Brim/Level.lean",
-            "fragment": "L61-L91"
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.PhysicalNext.Repeat.Brim.royaltyB",
-        "module": "YM.PhysicalNext.RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP.Brim.Lode",
-        "lines": [
-          33,
-          100
-        ]
-      },
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.PhysicalNext.Repeat.Brim.royaltyB"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/V9_JOINT_ENDPOINT_LOAD/Heir/Ghost.lean",
+            "fragment": "L107-L114"
           },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Brim/Lode.lean",
-            "fragment": "L33-L100"
+          "proof_context": {
+            "declaration": "YM.PhysicalNext.JointLoad.Heir.Seed.four",
+            "lines": [
+              83,
+              126
+            ],
+            "conclusion": "After the gauge move every slot has `2 ≤ a i`."
           }
         }
       }
@@ -106,8 +95,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge changed it from noMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
       }
     }
   }

@@ -1,7 +1,9 @@
 {
   "id": "Lemma 18.5 step 42",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "`lent` averages the degree-four difference over `n k` sites and telescopes it; the endpoint error O(a_k^{eta_0}), the support truncation at c_X = eta_0 s_k and the explicit choice of m are not in [L].",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.11191
         ]
       },
-      "title": "Lemma 18.5 step 42: Text, p. 213, not yet judged",
+      "title": "Lemma 18.5 step 42: Text, p. 213",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 18.5 step 42"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Trace.Shelves.lent",
+        "module": "YM.TraceExtension.Shelves.Height",
+        "lines": [
+          46,
+          47
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Trace.Shelves.lent"
+          },
+          "snippet": {
+            "text": "    let t:=C.S.a; let f k(j:ℕ):=plant I S 4 ((t k*j:ℝ) • basis a); let u k:= (n k:ℝ)⁻¹ • ∑ j∈ Finset.range (n k), f k j\n    have hx'(k:ℕ)(v:S.Field 4): u k v=(n k:ℝ)⁻¹ • ∑ j∈ Finset.range (n k), f k j v:=by unfold u; rw[LinearMap.smul_apply,LinearMap.sum_apply]",
+            "line": 46,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Shelves/Height.lean",
+            "fragment": "L46-L47"
+          },
+          "proof_context": {
+            "declaration": "YM.Trace.Shelves.lent",
+            "lines": [
+              41,
+              74
+            ],
+            "conclusion": "`lent` defines the average `u k v = (n k)⁻¹ • ∑ j in range (n k), plant I S 4 (t k * j • basis a) v` over n sites."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Trace.Shelves.lent",
+        "module": "YM.TraceExtension.Shelves.Height",
+        "lines": [
+          68,
+          70
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Trace.Shelves.lent"
+          },
+          "snippet": {
+            "text": "    let f(x:ℕ):= T₁ (x:ℤ) i; have hF(k:ℕ):V' k=A⁻¹ • (f (k+1)-f k):= (ht (k:ℤ)).trans (by dsimp only [f,T₁];rw[Nat.cast_add,Nat.cast_one]);\n    have hu': ‖(N:ℝ)⁻¹ • ∑ j∈U,V' j‖ ≤ q k:=by\n        simp_rw [hF]; rw[← Finset.smul_sum,show ∑ j∈U,(f (j+1)-f j)=f N-f 0 from Finset.sum_range_sub f _,norm_smul,norm_smul,Real.norm_of_nonneg (inv_nonneg.mpr htA.le), Real.norm_of_nonneg (inv_nonneg.mpr hs.le)]",
+            "line": 68,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Shelves/Height.lean",
+            "fragment": "L68-L70"
+          },
+          "proof_context": {
+            "declaration": "YM.Trace.Shelves.lent",
+            "lines": [
+              41,
+              74
+            ],
+            "conclusion": "The sum of forward differences telescopes: `∑ j in U, (f (j+1) - f j) = f N - f 0` by `Finset.sum_range_sub`, giving the bound `q k`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
       }
     }
   }

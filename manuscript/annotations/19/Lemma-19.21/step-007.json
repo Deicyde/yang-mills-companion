@@ -1,19 +1,21 @@
 {
   "id": "Lemma 19.21 step 7",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The cancellation and degree-by-degree cost are in `Override.residue`, and the finite-probe cost is paid by `precision_project` (`maxFee + w*u`), instead of an inline argument.",
   "subject": [
     {
       "location": {
         "page": 236,
         "rect": [
           0.11962,
-          0.30443,
+          0.30498,
           0.76357,
-          0.17399
+          0.17344
         ]
       },
-      "title": "Lemma 19.21 step 7: Text, p. 236, not yet judged",
+      "title": "Lemma 19.21 step 7: Text, p. 236",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 19.21 step 7"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Layers.Funds.drop",
+        "module": "YM.Contacts.Layers.Signed",
+        "lines": [
+          61,
+          72
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Layers.Funds.drop"
+          },
+          "snippet": {
+            "text": "lemma Funds.drop (h : Funds Z M φ T A s c e) (hp : Fits M φ w x A) (hs : u ≤ s)(hv : s ≤ 1)(hu : 0 ≤ u) : Funds Z M φ T A u (c-(w+1:ℝ)*(s-u)) (e-statedProject M w x e) := by\n  rcases hs.eq_or_lt with h'|hs\n  · subst u; rw [sub_self,mul_zero,sub_zero,sub_eq_add_neg]; exact h.plus hT ((h.allProjected hT H ha hx hu hv hp).funds hv).minus\n  refine ⟨loose_diff h.loose ((h.allProjected hT H ha hx (hu.trans hs.le) hv hp).increase_layer hv),fun q=>?_⟩\n  let v := min q (q - maxFee M w - w*u)\n  obtain ⟨g,hh,hq⟩:= (Matchable.layer hT H ha hs hu hv hx h).replaces v\n  refine ⟨(g-statedProject M w x g), hh.residue hT hu hs.le w hx,?_⟩\n  have he : Precision Z M φ T A u q (statedProject M w x (e-g)):= by\n     apply Against.mono ((precision_project hT hq hp hx hu (loose_diff h.loose ((hh.fine hT hx).increase_layer hv))).tests (Z:=Z) hT H hu (hs.le.trans hv)) le_rfl _ (by rfl)\n     linarith only [show v ≤ q-maxFee M w-w*u from min_le_right ..]\n  rw [show e-statedProject M w x e-(g-statedProject M w x g) = e-g-statedProject M w x (e-g) from funext fun i=>by simp only [Pi.sub_apply,statedProject,map_sub]; abel]\n  exact Against.diff (Against.mono hq le_rfl (min_le_left ..) (by rfl)) he hT",
+            "line": 61,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Layers/Signed.lean",
+            "fragment": "L61-L72"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Layers.Funds.drop",
+            "lines": [
+              61,
+              72
+            ],
+            "conclusion": "The residual `e - statedProject w x e` is `Funds` at height `u <= s` and cost `c - (w+1)(s-u)`; for `u = s` it keeps cost `c`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Layers.Override.residue",
+        "module": "YM.Contacts.Layers.Overrides",
+        "lines": [
+          70,
+          86
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Layers.Override.residue"
+          },
+          "snippet": {
+            "text": "lemma residue (h : Override Z M φ T x s c e)(hs : 0 ≤ u)(hu : u ≤ s) (w : ℕ) (hx : x∈A) : Fine M φ T A u\n      (c - (w+1:ℝ)*(s-u)) (fun i=> M.residue (x i) w (e i)):= by\n   induction h with\n   | @atom d f h =>\n     by_cases he : d ≤ w\n     · simp_rw [M.residue_low _ he]; exact .zero\n     -- every output of grade ≤w paid with price of same term of grade d\n     have he' : (w:ℝ)+1 ≤ d := by exact_mod_cast (Nat.add_one_le_of_lt (not_le.mp he))\n     have hl : c-(d:ℝ)*s ≤ c-(w+1:ℝ)*(s-u)-d*u:= by linarith only [mul_le_mul_of_nonneg_right he' (sub_nonneg.mpr hu)]\n     let g(i):= M.project (x i) w (insertField D (x i) d (f i)); have hf : RateLE φ T g (c-(d:ℝ)*s):= by\n        unfold g; simp_rw [← M.project_through,M.row_of_field]; refine RateLE.sum hT fun j _=>?_\n        exact rate_linear (LinearMap.toContinuousLinearMap (Z.sector.derivatives.rise (show j.val ≤ w from Nat.le_of_lt_succ j.isLt))) hT (rate_linear (LinearMap.toContinuousLinearMap (M.splitting.part j d)) hT h)\n     have hX:= Fine.field (M:=M) hT hx (hp:=h.mono hl)\n     exact hX.diff (Fine.field hT hx (hf.mono (hl.trans (by gcongr; omega))))\n   | zero=> simp only [Pi.zero_apply,map_zero]; exact .zero\n   | plus _ _ hx hy=> simp_rw [Pi.add_apply,map_add]; exact hx.plus hy\n   | germ _ h hx=> exact hx.germ (h.mono fun i hi=> congr_arg (M.residue (x i) w) hi)",
+            "line": 70,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Layers/Overrides.lean",
+            "fragment": "L70-L86"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Layers.Override.residue",
+            "lines": [
+              70,
+              86
+            ],
+            "conclusion": "For a field of degree `d <= w` the residue is zero, and for `d >= w+1` it has cost `c-(w+1)(s-u)`, including the lower fields produced by the projection."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

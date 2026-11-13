@@ -1,18 +1,18 @@
 {
   "id": "Lemma 16.4 step 11",
   "kind": "proof_step",
-  "status": "not_formalized",
-  "relation": "noMatch",
-  "note": "No Lean declaration carries this step: the lift and its estimates are packaged abstractly (Poised, Spots, Balances).",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "`pot` and `allowance` define q_k and the amplitude e^{2q_k} exactly, and `packaged` identifies it with M_k^{1/(8n)}; the inequality amplitude ≤ M_k^{1/16} for n ≥ 2 is not stated.",
   "subject": [
     {
       "location": {
         "page": 177,
         "rect": [
           0.12026,
-          0.20138,
+          0.20162,
           0.75996,
-          0.04279
+          0.042
         ]
       },
       "title": "Lemma 16.4 step 11: Text, p. 177",
@@ -22,13 +22,13 @@
           "quads": [
             [
               0.51758,
-              0.20138,
+              0.20162,
               0.88022,
-              0.20138,
+              0.20162,
               0.88022,
-              0.22216,
+              0.22194,
               0.51758,
-              0.22216
+              0.22194
             ],
             [
               0.12026,
@@ -36,9 +36,9 @@
               0.62193,
               0.22293,
               0.62193,
-              0.24417,
+              0.24362,
               0.12026,
-              0.24417
+              0.24362
             ]
           ]
         }
@@ -51,22 +51,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.MergeProof.East.sight",
-        "module": "YM.MergeProof.East.Suds",
+        "declaration": "YM.Next.Rank.Ship.pot",
+        "module": "YM.Next.RANK.Allowance",
         "lines": [
-          47,
-          90
+          26,
+          26
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.MergeProof.East.sight"
+            "id": "YM.Next.Rank.Ship.pot"
+          },
+          "snippet": {
+            "text": "def pot := Real.log (A.clock.monitor k)/(16*M)",
+            "line": 26,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/East/Suds.lean",
-            "fragment": "L47-L90"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Allowance.lean",
+            "fragment": "L26-L26"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Rank.Ship.pot",
+            "lines": [
+              26,
+              26
+            ],
+            "conclusion": "`pot A M k = log (monitor k) / (16 * M)` is q_k with the arity bound M = n."
           }
         }
       }
@@ -76,22 +90,75 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.MergeProof.East.third",
-        "module": "YM.MergeProof.East.Latch",
+        "declaration": "YM.Next.Rank.Ship.allowance",
+        "module": "YM.Next.RANK.Allowance",
         "lines": [
-          50,
-          75
+          27,
+          27
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.MergeProof.East.third"
+            "id": "YM.Next.Rank.Ship.allowance"
+          },
+          "snippet": {
+            "text": "def allowance := Real.exp (2*pot A M k)",
+            "line": 27,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/East/Latch.lean",
-            "fragment": "L50-L75"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Allowance.lean",
+            "fragment": "L27-L27"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Rank.Ship.allowance",
+            "lines": [
+              27,
+              27
+            ],
+            "conclusion": "`allowance = exp (2 * pot)` is the amplitude e^{2 q_k} given to each marked slot."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Rank.Peak.packaged",
+        "module": "YM.Next.RANK.TableGate",
+        "lines": [
+          25,
+          26
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Rank.Peak.packaged"
+          },
+          "snippet": {
+            "text": "lemma packaged : powder (A.clock.hatBeta k) m=Ship.allowance A m k := by\n  unfold Ship.allowance Ship.pot Calendar.monitor powder bill boil y; rw [Real.log_exp]; congr 1; ring",
+            "line": 25,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/TableGate.lean",
+            "fragment": "L25-L26"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Rank.Peak.packaged",
+            "lines": [
+              25,
+              26
+            ],
+            "conclusion": "`packaged` identifies the allowance with `bill (1/(8m)) s`, i.e. M_k^{1/(8n)}, so it is at most M_k^{1/16} for n >= 2."
           }
         }
       }
@@ -106,8 +173,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge kept it; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

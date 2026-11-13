@@ -1,7 +1,9 @@
 {
   "id": "Lemma 12.5 step 15",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean carries the induction, the preserved transversality, the base case and the independent-leg divisions as separate lemmas and does not state the degree count in words. It folds the independent-leg divisions into `allleg`, which calls `independent`.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.11961,
           0.25795,
           0.76359,
-          0.08845
+          0.089
         ]
       },
-      "title": "Lemma 12.5 step 15: Text, p. 80, not yet judged",
+      "title": "Lemma 12.5 step 15: Text, p. 80",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 12.5 step 15"
@@ -21,7 +23,164 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.dimensionShift",
+        "module": "YM.Next.STATIONARY.Lift.ManyLegs",
+        "lines": [
+          336,
+          336
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.dimensionShift"
+          },
+          "snippet": {
+            "text": "    obtain ⟨w,C,hw,He,Hc,H⟩ := ih (r+2) (by omega) τ' hk'",
+            "line": 336,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Lift/ManyLegs.lean",
+            "fragment": "L336-L336"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.dimensionShift",
+            "lines": [
+              319,
+              419
+            ],
+            "conclusion": "The induction hypothesis is used at `(r+2)` with one fewer independent momentum, the condition `r+1+2t > 4` kept by `omega`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.dimensionShift",
+        "module": "YM.Next.STATIONARY.Lift.ManyLegs",
+        "lines": [
+          409,
+          412
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.dimensionShift"
+          },
+          "snippet": {
+            "text": "    · apply (seal_tail p _).2\n      refine ⟨(lineTail p).sub_mem (HT p i) (wall_cob missing Hf p i),?_⟩\n      intro v\n      change headPress S (axes p) i v=0",
+            "line": 409,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Lift/ManyLegs.lean",
+            "fragment": "L409-L412"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.dimensionShift",
+            "lines": [
+              319,
+              419
+            ],
+            "conclusion": "The wall (transversality) conditions of the other legs are kept by the corrections (`sub_mem`, `wall_cob`)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.dimensionShift",
+        "module": "YM.Next.STATIONARY.Lift.ManyLegs",
+        "lines": [
+          325,
+          330
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.dimensionShift"
+          },
+          "snippet": {
+            "text": "  | zero =>\n    refine ⟨σ,0,hs,le_rfl,le_rfl,fun _ u ha hu he hh => ⟨0, ?_, fun i j => (locus0 i).zero_mem, fun i => ?_⟩⟩\n    · intro i x; simpa only [mul_zero,Pi.zero_apply] using Firm.zero (α:=_) hs\n    funext j\n    have hm := Finset.card_le_univ j.val\n    rw [j.property] at hm; simp at hm; omega",
+            "line": 325,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Lift/ManyLegs.lean",
+            "fragment": "L325-L330"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.dimensionShift",
+            "lines": [
+              319,
+              419
+            ],
+            "conclusion": "Base case `t = 0`: the primitive is `0`, since the tensor has degree above the number of axes."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.independent",
+        "module": "YM.Next.STATIONARY.Lift.ManyLegs",
+        "lines": [
+          471,
+          475
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.independent"
+          },
+          "snippet": {
+            "text": "lemma independent (t : ℕ) (σ : ℝ) (hσ : 0 < σ) (m : Keys t ↪ α) :\n    ∃ τ K, 0 < τ ∧ τ≤σ ∧ 0 ≤ K ∧ ∀ (A : ℝ) (s : ℕ) (f : Run t → Phase α → ℂ), 0 ≤ A →\n        (∀ i, Firm σ A (f i)) → (∀ i, Rays s (f i ∘ axes)) →\n        (∀ p : Corn α,(fun i => f i (axes p))∈locus m (axes p)) →\n        ∃ g : CurRun t → Phase α → ℂ, (∀ i, Firm τ (A*K) (g i)) ∧ (∀ i, Rays (s-t) (g i ∘ axes)) ∧",
+            "line": 471,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Lift/ManyLegs.lean",
+            "fragment": "L471-L475"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.independent",
+            "lines": [
+              471,
+              508
+            ],
+            "conclusion": "`independent` performs the independent-leg divisions by `wall_lift`, one leg at a time, to write `f` in curl form."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +190,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

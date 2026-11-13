@@ -1,0 +1,159 @@
+{
+  "id": "Section 10 display 8",
+  "kind": "display",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] parametrizes K_j by its curvature jets in `Shell` and maps them to radial potentials by `gaugeJet`, instead of imposing the equation on the potential A_j. The ideal is stated as the kernel of `observable` and shown equal to the vanishing on all shell towers.",
+  "subject": [
+    {
+      "location": {
+        "page": 44,
+        "rect": [
+          0.12026,
+          0.15881,
+          0.75948,
+          0.04695
+        ]
+      },
+      "title": "Display, p. 44",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Section 10 display 8"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Maxwell.equationIdeal",
+        "module": "YM.Maxwell.Equation",
+        "lines": [
+          72,
+          72
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Maxwell.equationIdeal"
+          },
+          "snippet": {
+            "text": "def equationIdeal (G : Gauge) (d : ℕ) := LinearMap.ker (observable G d)",
+            "line": 72,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Maxwell/Equation.lean",
+            "fragment": "L72-L72"
+          },
+          "proof_context": {
+            "declaration": "YM.Maxwell.equationIdeal",
+            "lines": [
+              72,
+              72
+            ],
+            "conclusion": "`equationIdeal G d` is the kernel of `observable`, the labels of weight <= d that vanish under substitution of Maxwell-shell jets."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Maxwell.ideal_meaning",
+        "module": "YM.Maxwell.Equation",
+        "lines": [
+          74,
+          79
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Maxwell.ideal_meaning"
+          },
+          "snippet": {
+            "text": "theorem ideal_meaning {d : ℕ} {A : Labels.Label G d} : A ∈ equationIdeal G d ↔\n    ∀ X : TaylorTower G, Labels.read (fun i => gaugeJet (X i)) A.val = 0 := by\n  change reduceEq A.val = 0 ↔ _\n  constructor\n  · intro h X; rw [← jet_value X, h, map_zero]\n  intro h; exact equalPol _ _ (by intro X; rw [jet_value, h,map_zero])",
+            "line": 74,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Maxwell/Equation.lean",
+            "fragment": "L74-L79"
+          },
+          "proof_context": {
+            "declaration": "YM.Maxwell.ideal_meaning",
+            "lines": [
+              74,
+              79
+            ],
+            "conclusion": "A label lies in `equationIdeal` iff `read (gaugeJet (X i)) A = 0` for every tower `X` of shell jets, i.e. iff it vanishes on the product of the shells."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Maxwell.onShell",
+        "module": "YM.Maxwell.Shell",
+        "lines": [
+          18,
+          42
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Maxwell.onShell"
+          },
+          "snippet": {
+            "text": "def onShell (F : Type*) [NormedAddCommGroup F] [NormedSpace ℝ F] (j : ℕ) : Submodule ℝ (TwoJet F j) where\n  carrier := {Q | Q ∈ formSpace j F ∧ ∀ b x, ∑ a : Axis, grad a (diagonal (Q a b)) x = 0}\n  zero_mem' := by\n    refine ⟨Submodule.zero_mem _, ?_⟩\n    intro b z\n    change ∑ a : Axis, fderiv ℝ (fun y : E4 => (0:F)) z (basis a) = _\n    simp\n  add_mem' := by\n    rintro x y ⟨hx,h⟩ ⟨hy,H⟩\n    refine ⟨Submodule.add_mem _ hx hy, ?_⟩\n    intro b z\n    have he (a : Axis) : grad a (diagonal ((x+y) a b)) z =\n        grad a (diagonal (x a b)) z + grad a (diagonal (y a b)) z := by\n      change fderiv ℝ (diagonal (x a b) + diagonal (y a b)) z _ = _\n      rw [fderiv_add ((diag_smooth _ ∞).differentiable (by simp) _)\n        ((diag_smooth _ ∞).differentiable (by simp) _)]; rfl\n    simp_rw [he, Finset.sum_add_distrib, h,H,add_zero]\n  smul_mem' := by\n    rintro t x ⟨hx,h⟩\n    refine ⟨Submodule.smul_mem _ t hx, ?_⟩\n    intro b z\n    have he (a : Axis) : grad a (diagonal ((t • x) a b)) z = t • grad a (diagonal (x a b)) z := by\n      change fderiv ℝ (t • diagonal (x a b)) z _ = _\n      rw [fderiv_const_smul ((diag_smooth _ ∞).differentiable (by simp) _)]; rfl\n    simp_rw [he, ← Finset.smul_sum, h, smul_zero]",
+            "line": 18,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Maxwell/Shell.lean",
+            "fragment": "L18-L42"
+          },
+          "proof_context": {
+            "declaration": "YM.Maxwell.onShell",
+            "lines": [
+              18,
+              42
+            ],
+            "conclusion": "`onShell` is the space of closed two-forms `Q` with `sum_a grad a (Q a b) = 0` for every `b`, the Maxwell equation, from which `gaugeJet` recovers the radial potential."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          44
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      }
+    }
+  }
+}

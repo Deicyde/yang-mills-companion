@@ -1,7 +1,9 @@
 {
   "id": "Lemma 15.2 step 1",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The choices of k with a_k < δ, k at least m, J = 8(n+1) and a finer spectator level with 3 a_sp at most a_k/[8(n+1)] agree. [L] reads the small-error condition off the hypothesis `rents` and gets the spectator constant A from `image_` for the centered book, not by citing the centered estimate directly.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.11962,
           0.55659,
           0.76258,
-          0.08845
+          0.08884
         ]
       },
-      "title": "Lemma 15.2 step 1: Text, p. 163, not yet judged",
+      "title": "Lemma 15.2 step 1: Text, p. 163",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 15.2 step 1"
@@ -21,7 +23,47 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extraction.Lease.take",
+        "module": "YM.Lane.Lease",
+        "lines": [
+          59,
+          66
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extraction.Lease.take"
+          },
+          "snippet": {
+            "text": "  obtain ⟨m,hm⟩ := eventually_atTop.mp (C.S.shrinks.eventually (gt_mem_nhds hδ))\n  obtain ⟨k,hk,H1⟩:=he n m\n  let J := 8*(n+1)\n  have hk : C.S.a k<δ:=hm k hk\n  have he : ∀ᶠ j : ℕ in atTop, (3*J:ℕ)*C.S.a j ≤ C.S.a k := by\n    have hu := (C.S.shrinks.const_mul ((3*J:ℕ):ℝ)).eventually (ge_mem_nhds (show ((3*J:ℕ):ℝ)*0 < C.S.a k by rw [mul_zero]; exact C.S.a_pos _))\n    exact hu\n  obtain ⟨j,H2,hS,A,hA,hq⟩:=((eventually_ge_atTop k).and (he.and ((image_ q h).2))).exists",
+            "line": 59,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Lane/Lease.lean",
+            "fragment": "L59-L66"
+          },
+          "proof_context": {
+            "declaration": "YM.Extraction.Lease.take",
+            "lines": [
+              57,
+              124
+            ],
+            "conclusion": "`take` picks m with a_m < δ, gets k ≥ m from `rents`, sets `J = 8*(n+1)`, and takes a finer level `j` with `3*J*a_j ≤ a_k` carrying the spectator bound `A`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +73,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
       }
     }
   }

@@ -1,28 +1,30 @@
 {
   "id": "Lemma 13.6 step 31",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "Taylor's integral remainder with a healthy-field bound is present, but applied to the whole integrand and not to the one- and two-factor terms after the cancellations.",
   "subject": [
     {
       "location": {
         "page": 100,
         "rect": [
           0.12026,
-          0.76448,
+          0.76361,
           0.75948,
-          0.05043
+          0.05091
         ]
       },
-      "title": "Lemma 13.6 step 31: Text, p. 100, not yet judged",
+      "title": "Lemma 13.6 step 31: Text, p. 100",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 13.6 step 31",
           "quads": [
             [
               0.62971,
-              0.76448,
+              0.76361,
               0.87974,
-              0.76448,
+              0.76361,
               0.87974,
               0.78197,
               0.62971,
@@ -30,20 +32,99 @@
             ],
             [
               0.12026,
-              0.78199,
+              0.78286,
               0.87974,
-              0.78199,
+              0.78286,
               0.87974,
-              0.81491,
+              0.81452,
               0.12026,
-              0.81491
+              0.81452
             ]
           ]
         }
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.PhysicalNext.Repeat.Lantern.residue",
+        "module": "YM.PhysicalNext.RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP.Lantern.Peg",
+        "lines": [
+          22,
+          23
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.PhysicalNext.Repeat.Lantern.residue"
+          },
+          "snippet": {
+            "text": "lemma residue (f : E→ℝ) (x z : E) (h : ∀ t : ℝ, t∈Icc (0:ℝ) 1→ ContDiffAt ℝ 2 f (x+t • z)) :\n    f (x+z)- f x-fderiv ℝ f x z = ∫ t in (0:ℝ)..1, inflect f x z t := by",
+            "line": 22,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Lantern/Peg.lean",
+            "fragment": "L22-L23"
+          },
+          "proof_context": {
+            "declaration": "YM.PhysicalNext.Repeat.Lantern.residue",
+            "lines": [
+              22,
+              37
+            ],
+            "conclusion": "`residue` gives the integral form of the second-order Taylor remainder, `inflect f x z r = (1-r) * scratch z f (x + r z)`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.PhysicalNext.Repeat.Lantern.shoots",
+        "module": "YM.PhysicalNext.RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP.Lantern.Blips",
+        "lines": [
+          51,
+          52
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.PhysicalNext.Repeat.Lantern.shoots"
+          },
+          "snippet": {
+            "text": "lemma shoots (x : E) (v : ℝ) {C : ℝ} (hv : 0<v) (ht : u ∘ (fun x:ℝ×E=>(-x.1,x.2))=u)\n    (h : ∀ t, ‖t‖ ≤ v → Brush (j+2) C 1 u (t,x)) : Brush j (C*v*v) 1 (u ∘ arc v - u ∘ arc 0) x := by",
+            "line": 51,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Lantern/Blips.lean",
+            "fragment": "L51-L52"
+          },
+          "proof_context": {
+            "declaration": "YM.PhysicalNext.Repeat.Lantern.shoots",
+            "lines": [
+              51,
+              85
+            ],
+            "conclusion": "An even `u` gives `Brush j (C*v*v)` for `u ∘ arc v - u ∘ arc 0`, a second-order bound from healthy-field derivative bounds."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -53,8 +134,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents agreed on the class but cited different declarations; the mapper's kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

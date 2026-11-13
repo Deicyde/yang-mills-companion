@@ -1,19 +1,21 @@
 {
   "id": "Lemma 18.3 step 20",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "Jet convergence on compacts (`travels_jet`, `comparison_jets`), the minimality gap of `summit` and the clock limit in `Scribe` are present, the jets obtained from the hypothesis `Approaches` and not by bounded left inverses of tested free responses. The translation-shell flux limit and the adjustable bound are not stated.",
   "subject": [
     {
       "location": {
         "page": 206,
         "rect": [
           0.12026,
-          0.13347,
+          0.13398,
           0.76194,
-          0.16023
+          0.15973
         ]
       },
-      "title": "Lemma 18.3 step 20: Text, p. 206, not yet judged",
+      "title": "Lemma 18.3 step 20: Text, p. 206",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 18.3 step 20"
@@ -21,7 +23,164 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.UVStress.travels_jet",
+        "module": "YM.Next.UV_STRESS.Focus",
+        "lines": [
+          183,
+          188
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.UVStress.travels_jet"
+          },
+          "snippet": {
+            "text": "lemma travels_jet (H : S.Hierarchy) (h : W.Derivatives S) (L : (Bel C.book).Hierarchy) (hp : V.Derivatives (Bel C.book))\n    (X : Scaling S) (ht : Approaches (path X) (isoPanel X)) (v : ℕ → Ribbon (Bel C.book) t) (x : Ribbon (Bel C.book) t)\n    (hv : ∀ i, Tendsto (fun k => v k i) atTop (𝓝 (x i)))\n    (j : ℕ) (s : Set (Points n)) (hs : IsCompact s) (hu : s ⊆ conf n) (ε : ℝ) (he : 0<ε) :\n    ∀ᶠ k in atTop, ∀ y∈s,\n      ‖iteratedFDeriv ℝ j (tested (X.r k) (isoPanel X k) (hang t (v k))) y - iteratedFDeriv ℝ j (disc (hang t x)) y‖ ≤ ε := by",
+            "line": 183,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/UV_STRESS/Focus.lean",
+            "fragment": "L183-L188"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.UVStress.travels_jet",
+            "lines": [
+              183,
+              196
+            ],
+            "conclusion": "For inputs v_k tending to x, every fixed derivative of the tested rescaled correlation converges uniformly on compact subsets of `conf n` to that of `disc`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.UVStress.comparison_jets",
+        "module": "YM.Next.UV_STRESS.Focus",
+        "lines": [
+          208,
+          212
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.UVStress.comparison_jets"
+          },
+          "snippet": {
+            "text": "lemma comparison_jets (H : S.Hierarchy) (h : W.Derivatives S) (L : (Bel C.book).Hierarchy) (hp : V.Derivatives (Bel C.book))\n    (X : Scaling S) (ht : Approaches (path X) (isoPanel X)) (N d m : ℕ) (R : ℝ) (hr : 0<R) : X.jets N d m R := by\n  intro n _ j _ v hv ε he\n  exact travels_jet H h L hp X ht (t:=fun i => (v i).1) (fun _ i => (v i).2) (fun i => (v i).2)\n    (fun _ => tendsto_const_nhds) j _ (window_closed ..) (fun _ h => spaced_conf (inv_pos.mpr hr) h.1) ε he",
+            "line": 208,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/UV_STRESS/Focus.lean",
+            "fragment": "L208-L212"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.UVStress.comparison_jets",
+            "lines": [
+              208,
+              212
+            ],
+            "conclusion": "Gives `Scaling.jets`: all derivative orders up to m of the rescaled correlation converge to the Maxwell one on windows of Conf_n."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Trace.Terrace.gstar",
+        "module": "YM.TraceExtension.Terrace.Base",
+        "lines": [
+          24,
+          24
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Trace.Terrace.gstar"
+          },
+          "snippet": {
+            "text": "lemma gstar : Gate (A.clock.hatBeta i) ≤ gap A i (summit A i):=(Nat.find_spec <| goal A i).2",
+            "line": 24,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Terrace/Base.lean",
+            "fragment": "L24-L24"
+          },
+          "proof_context": {
+            "declaration": "YM.Trace.Terrace.gstar",
+            "lines": [
+              24,
+              24
+            ],
+            "conclusion": "Minimality of `summit` gives the gap bound `Gate (hatBeta i)` ≤ gap, the (log beta)^48 separation."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Trace.Over.Scribe",
+        "module": "YM.TraceExtension.Chart.Time",
+        "lines": [
+          53,
+          54
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Trace.Over.Scribe"
+          },
+          "snippet": {
+            "text": "    grows: Tendsto (BQ Z V) atTop atTop\n    clock:Tendsto (fun i=>LogZoom J i/BQ Z V i) atTop (𝓝 G.slopeConstant⁻¹)",
+            "line": 53,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Chart/Time.lean",
+            "fragment": "L53-L54"
+          },
+          "proof_context": {
+            "declaration": "YM.Trace.Over.Scribe",
+            "lines": [
+              52,
+              59
+            ],
+            "conclusion": "`BQ Z V` tends to infinity and `LogZoom J i / BQ Z V i` tends to `slopeConstant⁻¹`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +190,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

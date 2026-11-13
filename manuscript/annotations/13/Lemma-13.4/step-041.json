@@ -1,7 +1,9 @@
 {
   "id": "Lemma 13.4 step 41",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "The beta-derivative of the normalized density (`tilt_hasDerivAt`), continuity in the parameter and transport by signed translations (`Moves`) are present; the square-completion bound, the Schur bounds for mean and precision changes, the finite covering and the averaging over signed permutations are not.",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.17692
         ]
       },
-      "title": "Lemma 13.4 step 41: Text, p. 95, not yet judged",
+      "title": "Lemma 13.4 step 41: Text, p. 95",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 13.4 step 41"
@@ -21,7 +23,125 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Push.BetaTransport.Gibbs.EnergyEstimate.tilt_hasDerivAt",
+        "module": "YM.Push.BETA_TRANSPORT.Gibbs",
+        "lines": [
+          107,
+          112
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Push.BetaTransport.Gibbs.EnergyEstimate.tilt_hasDerivAt"
+          },
+          "snippet": {
+            "text": "lemma tilt_hasDerivAt (b : ℝ) (x : α) : HasDerivAt (tilt μ H · x) (tiltSlope μ H b x) b := by\n  have hz := h.Z_pos (μ:=μ) b\n  have he : (tiltSlope μ H b x) = - (-(mean μ H b) * Z μ H b) / Z μ H b ^ 2 * factor H b x +\n      (Z μ H b)⁻¹ * (factor H b x * (-H x)) := by unfold tiltSlope tilt; field_simp; ring\n  rw [he]\n  exact ((h.Z_hasDerivAt b).inv hz.ne').mul (factor_hasDerivAt H b x)",
+            "line": 107,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/BETA_TRANSPORT/Gibbs.lean",
+            "fragment": "L107-L112"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.BetaTransport.Gibbs.EnergyEstimate.tilt_hasDerivAt",
+            "lines": [
+              107,
+              112
+            ],
+            "conclusion": "`tilt_hasDerivAt` gives the β-derivative of `tilt` as `tilt * (mean - H)`, the density times the centred energy."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Push.BetaTransport.FixedRepData.continuous_activities",
+        "module": "YM.Push.BETA_TRANSPORT.Curve",
+        "lines": [
+          88,
+          92
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Push.BetaTransport.FixedRepData.continuous_activities"
+          },
+          "snippet": {
+            "text": "lemma continuous_activities (hc : StableActivities P T s) (U : Config G n) :\n    ContinuousOn (fun x => (T x).activities.additive P U) s ∧ ContinuousOn (fun x => (T x).activities.gas P U) s := by\n  constructor <;> (intro x hx; apply Metric.tendsto_nhds.mpr; intro ε he\n                   filter_upwards [h.uniform_activities hc hx ε he] with y hy\n                   rw [dist_eq_norm, norm_sub_rev]; first | exact (hy U).1 | exact (hy U).2)",
+            "line": 88,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/BETA_TRANSPORT/Curve.lean",
+            "fragment": "L88-L92"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.BetaTransport.FixedRepData.continuous_activities",
+            "lines": [
+              88,
+              92
+            ],
+            "conclusion": "`continuous_activities` gives continuity of the activities in the parameter on a set `s` from stability."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.Activities.Moves",
+        "module": "YM.RG.Activities",
+        "lines": [
+          87,
+          96
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.Activities.Moves"
+          },
+          "snippet": {
+            "text": "structure Moves (s : Signed) (b : Site n) where\n  ep : Equiv.Perm ℕ\n  kp : Equiv.Perm ℕ\n  reg_site (i : ℕ) : (A.reg (ep i)).site = affine s b (A.reg i).site\n  reg_support (i : ℕ) : (A.reg (ep i)).support = (A.reg i).support.image (affine s b)\n  forced_support (i : ℕ) : (A.forced (kp i)).support = (A.forced i).support.image (affine s b)\n  forced_inventory (i : ℕ) : (A.forced (kp i)).inventory = (A.forced i).inventory.image (affine s b)\n  forced_tests (i : ℕ) (U : Config G n) : (A.forced (kp i)).extraTest U ↔ (A.forced i).extraTest (pull s b U)\n  valuesE (i : ℕ) (U : Config G n) : A.E (ep i) U = A.E i (pull s b U)\n  valuesK (i : ℕ) (U : Config G n) : A.K (kp i) U = A.K i (pull s b U)",
+            "line": 87,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/RG/Activities.lean",
+            "fragment": "L87-L96"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.Activities.Moves",
+            "lines": [
+              87,
+              96
+            ],
+            "conclusion": "`Moves` transports activities, supports, inventories and values by a signed translation `affine s b`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +151,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

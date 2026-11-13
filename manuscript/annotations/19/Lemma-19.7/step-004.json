@@ -1,7 +1,9 @@
 {
   "id": "Lemma 19.7 step 4",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "The factor 4(1+C_m) and the two weight conditions are hypotheses of `joins` (with `march` iterating the weights and `Scrim.jump` the entry requirement); the derivation of these conditions from the condition at k_* by the gain iteration and the (a_l/a_{k_*})^{7/8} bound is not in [L].",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.11962,
           0.589,
           0.76059,
-          0.12266
+          0.12306
         ]
       },
-      "title": "Lemma 19.7 step 4: Text, p. 225, not yet judged",
+      "title": "Lemma 19.7 step 4: Text, p. 225",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 19.7 step 4"
@@ -21,7 +23,125 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.MergeProof.Ribbons.ManyCopies.joins",
+        "module": "YM.OPE.Sweep.Camp",
+        "lines": [
+          59,
+          61
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.MergeProof.Ribbons.ManyCopies.joins"
+          },
+          "snippet": {
+            "text": "    (hb:0<b)(hL:march (fun _:Unit=>b) φ k m ()≤ δ m * (A/(16*x m)))\n    (hA:4*(1+(C.path.levels.params m).columns)*(2*(C.S.a (m+1)^d*(x m*(4*(1/A)))))≤ e)\n    (hp:32*(1+(C.path.levels.params m).columns)*b * ‖alto C.path k d‖*(e/gainChart C.path m k) ≤ ζ d k/2)",
+            "line": 59,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Sweep/Camp.lean",
+            "fragment": "L59-L61"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.Ribbons.ManyCopies.joins",
+            "lines": [
+              54,
+              94
+            ],
+            "conclusion": "The weight conditions `hL` (march along levels k..m) and `hp` (32(1+columns) b ||alto|| e/gainChart <= zeta/2) with `hA` (the factor 4(1+columns) on 2p') permit the extraction and the 2e bound."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.MergeProof.Accent.march",
+        "module": "YM.MergeProof.Paddle",
+        "lines": [
+          12,
+          14
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.MergeProof.Accent.march"
+          },
+          "snippet": {
+            "text": "def march {V:Type*}(w:V→ℝ)(φ:ℕ→ℝ)(k:ℕ) : ℕ→V→ℝ\n   | 0=> w\n   | m+1=> if k ≤ m then fun i=>φ m*march w φ k m i else w",
+            "line": 12,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Paddle.lean",
+            "fragment": "L12-L14"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.Accent.march",
+            "lines": [
+              12,
+              14
+            ],
+            "conclusion": "`march w φ k` iterates the weights by `φ m` per level starting from `w` at level `k`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.MergeProof.Scrim",
+        "module": "YM.MergeProof.Biscuit",
+        "lines": [
+          33,
+          33
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.MergeProof.Scrim"
+          },
+          "snippet": {
+            "text": "   jump d i: C.ref d ≤ i→ φ i*((C.S.block i).val:ℝ)^(d+1)*ζ d i≤ζ d (i+1)",
+            "line": 33,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Biscuit.lean",
+            "fragment": "L33-L33"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.Scrim",
+            "lines": [
+              29,
+              34
+            ],
+            "conclusion": "`jump` gives `φ i * block^(d+1) * ζ d i ≤ ζ d (i+1)`, the entry requirement on the zero-jet gain."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +151,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

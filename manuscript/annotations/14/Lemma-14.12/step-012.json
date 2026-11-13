@@ -1,7 +1,9 @@
 {
   "id": "Lemma 14.12 step 12",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "Lean has the periodic sum bounded by an injective lift (`torus_kernel`) and the reserved support unit absorbing the rooted sums (`root_hit`); tree attachments are bounded by exp γ - 1 (`forest`) rather than by a factor two. The cost A_{j,d}β̂^{q_d} of derivative products and polynomial evaluations is not derived.",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.09238
         ]
       },
-      "title": "Lemma 14.12 step 12: Text, p. 136, not yet judged",
+      "title": "Lemma 14.12 step 12: Text, p. 136",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 14.12 step 12"
@@ -21,7 +23,125 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extra.Multi.torus_kernel",
+        "module": "YM.Extra.MULTISOURCE_BOUNDS.Root",
+        "lines": [
+          136,
+          156
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extra.Multi.torus_kernel"
+          },
+          "snippet": {
+            "text": "lemma torus_kernel (x : Site n) :\n    ∑ y : Site n, Real.exp (-(separation y x : ℝ) / (4*(M:ℝ)+2)) ≤ (2*(16*(M:ℝ)+9))^4 := by\n  let t y := lift (y-x)\n  have hi : Injective t := fun y z h => by\n    have := congr_arg (wrap n) h\n    simpa only [t,wrap_lift, sub_left_inj] using this\n  let b := ((4:ℝ)*(4*M+2))⁻¹\n  have hp : 0 < b := by unfold b; positivity\n  have he (y : Site n) : Laurent.size (t y) ≤ 4*separation y x := by\n    calc\n      _ ≤ ∑ _i : Axis, separation y x := sum_le_sum fun i _ => component_le _ _\n      _ = _ := by simp [Axis]\n  have hn := Laurent.Width.compactPay (α:=Axis) b hp\n  calc\n    _ ≤ ∑ y, Real.exp (-b*Laurent.size (t y)) := sum_le_sum fun i _ => Real.exp_le_exp.mpr (by\n      have h : (Laurent.size (t i):ℝ) ≤ 4*(separation i x : ℝ) := by exact_mod_cast he i\n      change -_/_ ≤ -((4:ℝ)*(4*M+2))⁻¹*_\n      field_simp; linarith)\n    _ = ∑ y∈univ.image t, Real.exp (-b*Laurent.size y) := by rw [sum_image hi.injOn]\n    _ ≤ (2*((1+b)/b))^(Fintype.card Axis) := Budget.cap hn _\n    _ = _ := by simp [Axis,b]; congr 1; field_simp; ring",
+            "line": 136,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/MULTISOURCE_BOUNDS/Root.lean",
+            "fragment": "L136-L156"
+          },
+          "proof_context": {
+            "declaration": "YM.Extra.Multi.torus_kernel",
+            "lines": [
+              136,
+              156
+            ],
+            "conclusion": "The kernel sum is bounded on the periodic lattice, uniformly in the period, by an injective lift of `y - x` into the infinite lattice."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extra.Multi.root_hit",
+        "module": "YM.Extra.MULTISOURCE_BOUNDS.Root",
+        "lines": [
+          161,
+          199
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extra.Multi.root_hit"
+          },
+          "snippet": {
+            "text": "theorem root_hit {a c : ℝ} {mode : ι → Finset V} {X : ι → Support n} {f : ι → ℝ}\n    (hh : Occupancy o μ) (hf : ∀ i, 0 ≤ f i) (hc : 0 ≤ c)\n    (pins : ∀ i, 0<f i → ∃ v∈mode i, o v∈X i)\n    (cost : Rooted mode X M (a+1) f c) : Ac.Hit X M f a ((μ:ℝ)*siteFactor M*c) := by\n  intro x; refine Budget.certify (fun i => ?_) fun s => ?_\n  · split\n    · exact mul_nonneg (hf _) (Real.exp_pos _).le\n    exact le_rfl\n  let k (y : Site n) := Real.exp (1-(separation y x : ℝ)/(4*(M:ℝ)+2))\n  let p (v : V) (i : ι) := if v ∈ mode i then Real.exp ((a+1)*coverNumber M (X i)) * f i else 0\n  calc\n    _ ≤ ∑ i∈s, ∑ v, k (o v)*p v i := sum_le_sum fun i _ => by\n      by_cases h : x∈X i ∧ 0<f i\n      · obtain ⟨v,hv,hw⟩ := pins i h.2\n        apply le_trans ?_ (single_le_sum (f:=fun v => k (o v)*p v i)\n          (fun v _ => mul_nonneg (Real.exp_pos _).le ((cost v).1 i)) (mem_univ v))\n        rw [if_pos h.1,show p v i = _ from if_pos hv,mul_comm (f i),← mul_assoc]\n        refine mul_le_mul_of_nonneg_right ?_ (hf i)\n        rw [show k (o v)=_ from rfl, ← Real.exp_add, Real.exp_le_exp]\n        have he : (separation (o v) x : ℝ) ≤ coverNumber M (X i) * (4*(M:ℝ)+2)+2*(M:ℝ) := by\n          exact_mod_cast Corona.extent _ _ hw h.1\n        have hp : 0 < (4*(M:ℝ)+2) := by positivity\n        field_simp; nlinarith\n      have he : (if x∈X i then f i * Real.exp (a*coverNumber M (X i)) else 0) = 0 := by\n        by_cases hx : x∈X i\n        · simp [le_antisymm (le_of_not_gt (fun hi => h ⟨hx,hi⟩)) (hf i)]\n        simp [hx]\n      rw [he]; exact sum_nonneg fun v _ => mul_nonneg (Real.exp_pos _).le ((cost v).1 i)\n    _ ≤ ∑ v, k (o v)*c := by\n      rw [sum_comm]; refine sum_le_sum fun v _ => ?_\n      rw [← mul_sum]\n      exact mul_le_mul_of_nonneg_left (Budget.cap (cost v) _) (Real.exp_pos _).le\n    _ ≤ _ := by\n      rw [← sum_mul]\n      apply mul_le_mul_of_nonneg_right _ hc\n      refine (hh.weighted k fun _ => (Real.exp_pos _).le).trans (mul_le_mul_of_nonneg_left ?_ (by positivity))\n      dsimp [siteFactor,k]\n      simp only [sub_eq_add_neg, Real.exp_add,← mul_sum, ← neg_div]\n      exact mul_le_mul_of_nonneg_left (torus_kernel x) (Real.exp_pos _).le",
+            "line": 161,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/MULTISOURCE_BOUNDS/Root.lean",
+            "fragment": "L161-L199"
+          },
+          "proof_context": {
+            "declaration": "YM.Extra.Multi.root_hit",
+            "lines": [
+              161,
+              199
+            ],
+            "conclusion": "Rooted sums over marker vertices give the site-hit budget `mu * siteFactor M * c` by the reserved exponent unit."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Ac.forest",
+        "module": "YM.Ac.Tree",
+        "lines": [
+          89,
+          91
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Ac.forest"
+          },
+          "snippet": {
+            "text": "lemma forest {f : ι → ℝ} {a γ} (ha : 0≤ a) (hf : ∀ i, 0 ≤ f i) (hh : Hit X M f (a+1) γ)\n    (hp : (M+M+1:ℕ)^4*(γ:ℝ) ≤ 1) (hG : 0≤γ) (x : Site n) :\n    SumBudget (roots X M f a x) (Real.exp γ-1) := by",
+            "line": 89,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Ac/Tree.lean",
+            "fragment": "L89-L91"
+          },
+          "proof_context": {
+            "declaration": "YM.Ac.forest",
+            "lines": [
+              89,
+              127
+            ],
+            "conclusion": "A `Hit` bound with exponent `a+1` and `(M+M+1)^4*γ ≤ 1` gives the sum over rooted tree attachments at most `exp γ - 1`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +151,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

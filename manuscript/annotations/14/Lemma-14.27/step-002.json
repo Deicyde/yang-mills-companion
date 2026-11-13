@@ -1,19 +1,21 @@
 {
   "id": "Lemma 14.27 step 2",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The projection onto the range of Pi_e is the abstract map `a.step` (`display a x`), and the zero root on the kernel is a decay rate `flight C (-(1/32))` rather than the exact Haar-identity argument written in [M]. The sweep and admissibility facts are the same.",
   "subject": [
     {
       "location": {
         "page": 152,
         "rect": [
           0.12026,
-          0.70201,
+          0.70004,
           0.76156,
-          0.15704
+          0.15901
         ]
       },
-      "title": "Lemma 14.27 step 2: Text, p. 152, not yet judged",
+      "title": "Lemma 14.27 step 2: Text, p. 152",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 14.27 step 2"
@@ -21,7 +23,164 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.cap",
+        "module": "YM.FullVolume.Moneys",
+        "lines": [
+          39,
+          52
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.cap"
+          },
+          "snippet": {
+            "text": "  let X:= display a x\n  let f i:ℂ:= ((1+‖X i‖ : ℝ):ℂ)⁻¹\n  let y:Bid.Rowe C d:=fun i=> f i • X i\n  let z:Bid.Rowe C d:=fun i=> f i • (x i-X i)\n  have hz i : ‖f i‖=(1+‖X i‖)⁻¹:= by unfold f; rw [norm_inv, Complex.norm_real,Real.norm_of_nonneg (by positivity)]\n  have hz' i:0 < 1+‖X i‖:= add_pos_of_pos_of_nonneg zero_lt_one (norm_nonneg _)\n  have hs:∀ i,‖f i‖ ≤ 1:= by intro i; rw [hz]; exact inv_le_one_of_one_le₀ (by simp)\n  have hT:Coin C z:=by\n    have hd: z=f • x - y:= funext fun i=> (show f i • (x i-X i)=f i • x i-f i • X i from smul_sub _ _ _)\n    rw [hd]; apply Coin.sub (hx.scaled ((Sluggish.const (C:=C) (1:ℝ)).reduce (Eventually.of_forall (fun i=> by simp [hs])))) (Coin.from_bound M (A:=1) ?_)\n    refine Eventually.of_forall (fun i=>?_); unfold y; rw [norm_smul,hz i,mul_comm,←div_eq_mul_inv,div_le_one (hz' _)]\n    linarith\n  have hD:= sweep M B V R hV a hf z hT (fun i=> by unfold z X display; rw [map_smul,map_sub,a.projected,sub_self, smul_zero])\n  have hl:= hS _ _ hD (flown (by norm_num))",
+            "line": 39,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Moneys.lean",
+            "fragment": "L39-L52"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.cap",
+            "lines": [
+              23,
+              63
+            ],
+            "conclusion": "`cap` projects `x` to `X := display a x`, forms `z = (x - X)/(1+‖X‖)`, proves `Coin C z` (admissible) from `Coin C x` and the bounded `y`, and applies `sweep` to get a vanishing-root equation section for `z`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.sweep",
+        "module": "YM.FullVolume.Lit",
+        "lines": [
+          17,
+          19
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.sweep"
+          },
+          "snippet": {
+            "text": "lemma sweep (x:Bid.Rowe C d)(hx:Coin C x)(he:∀ i, a.step d i (x i)=0): Owed (Bid.upper C x) (flight C (-(1/32))):=by\n   obtain ⟨p,q,h⟩:=hf.hearth d\n   exact banked M B (V d) R (hV d) _ h _ hx fun i=> ((hf.foundation.step d i.1 i.2).ker) ▸ (show x i∈LinearMap.ker (a.step d i).toLinearMap from LinearMap.mem_ker.mpr (he i))",
+            "line": 17,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Lit.lean",
+            "fragment": "L17-L19"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.sweep",
+            "lines": [
+              17,
+              19
+            ],
+            "conclusion": "`sweep` shows an admissible `x` whose projection `a.step d i (x i)` vanishes (the kernel case) has `Owed (Bid.upper C x) (flight C (-(1/32)))`, a root bound tending to zero."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.PhysicalNext.Repeat.Legato.Run.financed",
+        "module": "YM.FullVolume.Literal",
+        "lines": [
+          29,
+          29
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.PhysicalNext.Repeat.Legato.Run.financed"
+          },
+          "snippet": {
+            "text": "  obtain ⟨x,hx,he⟩:= prepared_rows (C:=A) R.makes hT hC hG hR (hops_solid (F:=Bid.upper A w) (Eventually.of_forall fun i x=> A.continuousO ..) l|>.mono fun i hi=> hi 0) ((Stencil.visits R.makes w).hops l) hx",
+            "line": 29,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Literal.lean",
+            "fragment": "L29-L29"
+          },
+          "proof_context": {
+            "declaration": "YM.PhysicalNext.Repeat.Legato.Run.financed",
+            "lines": [
+              24,
+              33
+            ],
+            "conclusion": "`prepared_rows` supplies the admissible coefficient family `x` (local matching) with `Bid.upper A w` minus `hops` of the insertion having a root residual `he`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.Coin.from_bound",
+        "module": "YM.FullVolume.Sluggish",
+        "lines": [
+          150,
+          153
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.Coin.from_bound"
+          },
+          "snippet": {
+            "text": "lemma from_bound (h:C.Makes) {A:ℝ} (hp:∀ᶠ i in mesh, ‖p i‖ ≤ A) : Coin C p:=by\n  intro ε he\n  filter_upwards [deepen.eventually (Work.D01.terminal_ball C h _ A ε he),hp] with i hi hu\n  exact hi _ _ hu",
+            "line": 150,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Sluggish.lean",
+            "fragment": "L150-L153"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.Coin.from_bound",
+            "lines": [
+              150,
+              153
+            ],
+            "conclusion": "`Coin.from_bound` shows every eventually bounded coefficient family is admissible."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +190,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

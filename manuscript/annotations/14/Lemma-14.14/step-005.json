@@ -1,7 +1,9 @@
 {
   "id": "Lemma 14.14 step 5",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean gets the eventual estimate with constant one and fixes the constant before m. It uses z ≤ u/4 in a linear combination instead of the bound (d+2η)υ/(1-η) ≤ d+ε, and bounds the finitely many small m by the sum 1+Σ b_i instead of a maximum.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.11962,
           0.5061,
           0.76357,
-          0.07161
+          0.07228
         ]
       },
-      "title": "Lemma 14.14 step 5: Text, p. 138, not yet judged",
+      "title": "Lemma 14.14 step 5: Text, p. 138",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 14.14 step 5"
@@ -21,7 +23,125 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.MergeProof.Accent.coastwise",
+        "module": "YM.MergeProof.Baskets",
+        "lines": [
+          36,
+          36
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.MergeProof.Accent.coastwise"
+          },
+          "snippet": {
+            "text": "lemma coastwise (hG:G.Simple)(hK:Mix.paidL C) {u:ℝ}(hu:0<u): ∀ᶠ m in atTop, expense C a m (T! m) d ≤ ((d:ℝ)+u)* C.S.scale m:=by",
+            "line": 36,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Baskets.lean",
+            "fragment": "L36-L36"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.Accent.coastwise",
+            "lines": [
+              36,
+              67
+            ],
+            "conclusion": "Eventually `expense C a m (T! m) d ≤ (d+u) * scale m`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.MergeProof.Accent.coastwise",
+        "module": "YM.MergeProof.Baskets",
+        "lines": [
+          65,
+          67
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.MergeProof.Accent.coastwise"
+          },
+          "snippet": {
+            "text": "  change w^4 * Vac.treasury b r +6-Real.log (plumR C d a r) ≤ (d'+u)*v\n  change 6-Real.log (plumR C d a r) ≤ (d'+z)*t at hE\n  linarith only [hE,hq,hx,mul_le_mul_of_nonneg_left hW hw.le,mul_le_mul_of_nonneg_right hh ht',mul_le_mul_of_nonneg_right (show z ≤ u/4 from min_le_left _ _) ht']",
+            "line": 65,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Baskets.lean",
+            "fragment": "L65-L67"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.Accent.coastwise",
+            "lines": [
+              36,
+              67
+            ],
+            "conclusion": "`linarith` combines `hE`, `hW` and `hx` into the bound."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.MergeProof.Accent.gardena",
+        "module": "YM.MergeProof.Gardens",
+        "lines": [
+          28,
+          35
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.MergeProof.Accent.gardena"
+          },
+          "snippet": {
+            "text": "   let b i:=Real.exp (expense C g i (p i) d)/Real.exp (((d:ℝ)+u)*C.S.scale i); have hb'(i):0 ≤ b i:=by unfold b; positivity\n   let y:= 1+∑ i∈Finset.range k,b i; have hy : 1 ≤ y:= le_add_of_nonneg_right (Finset.sum_nonneg fun i _=>hb' i)\n   refine ⟨y,zero_le_one.trans hy, fun i hi=>?_⟩\n   let X:=p i; have hX : Stock.Tabs.opens (T) 1 i X:= Stock.Tabs.opened (T) 1 B i\n   have hW: Real.exp (expense C g i X d) ≤ y* C.S.a i^(-(d:ℝ)-u):=by\n      rw [← hw]; rcases lt_or_ge i k with h|h\n      · apply (div_le_iff₀ (Real.exp_pos _)).1; exact le_trans (Finset.single_le_sum (f:=b) (fun i _=>hb' _) (Finset.mem_range.mpr h)) (le_add_of_nonneg_left zero_le_one)\n      exact (Real.exp_monotone (h0 _ h)).trans (le_mul_of_one_le_left (Real.exp_pos _).le hy)",
+            "line": 28,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Gardens.lean",
+            "fragment": "L28-L35"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.Accent.gardena",
+            "lines": [
+              19,
+              40
+            ],
+            "conclusion": "`y := 1 + ∑_{i<k} b i` absorbs the finitely many small `m`, with `b i = exp(expense)/exp((d+u) scale i)`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +151,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

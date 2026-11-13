@@ -1,19 +1,21 @@
 {
   "id": "Lemma 18.3 step 19",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "`pays_sky` extracts a subsequence and a scaling with coherent frames and units, and `summit`/`gstar` choose the minimal k(n) with (log hatBeta)^48 separation. The entry bounds on ell_m, the first-crossing argument, the inclusion law of the frames and the constraint (alpha_0+1) log M ≤ (log beta)^48 are not carried.",
   "subject": [
     {
       "location": {
         "page": 205,
         "rect": [
           0.11962,
-          0.81736,
+          0.81792,
           0.76258,
-          0.08845
+          0.0879
         ]
       },
-      "title": "Lemma 18.3 step 19: Text, pp. 205–206, not yet judged",
+      "title": "Lemma 18.3 step 19: Text, pp. 205–206",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 18.3 step 19#0"
@@ -27,10 +29,10 @@
           0.11818,
           0.0962,
           0.76157,
-          0.03725
+          0.03775
         ]
       },
-      "title": "Lemma 18.3 step 19: Text, pp. 205–206, not yet judged",
+      "title": "Lemma 18.3 step 19: Text, pp. 205–206",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 18.3 step 19#1"
@@ -38,7 +40,125 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.MergeProof.East.pays_sky",
+        "module": "YM.TraceExtension.Prom.Zoom.Running",
+        "lines": [
+          25,
+          26
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.MergeProof.East.pays_sky"
+          },
+          "snippet": {
+            "text": "theorem pays_sky (hG:G.Simple)(hX: Scrim C W u ψ φ δ (fly C.path.levels) r L) {z:ℕ →ℝ}\n   (hZ:∀ i j, i≤j→ generator G i≤z j) (h : ∀ d,FiresSky B H O J d (z d))(hD:DimAbove S) (𝓛:Ultrafilter (ℕ×ℕ))(hℓ:(𝓛:Filter _)≤ F.fuse) (s:ℕ→ℝ)(hS:Tendsto s atTop (𝓝 0))(hp:∀ i,0<s i): ∃ f:ℕ→ℕ,StrictMono f ∧ ∃ X:Scaling S,X.r=s ∘ f ∧ StarPath F a X hs 𝓛:= by",
+            "line": 25,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Prom/Zoom/Running.lean",
+            "fragment": "L25-L26"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.East.pays_sky",
+            "lines": [
+              25,
+              31
+            ],
+            "conclusion": "For any scale sequence `s` tending to 0 there are a strictly monotone `f` and a scaling `X` with `X.r = s ∘ f` satisfying `StarPath` (units, symmetries, inclusions)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Trace.Terrace.summit",
+        "module": "YM.TraceExtension.Terrace.Base",
+        "lines": [
+          22,
+          22
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Trace.Terrace.summit"
+          },
+          "snippet": {
+            "text": "def summit (i:ℕ):= Nat.find (goal A i)",
+            "line": 22,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Terrace/Base.lean",
+            "fragment": "L22-L22"
+          },
+          "proof_context": {
+            "declaration": "YM.Trace.Terrace.summit",
+            "lines": [
+              22,
+              22
+            ],
+            "conclusion": "`summit A i` is the least index with the log-scale gap at least `Gate (hatBeta i)`, the minimal k(n)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Trace.Terrace.gstar",
+        "module": "YM.TraceExtension.Terrace.Base",
+        "lines": [
+          24,
+          24
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Trace.Terrace.gstar"
+          },
+          "snippet": {
+            "text": "lemma gstar : Gate (A.clock.hatBeta i) ≤ gap A i (summit A i):=(Nat.find_spec <| goal A i).2",
+            "line": 24,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Terrace/Base.lean",
+            "fragment": "L24-L24"
+          },
+          "proof_context": {
+            "declaration": "YM.Trace.Terrace.gstar",
+            "lines": [
+              24,
+              24
+            ],
+            "conclusion": "The next level `summit A i` is separated from `i` by at least `Gate(hatBeta i)=(log hatBeta)^48` in log scale."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -49,8 +169,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

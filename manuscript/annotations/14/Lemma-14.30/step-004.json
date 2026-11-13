@@ -1,7 +1,9 @@
 {
   "id": "Lemma 14.30 step 4",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The conclusions (Cauchy coordinates at level m, Cauchy coins and singleton functions via `hail`) are the same; [L] gets them by passing Cauchy-ness from the reference level down the exact recursion (`spends`, `winds`), without the h-m limit or explicitly solving the fixed-dimensional linear systems.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.11962,
           0.7888,
           0.76078,
-          0.08845
+          0.089
         ]
       },
-      "title": "Lemma 14.30 step 4: Text, p. 157, not yet judged",
+      "title": "Lemma 14.30 step 4: Text, p. 157",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 14.30 step 4"
@@ -21,7 +23,164 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.MergeProof.Matric.Gear.spends",
+        "module": "YM.FullVolume.Mark.Sages",
+        "lines": [
+          66,
+          70
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.MergeProof.Matric.Gear.spends"
+          },
+          "snippet": {
+            "text": "lemma spends {p':∀ m:ℕ,ℕ →F.Coeff}(ht:CauchySeq (p' k))(he:∀ i:ℕ,∀ h:k ≤ i ,∀ᶠ n in atTop,p' i n=(T i h n|>.leanings (W (i+1) n)) (p' (i+1) n))(v:ℕ)(hv:k≤v): CauchySeq (p' v):=by\n     induction v,hv using Nat.le_induction with\n     | base=>exact ht\n     | succ v h ih=>\n       apply succor (Ritzy.invests (Q.tight v h) (Q.voyages (v+1) (by omega))) (zero_lt_one.trans_le (Q.tight v h).senior) (fun i x=> (T v h i).hail (W (v+1) i) _) ih (he v h) -- Iiff orientation",
+            "line": 66,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Mark/Sages.lean",
+            "fragment": "L66-L70"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.Matric.Gear.spends",
+            "lines": [
+              66,
+              70
+            ],
+            "conclusion": "`spends` propagates `CauchySeq` of the level-`k` coordinates down through the recursion to every level `v >= k` by induction."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.PhysicalNext.Repeat.Legato.Bandage.Branch.winds",
+        "module": "YM.FullVolume.Gables.Master",
+        "lines": [
+          44,
+          48
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.PhysicalNext.Repeat.Legato.Bandage.Branch.winds"
+          },
+          "snippet": {
+            "text": "lemma winds (m:ℕ) (h:r≤ m): CauchySeq (fun n=> y' m n) :=by\n     have h' (i:ℕ)(h:r ≤ i): ∀ᶠ n in atTop,y' i n=(T' i h n|>.leanings (W (i+1) n)) (y' (i+1) n):=(L'.sails.eventually (eventually_gt_atTop i)).mono fun n hn=> ((B' n).tallies hG b hz hc hR ht (V n) (hV n) i h hn).2 _\n     apply (Matric.Gear.spends (cheerful hG b hz hc hR ht B' L' hZ V hV) _ h' m h)\n     have hh:Tendsto (fun _ : ℕ=> y) atTop (𝓝 y):= tendsto_const_nhds\n     apply Tendsto.cauchySeq (x:=y) (hh.congr' ?_); filter_upwards [L'.sails.eventually (eventually_ge_atTop r)] with n hn; exact ((he n hn).reads _ |>.trans ((V n).terminal.apply_symm_apply _))|>.symm",
+            "line": 44,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Gables/Master.lean",
+            "fragment": "L44-L48"
+          },
+          "proof_context": {
+            "declaration": "YM.PhysicalNext.Repeat.Legato.Bandage.Branch.winds",
+            "lines": [
+              44,
+              48
+            ],
+            "conclusion": "`winds` shows the coefficients at each level `m >= r` form a Cauchy sequence in `n`, using `Gear.spends`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.PhysicalNext.Repeat.Legato.Bandage.Branch.stays",
+        "module": "YM.FullVolume.Gables.Master",
+        "lines": [
+          50,
+          53
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.PhysicalNext.Repeat.Legato.Bandage.Branch.stays"
+          },
+          "snippet": {
+            "text": "lemma stays (m:ℕ)(hm:r≤ m): let z n:= (V n).entries m ((V n).terminal.symm y)\n     CauchySeq (fun n=> (z n).x) ∧ ∃ T:ℕ→ Coin ((Labels.frames G).level d) (hol G) (D m),CauchySeq T ∧ ∀ n:ℕ,∀ h:m≤ f n,Coin.uses (T n)=capture (z n) (Keeper.sufficient ((B' n).slots m (hR.trans hm) h)):=by\n    intro z; let T n:= (W m n).g (y' m n)\n    have he:= winds hG b hz hc hR ht B' L' hZ V hV he y m hm; exact ⟨he,T,(cheerful hG b hz hc hR ht B' L' hZ V hV).hides m hm _ he, fun n h=> (B' n).capitals b hc hR ht (V n) (hV n) m hm h _⟩",
+            "line": 50,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Gables/Master.lean",
+            "fragment": "L50-L53"
+          },
+          "proof_context": {
+            "declaration": "YM.PhysicalNext.Repeat.Legato.Bandage.Branch.stays",
+            "lines": [
+              50,
+              53
+            ],
+            "conclusion": "`stays` adds that the coefficients and the `Coin` data (which determine the graph) are Cauchy."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.PhysicalNext.Repeat.Legato.Bandage.Rising.hail",
+        "module": "YM.FullVolume.Fields.Capital",
+        "lines": [
+          57,
+          57
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.PhysicalNext.Repeat.Legato.Bandage.Rising.hail"
+          },
+          "snippet": {
+            "text": "lemma hail (m:ℕ)(hr:ψ d≤ m) (t:Motion)(x:∀ i,Site (A.B.a.S.side i p)): Confluence (fun n=> (show Config G (A.B.a.S.side m p)→ℂ from indexX (Lx! n) d (f n) p y x t m)) ∧ ∀ i:Box (A.B.a.S.side m p),Confluence (fun n=> (show Config G (A.B.a.S.side m p)→ℂ from Ktone (Lx! n) d (f n) p y x t m i)):=by",
+            "line": 57,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Fields/Capital.lean",
+            "fragment": "L57-L57"
+          },
+          "proof_context": {
+            "declaration": "YM.PhysicalNext.Repeat.Legato.Bandage.Rising.hail",
+            "lines": [
+              57,
+              61
+            ],
+            "conclusion": "`hail` concludes that `indexX` and the singleton functions `Ktone` form `Confluence` families (bounded and uniformly Cauchy) in the cutoff."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +190,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

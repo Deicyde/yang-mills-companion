@@ -1,19 +1,21 @@
 {
   "id": "Lemma 14.28 step 2",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean's `lens` multiplies a candidate entry by the scale factor `alto` and the health mask and unit term sit in `visible`/`candidate`; [M] writes them in one display with coordinate `v` and `P_d[factorscale v]`. The notation is not literally the same.",
   "subject": [
     {
       "location": {
         "page": 154,
         "rect": [
           0.12026,
-          0.54867,
+          0.54535,
           0.75948,
-          0.02239
+          0.0257
         ]
       },
-      "title": "Lemma 14.28 step 2: Display, p. 154, not yet judged",
+      "title": "Lemma 14.28 step 2: Display, p. 154",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 14.28 step 2"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.MergeProof.Accent.lens",
+        "module": "YM.MergeProof.South.Sand",
+        "lines": [
+          31,
+          31
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.MergeProof.Accent.lens"
+          },
+          "snippet": {
+            "text": "def lens (U:Config G (C.side k p)):=alto C.path k d * ((y).exponentialEntry 0 Y! (R k) U)",
+            "line": 31,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/South/Sand.lean",
+            "fragment": "L31-L31"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.Accent.lens",
+            "lines": [
+              31,
+              31
+            ],
+            "conclusion": "`lens` is `alto C.path k d * y.exponentialEntry ...`, the scaled bounded coarse polynomial on level-`k` configurations."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.MergeProof.Accent.visible",
+        "module": "YM.MergeProof.South.Lens",
+        "lines": [
+          34,
+          34
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.MergeProof.Accent.visible"
+          },
+          "snippet": {
+            "text": "   rw [scopes C N k p d L H hN]; let V:=Y!; let a:=V.footprint o!; let t:= C.path.levels.clock.threshold k; let g:=candidate C k p d ((F).core L); have hk:=candidate_fits C H k p d ((F).core L); apply (Interior.constant _ _).plus; apply Interior.enlarges (K:=inspected a) -- arg",
+            "line": 34,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/South/Lens.lean",
+            "fragment": "L34-L34"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.Accent.visible",
+            "lines": [
+              33,
+              45
+            ],
+            "conclusion": "`visible` writes the candidate as a constant plus the `masked t a g` polynomial, zero off the `Healthy` set."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

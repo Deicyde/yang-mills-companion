@@ -1,7 +1,9 @@
 {
   "id": "Lemma 13.12 step 2",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] packages the quadratic term as `delta * heads` and the log-subtraction zeta as the `fault` correction `dust`, with masks inside each term; the identity is stated for the masked additive term of `X.read v`, not as [M]'s unmasked displayed sum.",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.0424
         ]
       },
-      "title": "Lemma 13.12 step 2: Display, p. 107, not yet judged",
+      "title": "Lemma 13.12 step 2: Display, p. 107",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 13.12 step 2"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.AnalyticBridge.VerifiedReset.Collection.Local.first_split",
+        "module": "YM.AnalyticBridge.VERIFIED_RESET_STEP.Rewrites",
+        "lines": [
+          55,
+          56
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.AnalyticBridge.VerifiedReset.Collection.Local.first_split"
+          },
+          "snippet": {
+            "text": "lemma first_split : ((∑' i, v.logRead i 1) + delta (X.read v) * (∑ o, heads p o U) - ∑' i, dust X p v i U) +\n      ∑' i, untagged X p v i U = (X.read v).additive p U := by",
+            "line": 55,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/VERIFIED_RESET_STEP/Rewrites.lean",
+            "fragment": "L55-L56"
+          },
+          "proof_context": {
+            "declaration": "YM.AnalyticBridge.VerifiedReset.Collection.Local.first_split",
+            "lines": [
+              55,
+              59
+            ],
+            "conclusion": "The sum of the input's regular functions equals `∑' logRead i 1` (c_u), plus `delta * ∑ o, heads p o U` (the Delta_u quadratic term), minus the `dust` series (zeta), plus the `untagged` masked rebates (R_f)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.AnalyticBridge.VerifiedReset.Residual.splits",
+        "module": "YM.AnalyticBridge.VERIFIED_RESET_STEP.Residual",
+        "lines": [
+          114,
+          115
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.AnalyticBridge.VerifiedReset.Residual.splits"
+          },
+          "snippet": {
+            "text": "lemma splits (U : Config G n) : f 1 + masked t {d.site} (payout d f) U - fault d f t U + masked t (expand d) (rebate d f) U =\n    masked t d.support f U := by",
+            "line": 114,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/VERIFIED_RESET_STEP/Residual.lean",
+            "fragment": "L114-L115"
+          },
+          "proof_context": {
+            "declaration": "YM.AnalyticBridge.VerifiedReset.Residual.splits",
+            "lines": [
+              114,
+              120
+            ],
+            "conclusion": "Per term, `f 1` plus the masked `payout`, minus `fault`, plus the masked `rebate` gives the masked `f`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

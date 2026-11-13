@@ -1,19 +1,21 @@
 {
   "id": "Lemma 12.6 step 4",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean carries the orders 3,2,1 and 2,1,0 and the split of the constants into an input-independent part and a part scaled by `inch L`. The derivations through differentiated gauge invariance and curvature transport sit in helper lemmas (`column_price`, `Wilson_stream`, `veneer`) that I did not trace, and the vertices are indexed by derivative order, not degree.",
   "subject": [
     {
       "location": {
         "page": 81,
         "rect": [
           0.12026,
-          0.37764,
+          0.37819,
           0.75996,
-          0.08592
+          0.08496
         ]
       },
-      "title": "Lemma 12.6 step 4: Text, p. 81, not yet judged",
+      "title": "Lemma 12.6 step 4: Text, p. 81",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 12.6 step 4"
@@ -21,7 +23,164 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.greyson",
+        "module": "YM.Next.STATIONARY.Shape.Scaled",
+        "lines": [
+          363,
+          364
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.greyson"
+          },
+          "snippet": {
+            "text": "lemma greyson (G : Gauge) (σ ε C Z τ A : ℝ) (hs : 0<σ) (hC : 0≤C) (hZ : 0≤Z) (hτ : 0<τ) (hA : 0≤A) : ∃ s M,0<s ∧ 0≤M ∧ ∀ (m : ℕ→ Side), Tendsto (fun i => (m i).val) atTop atTop → ∀ (B : Bed) (p : Clip) (R : PathData G) Λ, R.Bounds p τ A Λ → Attached B R → B.metric.strip σ C → p.direct ≤ Z → (∀ n,Floor B p n ε C) → (∀ i,Bid.Sworn B (m i) G) →\n    ∀ i, i>0 → i≤3 → Drinkable i m (fun i => intended (m:=m i) p R-WilsonQ G (m i)) (4-i) s M := by",
+            "line": 363,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Shape/Scaled.lean",
+            "fragment": "L363-L364"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.greyson",
+            "lines": [
+              363,
+              403
+            ],
+            "conclusion": "`greyson`: for `i = 1,2,3` the fine-minus-Wilson series `intended - WilsonQ` is `Drinkable i … (4-i)`, i.e. its degree `i+1` vertex has jet order `4-i` (3, 2, 1 for degrees 2, 3, 4)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.whiteWilson",
+        "module": "YM.Next.STATIONARY.Shape.Scaled",
+        "lines": [
+          408,
+          408
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.whiteWilson"
+          },
+          "snippet": {
+            "text": "lemma whiteWilson (G : Gauge) : ∃ B:ℝ,0≤B ∧ ∀ (m : ℕ→Side), Tendsto (fun i=> (m i).val) atTop atTop → ∀ k, k>0 → k≤3 → Drinkable k m (fun i => WilsonQ G (m i)) (3-k) 1 B := by",
+            "line": 408,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Shape/Scaled.lean",
+            "fragment": "L408-L408"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.whiteWilson",
+            "lines": [
+              408,
+              422
+            ],
+            "conclusion": "`whiteWilson`: the Wilson vertices of `WilsonQ` are `Drinkable k … (3-k)`, i.e. order 2, 1, 0 for degrees 2, 3, 4."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.top_Wilson",
+        "module": "YM.Next.STATIONARY.Shape.ClassicalMatch",
+        "lines": [
+          441,
+          443
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.top_Wilson"
+          },
+          "snippet": {
+            "text": "lemma top_Wilson {u : Clip} {B : Bed} {p : PathData G} {c d}\n    (h : p.Bounds u σ A Λ) (hp : Attached B p) (hb : Floor B u m c d) (hy : Bid.Sworn B m G) (hz : B.diagonal.acts m=1) :\n    Rays 3 (WilsonQ G m-inputSeries u p) := by",
+            "line": 441,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Shape/ClassicalMatch.lean",
+            "fragment": "L441-L443"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.top_Wilson",
+            "lines": [
+              441,
+              471
+            ],
+            "conclusion": "`top_Wilson`: `WilsonQ - inputSeries` has `Rays 3`, the quadratic level using the diagonal `acts = 1` (`Ĥ(0) = I`) and `faceCurl`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.setWest",
+        "module": "YM.Next.STATIONARY.Shape.VertexWeights",
+        "lines": [
+          357,
+          360
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.setWest"
+          },
+          "snippet": {
+            "text": "lemma setWest (G : Gauge) (w η Q Z D ε : ℝ) (hσ : 0<w) (hη : 0<η) (hw : η ≤ 1) (hz : 0≤Z) (hQ : 0≤Q)\n    (J : ℕ) (K : KernelChoices) : ∃ a b : ℝ, 0≤a ∧ 0≤b ∧ ∀ σ A, 0<σ → 0 ≤ A → ∃ σ' ℓ r:ℝ, 0 < σ' ∧ 0≤ℓ ∧ 0≤r ∧ ∀ (m n : ℕ→Side), Tendsto (fun i => (n i).val) atTop atTop → ∀ (p : Clip) (R : PathData G) (B : Bed) (Λ : ℝ), p.direct ≤ Z → R.Bounds p σ A Λ → Attached B R → B.metric.strip w Q → (∀ i, Floor B p i ε Q) → (∀ i, Bid.Sworn B (n i) G) →\n      ∀ (P : Patch), P.J=J → P.Branches K G → inch P.L*η ≤ σ' → ∀ (F : Armada m n P K) (t : ∀ i,(F.boot i).Choices) (Φ : Bridge G P), Cruise Φ 2 η D →\n    ∃ T : TextS 3 P G, ∃ U : TextS 4 P G, Pungent T η ∧ Pungent U η ∧ Laureate T Φ η (a+inch P.L*ℓ) ∧ Laureate U Φ η (b+inch P.L*r) ∧ ∀ i, Skimming (F.boot i) T (centR (F.boot i) (t i) p R) ∧ Skimming (F.boot i) U (centR (F.boot i) (t i) p R) := by",
+            "line": 357,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Shape/VertexWeights.lean",
+            "fragment": "L357-L360"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.setWest",
+            "lines": [
+              357,
+              382
+            ],
+            "conclusion": "`setWest` gives the vertices bounds `a + inch P.L * ℓ` and `b + inch P.L * r` with `a, b` independent of the input bound `A`, i.e. `C_3 ≤ a_3 + ℓ⁻¹ a_3'`, `C_4 ≤ c_4 + ℓ⁻¹ c_4'`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +190,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

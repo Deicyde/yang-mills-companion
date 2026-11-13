@@ -1,18 +1,18 @@
 {
   "id": "Lemma 13.4 step 15",
   "kind": "proof_step",
-  "status": "not_formalized",
-  "relation": "noMatch",
-  "note": "The key declarations and their helpers contain nothing that states this claim; they take the corresponding bounds as abstract hypotheses.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "`impartial` controls an unbounded Gaussian coordinate with an integrable Gaussian-times-polynomial majorant rather than by square completion, and it does so for the full-volume factors, not for this molecule's covariance scores.",
   "subject": [
     {
       "location": {
         "page": 94,
         "rect": [
           0.12026,
-          0.17434,
+          0.17545,
           0.75948,
-          0.05147
+          0.0498
         ]
       },
       "title": "Lemma 13.4 step 15: Text, p. 94",
@@ -22,9 +22,9 @@
           "quads": [
             [
               0.32622,
-              0.17434,
+              0.17545,
               0.87974,
-              0.17434,
+              0.17545,
               0.87974,
               0.192,
               0.32622,
@@ -32,13 +32,13 @@
             ],
             [
               0.12026,
-              0.19202,
+              0.19209,
               0.87974,
-              0.19202,
+              0.19209,
               0.87974,
-              0.2083,
+              0.20933,
               0.12026,
-              0.2083
+              0.20933
             ],
             [
               0.12026,
@@ -46,9 +46,9 @@
               0.43594,
               0.20831,
               0.43594,
-              0.22581,
+              0.22525,
               0.12026,
-              0.22581
+              0.22525
             ]
           ]
         }
@@ -61,47 +61,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.AnalyticBridge.VerifiedReset.Collection.Local",
-        "module": "YM.AnalyticBridge.VERIFIED_RESET_STEP.Trays",
+        "declaration": "YM.ConnectedActivityE6.Lim.impartial",
+        "module": "YM.FullVolume.E6.Jag",
         "lines": [
-          35,
-          40
+          54,
+          70
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.AnalyticBridge.VerifiedReset.Collection.Local"
+            "id": "YM.ConnectedActivityE6.Lim.impartial"
+          },
+          "snippet": {
+            "text": "lemma impartial (J:Finset (Bond f))(k:ℕ) :∃ D:Air f G →ℝ, (∀ w,0≤D w) ∧ Integrable D volume ∧ ∀ n y (w:Air f G), let U:=H' n y; let z:=kickback U (K n).beta w\n           0≤ cups U (K n).beta w ∧ cups U (K n).beta w*facescale J z^k ≤ D w:=by\n    let r(n:ℕ):=(gStep (K n).beta)⁻¹; let f₀:=betaF G x S.patch.L; let u:=Real.sqrt (f₀/2); let v:= Real.sqrt (2*f₀)\n    have hS:1<f₀:=(I 0).laws.intake.height; have hu:0<u:=Real.sqrt_pos.mpr (by linarith); have hv:0<v:=Real.sqrt_pos.mpr (by linarith)\n    have hh (n:ℕ):u≤r n∧r n≤v:=by simp only [r,gStep,inv_inv]; exact ⟨Real.sqrt_le_sqrt (I n).laws.intake.window.1,Real.sqrt_le_sqrt (I n).laws.intake.window.2⟩\n    obtain ⟨τ,C,ht,hC,hA⟩:= oasis (ladders I X hx hK hm); obtain ⟨B,hB,hV⟩:=tipN I X hx hK hm; obtain ⟨K₀,h₀,hZ⟩:= facetsP (G:=G) J\n    let R:=Module.finrank ℝ (Air f G); let b':= C*Real.exp (τ*u^2*B^2); let F':=K₀*(1+v+v*B); let D(w:Air f G):= (v^R*b'* F'^k)*(Real.exp (-(τ*u^2/2)*‖w‖^2)*(1+‖w‖)^k)\n    have hi : 0≤F' := by unfold F'; positivity\n    refine ⟨D,fun w=>by unfold D b'; positivity, (crystal (show 0<τ*u^2/2 by positivity) k).const_mul _,?_⟩; intro n y w U z\n    have hr : 0< r n:= hu.trans_le (hh n).1\n    have hf: 0 ≤ cups U (K n).beta w:= mul_nonneg (pow_nonneg hr.le _) (fullFuel ..).le\n    obtain ⟨hq,he⟩:= caged B u v τ hB hu ht w _ _ (hV n y) (hh n).1 (hh n).2\n    rw [← show z=r n • _ from kickback_eq U (K n).beta w] at hq he\n    let g:=Real.exp (-(τ*u^2/2)*‖w‖^2)\n    have h': cups U (K n).beta w≤ v^R*(b'*g):= mul_le_mul (pow_le_pow_left₀ hr.le (hh n).2 R) ((hA n z).trans ((mul_le_mul_of_nonneg_left he hC.le).trans_eq (mul_assoc ..).symm)) (fullFuel ..).le (pow_nonneg hv.le R)\n    have hz: facescale J z^k ≤ (F'*(1+‖w‖))^k:= pow_le_pow_left₀ (zero_le_one.trans (hZ z).1) ((hZ z).2.trans ((mul_le_mul_of_nonneg_left hq h₀).trans_eq (mul_assoc ..).symm)) _\n    exact ⟨hf,(mul_le_mul h' hz (pow_nonneg (zero_le_one.trans (hZ z).1) _) (le_trans hf h')).trans_eq (by unfold D g; rw [mul_pow]; ring)⟩",
+            "line": 54,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/VERIFIED_RESET_STEP/Trays.lean",
-            "fragment": "L35-L40"
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.PhysicalNext.Repeat.Song.stanzaReady",
-        "module": "YM.PhysicalNext.RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP.Song.Litho",
-        "lines": [
-          62,
-          71
-        ]
-      },
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.PhysicalNext.Repeat.Song.stanzaReady"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/E6/Jag.lean",
+            "fragment": "L54-L70"
           },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Song/Litho.lean",
-            "fragment": "L62-L71"
+          "proof_context": {
+            "declaration": "YM.ConnectedActivityE6.Lim.impartial",
+            "lines": [
+              54,
+              70
+            ],
+            "conclusion": "For the Gaussian-weighted product `cups * facescale^k` there is an integrable majorant `D w = const * exp(-(τu²/2)‖w‖²) (1+‖w‖)^k`, obtained without a supremum bound on `w`."
           }
         }
       }
@@ -116,8 +105,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge changed it from noMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
       }
     }
   }

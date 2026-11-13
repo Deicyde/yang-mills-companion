@@ -1,28 +1,30 @@
 {
   "id": "Lemma 19.14 step 9",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean states the gain term by term through `gapBelow`, where [M] takes the minimum over vertices.",
   "subject": [
     {
       "location": {
         "page": 232,
         "rect": [
           0.12026,
-          0.23598,
+          0.23639,
           0.75948,
-          0.0342
+          0.03419
         ]
       },
-      "title": "Lemma 19.14 step 9: Text, p. 232, not yet judged",
+      "title": "Lemma 19.14 step 9: Text, p. 232",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 19.14 step 9",
           "quads": [
             [
               0.41519,
-              0.23598,
+              0.23639,
               0.87974,
-              0.23598,
+              0.23639,
               0.87974,
               0.25309,
               0.41519,
@@ -30,20 +32,99 @@
             ],
             [
               0.12026,
-              0.25309,
+              0.2535,
               0.2527,
-              0.25309,
+              0.2535,
               0.2527,
-              0.27018,
+              0.27058,
               0.12026,
-              0.27018
+              0.27058
             ]
           ]
         }
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Nesting.Composite.drop_price",
+        "module": "YM.OPE.Nesting.PriceDrop",
+        "lines": [
+          36,
+          38
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Nesting.Composite.drop_price"
+          },
+          "snippet": {
+            "text": "lemma drop_price (hr:rollCaps D ≤ r)(h':gapBelow (fork n f) a D γ): RateLE l T (fun s=>hinge U R z v r c s - hinge U R z v (rollCaps D) c s) (forkBill κ a v m - γ):=by\n        refine (RateLE.sum (S:=unkept U R D hr) (f:=growth U R v c (z:=z) r) hT ?_).congr (Eventually.of_forall fun s=>(estimate_suffix U R v c hr s).symm)\n        exact fun j hj=> (one_term U R hg v h hT c j).mono (sub_le_sub_left (fare_omitted U R hg v D r j hr h' hj) _)",
+            "line": 36,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Nesting/PriceDrop.lean",
+            "fragment": "L36-L38"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Nesting.Composite.drop_price",
+            "lines": [
+              36,
+              38
+            ],
+            "conclusion": "Each omitted term is bounded by `one_term` with the gain `fare_omitted` from `gapBelow`, so the unkept sum gains `γ`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Nesting.Composite.fare_omitted",
+        "module": "YM.OPE.Nesting.Accelerant",
+        "lines": [
+          52,
+          55
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Nesting.Composite.fare_omitted"
+          },
+          "snippet": {
+            "text": "lemma fare_omitted (D:(fork n f).Inner→ℕ)(r:Fin n→ℕ)(q:Branches U R (f:=f) r)(hD:rollCaps D ≤ r){g:ℝ}(h':gapBelow (fork n f) a D g)\n     (hq:q ∈ Finset.univ \\ Finset.univ.image (advance U R (f:=f) hD)): g ≤ ∑ i, rebate U R v a q i :=by\n    obtain ⟨p,hp,h_d⟩:= advance_missed U R v hD hq\n    exact le_trans (b:=rebate U R v a q p) (inflate.drop_cost U R (q p) (hg.inside p) (h' p) hp h_d) (Finset.single_le_sum (fun i hi=>terms_nonnegative U R v (fun i=>(hg.inside i).ageLower) q i) (Finset.mem_univ p))",
+            "line": 52,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Nesting/Accelerant.lean",
+            "fragment": "L52-L55"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Nesting.Composite.fare_omitted",
+            "lines": [
+              52,
+              55
+            ],
+            "conclusion": "An omitted term of some child degree above the cap pays the gain `γ` through `gapBelow`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -53,8 +134,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

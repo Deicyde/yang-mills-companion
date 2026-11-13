@@ -1,19 +1,21 @@
 {
   "id": "Lemma 17.8 step 2",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Isometry, vacuum, translation intertwining, uniqueness (`attach`, ∃!) and the ground-projection limit are stated. The heat identity J e^{-sH} = E_s J appears as the definition `bHeat = J* E_s J` together with its Boltzmann form, not as an intertwining equation.",
   "subject": [
     {
       "location": {
         "page": 201,
         "rect": [
           0.12026,
-          0.46517,
+          0.46304,
           0.76014,
-          0.07533
+          0.07746
         ]
       },
-      "title": "Lemma 17.8 step 2: Text, p. 201, not yet judged",
+      "title": "Lemma 17.8 step 2: Text, p. 201",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 17.8 step 2"
@@ -21,7 +23,164 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Boundary.Action.Intervenes",
+        "module": "YM.Fields.Spectrum",
+        "lines": [
+          103,
+          106
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Boundary.Action.Intervenes"
+          },
+          "snippet": {
+            "text": "structure Intervenes (W : X→L[ℂ] C.H) (v : X) : Prop where\n  scale (x : X) : ‖W x‖=‖x‖\n  across (p) : W.comp (P.orbit.translation p) = (C.flow.unit.translation p).comp W\n  start : W v=C.omega",
+            "line": 103,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Fields/Spectrum.lean",
+            "fragment": "L103-L106"
+          },
+          "proof_context": {
+            "declaration": "YM.Boundary.Action.Intervenes",
+            "lines": [
+              103,
+              106
+            ],
+            "conclusion": "`Intervenes` records that `U` is isometric (`scale`), sends the vacuum to the OS vacuum (`start`) and intertwines spatial translations (`across`)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.BOUNDARY.FieldCore.attach",
+        "module": "YM.Next.BOUNDARY.Core",
+        "lines": [
+          178,
+          189
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.BOUNDARY.FieldCore.attach"
+          },
+          "snippet": {
+            "text": "theorem FieldCore.attach (H : FieldCore W R h F) (P : DiffPlan S) (hs : S.Symmetric) (hP : P.Inclusions S)\n    (w : B.concretized A) (int : Y.NonTangentialFree W)\n    (hw : Bid.Hull B Y F.J) (lamp : B.Lamp W F.J F.spin) :\n    ∃! U : F.operators.H →L[ℂ] V.H, Attachment F V U := by\n  obtain ⟨U, hU, hθ⟩ := H.coupling lamp\n  refine ⟨U, ⟨hU, ⟨A, B, w⟩, fun n v => ?_⟩, fun L k => Kernel.Gram.by_bud H.soil\n    (fun b => tendsto_nhds_unique (k.traces w b) (hθ b))⟩\n  obtain ⟨Ψ, hΨ, hW⟩ := joints hU.scale hθ int F.J hw v\n  refine ⟨Ψ, hΨ, fun A₁ B₁ hb f => ?_⟩\n  apply (hW f).congr'\n  filter_upwards [heights_valid n] with i hi\n  exact hot_eq (bar_eq w hb P hs hP i.1 hi.2.1.1) n v i.2 f",
+            "line": 178,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/BOUNDARY/Core.lean",
+            "fragment": "L178-L189"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.BOUNDARY.FieldCore.attach",
+            "lines": [
+              178,
+              189
+            ],
+            "conclusion": "There is a unique `U` with `Attachment F V U`, via `Kernel.Gram.by_bud` and uniqueness of the limits of the boundary words."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.bHeat_pair",
+        "module": "YM.EveryPhase.Projection",
+        "lines": [
+          97,
+          100
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.bHeat_pair"
+          },
+          "snippet": {
+            "text": "lemma bHeat_pair (I : Attachment X V J) (H : FieldCore W U h X) (s : ℝ≥0) (x : X.operators.H) :\n    inner ℂ x (bHeat J s x)=(↑(∫ p, boltz s p ∂X.momentum.diagonal x):ℂ) := by\n  unfold bHeat; rw [ContinuousLinearMap.comp_apply, ContinuousLinearMap.adjoint_inner_right, I.measures H]\n  exact boltzmann _ _ _",
+            "line": 97,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Projection.lean",
+            "fragment": "L97-L100"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.bHeat_pair",
+            "lines": [
+              97,
+              100
+            ],
+            "conclusion": "`bHeat J s = J* E_s J` has the Boltzmann quadratic form `∫ boltz s p d(momentum.diagonal x)`, which is the heat `e^{-sH}` on the boundary side."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.bHeat_limit",
+        "module": "YM.EveryPhase.Projection",
+        "lines": [
+          102,
+          109
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.bHeat_limit"
+          },
+          "snippet": {
+            "text": "lemma bHeat_limit (I : Attachment X V J) (H : FieldCore W U h X) (x : X.operators.H) :\n    Tendsto (fun s => bHeat J s x) atTop (𝓝 (X.momentum.region zeroE x)) := by\n  have he := V.flow.emerges (J x)\n  rw [reflection_projection,← I.projections H zeroE zeroE_m] at he\n  have hJ (y : X.operators.H) : J.adjoint (J y)=y :=\n    DFunLike.congr_fun (J.norm_map_iff_adjoint_comp_self.mp I.acts.scale) y\n  have hp := (J.adjoint.continuous.continuousAt (x:=J (X.momentum.region zeroE x))).tendsto.comp he\n  rw [hJ] at hp; exact hp",
+            "line": 102,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Projection.lean",
+            "fragment": "L102-L109"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.bHeat_limit",
+            "lines": [
+              102,
+              109
+            ],
+            "conclusion": "`bHeat J s x` tends to the zero-energy projection `momentum.region zeroE x` as `s` grows, using that `J` is isometric, which identifies the ground projections."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +190,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

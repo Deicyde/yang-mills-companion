@@ -1,7 +1,9 @@
 {
   "id": "Lemma 14.30 step 1",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "`grow` gives Cauchy coefficient and coin arrays at level m and `flooded` gives the fixed-level data with the prescribed paths and a common reserve; [L] assumes the full-sequence convergence of couplings and activities through the `Rising` structure (`helmet`), and the exclusion of the vacuum scalar is not stated here.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.12026,
           0.4521,
           0.75948,
-          0.08813
+          0.08781
         ]
       },
-      "title": "Lemma 14.30 step 1: Text, p. 157, not yet judged",
+      "title": "Lemma 14.30 step 1: Text, p. 157",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 14.30 step 1"
@@ -21,7 +23,125 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.PhysicalNext.Repeat.Legato.Bandage.Rising.grow",
+        "module": "YM.FullVolume.Fields.Capital",
+        "lines": [
+          55,
+          56
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.PhysicalNext.Repeat.Legato.Bandage.Rising.grow"
+          },
+          "snippet": {
+            "text": "lemma grow (m:ℕ)(h:ψ d ≤ m):CauchySeq (fun n=>(show ((Labels.frames G).level d).Coeff from (U m n).x)) ∧\n    ∃ c:ℕ→ Coin ((Labels.frames G).level d) (hol G) (D m p), CauchySeq c∧ ∀ n:ℕ,∀ hm: m≤ f n, Coin.uses (c n)= capture (U m n) (Keeper.sufficient (J.branch n|>.slots _ (he.height.trans h) hm)):= Branch.stays hG b hz (fun i=> Boutique.brochure Y i p hz) he.height he.label J.branch J.helmet hx (fun i=> T i d (f i) p) he.firsts he.second y m h",
+            "line": 55,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Fields/Capital.lean",
+            "fragment": "L55-L56"
+          },
+          "proof_context": {
+            "declaration": "YM.PhysicalNext.Repeat.Legato.Bandage.Rising.grow",
+            "lines": [
+              55,
+              56
+            ],
+            "conclusion": "`grow` states that for `m >= psi d` the coordinates `(U m n).x` are a `CauchySeq` in `n`, and there are coins `c n` forming a `CauchySeq` that capture the representation."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.PhysicalNext.Repeat.Legato.Bandage.Rising.hail",
+        "module": "YM.FullVolume.Fields.Capital",
+        "lines": [
+          58,
+          58
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.PhysicalNext.Repeat.Legato.Bandage.Rising.hail"
+          },
+          "snippet": {
+            "text": "    let u:= U m; let H:=V' m; let ξ:ℂ:= alto (Lx! 0).path m d; obtain ⟨h,c,hc,hM⟩:= J.grow hG b T hx hz d he y m hr",
+            "line": 58,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Fields/Capital.lean",
+            "fragment": "L58-L58"
+          },
+          "proof_context": {
+            "declaration": "YM.PhysicalNext.Repeat.Legato.Bandage.Rising.hail",
+            "lines": [
+              57,
+              61
+            ],
+            "conclusion": "`hail` obtains from `J.grow` the Cauchy coefficient sequence and the Cauchy coin sequence of the cutoff-dependent unmarked representation at level `m`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.PhysicalNext.Repeat.Legato.Bandage.Rising.flooded",
+        "module": "YM.FullVolume.Fields.Capital",
+        "lines": [
+          31,
+          35
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.PhysicalNext.Repeat.Legato.Bandage.Rising.flooded"
+          },
+          "snippet": {
+            "text": "lemma flooded {m}(hm:k ≤ m): Flux (V' m) (S P' m p) (P'|>.params m|>.clip) (P'|>.params m|>.width) (P'|>.params m|>.paths) (P'|>.clock.loopCap m) (P'|>.clock.allowance m) (P'|>.clock.forcedAllowance m):=by\n    let H:= J.helmet; obtain ⟨v,hv,hX⟩:= H.earns _ hm\n    have hg:= H.sails.eventually (eventually_ge_atTop m)\n    refine ⟨hg.mono fun n hn=> ((J.branch n|>.choice).represents (f n) p m hn).good,hg.mono fun n hn=> ⟨((J.branch n|>.choice).represents (f n) p m hn).vac,((J.branch n|>.choice).represents (f n) p m hn).clip⟩,⟨v,hv,hg.mono fun i hi=> hX _ hi⟩,H.costa m hm,?_⟩\n    obtain ⟨r,v,hp,hA,h⟩:= Stationary.Artes.nativity H.cfront m; refine ⟨r,v,hp, hp.width.trans hA,fun g hg'=>?_⟩; filter_upwards [H.sails.eventually (h g hg'),hg] with i h H; rw [J.paths i m hm H]; exact h",
+            "line": 31,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Fields/Capital.lean",
+            "fragment": "L31-L35"
+          },
+          "proof_context": {
+            "declaration": "YM.PhysicalNext.Repeat.Legato.Bandage.Rising.flooded",
+            "lines": [
+              31,
+              35
+            ],
+            "conclusion": "`flooded` shows that along the cutoff tail the fixed-level data (`Flux`) are good, within the level-`m` budget, with the prescribed paths and a common reserve."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +151,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

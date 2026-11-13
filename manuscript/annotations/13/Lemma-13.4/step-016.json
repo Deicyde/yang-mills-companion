@@ -1,18 +1,18 @@
 {
   "id": "Lemma 13.4 step 16",
   "kind": "proof_step",
-  "status": "not_formalized",
-  "relation": "noMatch",
-  "note": "The key declarations and their helpers contain nothing that states this claim; they take the corresponding bounds as abstract hypotheses.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "`marched` factorizes integrals of factors with disjoint coordinate supports under a general product measure. It says nothing about the output flags or about the ordinary factors using the same Gaussian law.",
   "subject": [
     {
       "location": {
         "page": 94,
         "rect": [
           0.12026,
-          0.20832,
+          0.20935,
           0.75995,
-          0.035
+          0.03398
         ]
       },
       "title": "Lemma 13.4 step 16: Text, p. 94",
@@ -22,19 +22,19 @@
           "quads": [
             [
               0.44218,
-              0.20832,
+              0.20935,
               0.88021,
-              0.20832,
+              0.20935,
               0.88021,
-              0.22581,
+              0.22636,
               0.44218,
-              0.22581
+              0.22636
             ],
             [
               0.12026,
-              0.22583,
+              0.22528,
               0.47063,
-              0.22583,
+              0.22528,
               0.47063,
               0.24333,
               0.12026,
@@ -51,47 +51,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.AnalyticBridge.VerifiedReset.Collection.Local",
-        "module": "YM.AnalyticBridge.VERIFIED_RESET_STEP.Trays",
+        "declaration": "YM.ConnectedActivityE6.Pond.marched",
+        "module": "YM.AnalyticNext.CONNECTED_ACTIVITY_JETS_E6.Threads",
         "lines": [
-          35,
-          40
+          44,
+          62
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.AnalyticBridge.VerifiedReset.Collection.Local"
+            "id": "YM.ConnectedActivityE6.Pond.marched"
+          },
+          "snippet": {
+            "text": "lemma marched (h : (S:Set κ).PairwiseDisjoint Z) (f : κ → (ι→Ω) → ℝ) (hf : ∀ i∈S, Measurable (f i))\n    (hg : ∀ i∈S,∀ x y, (∀ j∈Z i,x j=y j) → f i x=f i y) :\n    (∫ u, ∏ i∈S,f i u ∂Measure.pi μ)= ∏ i∈S, ∫ u, f i u ∂Measure.pi μ := by\n  suffices H : ∀ V : Finset κ, V⊆ S → (∫ u, ∏ i∈V,f i u ∂Measure.pi μ)= ∏ i∈V, ∫ u,f i u ∂Measure.pi μ by\n    exact H S (Finset.Subset.refl _)\n  intro V; induction V using Finset.induction_on with\n  | empty => intro; simp\n  | @insert i v hi ih =>\n    intro hx\n    have hu := (subset_insert i v).trans hx; have hs : i∈ S := hx (mem_insert_self ..)\n    let Y := v.biUnion Z\n    simp_rw [prod_insert hi]; rw [← ih hu]; refine indexed_prod (caught μ (Z i)) (caught μ Y) (slide μ _ _ ?_) (replenish _) (replenish _)\n      (rmeas _) (rmeas _) (returns _) (returns _) (f:=f i) ?_ (g:=fun x=> ∏ j∈v,f j x) ?_\n      (hf _ hs) (Finset.measurable_fun_prod _ fun j hj=> hf _ (hu hj))\n    · refine Finset.disjoint_left.mpr fun z hz ha=> ?_\n      obtain ⟨j,hj,ha⟩ := mem_biUnion.mp ha\n      exact Finset.disjoint_left.mp (h hs (hu hj) fun H=>hi (H.symm ▸ hj)) hz ha\n    · exact fun x y hH=> hg _ hs x y fun j hj=> congr_fun hH ⟨j,hj⟩\n    exact fun x y hH=> prod_congr rfl fun j hj => hg _ (hu hj) x y fun i hk=> congr_fun hH ⟨i, mem_biUnion.mpr ⟨j,hj,hk⟩⟩",
+            "line": 44,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/VERIFIED_RESET_STEP/Trays.lean",
-            "fragment": "L35-L40"
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.PhysicalNext.Repeat.Song.stanzaReady",
-        "module": "YM.PhysicalNext.RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP.Song.Litho",
-        "lines": [
-          62,
-          71
-        ]
-      },
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.PhysicalNext.Repeat.Song.stanzaReady"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/Threads.lean",
+            "fragment": "L44-L62"
           },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Song/Litho.lean",
-            "fragment": "L62-L71"
+          "proof_context": {
+            "declaration": "YM.ConnectedActivityE6.Pond.marched",
+            "lines": [
+              44,
+              62
+            ],
+            "conclusion": "For factors depending on pairwise disjoint coordinate sets `Z i`, the integral of the product over `Measure.pi μ` equals the product of the integrals."
           }
         }
       }
@@ -106,8 +95,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge changed it from noMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
       }
     }
   }

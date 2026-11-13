@@ -1,49 +1,130 @@
 {
   "id": "Lemma 19.14 step 10",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[M] reuses the telescope display; Lean proves the product-difference bound `prod_drop` by induction on the factors.",
   "subject": [
     {
       "location": {
         "page": 232,
         "rect": [
           0.12026,
-          0.2531,
+          0.2535,
           0.75948,
-          0.0342
+          0.03466
         ]
       },
-      "title": "Lemma 19.14 step 10: Text, p. 232, not yet judged",
+      "title": "Lemma 19.14 step 10: Text, p. 232",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 19.14 step 10",
           "quads": [
             [
               0.26172,
-              0.2531,
+              0.2535,
               0.87975,
-              0.2531,
+              0.2535,
               0.87975,
-              0.27018,
+              0.27074,
               0.26172,
-              0.27018
+              0.27074
             ],
             [
               0.12026,
-              0.27021,
+              0.2706,
               0.54111,
-              0.27021,
+              0.2706,
               0.54111,
-              0.28731,
+              0.28816,
               0.12026,
-              0.28731
+              0.28816
             ]
           ]
         }
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Nesting.Composite.delta_nested",
+        "module": "YM.OPE.Nesting.PriceDrop",
+        "lines": [
+          55,
+          65
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Nesting.Composite.delta_nested"
+          },
+          "snippet": {
+            "text": "lemma delta_nested (h_y:∀ (j:Fin n) (p :Stage U R (boundNow (f j) (childAge j D)) (f j)),RateLE l T (nShot U R (f j) (down j z) (childWages j v) (childAge j D) p) (expense U R (a (Sum.inl ())) (childAge j a) (childWages j v) p))\n       (he:∀ (j:Fin n) (p :Stage U R (boundNow (f j) (childAge j D)) (f j)),RateLE l T (fun i=> flash U R (f j) (down j z) (childWages j v) p i - nShot U R (f j) (down j z) (childWages j v) (childAge j D) p i) (expense U R (a (Sum.inl ())) (childAge j a) (childWages j v) p - γ)):\n       RateLE l T (fun s=>hinge U R z v (rollCaps D) c s-stacked U R m c z v D s) (forkBill κ a v m-γ) := by\n          let z₁(j):= flash U R (f j) (down j z) (childWages j v) (n:=boundNow (f j) (childAge j D)); let z₂(j):= nShot U R (f j) (down j z) (childWages j v) (childAge j D)\n          let F(p:Branches U R (rollCaps D)) s := ((∏ i:Fin n,z₁ i (p i) s)-(∏ i:Fin n,z₂ i (p i) s)) * factor U R z v p c s\n          let χ:=forkBill κ a v m-γ\n          refine RateLE.congr (F:=fun i=>∑ p,F p i) (RateLE.sum (f:=F) (a:=χ) hT ?_) (Eventually.of_forall (fun i=> by unfold hinge stacked F; simp_rw [sub_mul,sum_sub_distrib]; rfl))\n          intro p hp\n          have hf:= prod_drop (γ:=γ) hT Finset.univ (fun i=>z₁ i (p i)) (fun i=>z₂ i (p i)) (fun i=>expense U R (a (Sum.inl ())) (childAge i a) (childWages i v) (p i)) (fun i _=> flash_rate U R (childWages i v) (hg.inside i) h hT (p i)) (fun i _=>h_y i (p i)) (fun j _=>he j (p j))\n          refine (hf.mul (factor_cost U R hg v h hT c p)).mono ?_\n          have h:=sum_fares_le U R hg v p m; unfold χ; unfold childExpense at h; linarith only [h]",
+            "line": 55,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Nesting/PriceDrop.lean",
+            "fragment": "L55-L65"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Nesting.Composite.delta_nested",
+            "lines": [
+              55,
+              65
+            ],
+            "conclusion": "Replacing each child's direct coefficient by its iterated one changes the hinge by at most `forkBill - γ`, using the child-wise difference bounds."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Nesting.Composite.prod_drop",
+        "module": "YM.OPE.Nesting.PriceDrop",
+        "lines": [
+          41,
+          48
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Nesting.Composite.prod_drop"
+          },
+          "snippet": {
+            "text": "lemma prod_drop {J:Type} (Z:Finset J)(x y:J→L→ℂ)(a:J→ℝ)(hx:∀j∈Z, RateLE l T (x j) (a j))(hy:∀j∈Z, RateLE l T (y j) (a j)) (he:∀ j∈Z,RateLE l T (fun i=> x j i - y j i) (a j-γ)) : RateLE l T (fun i=> (∏ j∈Z, x j i)-(∏ j∈Z,y j i)) ((∑ j∈Z,a j)-γ):=by\n    induction Z using Finset.induction with\n    | empty=>simp; exact RateLE.zero l T _\n    | @insert j t hj h=>\n       let X i:= (∏ j∈t,x j i); let Y i:=(∏ j∈t,y j i); let d:= ∑ i∈t,a i\n       let hxy:= h (fun i hi=>hx i (mem_insert_of_mem hi)) (fun i hi=>hy i (mem_insert_of_mem hi)) (fun i hi=>he i (mem_insert_of_mem hi))\n       let hX:=RateLE.prod (S:=t) hT (fun i hi=>hx i (mem_insert_of_mem hi))\n       simpa only [sum_insert hj,prod_insert hj] using ((((he _ (mem_insert_self _ _)).mul hX).mono (b:=a j+d - γ) (by dsimp only [d]; apply le_of_eq; ring)).add (((hy _ (mem_insert_self _ _)).mul hxy).mono (b:=a j + d - γ) (by dsimp only [d]; apply le_of_eq; ring)) hT|>.congr (Eventually.of_forall (fun i=> (show (x j i-y j i)*X i + (y j i)* (X i - Y i) =x j i*X i-y j i*Y i by ring))))",
+            "line": 41,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Nesting/PriceDrop.lean",
+            "fragment": "L41-L48"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Nesting.Composite.prod_drop",
+            "lines": [
+              41,
+              48
+            ],
+            "conclusion": "A difference of products with every factor bounded at `a j` and one difference gaining `γ` is bounded by `∑ a j - γ`, through the identity `(x-y)X + y(X-Y)`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -53,8 +134,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

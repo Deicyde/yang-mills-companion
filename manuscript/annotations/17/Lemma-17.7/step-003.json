@@ -1,7 +1,9 @@
 {
   "id": "Lemma 17.7 step 3",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean states the bound for the continued function at heights y with scale k (`broad y k`), while the manuscript states it for the eps-parametrized times; both are uniform in the point and the phase, but the parametrization of the small scale differs.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.12026,
           0.31498,
           0.75948,
-          0.01893
+          0.01869
         ]
       },
-      "title": "Lemma 17.7 step 3: Text, p. 199, not yet judged",
+      "title": "Lemma 17.7 step 3: Text, p. 199",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 17.7 step 3"
@@ -21,7 +23,47 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.power",
+        "module": "YM.EveryPhase.Pages",
+        "lines": [
+          19,
+          22
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.power"
+          },
+          "snippet": {
+            "text": "theorem power (n : ℕ) (v : Fin n → S.Union) : ∃ m : ℕ, ∃ C₀ : ℝ, 0≤C₀ ∧\n    ∀ i, ∀ (y : Heights n) (k : ℝ), k∈Ioc 0 1 → broad y k → ∀ x,\n    ‖(L.contours i).waves.restricted v y x‖ ≤ C₀*k⁻¹^m := by\n  obtain ⟨B,hB,-⟩ := (onFinal F).1.reveals",
+            "line": 19,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Pages.lean",
+            "fragment": "L19-L22"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.power",
+            "lines": [
+              19,
+              46
+            ],
+            "conclusion": "`power` bounds `‖restricted v y x‖` by `C₀ * k⁻¹^m` for every `x` and uniformly in the phase `i`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +73,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
       }
     }
   }

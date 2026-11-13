@@ -1,18 +1,18 @@
 {
   "id": "Lemma 13.4 step 30",
   "kind": "proof_step",
-  "status": "not_formalized",
-  "relation": "noMatch",
-  "note": "The key declarations and their helpers contain nothing that states this claim; they take the corresponding bounds as abstract hypotheses.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "`Poly.prod` is the coefficient convolution over disjoint selections, so repeated square-zero markers drop out, and `multiplication` gives price(ab) ≤ price(a)·price(b). The majorant is the weighted ℓ¹ `price`, not [M]'s tree-sum majorant.",
   "subject": [
     {
       "location": {
         "page": 94,
         "rect": [
           0.1198,
-          0.53337,
+          0.53424,
           0.76028,
-          0.05171
+          0.05122
         ]
       },
       "title": "Lemma 13.4 step 30: Text, p. 94",
@@ -22,9 +22,9 @@
           "quads": [
             [
               0.85023,
-              0.53337,
+              0.53424,
               0.88008,
-              0.53337,
+              0.53424,
               0.88008,
               0.55126,
               0.85023,
@@ -32,13 +32,13 @@
             ],
             [
               0.12026,
-              0.55127,
+              0.55183,
               0.87974,
-              0.55127,
+              0.55183,
               0.87974,
-              0.56756,
+              0.56843,
               0.12026,
-              0.56756
+              0.56843
             ],
             [
               0.1198,
@@ -46,9 +46,9 @@
               0.6116,
               0.56757,
               0.6116,
-              0.58508,
+              0.58546,
               0.1198,
-              0.58508
+              0.58546
             ]
           ]
         }
@@ -61,22 +61,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.AnalyticBridge.VerifiedReset.Collection.Local",
-        "module": "YM.AnalyticBridge.VERIFIED_RESET_STEP.Trays",
+        "declaration": "YM.Marker.Poly.prod",
+        "module": "YM.Marker.Console",
         "lines": [
-          35,
-          40
+          68,
+          68
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.AnalyticBridge.VerifiedReset.Collection.Local"
+            "id": "YM.Marker.Poly.prod"
+          },
+          "snippet": {
+            "text": "def prod (p q : Poly R) : Poly R := inject fun z => ∑ x, ∑ y, if merges x y z then part p x*part q y else 0",
+            "line": 68,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/VERIFIED_RESET_STEP/Trays.lean",
-            "fragment": "L35-L40"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Marker/Console.lean",
+            "fragment": "L68-L68"
+          },
+          "proof_context": {
+            "declaration": "YM.Marker.Poly.prod",
+            "lines": [
+              68,
+              68
+            ],
+            "conclusion": "The product on `Poly R` is the convolution of coefficients over selections `x,y` that `merges` (are disjoint, with union `z`), so repeated square-zero markers give no term."
           }
         }
       }
@@ -86,22 +100,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Ac.forest",
-        "module": "YM.Ac.Tree",
+        "declaration": "YM.Marker.Poly.multiplication",
+        "module": "YM.Marker.Weight",
         "lines": [
-          89,
-          127
+          139,
+          146
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Ac.forest"
+            "id": "YM.Marker.Poly.multiplication"
+          },
+          "snippet": {
+            "text": "lemma multiplication (a b : Poly R) : price w (a*b) ≤ price w a*price w b := by\n  unfold price\n\n  change price w (a*b) ≤ _\n  conv_lhs => rw [← studs a,← studs b,sum_mul]\n  apply le_trans (batch hw ..)\n  rw [sum_mul]; refine sum_le_sum fun i _ => ?_\n  rw [mul_sum,mul_sum]; exact (batch hw ..).trans (sum_le_sum fun j _ ↦ binary hw ..)",
+            "line": 139,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Ac/Tree.lean",
-            "fragment": "L89-L127"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Marker/Weight.lean",
+            "fragment": "L139-L146"
+          },
+          "proof_context": {
+            "declaration": "YM.Marker.Poly.multiplication",
+            "lines": [
+              139,
+              146
+            ],
+            "conclusion": "`price w (a*b) ≤ price w a * price w b` for the weighted ℓ¹ price: the product with the overlapping terms deleted does not exceed the product of the majorants."
           }
         }
       }
@@ -116,8 +144,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge changed it from noMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

@@ -1,7 +1,9 @@
 {
   "id": "Lemma 14.1 step 1",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "The odd nondecreasing stage ratios >= 3 with the log-cost requirements are `Large` and `exists_rolls`; the choices of K_j, C_j >= 64K_{j+1}^2, the column constants and 4K^2 <= C_{J_m} are not in [L].",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.04105
         ]
       },
-      "title": "Lemma 14.1 step 1: Text, pp. 124–125, not yet judged",
+      "title": "Lemma 14.1 step 1: Text, pp. 124–125",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 14.1 step 1#0"
@@ -30,7 +32,7 @@
           0.04292
         ]
       },
-      "title": "Lemma 14.1 step 1: Text, pp. 124–125, not yet judged",
+      "title": "Lemma 14.1 step 1: Text, pp. 124–125",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 14.1 step 1#1"
@@ -38,7 +40,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.Supply.Large",
+        "module": "YM.Price.Intent",
+        "lines": [
+          39,
+          48
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.Supply.Large"
+          },
+          "snippet": {
+            "text": "structure Large (p : Sheet G) (j : ℕ) (L : Side) : Prop where\n  odd : Odd L.val\n  size : 3 ≤ L.val\n  need : p.floorL j ≤ L.val\n  kick (hj : p.first ≤ j) : (p.profile j).drift / Real.log L.val ≤ G.slopeConstant/4\n  slow (hj : p.first ≤ j) : (p.profile j).drift / Real.log L.val ≤ ((j:ℝ)^2)⁻¹\n  fits (hj : p.first ≤ j) :\n    let X := p.profile j\n    Real.log (1 + X.paths + X.width⁻¹ + X.columns + X.clip.relaxation + X.supportExponent) /\n      Real.log L.val ≤ ((j:ℝ)^2)⁻¹",
+            "line": 39,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Price/Intent.lean",
+            "fragment": "L39-L48"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.Supply.Large",
+            "lines": [
+              39,
+              48
+            ],
+            "conclusion": "A stage ratio `L` is odd, at least 3, and satisfies the log-cost bounds `kick` (drift/log L ≤ slope/4), `slow` (≤ j⁻²) and `fits` (log of the stage constants / log L ≤ j⁻²)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.Supply.Rolls.exists_rolls",
+        "module": "YM.Price.Intent",
+        "lines": [
+          79,
+          84
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.Supply.Rolls.exists_rolls"
+          },
+          "snippet": {
+            "text": "theorem Rolls.exists_rolls (p : Sheet G) (h : G.Simple) : Nonempty (Rolls p) := by\n  choose C H using fun i => eventually_large p h i\n  let M := fun i => (range (i+1)).sup C\n  have hm : Monotone M := fun i j hij ↦ sup_mono (range_mono (by omega))\n  let L := fun i => (⟨2*M i+1, by omega⟩:Side)\n  exact ⟨⟨L,fun i ↦ H i _ (by change C i ≤ 2*M i+1; have H₀ : C i≤M i := le_sup (mem_range.mpr (by omega)); omega) ⟨_,rfl⟩,fun i j hij => by change 2*M i+1 ≤ 2*M j+1; have := hm hij; omega⟩⟩",
+            "line": 79,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Price/Intent.lean",
+            "fragment": "L79-L84"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.Supply.Rolls.exists_rolls",
+            "lines": [
+              79,
+              84
+            ],
+            "conclusion": "`exists_rolls` picks the ratios `L i = 2*M i+1`, odd, nondecreasing and large enough for each stage."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -49,8 +130,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

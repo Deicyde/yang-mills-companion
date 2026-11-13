@@ -1,19 +1,21 @@
 {
   "id": "Lemma 17.1 step 5",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] states the adjoint law under `S.Homogeneous` and the derivative law under the hypotheses of `Bid.B02`, in separate declarations. [M]'s Taylor-remainder induction is internal to `smooth_place` and `deriv_place`.",
   "subject": [
     {
       "location": {
         "page": 189,
         "rect": [
           0.12026,
-          0.27663,
+          0.27781,
           0.75982,
-          0.05447
+          0.05329
         ]
       },
-      "title": "Lemma 17.1 step 5: Text, p. 189, not yet judged",
+      "title": "Lemma 17.1 step 5: Text, p. 189",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 17.1 step 5"
@@ -21,7 +23,164 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OS.Spread.adjoints",
+        "module": "YM.OS.Slabs",
+        "lines": [
+          123,
+          136
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OS.Spread.adjoints"
+          },
+          "snippet": {
+            "text": "lemma adjoints {d} {u : L.Word} (h : Slab a d u) (hv : S.Homogeneous) :\n    (P.place d u).adjoint = P.place d (opposite a d u) := by\n  apply V.GNS.by_bud; intro x\n  refine V.GNS.whole.eq_of_inner_left ℂ fun f => ?_\n  rw [ContinuousLinearMap.adjoint_inner_left]\n  induction f using Finsupp.induction_linear with\n  | zero => simp\n  | add i j hi hj => simp only [map_add,inner_add_right,hi,hj]\n  | single i c =>\n    simp only [Kernel.Gram.stems,Finsupp.linearCombination_single,map_smul,\n      inner_smul_right,P.reads h _,P.reads (mirrorsSlab h) _,V.GNS.measure]\n    congr 1\n    -- lhs input intermediate earlier than counterpart; use reflect twice\n    rw [realignment (mirrorsSlab h) hv]; exact congr_arg (S.gram a _) (show _ from by simp [entering,linked])",
+            "line": 123,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OS/Slabs.lean",
+            "fragment": "L123-L136"
+          },
+          "proof_context": {
+            "declaration": "YM.OS.Spread.adjoints",
+            "lines": [
+              123,
+              136
+            ],
+            "conclusion": "The adjoint law `(place d u)† = place d (opposite a d u)` for homogeneous `S`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OS.Spread.concatenate",
+        "module": "YM.OS.Slabs",
+        "lines": [
+          118,
+          121
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OS.Spread.concatenate"
+          },
+          "snippet": {
+            "text": "lemma concatenate {d e} {u v : L.Word} (h : Slab a d u) (he : Slab a e v) :\n    P.place (d+e) (linked a d u v) = (P.place d u).comp (P.place e v) := by\n  apply V.GNS.by_bud; intro i\n  rw [ContinuousLinearMap.comp_apply,P.reads he,P.reads h, P.reads (connects h he),connected h he]",
+            "line": 118,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OS/Slabs.lean",
+            "fragment": "L118-L121"
+          },
+          "proof_context": {
+            "declaration": "YM.OS.Spread.concatenate",
+            "lines": [
+              118,
+              121
+            ],
+            "conclusion": "The product law `place (d+e) (linked a d u v) = place d u ∘ place e v`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.B02.answer",
+        "module": "YM.Work.B02",
+        "lines": [
+          17,
+          30
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.B02.answer"
+          },
+          "snippet": {
+            "text": "theorem answer : YM.Bid.B02 := by\n  intro G L S T P V A _ hT hr _ ht hD hb\n  constructor\n  · exact hb\n  · intro d n v\n    rw [show {x | Slab timeAxis d (realize v x)} = region timeAxis d n from\n      Set.ext fun x => in_region d v x]\n    exact smooth_place P A d ht hT.smooth hr hD hb v\n  intro d n v x p hx j\n  let b := (p,j)\n  change Analysis.D _ _ _ = A.place d (realize (nextLabels P v b) x)\n  unfold Analysis.D\n  rw [(deriv_place P A d ht hT.smooth hr hD hb v ((in_region d v x).1 hx)).fderiv]\n  exact columnD_column P A d v x b",
+            "line": 17,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/B02.lean",
+            "fragment": "L17-L30"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.B02.answer",
+            "lines": [
+              17,
+              30
+            ],
+            "conclusion": "The operator-norm derivative law and smoothness of `place` in the positions."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OS.Spread.Laws",
+        "module": "YM.OS.Slabs",
+        "lines": [
+          153,
+          162
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OS.Spread.Laws"
+          },
+          "snippet": {
+            "text": "structure Laws {B : Table L} (R : DiffPlan B) : Prop where\n  cap : P.AllCopy\n  regular (d : ℝ≥0) (n : ℕ) (v : Fin n → L.Token) :\n    ContDiffOn ℝ ∞ (fun x => P.place d (realize v x)) {x | Slab a d (realize v x)}\n  positional (d : ℝ≥0) (n : ℕ) (v : Fin n → L.Token) (x : Points n) (p : Fin n)\n      (h : Slab a d (realize v x)) (j : Axis) :\n    let i := (v p).1\n    Analysis.D (Points.direction p j) (fun y => P.place d (realize v y)) x =\n    P.place d (realize (Function.update v p ⟨i+1,B.representative _\n      (R.deriv i j (B.project i (v p).2))⟩) x)",
+            "line": 153,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OS/Slabs.lean",
+            "fragment": "L153-L162"
+          },
+          "proof_context": {
+            "declaration": "YM.OS.Spread.Laws",
+            "lines": [
+              153,
+              162
+            ],
+            "conclusion": "`Laws` bundles `regular` smoothness and the `positional` derivative law of `place`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +190,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

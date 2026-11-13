@@ -1,7 +1,9 @@
 {
   "id": "Lemma 13.18 step 8",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "The one-kernel contraction is the Lipschitz constant `soft` = 2⁻²⁰ in [L] instead of 1/16 ≤ 1/4; the trivial case δ_K = 0 is automatic for a Lipschitz map.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.11962,
           0.4764,
           0.76356,
-          0.03713
+          0.03768
         ]
       },
-      "title": "Lemma 13.18 step 8: Text, p. 116, not yet judged",
+      "title": "Lemma 13.18 step 8: Text, p. 116",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 13.18 step 8"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVExtension.Camp.Seal",
+        "module": "YM.UVExtension.Camp.Lights",
+        "lines": [
+          19,
+          22
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVExtension.Camp.Seal"
+          },
+          "snippet": {
+            "text": "structure Seal {A E:Type}[NormedAddCommGroup A][NormedSpace ℂ A][NormedAddCommGroup E][NormedSpace ℂ E] (H:A→E)(R:ℝ):Prop where\n   bumps : Bumps Grip H\n   rises (x:A) : x∈Grip→ ‖H x‖≤R\n   amounts (x:A): x∈Grip →∀ y∈Grip, ‖H x-H y‖ ≤ R*‖x-y‖",
+            "line": 19,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVExtension/Camp/Lights.lean",
+            "fragment": "L19-L22"
+          },
+          "proof_context": {
+            "declaration": "YM.UVExtension.Camp.Seal",
+            "lines": [
+              19,
+              22
+            ],
+            "conclusion": "Each step map has Lipschitz constant R on `Grip`, with R = `soft` for the activity maps and `worth (i+1)` for the scalar corrections."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVExtension.Camp.Cart",
+        "module": "YM.UVExtension.Camp.Lights",
+        "lines": [
+          23,
+          29
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVExtension.Camp.Cart"
+          },
+          "snippet": {
+            "text": "structure Cart where\n    headA : ℂ × X N → X N\n    car i : i<N → ℂ × X (i+1) → X i\n    gain i : i<N → ℂ × X (i+1) → ℂ\n    ace : Seal headA soft\n    cargo (i) (hi:i<N): Seal (car i hi) soft\n    coin i (hi:i<N): Seal (gain i hi) (worth T (i+1))",
+            "line": 23,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVExtension/Camp/Lights.lean",
+            "fragment": "L23-L29"
+          },
+          "proof_context": {
+            "declaration": "YM.UVExtension.Camp.Cart",
+            "lines": [
+              23,
+              29
+            ],
+            "conclusion": "A `Cart` has `Seal`s for `headA`, `car i` (constant `soft`) and `gain i` (constant `worth (i+1)`)."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents agreed on the class but cited different declarations; the mapper's kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

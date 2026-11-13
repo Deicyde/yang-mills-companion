@@ -1,7 +1,9 @@
 {
   "id": "Lemma 16.7 step 2",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The conjugated rescaled divergence is the chart `Z k` and convergence is stated entrywise on the kernel space to `currentDiv T.W a.spin p` rather than as operator convergence.",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.02347
         ]
       },
-      "title": "Lemma 16.7 step 2: Display, p. 182, not yet judged",
+      "title": "Lemma 16.7 step 2: Display, p. 182",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 16.7 step 2"
@@ -21,7 +23,47 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.UVStress.differential_rank",
+        "module": "YM.Next.UV_STRESS.Dimension",
+        "lines": [
+          176,
+          180
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.UVStress.differential_rank"
+          },
+          "snippet": {
+            "text": "  have he (v : KernelSpace a.spin) (i : Axis) : Tendsto (fun k => (Z k v).val i) atTop (𝓝 ((T₀ v).val i)) := by\n    have he (j : Axis) := Dash.arcing (bend_limit H hw a hh X 4 j hz) (tendsto_const_nhds (x:=v.val j i))\n    refine Tendsto.congr' (f₁:=fun k => ∑ j, tiltScale X W k 4 j (v.val j i)) ?_ (tendsto_finsetSum _ (fun j _ => he j))\n    filter_upwards [ha] with k hk; unfold Z; rw [dif_pos hk,chart_reads H a ho k _ _ _ hw]\n  have hs := stays_onto (E:=KernelSpace a.spin) (Y:=Vectors a.spin) Z T₀ hf.onto (fun x => tendsto_subtype_rng.mpr (tendsto_pi_nhds.mpr (he x)))",
+            "line": 176,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/UV_STRESS/Dimension.lean",
+            "fragment": "L176-L180"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.UVStress.differential_rank",
+            "lines": [
+              165,
+              195
+            ],
+            "conclusion": "`he` shows the entries of `Z k v` tend to those of `T₀ v` (the limit divergence), and `stays_onto` uses it."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +73,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
       }
     }
   }

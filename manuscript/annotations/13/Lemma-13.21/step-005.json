@@ -1,19 +1,21 @@
 {
   "id": "Lemma 13.21 step 5",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The Lean states the t^5 bound with an abstract constant `price G order power` and only for t below the abstract `threshold G order power`, while M's argument avoids smallness of links and writes C_j. The Taylor argument sits in `residual_price`, which these lines call, and the finite sum over plaquettes at an anchor carries an explicit overhead factor.",
   "subject": [
     {
       "location": {
         "page": 120,
         "rect": [
           0.11962,
-          0.3597,
+          0.35994,
           0.76059,
-          0.15688
+          0.15664
         ]
       },
-      "title": "Lemma 13.21 step 5: Text, p. 120, not yet judged",
+      "title": "Lemma 13.21 step 5: Text, p. 120",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 13.21 step 5"
@@ -21,7 +23,125 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.WilsonStartup.Start.accrual_fit",
+        "module": "YM.Extra.WILSON_STARTUP.Ink",
+        "lines": [
+          65,
+          67
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.WilsonStartup.Start.accrual_fit"
+          },
+          "snippet": {
+            "text": "theorem accrual_fit (i : Key n) (ht : b.threshold ≤ threshold G b.order b.power) : b.supBounds i.native i.skin (i.accrual (G:=G)) (item G b) := by\n  rw [Key.accrual_def,Key.skin_positive]\n  exact ((residual_price G b.order b.power).choose_spec.choose_spec.2.2.2 b rfl rfl ht n i.positive i.native (i.skin_positive ▸ i.native_mem))",
+            "line": 65,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/WILSON_STARTUP/Ink.lean",
+            "fragment": "L65-L67"
+          },
+          "proof_context": {
+            "declaration": "YM.WilsonStartup.Start.accrual_fit",
+            "lines": [
+              65,
+              67
+            ],
+            "conclusion": "Each regular accrual `i.accrual` has `supBounds` (healthy derivative bounds) by `item G b = price * b.threshold^5` when `b.threshold <= threshold G b.order b.power`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.WilsonStartup.Start.accrual_null",
+        "module": "YM.Extra.WILSON_STARTUP.Ink",
+        "lines": [
+          37,
+          42
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.WilsonStartup.Start.accrual_null"
+          },
+          "snippet": {
+            "text": "lemma accrual_null (i : Key n) (β : ℝ) : (β • i.accrual) (1:Config G n) = 0 ∧ ∀ x y,\n      logHessian (β • i.accrual (G:=G)) x y = 0 := by\n  rw [Key.accrual_def]; refine ⟨by simp [residual_one], fun x y => ?_⟩\n  change iteratedFDeriv ℝ 2 (β • (residual G i.positive ∘ increment 1)) 0 ![x,y] = 0\n  rw [iteratedFDeriv_const_smul_apply ((residual_smooth _ _).contDiffAt.of_le le_top),smul_apply]\n  exact (congr_arg (β • ·) (residual_hess i.positive x y)).trans (smul_zero ..)",
+            "line": 37,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/WILSON_STARTUP/Ink.lean",
+            "fragment": "L37-L42"
+          },
+          "proof_context": {
+            "declaration": "YM.WilsonStartup.Start.accrual_null",
+            "lines": [
+              37,
+              42
+            ],
+            "conclusion": "`beta` times the accrual vanishes at `1` and has zero `logHessian`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.WilsonStartup.Start.sum_items",
+        "module": "YM.Extra.WILSON_STARTUP.Ink",
+        "lines": [
+          93,
+          102
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.WilsonStartup.Start.sum_items"
+          },
+          "snippet": {
+            "text": "theorem sum_items (o : Site n) {y : ℝ} (hy : ‖β‖ ≤ y) (hc : c.direct ≤ 1) : (∑ i : Sheet n,\n      if (eInfo i).site = o then b.mass (eInfo i).support (i.elim (fun _ => ‖weight c β‖ * item G b) (fun _ => 0)) else 0) ≤ book G b y := by\n  rw [Fintype.sum_sum_type]; simp only [Sum.elim_inl,Sum.elim_inr,BudgetPoint.mass,mul_zero,ite_self,Finset.sum_const_zero, add_zero]\n  rw [Fintype.sum_prod_type]; simp_rw [Fintype.sum_prod_type (fun _ : Cell n => _)]\n  unfold book\n  rw [show (Fintype.card Signed:ℝ)*Fintype.card PlaqAxes*(overhead b*(y*item G b)) = ∑ _s : Signed, ∑ x : Site n,\n      ∑ _i : PlaqAxes, (if x=o then overhead b*(y*item G b) else 0) from by simp; ring]\n  gcongr ∑ _, ∑ _, ∑ _, ?_ with s _ x _ i _\n  change (if x=o then _ else _) ≤ _\n  split <;> first | exact mass_item (s,x,i) _ hy hc | exact le_rfl",
+            "line": 93,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/WILSON_STARTUP/Ink.lean",
+            "fragment": "L93-L102"
+          },
+          "proof_context": {
+            "declaration": "YM.WilsonStartup.Start.sum_items",
+            "lines": [
+              93,
+              102
+            ],
+            "conclusion": "At each anchor `o` the sum of the masses of the regular labels is at most `book G b y`, a finite sum with the cover overhead."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +151,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

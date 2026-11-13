@@ -1,7 +1,9 @@
 {
   "id": "Lemma 17.7 step 15",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean states the lower bound `c‖p‖` as a local uniform estimate (`Wide.cone`) and keeps the cutoff's bounded subtraction inside `Blanket` and the proof of holomorphy, rather than the decomposition through q_j. The arity-zero normalization is carried separately (`Outfield.soak`).",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.11962,
           0.19851,
           0.76357,
-          0.0887
+          0.08925
         ]
       },
-      "title": "Lemma 17.7 step 15: Text, p. 200, not yet judged",
+      "title": "Lemma 17.7 step 15: Text, p. 200",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 17.7 step 15"
@@ -21,7 +23,125 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Bid.Wide",
+        "module": "YM.Bid.Tar",
+        "lines": [
+          16,
+          18
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Bid.Wide"
+          },
+          "snippet": {
+            "text": "structure Wide (n : ℕ) : Prop where\n  rim p y : p∈coneM n → y∈shores n → 0 ≤ inner ℝ p y\n  cone (y : Points n) (p : y∈fields n) : ∃ c : ℝ,0<c ∧ ∀ᶠ u in 𝓝 y,∀ p∈coneM n,c * ‖p‖ ≤ inner ℝ p u",
+            "line": 16,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Bid/Tar.lean",
+            "fragment": "L16-L18"
+          },
+          "proof_context": {
+            "declaration": "YM.Bid.Wide",
+            "lines": [
+              16,
+              18
+            ],
+            "conclusion": "On `coneM n` the pairing with heights in `shores` is nonnegative and, locally uniformly at heights in `fields`, at least `c * ‖p‖`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Boundary.Blanket.Modified",
+        "module": "YM.Shift.Sol",
+        "lines": [
+          70,
+          72
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Boundary.Blanket.Modified"
+          },
+          "snippet": {
+            "text": "structure Modified : Prop where\n  actual : ∀ y ∈ shores n, HasTemperateGrowth (B.attenuate y)\n  seen (f : Joint n) : ContinuousOn (fun y => B.diffuser y f) (shores n)",
+            "line": 70,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Shift/Sol.lean",
+            "fragment": "L70-L72"
+          },
+          "proof_context": {
+            "declaration": "YM.Boundary.Blanket.Modified",
+            "lines": [
+              70,
+              72
+            ],
+            "conclusion": "The damping multipliers `attenuate y` have temperate growth and `diffuser y f` is continuous in `y` on `shores n` for every joint test."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Boundary.Surface.Aurora.FullBody",
+        "module": "YM.Shift.Sol",
+        "lines": [
+          118,
+          124
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Boundary.Surface.Aurora.FullBody"
+          },
+          "snippet": {
+            "text": "structure FullBody (F : Waves S) : Prop where\n  hol (n : ℕ) (v : Fin n → S.Union) : AnalyticOnNhd ℂ (X.emit v) (tube n)\n  builds (n : ℕ) (v : Fin n → S.Union) (y : Points n) (hy : y∈fields n) (f : Joint n) :\n    (D n).partialD (W.W n v) y f= ∫ x,X.emit v (glow x y) * f x\n  leaned (n : ℕ) (v : Fin n → S.Union) (y : Points n) (hy : y∈fields n) (f : Joint n) :\n    Integrable (fun x => X.emit v (glow x y) * f x)\n  pure (n : ℕ) (v : Fin n → S.Union) (x : Points n) (y : Heights n) (hp : y∈east n) : X.emit v (glow x (dawn y)) = F.restricted v y x",
+            "line": 118,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Shift/Sol.lean",
+            "fragment": "L118-L124"
+          },
+          "proof_context": {
+            "declaration": "YM.Boundary.Surface.Aurora.FullBody",
+            "lines": [
+              118,
+              124
+            ],
+            "conclusion": "`emit v` is holomorphic on `tube n`, its boundary pairing gives `partialD`, and at imaginary heights `emit v (glow x (dawn y)) = F.restricted v y x`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +151,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

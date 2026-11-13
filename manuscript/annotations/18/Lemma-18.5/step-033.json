@@ -1,7 +1,9 @@
 {
   "id": "Lemma 18.5 step 33",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "[L]'s smallness at this point is the `Tau` rate in `gainsK`, a different quantity from the explicit e^{-H_n/100}.",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.0223
         ]
       },
-      "title": "Lemma 18.5 step 33: Display, p. 212, not yet judged",
+      "title": "Lemma 18.5 step 33: Display, p. 212",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 18.5 step 33"
@@ -21,7 +23,47 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Trace.Terrace.gainsK",
+        "module": "YM.TraceExtension.Terrace.Arms",
+        "lines": [
+          26,
+          28
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Trace.Terrace.gainsK"
+          },
+          "snippet": {
+            "text": "lemma gainsK {C:Family G}(h:G.Simple)(θ:PostT C.path.levels)(K:Stock.Tabs C.path.levels) :∀ᶠ i:ℕ in atTop, Tau (C.path.levels) i 500 ≤ gainChart C.path (summit (C.path.levels) i) (basin _ K i):=by\n   filter_upwards [glacier _ h θ K] with i hi\n   apply Real.exp_monotone; norm_num; change _ ≤ 1/8 * gap C.path.levels (basin C.path.levels K i) (summit C.path.levels i); linarith only[hi, gate_le _ (C.path.levels.fits.delayed i)]",
+            "line": 26,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Terrace/Arms.lean",
+            "fragment": "L26-L28"
+          },
+          "proof_context": {
+            "declaration": "YM.Trace.Terrace.gainsK",
+            "lines": [
+              26,
+              28
+            ],
+            "conclusion": "Eventually `Tau A i 500 ≤ gainChart`, a gain bound by a power of `exp(loglog^2)` coming from the e^{gap/8} gain."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +73,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
       }
     }
   }

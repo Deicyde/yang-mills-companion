@@ -1,19 +1,21 @@
 {
   "id": "Lemma 19.8 step 9",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "`Under.pass_L` combines the incoming and local contributions through `Under.evens`, whose total cost is assumed by the `Runs` hypothesis; the masses p_l + A_l L, f_l, the real/imaginary splitting and 2p_l <= L, f_l <= L are not there.",
   "subject": [
     {
       "location": {
         "page": 227,
         "rect": [
           0.12026,
-          0.28078,
+          0.28117,
           0.75981,
-          0.13977
+          0.13938
         ]
       },
-      "title": "Lemma 19.8 step 9: Text, p. 227, not yet judged",
+      "title": "Lemma 19.8 step 9: Text, p. 227",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 19.8 step 9"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.MergeProof.Ribbons.ManyCopies.Under.pass_L",
+        "module": "YM.OPE.Sweep.Induct",
+        "lines": [
+          81,
+          88
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.MergeProof.Ribbons.ManyCopies.Under.pass_L"
+          },
+          "snippet": {
+            "text": "lemma Under.pass_L {W':J→ℝ}{c':V×J→ℂ} (hi:m ≤ i)(hh:i<j)(hc:Under A N p E (fun x=>o x ∘ (partialGroup V L).twig) P v B (fun x hx U=> Fibers.reap (partialGroup V L) (Q x hx U)) (i+1) (hh.trans_le hj) W' c') (hZ:Edition.Spaced (Y' i).B (o i ∘ (partialGroup V L).twig)) : Live A N p E (fun x=>o x ∘ (partialGroup V L).twig) P v B (fun x hx U=> Fibers.reap (partialGroup V L) (Q x hx U)) δ χ i (hh.le.trans hj) (fun j=>W' j/(L' i)^4) c':=by\n    let G:=(partialGroup V L).twig; have hr:(Γ).ratio.parent ∘ o (i+1) ∘ G=o i ∘ G:=by rw [← hE i hi hh]; rfl\n    have hz:Injective (o i ∘ G):=Edition.injected _ _ (Y' i|>.B_pos) hZ; have hX:Injective (o (i+1) ∘ G):= Injective.of_comp (f:=(Γ).ratio.parent) (hr.symm ▸ hz)\n    have hφ:0<L' i:=lt_of_lt_of_le zero_lt_two (size_enough A i)\n    refine Under.evens h ht (hm.trans hi) (hh.trans_le hj) hc (hp.mare i hi hh|>.symm) ((hΩ _ (hi.trans i.le_succ) hh).shrunk L) (repush _ (hΔ i hi hh) (hI _ (hi.trans i.le_succ) hh) L) (reap_live _ (hI _ (hi.trans i.le_succ) hh) L) hr (fun y=> (Occupancy.of_injective hX y).trans (hG i hi hh.le)) (fun y=>(Occupancy.of_injective hz y).trans (hG i hi hh.le)) (hD i hi hh) (by linarith only [size_enough A i]) ⟨fun _ _ i _ j _=>hZ i j⟩ hF (hx i hi hh) (fun b=>?_ ) (fun b=> div_pos (hc.width b) (by positivity))\n    rw [← mul_div_assoc]; apply (div_le_iff₀ (by positivity)).2\n    rw [pow_succ, mul_comm (6*L' i)]; apply mul_le_mul_of_nonneg_left _ (hc.width b|>.le); refine mul_le_mul_of_nonneg_right ?_ hφ.le; calc _  ≤  (2:ℝ)^3:=by norm_num\n                                                                                                                                                _  ≤  _:=pow_le_pow_left₀ zero_le_two (size_enough A i) _",
+            "line": 81,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Sweep/Induct.lean",
+            "fragment": "L81-L88"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.Ribbons.ManyCopies.Under.pass_L",
+            "lines": [
+              81,
+              88
+            ],
+            "conclusion": "`Under.pass_L` combines the incoming and local contributions into the new `Live` width bound."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.MergeProof.Ribbons.ManyCopies.Under.evens",
+        "module": "YM.OPE.Sweep.Step",
+        "lines": [
+          58,
+          79
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.MergeProof.Ribbons.ManyCopies.Under.evens"
+          },
+          "snippet": {
+            "text": "lemma Under.evens (hi:k ≤ i)(hn:i<N) (hc:Under A N p E o P v B Q (i+1) hn W c)\n    (hf: E (i+1)=fun j=>(Γ).ratio.embed (E i j))\n    (hb:∀ j,j≠v→∀ b:I,o (i+1) (j,b)=affine (P j).1 (E (i+1) j) (o (i+1) (v,b)))\n    (hΔ: Q i hn.le=(Γ).push (R (i+1)).beta (Q (i+1) hn))\n    (hp:Integrable (Q (i+1) hn) (prior G _))\n    (hx: (Γ).ratio.parent ∘ o (i+1)=o i) (hV: Occupancy (o (i+1)) (r i)) (hg:Occupancy (o i) (r i))\n    (hY: MergeProof.Float.Runs (D N p i hn) Γ x)\n    (he:x ≥ 1)\n    (hJ:Drake (Names V I) (Y' i).B (o i)) (hF:Brine A k δ φ)(hy:φ i≤1) (hw:∀ j,x * W' j ≤ W j) (hW:∀ j,0<W' j): Live A N p E o P v B Q δ χ i hn.le W' c:=by\n    have ha(j:I):W' j ≤ W j:= (le_mul_of_one_le_left (hW j|>.le) he).trans (hw j)\n    obtain ⟨g,K,hb',hd,he',hR⟩:=hc.flor; have hA:= ht.suns i hi; obtain ⟨hK,hh⟩:=ht.moon N p i hi hn\n    let d(b:I):=(1:ℝ)/(2*W b); have hv(j:V×I):2*(W ∘ Prod.snd) j*d j.snd ≤1:= by change 2*W j.2*(1/(2*W j.2))≤1; rw [mul_div_cancel₀ _ (by have he:= hc.width j.2; positivity)];\n    obtain ⟨g',F,hG,hF',hφ,hC,hU⟩:= flaring A r h hn hA hK hh (fun (j:V×I)=>hc.width j.2) (hf ▸ hR) (by linarith only) hV (hx.symm ▸ hg) (fun _ _ _=>rfl) (fun j hj b=> by rw [show _=E (i+1) j from (congr_fun hf j).symm]; exact hb j hj b) (hf ▸ he') hd hb' hv hY (zero_le_one.trans he) hp\n    have hPeg : Repegs (o i) (Y' i).B (fun j=>δ i*(W ∘ Prod.snd) j) (W' ∘ Prod.snd) (1/2) 1 (Names V I):=by\n       apply hJ.palms (fun j=>?_ ) (fun j=>hW j.2) (fun j=> mul_pos hA.hats.1 (hc.width j.2)) (hF.support _ hi); have hz := (hc.width j.2).le\n       let u:= mintK (Y' i).B; have ht': 1 ≤ δ i*u := (hF.mint i hi).trans (mul_le_mul_of_nonneg_right (mul_le_of_le_one_right hA.hats.1.le hy) (show 0≤u from (Real.exp_pos _).le))\n       refine (ha j.snd).trans ((le_mul_of_one_le_right hz ht').trans_eq ?_); unfold u; ring\n    have hT:=descended A N i p r h hn hA (fun j=>hc.width j.2) (fun j=>hW j.2) (hx.symm ▸ hg) (hx.symm ▸ hPeg) hU hG hF'\n    rw [hx,← hΔ] at hU hT\n    have hA' j: W' j.2*‖c j‖≤1:= (mul_le_mul_of_nonneg_right (ha _) (norm_nonneg _)).trans (hc.affordable j)\n    refine ⟨⟨hW,hA',g',F,fun j=>?_ ,hG,hφ,hT⟩,g',F,hU.reprice (fun j=>mul_le_mul_of_nonneg_left (ha _) hA.hats.1.le) (fun j=> mul_nonneg hA.hats.1.le (hW _|>.le))⟩\n    have hv:=hC j; rw [hx] at hv; apply hv.more; change x*(1/(2*W j)) ≤ 1/(2*W' j); rw [← mul_div_assoc]; have hP:=hc.width j; have ht:=hW j; exact (div_le_div_iff₀ (by positivity) (by positivity)).mpr (by linarith only [hw j])",
+            "line": 58,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Sweep/Step.lean",
+            "fragment": "L58-L79"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.Ribbons.ManyCopies.Under.evens",
+            "lines": [
+              58,
+              79
+            ],
+            "conclusion": null
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

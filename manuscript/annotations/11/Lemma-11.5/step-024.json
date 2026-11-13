@@ -1,7 +1,9 @@
 {
   "id": "Lemma 11.5 step 24",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean's thresholds `C ≤ l` and `m*B ≤ L^2` are existential constants in place of zeta^0 = C + 2 and l^2 >= zeta_j C^tr, and the lower bound is an abstract eta rather than c.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.11962,
           0.20941,
           0.76258,
-          0.10913
+          0.10842
         ]
       },
-      "title": "Lemma 11.5 step 24: Text, p. 53, not yet judged",
+      "title": "Lemma 11.5 step 24: Text, p. 53",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 11.5 step 24"
@@ -21,7 +23,164 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Free.Flight.absorb_before",
+        "module": "YM.Next.FREE_KERNELS.Eject",
+        "lines": [
+          58,
+          61
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Free.Flight.absorb_before"
+          },
+          "snippet": {
+            "text": "lemma absorb_before : ∃ C B : ℝ, 0<C ∧ 0<B ∧ ∀ (l m : ℝ), 0 ≤ m → C ≤ l →\n    ∀ (P : Flight j t), m*B ≤ (P.L.val:ℝ)^2 → ∀ p : Momentum, physical p →\n      IsHermitian ((render K.penalty m l P).read p) ∧ ∀ x,\n        sqLength x ≤ pairingRe ((render K.penalty m l P).read p) x x := by",
+            "line": 58,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/Eject.lean",
+            "fragment": "L58-L61"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Free.Flight.absorb_before",
+            "lines": [
+              58,
+              95
+            ],
+            "conclusion": "There are C, B with `C ≤ l` and `m * B ≤ L^2` such that `render` is Hermitian with `render >= I` at real momenta."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Free.Flight.netted",
+        "module": "YM.Next.FREE_KERNELS.Eject",
+        "lines": [
+          34,
+          36
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Free.Flight.netted"
+          },
+          "snippet": {
+            "text": "lemma netted : Stock (fee (t:=t) (j:=j) 2) (α:=fun _ => TypeFace 3) (β:=fun _ => TypeFace 3)\n    (fun P : Flight j t => net (P.sale K.penalty) (P.sale K.penalty)) := by\n  have hh := budget_sale K.penalty K.penalty_pos hj ht",
+            "line": 34,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/Eject.lean",
+            "fragment": "L34-L36"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Free.Flight.netted",
+            "lines": [
+              34,
+              41
+            ],
+            "conclusion": "`net sale sale` has a strip bound with the factor `fee 2` (order L^{-2}), the bound ‖S_0‖^2 ≤ C/l^2."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Free.Flight.funded",
+        "module": "YM.Next.FREE_KERNELS.Sell",
+        "lines": [
+          71,
+          72
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Free.Flight.funded"
+          },
+          "snippet": {
+            "text": "lemma funded : Guide (fund (j:=j) (t:=t) k) := by\n  have h := invested k hk hj ht; exact (h.plus h.flipped).weight _",
+            "line": 71,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/Sell.lean",
+            "fragment": "L71-L72"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Free.Flight.funded",
+            "lines": [
+              71,
+              72
+            ],
+            "conclusion": "`fund` (F_0) has a uniform strip bound."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Free.Flight.frontier",
+        "module": "YM.Next.FREE_KERNELS.Eject",
+        "lines": [
+          99,
+          101
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Free.Flight.frontier"
+          },
+          "snippet": {
+            "text": "lemma frontier : ∃ C B : ℝ, 0<C ∧ 0<B ∧ ∀ (l m : ℝ), 0≤m → C≤l → ∃ η σ D : ℝ,\n    0<η ∧ 0<σ ∧ 0<D ∧ ∀ P : Flight j t, (rollFunds K.penalty m l P).strip σ D ∧\n    (m*B ≤ (P.L.val:ℝ)^2 → Funds (rollFunds K.penalty m l P) η D) := by",
+            "line": 99,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/Eject.lean",
+            "fragment": "L99-L101"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Free.Flight.frontier",
+            "lines": [
+              99,
+              140
+            ],
+            "conclusion": "Under `m B ≤ L^2` and `C ≤ l`, `rollFunds` has a strip bound and `Funds` with a lower bound eta I and upper bound D, uniform in the history."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +190,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

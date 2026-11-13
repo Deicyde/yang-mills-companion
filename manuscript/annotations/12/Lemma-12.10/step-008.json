@@ -1,7 +1,9 @@
 {
   "id": "Lemma 12.10 step 8",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] gives the bound as hypothesis `early` with the abstract price `funds/4` standing for `c_pre ε/4`, and applies `preBound` at `1` and at `V` in `value_income`.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.11962,
           0.3633,
           0.76012,
-          0.03713
+          0.03831
         ]
       },
-      "title": "Lemma 12.10 step 8: Text, p. 88, not yet judged",
+      "title": "Lemma 12.10 step 8: Text, p. 88",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 12.10 step 8"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVNext.CouplingReset.Prereset",
+        "module": "YM.UVNext.COUPLING_RESET.Regular",
+        "lines": [
+          53,
+          55
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVNext.CouplingReset.Prereset"
+          },
+          "snippet": {
+            "text": "structure Prereset (B : Directed G I Z K P) (q : ResetPrices) (s : Set ℝ) (N m p : ℕ) (Q : In B.a m p)\n    (u : ℝ → ℝ) (S : ℝ → Activities G (B.a.S.side m p)) : Prop where\n  early x : x ∈ s → (S x).EBound (B.a.budget m) (funds B.a m q / 4)",
+            "line": 53,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/COUPLING_RESET/Regular.lean",
+            "fragment": "L53-L55"
+          },
+          "proof_context": {
+            "declaration": "YM.UVNext.CouplingReset.Prereset",
+            "lines": [
+              53,
+              59
+            ],
+            "conclusion": "`early`: the preparatory activities satisfy `EBound` with bound `funds B.a m q / 4`, i.e. `c_pre ε/4` per site."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVNext.CouplingReset.preBound",
+        "module": "YM.UVNext.COUPLING_RESET.Regular",
+        "lines": [
+          26,
+          38
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVNext.CouplingReset.preBound"
+          },
+          "snippet": {
+            "text": "lemma preBound {P : BudgetPoint} {S : Activities G n} {δ : ℝ} (h : S.EBound P δ)\n    {V : Config G n} (hV : flags P.threshold V = ∅) : |S.additive P V| ≤ sites n * δ := by\n  obtain ⟨b,hb,hx⟩ := h\n  let q (x : Site n) i := if (S.reg i).site = x then P.mass (S.reg i).support (b i) else 0\n  have hq x : Summable (q x) := (hx x).2.1\n  have hs := summable_sum (s:=Finset.univ) (fun x _ => hq x)\n  have he i : ‖S.regularOccurrence P i V‖ ≤ ∑ x, q x i := by\n    have hh : Healthy P.threshold (S.reg i).support V := by simp [Healthy,hV]\n    simp only [q, Finset.sum_ite_eq, Finset.mem_univ, if_true, regularOccurrence,masked_eq _ _ _ _ hh]\n    exact ((hb i).2 _ hh [] (Nat.zero_le _) (by simp)).trans (P.loMass _ _ (hb i).1)\n  have ht := hs.of_nonneg_of_le (fun i => norm_nonneg _) he\n  refine (norm_tsum_le_tsum_norm ht).trans ((ht.tsum_le_tsum he hs).trans ?_)\n  rw [Summable.tsum_finsetSum fun x _ => hq x]; simpa [sites] using Finset.sum_le_sum (s:=Finset.univ) fun x _ => (hx x).2.2",
+            "line": 26,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/COUPLING_RESET/Regular.lean",
+            "fragment": "L26-L38"
+          },
+          "proof_context": {
+            "declaration": "YM.UVNext.CouplingReset.preBound",
+            "lines": [
+              26,
+              38
+            ],
+            "conclusion": "An `EBound δ` family has `|additive V| <= sites n * δ` on flag-free `V`, with no vanishing needed at `1`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

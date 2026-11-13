@@ -1,7 +1,9 @@
 {
   "id": "Lemma 11.5 step 33",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean fixes one common width through `MapPrices` and takes minima in `bid_bed`; rectangular kernels are `Row α β` with finite index types.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.12026,
           0.70163,
           0.75948,
-          0.03711
+          0.03768
         ]
       },
-      "title": "Lemma 11.5 step 33: Text, p. 53, not yet judged",
+      "title": "Lemma 11.5 step 33: Text, p. 53",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 11.5 step 33"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Precision.Horizon.Suffices",
+        "module": "YM.PREC.Stacks",
+        "lines": [
+          132,
+          139
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Precision.Horizon.Suffices"
+          },
+          "snippet": {
+            "text": "structure Suffices (M : Horizon a) (P : MapPrices) : Prop where\n  rows N m : m ≤ N → (M.H N m).covered (P.α (a.clock.J m)) (P.Ω (a.clock.J m))\n  /-- Require every torus here; binit constructs UNIVERSAL. -/\n  all N m : m ≤ N → ∀ n, Floor (M.H N m) (a.params m).clip n (P.η (a.clock.J m)) (P.Ω (a.clock.J m))\n  costs N m : m < N → (M.towers N m).Deep (P.α (a.clock.J (m+1))) (P.Ω (a.clock.J (m+1))) (a.clock.J (m+1)-2)\n  crossings N m p : m < N → Towers.Diagonal (a.clock.op m p) (M.H N (m+1)) (M.H N m) (M.towers N m)\n  stack N m p : m < N → Towers.Roll (a.clock.op m p) (M.H N (m+1)) (M.H N m) (M.towers N m) (a.params (m+1)).clip (a.params m).clip\n  top N : ∀ n, (M.H N N).diagonal.acts n=1",
+            "line": 132,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PREC/Stacks.lean",
+            "fragment": "L132-L139"
+          },
+          "proof_context": {
+            "declaration": "YM.Precision.Horizon.Suffices",
+            "lines": [
+              132,
+              139
+            ],
+            "conclusion": "One width `P.alpha (J m)` serves for the metric rows, floors (roots), towers (A0, T) and crossings at each level."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Free.bid_bed",
+        "module": "YM.Next.FREE_KERNELS.Ground",
+        "lines": [
+          69,
+          72
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Free.bid_bed"
+          },
+          "snippet": {
+            "text": "lemma bid_bed (k l : ℝ) (hk : 0<k) (hl : 0≤l) (hj : 4≤j) :\n    ∃ γ σ v C : ℝ, 0<γ ∧ 0<σ ∧ 0<v ∧ 0<C ∧\n      ∀ (A : RG.Clip), A.direct ≤ γ → ∀ R : Train j, ∃ M : Bed, Defined k l R M ∧\n        M.covered σ C ∧ (∀ n, Floor M A n v C) ∧ (∀ n G, Bid.Sworn M n G) ∧",
+            "line": 69,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/Ground.lean",
+            "fragment": "L69-L72"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Free.bid_bed",
+            "lines": [
+              69,
+              120
+            ],
+            "conclusion": "The common width `sigma = min ...` is taken below the widths of the individual pieces."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

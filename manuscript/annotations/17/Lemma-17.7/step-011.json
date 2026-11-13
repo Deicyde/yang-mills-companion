@@ -1,7 +1,9 @@
 {
   "id": "Lemma 17.7 step 11",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean's support set is `coneM n`, defined as the intersection over Lorentz maps of the half-space conditions on tail sums, not literally the set V_n of the step. The two coincide, but the equality is not stated.",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.04007
         ]
       },
-      "title": "Lemma 17.7 step 11: Text, p. 199, not yet judged",
+      "title": "Lemma 17.7 step 11: Text, p. 199",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 17.7 step 11"
@@ -21,7 +23,125 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Bid.C06",
+        "module": "YM.Bid.Corners",
+        "lines": [
+          65,
+          66
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Bid.C06"
+          },
+          "snippet": {
+            "text": "def C06 : Prop := ∀ {G : Gauge} {L : Register G} (S T : Table L) (F : Waves S) (W : Surface S),\n    F.Region T → F.Breathes → F.Bounds → F.during W → W.cone_tests",
+            "line": 65,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Bid/Corners.lean",
+            "fragment": "L65-L66"
+          },
+          "proof_context": {
+            "declaration": "YM.Bid.C06",
+            "lines": [
+              65,
+              66
+            ],
+            "conclusion": "From `Region`, `Breathes`, `Bounds` and `during`, the Fourier support of every `W.W n v` lies in `half n` (`cone_tests`)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Boundary.tents",
+        "module": "YM.Shift.Closing",
+        "lines": [
+          106,
+          107
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Boundary.tents"
+          },
+          "snippet": {
+            "text": "lemma tents (W : Surface S) (K : Spins S) (h : Urs W K) (hv : ∀ (v : Fin n → S.Union), dsupport (Distn.fourier (W.W n v)) ⊆ half n) (p : Fin n → S.Union) :\n    dsupport (Distn.fourier (W.W n p)) ⊆ coneM n := by",
+            "line": 106,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Shift/Closing.lean",
+            "fragment": "L106-L107"
+          },
+          "proof_context": {
+            "declaration": "YM.Boundary.tents",
+            "lines": [
+              106,
+              121
+            ],
+            "conclusion": "With `Urs W K`, support in `half n` for all labels gives support in `coneM n`, the intersection of the Lorentz-transformed half-spaces."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Bid.cones",
+        "module": "YM.Bid.Tar",
+        "lines": [
+          39,
+          39
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Bid.cones"
+          },
+          "snippet": {
+            "text": "def cones (W : Surface S) := ∀ n (v : Fin n → S.Union), dsupport (Distn.fourier (W.W n v)) ⊆ coneM n",
+            "line": 39,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Bid/Tar.lean",
+            "fragment": "L39-L39"
+          },
+          "proof_context": {
+            "declaration": "YM.Bid.cones",
+            "lines": [
+              39,
+              39
+            ],
+            "conclusion": "`cones W` states `dsupport (Distn.fourier (W.W n v)) ⊆ coneM n` for all `n`, `v`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +151,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

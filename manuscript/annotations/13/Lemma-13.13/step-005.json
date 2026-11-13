@@ -1,19 +1,21 @@
 {
   "id": "Lemma 13.13 step 5",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "`uniform_activities` gives continuity uniform in U for the regular sum and gas with fixed inventories; continuity of the density is only pointwise in U (`continuous_eval`), not uniform as [M] claims.",
   "subject": [
     {
       "location": {
         "page": 108,
         "rect": [
           0.11962,
-          0.75534,
+          0.75528,
           0.76012,
-          0.07059
+          0.07104
         ]
       },
-      "title": "Lemma 13.13 step 5: Text, p. 108, not yet judged",
+      "title": "Lemma 13.13 step 5: Text, p. 108",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 13.13 step 5"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Push.BetaTransport.FixedRepData.uniform_activities",
+        "module": "YM.Push.BETA_TRANSPORT.Curve",
+        "lines": [
+          72,
+          74
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Push.BetaTransport.FixedRepData.uniform_activities"
+          },
+          "snippet": {
+            "text": "lemma uniform_activities (hc : StableActivities P T s) {x : ℝ} (hx : x ∈ s) (ε : ℝ) (he : 0 < ε) :\n    ∀ᶠ y in 𝓝[s] x, ∀ U, ‖(T x).activities.additive P U - (T y).activities.additive P U‖ < ε ∧\n      ‖(T x).activities.gas P U - (T y).activities.gas P U‖ < ε := by",
+            "line": 72,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/BETA_TRANSPORT/Curve.lean",
+            "fragment": "L72-L74"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.BetaTransport.FixedRepData.uniform_activities",
+            "lines": [
+              72,
+              87
+            ],
+            "conclusion": "Eventually along the curve, the additive (regular sum) and gas differ by less than epsilon uniformly in U, using fixed `forced` and `reg`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Push.BetaTransport.FixedRepData.continuous_eval",
+        "module": "YM.Push.BETA_TRANSPORT.Curve",
+        "lines": [
+          93,
+          97
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Push.BetaTransport.FixedRepData.continuous_eval"
+          },
+          "snippet": {
+            "text": "lemma continuous_eval (hc : Curve P T s) (U : Config G n) : ContinuousOn (fun x => (T x).eval U) s := by\n  have ⟨ha,hb⟩ := h.continuous_activities (curve_stable hc) U\n  refine ContinuousOn.congr (((hc.v.mul (continuousOn_const (c:=(Fintype.card (Site n):ℝ))) |>.sub\n    (hc.beta.mul (continuousOn_const (c:=kinetic D A P U)) |>.add (continuousOn_const (c:=D.inChannels A P 0 U)))).sub ha).rexp.mul hb) (fun x hx => ?_)\n  rw [Rep.eval, h.exponent_eq hx,h.budget x hx]; rfl",
+            "line": 93,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/BETA_TRANSPORT/Curve.lean",
+            "fragment": "L93-L97"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.BetaTransport.FixedRepData.continuous_eval",
+            "lines": [
+              93,
+              97
+            ],
+            "conclusion": "The density `eval U` is continuous along a `Curve`, since its exponent is affine in beta."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

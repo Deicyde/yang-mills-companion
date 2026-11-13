@@ -1,7 +1,9 @@
 {
   "id": "Lemma 19.1 step 18",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The same bounds `r_m ≤ 2(1+C_m)q_fin` and `r_m+μ ≤ 4(1+C_m)q_fin` follow with `q_fin` read as `w`; the discount is `gainChart = exp((scale_k - scale_i)/8)` and the iteration is a decreasing induction on `cone_step`, not the substitution into the signed-input inequality.",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.09379
         ]
       },
-      "title": "Lemma 19.1 step 18: Text, p. 220, not yet judged",
+      "title": "Lemma 19.1 step 18: Text, p. 220",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 19.1 step 18"
@@ -21,7 +23,164 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.G09.cost_finest",
+        "module": "YM.Work.G09",
+        "lines": [
+          210,
+          222
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.G09.cost_finest"
+          },
+          "snippet": {
+            "text": "theorem cost_finest {W : Worth} {H : History G} (hC : roomCost H.levels W) (hbank : Bank W H.levels)\n    {F : Labels.Frame G d} {B : SectionData F} {A : Hol G} {N p k o : ℕ}\n    {P : Duet H F N p k o} {w : ℝ} (hP : Duet.Woke P A W B w) :\n    P.cost o ≤ 2*(1+(H.levels.params o).columns)*w := by\n  have hh := (cone_cost hC hbank hP o hP.basic.1 le_rfl).1\n  let C := (H.levels.params o).columns\n  have he : 2*C * F.coeffSize (P.voice o).x ≤ P.cost o := by\n    have hm : 2*C ≤ 32*(1+C)^2 := by\n      have hp : 1 ≤ C := (H.levels.params o).columns_ge\n      nlinarith only [hp, sq_nonneg C]\n    exact (mul_le_mul_of_nonneg_right hm (coeff_nonneg F _)).trans hh\n  dsimp only [C] at he\n  linarith only [he, hP.spread]",
+            "line": 210,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/G09.lean",
+            "fragment": "L210-L222"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.G09.cost_finest",
+            "lines": [
+              210,
+              222
+            ],
+            "conclusion": "`cost_finest` gives `cost o ≤ 2*(1+C_o)*w` from the cone `2C*size ≤ cost` and `spread`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.G09.cone_cost",
+        "module": "YM.Work.G09",
+        "lines": [
+          183,
+          207
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.G09.cone_cost"
+          },
+          "snippet": {
+            "text": "theorem cone_cost {W : Worth} {H : History G} (hC : roomCost H.levels W) (hbank : Bank W H.levels)\n    {F : Labels.Frame G d} {B : SectionData F} {A : Hol G} {N p k o : ℕ}\n    {P : Duet H F N p k o} {w : ℝ} (hP : Duet.Woke P A W B w)\n    (i : ℕ) (hi : k ≤ i) (hi' : i ≤ o) :\n    32*(1+(H.levels.params i).columns)^2 * F.coeffSize (P.voice i).x ≤ P.cost i ∧\n    gainChart H o i * P.cost i ≤ P.cost o := by\n  have cone (m : ℕ) (hm : k ≤ m) : m ≤ o →\n      32*(1+(H.levels.params m).columns)^2 * F.coeffSize (P.voice m).x ≤ P.cost m := by\n    induction m, hm using Nat.le_induction with\n    | base =>\n      intro hko\n      have hn : 0 ≤ P.cost k := by\n        obtain ⟨a,b,ha,hb,hab,-⟩ := (hP.origin k le_rfl hko).2\n        exact (add_nonneg ha hb).trans hab\n      simpa [hP.pairing, Labels.Frame.coeffSize] using hn\n    | succ m hm ih =>\n      intro hh\n      exact (cone_step hC hbank (hP.funds m hm hh) (ih (by omega))).1\n  refine ⟨cone i hi hi', ?_⟩\n  induction hi' using Nat.decreasingInduction with\n  | self => simp [gainChart]\n  | of_succ j hj ih =>\n    rw [gain_step, mul_assoc]\n    have ha := (cone_step hC hbank (hP.funds j hi hj) (cone j hi hj.le)).2\n    exact le_trans (mul_le_mul_of_nonneg_left ha (Real.exp_pos _).le) (ih (by omega))",
+            "line": 183,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/G09.lean",
+            "fragment": "L183-L207"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.G09.cone_cost",
+            "lines": [
+              183,
+              207
+            ],
+            "conclusion": "The cone and the discounted chain `gainChart H o i * cost i ≤ cost o`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Bid.G09",
+        "module": "YM.Bid.Loan",
+        "lines": [
+          134,
+          137
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Bid.G09"
+          },
+          "snippet": {
+            "text": "def G09 : Prop := ∀ {G : Gauge} (W : Worth) (H : History G), roomCost H.levels W → Bank W H.levels →\n    ∀ (N p d k o : ℕ) (F : Labels.Frame G d) (B : SectionData F) (A : Hol G), ∀ P : Duet H F N p k o, ∀ w : ℝ,0≤ w → Duet.Woke P A W B w →\n    ∀ i : ℕ, k ≤ i → i ≤ o →\n      gainChart H o i*(P.cost i+F.coeffSize (P.voice i).x) ≤ 4*(1+(H.levels.params o).columns)*w",
+            "line": 134,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Bid/Loan.lean",
+            "fragment": "L134-L137"
+          },
+          "proof_context": {
+            "declaration": "YM.Bid.G09",
+            "lines": [
+              134,
+              137
+            ],
+            "conclusion": "`gainChart H o i * (cost i + size (voice i).x) ≤ 4*(1+C_o)*w` for every `i` in `[k, o]`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Bid.Duet.Woke",
+        "module": "YM.Bid.Loan",
+        "lines": [
+          126,
+          127
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Bid.Duet.Woke"
+          },
+          "snippet": {
+            "text": "  spread :\n    P.cost m ≤ w+(H.levels.params m).columns * (w+F.coeffSize (P.voice m).x)",
+            "line": 126,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Bid/Loan.lean",
+            "fragment": "L126-L127"
+          },
+          "proof_context": {
+            "declaration": "YM.Bid.Duet.Woke",
+            "lines": [
+              115,
+              127
+            ],
+            "conclusion": "`spread`: `cost m ≤ w + C_m*(w + size (voice m).x)` is the bound `r_m ≤ (1+C_m)q_fin + C_mμ(x_m)`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +190,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

@@ -1,18 +1,18 @@
 {
   "id": "Lemma 14.5 step 16",
   "kind": "proof_step",
-  "status": "not_formalized",
-  "relation": "noMatch",
-  "note": "The Lean local step is a hypothesis and contains no Taylor extraction or discussion of indicator differentiation.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "`computed` reads the Taylor label from smoothness at a healthy chart; that the indicators are never differentiated is only implicit in `rebate` applying the mask outside, not established by any lines.",
   "subject": [
     {
       "location": {
         "page": 130,
         "rect": [
           0.12026,
-          0.36314,
+          0.36306,
           0.75948,
-          0.03459
+          0.03522
         ]
       },
       "title": "Lemma 14.5 step 16: Text, p. 130",
@@ -22,9 +22,9 @@
           "quads": [
             [
               0.58951,
-              0.36314,
+              0.36306,
               0.87974,
-              0.36314,
+              0.36306,
               0.87974,
               0.38291,
               0.58951,
@@ -32,13 +32,13 @@
             ],
             [
               0.12026,
-              0.38294,
+              0.38215,
               0.87974,
-              0.38294,
+              0.38215,
               0.87974,
-              0.39773,
+              0.39828,
               0.12026,
-              0.39773
+              0.39828
             ]
           ]
         }
@@ -51,22 +51,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.MergeProof.Matric.motor",
-        "module": "YM.FullVolume.Mark.Wheels",
+        "declaration": "YM.Trace.Physical.Germ.computed",
+        "module": "YM.Trace.Physicalv2.Germ",
         "lines": [
-          40,
-          247
+          65,
+          67
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.MergeProof.Matric.motor"
+            "id": "YM.Trace.Physical.Germ.computed"
+          },
+          "snippet": {
+            "text": "lemma computed {U:Support n}{f:Config G n→ℂ}{B:BudgetPoint}(hf:B.Regular U f)(o:Site n)(h:d≤B.order) : JetTest A o (label A o f d) f := by\n    have he:=read_projection A o d f hf.symmetry ((hf.smooth _ (one_healthy U _ B.threshold_pos.le)).of_le (Nat.cast_le.mpr h))\n    unfold label; rw [dif_pos he.exists]; exact Classical.choose_spec he.exists",
+            "line": 65,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Mark/Wheels.lean",
-            "fragment": "L40-L247"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Trace/Physicalv2/Germ.lean",
+            "fragment": "L65-L67"
+          },
+          "proof_context": {
+            "declaration": "YM.Trace.Physical.Germ.computed",
+            "lines": [
+              65,
+              67
+            ],
+            "conclusion": "The label (Taylor jet) of a `B.Regular` function is read from its smoothness at the flat configuration, a healthy chart (`one_healthy`)."
           }
         }
       }
@@ -76,22 +90,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.MergeProof.Matric.Plate.Prints",
-        "module": "YM.FullVolume.Mark.Latch",
+        "declaration": "YM.Push.Local.rebate",
+        "module": "YM.Push.LOCAL_SPLITTING.Atoms",
         "lines": [
-          47,
-          55
+          107,
+          108
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.MergeProof.Matric.Plate.Prints"
+            "id": "YM.Push.Local.rebate"
+          },
+          "snippet": {
+            "text": "def rebate (o : Site n) (X : Support n) (t : ℝ) (f : Config G n → ℂ) :=\n  masked t X f - primary T o t (weighted H F o X t f) - masked t (joint T o X) (residual H T o X t f)",
+            "line": 107,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Mark/Latch.lean",
-            "fragment": "L47-L55"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/LOCAL_SPLITTING/Atoms.lean",
+            "fragment": "L107-L108"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.Local.rebate",
+            "lines": [
+              107,
+              108
+            ],
+            "conclusion": "`rebate` subtracts the primary part and the masked residual from `masked t X f`, so the mask enters only as an outer factor of the unmasked jets."
           }
         }
       }
@@ -106,8 +134,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge kept it; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

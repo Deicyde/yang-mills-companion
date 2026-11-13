@@ -1,9 +1,9 @@
 {
   "id": "Lemma 18.4 step 6",
   "kind": "proof_step",
-  "status": "not_formalized",
-  "relation": "noMatch",
-  "note": "The three-term coefficient `-2X_aca - X_cac + Σ X_bcb` has no Lean counterpart; Lean cancels the same terms inside `arcPay`/`vanish_r` without these coefficients.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "Lean cancels the contact coefficients through the limit `luxSum` (-highray(zell) + 2 highray(wentG)) summed over d != i by `suite`, not through the displayed combination of X_{aca}, X_{cac} and X_{bcb}.",
   "subject": [
     {
       "location": {
@@ -29,22 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Trace.Lamp.saga",
+        "declaration": "YM.Trace.Lamp.luxSum",
         "module": "YM.TraceExtension.Lamp.Pious",
         "lines": [
-          97,
-          127
+          53,
+          56
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Trace.Lamp.saga"
+            "id": "YM.Trace.Lamp.luxSum"
+          },
+          "snippet": {
+            "text": "lemma luxSum (Q:Tendsto (fun w=>(g w).val) L atTop)(h:Flare g R p σ C)(hs:0<σ)(hv:0<a)(hp:∀ w,a ≤ μ' w∧ μ' w≤ c) : Rose L (fun w=> ∑ i':Axis,lux d i q i' (portage p (R w) (μ' w) i' (g w))) (fun w=> - highray d i q (zell p (R w) (μ' w) (g w))+2 * highray d i q (wentG G (μ' w) (g w))):=by\n    have ht:= h.house hs hv hp 2; let F(w):= zell p (R w) (μ' w) (g w); let U(w):=wentG G (μ' w) (g w)\n    have he w:=hv.trans_le (hp w|>.1)\n    choose B a b A hp' hA H hh using h.tanks",
+            "line": 53,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Lamp/Pious.lean",
-            "fragment": "L97-L127"
+            "fragment": "L53-L56"
+          },
+          "proof_context": {
+            "declaration": "YM.Trace.Lamp.luxSum",
+            "lines": [
+              53,
+              72
+            ],
+            "conclusion": "The sum over the intermediate index i' of the traced coefficients tends to `-highray(zell) + 2*highray(wentG)`."
           }
         }
       }
@@ -54,22 +68,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Trace.Lamp.ultimate",
+        "declaration": "YM.Trace.Lamp.suite",
         "module": "YM.TraceExtension.Lamp.Pious",
         "lines": [
-          21,
-          50
+          83,
+          83
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Trace.Lamp.ultimate"
+            "id": "YM.Trace.Lamp.suite"
+          },
+          "snippet": {
+            "text": "def suite (F:Axis→Axis→ℂ) := ∑ d,∑ i,(if d=i then 0 else F d i)",
+            "line": 83,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Lamp/Pious.lean",
-            "fragment": "L21-L50"
+            "fragment": "L83-L83"
+          },
+          "proof_context": {
+            "declaration": "YM.Trace.Lamp.suite",
+            "lines": [
+              83,
+              83
+            ],
+            "conclusion": "`suite F` sums F d i over d ≠ i (the a ≠ c sum)."
           }
         }
       }
@@ -84,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge changed it from noMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

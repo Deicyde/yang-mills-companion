@@ -1,7 +1,9 @@
 {
   "id": "Lemma 13.12 step 1",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The setup (Delta_u by isotropy, c_u as the sum of the values at 1) is carried by these definitions; the citation list itself has no Lean line, and c_u appears only inside `vac` and `rebate`, not as a named object.",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.04127
         ]
       },
-      "title": "Lemma 13.12 step 1: Text, p. 107, not yet judged",
+      "title": "Lemma 13.12 step 1: Text, p. 107",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 13.12 step 1"
@@ -21,7 +23,125 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.AnalyticBridge.VerifiedReset.Collection.branch",
+        "module": "YM.AnalyticBridge.VERIFIED_RESET_STEP.Evaluation",
+        "lines": [
+          17,
+          17
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.AnalyticBridge.VerifiedReset.Collection.branch"
+          },
+          "snippet": {
+            "text": "def branch (X : Listing G n) (R : PathData G) (c : Clip) (p : BudgetPoint) (v : Source G n) (α : ℝ) := fill X R c p v α (delta (X.read v))",
+            "line": 17,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/VERIFIED_RESET_STEP/Evaluation.lean",
+            "fragment": "L17-L17"
+          },
+          "proof_context": {
+            "declaration": "YM.AnalyticBridge.VerifiedReset.Collection.branch",
+            "lines": [
+              17,
+              17
+            ],
+            "conclusion": "`branch` builds the output activities `fill ... (delta (X.read v))`, i.e. the tilt Delta_u is fixed to the isotropy coefficient `delta` of the incoming activities."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.AnalyticBridge.VerifiedReset.Averaging.delta",
+        "module": "YM.AnalyticBridge.VERIFIED_RESET_STEP.Isotropy",
+        "lines": [
+          75,
+          75
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.AnalyticBridge.VerifiedReset.Averaging.delta"
+          },
+          "snippet": {
+            "text": "def delta (A : Activities G n) := total A 0 axes01 axes01",
+            "line": 75,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/VERIFIED_RESET_STEP/Isotropy.lean",
+            "fragment": "L75-L75"
+          },
+          "proof_context": {
+            "declaration": "YM.AnalyticBridge.VerifiedReset.Averaging.delta",
+            "lines": [
+              75,
+              75
+            ],
+            "conclusion": "`delta A` is the isotropic coefficient `total A 0 axes01 axes01`, the value Delta_u chosen by (D-isotropy)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.AnalyticBridge.VerifiedReset.Collection.vac",
+        "module": "YM.AnalyticBridge.VERIFIED_RESET_STEP.Evaluation",
+        "lines": [
+          29,
+          29
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.AnalyticBridge.VerifiedReset.Collection.vac"
+          },
+          "snippet": {
+            "text": "def vac (v : Source G n) (τ : ℝ) := τ - (∑' i, v.logRead i 1)/sites n",
+            "line": 29,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/VERIFIED_RESET_STEP/Evaluation.lean",
+            "fragment": "L29-L29"
+          },
+          "proof_context": {
+            "declaration": "YM.AnalyticBridge.VerifiedReset.Collection.vac",
+            "lines": [
+              29,
+              29
+            ],
+            "conclusion": "`vac v tau` is tau minus `(sum' i, v.logRead i 1) / sites n`, carrying c_u = sum_i f_{i,u}(1) as `sum' i, v.logRead i 1`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +151,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

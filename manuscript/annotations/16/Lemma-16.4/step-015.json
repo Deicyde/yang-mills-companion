@@ -1,18 +1,18 @@
 {
   "id": "Lemma 16.4 step 15",
   "kind": "proof_step",
-  "status": "not_formalized",
-  "relation": "noMatch",
-  "note": "No Lean declaration carries this step: the lift and its estimates are packaged abstractly (Poised, Spots, Balances).",
+  "status": "partial",
+  "relation": "narrowMatch",
+  "note": "`crushed` bounds the marked modes plus the target cumulant by `bill (-31/32) s` rather than giving exactly zero leading Gaussian coefficient, and `Clipped` is supplied only for at most 2 marks (`v_clinker`, hn : m <= 2).",
   "subject": [
     {
       "location": {
         "page": 177,
         "rect": [
           0.12026,
-          0.31025,
+          0.31128,
           0.75948,
-          0.03499
+          0.03404
         ]
       },
       "title": "Lemma 16.4 step 15: Text, p. 177",
@@ -22,23 +22,23 @@
           "quads": [
             [
               0.39143,
-              0.31025,
+              0.31128,
               0.87974,
-              0.31025,
+              0.31128,
               0.87974,
-              0.32773,
+              0.32829,
               0.39143,
-              0.32773
+              0.32829
             ],
             [
               0.12026,
-              0.32776,
+              0.32831,
               0.62739,
-              0.32776,
+              0.32831,
               0.62739,
-              0.34524,
+              0.34532,
               0.12026,
-              0.34524
+              0.34532
             ]
           ]
         }
@@ -51,22 +51,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.MergeProof.East.sight",
-        "module": "YM.MergeProof.East.Suds",
+        "declaration": "YM.Next.Rank.Atlas.crushed",
+        "module": "YM.Next.RANK.Presenter",
         "lines": [
-          47,
-          90
+          87,
+          103
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.MergeProof.East.sight"
+            "id": "YM.Next.Rank.Atlas.crushed"
+          },
+          "snippet": {
+            "text": "lemma crushed (hp : Period b w degree x k) (g : Fit C.path.levels b k x) {T' : C.label d→ₗ[ℂ] C.label d} (hV : Heating C k N p d degree V T')\n    (t : Fin n→C.label d) (hi : k≤N) (ht : ∀ i, Price.Solves C (Station.mag C.path.levels b k) d k N p T' (w i) (t i))\n    (hb : Bell C.path.levels X d degree g) (D : Demand) (slot : ℕ) (h : Clipped b X V c Y x t hi degree D slot) :\n    Arrangements hi c Y (joint w) (asked t) g D slot := by\n  let A := C.path.levels; let T:= Ship.yard C b hi p; let S := clim A k\n  let f:= Ship.targets C (joint w) g\n  intro hv hs; obtain ⟨α,β,bα,bβ,H,K,W,h1,hbg,h2,h3,h4⟩ := h hv hs\n  refine ⟨α,β,bα,bβ,H,K,W,h1,hbg,h2,fun i => ⟨(h3 i).1,(h3 i).2,fun U HH => ?_⟩⟩\n  obtain ⟨y,hy,hh⟩ := h4 i.1 U HH\n  obtain ⟨hc,hp⟩ := hp; obtain ⟨Q,L⟩ := hp g\n  let u:= Station.choose A b k x\n  let D' := Cumulus X u (before A b k) V t y\n  have he : ‖D'-f‖+bill (-3/2) S ≤ bill (-31/32) S := L _ _ _ (cumulates X V u (before A b k) t y)\n    (Read.cumulative C (Station.tested A b k x) (joint w) (Ship.fitting g)) (fun s => sizes w g degree hi hV hb y hy hc t ht Q s)\n  let v:= (W i).value U; let z:= Peak.view T f i; let a:= (Array.reorient T i.1 D').part i.2.val\n  change ‖v+z‖ ≤ _\n  rw [show v+z=(a+z)+(v-a) by ring]; exact (norm_add_le ..).trans ((add_le_add (honor (C:=C) i.1 _ _ i.2) (hh _)).trans he)",
+            "line": 87,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/East/Suds.lean",
-            "fragment": "L47-L90"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Presenter.lean",
+            "fragment": "L87-L103"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Rank.Atlas.crushed",
+            "lines": [
+              87,
+              103
+            ],
+            "conclusion": "`crushed` shows the marked source modes `W`, once the target cumulant `view f` is added, have norm at most `bill (-31/32) s`, i.e. the leading Gaussian parts cancel."
           }
         }
       }
@@ -76,22 +90,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.MergeProof.East.third",
-        "module": "YM.MergeProof.East.Latch",
+        "declaration": "YM.Next.Rank.Atlas.Clipped",
+        "module": "YM.Next.RANK.Presenter",
         "lines": [
-          50,
-          75
+          37,
+          56
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.MergeProof.East.third"
+            "id": "YM.Next.Rank.Atlas.Clipped"
+          },
+          "snippet": {
+            "text": "def Clipped (x : Points n) (v : Fin n→ C.label d) (hi : k ≤ N) (degree : ℕ) (D : Demand) (slot : ℕ) :=\n    let A := C.path.levels\n    let s := clim A k\n    let l := middle A b k\n    let L := Y l\n    let h:= before A b k\n    let T:= Ship.yard C b hi p\n    let g := L.p\n    let ψ := Peak.route A b k p D.Q g.B\n    let t := Ship.clients C (asked v) b k N p x\n    let f:= readers (b:=b) (C:=C) (p:=p) x hi (h.trans hi)\n    ∀ g₀ : g.B=walls (clim A l), ∀ hs : Perch.Shelf D slot s (clim A l),\n      ∃ (α β : Type), ∃ (_ : Fintype α) (_ : Fintype β), ∃ (H : α → SourceAt G f) (K : β → Lifted G f g.threshold)\n        (W : T.Cell × flame (Fin n) → SourceAt G f),\n        Dock.Reception (Peak.Meter A g₀ hs) H K ∧ Background L K ∧\n          c.flow (Array.stamp T (C.beta N p) (Read.bareP t)) l (h.trans hi)=dust L (Sum.elim H W) K ∧\n          (∀ i,(W i).fires=sectionAt i ∧ (W i).extent=ψ i.1) ∧\n          ∀ i U, Healthy g.threshold (ψ i) U →\n          ∃ u : Chamber G C.S l p → ℝ, Wind A u (fraction n degree s) ∧\n            ∀ a : flame (Fin n), ‖(W (i,a)).value U-(Array.reorient T i (Cumulus X (Station.choose A b k x) h V v u)).part a.val‖ ≤ Perch.bill (-3/2) s",
+            "line": 37,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/East/Latch.lean",
-            "fragment": "L50-L75"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Presenter.lean",
+            "fragment": "L37-L56"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Rank.Atlas.Clipped",
+            "lines": [
+              37,
+              56
+            ],
+            "conclusion": "`Clipped` writes the flow as `dust` of residual sources `H, K` and marked modes `W` whose values equal the `Cumulus` (Gaussian cumulant) parts up to `bill (-3/2) s`."
           }
         }
       }
@@ -106,8 +134,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge kept it; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

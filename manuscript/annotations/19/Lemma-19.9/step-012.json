@@ -1,19 +1,21 @@
 {
   "id": "Lemma 19.9 step 12",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "[L] passes from grid to arbitrary configurations by the interpolation lemma `interpolated` between `coefficient_rough` and `grid_coeff` (`commonC`, `common_rate`), not by the descent in W moving by O(a_j).",
   "subject": [
     {
       "location": {
         "page": 229,
         "rect": [
           0.11961,
-          0.42794,
+          0.42707,
           0.76358,
-          0.17105
+          0.17231
         ]
       },
-      "title": "Lemma 19.9 step 12: Text, p. 229, not yet judged",
+      "title": "Lemma 19.9 step 12: Text, p. 229",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 19.9 step 12"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.commonC",
+        "module": "YM.OPE.Schemes.Corridor",
+        "lines": [
+          28,
+          33
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.commonC"
+          },
+          "snippet": {
+            "text": "private lemma commonC (hk:Height C.S φ T k b)(hm:Height C.S φ T m a)(hj:Height C.S φ T j d)(hb:0<b)(ho:b<a)(hd:a<x)(hw:x<d): RateLE φ T (fun i=> R.ope w (X i) g 0) (tax g a d-w.fst*a):=by\n    let z:=4*(Fintype.card I:ℝ)*(d-a)-w.fst*a; let F(i:L) (u:I→C.book.Token) (x:I→ E4):= R.ope w x u 0; have hh(p:I→C.book.Token): tax p a d - w.fst*a=d*sigma p+z:=by unfold tax z; ring\n    rw [hh]; refine interpolated hT hj F Λ hw (c:=0) (fun p x hx=>?_ ) (fun p x hg hx=>?_ ) (fun p x hx=>?_ ) g hx\n    · exact (coefficient_rough U p w hT hx ha h (R:=R)).mono (show _ ≤ _+0 from by rw [add_zero])\n    · exact hh _ ▸ grid_coeff U p Base' hR hT hG L' h i₀ hk hm hj hb ho hd hw hx.room hx.managed (Eventually.of_forall hg) w\n    filter_upwards [cadence_coeff U p w hT hx ha (R:=R)] with i hi using ⟨hi.works,hi.slopes⟩",
+            "line": 28,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Schemes/Corridor.lean",
+            "fragment": "L28-L33"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.commonC",
+            "lines": [
+              28,
+              33
+            ],
+            "conclusion": "`commonC` interpolates between the crude `coefficient_rough` bound and the `grid_coeff` bound to get the rate on arbitrary points."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.common_rate",
+        "module": "YM.OPE.Schemes.Corridor",
+        "lines": [
+          37,
+          41
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.common_rate"
+          },
+          "snippet": {
+            "text": "lemma common_rate : RateLE φ T (fun i=> R.ope w (X i) g 0) (( (sigma g:ℝ)-w.fst)*x):=by\n    intro r hr; let f a:= tax g (x-a) (x+a) - w.fst*(x-a); have hK: f 0 < r:= by unfold f tax; linarith only [hr]\n    have he: ContinuousAt f 0:= by unfold f tax; fun_prop\n    obtain ⟨ε,hε,hw,hx'⟩ := ((show ∀ᶠ i:ℝ in 𝓝[>] 0,0 < i from self_mem_nhdsWithin).and ((eventually_nhdsWithin_of_eventually_nhds (gt_mem_nhds ha)).and (he.tendsto.eventually (gt_mem_nhds hK)|>.filter_mono nhdsWithin_le_nhds))).exists; have hv:0<x-ε:= sub_pos.mpr hw; let a:= (x-ε); have hp:= C.path.levels.fits.mesh\n    obtain ⟨k,hk⟩:= found hT hp (show 0≤a/2 from (half_pos hv).le); obtain ⟨m,hm⟩:= found hT hp hv.le; obtain ⟨j,hj⟩:= found hT hp (show 0 ≤ x+ε by positivity); apply commonC U g Base' hR w hT hx ha h i₀ hG L' hk hm hj (half_pos hv) (by unfold a; linarith) (by linarith only [hε]) (by linarith) r hx'",
+            "line": 37,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Schemes/Corridor.lean",
+            "fragment": "L37-L41"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.common_rate",
+            "lines": [
+              37,
+              41
+            ],
+            "conclusion": "`common_rate` gives the coefficient rate `(sigma g - w.fst)*x` on all approaching configurations."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

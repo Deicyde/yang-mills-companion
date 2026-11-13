@@ -1,49 +1,130 @@
 {
   "id": "Lemma 16.11 step 7",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "The average of c^{-1}J is conserved, tensorial and satisfies both shell laws (`A15`, `answer`); the centered and nonzero parts of Theorem ST are not concluded for this average.",
   "subject": [
     {
       "location": {
         "page": 187,
         "rect": [
           0.12026,
-          0.34188,
+          0.34238,
           0.76155,
-          0.03419
+          0.03391
         ]
       },
-      "title": "Lemma 16.11 step 7: Text, p. 187, not yet judged",
+      "title": "Lemma 16.11 step 7: Text, p. 187",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 16.11 step 7",
           "quads": [
             [
               0.78088,
-              0.34188,
+              0.34238,
               0.88182,
-              0.34188,
+              0.34238,
               0.88182,
-              0.35806,
+              0.36059,
               0.78088,
-              0.35806
+              0.36059
             ],
             [
               0.12026,
-              0.35952,
+              0.36078,
               0.54398,
-              0.35952,
+              0.36078,
               0.54398,
-              0.37607,
+              0.37629,
               0.12026,
-              0.37607
+              0.37629
             ]
           ]
         }
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.A15.answer",
+        "module": "YM.Work.A15",
+        "lines": [
+          187,
+          192
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.A15.answer"
+          },
+          "snippet": {
+            "text": "theorem answer : YM.Bid.A15 := by\n  intro A G L S H V _incl _der _orient X hX xO J p Y c h e\n  let J₀ := ((c⁻¹ : ℝ) : ℂ) • J\n  refine ⟨averageStress X J₀, ?_, tensorial_average hX J₀, ?_⟩\n  · exact conserved_average hX J₀ (conserved_real_smul J h.pre.local_.tensor c⁻¹)\n  · exact stressLaws_average J₀ A H hX xO (normalize_flux H J c h e)",
+            "line": 187,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/A15.lean",
+            "fragment": "L187-L192"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.A15.answer",
+            "lines": [
+              187,
+              192
+            ],
+            "conclusion": "The average of `c⁻¹ J` is `Conserved`, `Tensorial` and satisfies `StressLaws`, which is what `Bid.A15` asks."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Bid.A15",
+        "module": "YM.Bid.Angular",
+        "lines": [
+          109,
+          112
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Bid.A15"
+          },
+          "snippet": {
+            "text": "def A15 : Prop := A10 → ∀ {G : Gauge} {L : Register G} {S : Table L} (H : S.Hierarchy) (V : DiffPlan S),\n    V.Inclusions S → V.Derivatives S → V.Orientation H.spin → ∀ (X : Rotation S), X.Laws V H.spin → X.Oriented S →\n    ∀ J p Y c, Crystal H V J p Y c → X.lie=c⁻¹ • Y → ∃ J' : Stress S, Conserved V H.spin J' ∧\n      Tensorial X J' ∧ StressLaws S J' V.deriv X.lie",
+            "line": 109,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Bid/Angular.lean",
+            "fragment": "L109-L112"
+          },
+          "proof_context": {
+            "declaration": "YM.Bid.A15",
+            "lines": [
+              109,
+              112
+            ],
+            "conclusion": "Under the hypotheses, a stress `J'` that is `Conserved`, `Tensorial` and has `StressLaws` exists."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -53,8 +134,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

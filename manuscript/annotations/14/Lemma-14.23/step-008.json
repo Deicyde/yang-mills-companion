@@ -1,19 +1,21 @@
 {
   "id": "Lemma 14.23 step 8",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "Lean has no per-annulus bound C·2^{-v(5+s)}·min{1,(R2^{-v})^{-q}}. The same conversion runs through the `Mist` decay (C/|x|^5 at infinity) and its consequence for the cut-off kernel.",
   "subject": [
     {
       "location": {
         "page": 147,
         "rect": [
           0.12026,
-          0.4899,
+          0.48951,
           0.75948,
-          0.01874
+          0.01913
         ]
       },
-      "title": "Lemma 14.23 step 8: Display, p. 147, not yet judged",
+      "title": "Lemma 14.23 step 8: Display, p. 147",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 14.23 step 8"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Rank.Radian.Mist",
+        "module": "YM.Next.RANK.Radian.Sinks",
+        "lines": [
+          20,
+          23
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Rank.Radian.Mist"
+          },
+          "snippet": {
+            "text": "structure Mist (F : E4→ℂ) (k : ℕ) (C : ℝ) : Prop where\n  part : ContDiffOn ℝ (↑(k+6:ℕ)) F away\n  jet (v : ℕ) (h : v≤k+6) (x : E4) (hx : x≠0) (hv : ‖x‖ ≤ 1) : ‖iteratedFDeriv ℝ v F x‖ * ‖x‖^v ≤ C* ‖x‖^(k+1)\n  far (v : ℕ) (h : v≤k+6) (x : E4) (hx : 1 ≤ ‖x‖) : ‖iteratedFDeriv ℝ v F x‖ ≤ C/‖x‖^5",
+            "line": 20,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Radian/Sinks.lean",
+            "fragment": "L20-L23"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Rank.Radian.Mist",
+            "lines": [
+              20,
+              23
+            ],
+            "conclusion": "`Mist` bounds the iterated derivatives by `C` times a power of `|x|` for `|x|<=1` and by `C/|x|^5` for `|x|>=1`, the 2^(-v(5+s)) decay shape."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Rank.Radian.settles",
+        "module": "YM.Next.RANK.Radian.Sinks",
+        "lines": [
+          71,
+          103
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Rank.Radian.settles"
+          },
+          "snippet": {
+            "text": "lemma settles (n : ℕ) : ∃ K : ℝ, 1 ≤ K ∧ ∀ j≤ n+6,∀ F C (_ : Mist F n C) (_ : 0≤C) r (_ : 0< r), r≤1 → ∀ x,\n    ‖iteratedFDeriv ℝ j (sail r*F) x‖ ≤ C*K*reach r x:= by\n  obtain ⟨t,hT,ht⟩:= crown_cost (n+6)\n  refine ⟨2^(n+6)*t,one_le_mul_of_one_le_of_one_le (one_le_pow₀ (by norm_num)) hT,?_⟩\n  intro j hj F C h hv r hr ht' x\n  have hz:C ≤ C*(2^(n+6)*t):= le_mul_of_one_le_right hv (one_le_mul_of_one_le_of_one_le (one_le_pow₀ (by norm_num)) hT)\n  unfold reach; split\n  · rename_i hq;have hy :0<‖x‖ := lt_of_lt_of_le (by positivity : 0 < r/2) hq\n    have he:x≠0 := norm_pos_iff.mp hy\n    by_cases hL:r < ‖x‖\n    · rw [((untouched hr F hL).iteratedFDeriv ℝ j).eq_of_nhds];exact (penny h hv j hj x he).trans (by rw [div_eq_mul_inv]; exact mul_le_mul_of_nonneg_right hz (inv_pos.mpr (pow_pos hy _)).le)\n    have hK:‖x‖ ≤ r:= le_of_not_gt hL\n    have ha (i) (hp : i≤ j): ‖iteratedFDeriv ℝ i (sail r) x‖ * ‖iteratedFDeriv ℝ (j-i) F x‖ ≤ C * t * (‖x‖^5)⁻¹:= by\n      let q:= ‖x‖; let v:= ‖iteratedFDeriv ℝ i (sail r) x‖; let w:= ‖iteratedFDeriv ℝ (j-i) F x‖\n      have h₁ : v*q^i ≤ t:= by\n        have hh:=ht i (hp.trans hj) r hr x\n        apply le_trans (b:=v*r^i) _ ((le_div_iff₀ (pow_pos hr _)).1 hh);gcongr\n      have h₂ : w*q^(j-i) ≤ C*q^(n+1):= h.jet _ (by omega) x he (hK.trans ht')\n      rw [← div_eq_mul_inv]; apply (le_div_iff₀ (pow_pos hy 5)).2; apply le_of_mul_le_mul_right (a:=q^j) _ (pow_pos hy j)\n      have ht : q^(n+1)*q^5 ≤ q^j:= by rw [← pow_add];exact pow_le_pow_of_le_one hy.le (hK.trans ht') hj\n      have hs : 0≤ w:=norm_nonneg _\n      have hh:=mul_le_mul_of_nonneg_right (mul_le_mul h₁ h₂ (mul_nonneg hs (pow_pos hy _|>.le)) (zero_le_one.trans hT)) (pow_nonneg hy.le 5)\n      change v*w*q^5 *q^j ≤ _ ; calc\n        _ = v*q^i*(w*q^(j-i)) * q^5:= by\n          conv_lhs=> rw [show q^j=q^i*q^(j-i) by rw [← pow_add, Nat.add_sub_of_le hp]]\n          ring\n        _ ≤ t*(C*q^(n+1))*q^5:= hh\n        _ ≤ _:= by nlinarith only [mul_le_mul_of_nonneg_left ht (mul_nonneg hv (zero_le_one.trans hT))]\n    apply (stove away open_away ((away_sail r).contDiffOn.of_le (WithTop.coe_le_coe.mpr le_top)) (h.part.of_le (by exact_mod_cast hj)) x he).trans\n    apply le_trans (b:=∑ i∈Finset.range (j+1),(j.choose i:ℝ)*(C*t*(‖x‖^5)⁻¹)); refine sum_le_sum fun i hi=>?_ ; rw [mul_assoc];exact mul_le_mul_of_nonneg_left (ha _ (Nat.le_of_lt_succ (mem_range.mp hi))) (by positivity)\n    rw [← sum_mul, ← Nat.cast_sum,Nat.sum_range_choose]; push_cast\n    apply le_trans (mul_le_mul_of_nonneg_right (pow_le_pow_right₀ (by norm_num : 1≤(2:ℝ)) hj) (by positivity : 0 ≤ C*t*(‖x‖^5)⁻¹)); exact le_of_eq (by ring)\n  rename_i hh; rw [dark (lt_of_not_ge hh) hr, norm_zero,mul_zero]",
+            "line": 71,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Radian/Sinks.lean",
+            "fragment": "L71-L103"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Rank.Radian.settles",
+            "lines": [
+              71,
+              103
+            ],
+            "conclusion": "`settles` bounds the derivatives of the cut-off kernel in terms of `C`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

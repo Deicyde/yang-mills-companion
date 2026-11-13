@@ -1,7 +1,9 @@
 {
   "id": "Lemma 16.12 step 1",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "The derivative limit is `Bid.A04`. The charge limit with factor ξ^{-1} is `Bid.A05`, and the normalized rotation limit is given per d with U chosen in `lens`. The passage via ξ_k/c_star → 1 to both limits along one sequence for all d is not stated.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.12026,
           0.62296,
           0.75996,
-          0.03713
+          0.03807
         ]
       },
-      "title": "Lemma 16.12 step 1: Text, p. 187, not yet judged",
+      "title": "Lemma 16.12 step 1: Text, p. 187",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 16.12 step 1"
@@ -21,7 +23,125 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Bid.A04",
+        "module": "YM.Bid.Angular",
+        "lines": [
+          51,
+          53
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Bid.A04"
+          },
+          "snippet": {
+            "text": "def A04 : Prop := ∀ {G : Gauge} {C : Family G} {S : Table C.book} (H : S.Hierarchy) (V : DiffPlan S),\n    V.Inclusions S → V.Derivatives S → ∀ (R : MaxwellData C) (J : S.Stress) (d : ℕ),\n    Watches J R.T H.spin R.hT.spin V (fun X => ConLap X V.deriv d R.T.W.deriv X.r)",
+            "line": 51,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Bid/Angular.lean",
+            "fragment": "L51-L53"
+          },
+          "proof_context": {
+            "declaration": "YM.Bid.A04",
+            "lines": [
+              51,
+              53
+            ],
+            "conclusion": "`Watches`: for scalings tracking beyond thresholds, `ConLap` says `r_k` times the transported derivative tends to `R.T.W.deriv`, the free derivative."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Bid.A05",
+        "module": "YM.Bid.Angular",
+        "lines": [
+          55,
+          59
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Bid.A05"
+          },
+          "snippet": {
+            "text": "def A05 : Prop := ∀ {G : Gauge} {C : Family G} {S : Table C.book} (H : S.Hierarchy) (V : DiffPlan S),\n    V.Inclusions S → V.Derivatives S → ∀ (R : MaxwellData C) (J : S.Stress) (d : ℕ)  (p : Climb.Parts S) (Y : Ward.SpinRows S),\n    Pre H V J p Y →\n    Watches J R.T H.spin R.hT.spin V (fun X => (ConLap X p d ((R.T.κ:ℝ) • R.T.W.deriv) (fun i => X.r i/X.xi i)) ∧\n      ∀ j : Spin.Ind, Tendsto (fun i => (X.xi i)⁻¹ • (Spin.transport Y (X.U i d) j)) atTop (𝓝 (R.T.κ • Spin.leaf R.T.K.lie d j)))",
+            "line": 55,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Bid/Angular.lean",
+            "fragment": "L55-L59"
+          },
+          "proof_context": {
+            "declaration": "YM.Bid.A05",
+            "lines": [
+              55,
+              59
+            ],
+            "conclusion": "`Watches`: the same derivative limit with factor `r/ξ` and `(X.ξ i)⁻¹ • transport Y (X.U i d) j → κ • leaf` for the spin rows."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Org.Commission",
+        "module": "YM.Org.Twist",
+        "lines": [
+          33,
+          34
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Org.Commission"
+          },
+          "snippet": {
+            "text": "  lens : V.Inclusions S → V.Derivatives S → ∀ c, Crystal H.basis.kernel V I.J I.p I.Y c →\n    (∀ n (x : Points n), x∈conf n → Still V (c⁻¹ • I.Y) x) → ∀ d, ∃ U w, Spin.Tilt W.T.K H.basis.kernel.spin W.hT.spin (c⁻¹ • I.Y) d U w",
+            "line": 33,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Org/Twist.lean",
+            "fragment": "L33-L34"
+          },
+          "proof_context": {
+            "declaration": "YM.Org.Commission",
+            "lines": [
+              29,
+              43
+            ],
+            "conclusion": "`lens` gives, for every `d`, `U` and `w` with `Spin.Tilt` for `c⁻¹ • I.Y`, the rotation-generator limit."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +151,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

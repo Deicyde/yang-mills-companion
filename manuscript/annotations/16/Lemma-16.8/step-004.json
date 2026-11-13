@@ -1,7 +1,9 @@
 {
   "id": "Lemma 16.8 step 4",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "broadMatch",
+  "note": "Independence of `l` is built in and the sum tends to zero by `zone`, the annular estimate. Duality gives the matching field. [L] states it for every conserved `J`, with the Aroma budget as an added hypothesis.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.12026,
           0.67054,
           0.75948,
-          0.07134
+          0.07063
         ]
       },
-      "title": "Lemma 16.8 step 4: Text, p. 182, not yet judged",
+      "title": "Lemma 16.8 step 4: Text, p. 182",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 16.8 step 4"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.MergeProof.Acme.tenet",
+        "module": "YM.MergeProof.West.Blanca",
+        "lines": [
+          70,
+          99
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.MergeProof.Acme.tenet"
+          },
+          "snippet": {
+            "text": "  have he (i j : Axis) : Tendsto (F i j) atTop (𝓝 0) := by\n    apply Metric.tendsto_nhds.mpr; intro ε hε\n    let C' := ∫ y, ‖M i j y‖\n    have hc': 0≤C' := integral_nonneg (fun _=> norm_nonneg _)\n    let S' := ε/(C'+2)\n    have he':0 < S':= div_pos hε (by linarith)\n    have ht' : C'*S'<ε:= lt_of_lt_of_le (mul_lt_mul_of_pos_right (show C'<C'+2 by linarith) he') (le_of_eq (mul_div_cancel₀ _ (by linarith : C'+2≠0)))\n    filter_upwards [hf,zone V hC hq ho H I g h HA hh (J i j) v ht he'] with l hh hx\n    rw [dist_zero_right]\n    calc\n      _ ≤ ∫ y, ‖M i j y‖ * (S') := norm_integral_le_of_norm_le ((hM i j).mul_const _) (by\n        filter_upwards with y\n        change ‖∑ a, g a*(M i j y* E i j a l y)‖ ≤ _\n        by_cases ht : Analysis.D (basis i) capB y = 0\n        · have h : M i j y=0 := by simp [M,weight,ht]\n          simp [h]\n        have hP a : Points.cons (r l • y) (I a).held∈conf _ := separated_of_D (I a).distinct\n          (stretch_window _ (I a).origin _ (hr l) (hh a)) (show Analysis.D (basis i) (stretch (r l) capB) _≠0 from by\n            rw [D_stretch (hr l) capB.contDiff]; exact mul_ne_zero (inv_pos.mpr (hr l)).ne' ht)\n        have he := hx _ (within_cap i _ (hr l) y ht)\n        simp_rw [mul_left_comm (g _) (M i j y), ← Finset.mul_sum]; rw [norm_mul]\n        exact mul_le_mul_of_nonneg_left he (norm_nonneg _))\n      _ = _ := integral_mul_const ..\n      _ < ε := ht'\n  have hv := Tendsto.neg (tendsto_finsetSum Finset.univ (fun i _ => tendsto_finsetSum Finset.univ (fun j _ => he i j)))\n  -- all expressions are genuine integrals before distributing\n  let f (i : ι) := flux J (W i) U (I i).held (S.classTokens ∘ (I i).q) v\n  have hz : Tendsto (fun k : ℕ => -(∑ i : Axis, ∑ j : Axis,F i j k)) atTop (𝓝 0) :=\n    (by simpa only [Finset.sum_const_zero,neg_zero] using hv)\n  refine tendsto_nhds_unique_of_eventuallyEq (f:=fun _ : ℕ => ∑ i : ι,g i * f i) tendsto_const_nhds hz ?_",
+            "line": 70,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/West/Blanca.lean",
+            "fragment": "L70-L99"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.Acme.tenet",
+            "lines": [
+              49,
+              120
+            ],
+            "conclusion": "`he` shows `F i j l → 0` using `zone` and the bound on the weight, and the sum of fluxes equals the limit, which is zero (`tendsto_nhds_unique_of_eventuallyEq`)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.MergeProof.Acme.annular_fieldA",
+        "module": "YM.MergeProof.West.Bravo",
+        "lines": [
+          65,
+          69
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.MergeProof.Acme.annular_fieldA"
+          },
+          "snippet": {
+            "text": "  have hs (I : Finset (Watch C)) : ∃ B : S.Field D,∀ y∈I,A y=y.tester S D B := by\n    let Z := LinearMap.pi (fun y : I => y.val.tester S D)\n    obtain ⟨B,hB⟩ := obtainable Z (fun y : I => A y.val) (fun g hx => tenet hC hq ho H h hc v U hw hl p hg D hh HA\n      (fun y : I => y.val) g hx (fun y : I => W y.val) (fun y => hW _))\n    exact ⟨B,fun y hy => (congr_fun hB (⟨y,hy⟩:I)).symm⟩",
+            "line": 65,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/West/Bravo.lean",
+            "fragment": "L65-L69"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.Acme.annular_fieldA",
+            "lines": [
+              55,
+              89
+            ],
+            "conclusion": "`hs` uses `obtainable` with `tenet` to get a field `B : S.Field D` with `A y = y.tester S D B` on any finite set of watches."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

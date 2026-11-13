@@ -1,18 +1,18 @@
 {
   "id": "Lemma 14.23 step 16",
   "kind": "proof_step",
-  "status": "not_formalized",
-  "relation": "noMatch",
-  "note": "No nonwrapping comparison interval or all-periods uniformity statement is present; [L] works with abstract `Rep` levels and `Fit`.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "`industry` derives `Nonwrapping` from containment in the patch and the hypothesis `Provision.cap`, and `shared_price` gives period-independent constants; the window-geometry inequalities are hypotheses in [L].",
   "subject": [
     {
       "location": {
         "page": 147,
         "rect": [
           0.12026,
-          0.73535,
+          0.73574,
           0.75948,
-          0.0513
+          0.05145
         ]
       },
       "title": "Lemma 14.23 step 16: Text, p. 147",
@@ -22,9 +22,9 @@
           "quads": [
             [
               0.6806,
-              0.73535,
+              0.73574,
               0.87974,
-              0.73535,
+              0.73574,
               0.87974,
               0.75284,
               0.6806,
@@ -32,13 +32,13 @@
             ],
             [
               0.12026,
-              0.75285,
+              0.75262,
               0.87974,
-              0.75285,
+              0.75262,
               0.87974,
-              0.78664,
+              0.78719,
               0.12026,
-              0.78664
+              0.78719
             ]
           ]
         }
@@ -51,22 +51,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Next.Rank.Atlas.Clipped",
-        "module": "YM.Next.RANK.Presenter",
+        "declaration": "YM.Next.Rank.Spindle.industry",
+        "module": "YM.Next.RANK.Carried",
         "lines": [
-          37,
-          56
+          121,
+          124
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Next.Rank.Atlas.Clipped"
+            "id": "YM.Next.Rank.Spindle.industry"
+          },
+          "snippet": {
+            "text": "  have hy : Nonwrapping (L.support a.val) 0 := by\n    intro x hx\n    have he : separation 0 x≤b := (doors (o:=0) x).mp (H.contained (h:=h) (hk:=hk) (hN:=hN) v (Sum.inr a) hx)\n    rw [separation_comm]; exact (Nat.mul_le_mul_left 10 he).trans_lt H.cap",
+            "line": 121,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Presenter.lean",
-            "fragment": "L37-L56"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Carried.lean",
+            "fragment": "L121-L124"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Rank.Spindle.industry",
+            "lines": [
+              95,
+              128
+            ],
+            "conclusion": "A support lying in `patch b 0` has `Nonwrapping (L.support a.val) 0`, since `separation 0 x <= b` and `Provision.cap : 10*R < side`, so the projection estimate applies."
           }
         }
       }
@@ -76,22 +90,75 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Next.Rank.Atlas.Bell",
-        "module": "YM.Next.RANK.Pilgrim",
+        "declaration": "YM.Next.Rank.Spindle.Provision",
+        "module": "YM.Next.RANK.Carried",
         "lines": [
-          45,
-          55
+          53,
+          57
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Next.Rank.Atlas.Bell"
+            "id": "YM.Next.Rank.Spindle.Provision"
+          },
+          "snippet": {
+            "text": "structure Provision (C : Family G) (d k N p i R : ℕ) : Prop where\n  footprint : (C.localSection d).stencil ⊆ box R\n  cap : 10*R<(C.side k p).val\n  cuts : i*(4*(C.path.rep N p k).p.B+2)+2*(C.path.rep N p k).p.B ≤ R\n  length : 2*(R+1)<(C.side k p).val",
+            "line": 53,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Pilgrim.lean",
-            "fragment": "L45-L55"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Carried.lean",
+            "fragment": "L53-L57"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Rank.Spindle.Provision",
+            "lines": [
+              53,
+              57
+            ],
+            "conclusion": "`Provision` supplies the footprint in `box R` and the period inequalities `cap`, `length` for the actual side `C.side k p`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FreeResolvent.shared_price",
+        "module": "YM.Push.FREE_RESOLVENT.PatchComparison",
+        "lines": [
+          41,
+          55
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FreeResolvent.shared_price"
+          },
+          "snippet": {
+            "text": "theorem shared_price (e : κ ↪ ι) (f : κ ↪ ι') (i j : κ)\n    (D : Cost X) (D' : Cost Y) (a : ι → X) (b : ι' → Y)\n    {R M V W σ γ μ u r : ℝ} {A : Matrix ι ι ℝ} {B : Matrix ι' ι' ℝ}\n    (ha : ∀ k : ι, k ∉ Set.range e → R ≤ D.d (a (e i)) (a k))\n    (hb : ∀ k : ι', k ∉ Set.range f → R ≤ D'.d (b (f i)) (b k))\n    (he : D.pull (a ∘ e) = D'.pull (b ∘ f))\n    (hp : D.Schur a a σ M A) (hq : D'.Schur b b σ M B)\n    (hg : Gap A r) (hg' : Gap B r)\n    (hx : D.Volume a (safeRate σ M r-μ) V)\n    (hy : D'.Volume b (safeRate σ M r-μ) V)\n    (hz : D.Schur (a ∘ e) (a ∘ e) γ W (A.submatrix e e-B.submatrix f f))\n    (hu : 0 ≤ u) (hr : 0 < r) (hs : 0 < σ) (hM : 0 ≤ M) (hγ : 0 ≤ γ) (hm : γ ≤ μ)\n    (hσ : μ ≤ σ) (hV : 0 ≤ V) (hW : 0 ≤ W) :\n    D.weight γ (a (e i)) (a (e j)) * |resolve A u (e j) (e i)-resolve B u (f j) (f i)| ≤\n      windowPrice M V r u μ γ R + (V*(r/2+u)⁻¹)*W*(V*(r/2+u)⁻¹) + windowPrice M V r u μ γ R := by",
+            "line": 41,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/FREE_RESOLVENT/PatchComparison.lean",
+            "fragment": "L41-L55"
+          },
+          "proof_context": {
+            "declaration": "YM.FreeResolvent.shared_price",
+            "lines": [
+              41,
+              83
+            ],
+            "conclusion": "Two periods with different index sets are compared on a common matched patch with a price that does not depend on the period."
           }
         }
       }
@@ -106,8 +173,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge changed it from noMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

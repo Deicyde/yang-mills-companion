@@ -1,18 +1,18 @@
 {
   "id": "Lemma 16.4 step 12",
   "kind": "proof_step",
-  "status": "not_formalized",
-  "relation": "noMatch",
-  "note": "No Lean declaration carries this step: the lift and its estimates are packaged abstractly (Poised, Spots, Balances).",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "`all_price` shows the weight multiplies amplitudes over the subset and the cells, and `postage` bounds the cell-root test of mode s by exp(...)/r^{|s|}, which is the factor e^{-2q|I|} when r = e^{2q}.",
   "subject": [
     {
       "location": {
         "page": 177,
         "rect": [
           0.12026,
-          0.22219,
+          0.22197,
           0.75948,
-          0.05422
+          0.05381
         ]
       },
       "title": "Lemma 16.4 step 12: Text, p. 177",
@@ -22,9 +22,9 @@
           "quads": [
             [
               0.6282,
-              0.22219,
+              0.22197,
               0.87974,
-              0.22219,
+              0.22197,
               0.87974,
               0.24419,
               0.6282,
@@ -32,13 +32,13 @@
             ],
             [
               0.12026,
-              0.2442,
+              0.24365,
               0.87974,
-              0.2442,
+              0.24365,
               0.87974,
-              0.2589,
+              0.25835,
               0.12026,
-              0.2589
+              0.25835
             ],
             [
               0.12026,
@@ -46,9 +46,9 @@
               0.44675,
               0.25892,
               0.44675,
-              0.27641,
+              0.27578,
               0.12026,
-              0.27641
+              0.27578
             ]
           ]
         }
@@ -61,22 +61,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.MergeProof.East.sight",
-        "module": "YM.MergeProof.East.Suds",
+        "declaration": "YM.Next.Rank.Glyph.all_price",
+        "module": "YM.Next.RANK.Array",
         "lines": [
-          47,
-          90
+          284,
+          285
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.MergeProof.East.sight"
+            "id": "YM.Next.Rank.Glyph.all_price"
+          },
+          "snippet": {
+            "text": "lemma all_price (s : modes V) (a : ℝ) : Poly.toll (fun _ : W × V => a) (allCells W s) =\n    (a^s.val.card)^Fintype.card W := by simp [Poly.toll, allCells, scene,← pow_mul,mul_comm]",
+            "line": 284,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/East/Suds.lean",
-            "fragment": "L47-L90"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Array.lean",
+            "fragment": "L284-L285"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Rank.Glyph.all_price",
+            "lines": [
+              284,
+              285
+            ],
+            "conclusion": "`all_price` evaluates the weight `Poly.toll` of the all-cells mode of subset s at constant amplitude a as `(a^|s|)^{#cells}`."
           }
         }
       }
@@ -86,22 +100,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.MergeProof.East.third",
-        "module": "YM.MergeProof.East.Latch",
+        "declaration": "YM.Next.Rank.Array.postage",
+        "module": "YM.Next.RANK.Stamp",
         "lines": [
-          50,
-          75
+          131,
+          140
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.MergeProof.East.third"
+            "id": "YM.Next.Rank.Array.postage"
+          },
+          "snippet": {
+            "text": "theorem postage (o : HaarBudget G) {P : Rep G (F.side m p)} (hp : c.Uses m hm P)\n    {σ A Λ δ ν g : ℝ} (hP : P.Lawful σ A Λ δ ν)\n    (hg : 0<g) (he : g≤P.p.threshold) (hβ : P.beta*g^2=1)\n    (tz : Fintype.card T.Cell = Fintype.card (Site (F.side m p)))\n    {r e l L : ℝ} (hr : 0<r) (eu : 0 ≤ e)\n    (h : ∀ i : modes V,Continuous fun U => (X U).part i)\n    {ζ : T.Cell×V → Site (F.side m p)}\n    (H : Value.Notice P ζ (c.flow (stamp T (F.beta N p) X) m hm) (fun _ => r) e l L) (s : modes V) :\n    T.rootTest (F.beta N p) (fun U => (X U).part s) ≤\n      Real.exp (protection o P A Λ δ (L+(Fintype.card V:ℝ)*l) g-4*G.lieDim*Real.log g / (Fintype.card T.Cell:ℝ)) / r^s.val.card := by",
+            "line": 131,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/East/Latch.lean",
-            "fragment": "L50-L75"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Stamp.lean",
+            "fragment": "L131-L140"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Rank.Array.postage",
+            "lines": [
+              131,
+              167
+            ],
+            "conclusion": "`postage` bounds the cell-root test of the mode `s` by `exp(...) / r^{|s|}`, so a nonempty I contributes the amplitude power r^{-|I|}, r = e^{2q}."
           }
         }
       }
@@ -116,8 +144,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge changed it from noMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

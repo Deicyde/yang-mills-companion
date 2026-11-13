@@ -1,18 +1,18 @@
 {
   "id": "Lemma 11.10 step 2",
   "kind": "proof_step",
-  "status": "not_formalized",
-  "relation": "noMatch",
-  "note": "Prose lead-in to the display below; it asserts no mathematics itself.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "At this point Lean writes the entries of Y as ½ of the first-order trace terms minus ¼ of the second-order trace term, obtained as a limit of the finite-volume identity (`active`). It does not use ½ log det along the stationary curve.",
   "subject": [
     {
       "location": {
         "page": 63,
         "rect": [
           0.12026,
-          0.30383,
+          0.30438,
           0.75948,
-          0.01961
+          0.01906
         ]
       },
       "title": "Lemma 11.10 step 2: Text, p. 63",
@@ -29,22 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Stationary.lean_drift",
-        "module": "YM.Next.STATIONARY.Joint.Drift",
+        "declaration": "YM.Stationary.drift_tip",
+        "module": "YM.Next.STATIONARY.Films.LeadingRay",
         "lines": [
-          498,
-          589
+          803,
+          805
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Stationary.lean_drift"
+            "id": "YM.Stationary.drift_tip"
+          },
+          "snippet": {
+            "text": "  have heq (v : Track) : stock (Y a a (axes v))=(1/2:ℂ)*((W v + W (-v))-(1/2:ℂ)*V v) := by\n    have hc := active (F:=U) hp he T hk hC hΩ hm a a (fun i u q hh=> signing_here (Q.tags i) (X.decor i) (X.mat i) hu h (X.health i) hd (X.guards i) hS (X.event i) (X.shades i) _ T (X.sworn i) (T.metric.rights _ _ hk hΩ.le) u q hh a a hC) (axes v) (axes_real v)\n    unfold V W B x M; simp only [axes_flip]; exact hc",
+            "line": 803,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Joint/Drift.lean",
-            "fragment": "L498-L589"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Films/LeadingRay.lean",
+            "fragment": "L803-L805"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.drift_tip",
+            "lines": [
+              789,
+              818
+            ],
+            "conclusion": "`heq` expresses the entry `stock (Y a a (axes v))` as `(1/2)((W v + W(-v)) - (1/2) V v)`, with W the linear trace sum and V the quadratic sum of the second-order trace."
           }
         }
       }
@@ -54,22 +68,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Stationary.drift_tip",
+        "declaration": "YM.Stationary.active",
         "module": "YM.Next.STATIONARY.Films.LeadingRay",
         "lines": [
-          789,
-          818
+          280,
+          291
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Stationary.drift_tip"
+            "id": "YM.Stationary.active"
+          },
+          "snippet": {
+            "text": "lemma active (hv : 0<γ) (hm : Tendsto (fun i=> (m i).val) atTop atTop) (i j : Loc G 1)\n   (H : ∀ l,∀ u : Site (m l),∀ q, rolls (mon u) q →\n    let x := taxTone G B (-q) i\n    let y := taxTone G B q j\n    shop (m l) (Y i j q)= (1/2:ℂ)*(\n      ((∑ a,y a * shop (m l) (hatchTrace F (.inl i) (.inr a) q)) + (∑ a,x a * shop (m l) (hatchTrace F (.inl j) (.inr a) (-q)))) -\n         (1/2:ℂ)* ∑ a,x a*∑ b,y b*shop (m l) (hatchTrace (F.pay F) (.inr a) (.inr b) q))) :\n    ∀ q : Momentum,star q=q →\n    let x := taxTone G B (-q) i; let y := taxTone G B q j\n    stock (Y i j q)= (1/2:ℂ)*(\n      ((∑ a,y a * stock (hatchTrace F (.inl i) (.inr a) q)) + (∑ a,x a * stock (hatchTrace F (.inl j) (.inr a) (-q)))) -\n         (1/2:ℂ)* ∑ a,x a*∑ b,y b*stock (hatchTrace (F.pay F) (.inr a) (.inr b) q)) := by",
+            "line": 280,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Films/LeadingRay.lean",
-            "fragment": "L789-L818"
+            "fragment": "L280-L291"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.active",
+            "lines": [
+              280,
+              309
+            ],
+            "conclusion": "For real momenta the limiting entry equals `1/2` of the symmetrised first-order trace terms minus `1/2` of the quadratic trace term `∑ x_a y_b hatchTrace (F.pay F)`."
           }
         }
       }
@@ -84,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge changed it from noMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

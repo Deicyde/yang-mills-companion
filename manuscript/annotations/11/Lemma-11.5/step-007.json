@@ -1,7 +1,9 @@
 {
   "id": "Lemma 11.5 step 7",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean's strip is an abstract `zone` and a real cube rather than |Re p| < 5 pi/4, |Im p| < eta, and constants are existential; the ratio-at-least-3 hypothesis is the `coarse` field of each hop.",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.04006
         ]
       },
-      "title": "Lemma 11.5 step 7: Text, p. 52, not yet judged",
+      "title": "Lemma 11.5 step 7: Text, p. 52",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 11.5 step 7"
@@ -21,7 +23,125 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Free.Train.smooth_upper",
+        "module": "YM.Next.FREE_KERNELS.Train",
+        "lines": [
+          169,
+          171
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Free.Train.smooth_upper"
+          },
+          "snippet": {
+            "text": "lemma smooth_upper (j : ℕ) : ∃ C : ℝ, 0<C ∧ ∀ (v : Train j) p, p∈cube zone →\n    ∀ l : Site v.mass, ‖v.smooth (aliasAt p l)‖ ≤ C*decay j l := by\n  obtain ⟨B,hB,h⟩ := alias_rail",
+            "line": 169,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/Train.lean",
+            "fragment": "L169-L171"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Free.Train.smooth_upper",
+            "lines": [
+              169,
+              184
+            ],
+            "conclusion": "For p in the complex cube of width `zone`, `smooth` at every alias is bounded by `C * decay j l`, the product of (1+|z_a|)^{-j}."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Free.Train.smooth_lower",
+        "module": "YM.Next.FREE_KERNELS.Train",
+        "lines": [
+          186,
+          186
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Free.Train.smooth_lower"
+          },
+          "snippet": {
+            "text": "lemma smooth_lower (j : ℕ) : ∃ c : ℝ, 0<c ∧ ∀ (v : Train j) (p : Momentum), p∈realCube zone → c ≤ ‖v.smooth (narrow v.mass p)‖ := by",
+            "line": 186,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/Train.lean",
+            "fragment": "L186-L186"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Free.Train.smooth_lower",
+            "lines": [
+              186,
+              194
+            ],
+            "conclusion": "On the real cube `c <= ‖smooth (narrow mass p)‖`, the real lower bound for f(p/M)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Free.Flight",
+        "module": "YM.Next.FREE_KERNELS.Signal",
+        "lines": [
+          25,
+          25
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Free.Flight"
+          },
+          "snippet": {
+            "text": "  coarse : 3 ≤ L.val",
+            "line": 25,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/Signal.lean",
+            "fragment": "L25-L25"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Free.Flight",
+            "lines": [
+              22,
+              29
+            ],
+            "conclusion": "Each hop of a `Flight` has block ratio `3 ≤ L.val`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +151,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

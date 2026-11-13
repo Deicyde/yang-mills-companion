@@ -1,7 +1,9 @@
 {
   "id": "Lemma 18.12 step 1",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "broadMatch",
+  "note": "M supposes the equality for every test in a fixed ball (the case P = id); Lean supposes it only after a self-adjoint P fixing U H, a weaker assumption, so its setup covers M's.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.12026,
           0.0962,
           0.76294,
-          0.03713
+          0.03736
         ]
       },
-      "title": "Lemma 18.12 step 1: Text, p. 217, not yet judged",
+      "title": "Lemma 18.12 step 1: Text, p. 217",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 18.12 step 1"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.Photons.regions_excludes",
+        "module": "YM.TraceExtension.Fock.Regions",
+        "lines": [
+          36,
+          37
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.Photons.regions_excludes"
+          },
+          "snippet": {
+            "text": "lemma regions_excludes (hr:0<r) (ha:0<A)(ht: EuclideanAsymptotic F A)(X:Comparison F U) : ¬ Regions r F U := by\n    intro hi; obtain ⟨μ,hμ,-⟩:= traceSpectrum_exists F",
+            "line": 36,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Fock/Regions.lean",
+            "fragment": "L36-L37"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.Photons.regions_excludes",
+            "lines": [
+              36,
+              38
+            ],
+            "conclusion": "Assuming `Regions r F U` (the equality on all open `Q`, `W` inside the ball `r`, for a projection `P` fixing `U H`) it takes the trace spectrum `μ` and derives `False` via `saturate`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.Photons.Regions.localball",
+        "module": "YM.TraceExtension.Fock.Regions",
+        "lines": [
+          19,
+          21
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.Photons.Regions.localball"
+          },
+          "snippet": {
+            "text": "lemma Regions.localball (he:Regions r F U)(hr:0<r) : LocalTest F U := by\n    obtain ⟨P,hP,hW,h⟩:= he.average_test\n    refine ⟨r,hr,?_⟩; intro f hf hb g hg hR hh",
+            "line": 19,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Fock/Regions.lean",
+            "fragment": "L19-L21"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.Photons.Regions.localball",
+            "lines": [
+              19,
+              35
+            ],
+            "conclusion": "`Regions r` yields `LocalTest F U`: the vacuum-matrix equality for every test supported in `ball 0 r`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

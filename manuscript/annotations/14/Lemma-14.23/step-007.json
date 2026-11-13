@@ -1,7 +1,9 @@
 {
   "id": "Lemma 14.23 step 7",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "Lean converts the window bounds to position space with the smooth cutoff `sail` and the `Mist` jet estimates (`intended`, `settles`) instead of dyadic annuli and q_der integrations by parts. The frequency bounds themselves are hypotheses.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.11962,
           0.36807,
           0.76046,
-          0.1218
+          0.12141
         ]
       },
-      "title": "Lemma 14.23 step 7: Text, p. 147, not yet judged",
+      "title": "Lemma 14.23 step 7: Text, p. 147",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 14.23 step 7"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Rank.Radian.intended",
+        "module": "YM.Next.RANK.Radian.Signed",
+        "lines": [
+          56,
+          92
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Rank.Radian.intended"
+          },
+          "snippet": {
+            "text": "theorem intended (R : ℕ) (h : 1≤R) (D L : Degree H) {t : ℝ} (ht : 0<t) (n : ℕ) (hn : D.degree+L.degree+6 ≤ n) : ∃ c : ℝ,0≤ c ∧ ∀ F B C,\n    1≤B→Window F R B n t D L → B*c≤C → Integrable (parade D L F) ∧\n      Mist (parade D L F-HeatP t D L) (D.degree+L.degree) C ∧ Lip (parade D L F) R C:= by\n  let K:=reel D L;let v:=D.degree+L.degree; let p:=staccato K; let q:=peck K; let l:=HeatP t (origin D) (origin L)\n  obtain ⟨⟨a,ha⟩,⟨hH,hS⟩,u,hu⟩:=messages K n; have hw:K.length=v:= by simp [K,v,reel]\n  rw [hw] at ha hS hu\n  obtain ⟨z,hZ⟩:=epithet p (starlight _) R n; obtain ⟨r,hr,hL⟩:=clear n D L ht; let T:=2^n*z+‖p 0‖\n  let F':=2^n*(u+hH);let c:=T+(R:ℝ)^5*T + F' +r\n  have hp:= hu.positive;have hx:=hS.positive; have he:=hZ.positive; have hT:0≤T:=by unfold T; positivity\n  have hP:0 ≤ F':= by unfold F'; positivity\n  refine ⟨c,by dsimp only [c]; positivity,?_⟩; intro F B C hB hv hC\n  have hy:= zero_le_one.trans hB; let g:=parade D L F\n  have hs:g=p*F:=dizzy D L F\n  have hy' : g-HeatP t D L= (p-q)*F+q*(F-l):= by rw [hs,augments];unfold p q K l;ring\n  have hh : Cast g n 0 R (B*T):= by rw [hs]; apply Cast.coin (hZ.multiply hv.cast);unfold T;nlinarith only [mul_nonneg hy (norm_nonneg (p 0))]\n  have hJ : eventP R g:= by intro x h; rw [hs,Pi.mul_apply,hv.event x h,mul_zero]\n  have hvX : ‖g 0‖ ≤ B*T:= by rw [hs,Pi.mul_apply,norm_mul,mul_comm]; apply (mul_le_mul_of_nonneg_right hv.coast (norm_nonneg _)).trans; apply mul_le_mul_of_nonneg_left _ hy; exact le_add_of_nonneg_left (by positivity)\n  have hC₁:B*T≤ C:= by unfold c at hC; nlinarith only [hC,mul_nonneg hy hP,mul_nonneg hy (zero_le_one.trans hr),mul_nonneg hy (show 0≤ (R:ℝ)^5*T by positivity)]\n  let Y:=(hh.coin hC₁).lips hJ (show 1 ≤ n by omega) (hvX.trans hC₁)\n  refine ⟨Y.int (show Measurable g by rw [hs]; exact (starlight _).continuous.measurable.mul hv.meas),?_,Y⟩\n  have ht' : Cast (g-HeatP t D L) (v+6) (v+1) 1 C:= by\n    have hX:= hu.multiply (hv.cast.range (show (1:ℝ) ≤ R by exact_mod_cast h)); rw [Nat.add_zero] at hX; rw [hy']\n    apply ((hX.join (hS.multiply hv.crest)).weaker (by omega : v+6≤n)).coin\n    apply le_trans (b:= F'*B) (le_of_eq (by unfold F';ring)); unfold c at hC; have he':0≤B*r:= mul_nonneg hy (zero_le_one.trans hr); linarith only [hC,he',mul_nonneg hy hT,mul_nonneg (show 0≤(R:ℝ)^5*T from by positivity) hy]\n  refine ⟨ht'.hills,ht'.altar,fun i hi x hx'=> ?_⟩; have h:n≤n:=le_rfl\n  have hw:0<‖x‖:=zero_lt_one.trans_le hx';have hp:x∈away:=norm_pos_iff.mp hw; have heU: i ≤n:=by omega\n  have h₀: ‖iteratedFDeriv ℝ i g x‖ ≤ ((R:ℝ)^5*(B*T))/‖x‖^5:= by\n    by_cases h:‖x‖ ≤ R\n    · have hk:= hh.altar i heU x hp h; rw [pow_zero,mul_one] at hk\n      rw [le_div_iff₀ (by positivity)]\n      have hx : ‖iteratedFDeriv ℝ i g x‖ ≤ B*T:= le_trans (le_mul_of_one_le_right (norm_nonneg _) (one_le_pow₀ hx')) hk\n      exact (mul_le_mul hx (pow_le_pow_left₀ hw.le h 5) (pow_nonneg hw.le 5) (mul_nonneg hy hT)).trans_eq (mul_comm ..)\n    rw [((Cast.cutZero hJ x (lt_of_not_ge h)).iteratedFDeriv ℝ i).eq_of_nhds]; simp; positivity\n  change ‖iteratedFDeriv ℝ i (g-_) x‖≤_\n  rw [iteratedFDeriv_sub_apply ((hh.hills.of_le (by exact_mod_cast heU : (↑i:WithTop ℕ∞) ≤ ↑n) x hp).contDiffAt (open_away.mem_nhds hp)) (((looks ht D L).1 _ hp).of_le (WithTop.coe_le_coe.mpr le_top))]\n  apply (norm_sub_le ..).trans; apply (add_le_add h₀ (hL i heU _ hx')).trans\n  rw [← add_div]; refine div_le_div_of_nonneg_right ?_ (by positivity); unfold c at hC; linarith only [hC,(le_mul_of_one_le_left (zero_le_one.trans hr) hB),mul_nonneg hy hT,mul_nonneg hy hP]",
+            "line": 56,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Radian/Signed.lean",
+            "fragment": "L56-L92"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Rank.Radian.intended",
+            "lines": [
+              56,
+              92
+            ],
+            "conclusion": "`intended` converts the window bounds `Window` into position-space comparison of the transform with the leading `HeatP` symbol, with order `n >= deg+6`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Rank.Radian.settles",
+        "module": "YM.Next.RANK.Radian.Sinks",
+        "lines": [
+          71,
+          103
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Rank.Radian.settles"
+          },
+          "snippet": {
+            "text": "lemma settles (n : ℕ) : ∃ K : ℝ, 1 ≤ K ∧ ∀ j≤ n+6,∀ F C (_ : Mist F n C) (_ : 0≤C) r (_ : 0< r), r≤1 → ∀ x,\n    ‖iteratedFDeriv ℝ j (sail r*F) x‖ ≤ C*K*reach r x:= by\n  obtain ⟨t,hT,ht⟩:= crown_cost (n+6)\n  refine ⟨2^(n+6)*t,one_le_mul_of_one_le_of_one_le (one_le_pow₀ (by norm_num)) hT,?_⟩\n  intro j hj F C h hv r hr ht' x\n  have hz:C ≤ C*(2^(n+6)*t):= le_mul_of_one_le_right hv (one_le_mul_of_one_le_of_one_le (one_le_pow₀ (by norm_num)) hT)\n  unfold reach; split\n  · rename_i hq;have hy :0<‖x‖ := lt_of_lt_of_le (by positivity : 0 < r/2) hq\n    have he:x≠0 := norm_pos_iff.mp hy\n    by_cases hL:r < ‖x‖\n    · rw [((untouched hr F hL).iteratedFDeriv ℝ j).eq_of_nhds];exact (penny h hv j hj x he).trans (by rw [div_eq_mul_inv]; exact mul_le_mul_of_nonneg_right hz (inv_pos.mpr (pow_pos hy _)).le)\n    have hK:‖x‖ ≤ r:= le_of_not_gt hL\n    have ha (i) (hp : i≤ j): ‖iteratedFDeriv ℝ i (sail r) x‖ * ‖iteratedFDeriv ℝ (j-i) F x‖ ≤ C * t * (‖x‖^5)⁻¹:= by\n      let q:= ‖x‖; let v:= ‖iteratedFDeriv ℝ i (sail r) x‖; let w:= ‖iteratedFDeriv ℝ (j-i) F x‖\n      have h₁ : v*q^i ≤ t:= by\n        have hh:=ht i (hp.trans hj) r hr x\n        apply le_trans (b:=v*r^i) _ ((le_div_iff₀ (pow_pos hr _)).1 hh);gcongr\n      have h₂ : w*q^(j-i) ≤ C*q^(n+1):= h.jet _ (by omega) x he (hK.trans ht')\n      rw [← div_eq_mul_inv]; apply (le_div_iff₀ (pow_pos hy 5)).2; apply le_of_mul_le_mul_right (a:=q^j) _ (pow_pos hy j)\n      have ht : q^(n+1)*q^5 ≤ q^j:= by rw [← pow_add];exact pow_le_pow_of_le_one hy.le (hK.trans ht') hj\n      have hs : 0≤ w:=norm_nonneg _\n      have hh:=mul_le_mul_of_nonneg_right (mul_le_mul h₁ h₂ (mul_nonneg hs (pow_pos hy _|>.le)) (zero_le_one.trans hT)) (pow_nonneg hy.le 5)\n      change v*w*q^5 *q^j ≤ _ ; calc\n        _ = v*q^i*(w*q^(j-i)) * q^5:= by\n          conv_lhs=> rw [show q^j=q^i*q^(j-i) by rw [← pow_add, Nat.add_sub_of_le hp]]\n          ring\n        _ ≤ t*(C*q^(n+1))*q^5:= hh\n        _ ≤ _:= by nlinarith only [mul_le_mul_of_nonneg_left ht (mul_nonneg hv (zero_le_one.trans hT))]\n    apply (stove away open_away ((away_sail r).contDiffOn.of_le (WithTop.coe_le_coe.mpr le_top)) (h.part.of_le (by exact_mod_cast hj)) x he).trans\n    apply le_trans (b:=∑ i∈Finset.range (j+1),(j.choose i:ℝ)*(C*t*(‖x‖^5)⁻¹)); refine sum_le_sum fun i hi=>?_ ; rw [mul_assoc];exact mul_le_mul_of_nonneg_left (ha _ (Nat.le_of_lt_succ (mem_range.mp hi))) (by positivity)\n    rw [← sum_mul, ← Nat.cast_sum,Nat.sum_range_choose]; push_cast\n    apply le_trans (mul_le_mul_of_nonneg_right (pow_le_pow_right₀ (by norm_num : 1≤(2:ℝ)) hj) (by positivity : 0 ≤ C*t*(‖x‖^5)⁻¹)); exact le_of_eq (by ring)\n  rename_i hh; rw [dark (lt_of_not_ge hh) hr, norm_zero,mul_zero]",
+            "line": 71,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Radian/Sinks.lean",
+            "fragment": "L71-L103"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Rank.Radian.settles",
+            "lines": [
+              71,
+              103
+            ],
+            "conclusion": "`settles` bounds the derivatives of the cut-off kernel `sail r * F` from the `Mist` jet bounds."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

@@ -1,7 +1,9 @@
 {
   "id": "Lemma 17.8 step 15",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] defines p and q as OS-side continuations transported by `J`, and identifies them with the boundary-side e^{izH} pairings only on the real and imaginary axes.",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.02248
         ]
       },
-      "title": "Lemma 17.8 step 15: Display, p. 202, not yet judged",
+      "title": "Lemma 17.8 step 15: Display, p. 202",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 17.8 step 15"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.commutant",
+        "module": "YM.EveryPhase.Irreducible",
+        "lines": [
+          141,
+          142
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.commutant"
+          },
+          "snippet": {
+            "text": "    let p t := D.flow.J 0 (J u) (J (B Ω)) t\n    let q t := D.flow.J 0 (J (B.adjoint Ω)) (J v) t",
+            "line": 141,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Irreducible.lean",
+            "fragment": "L141-L142"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.commutant",
+            "lines": [
+              118,
+              193
+            ],
+            "conclusion": "`p t = D.flow.J 0 (J u) (J (B Ω)) t` and `q t = D.flow.J 0 (J (B† Ω)) (J v) t`, the OS-side analytic pairings."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.commutant",
+        "module": "YM.EveryPhase.Irreducible",
+        "lines": [
+          163,
+          164
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.commutant"
+          },
+          "snippet": {
+            "text": "      have hx (s : ℝ≥0) : p (Complex.I * ↑(s:ℝ))=inner ℂ u (bHeat J s (B Ω)) := by\n        unfold p; rw [direct]; exact (ContinuousLinearMap.adjoint_inner_right J u _).symm",
+            "line": 163,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Irreducible.lean",
+            "fragment": "L163-L164"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.commutant",
+            "lines": [
+              118,
+              193
+            ],
+            "conclusion": "`p (I s) = ⟨u, bHeat J s (B Ω)⟩`, identifying `p` with the boundary-side upper half-plane function."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
       }
     }
   }

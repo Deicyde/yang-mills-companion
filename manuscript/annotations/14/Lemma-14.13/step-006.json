@@ -1,28 +1,30 @@
 {
   "id": "Lemma 14.13 step 6",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "Lean pays the derivative factorial by dividing the column width by it in `Mix.last` inside `cheap`, not through Taylor's product rule in the source expansion.",
   "subject": [
     {
       "location": {
         "page": 137,
         "rect": [
           0.12026,
-          0.27021,
+          0.27076,
           0.75949,
-          0.0517
+          0.05012
         ]
       },
-      "title": "Lemma 14.13 step 6: Text, p. 137, not yet judged",
+      "title": "Lemma 14.13 step 6: Text, p. 137",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 14.13 step 6",
           "quads": [
             [
               0.63203,
-              0.27021,
+              0.27076,
               0.87975,
-              0.27021,
+              0.27076,
               0.87975,
               0.2877,
               0.63203,
@@ -30,13 +32,13 @@
             ],
             [
               0.12026,
-              0.28772,
+              0.28795,
               0.87974,
-              0.28772,
+              0.28795,
               0.87974,
-              0.304,
+              0.30487,
               0.12026,
-              0.304
+              0.30487
             ],
             [
               0.12026,
@@ -44,16 +46,56 @@
               0.19143,
               0.30401,
               0.19143,
-              0.32191,
+              0.32088,
               0.12026,
-              0.32191
+              0.32088
             ]
           ]
         }
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.MergeProof.Accent.cheap",
+        "module": "YM.MergeProof.Baskets",
+        "lines": [
+          28,
+          30
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.MergeProof.Accent.cheap"
+          },
+          "snippet": {
+            "text": "   have hK: (1:ℝ) ≤ Nat.factorial ((C.path.levels.params i).order):= by exact_mod_cast Nat.factorial_pos _\n   have hg0 := div_le_self (hz i|>.le) hK\n   have hg : Real.log (Mix.last C i (f i)) ≤ Real.log (f i):=Real.log_le_log (div_pos (hz i) (zero_lt_one.trans_le hK)) hg0",
+            "line": 28,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Baskets.lean",
+            "fragment": "L28-L30"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.Accent.cheap",
+            "lines": [
+              21,
+              32
+            ],
+            "conclusion": "The factorial of the stage order is divided out: `Mix.last C i (f i) <= f i` since `1 <= Nat.factorial (params i).order`, so the width is at most the log-cost quantity."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -63,8 +105,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
       }
     }
   }

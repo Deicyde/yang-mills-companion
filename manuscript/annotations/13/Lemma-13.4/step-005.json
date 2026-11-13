@@ -1,9 +1,9 @@
 {
   "id": "Lemma 13.4 step 5",
   "kind": "proof_step",
-  "status": "not_formalized",
-  "relation": "noMatch",
-  "note": "The limit of (t/g)/(B^4 log b) is not stated; no such quantity occurs.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "Lean uses the monitor exp(-δ·fineMonitor^γ), which is a `Rate` of every exponent, in place of the ratio (t_{m+1}/g)/(B⁴ log 𝔟)→∞; the limit itself is not stated.",
   "subject": [
     {
       "location": {
@@ -29,47 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.PhysicalNext.Repeat.Song.books",
-        "module": "YM.PhysicalNext.RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP.Song.Octet",
+        "declaration": "YM.ConnectedActivityE6.Rate.monitor_cutoff",
+        "module": "YM.AnalyticNext.CONNECTED_ACTIVITY_JETS_E6.Numerics",
         "lines": [
-          81,
-          90
+          121,
+          129
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.PhysicalNext.Repeat.Song.books"
+            "id": "YM.ConnectedActivityE6.Rate.monitor_cutoff"
+          },
+          "snippet": {
+            "text": "lemma monitor_cutoff {δ γ : ℝ} (hδ : 0 < δ) (hγ : 0 < γ) :\n    Rate G L a (fun x => Real.exp (-δ*(Delay.fineMonitor G L x)^γ)) := by\n  intro b hb\n  let N := max (-b) 1\n  have h1 : 0 < N := lt_of_lt_of_le zero_lt_one (le_max_right ..)\n  filter_upwards [Fees.hat_decay G L hδ hγ h1,\n    (Work.E09.betaF_growth G L).eventually_gt_atTop 1] with x hx hp\n  rw [abs_of_pos (Real.exp_pos _)]\n  exact hx.trans (Real.rpow_le_rpow_of_exponent_le hp.le (by have := le_max_left (-b) (1:ℝ); unfold N; linarith))",
+            "line": 121,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Song/Octet.lean",
-            "fragment": "L81-L90"
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.PhysicalNext.Repeat.Song.stanzaReady",
-        "module": "YM.PhysicalNext.RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP.Song.Litho",
-        "lines": [
-          62,
-          71
-        ]
-      },
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.PhysicalNext.Repeat.Song.stanzaReady"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/Numerics.lean",
+            "fragment": "L121-L129"
           },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Song/Litho.lean",
-            "fragment": "L62-L71"
+          "proof_context": {
+            "declaration": "YM.ConnectedActivityE6.Rate.monitor_cutoff",
+            "lines": [
+              121,
+              129
+            ],
+            "conclusion": "For δ,γ>0, `exp(-δ * fineMonitor^γ)` is a `Rate` of every exponent `a`: it is eventually below every power of β."
           }
         }
       }
@@ -84,8 +73,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge changed it from noMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
       }
     }
   }

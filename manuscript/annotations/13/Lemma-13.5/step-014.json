@@ -1,9 +1,9 @@
 {
   "id": "Lemma 13.5 step 14",
   "kind": "proof_step",
-  "status": "not_formalized",
-  "relation": "noMatch",
-  "note": "No lines of the key proof or its helpers carry this step; [L] takes the corresponding bound as an abstract hypothesis or rate.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "The derivative bounds of the background kernel reach [L] through the priced annuity hypotheses packaged by `coaches` into `Matins` and `Promise 2 C L⁻¹`, not through a Lemma B3 bound on the derivatives of W0 with a curl and a further difference; the per-term factors are not formed.",
   "subject": [
     {
       "location": {
@@ -29,47 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.PhysicalNext.Repeat.Brim.pressings",
-        "module": "YM.PhysicalNext.RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP.Brim.Level",
+        "declaration": "YM.PhysicalNext.JointLoad.Heir.coaches",
+        "module": "YM.PhysicalNext.V9_JOINT_ENDPOINT_LOAD.Heir.Coach",
         "lines": [
-          61,
-          91
+          122,
+          158
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.PhysicalNext.Repeat.Brim.pressings"
+            "id": "YM.PhysicalNext.JointLoad.Heir.coaches"
+          },
+          "snippet": {
+            "text": "theorem coaches (Pt : Teller G) (b : ℕ) (M : ℝ) (hb : 2 ≤ b) (hM : 0<M) : ∃ C : ℝ, 1≤C ∧\n    ∀ {c f : Side} (S : StepData c f) (T : Tube G S), Pt.Funds S T → ∀ (F : Forest S.ratio), Matins T F b M C := by\n  obtain ⟨D,hD,H⟩ := annuities Pt\n  obtain ⟨Z,hZ,h⟩ := ridge b Pt.width\n  obtain ⟨Q,hq,hQ⟩ := Newt.row_home G Pt.width Pt.C 2 b\n  obtain ⟨Y,hy,hY⟩ := Newt.canal G 2 b hb\n  have h0 : 0 ≤ M*Y*Q := by positivity\n  let C := 1+D+Z*D+M*Y*Q; have hC : 1 ≤ C := by unfold C; nlinarith\n  refine ⟨C,hC, fun S T ht F => ?_⟩\n  obtain ⟨h1,h2,h3⟩ := H S T ht F\n  let A := S.ratio\n  have hL : 1 ≤ (S.patch.L.val:ℝ) := Nat.one_le_cast.mpr S.patch.L.property\n  constructor\n  · intro v i o t h0 hv; rw [woody,roll_as]; apply (collect_load _ h1 v (i.1,Exterior.coord i.2) (M:=t*(Z*spine b i.1 o))\n      (mul_nonneg h0 (mul_pos hZ (spine_pos ..)).le) (fun j => (hv j).trans (by rw [mul_assoc]; exact mul_le_mul_of_nonneg_left (h A ..) h0))).trans\n    have he : Z*D≤C := by unfold C; nlinarith\n    rw [show t*(Z*spine b i.1 o)*D = Z*D*t*spine b i.1 o by ring]; exact mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_right he h0) (spine_pos ..).le\n  · apply ContinuousLinearMap.opNorm_le_bound _ (zero_le_one.trans hC)\n    intro v; refine (pi_norm_le_iff_of_nonneg (by positivity : 0≤C*‖v‖)).mpr fun i => ?_; rw [peg_as]; apply (collect_load _ h2 v (i,Exterior.vac) (norm_nonneg v) (fun j => ?_)).trans\n    · rw [mul_comm]; apply mul_le_mul_of_nonneg_right _ (norm_nonneg _); unfold C; nlinarith\n    exact (norm_le_pi_norm ..).trans (le_mul_of_one_le_right (norm_nonneg _) (Real.one_le_exp (by have := Pt.width; positivity)))\n  intro B X o v hB hv; let y := M⁻¹ • Flat.labels v\n  have hpt i : ‖y i‖ ≤ B.threshold * spine b i.1 (A.parent o) := by\n    unfold y; rw [Pi.smul_apply,norm_smul_of_nonneg (inv_pos.mpr hM).le]; exact (inv_mul_le_iff₀ hM).mpr ((hv _).trans_eq (mul_assoc ..))\n  obtain ⟨w,hf,hg,hw⟩ := hY _ X o B _ _ _ hB hL (zero_le_one.trans hq)\n    (hQ _ _ A _ (accreditation ht) B o S.patch.odd_side hB y hpt)\n  let N : ℝ := S.patch.L.val\n  refine ⟨fun i => M • w i,?_,fun i => ⟨by positivity,fun j => ?_⟩,fun i hi => ?_⟩\n  · rw [← Finset.smul_sum,← hf]\n    funext i; rw [route,roll_as,Pi.smul_apply]; change Newt.load _ _ _=M • Newt.load _ y _; unfold Newt.load y; rw [Finset.smul_sum]; exact Finset.sum_congr rfl fun j _ => by rw [smul_comm M,Pi.smul_apply,smul_inv_smul₀ hM.ne']\n  · change ‖M • w i j‖ ≤ _; rw [norm_smul_of_nonneg hM.le]; refine (mul_le_mul_of_nonneg_left ((hg i).2 j) hM.le).trans ?_\n    have he : M*(Y*Q) ≤ C := by unfold C; nlinarith\n    calc\n      _ = (M*(Y*Q)*N⁻¹^(i.val+1))*Lyre.width B o j := by unfold N; ring\n      _ ≤ _ := mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_right he (by unfold N; positivity)) (Lyre.width_pos ..).le\n  rw [Mom.screen, map_smul]\n  exact (Mom.Maps o X (i.val+1)).smul_mem _ (hw i hi)",
+            "line": 122,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Brim/Level.lean",
-            "fragment": "L61-L91"
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.PhysicalNext.Repeat.Brim.royaltyB",
-        "module": "YM.PhysicalNext.RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP.Brim.Lode",
-        "lines": [
-          33,
-          100
-        ]
-      },
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.PhysicalNext.Repeat.Brim.royaltyB"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/V9_JOINT_ENDPOINT_LOAD/Heir/Coach.lean",
+            "fragment": "L122-L158"
           },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Brim/Lode.lean",
-            "fragment": "L33-L100"
+          "proof_context": {
+            "declaration": "YM.PhysicalNext.JointLoad.Heir.coaches",
+            "lines": [
+              122,
+              158
+            ],
+            "conclusion": "For `Pt.Funds S T`, `Matins T F b M C` holds: the route, `woody` and `pegs` obey the priced annulus bounds, and `taper` gives `Promise 2 C L⁻¹`."
           }
         }
       }
@@ -84,8 +73,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge changed it from noMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
       }
     }
   }

@@ -1,28 +1,30 @@
 {
   "id": "Lemma 14.5 step 14",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "Lean chooses L large through `Bank` with exponent 1/8 and keeps the coupling-entry choice implicit in the hypotheses; the thresholds L^{3/5} > 2C_loc and the 1/2 L^{-2/5} split are not there.",
   "subject": [
     {
       "location": {
         "page": 130,
         "rect": [
           0.12026,
-          0.32497,
+          0.32473,
           0.75996,
-          0.05795
+          0.0574
         ]
       },
-      "title": "Lemma 14.5 step 14: Text, p. 130, not yet judged",
+      "title": "Lemma 14.5 step 14: Text, p. 130",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 14.5 step 14",
           "quads": [
             [
               0.49681,
-              0.32497,
+              0.32473,
               0.87974,
-              0.32497,
+              0.32473,
               0.87974,
               0.34385,
               0.49681,
@@ -30,13 +32,13 @@
             ],
             [
               0.12026,
-              0.34386,
+              0.34429,
               0.88022,
-              0.34386,
+              0.34429,
               0.88022,
-              0.3631,
+              0.36303,
               0.12026,
-              0.3631
+              0.36303
             ],
             [
               0.12026,
@@ -44,16 +46,95 @@
               0.18462,
               0.36313,
               0.18462,
-              0.38291,
+              0.38212,
               0.12026,
-              0.38291
+              0.38212
             ]
           ]
         }
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Bid.Bank",
+        "module": "YM.Bid.Loan",
+        "lines": [
+          43,
+          46
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Bid.Bank"
+          },
+          "snippet": {
+            "text": "def Bank (W : Worth) (A : Levels G) : Prop := ∀ i : ℕ,\n    let j:=A.clock.J (i+1)\n    let p:= A.params (i+1)\n    100000*(W.K (j+1))^6*(1+p.columns)^2 ≤ puffs (A.S.block i)",
+            "line": 43,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Bid/Loan.lean",
+            "fragment": "L43-L46"
+          },
+          "proof_context": {
+            "declaration": "YM.Bid.Bank",
+            "lines": [
+              43,
+              46
+            ],
+            "conclusion": "`Bank W A` requires `100000*K^6*(1+columns)^2 ≤ puffs (block i) = L^{1/8}` for every stage, a lower bound on the block size L."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Bid.roomCost",
+        "module": "YM.Bid.Loan",
+        "lines": [
+          36,
+          39
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Bid.roomCost"
+          },
+          "snippet": {
+            "text": "def roomCost (A : Levels G) (P : Worth) : Prop := ∀ i : ℕ,\n    let j:=A.clock.J i\n    let h:=P.K (j+1)\n    64*h^ (2:ℕ) ≤ (A.params i).columns",
+            "line": 36,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Bid/Loan.lean",
+            "fragment": "L36-L39"
+          },
+          "proof_context": {
+            "declaration": "YM.Bid.roomCost",
+            "lines": [
+              36,
+              39
+            ],
+            "conclusion": "`roomCost` requires `64*K^2 ≤ columns`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -63,8 +144,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents agreed on the class but cited different declarations; the mapper's kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

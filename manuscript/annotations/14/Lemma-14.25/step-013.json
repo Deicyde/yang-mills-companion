@@ -1,19 +1,21 @@
 {
   "id": "Lemma 14.25 step 13",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The comparison density in Lean is `white P` (a density with the comparison exponent), and the factors e^{Vδ} are absorbed through `X+δ` and `protection`'s `2 exCost` as in [M].",
   "subject": [
     {
       "location": {
         "page": 151,
         "rect": [
           0.12026,
-          0.29857,
+          0.29912,
           0.75996,
           0.10262
         ]
       },
-      "title": "Lemma 14.25 step 13: Text, p. 151, not yet judged",
+      "title": "Lemma 14.25 step 13: Text, p. 151",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 14.25 step 13"
@@ -21,7 +23,47 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.PhysicalNext.InteractingRank.Soft.denture",
+        "module": "YM.PhysicalNext.AFTERNOON_INTERACTING_RANK_COMPARISON.Soft.Denarii",
+        "lines": [
+          30,
+          43
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.PhysicalNext.InteractingRank.Soft.denture"
+          },
+          "snippet": {
+            "text": "  let Y:= white P; let A:= prior G n; let R:=(K:ℝ)*δ\n  have ht U:0 ≤ Y.eval U:= by unfold Y; rw [whiteEval]; exact mul_nonneg (Real.exp_pos _).le (hn _)\n  have hv U : -R ≤ P.exponent U-Y.exponent U ∧ P.exponent U-Y.exponent U≤R:= abs_le.mp (e_volume P h.patch U).2\n  have hf : 0<∫ U,Y.eval U∂A:=\n    lt_of_lt_of_le (by have hp:= O.positive; positivity) (vacuum_bound h.status O ht hg hp hβ)\n  have hP : (∫ U,Y.eval U∂A) ≤ Real.exp R * ∫ U,P.eval U∂A:= by\n    rw [← integral_const_mul]; refine integral_mono ((Y.envelope h.status).integrable _) ((payEnv P h).integrable _|>.const_mul _) ?_\n    intro i; change (white P).eval i ≤ _; rw [whiteEval]; have he := (hv i).1; rw [whiteExp] at he\n    exact mul_le_mul_of_nonneg_right (Real.exp_monotone (by unfold Y at he; linarith only [he])) (hn _)\n  have hY :0<∫ U,P.eval U∂A:= pos_of_mul_pos_right (hf.trans_le hP) (Real.exp_pos _).le\n  have hw := determinant h.status O ht hL hg hp hβ F hI hz (X:=X+δ) (fun U=> (hQ U).trans (Real.exp_monotone ?_))\n  swap; unfold R Y at hv; linarith only [(hv U).2]\n  rw [div_le_iff₀ hY]; refine ((div_le_iff₀ hf).1 hw).trans ((mul_le_mul_of_nonneg_left hP (Real.exp_pos _).le).trans_eq ?_)\n  rw [← mul_assoc,← Real.exp_add]; unfold R protection Rep.exCost; simp only [white]; ring_nf",
+            "line": 30,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/AFTERNOON_INTERACTING_RANK_COMPARISON/Soft/Denarii.lean",
+            "fragment": "L30-L43"
+          },
+          "proof_context": {
+            "declaration": "YM.PhysicalNext.InteractingRank.Soft.denture",
+            "lines": [
+              27,
+              43
+            ],
+            "conclusion": "`denture` compares the exponent of `P` with that of `white P` within `K δ`, multiplies the source bound by `e^{Kδ}` through `X+δ` and the partition integrals by `e^{Kδ}`, and applies `determinant`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +73,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
       }
     }
   }

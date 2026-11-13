@@ -1,9 +1,9 @@
 {
   "id": "Lemma 14.24 step 3",
   "kind": "proof_step",
-  "status": "not_formalized",
-  "relation": "noMatch",
-  "note": "The asymptotics of B_t against M and the ceilings are not computed; Lean packages the needed smallness in the abstract `Tally` hypothesis (`growth`, `stops`, `force`).",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "`rate_wall` gives B_t = M^{o(1)} as a one-sided eventual bound; the ceiling and +2 contribution L^{4/j^2} ≤ M^{4/j^2} from row 6 is not stated.",
   "subject": [
     {
       "location": {
@@ -12,7 +12,7 @@
           0.12026,
           0.162,
           0.76013,
-          0.05423
+          0.05479
         ]
       },
       "title": "Lemma 14.24 step 3: Text, p. 149",
@@ -29,47 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Next.Rank.Perch.covers",
-        "module": "YM.Next.RANK.Stepped",
+        "declaration": "YM.Next.Rank.Perch.rate_wall",
+        "module": "YM.Next.RANK.Reign",
         "lines": [
-          140,
-          176
+          71,
+          90
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Next.Rank.Perch.covers"
+            "id": "YM.Next.Rank.Perch.rate_wall"
+          },
+          "snippet": {
+            "text": "lemma rate_wall {a : ℝ} (ha : 0<a) (c : ℝ) : ∀ᶠ s in atTop, c*Real.log (walls s:ℝ) ≤ a*boil s := by\n  -- M=ceil exp(2*y), walls=M^2\n  have hM : ∀ᶠ s in atTop, Real.log (walls s:ℝ) ≤ 6*y s := by\n    filter_upwards [y_rate.eventually_ge_atTop 1, Real.tendsto_log_atTop.eventually_ge_atTop 1] with s hs hh\n    have hx : 1≤Real.log s := hh; have he : Real.log s = Real.exp (y s) := (Real.exp_log (zero_lt_one.trans_le hx)).symm\n    have hu : (M s:ℝ) < (Real.log s)^2+1 := Nat.ceil_lt_add_one (sq_nonneg _)\n    have ht : (Real.log s)^2=Real.exp (2*y s) := by rw [he,two_mul,Real.exp_add,pow_two]\n    have hy : 1 ≤ Real.exp (2*y s) := Real.one_le_exp (by linarith)\n    have hv : 2 ≤ Real.exp (y s) := by linarith only [Real.add_one_le_exp (y s),hs]\n    have hp : (M s:ℝ) ≤ Real.exp (3*y s) := by rw [show 3*y s=2*y s+y s by ring,Real.exp_add]; linarith only [ht,hu,hy,mul_le_mul_of_nonneg_left hv (Real.exp_pos (2*y s)).le]\n    have hh : (0:ℝ) < M s := by exact_mod_cast (Nat.ceil_pos.mpr (by positivity : 0 < Real.log s ^ 2))\n    unfold walls; rw [Nat.cast_pow,Real.log_pow,Nat.cast_ofNat]\n    linarith only [(Real.log_le_iff_le_exp hh).mpr hp]\n  rcases le_or_gt c 0 with h|h\n  · filter_upwards [big.eventually_ge_atTop 1] with s hs\n    exact (mul_nonpos_of_nonpos_of_nonneg h (Real.log_nonneg (by exact_mod_cast hs))).trans (mul_nonneg ha.le (boil_pos _))\n  filter_upwards [hM,y_rate.eventually_ge_atTop (6*c/a)] with s hs hy\n  have he : 6*c ≤ y s*a := (div_le_iff₀ ha).mp hy\n  have hv : 0≤ y s := le_trans (by positivity) hy\n  unfold boil; linarith only [mul_le_mul_of_nonneg_left hs h.le,mul_le_mul_of_nonneg_left he hv]",
+            "line": 71,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Stepped.lean",
-            "fragment": "L140-L176"
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Next.Rank.Perch.Tally",
-        "module": "YM.Next.RANK.Stepped",
-        "lines": [
-          55,
-          58
-        ]
-      },
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Next.Rank.Perch.Tally"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Reign.lean",
+            "fragment": "L71-L90"
           },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Stepped.lean",
-            "fragment": "L55-L58"
+          "proof_context": {
+            "declaration": "YM.Next.Rank.Perch.rate_wall",
+            "lines": [
+              71,
+              90
+            ],
+            "conclusion": "For every a>0 and c, eventually `c*log (walls s) <= a*boil s`, where `walls s=(ceil((log s)^2))^2` and `boil s=(log log s)^2`, so the width factor is `bill a s=M^a` for every fixed a."
           }
         }
       }
@@ -84,8 +73,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge changed it from noMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
       }
     }
   }

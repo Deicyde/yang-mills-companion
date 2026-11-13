@@ -1,7 +1,9 @@
 {
   "id": "Lemma 13.21 step 19",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Continuity is stated as the abstract `Curve` condition over a fixed finite address set, and covariance as the `Moves` datum, rather than as continuity of the weighted difference sums. The final assertion holds on the allowed band under `Allows` and `Approved`.",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.09139
         ]
       },
-      "title": "Lemma 13.21 step 19: Text, p. 121, not yet judged",
+      "title": "Lemma 13.21 step 19: Text, p. 121",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 13.21 step 19"
@@ -21,7 +23,125 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.WilsonStartup.Start.curve",
+        "module": "YM.Extra.WILSON_STARTUP.Curve",
+        "lines": [
+          66,
+          87
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.WilsonStartup.Start.curve"
+          },
+          "snippet": {
+            "text": "lemma curve (ht : b.threshold ≤ threshold G b.order b.power) (hc : c.direct ≤ 1) (hX : ∀ x∈X, 0 ≤ x) :\n    Curve b (Bid.Cake (payload c b G n) (dictionary G n) (top G c) c b) X := by\n  refine ⟨continuousOn_id,continuousOn_const, fun _ _ _ _ => rfl, fun _ _ _ _ => rfl,fun ε he x hx => ?_⟩\n  have hf := (show Continuous (totalE n c G b x) by unfold totalE BudgetPoint.mass weight; fun_prop).tendsto' x 0\n    (by simp [totalE,BudgetPoint.mass])\n  have hg := (show Continuous (totalK n b x) by unfold totalK BudgetPoint.mass; fun_prop).tendsto' x 0 (by simp [totalK,BudgetPoint.mass])\n  filter_upwards [(hf.mono_left nhdsWithin_le_nhds).eventually (gt_mem_nhds he), (hg.mono_left nhdsWithin_le_nhds).eventually (gt_mem_nhds he),self_mem_nhdsWithin] with y hy hy' hyx\n  let p := ‖weight c x-weight c y‖ * item G b\n  let q := ‖x-y‖ * total n\n  have hp : 0 ≤ p := mul_nonneg (norm_nonneg _) (item_pos ..).le\n  have hq : 0 ≤ q := mul_nonneg (norm_nonneg _) (total_pos ..).le\n  refine ⟨fun i => if fixed (Sheet n) i then p else 0, fun i => if fixed (Foot n) i then q else 0, fun i => ?_,fun i => ?_,\n    Padded.budget (α:=Sheet n) (fun i => ?_) (fun i => mul_nonneg (Real.exp_pos _).le hp) hy.le,\n    Padded.budget (α:=Foot n) (fun i => ?_) (fun i => mul_nonneg (Real.exp_pos _).le hq) hy'.le⟩\n  · simp only [Bid.Cake,pours,dictionary,payload]; split\n    · exact differenceE ht _\n    exact ⟨le_rfl,fun _ _ _ _ _ => by simp⟩\n  · simp only [Bid.Cake,pours,dictionary,payload]; split\n    · exact ⟨hq,paid_dist hc (hX x hx) (hX y hyx) _⟩\n    exact ⟨le_rfl,fun _ => by simp⟩\n  · dsimp only; split <;> first | rfl | exact mul_zero _\n  · dsimp only; split <;> first | rfl | exact mul_zero _",
+            "line": 66,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/WILSON_STARTUP/Curve.lean",
+            "fragment": "L66-L87"
+          },
+          "proof_context": {
+            "declaration": "YM.WilsonStartup.Start.curve",
+            "lines": [
+              66,
+              87
+            ],
+            "conclusion": "`Curve` for the start family: continuity in `beta` of the regular and forced activities within the budgets `totalE` and `totalK` (finite sums over `Sheet n` and `Foot n`)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.WilsonStartup.Start.moves",
+        "module": "YM.Extra.WILSON_STARTUP.Labels",
+        "lines": [
+          137,
+          152
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.WilsonStartup.Start.moves"
+          },
+          "snippet": {
+            "text": "theorem moves (s : Signed) (x : Site n) (β : ℝ) : Nonempty ((raw G n c b β).Moves s x) := by\n  refine ⟨{ ep := sends (sheetAction s x), kp := sends (footAction s x), reg_site := fun i => ?_,reg_support := fun i => ?_,\n            forced_support := fun i => ?_,forced_inventory := fun i => ?_,forced_tests := fun i U => Iff.rfl,\n            valuesE := fun i U => ?_,valuesK := fun i U => ?_ }⟩\n  · change (eInfo _).site = affine s x (eInfo _).site\n    rw [name_sends,eInfo_transport]\n  · change (eInfo _).support = Finset.image _ (eInfo _).support\n    rw [name_sends,eInfo_transport]\n  · change (name (Foot n) _).val.1 = (name (Foot n) i).val.1.image _\n    rw [name_sends,foot_trans]\n  · change (name (Foot n) _).val.2 = (name (Foot n) i).val.2.image _\n    rw [name_sends,foot_trans]\n  · simp only [raw,pours,payload,name_sends,fixed_sends]\n    split <;> first | exact written_oriented .. | exact rfl\n  · simp only [raw,pours,payload,name_sends,fixed_sends]\n    split <;> first | exact paid_oriented .. | exact rfl",
+            "line": 137,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/WILSON_STARTUP/Labels.lean",
+            "fragment": "L137-L152"
+          },
+          "proof_context": {
+            "declaration": "YM.WilsonStartup.Start.moves",
+            "lines": [
+              137,
+              152
+            ],
+            "conclusion": "Translations and signed permutations act on labels, supports, inventories, tests and values (`written_oriented`, `paid_oriented`): `Moves s x` is nonempty."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.WilsonStartup.Start.oust",
+        "module": "YM.Extra.WILSON_STARTUP.Cake",
+        "lines": [
+          58,
+          77
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.WilsonStartup.Start.oust"
+          },
+          "snippet": {
+            "text": "theorem oust (N p : ℕ) (h : Approved B N) (a : Allows B.a N) : Bid.Oust B N p := by\n  let b := B.a.budget N\n  let X := band B.a N\n  let n := B.a.S.side N p\n  let c := (B.a.params N).clip\n  obtain ⟨σ,κ,γ,he,hh⟩ := a.receipt\n  have ht : b.threshold ≤ threshold G b.order b.power := a.radius\n  refine ⟨dictionary G n,payload c b G n,enumeration G n,?_⟩\n  have hX (x) (hx : x∈X) : B.a.clock.hatBeta N/2 ≤ x := hx.1\n  dsimp only\n  change ((Curve b (Cake _ _ (B.bake.path N N) c b) X ∧ _ ∧ _) ∧ _)\n  simp only [h.paths,topRatio]\n  refine ⟨⟨curve ht a.clip.direct (fun x hx => he.slope.trans (hX x hx)),posed a.clip.direct (fun x hx => he.slope.trans (hX x hx)),he.little a.clip X hX⟩,fun x hx =>\n    ⟨(h.passes p x hx).symm,κ,Real.exp γ-1,Real.exp γ-1, digests a.clip ht he (hX x hx) ?_,he.buys a.clip (hX x hx),hh,fun y => ?_⟩⟩\n  · refine le_trans ?_ a.income\n    unfold book overhead\n    have h₁ := item_pos G b\n    have ht : ‖x‖ ≤ 2*B.a.clock.hatBeta N := by rw [Real.norm_of_nonneg (he.slope.trans (hX x hx))]; exact hx.2\n    gcongr\n  simp only [payload,Pi.zero_apply,tsum_zero,Real.exp_zero,mul_one]; exact evaluates a.clip y",
+            "line": 58,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/WILSON_STARTUP/Cake.lean",
+            "fragment": "L58-L77"
+          },
+          "proof_context": {
+            "declaration": "YM.WilsonStartup.Start.oust",
+            "lines": [
+              58,
+              77
+            ],
+            "conclusion": "Assembles the curve, its bounds and the evaluation to the bare weight `e^{-beta E}` over the coupling band."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +151,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

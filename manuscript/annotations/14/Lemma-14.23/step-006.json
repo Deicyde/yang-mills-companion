@@ -1,7 +1,9 @@
 {
   "id": "Lemma 14.23 step 6",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The two derivative bounds, on the kernel and on its difference from `HeatP` with one extra power, are the fields `cast` and `crest` of `Window` on a window of radius R. Lean assumes them as hypotheses and does not prove them.",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.02236
         ]
       },
-      "title": "Lemma 14.23 step 6: Display, p. 147, not yet judged",
+      "title": "Lemma 14.23 step 6: Display, p. 147",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 14.23 step 6"
@@ -21,7 +23,47 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Rank.Radian.Window",
+        "module": "YM.Next.RANK.Radian.Signed",
+        "lines": [
+          47,
+          53
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Rank.Radian.Window"
+          },
+          "snippet": {
+            "text": "structure Window (F : E4→ℂ) (R : ℕ) (C : ℝ) (n : ℕ) (b : ℝ) (D L : Degree H) : Prop where\n  nonneg : 0 ≤ C\n  event : eventP R F\n  coast : ‖F 0‖ ≤ C\n  meas : Measurable F\n  cast : Cast F n 0 R C\n  crest : Cast (F-HeatP b (origin D) (origin L)) n 1 1 C",
+            "line": 47,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Radian/Signed.lean",
+            "fragment": "L47-L53"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Rank.Radian.Window",
+            "lines": [
+              47,
+              53
+            ],
+            "conclusion": "`cast` bounds the derivatives of the kernel by the inverse powers of the radius and `crest` bounds those of `F - HeatP` with one extra power, up to order `n`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +73,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
       }
     }
   }

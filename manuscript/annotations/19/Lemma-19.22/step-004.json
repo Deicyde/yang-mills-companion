@@ -1,49 +1,130 @@
 {
   "id": "Lemma 19.22 step 4",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The support bound `2s` is proved in [L]; the clearance `2s <= B <= clearance` is a hypothesis of the estimates rather than something derived, so the step is split between a lemma and hypotheses.",
   "subject": [
     {
       "location": {
         "page": 236,
         "rect": [
           0.12026,
-          0.75694,
+          0.75797,
           0.75948,
-          0.0346
+          0.03364
         ]
       },
-      "title": "Lemma 19.22 step 4: Text, p. 236, not yet judged",
+      "title": "Lemma 19.22 step 4: Text, p. 236",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 19.22 step 4",
           "quads": [
             [
               0.30999,
-              0.75694,
+              0.75797,
               0.87974,
-              0.75694,
+              0.75797,
               0.87974,
-              0.77442,
+              0.77498,
               0.30999,
-              0.77442
+              0.77498
             ],
             [
               0.12026,
-              0.77445,
+              0.775,
               0.54457,
-              0.77445,
+              0.775,
               0.54457,
-              0.79154,
+              0.79161,
               0.12026,
-              0.79154
+              0.79161
             ]
           ]
         }
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Normal.taylor_support",
+        "module": "YM.Contacts.Normal.Subtractions",
+        "lines": [
+          97,
+          98
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Normal.taylor_support"
+          },
+          "snippet": {
+            "text": "lemma taylor_support {s : ℝ} (hs : 0 < s) (m : ℕ) (f : SmoothTests E) : tsupport (taylor K s m f).val ⊆\n   (slide K 0 ⁻¹' tsupport f.val) ∩ {x | ‖K.starProjection x‖ ≤ 2*s} := by",
+            "line": 97,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Normal/Subtractions.lean",
+            "fragment": "L97-L98"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Normal.taylor_support",
+            "lines": [
+              97,
+              104
+            ],
+            "conclusion": "The support of `taylor K s m f` lies in `{x | ‖K.starProjection x‖ ≤ 2*s}`, i.e. within `2s` of the diagonal."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Solstice.global_charge",
+        "module": "YM.Contacts.Solstice.Venue",
+        "lines": [
+          62,
+          62
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Solstice.global_charge"
+          },
+          "snippet": {
+            "text": "lemma global_charge {o : Points k} (h : plane g ≤ LinearMap.range P.toLinearMap) (hp : Collapsed g o) (t : Cells S d) (α : Viewers Z){s B : ℝ} (hb : B∈ Ioc (0:ℝ) 1) (hz : B ≤ M.clearance (∑ i,d i+0)) (hh : 0<s ∧ 2*s ≤ B) (H : Services C F S): Charge (majorKernel P g M t α o s) ⊤ (totalTestOrder d g):= by",
+            "line": 62,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Solstice/Venue.lean",
+            "fragment": "L62-L62"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Solstice.global_charge",
+            "lines": [
+              62,
+              63
+            ],
+            "conclusion": "The estimate is assumed under `B <= M.clearance (...)` and `2*s <= B`, which supplies the contact clearance for the projections."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -53,8 +134,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents agreed on the class but cited different declarations; the mapper's kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

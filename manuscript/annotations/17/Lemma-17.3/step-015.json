@@ -1,19 +1,21 @@
 {
   "id": "Lemma 17.3 step 15",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The induction over at most three coordinates is there. [M] closes it by bounding finite Taylor terms on normalized shrinking profiles; Lean's base case is the unshrunk constant profile, with the finite sums hidden in `credits` and `baked_budget`.",
   "subject": [
     {
       "location": {
         "page": 193,
         "rect": [
           0.12026,
-          0.74645,
+          0.74692,
           0.75948,
-          0.03418
+          0.03426
         ]
       },
-      "title": "Lemma 17.3 step 15: Text, p. 193, not yet judged",
+      "title": "Lemma 17.3 step 15: Text, p. 193",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 17.3 step 15"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.fix_cost",
+        "module": "YM.Next.ROTATIONS.Nodal",
+        "lines": [
+          59,
+          62
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.fix_cost"
+          },
+          "snippet": {
+            "text": "  induction T using Finset.induction_on generalizing w f with\n  | empty =>\n    have he n : mails w f n=f := by ext1 x; unfold mails; rw [hr _ (by simp),bill_zero]\n    simp_rw [he]; exact (constant_budget (Z f)).rise hd.le",
+            "line": 59,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Nodal.lean",
+            "fragment": "L59-L62"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.fix_cost",
+            "lines": [
+              48,
+              117
+            ],
+            "conclusion": "`fix_cost` is an induction over the finite set `T` of shrinking coordinates, with base case `T=∅` where `mails w f n = f` and the budget is a constant."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.fixed",
+        "module": "YM.Next.ROTATIONS.Pier",
+        "lines": [
+          131,
+          133
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.fixed"
+          },
+          "snippet": {
+            "text": "  refine fix_cost V H i B A e' e (signD_both c d i) (signD_both a b i) h₂ H₂ h₃ H₃ W\n    (fun k y => ⟨W.toLinearMap y k,fun h => rfl⟩) ε hK δ hδ (f i) g hu z (max D j) ?_ (other i) (by simp [other])\n    w hw (fun k hl => ?_) f hF (fun k hn => ?_) rfl",
+            "line": 131,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Pier.lean",
+            "fragment": "L131-L133"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.fixed",
+            "lines": [
+              116,
+              149
+            ],
+            "conclusion": "`fixed` calls `fix_cost` with `T := other i`, the three transverse coordinates."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

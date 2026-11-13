@@ -1,7 +1,9 @@
 {
   "id": "Lemma 11.5 step 28",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "Lean defines W_0 by an explicit alias formula (`pilot`) and checks the normal equations; it does not derive it by Gaussian conditioning W_0 = C_f M^* C_c^{-1} modulo gradients.",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.09139
         ]
       },
-      "title": "Lemma 11.5 step 28: Text, p. 53, not yet judged",
+      "title": "Lemma 11.5 step 28: Text, p. 53",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 11.5 step 28"
@@ -21,7 +23,125 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Free.Flight.tangent",
+        "module": "YM.Next.FREE_KERNELS.Primal",
+        "lines": [
+          63,
+          118
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Free.Flight.tangent"
+          },
+          "snippet": {
+            "text": "lemma tangent :\n    let k := K.penalty; let W := pulse k P.wing; let W' := pulse k P.land; let S := visit P K hc\n    let V := duo k P; let A := installed (P.visitRatio hc) V.A0; let T := installed (P.visitRatio hc) V.T\n    Inputs S A ((record W).acts f) ((record W').acts c) ∧\n      T.transpose * d 1 f = d 1 c * mean S ∧ T*((record W').acts c)*d 1 c=(record W).acts f*d 1 f*A := by\n  intro k W W' S V A T\n  have hj : 4≤j := P.legal\n  have hk : 0<k := K.penalty_pos\n  let A' p := P.fromBank (pilot k) 1 p; let T' p := P.fromBank (wire k) 2 p\n  let r := P.visitRatio hc\n  obtain ⟨hA,hT⟩ := secure_both k hk hj ht\n  have hX : Runs (readings r (TypeFace 1)) (rotations c (TypeFace 1)) A (solo c A') := P.sail_run hc hA hj 1\n  have hY : Runs (readings r (TypeFace 2)) (rotations c (TypeFace 2)) T (solo c T') := P.sail_run hc hT hj 2\n  have hQ := phi_run P K hc\n  let Q p := downAlias fun l : Site P.L => toll P.L 3 • flux P 1 (aliasAt p l)\n  have hv : stageVolume c/stageVolume f=(stageVolume P.L)⁻¹ := by rw [ratio_volume r]; change stageVolume c / (stageVolume c * stageVolume P.L) = _; field_simp [stage_ne]\n  have hq : Runs (readings r (TypeFace 1)) (rotations c (TypeFace 1)) (mean S).transpose (solo c Q) := by\n    have hh := hQ.back (rotations_crew c _) (readings_crew _ _)\n    rw [hv] at hh; unfold solo at hh; rw [fiber_H,fiber_weight] at hh\n    have hd (p : Site c) := adjust_adj P _ (show physical (mon p) from real_frequency p)\n    simp_rw [hd] at hh; exact hh\n  have hK := runs_rotor_fine _ hk hj P.wing r P.odd\n  have hK' := runs_rotor _ hk ht P.land c\n  have hd := (cobound_true 1).fine r P.odd\n  have hd' := (cobound_true 1).coarse c\n  have hm (p : Site c) := base_subset_realCube zone_pos (mon_mem c p)\n  refine ⟨⟨?_,?_⟩,?_,?_⟩\n  · have hh : braceAll r (rotor 1 k P.wing)*solo c A'=solo c Q * solo c (rotor 1 k P.land) := by\n      unfold braceAll solo; rw [fiber_mult,fiber_mult]\n      congr! 2 with p\n      unfold A' Q fromBank; rw [alias_after,alias_then]; exact congr_arg downAlias (funext fun l => (scaled_tri P k hk (hm p) l).1)\n    have he := hK.product hX; rw [hh] at he; exact he.lands (hq.product hK') (rotations_crew c _)\n  · have he := hQ.product hX\n    have hu := (Runs.nil (rotations c (TypeFace 1))).minus (hK'.smult k⁻¹)\n    have hh : solo c (going P)*solo c A'=1-(↑(k⁻¹):ℂ) • solo c (rotor 1 k P.land) := by\n      unfold solo; rw [fiber_mult,fiber_weight,← fiber_one, fiber_less]; congr! 2 with p\n      rw [Complex.ofReal_inv]; exact scaled_mul P k hk (hm p)\n    rw [hh] at he; exact he.lands hu (rotations_crew c _)\n  · have h1 := (hd.back (readings_crew _ _) (readings_crew _ _)).product hY\n    have h2 := hq.product (hd'.back (rotations_crew _ _) (rotations_crew _ _))\n    rw [div_self (stage_ne f),one_smul] at h1; rw [div_self (stage_ne c),one_smul] at h2\n    have hh : (braceAll r (signal 1 1))ᴴ * solo c T'= solo c Q * (solo c (signal 1 1))ᴴ := by\n      unfold braceAll solo; simp only [fiber_H,fiber_mult]\n      congr! 2 with p\n      unfold Q T' fromBank; rw [alias_after,alias_then]; congr! 2 with l\n      rw [← mirage_herm _ _ (alias_real (hm p).1 _),← mirage_herm _ _ (hm p).1]; exact (scaled_tri P k hk (hm p) l).2.1\n    rw [hh] at h1; have he := h1.lands h2 (rotations_crew c _)\n    apply transpose_injective; simp only [transpose_mul, transpose_transpose]; exact he\n  have hW := (heart_true _ hk hj P.wing).1.fine r P.odd\n  have hW' := (heart_true _ hk ht P.land).1.coarse c\n  have h1 := (hY.product hW').product hd'; have h2 := (hW.product hd).product hX\n  have hh : solo c T'*solo c W'*solo c (signal 1 1)=braceAll r W*braceAll r (signal 1 1)*solo c A' := by\n    unfold solo braceAll; simp only [fiber_mult]; congr! 2 with p\n    unfold T' A' fromBank; rw [alias_then,alias_then,alias_after]\n    exact congr_arg downAlias (funext fun l => (scaled_tri P k hk (hm p) l).2.2)\n  change Runs _ _ _ (solo c T'*solo c W'*_) at h1; rw [hh] at h1; exact h1.lands h2 (rotations_crew c _)",
+            "line": 63,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/Primal.lean",
+            "fragment": "L63-L118"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Free.Flight.tangent",
+            "lines": [
+              63,
+              118
+            ],
+            "conclusion": "The explicit alias kernels `pilot` and `wire` (A0 and T) satisfy `Inputs` and the T conditions, verified with the zero-momentum alias."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Free.Flight.genuine_sum",
+        "module": "YM.Next.FREE_KERNELS.ZeroAlias",
+        "lines": [
+          66,
+          66
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Free.Flight.genuine_sum"
+          },
+          "snippet": {
+            "text": "lemma genuine_sum : (∑ l : Site P.L, hinges P 1 (aliasAt p l)*pilot k P p l)=1-(k:ℂ)⁻¹ • rotor 1 k P.land p := by",
+            "line": 66,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/ZeroAlias.lean",
+            "fragment": "L66-L66"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Free.Flight.genuine_sum",
+            "lines": [
+              66,
+              73
+            ],
+            "conclusion": "`sum_l hinges * pilot = 1 - k⁻¹ rotor`: the dual normal equation at the symbol level, including the zero alias."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Free.Flight.scaled_tri",
+        "module": "YM.Next.FREE_KERNELS.Primal",
+        "lines": [
+          33,
+          38
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Free.Flight.scaled_tri"
+          },
+          "snippet": {
+            "text": "lemma scaled_tri (l : Site P.L) :\n    let q := aliasAt p l\n    let H := pulse k P.wing q; let H' := pulse k P.land p\n    let A := toll P.L 1 • pilot k P p l; let T := toll P.L 2 • wire k P p l\n    let Q := toll P.L 3 • flux P 1 q\n    rotor 1 k P.wing q * A=Q*rotor 1 k P.land p ∧",
+            "line": 33,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/Primal.lean",
+            "fragment": "L33-L38"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Free.Flight.scaled_tri",
+            "lines": [
+              33,
+              49
+            ],
+            "conclusion": "Per-alias relations `rotor*A = Q*rotor`, `mirage*T = Q*mirage`, `T H' signal = H signal A`, rescaled by `toll`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +151,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents agreed on the class but cited different declarations; the mapper's kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

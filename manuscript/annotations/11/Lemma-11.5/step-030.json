@@ -1,7 +1,9 @@
 {
   "id": "Lemma 11.5 step 30",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean's T is the tree representative `extracted` (W plus a gradient correction) and Q is replaced by `probe` (mean plus gradient), which `K` does not see; the Wilson form after the inverse modification is `bid_bed` with `R = Train.top`.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.12026,
           0.59098,
           0.75948,
-          0.03713
+          0.03768
         ]
       },
-      "title": "Lemma 11.5 step 30: Text, p. 53, not yet judged",
+      "title": "Lemma 11.5 step 30: Text, p. 53",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 11.5 step 30"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Precision.action",
+        "module": "YM.PREC.TreeMatch",
+        "lines": [
+          93,
+          96
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Precision.action"
+          },
+          "snippet": {
+            "text": "lemma action (i : Inputs S W H H') :\n    let T:=extracted S F W\n    let P:=1-probe S*T\n    T.transpose*K H*T+S.kernel.penalty • (P.transpose*P)=K H' := by",
+            "line": 93,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PREC/TreeMatch.lean",
+            "fragment": "L93-L96"
+          },
+          "proof_context": {
+            "declaration": "YM.Precision.action",
+            "lines": [
+              93,
+              103
+            ],
+            "conclusion": "`T^T * K H * T + penalty • (P^T P) = K H'` with `T = extracted S F W` and `P = 1 - probe S * T`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Free.top_metric",
+        "module": "YM.Next.FREE_KERNELS.Heart",
+        "lines": [
+          140,
+          141
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Free.top_metric"
+          },
+          "snippet": {
+            "text": "lemma top_metric (k : ℝ) (hk : 0<k) (j : ℕ) {p : Momentum} (hp : p∈realCube zone) :\n    vault k (.top j) p=1 ∧ pulse k (.top j) p=1 := by",
+            "line": 140,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/Heart.lean",
+            "fragment": "L140-L141"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Free.top_metric",
+            "lines": [
+              140,
+              155
+            ],
+            "conclusion": "At the top of the history `vault = 1` and `pulse = 1`: the empty history has H^0 = I."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

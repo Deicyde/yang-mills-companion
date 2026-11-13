@@ -1,0 +1,159 @@
+{
+  "id": "Section 13 display 19",
+  "kind": "display",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] has no separate trial parameter: the sum β'+α+ϑ is the representation's coupling `β`, and the exponent also carries a vacuum scalar `v*|Λ|` that [M]'s q omits (it is zero at v = 0). The fused gas F_u is the unfused gas times `exp(∑ logarithm)`, which `exact_eval` keeps outside `trunk`.",
+  "subject": [
+    {
+      "location": {
+        "page": 106,
+        "rect": [
+          0.12026,
+          0.14367,
+          0.75948,
+          0.02415
+        ]
+      },
+      "title": "Display, p. 106",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "Section 13 display 19"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Progress.DirectedRecipe.Ingredients.exact_eval",
+        "module": "YM.Progress.DIRECTED_RECIPE.Batch",
+        "lines": [
+          83,
+          85
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Progress.DirectedRecipe.Ingredients.exact_eval"
+          },
+          "snippet": {
+            "text": "lemma exact_eval (W : PathData G) (c : Clip) (β v : ℝ) (U : Config G n) :\n    (finish W c P X d β v).eval U = Real.exp (v * Fintype.card (Site n)) *\n      ((trunk W c P X d β 0).eval U * Real.exp (∑' i, d.logarithm i U)) := by",
+            "line": 83,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Progress/DIRECTED_RECIPE/Batch.lean",
+            "fragment": "L83-L85"
+          },
+          "proof_context": {
+            "declaration": "YM.Progress.DirectedRecipe.Ingredients.exact_eval",
+            "lines": [
+              83,
+              90
+            ],
+            "conclusion": "The fused representation evaluates to `exp(v*|Λ|)` times the unfused `trunk ... β 0` density times `exp(∑' logarithm)`, i.e. the density with coupling β, the additive sum and the fused gas."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.Rep.eval",
+        "module": "YM.RG.History",
+        "lines": [
+          179,
+          179
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.Rep.eval"
+          },
+          "snippet": {
+            "text": "def eval (U : Config G n) := Real.exp (R.exponent U) * R.activities.gas R.p U",
+            "line": 179,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/RG/History.lean",
+            "fragment": "L179-L179"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.Rep.eval",
+            "lines": [
+              179,
+              179
+            ],
+            "conclusion": "`Rep.eval U = exp(exponent U) * gas U` with `exponent U = v*|Λ| - inChannels β U - additive U`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Push.BetaTransport.FixedRepData.exponent_eq",
+        "module": "YM.Push.BETA_TRANSPORT.Curve",
+        "lines": [
+          65,
+          68
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Push.BetaTransport.FixedRepData.exponent_eq"
+          },
+          "snippet": {
+            "text": "lemma exponent_eq {x : ℝ} (hx : x ∈ s) (U : Config G n) : (T x).exponent U =\n    (T x).v * Fintype.card (Site n) - ((T x).beta * kinetic D A P U + D.inChannels A P 0 U) -\n        (T x).activities.additive P U := by simp [Rep.exponent,h.path x hx,h.budget x hx,h.clip x hx,\n          channels_split U (T x).beta]",
+            "line": 65,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/BETA_TRANSPORT/Curve.lean",
+            "fragment": "L65-L68"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.BetaTransport.FixedRepData.exponent_eq",
+            "lines": [
+              65,
+              68
+            ],
+            "conclusion": "The exponent equals `v*|Λ| - (β*kinetic + inChannels 0 U) - additive U`, splitting the path action into the coupling-linear kinetic part and the coupling-free part."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          106
+        ]
+      },
+      "provenance": {
+        "actor": "agent",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
+        "confirmed_by_human": false
+      }
+    }
+  }
+}

@@ -1,19 +1,21 @@
 {
   "id": "Lemma 17.7 step 19",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "The Cauchy vectors and Gram limits are in Lean, but positivity is established for word tests (single-point sentences through `Joint.materialize`); the extension of W(F*F) >= 0 to general joint tests by seminorm bound and product-test density is not a declaration.",
   "subject": [
     {
       "location": {
         "page": 200,
         "rect": [
           0.12026,
-          0.5373,
+          0.53754,
           0.76195,
-          0.08549
+          0.08638
         ]
       },
-      "title": "Lemma 17.7 step 19: Text, p. 200, not yet judged",
+      "title": "Lemma 17.7 step 19: Text, p. 200",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 17.7 step 19"
@@ -21,7 +23,125 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.BOUNDARY.heated",
+        "module": "YM.Next.BOUNDARY.Heights",
+        "lines": [
+          167,
+          170
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.BOUNDARY.heated"
+          },
+          "snippet": {
+            "text": "theorem heated (h : Bid.Hull B Y J) (int : Y.NonTangentialFree W) (v : Fin n → S.Union) :\n    ∃! U : Joint n →L[ℂ] V.H, ∀ f : Joint n, Tendsto (hot B v f) (edgeFilter n) (𝓝 (U f)) := by\n  haveI := edge_nontrivial n\n  choose F hf using fun f : Joint n => vector_limit V.H _ _ (hot_inner h int v v f f)",
+            "line": 167,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/BOUNDARY/Heights.lean",
+            "fragment": "L167-L170"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.BOUNDARY.heated",
+            "lines": [
+              167,
+              193
+            ],
+            "conclusion": "`heated` gives Hilbert-space limits of the smeared heat vectors for joint tests, with Gram limits given by the boundary distributions."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Boundary.Cups",
+        "module": "YM.Fields.Lo",
+        "lines": [
+          37,
+          41
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Boundary.Cups"
+          },
+          "snippet": {
+            "text": "structure Cups (W : Surface S) (J : StarOp S) (K : Spins S) (C : Chamber T timeAxis) where\n  hot : Sentence S → ℝ → C.H\n  here (v w) : Tendsto (fun p : ℝ×ℝ => inner ℂ (hot v p.1) (hot w p.2)) (till ×ˢ till) (𝓝 (W.kernel J v w))\n  omega : Tendsto (hot []) till (𝓝 C.omega)\n  time (v b) : hot (K.po (Poincare.translation b) v) =ᶠ[till] (fun s => C.flow.unit.translation b (hot v s))",
+            "line": 37,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Fields/Lo.lean",
+            "fragment": "L37-L41"
+          },
+          "proof_context": {
+            "declaration": "YM.Boundary.Cups",
+            "lines": [
+              37,
+              41
+            ],
+            "conclusion": "`Cups` records vectors `hot v s` whose Gram matrix tends to `W.kernel J v w` as `s → 0+`, from which `Cups.out` extracts the limit vectors."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Boundary.Fields.sees",
+        "module": "YM.Fields.System",
+        "lines": [
+          82,
+          84
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Boundary.Fields.sees"
+          },
+          "snippet": {
+            "text": "theorem sees (W : Surface S) (t : F.realizes W) (J : StarOp S) (h : F.sharpPair J) : W.wordsPositive J := by\n  rw [Surface.wordsPositive,show W.kernel J = _ from funext fun i => funext fun j => (F.general W t J h i j).symm]\n  apply hilbertNonnegative",
+            "line": 82,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Fields/System.lean",
+            "fragment": "L82-L84"
+          },
+          "proof_context": {
+            "declaration": "YM.Boundary.Fields.sees",
+            "lines": [
+              82,
+              84
+            ],
+            "conclusion": "`sees` gives positivity `W.wordsPositive J` (an `NNKernel`) of the boundary on word tests from a realizing Hilbert space."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +151,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents agreed on the class but cited different declarations; the mapper's kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

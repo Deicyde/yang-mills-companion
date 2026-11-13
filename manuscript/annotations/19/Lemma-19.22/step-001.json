@@ -1,7 +1,9 @@
 {
   "id": "Lemma 19.22 step 1",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] proves the integrability for a slice of any normal group `g` with offset `o` and `2s <= B <= clearance`, with the explicit order `(2+sum d)*card g`; [M] states the full-arity case with `s_* = B_*/4`. The setup sentence itself (which fields, projections and estimates are used) has no separate Lean line.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.12026,
           0.59403,
           0.76195,
-          0.05424
+          0.05463
         ]
       },
-      "title": "Lemma 19.22 step 1: Text, p. 236, not yet judged",
+      "title": "Lemma 19.22 step 1: Text, p. 236",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 19.22 step 1"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Solstice.glues_total",
+        "module": "YM.Contacts.Solstice.Skies",
+        "lines": [
+          59,
+          59
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Solstice.glues_total"
+          },
+          "snippet": {
+            "text": "lemma glues_total {U : Set E} (hc : IsCompact U)(ha : B∈ Ioc (0:ℝ) 1)(hH : B ≤ M.clearance (∑ i,d i+0))(hs : 0<s∧2*s≤B): ∃ C>(0:ℝ),∀ (f:SmoothTests E)(c:ℝ), tsupport f.val ⊆ U → Jet (totalTestOrder d g) univ f.val c → Dust (kernel P g M T α o s f) (C*c):= by",
+            "line": 59,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Solstice/Skies.lean",
+            "fragment": "L59-L59"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Solstice.glues_total",
+            "lines": [
+              59,
+              79
+            ],
+            "conclusion": "For tests supported in a compact `U` with jet bound `c` of order `totalTestOrder d g`, the full subtracted `kernel` is integrable with `∫‖kernel f‖ ≤ C*c` (`Dust`)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Solstice.Charge",
+        "module": "YM.Contacts.Solstice.Venue",
+        "lines": [
+          30,
+          31
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Solstice.Charge"
+          },
+          "snippet": {
+            "text": "structure Charge (P : E→ SmoothTests E→ₗ[ℂ] X)(U : Opens E)(n : ℕ) : Prop where\n   cost : ∀ K:Compacts E, (K:Set E) ⊆ U → ∃ C> (0:ℝ),∀ (p:SmoothTests E){m:ℝ}, tsupport p.val ⊆ K → Jet n univ p.val m → Dust (fun x=> P x p) (C*m)",
+            "line": 30,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Solstice/Venue.lean",
+            "fragment": "L30-L31"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Solstice.Charge",
+            "lines": [
+              30,
+              31
+            ],
+            "conclusion": "`Charge` packages this as: on every compact subset of `U`, absolute integrability with a finite jet seminorm of order `n`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

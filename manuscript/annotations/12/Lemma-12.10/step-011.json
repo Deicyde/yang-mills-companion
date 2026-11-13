@@ -1,7 +1,9 @@
 {
   "id": "Lemma 12.10 step 11",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] carries the threshold raise as the hypothesis `CubicGate` (eventually true by `delay_cubic` using `late_cubic`) and writes the right side as the abstract `funds/2`; the additive `E^pre` combination into the final display is in `pays_surplus`.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.11961,
           0.45701,
           0.76047,
-          0.05715
+          0.05768
         ]
       },
-      "title": "Lemma 12.10 step 11: Text, p. 88, not yet judged",
+      "title": "Lemma 12.10 step 11: Text, p. 88",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 12.10 step 11"
@@ -21,7 +23,125 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVNext.CouplingReset.pays_cubic",
+        "module": "YM.UVNext.COUPLING_RESET.Precision",
+        "lines": [
+          108,
+          110
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVNext.CouplingReset.pays_cubic"
+          },
+          "snippet": {
+            "text": "theorem pays_cubic (B : Directed G I Z K P) (hg : ∀ j x, W.betaEntry j ≤ x → ∀ i, StepStages j i → CubicGate D q j i x)\n    (hm : m < N) :\n    |B.kin.alpha N m| * (2 * (B.a.params m).paths * (B.a.budget m).threshold^3) ≤ funds B.a m q / 2 := by",
+            "line": 108,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/COUPLING_RESET/Precision.lean",
+            "fragment": "L108-L110"
+          },
+          "proof_context": {
+            "declaration": "YM.UVNext.CouplingReset.pays_cubic",
+            "lines": [
+              108,
+              116
+            ],
+            "conclusion": "`|α| * (2*paths*threshold^3) <= funds/2`, the inequality `2|α|A t^3 <= c_pre ε/2` with `funds` for `c_pre ε`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVNext.CouplingReset.within_alpha",
+        "module": "YM.UVNext.COUPLING_RESET.Precision",
+        "lines": [
+          89,
+          94
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVNext.CouplingReset.within_alpha"
+          },
+          "snippet": {
+            "text": "lemma within_alpha (hm : m < N) : |B.kin.alpha N m| ≤ alphaBound D (B.a.clock.J (m+1)) := by\n  have he := B.support.kinetic N m hm\n  rw [params_eq B.valid, block_eq B.valid] at he\n  unfold alphaBound; have h := abs_sub ((B.kin.alpha N m)+G.slopeConstant*Real.log (D.L (B.a.clock.J (m+1))).val)\n    (G.slopeConstant*Real.log (D.L (B.a.clock.J (m+1))).val)\n  rw [add_sub_cancel_right] at h; linarith",
+            "line": 89,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/COUPLING_RESET/Precision.lean",
+            "fragment": "L89-L94"
+          },
+          "proof_context": {
+            "declaration": "YM.UVNext.CouplingReset.within_alpha",
+            "lines": [
+              89,
+              94
+            ],
+            "conclusion": "`|α_{N,m}|` is bounded by the stage constant `alphaBound`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVNext.CouplingReset.CubicGate",
+        "module": "YM.UVNext.COUPLING_RESET.Precision",
+        "lines": [
+          96,
+          98
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVNext.CouplingReset.CubicGate"
+          },
+          "snippet": {
+            "text": "def CubicGate (D : Rolls c) (q : ResetPrices) (j i : ℕ) (x : ℝ) :=\n    alphaBound D j * (2 * (c.profile i).paths * (Vac.Numbers.theta x)^3) ≤\n        q.cost j i / 2 * Vac.Numbers.Hat x ^ ((11:ℝ)/5)",
+            "line": 96,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/COUPLING_RESET/Precision.lean",
+            "fragment": "L96-L98"
+          },
+          "proof_context": {
+            "declaration": "YM.UVNext.CouplingReset.CubicGate",
+            "lines": [
+              96,
+              98
+            ],
+            "conclusion": "The entry-threshold condition that makes `pays_cubic` hold, `alphaBound*2*paths*θ^3 <= cost/2 * Hat^(11/5)`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +151,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

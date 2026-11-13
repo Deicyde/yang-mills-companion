@@ -1,7 +1,9 @@
 {
   "id": "Lemma 19.9 step 8",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "Both bound the degree-i coordinate by a grid exponent decreasing by i times the scale; [M] tests the difference against probes via biorthogonality and a quotient functional, [L] uses its coefficient functionals directly.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.11962,
           0.20402,
           0.76308,
-          0.08845
+          0.08853
         ]
       },
-      "title": "Lemma 19.9 step 8: Text, p. 229, not yet judged",
+      "title": "Lemma 19.9 step 8: Text, p. 229",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 19.9 step 8"
@@ -21,7 +23,47 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.grid_coeff",
+        "module": "YM.OPE.Schemes.Ladder",
+        "lines": [
+          34,
+          42
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.grid_coeff"
+          },
+          "snippet": {
+            "text": "lemma grid_coeff (w : Mode Λ): RateLE φ T (fun i=> R.ope w (w' i) g 0) ((u')-w.1*a):=by\n    have hϑ:= ha.trans (hu.trans hd); obtain ⟨q,hF,hq⟩ := ((far a b w.fst ha).and (eventually_ge_atTop w.fst)).exists\n    obtain ⟨A,p,Q,h₁,h₂,hS⟩:= for_plot U g hT i₀ hG L' hk hm hj ha hu hd q hx hy\n    have hf:= det_cost (R:=R) U g hT hS h w he hx hy (hb.trans (ha.trans hu)) hk hj hb hϑ h₂\n    have hQ:= at_grade U g Base' hT hS L' hG hR w hm (h₁.pays hT) hq\n    let f i:= R.ope w (w' i) g 0; let u i:=R.test w _ (S.project _ (Q i))\n    apply RateLE.congr (RateLE.add (hf.mono ?_) (hQ.mono ?_) hT) (Eventually.of_forall fun i=> (sub_add_cancel (f i) (u i)))\n    · unfold tax; unfold sigma; linarith only [hF,hb,ha]\n    unfold tax; unfold sigma; rw [Nat.cast_sub hq]; linarith only",
+            "line": 34,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Schemes/Ladder.lean",
+            "fragment": "L34-L42"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.grid_coeff",
+            "lines": [
+              34,
+              42
+            ],
+            "conclusion": "`grid_coeff` bounds each coefficient `R.ope w` at grid points by the rate `u' - w.1*a`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +73,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents agreed on the class but cited different declarations; the mapper's kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
       }
     }
   }

@@ -1,7 +1,9 @@
 {
   "id": "Lemma 19.20 step 1",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean carries the covariance of the base maps and of the recursion (`origin_spin`, `origin_real`, `origin_id`) as separate lemmas; the displayed split identities that the step introduces are the next lines in [M].",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.08673
         ]
       },
-      "title": "Lemma 19.20 step 1: Text, p. 234, not yet judged",
+      "title": "Lemma 19.20 step 1: Text, p. 234",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 19.20 step 1"
@@ -21,7 +23,203 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Devices.base_spin",
+        "module": "YM.Contacts.Tomography",
+        "lines": [
+          198,
+          199
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Devices.base_spin"
+          },
+          "snippet": {
+            "text": "lemma base_spin (d : ℕ) (s : Ortho) (e : Expression P) : M.rotation.act d s (M.base d e)= M.base d (turnExpr D R s e):= by\n  rw [base_formula, base_formula, map_smul, map_add,mean_spin,← M.laws.real,mean_spin,real_turn D R M.laws hS M.incl M.orientation M.coherent]",
+            "line": 198,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Tomography.lean",
+            "fragment": "L198-L199"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Devices.base_spin",
+            "lines": [
+              198,
+              199
+            ],
+            "conclusion": "The averaged detector `base` is rotation covariant (Haar invariance, `mean_spin`)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Devices.base_real",
+        "module": "YM.Contacts.Tomography",
+        "lines": [
+          196,
+          197
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Devices.base_real"
+          },
+          "snippet": {
+            "text": "lemma base_real (d : ℕ) (e : Expression P) : S.conj ρ d (M.base d e)= M.base d (realExpr D ρ e):= by\n  simp_rw [base_formula,map_smulₛₗ,map_add,S.reflect_star,real_twice D hS M.incl M.orientation M.coherent]; rw [add_comm]; rw [map_inv₀, map_ofNat]",
+            "line": 196,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Tomography.lean",
+            "fragment": "L196-L197"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Devices.base_real",
+            "lines": [
+              196,
+              197
+            ],
+            "conclusion": "`base` commutes with conjugation."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Devices.base_id",
+        "module": "YM.Contacts.Tomography",
+        "lines": [
+          194,
+          195
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Devices.base_id"
+          },
+          "snippet": {
+            "text": "lemma base_id (d : ℕ) (v : S.Field d) : M.base d (insertField D 0 d v)=v := by\n  rw [base_formula,real_field D hS M.incl M.orientation M.coherent, M.mean_id,M.mean_id, S.reflect_star,← two_smul ℂ, inv_smul_smul₀ (two_ne_zero)]",
+            "line": 194,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Tomography.lean",
+            "fragment": "L194-L195"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Devices.base_id",
+            "lines": [
+              194,
+              195
+            ],
+            "conclusion": "`base` fixes inserted fields: `base d (insertField 0 d v) = v`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Devices.originProjection",
+        "module": "YM.Contacts.Coherent",
+        "lines": [
+          28,
+          31
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Devices.originProjection"
+          },
+          "snippet": {
+            "text": "def originProjection (d : ℕ) : Expression P →ₗ[ℂ] (A d) := match d with\n| 0 => B 0\n| n+1 => let F := originProjection n; let t := P.rise (Nat.le_succ n); let H := insertField D 0 (n+1)\n         t.comp F + (B (n+1) - (t.comp F).comp (H.comp (B (n+1))))",
+            "line": 28,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Coherent.lean",
+            "fragment": "L28-L31"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Devices.originProjection",
+            "lines": [
+              28,
+              31
+            ],
+            "conclusion": "`originProjection` is the recursion `P_0 = B_0`, `P_{q+1} = j P_q + B_{q+1} - j P_q I B_{q+1}`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Devices.splitting",
+        "module": "YM.Contacts.Coherent",
+        "lines": [
+          48,
+          50
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Devices.splitting"
+          },
+          "snippet": {
+            "text": "def splitting : Splitting P where\n  down d := (M.originProjection d).comp (insertField D 0 (d+1))\n  left d x := by rw [LinearMap.comp_apply, insert_rise D M.coherent hS M.incl]; exact M.origin_id d x",
+            "line": 48,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Coherent.lean",
+            "fragment": "L48-L50"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Devices.splitting",
+            "lines": [
+              48,
+              50
+            ],
+            "conclusion": "`splitting.down d = originProjection d ∘ insertField 0 (d+1)` is `T_q = P_q I_{q+1}`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +229,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

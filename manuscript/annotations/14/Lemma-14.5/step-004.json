@@ -1,9 +1,9 @@
 {
   "id": "Lemma 14.5 step 4",
   "kind": "proof_step",
-  "status": "not_formalized",
-  "relation": "noMatch",
-  "note": "The rooted-support summation and absolute convergence appear only inside the hypothesis `Plate.Prints`; no Lean lines argue them.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "`array_read` carries the extraction of the marked coefficient from the product of factors; the rooting at the marked factor, the rooted clause of the connected-sum lemma, absolute convergence and the e_i/k_i majorants are not in these lines.",
   "subject": [
     {
       "location": {
@@ -12,7 +12,7 @@
           0.11961,
           0.65888,
           0.76359,
-          0.10556
+          0.10595
         ]
       },
       "title": "Lemma 14.5 step 4: Text, p. 129",
@@ -29,72 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.MergeProof.Matric.motor",
-        "module": "YM.FullVolume.Mark.Wheels",
+        "declaration": "YM.Push.GridApprox.Birth.array_read",
+        "module": "YM.Push.GRID_APPROXIMATION.Birth",
         "lines": [
-          40,
-          247
+          71,
+          81
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.MergeProof.Matric.motor"
+            "id": "YM.Push.GridApprox.Birth.array_read"
+          },
+          "snippet": {
+            "text": "lemma array_read (A : Poly (Stock.census V)) (s : Finset V) (f : V → ℂ) :\n    (A*∏ i, (1+Poly.send ((Stock.census V).fire i) (f i))).part (bucket s) =\n      ∑ l∈s.powerset, A.part (bucket (s\\l))*∏ i∈l,f i := by\n  classical\n  rw [prod_one_add,mul_sum,Poly.part_sum]; simp_rw [submits, fires]\n  let w (l : Finset V) := A.part (bucket (s\\l))*∏ i∈l,f i\n  have hb : s.powerset ⊆ Finset.univ.powerset := fun x hx => Finset.mem_powerset.mpr (subset_univ x)\n  have he : ∀ l ∈ s.powerset, (if l⊆s then w l else 0) = w l := fun l h => if_pos (Finset.mem_powerset.mp h)\n  have hz : ∀ l∈ Finset.univ.powerset, l∉s.powerset → (if l ⊆ s then w l else 0)=0 :=\n    fun l _ hh => if_neg (mt Finset.mem_powerset.mpr hh)\n  exact (Finset.sum_subset hb hz).symm.trans (Finset.sum_congr rfl he)",
+            "line": 71,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Mark/Wheels.lean",
-            "fragment": "L40-L247"
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.MergeProof.Matric.Plate.Prints",
-        "module": "YM.FullVolume.Mark.Latch",
-        "lines": [
-          47,
-          55
-        ]
-      },
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.MergeProof.Matric.Plate.Prints"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/GRID_APPROXIMATION/Birth.lean",
+            "fragment": "L71-L81"
           },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Mark/Latch.lean",
-            "fragment": "L47-L55"
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.MergeProof.Matric.Tool.recoil",
-        "module": "YM.FullVolume.Mark.Sanctum",
-        "lines": [
-          75,
-          78
-        ]
-      },
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.MergeProof.Matric.Tool.recoil"
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Mark/Sanctum.lean",
-            "fragment": "L75-L78"
+          "proof_context": {
+            "declaration": "YM.Push.GridApprox.Birth.array_read",
+            "lines": [
+              71,
+              81
+            ],
+            "conclusion": "In the square-zero marker algebra the `bucket s` coefficient of `A*prod (1+send (fire i) (f i))` is `sum over l in s.powerset of A.part(bucket (s\\l)) * prod_{i in l} f i`."
           }
         }
       }
@@ -109,8 +73,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge changed it from noMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
       }
     }
   }

@@ -1,7 +1,9 @@
 {
   "id": "Lemma 13.4 step 3",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "The rows bounded here by Taylor expansion about a chart point appear in the Lean as the abstract cubic/quartic/loop score bounds `singBook`, `pitch_charge`; the chart, determinant and warning-factor estimates are not carried.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.1198,
           0.3043,
           0.7624,
-          0.17383
+          0.17312
         ]
       },
-      "title": "Lemma 13.4 step 3: Text, p. 93, not yet judged",
+      "title": "Lemma 13.4 step 3: Text, p. 93",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 13.4 step 3"
@@ -21,7 +23,47 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.PhysicalNext.Repeat.Song.stanzaReady",
+        "module": "YM.PhysicalNext.RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP.Song.Litho",
+        "lines": [
+          62,
+          71
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.PhysicalNext.Repeat.Song.stanzaReady"
+          },
+          "snippet": {
+            "text": "lemma stanzaReady (β γ : ℝ) (hs : R.Bounds c σ C Λ) (hp : Decent c p) (he : preExponent p / p.B ≤ σ/2) : ∃ f : Songbook n →ℝ, Quotes.early p (strings R p) f (octaveNeed G p c σ C Λ β γ) ∧\n    ∀ i,p.Regular (strings R p i).support (sounding R c β γ i) ∧ p.supBounds (strings R p i).site (strings R p i).support (sounding R c β γ i) (f i) := by\n  let f : Songbook n→ℝ := Sum.elim (fun i=> mezzo R c p (-γ) i.2) (Sum.elim (fun i=> sine p R.cubic (-β) i.2) (Sum.elim (fun i=> sine p R.quartic (-β) i.2) (fun i=> sine p R.loop (-1) i.2)))\n  refine ⟨f,fun i=> ?_,fun i=>?_⟩\n  · exact Cost.sum (mezzoBook R c p (-γ) hs he i) (Cost.sum (singBook p R.cubic (-β) hs.three hs.width he i) (Cost.sum (singBook p R.quartic (-β) hs.four hs.width he i) (singBook p R.loop (-1) hs.two hs.width he i)))\n  rcases i with i|i|i|i\n  · exact tally_charge R c p i (-γ) hp\n  · exact pitch_charge p _ i (-β) fun i => (hs.invariant i).2.1\n  · exact pitch_charge p _ i (-β) fun i => (hs.invariant i).2.2\n  exact pitch_charge p _ i (-1) fun i => (hs.invariant i).1",
+            "line": 62,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Song/Litho.lean",
+            "fragment": "L62-L71"
+          },
+          "proof_context": {
+            "declaration": "YM.PhysicalNext.Repeat.Song.stanzaReady",
+            "lines": [
+              62,
+              71
+            ],
+            "conclusion": "`stanzaReady` bounds the kernel (`mezzo`), cubic, quartic and loop score factors (`sine`) by `supBounds` of the stated cost."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +73,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents agreed on the class but cited different declarations; the mapper's kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
       }
     }
   }

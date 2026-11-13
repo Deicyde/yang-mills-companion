@@ -1,7 +1,9 @@
 {
   "id": "Lemma 12.9 step 10",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "`rebounds` differentiates X^{-1} X = 1 for the inverse and `shrimper` gives q_a = i k_a + O(kappa^2); the vertex orders appear only as `Floe` fields, not as a statement.",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.04007
         ]
       },
-      "title": "Lemma 12.9 step 10: Text, p. 85, not yet judged",
+      "title": "Lemma 12.9 step 10: Text, p. 85",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 12.9 step 10"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.Jam.rebounds",
+        "module": "YM.Next.STATIONARY.OneLoop.Weights",
+        "lines": [
+          125,
+          151
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.Jam.rebounds"
+          },
+          "snippet": {
+            "text": "lemma rebounds {X : ReelF α α} (h : Jam r X (A*a)) (he : IsUnit (X 0).det) (hv : vflux (X 0)⁻¹≤ C/a) (ha : 0<a) (hr : 0≤r) : Jam r (fun x=> (X x)⁻¹) ((inverseBill A C)/a) := by\n  let Y x := (X x)⁻¹\n  have hE : Prick Y := h.run.poles he\n  have hh : (fun x=> Y x*X x)=ᶠ[𝓝 0] fun _=>1 := by filter_upwards [(h.run.det.continuousAt).eventually_ne he.ne_zero] with x hx; exact Matrix.nonsing_inv_mul _ hx.isUnit\n  have hY := eq_neg_of_add_eq_zero_right ((jar_ini hE h.run).symm.trans ((jar_tape (n:=1) hh).trans (jar_const one_pos _)))\n  have hV : jarY 1 Y= -(Y 0 *jarY 1 X*Y 0) := by\n    have hh := congr_arg (· * Y 0) hY\n    rw [← Matrix.mul_nonsing_inv_cancel_right (X 0) (jarY 1 Y) he];\n    exact hh.trans (Matrix.neg_mul ..)\n  have ht' := h.prices 0 (by decide); rw [jar_now] at ht'\n  have hz : r^0 *vflux (Y 0) ≤ C/a := by simpa using hv\n  have h1 : r^1*vflux (jarY 1 Y) ≤ A*C^2/a := by rw [hV,flux_neg]; refine (sweeter (sweeter hz (h.prices 1 (by decide)) hr) hz hr).trans_eq (?_); field_simp\n  have hl : r^2*vflux (jarY 2 Y)≤ (2*A^2*C^3+C^2*A)/a := by\n    let U := Y 0*jarY 2 X +jarY 1 Y*jarY 1 X +jarY 1 Y * jarY 1 X\n    have ht : U + jarY 2 Y * X 0=0 := Eq.trans (by unfold U; rw [add_assoc (_ + _), ← jar_multi hE h.run]) ((jar_tape (n:=2) hh).trans (jar_const (by decide : 0<2) _))\n    have hx : jarY 2 Y= -(U*Y 0) := by\n      have hh := congr_arg (· * Y 0) (eq_neg_of_add_eq_zero_right ht); rw [← Matrix.mul_nonsing_inv_cancel_right (X 0) (jarY 2 Y) he]; exact hh.trans (Matrix.neg_mul ..)\n    have hL := sweeter h1 (h.prices 1 (by decide)) hr\n    rw [hx, flux_neg]; refine (sweeter (summer (summer (sweeter hz (h.prices 2 le_rfl) hr) hL hr) hL hr) hz hr).trans_eq ?_; field_simp; ring\n  have hA : 0≤ A := nonneg_of_mul_nonneg_left h.units ha\n  have hC : 0 ≤ C := by have hh : 0 ≤ C/a := ((flux_nonneg _).trans hv); rwa [le_div_iff₀ ha, zero_mul] at hh\n  have hp : 0≤2*A^2*C^3+C^2*A := by positivity\n  have hP : 0≤ A*C^2 := by positivity\n  change Jam r Y _; refine ⟨hE,fun i hi =>?_⟩; interval_cases i\n  · rw [jar_now]; exact hz.trans (div_le_div_of_nonneg_right (by unfold inverseBill; linarith) ha.le)\n  · exact h1.trans (div_le_div_of_nonneg_right (by unfold inverseBill; linarith) ha.le)\n  exact hl.trans (div_le_div_of_nonneg_right (by unfold inverseBill; linarith) ha.le)",
+            "line": 125,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/OneLoop/Weights.lean",
+            "fragment": "L125-L151"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.Jam.rebounds",
+            "lines": [
+              125,
+              151
+            ],
+            "conclusion": "The derivative bounds of an inverse `X⁻¹` follow from differentiating `X⁻¹ X = 1` (`jar_ini`, `jarY 1 Y = -(Y 0 * jarY 1 X * Y 0)`), giving `inverseBill A C / a`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.shrimper",
+        "module": "YM.Next.STATIONARY.OneLoop.Leading",
+        "lines": [
+          170,
+          182
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.shrimper"
+          },
+          "snippet": {
+            "text": "lemma shrimper (i : Axis) : Rays 2 (fun p : Track => Exterior.q (axes p) i - Complex.I*(p i:ℂ)) := by\n  let L : Track→L[ℝ] ℂ := Complex.ofRealCLM ∘L ContinuousLinearMap.proj i\n  let T : Track →ℂ := fun p => Complex.exp (L p *Complex.I)\n  let K : Track→L[ℝ] ℂ := Complex.I • L\n  refine twin_shear ?_ fun p=> ?_\n  · apply ContDiffAt.analyticAt\n    unfold q; apply ContDiffAt.sub; swap; exact K.contDiff.contDiffAt\n    let f : Track→ℂ := fun p=> Complex.I * (axes p i)\n    apply ContDiffAt.sub _ contDiffAt_const; refine ContDiffAt.comp (x:=0) (g:=Complex.exp) (f:=f) ?_ K.contDiff.contDiffAt\n    exact (by fun_prop)\n  have hp : ∀ᶠ u : ℝ in cutRay, (u:ℂ)⁻¹ * (q (axes (u • p)) i - Complex.I*((u • p) i:ℂ))=(u:ℂ)⁻¹*q (axes (u • p)) i -Complex.I*(p i:ℂ) := by\n    filter_upwards [(self_mem_nhdsWithin : ∀ᶠ t : ℝ in cutRay,t≠0)] with t ht; change t≠0 at ht; simp; field_simp [ht]\n  have hx := (qPitch i p).sub_const (Complex.I*(p i:ℂ)); rw [sub_self] at hx; exact hx.congr' (EventuallyEq.symm hp)",
+            "line": 170,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/OneLoop/Leading.lean",
+            "fragment": "L170-L182"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.shrimper",
+            "lines": [
+              170,
+              182
+            ],
+            "conclusion": "`q_i(p) - I p_i` has `Rays 2`, i.e. vanishes to order 2: `q_a = i k_a + O(κ^2)`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

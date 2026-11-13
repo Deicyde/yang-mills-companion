@@ -1,7 +1,9 @@
 {
   "id": "Lemma 11.13 step 9",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "Only the scale rate zero of the fixed-power coefficients is carried (`rump`, and `p` of rate zero in `timing`); the inverse and stationarity residuals, the O(beta t^3) square-correction envelopes and the path-coefficient bounds are not stated.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.11962,
           0.30167,
           0.76357,
-          0.10556
+          0.10579
         ]
       },
-      "title": "Lemma 11.13 step 9: Text, p. 74, not yet judged",
+      "title": "Lemma 11.13 step 9: Text, p. 74",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 11.13 step 9"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.ConnectedActivityE6.Blaze.Flux.rump",
+        "module": "YM.AnalyticNext.CONNECTED_ACTIVITY_JETS_E6.Cirrus",
+        "lines": [
+          42,
+          43
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.ConnectedActivityE6.Blaze.Flux.rump"
+          },
+          "snippet": {
+            "text": "lemma rump (P : Teller G) (L : Side) (D : Patch) (hD : D.Branches P.bind G) (K γ W a : ℝ) (χ : Chi) (j : ℕ)\n    {V u e : ℝ→ℝ} (h : Rate G L (-(1/2)) V) (hp : Rate G L (-(1/2)) u) (hv : ∀ᶠ x in atTop,0≤V x) (he : Rate G L 0 e)",
+            "line": 42,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/Cirrus.lean",
+            "fragment": "L42-L43"
+          },
+          "proof_context": {
+            "declaration": "YM.ConnectedActivityE6.Blaze.Flux.rump",
+            "lines": [
+              42,
+              76
+            ],
+            "conclusion": "`rump` yields `B` with `Rate G L 0 B`, the fixed rate-zero coefficient of the jet bound."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.PhysicalNext.Repeat.Daisy.timing",
+        "module": "YM.PhysicalNext.RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP.Daisy.Charm",
+        "lines": [
+          73,
+          77
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.PhysicalNext.Repeat.Daisy.timing"
+          },
+          "snippet": {
+            "text": "  let e x:= 1+|F x|; let v x:=(1+|U x|+2*(r x+J' x))^i; let p x:=e x*v x\n  have hh {V:ℝ→ℝ} (h:Rate G L 0 V):= h.compare (v:=fun x=> |V x|) (Eventually.of_forall fun z=> (abs_abs _).le)\n  have he:= Rate.const (G:=G) (L:=L) 1\n  refine ⟨C,(fun x=> |B x|),r,p,K+i,hb,by unfold p; simpa only [zero_mul,zero_add] using! ((he.add (hh hF)).mul (((he.add\n    (hh hU)).add ((hr.add hJ').mul_left 2)).pow i)),?_⟩",
+            "line": 73,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Daisy/Charm.lean",
+            "fragment": "L73-L77"
+          },
+          "proof_context": {
+            "declaration": "YM.PhysicalNext.Repeat.Daisy.timing",
+            "lines": [
+              58,
+              179
+            ],
+            "conclusion": "The coefficient `p` has `Rate G L 0` and the base `B` has `Rate G L (-(1/2))`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

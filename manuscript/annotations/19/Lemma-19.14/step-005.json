@@ -1,7 +1,9 @@
 {
   "id": "Lemma 19.14 step 5",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[M] writes the telescope identity as a displayed formula; Lean carries it as `taxi_formula`/`change_one` (rest of the word kept as a scalar factor) and `Agrees.then`.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.12026,
           0.0962,
           0.76294,
-          0.03713
+          0.03768
         ]
       },
-      "title": "Lemma 19.14 step 5: Text, p. 232, not yet judged",
+      "title": "Lemma 19.14 step 5: Text, p. 232",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 19.14 step 5"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Nesting.change_one",
+        "module": "YM.OPE.Nesting.Transactions",
+        "lines": [
+          68,
+          70
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Nesting.change_one"
+          },
+          "snippet": {
+            "text": "lemma change_one {i:Fin n}(P P':Fin n→Menu S L)(h_eq: rest P i = rest P' i)(hg:Regular l T (fork n f) a ν z)(hb:((fork n f).topAge a ν) ≤ b)(hT:Tendsto T l atTop)(h:∀ j,Eligible l T (down j z) b (P j))(h':∀ j,Eligible l T (down j z) b (P' j))\n      (h_use:∀ (q:(Menu.rest P i).Draw),∃ ζ:ℝ, RateLE l T ((rest P i).pick q).amp ζ ∧ Agrees U l T (down i z) ((fork n f).topAge a ν) b (W+ ((rest P i).pick q).cost) (r-ζ) (P i) (P' i)):\n       Agrees U l T z ((fork n f).topAge a ν) b W r (fuse P) (fuse P') :=by",
+            "line": 68,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Nesting/Transactions.lean",
+            "fragment": "L68-L70"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Nesting.change_one",
+            "lines": [
+              68,
+              87
+            ],
+            "conclusion": "Replacing one child's menu by another changes the fused menu by the child difference times the fixed remaining product, so successive replacements compose."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Nesting.Agrees.then",
+        "module": "YM.OPE.Nesting.Transactions",
+        "lines": [
+          64,
+          64
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Nesting.Agrees.then"
+          },
+          "snippet": {
+            "text": "lemma Agrees.then (hT:Tendsto T l atTop)(h:Agrees U l T o u b W r A B')(h':Agrees U l T o u b W r B' D):Agrees U l T o u b W r A D :=fun w y z p q he=> ((h w y z p q he).add (h' w y z p q he) hT).congr (Eventually.of_forall fun _=> sub_add_sub_cancel ..)",
+            "line": 64,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Nesting/Transactions.lean",
+            "fragment": "L64-L64"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Nesting.Agrees.then",
+            "lines": [
+              64,
+              64
+            ],
+            "conclusion": "Agreement is transitive, via the telescoping identity `(A-B')+(B'-D)=A-D`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents agreed on the class but cited different declarations; the mapper's kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

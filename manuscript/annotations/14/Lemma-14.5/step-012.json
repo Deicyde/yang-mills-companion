@@ -1,18 +1,18 @@
 {
   "id": "Lemma 14.5 step 12",
   "kind": "proof_step",
-  "status": "not_formalized",
-  "relation": "noMatch",
-  "note": "No Lean lines assign wrapping terms to the forced remainder: `Nonwrapping` in `LOCAL_SPLITTING` only switches the sampled Taylor coefficients (`logSample`) and the placement of atoms, and the forced part of `make` is the complement of the primary extraction.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "[L] keeps wrapping terms regular and pays for them with the covering factor `wraps` (`unweigh`) instead of assigning them to the forced remainder.",
   "subject": [
     {
       "location": {
         "page": 130,
         "rect": [
           0.25507,
-          0.28739,
+          0.28873,
           0.42694,
-          0.01742
+          0.01556
         ]
       },
       "title": "Lemma 14.5 step 12: Text, p. 130",
@@ -29,22 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.MergeProof.Matric.motor",
-        "module": "YM.FullVolume.Mark.Wheels",
+        "declaration": "YM.Trace.Physical.Germ.correction_budget",
+        "module": "YM.Trace.Physicalv2.Germ",
         "lines": [
-          40,
-          247
+          99,
+          101
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.MergeProof.Matric.motor"
+            "id": "YM.Trace.Physical.Germ.correction_budget"
+          },
+          "snippet": {
+            "text": "    by_cases hwrap : Nonwrapping (q.support i) o\n    · rw [short_vector F A hf hd hwrap,norm_zero]; exact mul_nonneg hc (mul_nonneg hu (he.1 i))\n    exact (norm_le_size F _).trans ((hC.2 o hd hp (hf.smooth i) (hs i)).trans (mul_le_mul_of_nonneg_left (unweigh (hs i).1 R.p _ o (hf.origin i) hwrap) hc))",
+            "line": 99,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Mark/Wheels.lean",
-            "fragment": "L40-L247"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Trace/Physicalv2/Germ.lean",
+            "fragment": "L99-L101"
+          },
+          "proof_context": {
+            "declaration": "YM.Trace.Physical.Germ.correction_budget",
+            "lines": [
+              90,
+              101
+            ],
+            "conclusion": "For a regular term whose support wraps, the vector of Taylor coefficients is bounded by the full mass times `wraps R.p n` (via `unweigh`), while the nonwrapping terms have zero vector (`short_vector`)."
           }
         }
       }
@@ -54,47 +68,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.MergeProof.Matric.Tool.recoil",
-        "module": "YM.FullVolume.Mark.Sanctum",
+        "declaration": "YM.Trace.Physical.Germ.unweigh",
+        "module": "YM.Trace.Physicalv2.Germ",
         "lines": [
-          75,
-          78
+          57,
+          64
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.MergeProof.Matric.Tool.recoil"
+            "id": "YM.Trace.Physical.Germ.unweigh"
+          },
+          "snippet": {
+            "text": "lemma unweigh {c : ℝ}(hc :0≤c) (B:BudgetPoint)(X:Support n)(o:Site n)(hz:o∈X)(h:¬Nonwrapping X o): c ≤ wraps B n * B.mass X c := by\n    have hb : (n.val:ℝ) ≤ 10*(4*(B.B:ℝ)+2)*(2+coverNumber B.B X):= by exact_mod_cast wrap_lower_nat B.B X o hz h\n    have h0:0<10*(4*(B.B:ℝ)+2):=by positivity\n    replace hb : (n.val:ℝ)/(10*(4*↑B.B+2)) ≤ 2+↑(coverNumber B.B X) := (div_le_iff₀ h0).mpr (by rw [mul_comm]; exact hb)\n    unfold wraps BudgetPoint.mass; rw [mul_div_assoc,← mul_assoc, ←Real.exp_add]\n    apply le_mul_of_one_le_left hc (Real.one_le_exp ?_)\n    have he:= mul_le_mul_of_nonneg_left hb B.exponent_pos.le\n    linarith",
+            "line": 57,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Mark/Sanctum.lean",
-            "fragment": "L75-L78"
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Push.Local.Output.owns",
-        "module": "YM.Push.LOCAL_SPLITTING.Step",
-        "lines": [
-          93,
-          117
-        ]
-      },
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Push.Local.Output.owns"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Trace/Physicalv2/Germ.lean",
+            "fragment": "L57-L64"
           },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/LOCAL_SPLITTING/Step.lean",
-            "fragment": "L93-L117"
+          "proof_context": {
+            "declaration": "YM.Trace.Physical.Germ.unweigh",
+            "lines": [
+              57,
+              64
+            ],
+            "conclusion": "If the support does not satisfy `Nonwrapping`, then `c <= wraps B n * B.mass X c`: the covering mass pays for wrapping."
           }
         }
       }
@@ -109,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, a judge ruled on the search; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, a judge ruled on the search; a deeper re-search disagreed and a judge changed it from noMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

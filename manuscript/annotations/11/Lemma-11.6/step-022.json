@@ -1,18 +1,18 @@
 {
   "id": "Lemma 11.6 step 22",
   "kind": "proof_step",
-  "status": "not_formalized",
-  "relation": "noMatch",
-  "note": "Asserts no mathematics beyond introducing weighted norms; [L] has no weighted-input norms for kernel application.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "Lean lets kernels act on exponentially weighted inputs (`Tariff`, `envelopeW`) and, separately, on polynomially growing ones (`hill`); it never forms the combined weight with 𝔞<c_j and degree h.",
   "subject": [
     {
       "location": {
         "page": 56,
         "rect": [
           0.12026,
-          0.69267,
+          0.69322,
           0.75948,
-          0.03713
+          0.03658
         ]
       },
       "title": "Lemma 11.6 step 22: Text, p. 56",
@@ -29,47 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Craft.Donate",
-        "module": "YM.Bid.Craft",
+        "declaration": "YM.Next.Free.Tariff",
+        "module": "YM.Next.FREE_KERNELS.Tariff",
         "lines": [
-          21,
-          22
+          25,
+          26
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Craft.Donate"
+            "id": "YM.Next.Free.Tariff"
+          },
+          "snippet": {
+            "text": "def Tariff (R : Cover → Cover → ℝ) (η σ B : ℝ) := ∀ i,\n    Width σ (B * envelopeW η i) (R i)",
+            "line": 25,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Bid/Craft.lean",
-            "fragment": "L21-L22"
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Laurent.Width",
-        "module": "YM.Laurent.Eval",
-        "lines": [
-          104,
-          104
-        ]
-      },
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Laurent.Width"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/Tariff.lean",
+            "fragment": "L25-L26"
           },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Laurent/Eval.lean",
-            "fragment": "L104-L104"
+          "proof_context": {
+            "declaration": "YM.Next.Free.Tariff",
+            "lines": [
+              25,
+              26
+            ],
+            "conclusion": "`Tariff R η σ B` states that kernel row `R i` has exponential width `σ` with constant `B * exp(η size i)`, so the kernel may be applied to inputs weighted by `exp(η size)`."
           }
         }
       }
@@ -84,8 +73,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge changed it from noMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
       }
     }
   }

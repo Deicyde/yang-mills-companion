@@ -1,7 +1,9 @@
 {
   "id": "Lemma 13.18 step 1",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] applies the recovery lemma with r = 1/4 and R = q/2 to both the activity map and the scalar correction, where [M] takes R = rho for the scalar correction.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.12026,
           0.62429,
           0.76244,
-          0.07095
+          0.07024
         ]
       },
-      "title": "Lemma 13.18 step 1: Text, p. 115, not yet judged",
+      "title": "Lemma 13.18 step 1: Text, p. 115",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 13.18 step 1"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.PhysicalNext.Repeat.Muse.incomeP",
+        "module": "YM.FullVolume.Gain.Rate",
+        "lines": [
+          83,
+          90
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.PhysicalNext.Repeat.Muse.incomeP"
+          },
+          "snippet": {
+            "text": "   have ht':∀ᶠ y in 𝓝 x,∀ z:ℝ × (Home T), ‖z‖≤1/4 → Scout (q/4) (fun t:ℝ=>World.ready (reading H hp (y+t • z))) (2*d) ∧ Scout (q/4) (fun t:ℝ=>drum H (y+t • z)) (2*fn A.B.a m v):=by\n     filter_upwards [Metric.closedBall_mem_nhds x (by norm_num: (0:ℝ)<1/8)] with y hy; intro z hz; rw [Metric.mem_closedBall,dist_eq_norm] at hy\n     have hβ:=Pass.samples ht h' (show |y.1-x.1| ≤2 from ((norm_fst_le (y-x)).trans hy).trans (by norm_num)); have hV:‖y.2‖ ≤1/4:= by\n       have h:= norm_snd_le (y-x)|>.trans hy; change ‖y.2-x.2‖≤ _ at h; linarith [norm_sub_norm_le y.2 x.2]\n     have hW(i:sun) : ‖(y+i.val • z).2‖≤1:=by\n        change ‖y.2+i.val • z.2‖ ≤ _; apply (norm_add_le ..).trans; rw [norm_smul]; exact (add_le_add hV ( (mul_le_of_le_one_left (norm_nonneg _) (abs_le.mpr i.2)).trans ((norm_snd_le z).trans hz))).trans (by norm_num)\n     obtain ⟨hu,ha⟩:= income g H h hq hp ht y z hβ (((norm_fst_le z).trans hz).trans (by norm_num)) hW\n     have hq:= hC.1; exact ⟨roundTrip _ hu hC.1,roundTrip _ ⟨by linarith, ha.nonneg,fun w i hz=>ha.beam _ _ (stripe_down hz (by linarith: (0:ℝ)<q/2) (by linarith))⟩ hC.1⟩",
+            "line": 83,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Gain/Rate.lean",
+            "fragment": "L83-L90"
+          },
+          "proof_context": {
+            "declaration": "YM.PhysicalNext.Repeat.Muse.incomeP",
+            "lines": [
+              82,
+              92
+            ],
+            "conclusion": "For centres y near x and directions z with ‖z‖ ≤ 1/4, the line maps of `reading` and `drum` are `Scout (q/4)` with constants 2d and 2 fn, via `roundTrip` from the stencil bound `Rebar (q/2)`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.PhysicalNext.Repeat.Muse.roundTrip",
+        "module": "YM.FullVolume.Gain.Rate",
+        "lines": [
+          61,
+          64
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.PhysicalNext.Repeat.Muse.roundTrip"
+          },
+          "snippet": {
+            "text": "lemma roundTrip (f:ℝ→Y)(hp:Rebar (q/2) (phraseS (fun i:sun=> f i)) c)(hv:4≤q): Scout (q/4) f (2*c):=by\n   have h:= hp.recovery (show 1≤q/4 from (by linarith)) (show q/4<q/2 from (by linarith))\n   apply (h.enlarged (le_of_eq (by rw [show q/4/(q/2)=(1/2:ℝ) from (by have hh:q≠0:=(by linarith); field_simp <;> ring)]; ring))).replace\n   exact fun t ht=> by unfold phraseS pinch; rw [dif_pos ht]",
+            "line": 61,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Gain/Rate.lean",
+            "fragment": "L61-L64"
+          },
+          "proof_context": {
+            "declaration": "YM.PhysicalNext.Repeat.Muse.roundTrip",
+            "lines": [
+              61,
+              64
+            ],
+            "conclusion": "`Rebar (q/2) f c` gives `Scout (q/4) f (2*c)` by `Rebar.recovery`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

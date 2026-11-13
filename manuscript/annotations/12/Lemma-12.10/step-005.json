@@ -1,7 +1,9 @@
 {
   "id": "Lemma 12.10 step 5",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] shows the chord bound for each signed image by `send_price` and sums over `Signed`; the bound is `4*h` rather than [M]'s same chords.",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.04006
         ]
       },
-      "title": "Lemma 12.10 step 5: Text, p. 88, not yet judged",
+      "title": "Lemma 12.10 step 5: Text, p. 88",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 12.10 step 5"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVNext.CouplingReset.sensor",
+        "module": "YM.UVNext.COUPLING_RESET.Probe",
+        "lines": [
+          121,
+          122
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVNext.CouplingReset.sensor"
+          },
+          "snippet": {
+            "text": "    have hm p : G.chord (faceValue (pull s 0 U) p) ≤ 4*h :=\n      (Face.send_price U _ _ _ G.chord G.chord_inv (fun k g => G.chord_conj g k)).trans_le (hf _)",
+            "line": 121,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/COUPLING_RESET/Probe.lean",
+            "fragment": "L121-L122"
+          },
+          "proof_context": {
+            "declaration": "YM.UVNext.CouplingReset.sensor",
+            "lines": [
+              96,
+              142
+            ],
+            "conclusion": "For every signed image `pull s 0 U`, face chords are at most `4*h` (`send_price`, `chord_conj`)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVNext.CouplingReset.sensor",
+        "module": "YM.UVNext.COUPLING_RESET.Probe",
+        "lines": [
+          142,
+          142
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVNext.CouplingReset.sensor"
+          },
+          "snippet": {
+            "text": "  simpa using Finset.sum_le_sum (s:=Finset.univ) (fun s _ => H s)",
+            "line": 142,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/COUPLING_RESET/Probe.lean",
+            "fragment": "L142-L142"
+          },
+          "proof_context": {
+            "declaration": "YM.UVNext.CouplingReset.sensor",
+            "lines": [
+              96,
+              142
+            ],
+            "conclusion": "The per-signed bound `H s` is summed over `Signed` to give the bound for the hypercubic average."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
       }
     }
   }

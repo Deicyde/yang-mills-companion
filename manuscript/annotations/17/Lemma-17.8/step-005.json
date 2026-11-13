@@ -1,7 +1,9 @@
 {
   "id": "Lemma 17.8 step 5",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] gives an existential radius R where [M] has the explicit R = 4r+1.",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.02423
         ]
       },
-      "title": "Lemma 17.8 step 5: Display, p. 201, not yet judged",
+      "title": "Lemma 17.8 step 5: Display, p. 201",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 17.8 step 5"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.late",
+        "module": "YM.EveryPhase.Light",
+        "lines": [
+          212,
+          216
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.late"
+          },
+          "snippet": {
+            "text": "  have he t (ht : |t| ≤ 1) : delta (L.actors i) w (position x t)=0 := by\n    rw [comm_expect (L.cores i) F.sector.derivatives F.room.kernel.laws.toSymmetric F.phase.transport.injection]\n    have hh : spacelikeWords (reverseP (L.actors i).J w) (acted (L.actors i).spin (Poincare.translation (position x t)) w) := by\n      rw [L.spins,L.letters]; exact hR t ht x hx\n    rw [op_comm (L.actors i).operators (L.cores i).localPairs hh,sub_self]",
+            "line": 212,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Light.lean",
+            "fragment": "L212-L216"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.late",
+            "lines": [
+              208,
+              219
+            ],
+            "conclusion": "The momentum-space commutator quantity `delta` (the charFun difference of the word and reversed-word measures) vanishes at `position x t` for `|t| ≤ 1` and `R < ‖x‖`, by `comm_expect` and locality `op_comm`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.delta",
+        "module": "YM.EveryPhase.Polynomials",
+        "lines": [
+          171,
+          173
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.delta"
+          },
+          "snippet": {
+            "text": "def delta (X : Wightman S) (A : SumOfWords S) (p : E4) :=\n    charFun (X.momentum.diagonal (stands X.operators A)) p -\n      charFun (X.momentum.diagonal (stands X.operators (reverseP X.J A))) (-p)",
+            "line": 171,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Polynomials.lean",
+            "fragment": "L171-L173"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.delta",
+            "lines": [
+              171,
+              173
+            ],
+            "conclusion": "`delta X A p = charFun(μ_{AΩ}) p - charFun(μ_{A†Ω}) (-p)`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

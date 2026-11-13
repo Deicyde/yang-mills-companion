@@ -1,18 +1,18 @@
 {
   "id": "Lemma 11.6 step 2",
   "kind": "proof_step",
-  "status": "not_formalized",
-  "relation": "noMatch",
-  "note": "[L] has no signed route sums I_a(x to y; o) and no frame equation to differentiate; the fine field is built by `stretch` from a coarse field and the free (non-tree) links.",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "`fee` is the signed route sum I_a(x→y;o) and `derivative` differentiates the frame equation along the field; the colour-component form of the field is an encoding, not a difference in content.",
   "subject": [
     {
       "location": {
         "page": 55,
         "rect": [
           0.12026,
-          0.45042,
+          0.45066,
           0.75948,
-          0.03713
+          0.03689
         ]
       },
       "title": "Lemma 11.6 step 2: Text, p. 55",
@@ -29,22 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Work.F01.link_bound",
-        "module": "YM.Work.F01",
+        "declaration": "YM.Push.fee",
+        "module": "YM.PREC.Derivative",
         "lines": [
-          63,
-          108
+          29,
+          29
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Work.F01.link_bound"
+            "id": "YM.Push.fee"
+          },
+          "snippet": {
+            "text": "def fee (u z : S.patch.Points) (o : Lattice.Order) (x : In G f) := linkSum (collect G x) (atPoint S y u) (route u.val z.val o)",
+            "line": 29,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/F01.lean",
-            "fragment": "L63-L108"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PREC/Derivative.lean",
+            "fragment": "L29-L29"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.fee",
+            "lines": [
+              29,
+              29
+            ],
+            "conclusion": "`fee` is the signed sum `linkSum (collect G x)` of the field along the route from patch point `u` to `z` in order `o`, the quantity I_a(x→y;o)."
           }
         }
       }
@@ -54,22 +68,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Bid.stretch",
-        "module": "YM.Bid.Station",
+        "declaration": "YM.Push.derivative",
+        "module": "YM.PREC.Derivative",
         "lines": [
-          34,
-          36
+          38,
+          39
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Bid.stretch"
+            "id": "YM.Push.derivative"
+          },
+          "snippet": {
+            "text": "lemma derivative (t : S.SitesChoice) (v : S.patch.Points) (x : In G f) :\n    HasDerivAt (fun u : ℝ => hats S y t (u • x) v) (G.colorMat (tap S y v x - tap S y S.patch.center x)) 0 := by",
+            "line": 38,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Bid/Station.lean",
-            "fragment": "L34-L36"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PREC/Derivative.lean",
+            "fragment": "L38-L39"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.derivative",
+            "lines": [
+              38,
+              68
+            ],
+            "conclusion": "`derivative` differentiates the frame (`hats`) at the flat field along a direction `x`: the derivative at patch point `v` is `tap v - tap center`, built from the route sums `fee`."
           }
         }
       }
@@ -84,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge kept it; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

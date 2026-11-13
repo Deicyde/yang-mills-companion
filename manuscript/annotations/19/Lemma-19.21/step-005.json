@@ -1,7 +1,9 @@
 {
   "id": "Lemma 19.21 step 5",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean states the expansion to degree H (error `c-(H+1)(s-u)`) through `Override` and `from_word` with a chosen `n`, rather than via the raw-rates display.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.12026,
           0.0962,
           0.75948,
-          0.10556
+          0.10611
         ]
       },
-      "title": "Lemma 19.21 step 5: Text, p. 236, not yet judged",
+      "title": "Lemma 19.21 step 5: Text, p. 236",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 19.21 step 5"
@@ -21,7 +23,125 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Layers.Funds.coarsen",
+        "module": "YM.Contacts.Layers.Signed",
+        "lines": [
+          73,
+          74
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Layers.Funds.coarsen"
+          },
+          "snippet": {
+            "text": "lemma Funds.coarsen (h : Funds Z M φ T A s c e) (hs : u ≤ s)(hv : s ≤ 1)(hu : 0 ≤ u) : Funds Z M φ T A u c e:=\n    hs.eq_or_lt.elim (fun hh=> hh ▸ h) fun he=> Matchable.fall hT H ha he hu hv hx h",
+            "line": 73,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Layers/Signed.lean",
+            "fragment": "L73-L74"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Layers.Funds.coarsen",
+            "lines": [
+              73,
+              74
+            ],
+            "conclusion": "`Funds` at height `s` and cost `c` gives `Funds` at height `u <= s` and the same cost `c`; for `u = s` the original is kept."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Layers.Matchable.fall",
+        "module": "YM.Contacts.Layers.Overrides",
+        "lines": [
+          142,
+          143
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Layers.Matchable.fall"
+          },
+          "snippet": {
+            "text": "lemma fall (h : Funds Z M φ T A s c e) : Funds Z M φ T A u c e:= ⟨h.loose, fun q=> by\n  obtain ⟨f,hh,hL⟩:=(layer hT H ha hs hu hv hx h).replaces q; exact ⟨_, (hh.mono hs.le le_rfl).fine hT hx,hL⟩⟩",
+            "line": 142,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Layers/Overrides.lean",
+            "fragment": "L142-L143"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Layers.Matchable.fall",
+            "lines": [
+              142,
+              143
+            ],
+            "conclusion": "Replaces the approximant by a single-point override at the lower height, with the same cost."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Layers.Matchable.from_word",
+        "module": "YM.Contacts.Layers.Overrides",
+        "lines": [
+          106,
+          124
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Layers.Matchable.from_word"
+          },
+          "snippet": {
+            "text": "lemma from_word : Matchable Z M φ T A x s u ((sigma p:ℝ)*s) (fun t=> tokenWord M.basis (X t) p) := by\n  have hx' := habitat_gives ha hU; have hs' := lt_of_le_of_lt hu hs\n  refine ⟨fun r=>?_⟩; obtain ⟨n,hn⟩:= exists_nat_gt (((sigma p:ℝ)*s-r)/(s-u)); let E(t):= internal (X t) p (x t) M n\n  refine ⟨E,(Override.sum (p:=bands Z.sector.derivatives n) (E:= fun j t=> M.basis.ope j (X t) p (x t) • insertToken D (x t) (M.basis.letter j)) (fun i hi=> ?_)).germ (Eventually.of_forall fun i=> Finset.sum_apply ..),?_⟩\n  · have h: Override Z M φ T x s (i.1*s) (fun t=>insertToken D (x t) (M.basis.letter i)):= by\n       unfold insertToken; refine .atom (RateLE.mono (RateLE.const (S.project i.1 (M.basis.letter i).2) hT) (by change 0 ≤ (i.1:ℝ)*s-i.1*s; linarith only))\n    exact Override.mono (h.coeff (available_cost Z D p hT H M.coherent hx' hk hs' i)) le_rfl (by apply le_of_eq; ring)\n  refine Against.of_words hT (fun J _ Y q hh he l=>?_)\n  have hs:= he.windows hU pack_carries; have hf:= he.left hx pack_carries\n  -- read the signed approximation before taking the bound; every allowed exterior\n  have hZ := arrangement_cost Z D n p q hT H M.coherent hx' hk hs' hh hf hu (le_trans (le_of_lt ‹u<s›) hv) ‹u<s›\n  apply RateLE.transfer (RateLE.mono hZ (by linarith only [div_lt_iff₀ (sub_pos.mpr ‹u<s›) |>.mp hn, sub_pos.mpr ‹u<s›]))\n  filter_upwards [(hk.mono hv|>.chorus hh (hs.mono ((le_of_lt ‹u<s›).trans hv))).inject,(Kept.sole φ T x 1|>.chorus hh (hf.mono ((le_of_lt ‹u<s›).trans hv))).inject] with i hP hC\n  apply le_trans (le_of_eq (congr_arg norm (?_ : _= glance Z (l i) _))) (glance_bound Z (l i) _)\n  rw [glance_terms Z D n _ p _ _ q (l i) hP hC]\n  let S':=spectator Z (l i); let m:= readExpr D S'; let K:= tokenWord D (Y i) q; change m ((tokenWord D (X i) p - E i)*K)=_\n  rw [sub_mul,map_sub, show m (tokenWord D (X i) p*K) = observe S' (beside (X i) (Y i)) (beside p q) by unfold m K; rw [← token_beside, read_word D M.coherent S' (spectate Z (l i)).laws.toSymmetric (spectate_respects Z _) (spectate_ready Z _),totalObserve,if_pos hP] ]\n  congr 1; unfold E internal Prescription.truncated; rw [Finset.sum_mul,map_sum]; refine Finset.sum_congr rfl fun j _=>?_\n  rw [smul_mul_assoc,map_smul]; unfold Prescription.termRead K m; rw [← token_sole,← token_beside, read_word D M.coherent S' (spectate Z (l i)).laws.toSymmetric (spectate_respects Z _) (spectate_ready Z _),totalObserve,if_pos hC]; rfl",
+            "line": 106,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Layers/Overrides.lean",
+            "fragment": "L106-L124"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Layers.Matchable.from_word",
+            "lines": [
+              106,
+              124
+            ],
+            "conclusion": "A word is replaced by its OPE truncated at `n > (σ s - r)/(s-u)` with outputs of rate at most `i*s`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +151,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

@@ -1,19 +1,21 @@
 {
   "id": "Lemma 13.15 step 14",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "`perk` bounds the same left side `exp(-w)*exp(sqcost t*w)` by `exp(-w)*exp(scaleT w)` and compares it through `landing` with the node bound `exp(-κ)*cash`, not with e^{-beta(0) d/2}.",
   "subject": [
     {
       "location": {
         "page": 112,
         "rect": [
           0.12026,
-          0.77177,
+          0.77011,
           0.75948,
-          0.01998
+          0.02164
         ]
       },
-      "title": "Lemma 13.15 step 14: Display, p. 112, not yet judged",
+      "title": "Lemma 13.15 step 14: Display, p. 112",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 13.15 step 14"
@@ -21,7 +23,47 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.WilsonStartup.Fog.Bell.perk",
+        "module": "YM.FullVolume.Rise.Hat",
+        "lines": [
+          43,
+          49
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.WilsonStartup.Fog.Bell.perk"
+          },
+          "snippet": {
+            "text": "  have hK t (ht:|t|≤6*R) : p' (V.poses t)= Real.exp (-w)*Real.exp (r.sqcost t*w):= by rw [hY,← Real.exp_add,V.move _ ht]; apply congr_arg; unfold w Fold.sqcost r; ring\n  have ha:= (r.unveils w).scale (Real.exp (-w)); rw [Real.norm_of_nonneg (Real.exp_nonneg _)] at ha\n  refine (ha.replace (fun x hx=> (show phraseS _ x= _ from phrased _ ⟨x,hx⟩).symm ▸ ?_)).enlarged ?_\n  swap\n  · exact Eq.symm (hK _ (show |x|≤6*R from earning V hp he ⟨x,hx⟩))\n  have hz := hh (V.poses u) (he _); change |p' (V.poses u)|≤ _ at hz; rw [abs_of_nonneg (by rw [hY]; positivity), hK u hm] at hz\n  exact (mul_le_mul_of_nonneg_left (Real.exp_monotone (r.landing w x')) (Real.exp_nonneg _)).trans hz",
+            "line": 43,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Rise/Hat.lean",
+            "fragment": "L43-L49"
+          },
+          "proof_context": {
+            "declaration": "YM.WilsonStartup.Fog.Bell.perk",
+            "lines": [
+              25,
+              49
+            ],
+            "conclusion": "The forced term is `exp(-w)*exp(sqcost t*w)` with `w = knot*charge`, bounded by `exp(-w)*exp(scaleT w)`, which `landing` compares with the node bound `exp(-κ)*cash`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +73,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
       }
     }
   }

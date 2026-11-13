@@ -1,7 +1,9 @@
 {
   "id": "Lemma 17.1 step 2",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean bounds the doubled-time term by the supremum `c` over all times rather than by `‖E_{2t}v‖`. The sup trick takes the place of the displayed bound.",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.02174
         ]
       },
-      "title": "Lemma 17.1 step 2: Display, p. 188, not yet judged",
+      "title": "Lemma 17.1 step 2: Display, p. 188",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 17.1 step 2"
@@ -21,7 +23,47 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OS.contract",
+        "module": "YM.OS.Flow",
+        "lines": [
+          77,
+          80
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OS.contract"
+          },
+          "snippet": {
+            "text": "  have hh (i) : d i ^ 2 ≤ ‖X.stems p‖ * c := by\n    change ‖timed X i p‖^2 ≤ _\n    rw [sq_key X, symmetrical X H.translations]\n    exact (norm_inner_le_norm ..).trans (mul_le_mul_of_nonneg_left (he _) (norm_nonneg _))",
+            "line": 77,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OS/Flow.lean",
+            "fragment": "L77-L80"
+          },
+          "proof_context": {
+            "declaration": "YM.OS.contract",
+            "lines": [
+              70,
+              89
+            ],
+            "conclusion": "`‖timed X i p‖^2 = ⟨p, timed X (2i) p⟩ ≤ ‖stems p‖ * c`, with `c` the supremum of `‖timed X s p‖`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +73,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
       }
     }
   }

@@ -1,32 +1,34 @@
 {
   "id": "Lemma 14.1 step 14",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "The allowance requirement is the `PricedReset` inequality with abstract cost and radius, and `can_delay_reset` meets it because η·radius·monitor² tends to infinity. That is a different argument from [M]'s explicit rate (2B+1)^4(1+B)^4β̂^{-4} → 0.",
   "subject": [
     {
       "location": {
         "page": 125,
         "rect": [
           0.12026,
-          0.84176,
+          0.8405,
           0.75948,
-          0.03724
+          0.0385
         ]
       },
-      "title": "Lemma 14.1 step 14: Text, p. 125, not yet judged",
+      "title": "Lemma 14.1 step 14: Text, p. 125",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 14.1 step 14",
           "quads": [
             [
               0.12026,
-              0.84176,
+              0.8405,
               0.87974,
-              0.84176,
+              0.8405,
               0.87974,
-              0.85898,
+              0.86006,
               0.12026,
-              0.85898
+              0.86006
             ],
             [
               0.12026,
@@ -43,7 +45,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVNext.CouplingReset.PricedReset",
+        "module": "YM.UVNext.COUPLING_RESET.Prices",
+        "lines": [
+          66,
+          69
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVNext.CouplingReset.PricedReset"
+          },
+          "snippet": {
+            "text": "def PricedReset (a : Levels G) (η : ℕ → ℝ) (q : ResetPrices) := ∀ m,\n    let i := a.clock.J m; let j := a.clock.J (m+1)\n    Sensor G (a.params m).clip (a.params m).paths (η i) ∧\n      2*(q.cost j i+1) * a.clock.allowance m ≤ η i * (a.budget m).threshold^2 * q.radius j i",
+            "line": 66,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/COUPLING_RESET/Prices.lean",
+            "fragment": "L66-L69"
+          },
+          "proof_context": {
+            "declaration": "YM.UVNext.CouplingReset.PricedReset",
+            "lines": [
+              66,
+              69
+            ],
+            "conclusion": "For every m, 2 (cost+1) * allowance m ≤ η * threshold² * radius, the attachment-allowance requirement."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVNext.CouplingReset.can_delay_reset",
+        "module": "YM.UVNext.COUPLING_RESET.Prices",
+        "lines": [
+          56,
+          62
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVNext.CouplingReset.can_delay_reset"
+          },
+          "snippet": {
+            "text": "theorem can_delay_reset (q : ResetPrices) (η : ℕ → ℝ) (hη : ∀ i, 0 < η i) (e : ℕ → ℝ) :\n    ∃ f, Monotone f ∧ e ≤ f ∧ ∀ j x, f j ≤ x → ∀ i, StepStages j i → Gate η q j i x := by\n  apply collect_upper e; intro j; apply eventually_transitions\n  intro i _\n  have he : Tendsto (fun x => η i * q.radius j i * (mon x)^2) atTop atTop :=\n    ((tendsto_pow_atTop (n:=2) (by decide)).comp mon_deep).const_mul_atTop (mul_pos (hη i) (q.rad_pos j i))\n  exact he.eventually_ge_atTop _",
+            "line": 56,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/COUPLING_RESET/Prices.lean",
+            "fragment": "L56-L62"
+          },
+          "proof_context": {
+            "declaration": "YM.UVNext.CouplingReset.can_delay_reset",
+            "lines": [
+              56,
+              62
+            ],
+            "conclusion": "The requirement η * radius * (monitor x)² is eventually large in x, so it holds beyond a coupling entry."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -53,8 +134,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

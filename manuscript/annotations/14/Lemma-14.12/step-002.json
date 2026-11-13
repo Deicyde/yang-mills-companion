@@ -1,19 +1,21 @@
 {
   "id": "Lemma 14.12 step 2",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "The product weight ∏w_i on a mode and the rooted attachment clause are present (`Weighted`, `Rooted`). The submultiplicative marker coefficient norm and the separate majorants v_{a,i} are not.",
   "subject": [
     {
       "location": {
         "page": 135,
         "rect": [
           0.12026,
-          0.25181,
+          0.25205,
           0.76013,
-          0.11679
+          0.11655
         ]
       },
-      "title": "Lemma 14.12 step 2: Text, p. 135, not yet judged",
+      "title": "Lemma 14.12 step 2: Text, p. 135",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 14.12 step 2"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extra.Multi.Weighted",
+        "module": "YM.Extra.MULTISOURCE_BOUNDS.Bands",
+        "lines": [
+          34,
+          35
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extra.Multi.Weighted"
+          },
+          "snippet": {
+            "text": "def Weighted (q : ι → R.Mode) (X : ι → Support n) (p : BudgetPoint) (w : V → ℝ) (δ : ℝ) (f : ι → ℝ) :=\n    Rooted (fun i => (q i).val) X p.B (p.supportExponent+δ) (fun i => Poly.toll w (q i) * f i)",
+            "line": 34,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/MULTISOURCE_BOUNDS/Bands.lean",
+            "fragment": "L34-L35"
+          },
+          "proof_context": {
+            "declaration": "YM.Extra.Multi.Weighted",
+            "lines": [
+              34,
+              35
+            ],
+            "conclusion": "`Weighted` is the rooted cover budget of the terms with the mode weight `Poly.toll w (q i)`, the product of the weights `w v` over the mode, times the coefficient `f i`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extra.Multi.Rooted",
+        "module": "YM.Extra.MULTISOURCE_BOUNDS.Root",
+        "lines": [
+          67,
+          68
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extra.Multi.Rooted"
+          },
+          "snippet": {
+            "text": "def Rooted (mode : ι → Finset V) (X : ι → Support n) (M : ℕ) (a : ℝ) (f : ι → ℝ) (c : ℝ) :=\n    ∀ s : V, SumBudget (fun i => if s ∈ mode i then Real.exp (a*coverNumber M (X i)) * f i else 0) c",
+            "line": 67,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/MULTISOURCE_BOUNDS/Root.lean",
+            "fragment": "L67-L68"
+          },
+          "proof_context": {
+            "declaration": "YM.Extra.Multi.Rooted",
+            "lines": [
+              67,
+              68
+            ],
+            "conclusion": "`Rooted` is the marker-rooted attachment budget: for each root vertex `s` the sum over terms whose mode contains `s` is a `SumBudget` with the exponential cover weight."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

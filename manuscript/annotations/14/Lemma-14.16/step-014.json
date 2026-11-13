@@ -1,19 +1,20 @@
 {
   "id": "Lemma 14.16 step 14",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "exactMatch",
   "subject": [
     {
       "location": {
         "page": 141,
         "rect": [
           0.34288,
-          0.13294,
+          0.13359,
           0.47016,
-          0.01789
+          0.01713
         ]
       },
-      "title": "Lemma 14.16 step 14: Text, p. 141, not yet judged",
+      "title": "Lemma 14.16 step 14: Text, p. 141",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 14.16 step 14"
@@ -21,7 +22,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.MergeProof.diet",
+        "module": "YM.MergeProof.Brioche",
+        "lines": [
+          18,
+          20
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.MergeProof.diet"
+          },
+          "snippet": {
+            "text": "lemma diet (H:History G)(d k:ℕ)(η ρ:ℕ→ℝ)(w :ℝ)(hp:0<w)(hh: ∀ i,k ≤ i → 0 < η i)\n    (hx:∀ i,k ≤ i → η i *((H.S.block i).val:ℝ)^(d+1)*ρ i ≤ ρ (i+1)) (m:ℕ) (E:ℝ)(hb:0≤E)\n    (hv:w*‖alto H k d‖*(E/gainChart H m k) ≤ ρ k): ∀ i:ℕ,k ≤ i→ (march (fun _:Unit=>w) η k i ())*‖alto H i d‖*(E/gainChart H m i) ≤ ρ i := by",
+            "line": 18,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Brioche.lean",
+            "fragment": "L18-L20"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.diet",
+            "lines": [
+              18,
+              37
+            ],
+            "conclusion": "If `eta_i * block^(d+1) * rho_i <= rho_(i+1)` for `i >= k` and the start bound holds at `k`, then `march w eta k i * norm(alto i d) * (E/gainChart m i) <= rho_i` for all `i >= k`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.MergeProof.diet",
+        "module": "YM.MergeProof.Brioche",
+        "lines": [
+          31,
+          37
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.MergeProof.diet"
+          },
+          "snippet": {
+            "text": "                  let L:= H.S.block i; let v:=s i; let x:= ‖alto H i d‖; let a:=E/gainChart H m i; let q:=puffs L\n                  have hl : (1:ℝ) ≤ L.val:= by exact_mod_cast L.property\n                  have hf: q≤L.val:= by unfold q puffs; exact Real.rpow_le_self_of_one_le hl (by norm_num)\n                  have hv:0≤a:= div_nonneg hb (he i).le\n                  rw [show s (i+1)=η i*s i from by unfold s; rw [march,if_pos (show k ≤ _ from hi)], show ‖alto H (i+1) d‖= (↑L.val:ℝ)^d*x by rw [alto_at,norm_mul,norm_pow,Complex.norm_natCast],show E/gainChart H m (i+1)= q*a from by unfold a q L; rw [heq i]; have hT:= ht i; have hz:=he (i+1); field_simp]\n                  apply le_trans _ (hx i hi)\n                  exact le_trans (mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_right hf hv) (mul_nonneg (mul_nonneg (hh _ hi).le (hs _ hi|>.le)) (mul_nonneg (pow_nonneg (zero_le_one.trans hl) _) (norm_nonneg _)))) ((le_of_eq (b:=η i *((H.S.block i).val:ℝ)^(d+1)*(s i*x*a)) (by unfold L; ring)).trans (mul_le_mul_of_nonneg_left ih (mul_nonneg (hh _ hi).le (by positivity))))",
+            "line": 31,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/Brioche.lean",
+            "fragment": "L31-L37"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.diet",
+            "lines": [
+              18,
+              37
+            ],
+            "conclusion": "The induction step multiplies the radius by `eta_i`, `norm(alto)` by `block^d`, and `E/gain` by `puffs <= block`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +111,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents agreed on the class but cited different declarations; the mapper's kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
       }
     }
   }

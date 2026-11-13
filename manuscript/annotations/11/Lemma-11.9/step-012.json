@@ -1,9 +1,9 @@
 {
   "id": "Lemma 11.9 step 12",
   "kind": "proof_step",
-  "status": "not_formalized",
-  "relation": "noMatch",
-  "note": "The integral formula f(p) = sum p_a int_0^1 d_a f(tp) dt is not stated; Lean works with `rays_jet` (vanishing iterated derivatives give `Rays n`).",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "In the proof of Lemma 11.9, Lean kills the low-order terms through `rays_jet` (vanishing iterated derivatives at 0 are equivalent to `Rays n`) instead of the integral formula f(p)=Σ p_a∫₀¹∂_a f(tp)dt. B's axis-by-axis telescoping (`read_part`) lives in FREE_KERNELS and is not used in this proof.",
   "subject": [
     {
       "location": {
@@ -29,6 +29,45 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
+        "declaration": "YM.Stationary.rays_jet",
+        "module": "YM.Next.STATIONARY.Infrastructure.Jets",
+        "lines": [
+          122,
+          131
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.rays_jet"
+          },
+          "snippet": {
+            "text": "lemma rays_jet (n : ℕ) : Rays n f ↔ ∀ i < n, iteratedFDeriv ℝ i f 0=0 := by\n  have hh := h.contDiffAt (n:=ω)\n  obtain ⟨p,h⟩ := h\n  have he (i : ℕ) (x : X) : Tensor.diagonal (iteratedFDeriv ℝ i f 0) x=0 ↔ Tensor.diagonal (p i) x=0 := by\n    have hv : (i.factorial:ℝ) ≠ 0 := Nat.cast_ne_zero.mpr (Nat.factorial_ne_zero _)\n    rw [diag_derivative h,smul_eq_zero,or_iff_right hv]\n  constructor\n  · refine fun u i hi => Tensor.ext_diag _ _ (hh.iteratedFDeriv_comp_perm) (fun _ _ => rfl) ?_\n    exact funext fun x => (he i x).2 ((rays_one h n x).1 (u x) _ hi)\n  exact fun u x => (rays_one h n x).2 fun i hi => (he i x).1 (by rw [u i hi]; rfl)",
+            "line": 122,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Infrastructure/Jets.lean",
+            "fragment": "L122-L131"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.rays_jet",
+            "lines": [
+              122,
+              131
+            ],
+            "conclusion": null
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
         "declaration": "YM.Stationary.greyson",
         "module": "YM.Next.STATIONARY.Shape.Scaled",
         "lines": [
@@ -36,65 +75,29 @@
           403
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
             "id": "YM.Stationary.greyson"
           },
+          "snippet": {
+            "text": "lemma greyson (G : Gauge) (σ ε C Z τ A : ℝ) (hs : 0<σ) (hC : 0≤C) (hZ : 0≤Z) (hτ : 0<τ) (hA : 0≤A) : ∃ s M,0<s ∧ 0≤M ∧ ∀ (m : ℕ→ Side), Tendsto (fun i => (m i).val) atTop atTop → ∀ (B : Bed) (p : Clip) (R : PathData G) Λ, R.Bounds p τ A Λ → Attached B R → B.metric.strip σ C → p.direct ≤ Z → (∀ n,Floor B p n ε C) → (∀ i,Bid.Sworn B (m i) G) →\n    ∀ i, i>0 → i≤3 → Drinkable i m (fun i => intended (m:=m i) p R-WilsonQ G (m i)) (4-i) s M := by\n  obtain ⟨w,P,hp,hq,L⟩ := column_price G 2 A Z hτ hZ\n  obtain ⟨v,T,hv,hk,U⟩ := column_price G 3 A Z hτ hZ\n  obtain ⟨hk',x,hx,H,h,H₀⟩ := Wilson_stream G 2\n  obtain ⟨hq',y,hy,V,hV,H₁⟩ := Wilson_stream G 3\n  obtain ⟨u,W,hu,hW,X⟩ := veneer G τ hτ\n  let d := min w v; let e := min σ 1\n  let a := min d e\n  have hd : 0<d := lt_min hp hv\n  have he : 0<e := lt_min hs zero_lt_one\n  have ha : 0<a := lt_min hd he\n  let b := bedCharge σ C+ bedCharge σ 1\n  let g := b+P+T+x+y\n  have hb : 0≤ b := add_nonneg (bedCharge_nonneg hC) (bedCharge_nonneg zero_le_one)\n  have hg : 0≤g := by unfold g; positivity\n  let s := min a u\n  have ht : 0<s := lt_min ha hu\n  refine ⟨s,g+A*W,ht,add_nonneg hg (mul_nonneg hA hW),fun m hm B p R Λ hR hB hw hY hh hj k hN hM => ?_⟩\n  -- f=raw minus Wilson (Log not Dough)\n  have hk : BankRows R τ A := hR.rows\n  obtain ⟨hL,l,hl,l'⟩ := L p R _ _ _ hY hR hk\n  obtain ⟨hT,j,hj',j'⟩ := U p R _ _ _ hY hR hk\n  let F i := inputSeries (m:=m i) p R-WilsonQ G (m i)\n  have ht' i : Pointwise (inputSeries p R (m:=m i)) := stain_knit R p hR\n  have hf i : Pointwise (F i) := (ht' i).sub Wilson_witness\n  have hu₀ := (whites_on_K hR hB hw hs (fun i=> hh (m i)) hj (F:=ageCore p R m) (fun _=>rfl)).2\n  have he (i j') : Firm a g ((l-H) i j') := (((hl i j').mono ha ((min_le_left ..).trans (min_le_left ..)) le_rfl).sub ((h i j').mono ha ((min_le_right ..).trans (min_le_right ..)) le_rfl)).mono ha le_rfl (by unfold g; linarith)\n  have hE (i k') : Firm a g ((j-V) i k') := (((hj' i k').mono ha ((min_le_left ..).trans (min_le_right ..)) le_rfl).sub ((hV i k').mono ha ((min_le_right ..).trans (min_le_right ..)) le_rfl)).mono ha le_rfl (by unfold g; linarith)\n  have hr i : Recorded (l-H) (F i) 0 := (l' (m i)).less (ht' i).analytic (hk' (m i)) (H₀ (m i))\n  have hr' i : Recorded (j-V) (F i) 0 := (j' (m i)).less (ht' i).analytic (hq' (m i)) (H₁ (m i))\n  obtain ⟨hQ,hQ'⟩ := pure_grey hm hf (fun i => (show fderiv ℝ (F i) 0=0 by unfold F; rw [fderiv_sub (ht' i).analytic.differentiableAt (hk' _).differentiableAt,(low_columns hR hB (hh (m i)) (hj i)).2.1,(outright G _).2.1,sub_self])) hu₀ (l-H) (j-V) he hr hE hr'\n  have h₀ (k) (hN : 0<k) (hM : k≤3) : Drinkable k m F (4-k) a g := by\n    interval_cases k\n    · refine ⟨slots B.metric G-slots leader G,fun i=> (according (B.metric.rights _ _ hw hs.le) (low_columns hR hB (hh (m i)) (hj i)).2.2).less (ht' i).analytic Wilson_witness.analytic (outright G (m i)).2.2,fun i j => ⟨?_,slots_gain hs hw (hh 1).starts i j⟩⟩\n      apply ((slots_cost hs hw i j).sub (slots_cost hs (leader_pay σ) i j)).mono ha ((min_le_right ..).trans (min_le_left ..)); show b≤g; unfold g; linarith\n    · exact ⟨_,hr,fun i j=> ⟨he i j,hQ i j⟩ ⟩\n    exact ⟨_,hr',fun i j => ⟨hE i j,hQ' i j⟩ ⟩\n  have hW i : intended (m:=m i) p R-WilsonQ G (m i)=(F+cureCore R m) i := by\n    rw [show intended (m:=m i) p R=ageCore p R m i+cureCore R m i from congr_fun (intent_bound p R m) i]; change inputSeries _ _+_ - _ = (inputSeries _ _-_)+_; abel\n  rw [show (fun i=> intended (m:=m i) p R-WilsonQ G (m i))=F+cureCore R m from funext hW]; exact ((h₀ k hN hM).thins ht (min_le_left ..) le_rfl le_rfl).more ((X m hm p R A Λ hA hR k hN hM).thins ht (min_le_right ..) le_rfl le_rfl) (fun i=> (hf i).analytic) (fun i=> (cures m hR i).1.analytic)",
+            "line": 363,
+            "truncated": false
+          },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Shape/Scaled.lean",
             "fragment": "L363-L403"
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Stationary.rays_jet",
-        "module": "YM.Next.STATIONARY.Infrastructure.Jets",
-        "lines": [
-          122,
-          133
-        ]
-      },
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Stationary.rays_jet"
           },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Infrastructure/Jets.lean",
-            "fragment": "L122-L133"
-          }
-        }
-      }
-    },
-    {
-      "type": "lean",
-      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
-      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
-      "location": {
-        "declaration": "YM.Stationary.pure_grey",
-        "module": "YM.Next.STATIONARY.Shape.SoftTransfers",
-        "lines": [
-          29,
-          40
-        ]
-      },
-      "extensions": {
-        "org.mathlib-initiative.formal-companion.overlay": {
-          "declaration": {
-            "id": "YM.Stationary.pure_grey"
-          },
-          "destination": {
-            "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Shape/SoftTransfers.lean",
-            "fragment": "L29-L40"
+          "proof_context": {
+            "declaration": "YM.Stationary.greyson",
+            "lines": [
+              363,
+              403
+            ],
+            "conclusion": null
           }
         }
       }
@@ -109,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge changed it from noMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

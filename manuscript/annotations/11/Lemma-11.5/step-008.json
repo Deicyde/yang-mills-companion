@@ -1,7 +1,9 @@
 {
   "id": "Lemma 11.5 step 8",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean has each ingredient with an abstract strip width `zone` and `plankCost` in place of the explicit 4 eta and C; the bound on r_M by C/(1+|z_a|) is in `alias_rail` and `rail_cost`.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.11962,
           0.19136,
           0.76012,
-          0.08845
+          0.08813
         ]
       },
-      "title": "Lemma 11.5 step 8: Text, p. 52, not yet judged",
+      "title": "Lemma 11.5 step 8: Text, p. 52",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 11.5 step 8"
@@ -21,7 +23,281 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Free.Train.area_height",
+        "module": "YM.Next.FREE_KERNELS.Train",
+        "lines": [
+          93,
+          94
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Free.Train.area_height"
+          },
+          "snippet": {
+            "text": "lemma area_height {L M : Side} (p : Momentum) (hp : p ∈ strip (zone/L.val)) :\n    ‖area M p‖ ≤ Real.exp (4*zone*(M.val/L.val)) := by",
+            "line": 93,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/Train.lean",
+            "fragment": "L93-L94"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Free.Train.area_height",
+            "lines": [
+              93,
+              104
+            ],
+            "conclusion": "`‖area M p‖ ≤ exp(4*zone*(M/L))` on the strip, the bound |b_{M'}(p/M)| ≤ e^{4 eta M'/M}."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Free.Train.area_at_root",
+        "module": "YM.Next.FREE_KERNELS.Train",
+        "lines": [
+          106,
+          107
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Free.Train.area_at_root"
+          },
+          "snippet": {
+            "text": "lemma area_at_root (M L : Side) (hm : M.val ≤ L.val) (p : Momentum) (hp : p ∈ realCube zone) :\n    Real.exp (-(4*plankCost*(M.val/L.val))) ≤ ‖area M (narrow L p)‖ := by",
+            "line": 106,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/Train.lean",
+            "fragment": "L106-L107"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Free.Train.area_at_root",
+            "lines": [
+              106,
+              119
+            ],
+            "conclusion": "`exp(-(4*plankCost*(M/L))) ≤ ‖area M (narrow L p)‖` on the real cube, the real lower bound e^{-C M'/M}."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Free.Train.extra_cube",
+        "module": "YM.Next.FREE_KERNELS.Train",
+        "lines": [
+          129,
+          130
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Free.Train.extra_cube"
+          },
+          "snippet": {
+            "text": "lemma extra_cube {j} (v : Train j) (L : Side) (hL : v.mass.val ≤ L.val)\n    (p : Momentum) (hp : p∈ strip (zone/L.val)) : ‖v.extra p‖ ≤ Real.exp (8*zone*(v.mass.val/L.val)) := by",
+            "line": 129,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/Train.lean",
+            "fragment": "L129-L130"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Free.Train.extra_cube",
+            "lines": [
+              129,
+              147
+            ],
+            "conclusion": "The extra product satisfies `‖extra p‖ ≤ exp(8*zone*(mass/L))`, summing M'/M over the history."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Free.Train.extra_root",
+        "module": "YM.Next.FREE_KERNELS.Train",
+        "lines": [
+          149,
+          150
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Free.Train.extra_root"
+          },
+          "snippet": {
+            "text": "lemma extra_root {j} (v : Train j) (L : Side) (hL : v.mass.val≤L.val) (p : Momentum) (hp : p∈ realCube zone) :\n    Real.exp (-(8*plankCost*(v.mass.val/L.val))) ≤ ‖v.extra (narrow L p)‖ := by",
+            "line": 149,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/Train.lean",
+            "fragment": "L149-L150"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Free.Train.extra_root",
+            "lines": [
+              149,
+              167
+            ],
+            "conclusion": "The extra product has the real lower bound `exp(-(8*plankCost*(mass/L)))`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Free.plank_bind",
+        "module": "YM.Next.FREE_KERNELS.Lines",
+        "lines": [
+          68,
+          69
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Free.plank_bind"
+          },
+          "snippet": {
+            "text": "lemma plank_bind (L M : Side) (ho : Odd L.val) (ho' : Odd M.val) (z : ℂ) :\n    plank L ((M.val:ℂ)*z) * plank M z=plank (L*M) z := by",
+            "line": 68,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/Lines.lean",
+            "fragment": "L68-L69"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Free.plank_bind",
+            "lines": [
+              68,
+              76
+            ],
+            "conclusion": "`plank` satisfies the composition identity b_l(theta) b_l'(l theta) = b_{ll'}(theta) for odd sides."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Free.rail_bind",
+        "module": "YM.Next.FREE_KERNELS.Lines",
+        "lines": [
+          51,
+          51
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Free.rail_bind"
+          },
+          "snippet": {
+            "text": "lemma rail_bind (L M : Side) (z : ℂ) : rail L ((M.val:ℂ)*z) * rail M z=rail (L*M) z := by",
+            "line": 51,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/Lines.lean",
+            "fragment": "L51-L51"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Free.rail_bind",
+            "lines": [
+              51,
+              62
+            ],
+            "conclusion": "`rail L (M z) * rail M z = rail (L*M) z`, the identity r_l(t) r_l'(l t) = r_{ll'}(t)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Free.Train.bind",
+        "module": "YM.Next.FREE_KERNELS.Train",
+        "lines": [
+          43,
+          44
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Free.Train.bind"
+          },
+          "snippet": {
+            "text": "lemma bind {j : ℕ} (P : RG.Patch) (h : j ≤ P.J) (h' : P.J ≤ j+1) (v : Train P.J) (p : Momentum) :\n    (hop P h h' v).smooth p=area P.L (v.mass.val • p)^P.J * v.smooth p := by",
+            "line": 43,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/Train.lean",
+            "fragment": "L43-L44"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Free.Train.bind",
+            "lines": [
+              43,
+              48
+            ],
+            "conclusion": "`smooth` of a hop factors as `area P.L (mass • p)^J * smooth v`, the cumulative filter."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +307,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

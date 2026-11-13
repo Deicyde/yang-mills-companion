@@ -154,8 +154,15 @@ STEP_STATUS = {'exactMatch': 'formalized', 'closeMatch': 'formalized', 'broadMat
 
 def step_provenance(r):
     v = r['verification']
+    s5 = v.get('s5') or {}
     if not v['complete']:
         method = 'mapper and verifier agents disagreed; not yet judged'
+    elif s5.get('how') == 'judge':
+        method = 'mapper and verifier agents disagreed; a judge ruled in a second pass'
+    elif s5.get('how') == 'rule: the Faithful verdict':
+        method = 'mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged'
+    elif s5.get('how') == 'rule: mapper, same class':
+        method = "mapper and verifier agents agreed on the class but cited different declarations; the mapper's kept, not judged"
     elif v.get('judge'):
         method = 'mapper and verifier agents, a judge ruled'
         if v.get('ruling', '').startswith('search-'):
@@ -166,6 +173,15 @@ def step_provenance(r):
         c = v.get(k)
         if c:
             method += f"; {what} {'changed it from ' + c['was'] if c['ruling'] != c['was'] else 'kept it'}"
+    if s5.get('sweep'):
+        agent = 'a deeper re-search' if s5['sweep'] == 're-search' else 'a re-rating agent'
+        if s5['how'] == 'sweep agreed':
+            method += f'; {agent} agreed'
+        elif s5['how'] == 'sweep+judge':
+            ch = r['relation'] != s5['was']
+            method += f"; {agent} disagreed and a judge {'changed it from ' + s5['was'] if ch else 'kept it'}"
+        else:
+            method += f'; {agent} disagreed, not judged'
     method += '; lines of [L] read at the pin, not built'
     return {'actor': 'agent', 'method': method, 'confirmed_by_human': False}
 

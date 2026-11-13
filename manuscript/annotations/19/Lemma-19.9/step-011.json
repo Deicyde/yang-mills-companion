@@ -1,7 +1,9 @@
 {
   "id": "Lemma 19.9 step 11",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "These are [L]'s grid rates for coordinates and remainder; the exponents are in [L]'s parameters and not literally Z-i*theta.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.11962,
           0.37367,
           0.76012,
-          0.05424
+          0.05337
         ]
       },
-      "title": "Lemma 19.9 step 11: Text, p. 229, not yet judged",
+      "title": "Lemma 19.9 step 11: Text, p. 229",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 19.9 step 11"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.grid_coeff",
+        "module": "YM.OPE.Schemes.Ladder",
+        "lines": [
+          34,
+          42
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.grid_coeff"
+          },
+          "snippet": {
+            "text": "lemma grid_coeff (w : Mode Λ): RateLE φ T (fun i=> R.ope w (w' i) g 0) ((u')-w.1*a):=by\n    have hϑ:= ha.trans (hu.trans hd); obtain ⟨q,hF,hq⟩ := ((far a b w.fst ha).and (eventually_ge_atTop w.fst)).exists\n    obtain ⟨A,p,Q,h₁,h₂,hS⟩:= for_plot U g hT i₀ hG L' hk hm hj ha hu hd q hx hy\n    have hf:= det_cost (R:=R) U g hT hS h w he hx hy (hb.trans (ha.trans hu)) hk hj hb hϑ h₂\n    have hQ:= at_grade U g Base' hT hS L' hG hR w hm (h₁.pays hT) hq\n    let f i:= R.ope w (w' i) g 0; let u i:=R.test w _ (S.project _ (Q i))\n    apply RateLE.congr (RateLE.add (hf.mono ?_) (hQ.mono ?_) hT) (Eventually.of_forall fun i=> (sub_add_cancel (f i) (u i)))\n    · unfold tax; unfold sigma; linarith only [hF,hb,ha]\n    unfold tax; unfold sigma; rw [Nat.cast_sub hq]; linarith only",
+            "line": 34,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Schemes/Ladder.lean",
+            "fragment": "L34-L42"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.grid_coeff",
+            "lines": [
+              34,
+              42
+            ],
+            "conclusion": "`grid_coeff` gives the coordinate rate on grid points."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.grid_remainder",
+        "module": "YM.OPE.Schemes.Ladder",
+        "lines": [
+          53,
+          73
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.grid_remainder"
+          },
+          "snippet": {
+            "text": "lemma grid_remainder (hc:c<b) (N:ℕ): RateLE φ T (fun i=> (T' i) - R.truncated (spectator U (s i)) N (w' i) g 0 (Y i) r) ((u')-(N+1:ℝ)*(a-c)+(cost')) :=by\n    let x':= u'-(N+1:ℝ)*(a-c); let t':= x'+cost'; let z:=(centerless (U:=E4) L)\n    obtain ⟨q,hF,hq⟩:= ((far a b N ha).and (eventually_ge_atTop N)).exists\n    obtain ⟨A,p,Q,h₁,h₂,hS⟩:= for_plot U g hT i₀ hG L' hk hm hj ha hu hd q hx hy; let v (w) i:= R.test w _ (S.project q (Q i)); let f (w) i:= R.ope w (w' i) g 0\n    have he1:= director_space hT hx hV (hc.trans (ha.trans hu)); have hxy := (hy.mono (le_max_left x u)|>.chorus (hp.mono (le_max_right ..)) (he1.mono ((hc.trans (ha.trans hu)).le.trans (le_max_left ..)))|>.inject)\n    let W(i):= spectator U (s i); let P' i:= observe (W i) (beside (z i) (Y i)) (beside (sole (⟨q,Q i⟩:C.book.Token)) r)\n    have hs:RateLE φ T (fun i=>T' i-P' i) t' := (see_cost (h:=h) U r hT hS he hxy h₂ hk hj (ha.trans (hu.trans hd)) hV hp hc hl ht s).mono (by unfold t' x' tax; linarith only [hF, mul_nonneg (a:=(N+1:ℝ)) (by positivity) ht])\n    have ha':∀ w: Mode Λ,w∈ bands Λ q → RateLE φ T (v w) ((u')-w.fst*a):=fun w hw=>(at_grade U g Base' hT hS L' hG hR w hm (h₁.pays hT) ((full_bands ..).1 hw)).mono (by unfold tax; rw [Nat.cast_sub ((full_bands ..).1 hw)]; linarith)\n    have hu(w:Mode Λ)(hw:w∈ bands Λ N):RateLE φ T (fun i=>(v w i-f w i)*Q' w i) t':=by\n       have ht':(w.fst:ℝ) ≤ N:= by exact_mod_cast ((full_bands ..).1 hw)\n       let V:=u'-(q+1/16:ℝ)*(a-b); have hv: RateLE φ T (fun i=> f w i-v w i) V:= det_cost U g hT hS h w he hx hy (hb.trans (ha.trans hu)) hk hj hb (ha.trans (hu.trans hd)) h₂\n       have hv: RateLE φ T (fun i=> v w i-f w i) V:=hv.neg.congr (Eventually.of_forall fun i=> (neg_sub _ _)); have hc:= (hv.mul (cloudRead (R:=R) U r hT h s hV hp ht hl w)).mono (b:=t'); apply hc; unfold t' V x'; linarith only [hF,mul_le_mul_of_nonneg_right ht' ht,ht]\n    have hr(w: Mode Λ)(hw:w ∈ bands Λ q \\ bands Λ N): RateLE φ T (fun i=>v w i*Q' w i) t':=by\n       have hm:= w.fst; have hh: (N:ℕ)< w.fst:= lt_of_not_ge (fun h=>(Finset.mem_sdiff.mp hw).2 ((full_bands ..).mpr h))\n       refine ((ha' w (Finset.mem_sdiff.mp hw).1).mul (cloudRead (R:=R) U r hT h s hV hp ht hl w)).mono ?_; have hx': (↑(N+1:ℕ):ℝ) ≤ w.fst:= by exact_mod_cast hh\n       unfold t' x'; push_cast at hx'; linarith only [mul_le_mul_of_nonneg_right hx' (sub_nonneg.mpr (hc.le.trans ha.le))]\n    have hL: RateLE φ T (fun i=> P' i- R.truncated (W i) N (w' i) g 0 (Y i) r) t':=by\n       apply RateLE.congr ((RateLE.sum hT hr).add (RateLE.sum hT hu) hT); filter_upwards [Intervals.inject hV hp] with i hi\n       rw [show P' i= _ from (R.sumAll (W i) r (spectate_ready U (s i)) (spectate U (s i)).laws.toSymmetric (spectate_respects U (s i)) hi (hR) (Q i)).symm]; unfold Prescription.truncated Prescription.termRead\n       change _+_ = (∑ w∈ bands Λ _, v w i * Q' w i)-(∑ w∈ bands Λ _,f w i * Q' w i); rw [← Finset.sum_sdiff (f:=fun w=> v w i*Q' w i) (show bands Λ N⊆ bands Λ q from fun x hx=> (full_bands ..).2 (((full_bands ..).1 hx).trans hq)), add_sub_assoc]; congr 1; simp_rw [sub_mul,Finset.sum_sub_distrib] -- name?\n    exact (hs.add hL hT).congr (Eventually.of_forall fun i=> (sub_add_sub_cancel _ _ _))",
+            "line": 53,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Schemes/Ladder.lean",
+            "fragment": "L53-L73"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.grid_remainder",
+            "lines": [
+              53,
+              73
+            ],
+            "conclusion": "`grid_remainder` gives the remainder rate on grid points."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents agreed on the class but cited different declarations; the mapper's kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

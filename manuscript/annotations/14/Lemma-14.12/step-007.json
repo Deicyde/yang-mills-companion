@@ -1,19 +1,21 @@
 {
   "id": "Lemma 14.12 step 7",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "Lean's descending induction is on `Spent` budgets via `rewind`; there are no radii `ρ_{h,i}`, no polynomial `b_{h,i}` or inverse estimate of Lemma E-marked-step.",
   "subject": [
     {
       "location": {
         "page": 135,
         "rect": [
           0.12026,
-          0.72653,
+          0.72692,
           0.76155,
-          0.05267
+          0.05217
         ]
       },
-      "title": "Lemma 14.12 step 7: Text, p. 135, not yet judged",
+      "title": "Lemma 14.12 step 7: Text, p. 135",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 14.12 step 7"
@@ -21,7 +23,47 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extra.Multi.Unbilled.realizes",
+        "module": "YM.Extra.MULTISOURCE_BOUNDS.Trajectory",
+        "lines": [
+          278,
+          286
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extra.Multi.Unbilled.realizes"
+          },
+          "snippet": {
+            "text": "  | of_succ m hn ih =>\n    have hs := fun v => (hstart v).trans hm\n    have he i := (hprep.here m).atlas (D i) (admitted C m H (hs i))\n    obtain ⟨h1,h2⟩ := copied_price H (h.copy m hm hn.le) hs hn.le hr hc (fun i => (rate_pos hot (hr i)).le)\n      (fun i => rate_le hot (hr i)) (fun i => (he i).1) (hprep.here m).singletons\n    have hM := rewind H hprep hot hr hG (h.raw m hm hn) (h.active m hm hn.le) hs hn (hsep m hm hn.le) (hμ m hm hn.le)\n      (ih (hm.trans (Nat.le_succ m))).2\n    refine ⟨h1, (h2.complete (h.active _ hm hn.le) (fun i => (rate_pos hot (hr i)).le) (divisor_pos ..).le hM).mono\n      (fun i => (rate_pos hot (hr i)).le) (fun _ => le_rfl) (divisor_pos ..).le ?_ (fun _ h => h) (fun _ h => h)⟩",
+            "line": 278,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/MULTISOURCE_BOUNDS/Trajectory.lean",
+            "fragment": "L278-L286"
+          },
+          "proof_context": {
+            "declaration": "YM.Extra.Multi.Unbilled.realizes",
+            "lines": [
+              263,
+              289
+            ],
+            "conclusion": "The inductive step passes from level `m+1` to `m` with `rewind`, assuming `Spent` at `m+1` and concluding `Spent` at `m`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +73,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents agreed on the class but cited different declarations; the mapper's kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
       }
     }
   }

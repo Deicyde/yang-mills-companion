@@ -1,9 +1,9 @@
 {
   "id": "Lemma 14.23 step 18",
   "kind": "proof_step",
-  "status": "not_formalized",
-  "relation": "noMatch",
-  "note": "The product telescoping (a1-a1^0)a2 + a1^0(a2-a2^0) and the finite polynomial bound in U,T,Z are absent.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "The product-difference identity and the bound of the Wick moment error by a finite expression in the factor bounds are carried; the specific bound (U+T)T+UT and the choice of b making the Gaussian polynomial smaller than every source bound are not.",
   "subject": [
     {
       "location": {
@@ -29,7 +29,7 @@
           0.12026,
           0.0962,
           0.76013,
-          0.07134
+          0.07142
         ]
       },
       "title": "Lemma 14.23 step 18: Text, pp. 147–148",
@@ -46,22 +46,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Next.Rank.Atlas.crushed",
-        "module": "YM.Next.RANK.Presenter",
+        "declaration": "YM.Next.Rank.Particle.vertices",
+        "module": "YM.MergeProof.West.Teddy",
         "lines": [
-          87,
-          103
+          65,
+          66
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Next.Rank.Atlas.crushed"
+            "id": "YM.Next.Rank.Particle.vertices"
+          },
+          "snippet": {
+            "text": "    have hh (p q f g : poly (Fin n × (KeyIn G d ⊕ W))) : p*f-q*g=(p-q)*g+p*(f-g) := by ring\n    rw [hh]; apply (Rise.taller _ zero_le_one _ _).trans",
+            "line": 65,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Presenter.lean",
-            "fragment": "L87-L103"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/West/Teddy.lean",
+            "fragment": "L65-L66"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Rank.Particle.vertices",
+            "lines": [
+              46,
+              74
+            ],
+            "conclusion": "The inductive step uses `p*f-q*g=(p-q)*g+p*(f-g)` to bound the difference of two products of polynomials by `D.card*X.xi*(X.base+X.xi)^D.card`."
           }
         }
       }
@@ -71,22 +85,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Next.Rank.Atlas.sizes",
-        "module": "YM.Next.RANK.Pilgrim",
+        "declaration": "YM.Next.Rank.Particle.accuracy",
+        "module": "YM.Next.RANK.BoundParticle",
         "lines": [
-          63,
-          96
+          122,
+          152
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Next.Rank.Atlas.sizes"
+            "id": "YM.Next.Rank.Particle.accuracy"
+          },
+          "snippet": {
+            "text": "theorem accuracy (Tset : modes (Fin n)) (Q₀ : Normal.Symmetric (Fin n × V)) (m : Fin n × V → ℂ)\n    (hp : Q₀=Normal.scope (perSlot M) Q) (hμ : m=Normal.reads (perSlot M) μ)\n    (h : Sorts Q μ X.B)\n    (he : Nearby (ferry Q) (Configuration.currentX hx G d) (μ∘polar) 0 X.B X.collision) :\n    ‖blend Q₀ m (pot Tset.val P)- Maxwell.Wick.moment G (Read.portion Tset x) (fun i => Maxwell.observable G d (F ((Read.project Tset) i).val))‖ ≤ X.cost := by\n  let Z := Tset.val\n  have hZ : Z.card ≤ n := by simpa using card_le_univ Z\n  let X' := fun i => thawKey (F i)\n  let H := cast M P\n  let Y := fun i => rename (Sum.inl : _ → KeyIn G d ⊕ W) (X' i)\n  have hz : blend Q₀ m (pot Z P)=blend Q μ (pot Z H) := by\n    rw [hp,hμ, ← wets]; apply congr_arg\n    unfold pot; rw [map_prod]; exact prod_congr rfl fun i _ => Normal.posts M i (P i)\n  have hc i : totalDegree (H i)≤k := (ascent ..).trans (T.words i)\n  have hy i : totalDegree (Y i)≤k := by unfold Y X'; rw [← T.mark i]; exact (below_degree ..).trans (hc i)\n  have hC i : totalDegree (X' i) ≤ k := le_trans (bracket ..) (hy i)\n  rw [hz, Configuration.G_subset hx]; refine (norm_sub_le_norm_sub_add_norm_sub _ (blend Q μ (pot Z Y)) _).trans ?_\n  have hh := zero_lt_one.trans_le he.small.paid; have hD : 0≤ Common.priced X.B (n*k) := by dsimp only [Common.priced]; positivity\n  apply le_trans _ X.enough; apply add_le_add\n  · rw [← map_sub]; apply (Common.width (pot Z H-pot Z Y) (n*k) h ?_).trans\n    · apply mul_le_mul_of_nonneg_right _ hD\n      have hp : 1 ≤ X.base+X.ξ := X.home.trans (le_add_of_nonneg_right X.pos)\n      exact (vertices T Z).trans (mul_le_mul (mul_le_mul_of_nonneg_right (Nat.cast_le.mpr hZ) X.pos)\n        (pow_le_pow_right₀ hp hZ) (pow_nonneg (zero_le_one.trans hp) _) (mul_nonneg (Nat.cast_nonneg _) X.pos))\n    rw [sub_eq_add_neg,show -(pot Z Y)=(-1:ℂ) • (pot Z Y) by simp]; exact (totalDegree_add (pot Z H) _).trans (max_le (ceiling Z H hc) ((totalDegree_smul_le (-1:ℂ) (pot Z Y)).trans (ceiling Z Y hy)))\n  · change ‖blend Q μ _-_‖ ≤ _\n    rw [show blend Q μ (pot Z Y)=_ from tide Q μ Z X']\n    refine (Common.differs (pot Z X') (n*k) he (ceiling Z _ hC)).trans (mul_le_mul_of_nonneg_right ?_ (mul_nonneg he.pos hD))\n    refine (Rise.purchased _ zero_le_one ..).trans ?_\n    have hh := prod_le_prod (s:=Z) (fun i _ => Rise.sign _ (post i (X' i)) zero_le_one) (fun i _ => (Rise.port i (X' i)).trans (T.price i))\n    rw [prod_const] at hh; exact hh.trans (pow_le_pow_right₀ X.home hZ)",
+            "line": 122,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Pilgrim.lean",
-            "fragment": "L63-L96"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/BoundParticle.lean",
+            "fragment": "L122-L152"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Rank.Particle.accuracy",
+            "lines": [
+              122,
+              152
+            ],
+            "conclusion": "The Wick moment of the product differs from its Gaussian blend by an explicit cost built from the pairing bounds."
           }
         }
       }
@@ -102,8 +130,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge changed it from noMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

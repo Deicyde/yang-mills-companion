@@ -1,28 +1,30 @@
 {
   "id": "Lemma 16.11 step 9",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The argument is the same: if the tensor vanished, its translation shell law would make the free degree-four derivative vanish, contradicting `born`. [L] runs it for the re-centered average `j₀` (and the coefficient `w 3`) instead of T itself.",
   "subject": [
     {
       "location": {
         "page": 187,
         "rect": [
           0.12026,
-          0.37609,
+          0.37644,
           0.75948,
-          0.07133
+          0.07098
         ]
       },
-      "title": "Lemma 16.11 step 9: Text, p. 187, not yet judged",
+      "title": "Lemma 16.11 step 9: Text, p. 187",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 16.11 step 9",
           "quads": [
             [
               0.51319,
-              0.37609,
+              0.37644,
               0.87974,
-              0.37609,
+              0.37644,
               0.87974,
               0.39357,
               0.51319,
@@ -30,9 +32,9 @@
             ],
             [
               0.12026,
-              0.39359,
+              0.39414,
               0.87974,
-              0.39359,
+              0.39414,
               0.87974,
               0.44742,
               0.12026,
@@ -43,7 +45,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVNext.FreeStress.ignite",
+        "module": "YM.UVNext.FREE_STRESS_CERTIFICATE.Choose",
+        "lines": [
+          112,
+          120
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVNext.FreeStress.ignite"
+          },
+          "snippet": {
+            "text": "  have hn : j₀.val ≠ 0 := by\n    intro ht; apply T.lit.born\n    funext b\n    apply ContinuousLinearMap.ext; intro i\n    apply Table.field_ext S T.hT.laws.toSymmetric; intro n q x hx\n    obtain ⟨χ,hχ⟩ := exists_window x hx\n    change (Bel C.book).useAt S x (Fin.cons ⟨5,T.T.W.deriv 4 b i⟩ q) =\n      (Bel C.book).useAt S x (Fin.cons ⟨5,0⟩ q)\n    rw [← hm.translation hx q hχ, ← translationFlux_apply hx hχ T.hT.smooth q,ht,map_zero, ← front_eval q x _ 0,map_zero]",
+            "line": 112,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/FREE_STRESS_CERTIFICATE/Choose.lean",
+            "fragment": "L112-L120"
+          },
+          "proof_context": {
+            "declaration": "YM.UVNext.FreeStress.ignite",
+            "lines": [
+              80,
+              134
+            ],
+            "conclusion": "`hn : j₀.val ≠ 0`: if `j₀ = 0`, its translation shell law makes `useAt` of `T.T.W.deriv 4 b i` vanish, contradicting `T.lit.born`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.StressFlux.FreeBridge.canonical",
+        "module": "YM.Push.STRESS_FLUX.FreeBridge",
+        "lines": [
+          70,
+          73
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.StressFlux.FreeBridge.canonical"
+          },
+          "snippet": {
+            "text": "  have hn : w 3 ≠ 0 := fun h0 => hT.born (funext fun a => ContinuousLinearMap.ext fun x => (Bel L).field_ext hs.laws.toSymmetric (fun n q z hz => by\n    obtain ⟨χ,hχ⟩ := exists_window z hz\n    change (Bel L).useAt _ _ (Fin.cons ⟨4+1,T.W.deriv 4 a x⟩ q) = (Bel L).useAt _ _ (Fin.cons ⟨4+1,0⟩ q)\n    rw [← h1.translation hz q hχ a 4 x,h0,zero_smul,← translationFlux_apply hz hχ hs.smooth,map_zero, ← front_eval q z (4+1) 0, map_zero]))",
+            "line": 70,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/STRESS_FLUX/FreeBridge.lean",
+            "fragment": "L70-L73"
+          },
+          "proof_context": {
+            "declaration": "YM.StressFlux.FreeBridge.canonical",
+            "lines": [
+              61,
+              74
+            ],
+            "conclusion": "`hn : w 3 ≠ 0` by the same translation-shell argument against `hT.born` (`leaves T.W.deriv 4 ≠ 0`)."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -53,8 +134,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

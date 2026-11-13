@@ -1,7 +1,9 @@
 {
   "id": "Lemma 13.15 step 7",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "The Neumann series `HasSum (A^n) (1-A)⁻¹` is in [L] (the same as (A+H)^{-1} after factoring A^{-1}); the log-determinant is given as a sum of integrated diagonal terms (`clustered`), not as the series in Tr H^n.",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.0449
         ]
       },
-      "title": "Lemma 13.15 step 7: Display, p. 112, not yet judged",
+      "title": "Lemma 13.15 step 7: Display, p. 112",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 13.15 step 7"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.ConnectedActivityE6.Pulse.involves",
+        "module": "YM.AnalyticNext.CONNECTED_ACTIVITY_JETS_E6.Neumann",
+        "lines": [
+          25,
+          26
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.ConnectedActivityE6.Pulse.involves"
+          },
+          "snippet": {
+            "text": "lemma involves (h : Price a a A η Q) (hn : 0≤Q) (he : 0≤η) (hX : Q<1) :\n    (IsUnit (1-A).det) ∧ HasSum (fun n : ℕ => A^n) (1-A)⁻¹ := by",
+            "line": 25,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/Neumann.lean",
+            "fragment": "L25-L26"
+          },
+          "proof_context": {
+            "declaration": "YM.ConnectedActivityE6.Pulse.involves",
+            "lines": [
+              25,
+              38
+            ],
+            "conclusion": "For a small matrix `A` (a `Price` bound `Q<1`), `(1-A)` is invertible and `HasSum (fun n => A^n) (1-A)⁻¹`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.ConnectedActivityE6.Pulse.clustered",
+        "module": "YM.AnalyticNext.CONNECTED_ACTIVITY_JETS_E6.Logs",
+        "lines": [
+          66,
+          66
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.ConnectedActivityE6.Pulse.clustered"
+          },
+          "snippet": {
+            "text": "lemma clustered : Real.log A.det = ∑ i, coil A i := by",
+            "line": 66,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticNext/CONNECTED_ACTIVITY_JETS_E6/Logs.lean",
+            "fragment": "L66-L66"
+          },
+          "proof_context": {
+            "declaration": "YM.ConnectedActivityE6.Pulse.clustered",
+            "lines": [
+              66,
+              75
+            ],
+            "conclusion": "`Real.log A.det = ∑ i, coil A i`, the log-determinant as a sum of integrated diagonal terms."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

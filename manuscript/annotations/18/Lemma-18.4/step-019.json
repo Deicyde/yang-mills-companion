@@ -1,28 +1,30 @@
 {
   "id": "Lemma 18.4 step 19",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "`noting` pairs four product-rule terms with inverse bounds z^{-2}, z^{-3}, z^{-3}, z^{-4}, where [M] has three pairings with z^{-4}, z^{-3}, z^{-2}. The total C z^{-2} is the same.",
   "subject": [
     {
       "location": {
         "page": 209,
         "rect": [
           0.12026,
-          0.62925,
+          0.63012,
           0.75948,
-          0.05131
+          0.05099
         ]
       },
-      "title": "Lemma 18.4 step 19: Text, p. 209, not yet judged",
+      "title": "Lemma 18.4 step 19: Text, p. 209",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 18.4 step 19",
           "quads": [
             [
               0.52929,
-              0.62925,
+              0.63012,
               0.87974,
-              0.62925,
+              0.63012,
               0.87974,
               0.64675,
               0.52929,
@@ -34,9 +36,9 @@
               0.87974,
               0.64675,
               0.87974,
-              0.66304,
+              0.66281,
               0.12026,
-              0.66304
+              0.66281
             ],
             [
               0.12026,
@@ -44,16 +46,56 @@
               0.41725,
               0.66306,
               0.41725,
-              0.68056,
+              0.68111,
               0.12026,
-              0.68056
+              0.68111
             ]
           ]
         }
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Trace.Loft.noting",
+        "module": "YM.TraceExtension.Loft.Exon",
+        "lines": [
+          60,
+          64
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Trace.Loft.noting"
+          },
+          "snippet": {
+            "text": "    let y:=sip x; have hL:0<μ:= hd.trans_le hx; have hy:μ≤ z:=le_add_of_nonneg_left (orbit_nonneg _); have hz:0<z:= hL.trans_le hy; have hh: z≤furthest:= (add_le_add (orbit_boundary _ (sip_n x)) ht).trans_eq (add_comm ..); have hk: ‖y‖≤z:= (orbit_at _).trans (le_add_of_nonneg_right hL.le)\n    obtain ⟨ha,hb,hp,he⟩:=K w x μ ⟨hL,ht⟩; have hv:= hx.trans hy\n    refine Allows.mono (C:=((c*E*(A*(z^2)⁻¹)+ c*(C*z)*(A*(z^3)⁻¹))+c*(D*z)*(A*(z^3)⁻¹))+ c*(R*z^2)*(A*(z^4)⁻¹)) ?_ ?_\n    · exact (((cabin (h3 y z hv hh hk) ha).add (cabin (h1 y z hv hh hk) hb)).add (cabin (h2 y z hv hh hk) hp)).add (cabin (h4 y z hv hh hk) he)\n    apply le_of_eq; field_simp <;> ring",
+            "line": 60,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Loft/Exon.lean",
+            "fragment": "L60-L64"
+          },
+          "proof_context": {
+            "declaration": "YM.Trace.Loft.noting",
+            "lines": [
+              53,
+              64
+            ],
+            "conclusion": "`noting` pairs the insertion factors `z²`, `z`, `z`, `z²` with `A·(z²)⁻¹`, `A·(z³)⁻¹`, `A·(z⁴)⁻¹` and sums them with `Allows.mono`, giving the bound `C·(z²)⁻¹`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -63,8 +105,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
       }
     }
   }

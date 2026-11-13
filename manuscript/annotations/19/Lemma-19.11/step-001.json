@@ -1,7 +1,8 @@
 {
   "id": "Lemma 19.11 step 1",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "exactMatch",
   "subject": [
     {
       "location": {
@@ -13,7 +14,7 @@
           0.14271
         ]
       },
-      "title": "Lemma 19.11 step 1: Text, p. 230, not yet judged",
+      "title": "Lemma 19.11 step 1: Text, p. 230",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 19.11 step 1"
@@ -21,7 +22,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Orbits.estimates_weighted",
+        "module": "YM.OPE.Orbits.Profile",
+        "lines": [
+          98,
+          108
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Orbits.estimates_weighted"
+          },
+          "snippet": {
+            "text": "lemma estimates_weighted : ∀ᶠ r:ℝ in 𝓝[>]0,\n    ∀ (μ:Measure K)(f:K→ℂ)(p:K→Loc I J), AEMeasurable p μ→ Integrable f μ→ (∫ s, ‖f s‖ ∂μ) ≤ B→ (∀ᵐ s ∂μ,f s ≠ 0 → p s∈FitsOn I J M η δ r) →\n    ((∀ χ : K→U.α.space.X,AEMeasurable χ μ→ JointEstimate U R m v w (B*costRemainder m d ε r) μ f p (some ∘ χ)) ∧\n       JointEstimate U R m v w (B*costRemainder m d ε r) μ f p (fun _=>none)) :=by\n       filter_upwards [profile_scope U R h v w hM hη hδ hε m] with i ⟨hi,hq⟩ μ f p hP hf hw he\n       have h₁:= he.mono (q:=fun s=> f s ≠ 0→ p s∈guardZone U R m) (fun s hs h=>(hq _ (hs h)).1)\n       have h₂(t:K→Viewers U):∀ᵐ s ∂μ,f s≠0→ ‖formula U R (p s).1 (p s).2.1 v (p s).2.2 w m (t s)‖ ≤ costRemainder m d ε i:= he.mono (fun s hs h=> ((hq _ (hs h)).2 _).2)\n       have h₃(t:K→Viewers U):∀ᵐ s ∂μ, f s≠0→ ‖whole (spectator U (t s)) (p s).1 v (p s).2.2 w‖ ≤ costRaw d ε i:= he.mono (fun s hs h=>((hq _ (hs h)).2 _).1)\n       have hh : 0 ≤ costRemainder m d ε i:= Real.rpow_nonneg hi ..\n       exact ⟨fun χ hx=> price_measurable U R v w p χ some _ (mixed_meas U R v w m) (raw_meas_mixed U R v w m) hP hx hf hw h₁ (h₂ _) (h₃ _) hh,\n             price_measurable U R v w p (fun _=>()) (fun _:Unit=>none) m ((indicator_meas _ _ _ _ _ none).comp measurable_fst) ((raw_meas _ _ _ _ _ none).comp measurable_fst) hP aemeasurable_const hf hw h₁ (h₂ _) (h₃ _) hh⟩",
+            "line": 98,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Orbits/Profile.lean",
+            "fragment": "L98-L108"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Orbits.estimates_weighted",
+            "lines": [
+              98,
+              108
+            ],
+            "conclusion": "`estimates_weighted` obtains, for r below a threshold, `JointEstimate` for every measure with integrable weight of L1 norm at most B, measurable geometry in `FitsOn`, every measurable phase map and the mixed state, by `profile_scope` and `price_measurable`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Orbits.profile_scope",
+        "module": "YM.OPE.Orbits.Profile",
+        "lines": [
+          34,
+          38
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Orbits.profile_scope"
+          },
+          "snippet": {
+            "text": "lemma profile_scope (D:ℕ): ∀ᶠ r:ℝ in 𝓝[>]0,0 ≤ r ∧ ∀ z∈FitsOn I J M η δ r,z∈ guardZone U R D ∧ ∀ i:Viewers U, ‖whole (spectator U i) z.1 v z.2.2 w‖ ≤ costRaw d ε r ∧ ‖formula U R z.1 z.2.1 v z.2.2 w D i‖≤costRemainder D d ε r:=by\n    filter_upwards [raw_price U h v w hM hη hδ hε,admissible_separated U R (I:=I) hM hη D,quantitative_separated U R h v w hM hη hε D hδ,(self_mem_nhdsWithin : ∀ᶠ r:ℝ in (𝓝[>]0),0<r)] with r h' hv hl hr\n    exact ⟨hr.le,fun z hz=> by\n      obtain ⟨hi,hj,_,hg⟩:=hl _ _ _ hz.1 hz.2\n      exact ⟨⟨hv _ _ hz.1,hi,hj⟩,fun i=>⟨h' z hz i,hg i⟩⟩⟩",
+            "line": 34,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Orbits/Profile.lean",
+            "fragment": "L34-L38"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Orbits.profile_scope",
+            "lines": [
+              34,
+              38
+            ],
+            "conclusion": "`profile_scope` bounds the full correlation by `costRaw` and the remainder by `costRemainder` on `FitsOn` for every viewer."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +111,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

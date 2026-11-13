@@ -1,19 +1,21 @@
 {
   "id": "Lemma 14.3 step 3",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean has the same construction: successive substitution contracting by 1/2, a holomorphic uniform limit, real values for real b, and the b = 0 selected history. It works on the open ball of the abstract radius `radius S`, not with the explicit w_tun = λ*b*/4 and the closed range [-1,1].",
   "subject": [
     {
       "location": {
         "page": 127,
         "rect": [
           0.12026,
-          0.74042,
+          0.74089,
           0.76293,
-          0.17399
+          0.17352
         ]
       },
-      "title": "Lemma 14.3 step 3: Text, p. 127, not yet judged",
+      "title": "Lemma 14.3 step 3: Text, p. 127",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 14.3 step 3"
@@ -21,7 +23,242 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVExtension.Upland.Arc.exists_trial",
+        "module": "YM.UVExtension.Upland.Plinth",
+        "lines": [
+          71,
+          75
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVExtension.Upland.Arc.exists_trial"
+          },
+          "snippet": {
+            "text": "lemma exists_trial (N n:ℕ)(b:ℝ)(h: |b|< radius S) :\n    (∃! β:ℝ,S.Trial N n b β) ∧ RG.Shoot.Competes A.B.bake n N 0 (S.realBeat b N n) ∧ (S.realBeat b N n 0).beta=A.B.a.clock.bar+b ∧\n      (∀ β:ℝ,S.Trial N n b β → betaK S N n N (b:ℂ)= Complex.ofReal β) :=by\n   have hp: (b:ℂ)∈Camp.Broad a!:=mem_ball_zero_iff.mpr ((Complex.norm_real b).trans_lt h)\n   exact ⟨⟨_, S.terminates N n hp, fun β=> S.only N n hp⟩,S.ticking N n hp, S.hits N n hp, fun β ht=> (S.only N n hp ht).symm ▸ ((real S N n N le_rfl b hp).2.2.2.2.2.1)⟩",
+            "line": 71,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVExtension/Upland/Plinth.lean",
+            "fragment": "L71-L75"
+          },
+          "proof_context": {
+            "declaration": "YM.UVExtension.Upland.Arc.exists_trial",
+            "lines": [
+              71,
+              75
+            ],
+            "conclusion": "For every |b| < `radius S` there is a unique real β with a `Trial` ending at bar + b, the `realBeat b` trajectory competes and hits bar + b, and `betaK` at N equals it."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVExtension.Camp.Cart.speed",
+        "module": "YM.UVExtension.Camp.Minuet",
+        "lines": [
+          34,
+          43
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVExtension.Camp.Cart.speed"
+          },
+          "snippet": {
+            "text": "lemma speed (k:ℕ): dist ((V.veil T N X b)^[k] 0) (V.picked h T N X hf (b:=b)) ≤ rad*(1/2)^k/(1-1/2):= by\n    unfold picked; rw [dif_pos hv]; let f:= V.harp h T N X hf b hv; have hh:= V.harps h T N X hf hv; let j: Harbor N:=⟨0,harbor N⟩\n    have he := hh.apriori_dist_iterate_fixedPoint_le j k\n    have hF (n:ℕ): (V.veil T N X b)^[n] 0 = (f^[n] j).val:= by\n      induction n with\n      | zero=>rfl\n      | succ n hn=> rw [iterate_succ_apply',iterate_succ_apply',hn]; rfl\n    rw [hF]\n    have hg: dist j (f j) ≤ rad:= by change dist (0:PlotN N) _ ≤ _; rw [dist_comm]; exact mem_closedBall.mp (f j).2\n    exact he.trans (by push_cast; exact div_le_div_of_nonneg_right (mul_le_mul_of_nonneg_right hg (by positivity)) (by norm_num))",
+            "line": 34,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVExtension/Camp/Minuet.lean",
+            "fragment": "L34-L43"
+          },
+          "proof_context": {
+            "declaration": "YM.UVExtension.Camp.Cart.speed",
+            "lines": [
+              34,
+              43
+            ],
+            "conclusion": "Successive substitution `veil^[k] 0` converges geometrically (rate 1/2) to the fixed point `picked`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVExtension.Camp.Cart.canon",
+        "module": "YM.UVExtension.Camp.Minuet",
+        "lines": [
+          45,
+          57
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVExtension.Camp.Cart.canon"
+          },
+          "snippet": {
+            "text": "lemma canon : DifferentiableOn ℂ (fun b:ℂ=> V.picked h T N X hf (b:=b)) (Broad T):=by\n   let f i (b:ℂ):= (V.veil T N X b)^[i] 0\n   let s:=Broad T\n   have hs(i): MapsTo (f i) s (Harbor N):=by intro b hv; induction i with | zero=> exact harbor N | succ i hi=> change _^[i+1] _∈_; rw [iterate_succ_apply']; exact V.access h T N X hf hv hi\n   have ht(i):DifferentiableOn ℂ (f i) s:= by\n      induction i with\n      | zero=> exact differentiableOn_const _\n      | succ i hi=> unfold f; simp_rw [iterate_succ_apply']; exact V.warmth T N X s isOpen_ball _ (hs i) hi\n   have he: TendstoUniformlyOn f (fun b=> V.picked h T N X hf (b:=b)) atTop s:=by\n     refine Metric.tendstoUniformlyOn_iff.mpr (fun ε he=> ?_); have H:Tendsto (fun k:ℕ=>rad*(1/2)^k/(1-1/2)) atTop (𝓝 0):= by\n       simpa only [mul_zero,zero_div] using (((tendsto_pow_atTop_nhds_zero_of_lt_one (by norm_num : 0≤ (1/2:ℝ)) (by norm_num)).const_mul rad).div_const ((1:ℝ)-1/2))\n     filter_upwards [H.eventually (gt_mem_nhds he)] with i hi k hk; rw [dist_comm]; exact lt_of_le_of_lt (speed h T N X V hf hk i) hi\n   exact he.tendstoLocallyUniformlyOn.differentiableOn (Eventually.of_forall ht) isOpen_ball",
+            "line": 45,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVExtension/Camp/Minuet.lean",
+            "fragment": "L45-L57"
+          },
+          "proof_context": {
+            "declaration": "YM.UVExtension.Camp.Cart.canon",
+            "lines": [
+              45,
+              57
+            ],
+            "conclusion": "`picked` is complex-differentiable in b on `Broad T` as a uniform limit of the iterates."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVExtension.Upland.Arc.finiteCut",
+        "module": "YM.UVExtension.Upland.Plinth",
+        "lines": [
+          55,
+          55
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVExtension.Upland.Arc.finiteCut"
+          },
+          "snippet": {
+            "text": "lemma finiteCut (m n N)(h:m≤N) : AnalyticOnNhd ℂ (betaK S m n N) (ball (0:ℂ) (radius S)) ∧ (∀ i∈ ball (0:ℂ) (radius S), ‖betaK S m n N i‖≤3*A.B.a.clock.hatBeta m) ∧ AnalyticOnNhd ℂ (view S m n N) (ball (0:ℂ) (radius S))∧∀ i∈ball (0:ℂ) (radius S), ‖view S m n N i‖ ≤ Camp.soft:=by",
+            "line": 55,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVExtension/Upland/Plinth.lean",
+            "fragment": "L55-L55"
+          },
+          "proof_context": {
+            "declaration": "YM.UVExtension.Upland.Arc.finiteCut",
+            "lines": [
+              55,
+              58
+            ],
+            "conclusion": "`betaK S m n N` is `AnalyticOnNhd` on `ball 0 (radius S)` for each cutoff."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVExtension.Upland.Arc.real",
+        "module": "YM.UVExtension.Upland.Plinth",
+        "lines": [
+          48,
+          54
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVExtension.Upland.Arc.real"
+          },
+          "snippet": {
+            "text": "lemma real (m n N)(h:m≤N)(b:ℝ)(hp: (b:ℂ) ∈ ball (0:ℂ) (Upland.Arc.radius S)): let R:= S.realBeat b N n m\n     R.path=A.B.kin.path N m ∧ R.clip=((A.B.a.params m)).clip ∧ R.p=A.B.a.budget m ∧\n     R.activities.reg=(drawer G _).reg ∧ R.activities.forced=Ovens.Pipes.addr (folio G _) (A.B.a.budget m) ∧ betaK S m n N (b:ℂ)=Complex.ofReal R.beta ∧\n     Arc.view S m n N (b:ℂ)=tuning (A.B.a.budget m) (A.B.a.clock.allowance m) (A.B.a.clock.forcedAllowance m) (R.activities.E,R.activities.K):=by\n   intro J; refine ⟨rfl,rfl,rfl,rfl,rfl,?_,?_⟩\n   · rw [betaK,dif_pos h]; exact ((S.fits _ _).really (S.cart ..) (S.token ..) S.grove.coins hp m h).1\n   rw [Arc.view,dif_pos h]; exact (S.fits _ _).realX (S.cart ..) (S.token ..) S.grove.coins hp m h",
+            "line": 48,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVExtension/Upland/Plinth.lean",
+            "fragment": "L48-L54"
+          },
+          "proof_context": {
+            "declaration": "YM.UVExtension.Upland.Arc.real",
+            "lines": [
+              48,
+              54
+            ],
+            "conclusion": "For real b in the ball, `betaK` at b equals the real bare coupling of `realBeat b` (real values of the analytic series)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVExtension.Upland.Arc.centered",
+        "module": "YM.UVExtension.Upland.Plinth",
+        "lines": [
+          77,
+          77
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVExtension.Upland.Arc.centered"
+          },
+          "snippet": {
+            "text": "lemma centered : History.Selected (A.B.bake.make (S.realBeat 0)):=by rw [← a.atPeak]; exact Y.choice -- inspect",
+            "line": 77,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVExtension/Upland/Plinth.lean",
+            "fragment": "L77-L77"
+          },
+          "proof_context": {
+            "declaration": "YM.UVExtension.Upland.Arc.centered",
+            "lines": [
+              77,
+              77
+            ],
+            "conclusion": "`realBeat 0` is the `Selected` history `bake.make (realBeat 0)`, so the b = 0 trajectory is the one of Lemma 14.2."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +268,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

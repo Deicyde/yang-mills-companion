@@ -1,9 +1,9 @@
 {
   "id": "Lemma 13.5 step 23",
   "kind": "proof_step",
-  "status": "not_formalized",
-  "relation": "noMatch",
-  "note": "No lines of the key proof or its helpers carry this step; [L] takes the corresponding bound as an abstract hypothesis or rate.",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "Each argument is expanded into its three parts, multilinearity (`map_sum`) is applied, and every selection with total weight at most 4 vanishes by `extinguish`.",
   "subject": [
     {
       "location": {
@@ -12,7 +12,7 @@
           0.11962,
           0.0962,
           0.76011,
-          0.03754
+          0.0377
         ]
       },
       "title": "Lemma 13.5 step 23: Text, p. 97",
@@ -26,9 +26,9 @@
               0.87974,
               0.0962,
               0.87974,
-              0.1158,
+              0.11677,
               0.12026,
-              0.1158
+              0.11677
             ],
             [
               0.11962,
@@ -36,9 +36,9 @@
               0.28337,
               0.11583,
               0.28337,
-              0.13374,
+              0.13389,
               0.11962,
-              0.13374
+              0.13389
             ]
           ]
         }
@@ -51,22 +51,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.PhysicalNext.Repeat.Brim.pressings",
-        "module": "YM.PhysicalNext.RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP.Brim.Level",
+        "declaration": "YM.PhysicalNext.JointLoad.Heir.taper_zero",
+        "module": "YM.PhysicalNext.V9_JOINT_ENDPOINT_LOAD.Heir.Ray",
         "lines": [
-          61,
-          91
+          52,
+          57
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.PhysicalNext.Repeat.Brim.pressings"
+            "id": "YM.PhysicalNext.JointLoad.Heir.taper_zero"
+          },
+          "snippet": {
+            "text": "  rw [funext hw,T.map_sum (α:=fun _ => Fin 3)]\n  apply (norm_sum_le ..).trans\n  refine (Finset.sum_le_sum (g:=fun _ => (C^m*r^5)*Q.fee*τ) (fun j _ => ?_)).trans ?_\n  · let a (i : Fin m) := (j i).val+1\n    by_cases he : ∑ i,a i ≤ 4\n    · rw [show T _ = 0 from extinguish g h hX hn a _ he (fun _ => by unfold a; omega) (fun i hi => hP i _ (show (j i).val < 2 from Nat.lt_of_succ_le hi)),norm_zero]",
+            "line": 52,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Brim/Level.lean",
-            "fragment": "L61-L91"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/V9_JOINT_ENDPOINT_LOAD/Heir/Ray.lean",
+            "fragment": "L52-L57"
+          },
+          "proof_context": {
+            "declaration": "YM.PhysicalNext.JointLoad.Heir.taper_zero",
+            "lines": [
+              47,
+              66
+            ],
+            "conclusion": "Expanding every argument in 3 parts and applying multilinearity, each selection with `∑ a i ≤ 4` is zero by `extinguish`."
           }
         }
       }
@@ -76,22 +90,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.PhysicalNext.Repeat.Brim.royaltyB",
-        "module": "YM.PhysicalNext.RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP.Brim.Lode",
+        "declaration": "YM.PhysicalNext.JointLoad.Heir.extinguish",
+        "module": "YM.PhysicalNext.V9_JOINT_ENDPOINT_LOAD.Heir.Ray",
         "lines": [
-          33,
-          100
+          22,
+          44
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.PhysicalNext.Repeat.Brim.royaltyB"
+            "id": "YM.PhysicalNext.JointLoad.Heir.extinguish"
+          },
+          "snippet": {
+            "text": "private lemma extinguish (a : Fin m → ℕ) (v : Fin m → Directions G n)\n    (he : ∑ i,a i ≤ 4) (hA : ∀ i, 1 ≤ a i) (hv : ∀ i, a i ≤ 2 → screen X (v i) ∈ Mom.Maps o X (a i)) :\n    iteratedFDeriv ℝ m (f ∘ increment 1) 0 v = 0 := by\n  by_cases hx : ∃ i, 2 < a i\n  · obtain ⟨i,hi⟩ := hx\n    have hm : (Finset.univ.erase i).card+1=m := (Finset.card_erase_add_one (Finset.mem_univ i)).trans (by simp)\n    have hs := Finset.sum_le_sum (s:= Finset.univ.erase i) (f:=fun _ => 1) (fun i _ => hA i); rw [← Finset.add_sum_erase _ _ (Finset.mem_univ i)] at he\n    simp only [Finset.sum_const,nsmul_eq_mul,mul_one] at hs\n    change (Finset.univ.erase i).card ≤ ∑ j ∈ Finset.univ.erase i, a j at hs\n    have hM : 0 < m := i.pos\n    rcases show m=1 ∨ m=2 by omega with hj|hj\n    · subst m; rw [iteratedFDeriv_one_apply, show fderiv ℝ (f ∘ increment 1) 0=0 from flat_critical g h.good]; rfl\n    subst m\n    change iteratedFDeriv ℝ 2 (f ∘ increment 1) 0 _ = _\n    rw [show v= ![v 0,v 1] from funext fun i => by fin_cases i <;> rfl]\n    change logHessian f (v 0) (v 1)=0\n    have hz : a 0 + a 1 ≤ 4 := by rwa [Finset.add_sum_erase _ _ (Finset.mem_univ i),Fin.sum_univ_two] at he\n    fin_cases i\n    · have ht : a 1 = 1 := by change 2 < a 0 at hi; have := hA 1; omega\n      rw [hessian_symm h.good]; exact h.constant_hessian g hX hn (by simpa only [ht] using hv 1 (show a 1 ≤ 2 by omega))\n    · have ht : a 0 = 1 := by change 2 < a 1 at hi; have := hA 0; omega\n      exact h.constant_hessian g hX hn (by simpa only [ht] using hv 0 (show a 0 ≤ 2 by omega))\n  exact h.ghost g hX hn v hA he (fun i => hv i (le_of_not_gt (fun h => hx ⟨i,h⟩)))",
+            "line": 22,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Brim/Lode.lean",
-            "fragment": "L33-L100"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/V9_JOINT_ENDPOINT_LOAD/Heir/Ray.lean",
+            "fragment": "L22-L44"
+          },
+          "proof_context": {
+            "declaration": "YM.PhysicalNext.JointLoad.Heir.extinguish",
+            "lines": [
+              22,
+              44
+            ],
+            "conclusion": "Jets with all weights positive and total at most 4 vanish."
           }
         }
       }
@@ -106,8 +134,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge changed it from noMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

@@ -1,7 +1,9 @@
 {
   "id": "Lemma 13.5 step 16",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "[L] makes the same split at `coverNumber B.B X ^ 3 < L` on the incoming covering number (`decay`, `pay_le`); the fine-radius bound 6(1+B_m)l_m, the nonwrapping argument and the constant/affine/remainder decomposition of the lifted potential are not there.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.12026,
           0.59266,
           0.76013,
-          0.12259
+          0.12188
         ]
       },
-      "title": "Lemma 13.5 step 16: Text, p. 96, not yet judged",
+      "title": "Lemma 13.5 step 16: Text, p. 96",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 13.5 step 16"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.PhysicalNext.JointLoad.Heir.Lute.decay",
+        "module": "YM.PhysicalNext.V9_JOINT_ENDPOINT_LOAD.Heir.Musical",
+        "lines": [
+          26,
+          26
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.PhysicalNext.JointLoad.Heir.Lute.decay"
+          },
+          "snippet": {
+            "text": "def decay := if (coverNumber B.B X)^3 < L.val then ((L.val:ℝ)⁻¹)^5 else 1",
+            "line": 26,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/V9_JOINT_ENDPOINT_LOAD/Heir/Musical.lean",
+            "fragment": "L26-L26"
+          },
+          "proof_context": {
+            "declaration": "YM.PhysicalNext.JointLoad.Heir.Lute.decay",
+            "lines": [
+              26,
+              26
+            ],
+            "conclusion": "`decay` splits at `coverNumber B.B X ^ 3 < L.val` and gives `(L.val)⁻¹ ^ 5` there and `1` otherwise."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.PhysicalNext.JointLoad.Heir.Lute.pay_le",
+        "module": "YM.PhysicalNext.V9_JOINT_ENDPOINT_LOAD.Heir.Musical",
+        "lines": [
+          96,
+          100
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.PhysicalNext.JointLoad.Heir.Lute.pay_le"
+          },
+          "snippet": {
+            "text": "  unfold Plays.price decay; change _ ≤ _*_* (a+b*s)^n; split\n  · rw [mul_right_comm]; gcongr ?_*_*?_^_\n    · unfold phrase grandFee; apply le_add_of_nonneg_right; positivity\n    unfold a leading; apply add_le_add _ h₂; nlinarith only [C.C_one,C.matins,Nat.cast_nonneg (α:=ℝ) n]\n  rw [mul_one]; gcongr",
+            "line": 96,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/V9_JOINT_ENDPOINT_LOAD/Heir/Musical.lean",
+            "fragment": "L96-L100"
+          },
+          "proof_context": {
+            "declaration": "YM.PhysicalNext.JointLoad.Heir.Lute.pay_le",
+            "lines": [
+              76,
+              102
+            ],
+            "conclusion": "The price bound `pay_le` splits on the same condition."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

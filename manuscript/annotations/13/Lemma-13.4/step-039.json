@@ -1,19 +1,21 @@
 {
   "id": "Lemma 13.4 step 39",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "`product_diff` and `gas_diff` telescope products and gases with activity differences; the explicit comparison of Gaussian densities under a coupling change is not in these lines.",
   "subject": [
     {
       "location": {
         "page": 95,
         "rect": [
           0.12026,
-          0.31641,
+          0.31719,
           0.76013,
-          0.07134
+          0.07056
         ]
       },
-      "title": "Lemma 13.4 step 39: Text, p. 95, not yet judged",
+      "title": "Lemma 13.4 step 39: Text, p. 95",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 13.4 step 39"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Push.BetaTransport.product_diff",
+        "module": "YM.Push.BETA_TRANSPORT.Activity",
+        "lines": [
+          41,
+          43
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Push.BetaTransport.product_diff"
+          },
+          "snippet": {
+            "text": "lemma product_diff {ι : Type*} {δ : ℝ} (hδ : 0 ≤ δ) (p q h : ι → ℝ) (hp : ∀ i, ‖p i‖ ≤ h i)\n    (hq : ∀ i, ‖q i‖ ≤ h i) (he : ∀ i, ‖p i-q i‖ ≤ δ*h i) (b : Finset ι) :\n    ‖(∏ i ∈ b, p i) - (∏ i ∈ b, q i)‖ ≤ δ * ∏ i ∈ b, (2*h i) := by",
+            "line": 41,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/BETA_TRANSPORT/Activity.lean",
+            "fragment": "L41-L43"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.BetaTransport.product_diff",
+            "lines": [
+              41,
+              63
+            ],
+            "conclusion": "`product_diff` bounds the difference of two finite products by `δ * ∏ (2 h i)` when each factor and each difference is controlled."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Push.BetaTransport.gas_diff",
+        "module": "YM.Push.BETA_TRANSPORT.Activity",
+        "lines": [
+          67,
+          70
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Push.BetaTransport.gas_diff"
+          },
+          "snippet": {
+            "text": "lemma gas_diff {d k : ℕ → ℝ} (h : S.forced = T.forced) {δ : ℝ} (hd : SumBudget d δ) (hδ : 0 < δ) (h1 : δ ≤ 1)\n    (he : ∀ i x, ‖S.K i x-T.K i x‖ ≤ d i) (hh : ∀ i x, ‖S.K i x‖ ≤ k i) (hk : Summable k) (x : Config G n) :\n    ‖S.gas P x - T.gas P x‖ ≤ δ * Real.exp (2*((∑' i, k i)+1)) := by\n  classical",
+            "line": 67,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/BETA_TRANSPORT/Activity.lean",
+            "fragment": "L67-L70"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.BetaTransport.gas_diff",
+            "lines": [
+              67,
+              105
+            ],
+            "conclusion": "`gas_diff` bounds the difference of the gases of two activity families with equal forced addresses by `δ * exp(2(∑k+1))` from activity differences `d i`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

@@ -1,28 +1,30 @@
 {
   "id": "Lemma 16.10 step 21",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean uses a real positive-definite form and skewness of each generator instead of stating that `Ω(C,C)` is self-adjoint; the kernel claim is stated.",
   "subject": [
     {
       "location": {
         "page": 186,
         "rect": [
           0.12026,
-          0.3744,
+          0.3748,
           0.75948,
-          0.03445
+          0.03454
         ]
       },
-      "title": "Lemma 16.10 step 21: Text, p. 186, not yet judged",
+      "title": "Lemma 16.10 step 21: Text, p. 186",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 16.10 step 21",
           "quads": [
             [
               0.85241,
-              0.3744,
+              0.3748,
               0.87974,
-              0.3744,
+              0.3748,
               0.87974,
               0.39234,
               0.85241,
@@ -30,20 +32,138 @@
             ],
             [
               0.12026,
-              0.39235,
+              0.39271,
               0.82116,
-              0.39235,
+              0.39271,
               0.82116,
-              0.40884,
+              0.40935,
               0.12026,
-              0.40884
+              0.40935
             ]
           ]
         }
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.A12.works_of_skew",
+        "module": "YM.Work.A12",
+        "lines": [
+          104,
+          113
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.A12.works_of_skew"
+          },
+          "snippet": {
+            "text": "  have ker (x : Mat X) (hx : A x = 0) (i : ι) : D i x = 0 := by\n    have ha : ∀ j, B (D j (D j x)) x = - B (D j x) (D j x) :=\n      fun j => eq_neg_of_add_eq_zero_left (hs j (D j x) x)\n    have he : B (A x) x = -∑ j, B (D j x) (D j x) := by\n      rw [hA, map_sum]; simp [ha]\n    by_contra h\n    have hg : 0 < ∑ j, B (D j x) (D j x) :=\n      Finset.sum_pos' (fun j _ => hn _) ⟨i, Finset.mem_univ _, hpos _ h⟩\n    rw [hx, map_zero, LinearMap.zero_apply] at he\n    exact hg.ne (by linarith)",
+            "line": 104,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/A12.lean",
+            "fragment": "L104-L113"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.A12.works_of_skew",
+            "lines": [
+              91,
+              143
+            ],
+            "conclusion": "For a positive real form `B` with each `effect (C i)(C i)` skew, the kernel of `Σ_i effect(C i)(C i)^2` is exactly the common commutant (`ker`)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.A12.invariant_form",
+        "module": "YM.Work.A12",
+        "lines": [
+          189,
+          238
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.A12.invariant_form"
+          },
+          "snippet": {
+            "text": "lemma invariant_form (ρ : Ortho → Y →ₗ[ℝ] Y)\n    (hc : ∀ x, Continuous fun g => ρ g x)\n    (h1 : ∀ x, ρ 1 x = x)\n    (hm : ∀ g k x, ρ (g*k) x = ρ g (ρ k x)) :\n    ∃ B : Y →ₗ[ℝ] Y →ₗ[ℝ] ℝ, (∀ x y, B x y = B y x) ∧\n      (∀ x, x ≠ 0 → 0 < B x x) ∧ ∀ k x y, B (ρ k x) (ρ k y) = B x y := by\n  classical\n  letI : CompactSpace Ortho := compact_ortho\n  letI : MeasurableSpace Ortho := borel _\n  letI : BorelSpace Ortho := ⟨rfl⟩\n  let b := Module.finBasis ℝ Y\n  let u (x y : Y) (g : Ortho) : ℝ := ∑ i, b.coord i (ρ g⁻¹ x) * b.coord i (ρ g⁻¹ y)\n  have ht (x y : Y) : Continuous (u x y) :=\n    continuous_finsetSum _ (fun i _ =>\n      ((b.coord i).continuous_of_finiteDimensional.comp ((hc x).comp continuous_inv)).mul\n        ((b.coord i).continuous_of_finiteDimensional.comp ((hc y).comp continuous_inv)))\n  have hu (x y : Y) : Integrable (u x y) Measure.haar :=\n    (ht _ _).integrable_of_hasCompactSupport (HasCompactSupport.of_compactSpace _)\n  let B0 (x y : Y) := ∫ g, u x y g ∂Measure.haar\n  have hs (x y : Y) : B0 x y = B0 y x := by\n    unfold B0; simp_rw [u, mul_comm]\n  have ha (x y z : Y) : B0 (x+y) z = B0 x z + B0 y z := by\n    have h (g) : u (x+y) z g = u x z g + u y z g := by\n      unfold u; simp_rw [map_add, add_mul, Finset.sum_add_distrib]\n    unfold B0; simp_rw [h]; exact integral_add (hu _ _) (hu _ _)\n  have hw (c : ℝ) (x y : Y) : B0 (c • x) y = c • B0 x y := by\n    have h (g) : u (c • x) y g = c * u x y g := by\n      unfold u; simp_rw [map_smul, smul_eq_mul, mul_assoc, Finset.mul_sum]\n    unfold B0; simp_rw [h]; exact integral_const_mul ..\n  let B1 (x : Y) : Y →ₗ[ℝ] ℝ := {\n    toFun := B0 x\n    map_add' := fun y z => by rw [hs, ha, hs y, hs z]\n    map_smul' := fun c y => by rw [hs, hw, hs y]; rfl }\n  let B : Y →ₗ[ℝ] Y →ₗ[ℝ] ℝ := {\n    toFun := B1\n    map_add' := fun x y => by ext1 z; exact ha ..\n    map_smul' := fun c y => by ext1 z; exact hw .. }\n  refine ⟨B, hs, fun x hx => ?_, fun k x y => ?_⟩\n  · have hn (g : Ortho) : 0 ≤ u x x g := Finset.sum_nonneg (fun i _ => mul_self_nonneg _)\n    have hp : 0 < u x x 1 := by\n      obtain ⟨i,hi⟩ : ∃ i, b.coord i x ≠ 0 := by\n        by_contra! h\n        apply hx; apply b.ext_elem; intro i; simpa using h i\n      unfold u; rw [inv_one]; simp_rw [h1]\n      exact Finset.sum_pos' (fun j _ => mul_self_nonneg _) ⟨i, Finset.mem_univ _, mul_self_pos.mpr hi⟩\n    exact integral_pos_of_integrable_nonneg_nonzero (ht _ _) (hu _ _) hn hp.ne'\n  have h (g : Ortho) : u (ρ k x) (ρ k y) g = u x y (k⁻¹*g) := by\n    unfold u; simp only [← hm, mul_inv_rev, inv_inv]\n  change (∫ g, u (ρ k x) (ρ k y) g ∂Measure.haar) = ∫ g, u x y g ∂Measure.haar\n  simp_rw [h]; exact integral_mul_left_eq_self ..",
+            "line": 189,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/A12.lean",
+            "fragment": "L189-L238"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.A12.invariant_form",
+            "lines": [
+              189,
+              238
+            ],
+            "conclusion": "The compact group `Ortho` carries an invariant positive form on `Mat X`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.A12.skew_of_invariant",
+        "module": "YM.Work.A12",
+        "lines": [
+          240,
+          252
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.A12.skew_of_invariant"
+          },
+          "snippet": {
+            "text": "lemma skew_of_invariant (ρ : Ortho → Y →ₗ[ℝ] Y) (h1 : ∀ x, ρ 1 x = x)\n    (B : Y →ₗ[ℝ] Y →ₗ[ℝ] ℝ) (hB : ∀ k x y, B (ρ k x) (ρ k y) = B x y)\n    (g : Ortho.Skew) (x y dx dy : Y)\n    (hx : HasDerivAt (fun t => ρ (Ortho.oneParameter g t) x) dx 0)\n    (hy : HasDerivAt (fun t => ρ (Ortho.oneParameter g t) y) dy 0) :\n    B dx y + B x dy = 0 := by\n  let F : Y →L[ℝ] Y →L[ℝ] ℝ :=\n    LinearMap.toContinuousLinearMap (LinearMap.toContinuousLinearMap.toLinearMap.comp B)\n  have he := (F.hasFDerivAt.comp_hasDerivAt 0 hx).clm_apply hy\n  change HasDerivAt (fun t => B (ρ (Ortho.oneParameter g t) x) (ρ (Ortho.oneParameter g t) y))\n    (B dx (ρ (Ortho.oneParameter g 0) y) + B (ρ (Ortho.oneParameter g 0) x) dy) 0 at he\n  simp_rw [hB, oneParameter_zero, h1] at he\n  exact he.unique (hasDerivAt_const ..)",
+            "line": 240,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/A12.lean",
+            "fragment": "L240-L252"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.A12.skew_of_invariant",
+            "lines": [
+              240,
+              252
+            ],
+            "conclusion": "The generators of an invariant form are skew for it."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -53,8 +173,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

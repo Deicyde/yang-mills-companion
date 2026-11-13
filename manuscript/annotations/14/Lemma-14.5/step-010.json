@@ -1,32 +1,34 @@
 {
   "id": "Lemma 14.5 step 10",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "`left_prod_bound` shows the ordered-derivative product rule costs only the combinatorial constant (card s)^|l|. The finite connected sums are not covered.",
   "subject": [
     {
       "location": {
         "page": 130,
         "rect": [
           0.12026,
-          0.2356,
+          0.23646,
           0.76014,
-          0.03499
+          0.03294
         ]
       },
-      "title": "Lemma 14.5 step 10: Text, p. 130, not yet judged",
+      "title": "Lemma 14.5 step 10: Text, p. 130",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 14.5 step 10",
           "quads": [
             [
               0.22573,
-              0.2356,
+              0.23646,
               0.8804,
-              0.2356,
+              0.23646,
               0.8804,
-              0.25308,
+              0.25347,
               0.22573,
-              0.25308
+              0.25347
             ],
             [
               0.12026,
@@ -34,16 +36,56 @@
               0.24988,
               0.2531,
               0.24988,
-              0.27058,
+              0.2694,
               0.12026,
-              0.27058
+              0.2694
             ]
           ]
         }
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Push.Local.left_prod_bound",
+        "module": "YM.Push.LOCAL_SPLITTING.Products",
+        "lines": [
+          27,
+          63
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Push.Local.left_prod_bound"
+          },
+          "snippet": {
+            "text": "theorem left_prod_bound (s : Finset ι) (f : ι → Config G n → ℂ) {U : Config G n}\n    {D : Directions G n → Prop} {a : ι → ℝ} {k : ℕ} (h : ∀ i∈s, Chart k (f i) U)\n    (hc : ∀ i∈s, ∀ l : List (Directions G n), l.length ≤ k → (∀ v∈l, D v) → ‖leftDerivs (f i) l U‖ ≤ a i) :\n    ∀ l : List (Directions G n), l.length ≤ k → (∀ v∈l, D v) →\n      ‖leftDerivs (∏ i ∈ s, f i) l U‖ ≤ (s.card:ℝ)^l.length * ∏ i∈s, a i := by\n  classical\n  intro l hl hD\n  induction l using List.reverseRecOn generalizing f k with\n  | nil => simp only [leftDerivs, List.length_nil, Finset.prod_apply, norm_prod, pow_zero,one_mul]; exact Finset.prod_le_prod (fun _ _ => norm_nonneg _) (fun i hi => hc i hi [] hl hD)\n  | append_singleton l A ih =>\n    let f' (i j : ι) := if j = i then leftDerivs (f i) [A] else f j\n    have he : l.length+1 ≤ k := by simpa using hl\n    have hx (i) (hi : i∈s) (j) (hj : j∈s) : Chart l.length (f' i j) U := by\n      unfold f'; split\n      · exact leftDerivs_chart _ l.length ((h i hi).of_le (Nat.cast_le.mpr (Nat.add_comm .. ▸ he)))\n      exact (h j hj).of_le (Nat.cast_le.mpr (Nat.le_of_succ_le he))\n    have ht : leftDerivs (∏ i ∈ s, f i) [A] ∘ increment U =ᶠ[𝓝 0] (∑ i∈s, ∏ j∈s, f' i j) ∘ increment U := by\n      have h' (i) (hi : i∈s) : ∀ᶠ x in 𝓝 0, Chart k (f i) (increment U x) :=\n        chart_eventually (by rw [Work.G07.at_zero_increment]; exact h i hi) fun j => by simp only [increment,G.mat_mul]; exact ((G.exp_jet.comp (contDiff_apply ..)).mul contDiff_const).contDiffAt\n      filter_upwards [(s.eventually_all).2 h'] with x hx\n      have hy (i) (hi : i∈s) := left_has A (l:=[]) (by simp; omega) (hx i hi)\n      have hh := (HasDerivAt.fun_finsetProd hy).deriv\n      simp only [zero_smul,Work.G07.at_zero_increment,leftDerivs] at hh\n      simp only [comp_apply,leftDerivs, Finset.prod_apply,Finset.sum_apply,hh]\n      refine Finset.sum_congr rfl fun i hi => ?_\n      rw [← Finset.prod_erase_mul _ _ hi]; unfold f'; rw [if_pos rfl]; simp only [leftDerivs, smul_eq_mul]; congr 1\n      exact Finset.prod_congr rfl fun j hj => by rw [if_neg (Finset.ne_of_mem_erase hj)]\n    rw [Work.G07.left_append,left_congr l U ht,left_sum _ _ U l (fun i hi => chart_prod s (f' i) (hx i hi)) le_rfl]\n    have hcost (i : ι) (hi : i∈s) := ih (f' i) (hx i hi) (by\n      intro j hj l' hl' hD'; unfold f'; split\n      · rename_i he; subst j; rw [← Work.G07.left_append]; exact hc _ hj _ (by simp; omega) (by\n          intro v hv; obtain hh|hh := List.mem_append.mp hv\n          · exact hD' _ hh\n          exact hD _ (List.mem_append_right _ hh))\n      exact hc _ hj _ (by omega) hD') le_rfl (fun v hv => hD v (by simp [hv]))\n    apply (norm_sum_le ..).trans\n    exact (Finset.sum_le_sum hcost).trans_eq (by rw [Finset.sum_const]; simp; ring)",
+            "line": 27,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/LOCAL_SPLITTING/Products.lean",
+            "fragment": "L27-L63"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.Local.left_prod_bound",
+            "lines": [
+              27,
+              63
+            ],
+            "conclusion": "The ordered derivative of a product of `card s` factors is bounded by `(card s)^|l| * ∏ a i`, a constant depending only on the number of factors and the derivative length."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -53,8 +95,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
       }
     }
   }

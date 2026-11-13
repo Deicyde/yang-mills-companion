@@ -1,7 +1,9 @@
 {
   "id": "Lemma 17.10 step 4",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean writes the integrated current with a spatial probe `g` and the drift of the Killing field instead of c(x) K_E^b(x, -i z_0 +- eps); the quantity is the same smeared continued current, evaluated at `morn`/`eve` times.",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.04316
         ]
       },
-      "title": "Lemma 17.10 step 4: Display, p. 201, not yet judged",
+      "title": "Lemma 17.10 step 4: Display, p. 201",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 17.10 step 4"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.Stress.docks",
+        "module": "YM.EveryPhase.Strip",
+        "lines": [
+          77,
+          79
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.Stress.docks"
+          },
+          "snippet": {
+            "text": "def docks (Z : W.Aurora D) (K : Killing) (v : Fin n → S.Union) (T : S.Stress)\n    (g : Probe Space3) (j : Fin (n+1)) (x : SpacePoints n) (u : Times n) (z : ℂ) :=\n    ∑ i : SpaceAxis, ∫ r, drift g i r * waveT Z K v T j i.castSucc x u z r",
+            "line": 77,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Strip.lean",
+            "fragment": "L77-L79"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.Stress.docks",
+            "lines": [
+              77,
+              79
+            ],
+            "conclusion": "`docks Z K v T g j x t z` is the integral against the spatial test `g` of the continued current inserted at complex time `z` in slot `j`, summed over the Killing components."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.EveryPhase.Stress.waveT",
+        "module": "YM.EveryPhase.Strip",
+        "lines": [
+          61,
+          62
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.EveryPhase.Stress.waveT"
+          },
+          "snippet": {
+            "text": "def waveT (Z : W.Aurora D) (K : Killing) (v : Fin n → S.Union) (T : S.Stress)\n    (j : Fin (n+1)) (a : Axis) (x : SpacePoints n) (u : Times n) (z : ℂ) (r : Space3) := tide Z K j v T a (lodge j x u r z)",
+            "line": 61,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/EveryPhase/Strip.lean",
+            "fragment": "L61-L62"
+          },
+          "proof_context": {
+            "declaration": "YM.EveryPhase.Stress.waveT",
+            "lines": [
+              61,
+              62
+            ],
+            "conclusion": "`waveT` is the continued stress insertion at a complex time and space point."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

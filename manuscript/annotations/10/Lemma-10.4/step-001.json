@@ -1,9 +1,9 @@
 {
   "id": "Lemma 10.4 step 1",
   "kind": "proof_step",
-  "status": "not_formalized",
-  "relation": "noMatch",
-  "note": "The sentence only lists the definitions and lemmas used; it asserts no mathematics.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "The step cites Lemma A1, which the Lean proof applies through `columns` inside `weaveBuild`; Lemma A-bounds is not applied in this proof (it is the separate global bound `exists_price`/`full_cost`), and the definitions enter only through the types.",
   "subject": [
     {
       "location": {
@@ -12,7 +12,7 @@
           0.12026,
           0.61512,
           0.75948,
-          0.02002
+          0.02026
         ]
       },
       "title": "Lemma 10.4 step 1: Text, p. 44",
@@ -32,19 +32,72 @@
         "declaration": "YM.Push.Mark.weaveBuild",
         "module": "YM.Push.RELAY_MARK.Portfolio",
         "lines": [
-          60,
-          97
+          67,
+          67
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
             "id": "YM.Push.Mark.weaveBuild"
           },
+          "snippet": {
+            "text": "  obtain ⟨T,he,hx,hS,hp'⟩ := columns B Y hp",
+            "line": 67,
+            "truncated": false
+          },
           "destination": {
             "resolution": "exact",
             "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/RELAY_MARK/Portfolio.lean",
-            "fragment": "L60-L97"
+            "fragment": "L67-L67"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.Mark.weaveBuild",
+            "lines": [
+              60,
+              97
+            ],
+            "conclusion": "`weaveBuild` takes its section `T` from `columns B Y hp`, with `Y` the realization of the Imprint and the regrading `twist`, and then checks `T.Sound H` (gauge invariance, reality, covariance, unit) from the Imprint's properties."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Push.Mark.columns",
+        "module": "YM.Push.RELAY_MARK.Portfolio",
+        "lines": [
+          23,
+          46
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Push.Mark.columns"
+          },
+          "snippet": {
+            "text": "private lemma columns (B : Frame G d) (Y : Label G d →ₗ[ℂ] Pre G) (h : ∀ i:B.Index,\n    Y (B.basis i) ∈ powered G (B.grades i).2) :\n    ∃ T : SectionData B, pop T ∧ 0∈T.stencil ∧ (∀ s:Signed,T.stencil.image s.act=T.stencil) ∧\n      ∀ p, T.evaluate (B.coords p)=Y p := by\n  classical\n  choose m V Q hq he using fun i : B.Index => powered_pose (h i)\n  choose r hr using fun i => Work.G06.enclose (V i)\n  let c := Finset.univ.sup r\n  have ht i b : (V i b).stencil ⊆ box c := le_trans (hr i b) (by\n    intro a ha\n    obtain ⟨h0,h1⟩ := box_test.mp ha\n    have hh : r i ≤ c := Finset.le_sup (f:=r) (Finset.mem_univ i)\n    exact box_test.mpr ⟨fun j=>by specialize h0 j; omega,fun j=>by specialize h1 j; omega⟩)\n  choose E hE using fun i=> Work.G06.realize G (V i) (box c) (ht i)\n  let x := B.basis.constr ℂ (fun i=>E i (Q i))\n  let T : SectionData B := ⟨box c,x ∘ₗ B.coords.symm.toLinearMap⟩\n  let L : Label G d →ₗ[ℂ] Pre G := ((T.eval_linear).mk' _).comp B.coords.toLinearMap\n  have hl i : T.evaluate (B.coords (B.basis i)) = Y (B.basis i) := by\n    rw [he i]; funext U\n    change MvPolynomial.aeval (Source.entry U) (x (B.coords.symm (B.coords _))) = _\n    rw [LinearEquiv.symm_apply_apply B.coords (B.basis i), show x (B.basis i)=_ from Module.Basis.constr_basis ..]\n    exact hE i U (Q i)\n  refine ⟨T,fun i => ?_,center_box _, fun s => box_covariant c s,fun p=> LinearMap.congr_fun (show L=Y from B.basis.ext hl) p⟩\n  exact ⟨m i,V i,ht i,Q i,by rw [← B.coords_basis,hl,he i]; rfl,hq i⟩",
+            "line": 23,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/RELAY_MARK/Portfolio.lean",
+            "fragment": "L23-L46"
+          },
+          "proof_context": {
+            "declaration": "YM.Push.Mark.columns",
+            "lines": [
+              23,
+              46
+            ],
+            "conclusion": "`columns` builds, for a frame `B` and powered label functions `Y`, a `SectionData` on one stencil (`pop`, `0 ∈ T.stencil`, stable under signed permutations) evaluating to `Y` on label coordinates, the construction of the sections of Lemma A1."
           }
         }
       }
@@ -59,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge changed it from noMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

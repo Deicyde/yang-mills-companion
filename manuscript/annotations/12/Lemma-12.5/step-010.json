@@ -1,7 +1,9 @@
 {
   "id": "Lemma 12.5 step 10",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The Lean bound uses `size x`, the total size of the shift, in place of `|n|` for the divided index, and the strip loss is the explicit factor 4. The three claims, the bound, the convergence and the loss of one order, are all present.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.11962,
           0.68616,
           0.76357,
-          0.05423
+          0.05337
         ]
       },
-      "title": "Lemma 12.5 step 10: Text, p. 79, not yet judged",
+      "title": "Lemma 12.5 step 10: Text, p. 79",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 12.5 step 10"
@@ -21,7 +23,125 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.seriesLeg_fund",
+        "module": "YM.Next.STATIONARY.Lift.Koszul",
+        "lines": [
+          62,
+          62
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.seriesLeg_fund"
+          },
+          "snippet": {
+            "text": "lemma seriesLeg_fund (h : 0<σ) : Firm σ ((size x:ℝ)*Real.exp (σ*size x)) (seriesLeg i x) := by",
+            "line": 62,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Lift/Koszul.lean",
+            "fragment": "L62-L62"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.seriesLeg_fund",
+            "lines": [
+              62,
+              77
+            ],
+            "conclusion": "`seriesLeg i x` is `Firm σ` with constant `size x * exp (σ * size x)`, the monomial quotient bounded by its size times the exponential weight."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.div_var",
+        "module": "YM.Next.STATIONARY.Lift.Koszul",
+        "lines": [
+          88,
+          89
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.div_var"
+          },
+          "snippet": {
+            "text": "theorem div_var (hf : Firm σ A f) : ∃ g, Firm (σ/4) (A*priceDivision α σ) g ∧\n    ∀ p ∈ Laurent.strip (σ/4), divZ i p * g p = f p - f (update p i 0) := by",
+            "line": 88,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Lift/Koszul.lean",
+            "fragment": "L88-L89"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.div_var",
+            "lines": [
+              88,
+              128
+            ],
+            "conclusion": "Summing over Fourier monomials on the strip of width `σ/4` gives an absolutely convergent series with constant `A * priceDivision α σ`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.rays_div",
+        "module": "YM.Next.STATIONARY.Lift.Koszul",
+        "lines": [
+          221,
+          224
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.rays_div"
+          },
+          "snippet": {
+            "text": "theorem rays_div {f g : Phase α → ℂ} {s : ℕ} {i : α} (hg : Firm σ C g)\n    (hp : Rays s (f ∘ axes))\n    (h : ∀ p : Corn α, divZ i (axes p) * g (axes p) = f (axes p) - f (update (axes p) i 0)) :\n    Rays (s-1) (g ∘ axes) := by",
+            "line": 221,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Lift/Koszul.lean",
+            "fragment": "L221-L224"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.rays_div",
+            "lines": [
+              221,
+              256
+            ],
+            "conclusion": "If `divZ i * g = f - f(update i 0)` and `f` vanishes to order `s` along rays, then `g` vanishes to order `s - 1`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +151,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

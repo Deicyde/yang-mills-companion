@@ -1,7 +1,9 @@
 {
   "id": "Lemma 14.1 step 19",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "broadMatch",
+  "note": "[L] holds for every s ≥ 1 and covers k(m)=m through the case split on `chosen`, while [M] has the case s=1 only. `fiat` stands for q and `scale` for s.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.12026,
           0.24106,
           0.75949,
-          0.03713
+          0.0376
         ]
       },
-      "title": "Lemma 14.1 step 19: Text, p. 126, not yet judged",
+      "title": "Lemma 14.1 step 19: Text, p. 126",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 14.1 step 19"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stock.Tabs.pay",
+        "module": "YM.Overlay.Prior",
+        "lines": [
+          85,
+          115
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stock.Tabs.pay"
+          },
+          "snippet": {
+            "text": "lemma pay (h : Tabs a) (hs : 1≤s) (e : ℝ) (he : 0<e) :\n    ∀ᶠ m : ℕ in atTop,\n      let p := chosen a s h m\n      (a.S.a m / a.S.a p)^4* Vac.fiat G (a.params p) (a.clock.hatBeta p) ≤ e * a.S.scale p := by\n  have hw : ∀ᶠ m : ℕ in atTop, ∀ i ≥ m-1,\n      ((a.S.block i).val * ((a.clock.coverSize i:ℝ)^2))^(4:ℕ) * Vac.fiat G (a.params (i+1)) (a.clock.hatBeta (i+1)) ≤\n        (e/s^4) * a.S.scale (i+1) := by\n    have hn : 0 < s := by linarith\n    obtain ⟨j,hj⟩ := eventually_atTop.1 (h.cheap (e/s^4) (by positivity))\n    filter_upwards [eventually_gt_atTop j] with i hg k hk using hj _ (by omega)\n  filter_upwards [hw,eventually_gt_atTop 0] with i hi hp\n  dsimp only\n  have hv := (opened a s h i).1\n  cases hg : chosen a s h i with\n  | zero => omega\n  | succ m =>\n    have hh := hi m (by omega)\n    have hf (q : ℕ) : 0≤Vac.fiat G (a.params q) (a.clock.hatBeta q) := by\n      unfold Vac.fiat\n      have hu := (a.params q).clip.quadratic_pos\n      have hx := (a.params q).paths_pos\n      have he := Real.log_pos (a.fits.delayed q)\n      positivity\n    calc\n      _ ≤ (s*((a.S.block m).val*(a.clock.coverSize m:ℝ)^ (2:ℕ)))^(4:ℕ) * Vac.fiat G (a.params (m+1)) (a.clock.hatBeta (m+1)) := mul_le_mul_of_nonneg_right\n        (pow_le_pow_left₀ (div_nonneg (a.S.a_pos _).le (a.S.a_pos _).le) (expensive a s h hs i m hg) 4) (hf (m+1))\n      _ ≤ _ := by\n        rw [mul_pow,mul_assoc]\n        refine (mul_le_mul_of_nonneg_left hh (show 0 ≤ s^4 by positivity)).trans_eq ?_\n        have hn := ne_of_gt (lt_of_lt_of_le (by norm_num : (0:ℝ) < 1) hs)\n        field_simp",
+            "line": 85,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Overlay/Prior.lean",
+            "fragment": "L85-L115"
+          },
+          "proof_context": {
+            "declaration": "YM.Stock.Tabs.pay",
+            "lines": [
+              85,
+              115
+            ],
+            "conclusion": "`pay`: for every `s ≥ 1` and `e > 0`, eventually in m, `(a m / a p)^4 * fiat(params p, hatBeta p) ≤ e * scale p` with `p = chosen s m`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stock.Tabs.expensive",
+        "module": "YM.Overlay.Prior",
+        "lines": [
+          71,
+          83
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stock.Tabs.expensive"
+          },
+          "snippet": {
+            "text": "lemma expensive (h : Tabs a) (hs : 1 ≤ s) (i : ℕ) (F : ℕ) (hF : chosen a s h i=F+1) :\n    a.S.a i / a.S.a (F+1) ≤ s * ((a.S.block F).val * (a.clock.coverSize F:ℝ)^2) := by\n  have ht := (opened a s h i).1\n  have hh := a.S.a_pos F\n  have hg : (3:ℝ)≤ (a.S.block F).val := by exact_mod_cast (a.S.block_large F)\n  have hp : 0< ((a.S.block F).val:ℝ) := lt_of_lt_of_le (by norm_num) hg\n  have h1 : (1:ℝ) ≤ (a.clock.coverSize F:ℝ) := by exact_mod_cast (a.budget F).B_pos\n  rcases eq_or_lt_of_le ht with e|e\n  · have hw : a.S.a i=a.S.a (F+1) := congr_arg a.S.a (e.trans hF)\n    rw [hw,div_self (a.S.a_pos _).ne']\n    exact one_le_mul_of_one_le_of_one_le hs (one_le_mul_of_one_le_of_one_le (by linarith) (one_le_pow₀ h1))\n  rw [a.S.a_step, show a.S.a i / (a.S.a F / (a.S.block F).val)= (a.S.a i/a.S.a F)*(a.S.block F).val by field_simp]\n  exact (mul_le_mul_of_nonneg_right (needs a s h e hF) hp.le).trans_eq (by ring)",
+            "line": 71,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Overlay/Prior.lean",
+            "fragment": "L71-L83"
+          },
+          "proof_context": {
+            "declaration": "YM.Stock.Tabs.expensive",
+            "lines": [
+              71,
+              83
+            ],
+            "conclusion": "`expensive`: `a i / a (F+1) ≤ s * (block F * coverSize F^2)`, the form ℓ_u B_u² used with `cheap`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

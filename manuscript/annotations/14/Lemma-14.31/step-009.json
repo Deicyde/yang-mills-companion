@@ -1,19 +1,21 @@
 {
   "id": "Lemma 14.31 step 9",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean obtains the holomorphic function and its bound by the `Served`/`stamp` machinery with the abstract constant `refreeze`. It does not display the log-majorant terms `n(s_0^reg+s_0^for)`, `2n` and `|Λ|q` or the division by `prod w_i`.",
   "subject": [
     {
       "location": {
         "page": 159,
         "rect": [
           0.11962,
-          0.20178,
+          0.20233,
           0.76073,
-          0.14257
+          0.14202
         ]
       },
-      "title": "Lemma 14.31 step 9: Text, p. 159, not yet judged",
+      "title": "Lemma 14.31 step 9: Text, p. 159",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 14.31 step 9"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.Sever.omissions",
+        "module": "YM.FullVolume.Fields.Flight",
+        "lines": [
+          57,
+          60
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.Sever.omissions"
+          },
+          "snippet": {
+            "text": "        let X':= gust A N p j v k ht.le; have hZ : Served (R k) (X k) (M₀ k) X' (o k) (w k) (P k).supportExponent 1:=by\n           have hc : Served (A.rep N p j) (X j) (M₀ j) v (o j) (w j) (k₀-2) 1:= garnish _ _ _ (hR.symm ▸ hf) H H₀ H₁ hi (hR.symm ▸ hy) z (by simpa using hz : ‖z‖<_).le\n           have hh:= Retain.waft A r δ u D N p hN o w X g h hq T W hc hV k le_rfl ht.le\n           rwa [if_neg ht.ne] at hh",
+            "line": 57,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Fields/Flight.lean",
+            "fragment": "L57-L60"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.Sever.omissions",
+            "lines": [
+              49,
+              68
+            ],
+            "conclusion": "`omissions` carries the scaled density `v = f z` down to the base level `k` by `gust`, keeping it `Served` with support exponent `k₀-2`, via `Retain.waft`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.FullVolume.Sever.charges",
+        "module": "YM.FullVolume.Fields.Flight",
+        "lines": [
+          31,
+          36
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.FullVolume.Sever.charges"
+          },
+          "snippet": {
+            "text": "lemma charges {k:ℕ} {k₁: V→ Config G (A.S.side k p)→ℂ}{k₂:V→Box (A.S.side k p)→ Config G (A.S.side k p)→ℂ}{X:Config G (A.S.side k p)→ Poly B}{o:V→Site (A.S.side k p)} {x y:ℝ}{w:V→ℝ}(hk:k≤N) (hs:∀ i,0<w i)\n          (hp:Served (A.rep N p k) k₁ k₂ X o w (A.levels.budget k).supportExponent 1)(he:Vault w k₁ k₂ x y)(hx:Integrable X (prior G _))(t:B.Mode): ‖stamp A N p k X t‖ ≤ refreeze (A.levels) p k x y t w:=by\n    let Q:= A.levels.clock; have hv:= h.represents N p k hk; have hq:0<Q.hatCoupling k:= inv_pos.mpr (Real.sqrt_pos.mpr (zero_lt_one.trans (A.levels.fits.delayed k)))\n    have hf: Q.hatCoupling k ≤ (R k).p.threshold:=by rw [hv.vac]; exact le_mul_of_one_le_right hq.le (Real.one_le_exp (sq_nonneg _))\n    have hg:= (sail hs hp hv.good (Overlay.beta_positive h hk).le he (A.levels.budget k|>.exponent_pos.le) t hx _ hq hf (History.nonnegative A h N p k hk)).trans (Real.exp_monotone (Vac.suffices_bill h hk (Fintype.card V) ..))\n    unfold stamp refreeze; rw [norm_div,Complex.norm_real,Real.norm_of_nonneg (partition_pos _).le]; rw [History.partition_eq A h N p k hk,mul_one] at hg; exact (le_div_iff₀ (Poly.worth hs _)).mpr hg",
+            "line": 31,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Fields/Flight.lean",
+            "fragment": "L31-L36"
+          },
+          "proof_context": {
+            "declaration": "YM.FullVolume.Sever.charges",
+            "lines": [
+              31,
+              36
+            ],
+            "conclusion": "`charges` bounds the base-level `stamp` coordinate norm by the full-level one, in terms of the weights, bounds `x, y`, and the vacuum term."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

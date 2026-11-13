@@ -1,9 +1,9 @@
 {
   "id": "Lemma 16.4 step 2",
   "kind": "proof_step",
-  "status": "not_formalized",
-  "relation": "noMatch",
-  "note": "No Lean declaration carries this step: the lift and its estimates are packaged abstractly (Poised, Spots, Balances).",
+  "status": "formalized",
+  "relation": "exactMatch",
+  "note": "`shrink` is (t_k √β)^{-1} with t_k the threshold, `shrink_pos` gives positivity and `shrink_min` gives shrink⁻¹ ≤ 2 M_k.",
   "subject": [
     {
       "location": {
@@ -29,22 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.MergeProof.East.wok",
-        "module": "YM.MergeProof.East.Pint",
+        "declaration": "YM.Next.Rank.Price.shrink",
+        "module": "YM.Next.RANK.Matrices",
         "lines": [
-          25,
-          31
+          104,
+          104
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.MergeProof.East.wok"
+            "id": "YM.Next.Rank.Price.shrink"
+          },
+          "snippet": {
+            "text": "def shrink (k N p : ℕ) := (Real.sqrt (C.path.β N p k))⁻¹ / C.path.levels.clock.threshold k",
+            "line": 104,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/East/Pint.lean",
-            "fragment": "L25-L31"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Matrices.lean",
+            "fragment": "L104-L104"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Rank.Price.shrink",
+            "lines": [
+              104,
+              104
+            ],
+            "conclusion": "`shrink C k N p` is `(sqrt (β N p k))⁻¹ / threshold k`, the scale of the Gaussian field divided by the small-field threshold."
           }
         }
       }
@@ -54,22 +68,75 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.MergeProof.East.staging",
-        "module": "YM.MergeProof.East.Plume",
+        "declaration": "YM.Next.Rank.Price.shrink_min",
+        "module": "YM.Next.RANK.Matrices",
         "lines": [
-          29,
-          52
+          109,
+          122
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.MergeProof.East.staging"
+            "id": "YM.Next.Rank.Price.shrink_min"
+          },
+          "snippet": {
+            "text": "lemma shrink_min (h : C.Makes) (hk : k≤N) (p : ℕ) : (shrink C k N p)⁻¹ ≤ 2*C.path.levels.clock.monitor k := by\n  let A := C.path.levels.clock; let B := A.hatBeta k; let t:= A.threshold k\n  have he : 0<t := (C.path.levels.budget k).threshold_pos\n  have hx : 0<B := lt_trans zero_lt_one (C.path.levels.fits.delayed k)\n  have hp : 0 < C.path.β N p k := Overlay.beta_positive h.wilson hk\n  have hc : C.path.β N p k ≤ 2*B := (h.wilson.represents N p k hk).band.2\n  calc\n    _ = t * Real.sqrt (C.path.β N p k) := by unfold shrink; simp only [inv_div,div_inv_eq_mul];rfl\n    _ ≤ t * (2 * Real.sqrt B) := by\n      apply mul_le_mul_of_nonneg_left _ he.le\n      nlinarith [Real.sqrt_nonneg B,Real.sq_sqrt hp.le,Real.sq_sqrt hx.le]\n    _ = _ := by\n      change ((Real.sqrt B)⁻¹ * (A.monitor k)) * _ = 2 * A.monitor k\n      have he := Real.sqrt_pos.2 hx; field_simp",
+            "line": 109,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/MergeProof/East/Plume.lean",
-            "fragment": "L29-L52"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Matrices.lean",
+            "fragment": "L109-L122"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Rank.Price.shrink_min",
+            "lines": [
+              109,
+              122
+            ],
+            "conclusion": "`shrink_min` proves `(shrink)⁻¹ ≤ 2 * monitor k` from the band `β ≤ 2 * hatBeta k` and `threshold = hatCoupling * monitor`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Rank.Price.shrink_pos",
+        "module": "YM.Next.RANK.Matrices",
+        "lines": [
+          106,
+          107
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Rank.Price.shrink_pos"
+          },
+          "snippet": {
+            "text": "lemma shrink_pos (h : C.Makes) (hk : k≤N) (p : ℕ) : 0<shrink C k N p :=\n    div_pos (inv_pos.mpr (Real.sqrt_pos.2 (Overlay.beta_positive h.wilson hk))) (C.path.levels.budget k).threshold_pos",
+            "line": 106,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/RANK/Matrices.lean",
+            "fragment": "L106-L107"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Rank.Price.shrink_pos",
+            "lines": [
+              106,
+              107
+            ],
+            "conclusion": "`shrink_pos` gives `0 < shrink`."
           }
         }
       }
@@ -84,8 +151,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge changed it from noMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

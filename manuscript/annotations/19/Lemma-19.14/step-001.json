@@ -1,7 +1,9 @@
 {
   "id": "Lemma 19.14 step 1",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean passes to a refined filter (`refine_geometry`, `find_layers`) in place of a subsequence, and normalizes by a given clock `T` with `∑ a = 1` and parent-before-child ordering. Positivity of the summands of T and the explicit definition T = sum of log(1/rho_v) are not stated.",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.05837
         ]
       },
-      "title": "Lemma 19.14 step 1: Text, p. 231, not yet judged",
+      "title": "Lemma 19.14 step 1: Text, p. 231",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 19.14 step 1"
@@ -21,7 +23,47 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Nesting.Limits.parse_eventual'",
+        "module": "YM.OPE.Nesting.Quantified",
+        "lines": [
+          33,
+          40
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Nesting.Limits.parse_eventual'"
+          },
+          "snippet": {
+            "text": "private lemma parse_eventual' (t:Tree)[Nonempty t.Inner] (p:(t.Inner→ℝ) × Tree.Plot t→ Prop)\n    (hp:∀ (r:ℝ→t.Inner→ℝ)(z:Envelope ℝ t)(ψ:Filter ℝ)(_:ψ.NeBot), ∀ (T:ℝ→ℝ)(a:t.Inner→ℝ), (∑ v,a v)=1 → Tendsto T ψ atTop → (∀ v,RateIs ψ T (fun i=>r i v) (-a v)) → t.Regular ψ T 0 a z → t.ordered 0 a → ∀ᶠ i in ψ,p (r i,z i)) : ∀ᶠ r:ℝ in 𝓝[>]0,∀ (s:t.Inner→ℝ)(z:Tree.Plot t), Accept r M η s z → p (s,z):=by\n      have hv:∀ᶠ r:ℝ in 𝓝[>]0,∀ v:_ × Tree.Plot t,Accept r M η v.1 v.2 → p v := by\n           refine refine_geometry (V:=(t.Inner→ℝ) × Tree.Plot t) (Q:=fun _ v=>p v) fun f ψ hN h' he=>?_ \n           let s:= Prod.fst ∘ f; let z:=Prod.snd ∘ f\n           obtain ⟨χ,hb,hh,T,a,ha,hT,hs,hg,ht⟩:=t.find_layers (s:=s) (z:=z) (M:=M) (η:=η) (tendsto_id.mono_left h': Tendsto id ψ _) (he.mono fun l he=>⟨he.levels,he.relative⟩) hM hη\n           exact ⟨χ,hb,hh, hp s z χ hb T a ha hT hs hg ht⟩\n      exact hv.mono fun i hi s z hp=> hi (s,z) hp",
+            "line": 33,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Nesting/Quantified.lean",
+            "fragment": "L33-L40"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Nesting.Limits.parse_eventual'",
+            "lines": [
+              33,
+              40
+            ],
+            "conclusion": "Reduces the eventual-in-`r` claim for all `Accept` geometries to every filter `ψ` along which the scales have rates `-a v` for a clock `T`, with `∑ a v = 1` and `ordered 0 a`, by `refine_geometry` and `find_layers`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +73,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
       }
     }
   }

@@ -1,19 +1,21 @@
 {
   "id": "Lemma 14.5 step 19",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean averages over `Tally F` (motions and basis axes) with recombination weights `chips`, and `orbitCost F` plays `A_d^sym`; the factors are `ε = η(1+s)` and `c = C+ηs` as in [M]. [M]'s `A_d^sym` bounds absolute recombination coefficients; Lean's `orbitCost` bounds the total patched basis size.",
   "subject": [
     {
       "location": {
         "page": 130,
         "rect": [
           0.12026,
-          0.57631,
+          0.5767,
           0.76243,
-          0.11724
+          0.11972
         ]
       },
-      "title": "Lemma 14.5 step 19: Text, p. 130, not yet judged",
+      "title": "Lemma 14.5 step 19: Text, p. 130",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 14.5 step 19"
@@ -21,7 +23,125 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.MergeProof.Matric.motor",
+        "module": "YM.FullVolume.Mark.Wheels",
+        "lines": [
+          112,
+          122
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.MergeProof.Matric.motor"
+          },
+          "snippet": {
+            "text": "  let O : Tally F → Coefficient F _ := fun j => Q j.2 j.1\n  let Y : F.Coeff →ₗ[ℂ] Tally F → ℂ := (chips F).comp V.index.toLinearMap\n  let Z : F.Coeff → Coefficient F _ := pencil (code (Tally F)) O Y\n  let a v := c * orbitCost F * Dm (V.index v)\n  let y := Real.sqrt (H.levels.clock.forcedAllowance m)\n  have hy : 0<y := Real.sqrt_pos.2 (forcedPos ..)\n  have hy' := (h.represents N p m hm.le).good\n  have hb' (v) : (Z v).Format 0 A R ∧ (Z v).remBound 0 R y (a v) := by\n    let t (j : Tally F) := c*Dm (J j.2)\n    have h := pencil_cost (code _) O Y (X:=t) hy (fun j => ⟨hF j.2 j.1,hY j.2 j.1⟩) v\n    exact ⟨h.1,rem_mono h.2 (residual_bill F L c hc (V.index v))⟩",
+            "line": 112,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Mark/Wheels.lean",
+            "fragment": "L112-L122"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.Matric.motor",
+            "lines": [
+              40,
+              247
+            ],
+            "conclusion": "`motor` builds the averaged coarse entry `Z v` as the `pencil` over `Tally F` (motions times basis) with weights `chips F (index v)`, and `pencil_cost` bounds format and remainder by `c*orbitCost*Dm`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.MergeProof.Matric.motor",
+        "module": "YM.FullVolume.Mark.Wheels",
+        "lines": [
+          123,
+          140
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.MergeProof.Matric.motor"
+          },
+          "snippet": {
+            "text": "  have hZ (v) : (Z v).x = repaint F X (V.index v) := by\n    unfold Z\n    rw [pencil_x]\n    exact Finset.sum_congr rfl fun i _ => congr_arg (chips F (V.index v) i • ·) (hQ ..)\n  have hp (v) : (Z v).density 0 B R=P v := by\n    let K := (IsLinearMap.mk' P hP).comp V.index.symm.toLinearMap\n    have hh (v) (y) : dance y (K v)=K (Motion.patch F y v) := by\n      change dance y (P _)=P _\n      rw [hM]; apply congr_arg\n      apply V.index.injective; rw [← hq.moves]; simp\n    funext x\n    have hi := field_same F K hh (V.index v) x\n    unfold Z\n    rw [pencil_density (code _) O Y hy' hy (X:=fun j => c*Dm (J j.2)) (fun j => hY j.2 j.1)]\n    refine (Finset.sum_congr rfl (g:=fun i : Tally F => chips F (V.index v) i *\n        dance i.1 (K (J i.2)) x) fun i _ => ?_).trans (hi.trans ?_)\n    · exact congr_arg ((Y v i) * ·) (congr_fun (hU i.2 i.1) x)\n    change P (V.index.symm (V.index v)) x= P v x; rw [LinearEquiv.symm_apply_apply]",
+            "line": 123,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Mark/Wheels.lean",
+            "fragment": "L123-L140"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.Matric.motor",
+            "lines": [
+              40,
+              247
+            ],
+            "conclusion": "`Z v` has coefficient `repaint F X (index v)` and density `P v`: the averaged family is linear in `v`, covariant under motions and has the exact density identity."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.MergeProof.Matric.motor",
+        "module": "YM.FullVolume.Mark.Wheels",
+        "lines": [
+          142,
+          146
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.MergeProof.Matric.motor"
+          },
+          "snippet": {
+            "text": "  have hI (v) : F.coeffSize ((Z v).x - T.leads L (V.index v)) ≤\n      barunit L * F.coeffSize (F.core (V.index v)) := calc\n    _ ≤ ε*orbitCost F*F.coeffSize (F.core (V.index v)) := by\n      rw [hZ]; exact budgets_orbit F L T X (V.index v) ε hε (fun i => HX i.2 i.1)\n    _ ≤ _ := mul_le_mul_of_nonneg_right he.tiny (Work.G08.size_nonneg ..)",
+            "line": 142,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/FullVolume/Mark/Wheels.lean",
+            "fragment": "L142-L146"
+          },
+          "proof_context": {
+            "declaration": "YM.MergeProof.Matric.motor",
+            "lines": [
+              40,
+              247
+            ],
+            "conclusion": "`hI`: the averaged coefficient error is at most `ε*orbitCost F*|core (index v)|` by `budgets_orbit`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +151,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
       }
     }
   }

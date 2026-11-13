@@ -1,18 +1,18 @@
 {
   "id": "Lemma 11.6 step 25",
   "kind": "proof_step",
-  "status": "not_formalized",
-  "relation": "noMatch",
-  "note": "[L] states kernel row bounds only; the weighted-norm estimate on `nabla^r W_0 v` for inputs of exponential-polynomial growth is not stated.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "Lean bounds the image of a weighted input in the exponentially weighted ℓ¹ `Width` (`released`) and, for polynomial growth, through `activated` with radial costs. The sup-norm estimate with ℓ^{-1-r}C_{j,r,𝔞,h} for ∇^r W_0 is not stated.",
   "subject": [
     {
       "location": {
         "page": 56,
         "rect": [
           0.12026,
-          0.82417,
+          0.82377,
           0.75948,
-          0.03818
+          0.03857
         ]
       },
       "title": "Lemma 11.6 step 25: Display, p. 56",
@@ -29,22 +29,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Craft.Donate",
-        "module": "YM.Bid.Craft",
+        "declaration": "YM.Next.Free.Tariff.released",
+        "module": "YM.Next.FREE_KERNELS.Tariff",
         "lines": [
-          21,
-          22
+          55,
+          68
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Craft.Donate"
+            "id": "YM.Next.Free.Tariff.released"
+          },
+          "snippet": {
+            "text": "lemma released (h : Tariff R η σ B) (hb : 0 ≤ B) (hu : Width η C u) (he : 0 ≤ σ) :\n    Width σ (B*C) (payOut R u) := by\n  let f := fun x y : Cover => envelopeW σ x*‖u y * R y x‖\n  have h1 := h.estimate hb hu\n  have hm : 0 ≤ uncurry f := fun ⟨i,j⟩ => h1.1 (j,i)\n  have hs : Summable (uncurry f) := h1.2.1.prod_symm\n  have hh : SumBudget (fun x => ∑' j, f x j) (B*C) := by\n    refine ⟨fun i => tsum_nonneg (fun j => hm (i,j)),((summable_prod_of_nonneg hm).mp hs).2,?_⟩\n    change ∑' x, ∑' j, (uncurry f) (x,j) ≤ _\n    rw [← hs.tsum_prod]; unfold uncurry f\n    exact ((Equiv.prodComm Cover Cover).tsum_eq (fun z => envelopeW σ z.2 * ‖u z.1 * R z.1 z.2‖)).trans_le h1.2.2\n  unfold Width; refine budget_minor hh (fun _ => by positivity) fun i => ?_\n  dsimp only [envelopeW,f,payOut]; rw [tsum_mul_left]; apply mul_le_mul_of_nonneg_left _ (Real.exp_pos _).le\n  exact norm_tsum_le_tsum_norm ((h.freedom hb hu he).prod_symm.prod_factor i)",
+            "line": 55,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Bid/Craft.lean",
-            "fragment": "L21-L22"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/Tariff.lean",
+            "fragment": "L55-L68"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Free.Tariff.released",
+            "lines": [
+              55,
+              68
+            ],
+            "conclusion": "If `R` is a `Tariff R η σ B` and the input `u` has `Width η C u`, then the image `payOut R u` has `Width σ (B*C)`: absolute kernel summation against the weight."
           }
         }
       }
@@ -54,22 +68,36 @@
       "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
       "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
       "location": {
-        "declaration": "YM.Next.Free.HopQuote",
-        "module": "YM.Next.FREE_KERNELS.Priced",
+        "declaration": "YM.FreeResolvent.Mark.activated",
+        "module": "YM.Push.FREE_RESOLVENT.Growth",
         "lines": [
-          25,
-          28
+          114,
+          128
         ]
       },
+      "role": "key",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "declaration": {
-            "id": "YM.Next.Free.HopQuote"
+            "id": "YM.FreeResolvent.Mark.activated"
+          },
+          "snippet": {
+            "text": "lemma activated {x : τ → ℝ} {F : (τ → ℝ) → Matrix ι κ ℝ} {l : List α} (u : α → τ → ℝ)\n    (h : ContDiffAt ℝ l.length F x)\n    (hf : ∀ w : Fin l.length → τ, Bill (positions D p d) D a b (List.ofFn w) γ M\n            (jet (fun i : τ => Pi.single i 1) F (List.ofFn w) x))\n    (hM : 0 ≤ M) (hG : 0 ≤ G)\n    (ht : ∀ i∈l, ∀ j, ‖u i j‖ ≤ G*hill D o R (p j)) (hs : 0 < s) (hd : s+s ≤ d) (hv : D.Volume p s V) :\n    Bill (radial α D o R) D a b l γ (V^l.length * ((G*polynomial s R)^l.length*M)) (jet u F l x) := by\n  refine ⟨meter_rows u (fun w => (hf w).row) hM hG ht hs hd hv,?_⟩\n  let Q y := (F y).transpose\n  have he : jet u Q l x=(jet u F l x).transpose := jet_linear u l (Bundle.switch ι κ) h\n  rw [← he]; apply meter_rows u _ hM hG ht hs hd hv\n  intro w\n  have hx : ContDiffAt ℝ (List.ofFn w).length F x := by simpa\n  erw [jet_linear (A:=F) _ _ (Bundle.switch ι κ) hx]\n  exact (hf w).col",
+            "line": 114,
+            "truncated": false
           },
           "destination": {
             "resolution": "exact",
-            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/Priced.lean",
-            "fragment": "L25-L28"
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Push/FREE_RESOLVENT/Growth.lean",
+            "fragment": "L114-L128"
+          },
+          "proof_context": {
+            "declaration": "YM.FreeResolvent.Mark.activated",
+            "lines": [
+              114,
+              128
+            ],
+            "conclusion": "For polynomially growing inputs `‖u i j‖ ≤ G * hill D o R (p j)`, the jet of a row-bounded kernel has row bound `V^n * ((G*polynomial s R)^n * M)`."
           }
         }
       }
@@ -84,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents, agreed; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents, agreed; a deeper re-search disagreed and a judge changed it from noMatch; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

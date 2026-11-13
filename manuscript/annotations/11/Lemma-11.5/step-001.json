@@ -1,7 +1,9 @@
 {
   "id": "Lemma 11.5 step 1",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean states the averaging multiplier, the gradient added by the frame and the gauge-invariance of the energy as three separate facts; no single statement says that gauge reduction commutes with the block step.",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.05717
         ]
       },
-      "title": "Lemma 11.5 step 1: Text, p. 51, not yet judged",
+      "title": "Lemma 11.5 step 1: Text, p. 51",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 11.5 step 1"
@@ -21,7 +23,125 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.Free.Flight.phi_run",
+        "module": "YM.Next.FREE_KERNELS.Dispatch",
+        "lines": [
+          67,
+          74
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.Free.Flight.phi_run"
+          },
+          "snippet": {
+            "text": "lemma phi_run : Runs (rotations c (TypeFace 1)) (readings (P.visitRatio hc) (TypeFace 1))\n    (mean (visit P K hc)) (solo c (going P)) := by\n  have hm p : mask 1 (fun i => pullLine P.patch i p)=hinges P 1 p := by\n    unfold pullLine hinges; rw [mask1_scale]; rfl\n  have he := patch_service (visit P K hc)\n  change Runs (rotations c _) (readings (P.visitRatio hc) _) _ (fiber fun p : Site c => upAlias fun l : Site P.L =>\n      (P.L.val:ℂ) • mask 1 (fun i => pullLine P.patch i (aliasAt (mon p) l))) at he\n  simp_rw [hm] at he; exact he",
+            "line": 67,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/FREE_KERNELS/Dispatch.lean",
+            "fragment": "L67-L74"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.Free.Flight.phi_run",
+            "lines": [
+              67,
+              74
+            ],
+            "conclusion": "The straight-link averaging `mean` of the visit step (patch weights) has as symbol `going`, the sum over aliases of `L` times `hinges` (`massFilter`, the b-factor to the stage power, times the `rail` factor r_l)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Precision.root_gradient",
+        "module": "YM.PREC.FrameResponse",
+        "lines": [
+          92,
+          96
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Precision.root_gradient"
+          },
+          "snippet": {
+            "text": "lemma root_gradient (v : form 0 f) : probe S *ᵥ (d 0 f *ᵥ v)=d 0 c *ᵥ centered S v := by\n  funext ⟨x,i⟩\n  obtain ⟨a,rfl⟩ := axisEquiv.surjective i\n  rw [probe,Matrix.add_mulVec, ← Matrix.mulVec_mulVec,Pi.add_apply, mean_site]\n  simp only [show axisEquiv.symm (coord a)=a from axisEquiv.symm_apply_apply _,coord_map,d_sites,psi_proj, mul_sub,Finset.sum_sub_distrib]; unfold centered; abel",
+            "line": 92,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PREC/FrameResponse.lean",
+            "fragment": "L92-L96"
+          },
+          "proof_context": {
+            "declaration": "YM.Precision.root_gradient",
+            "lines": [
+              92,
+              96
+            ],
+            "conclusion": "The frame response `probe` (`mean` plus `d 0 c * fixRoot`) sends the gradient `d 0 f v` to `d 0 c` of `centered S v`, i.e. Q d0 phi = d0 (phi o iota)."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Precision.K_kills",
+        "module": "YM.PREC.TreeMatch",
+        "lines": [
+          72,
+          72
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Precision.K_kills"
+          },
+          "snippet": {
+            "text": "lemma K_kills : K H' * d 0 c=0 := by rw [K,Matrix.mul_assoc,d_d_vac,Matrix.mul_zero]",
+            "line": 72,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PREC/TreeMatch.lean",
+            "fragment": "L72-L72"
+          },
+          "proof_context": {
+            "declaration": "YM.Precision.K_kills",
+            "lines": [
+              72,
+              72
+            ],
+            "conclusion": "`K H'` annihilates `d 0 c`, so the reduced two-form energy ignores gradients."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +151,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

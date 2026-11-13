@@ -1,7 +1,9 @@
 {
   "id": "Lemma 12.6 step 1",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean states the second-derivative identity as `B(v,v) = -Q D²z[v,v]` with `Q = postmark` and uses the gauge-completed inverse `commonM⁻¹` where [M] writes `Q⁻¹`. It proves the third and fourth derivatives as identities (`accrue`, `tally`) rather than by listing vanishing terms.",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.07428
         ]
       },
-      "title": "Lemma 12.6 step 1: Text, p. 81, not yet judged",
+      "title": "Lemma 12.6 step 1: Text, p. 81",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 12.6 step 1"
@@ -21,7 +23,203 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.Stayed.hedge",
+        "module": "YM.Next.STATIONARY.Joint.FourPoint",
+        "lines": [
+          131,
+          138
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.Stayed.hedge"
+          },
+          "snippet": {
+            "text": "lemma hedge (u : Y) (a : X) : iteratedFDeriv ℝ 2 F 0 ![fieldT S a,(0,u)]=0 := by\n  have he : D (0,u) F ∘ viewS S=ᶠ[𝓝 0] 0 := (margin hs).mono (fun _ hp => hp u)\n  have hh := (dSmooth hs.origin ((0:X),u) (m:=ω) (by simp)).differentiableAt (by simp)\n  have hv : fderiv ℝ (D (0,u) F) 0 (fieldT S a)=0 := by\n    have hp := he.fderiv_eq (𝕜:=ℝ)\n    rw [fderiv_comp (0:X) (by rw [H0 hs]; exact hh) ((hl hs).differentiableAt (by simp)),H0 hs,fderiv_zero] at hp\n    exact DFunLike.congr_fun hp a\n  rwa [show fderiv ℝ (D ((0:X),u) F) 0 (fieldT S a)=iteratedFDeriv ℝ 2 F 0 ![fieldT S a,(0,u)] from divided _ _ hs.origin] at hv",
+            "line": 131,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Joint/FourPoint.lean",
+            "fragment": "L131-L138"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.Stayed.hedge",
+            "lines": [
+              131,
+              138
+            ],
+            "conclusion": "`hedge`: `D²F[T a, (0,u)] = 0` from `D_z F = 0` along the branch, i.e. `D²S(0)[Wv,(0,u)] = 0`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.Stayed.reserve",
+        "module": "YM.Next.STATIONARY.Joint.FourPoint",
+        "lines": [
+          139,
+          149
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.Stayed.reserve"
+          },
+          "snippet": {
+            "text": "lemma reserve (u : Y) (a b : X) : iteratedFDeriv ℝ 3 F 0 ![(0,u),fieldT S a,fieldT S b]= - iteratedFDeriv ℝ 2 F 0 ![fieldU S a b,(0,u)] := by\n  have he : D (0,u) F ∘ viewS S=ᶠ[𝓝 0] 0 := (margin hs).mono (fun _ hp => hp u)\n  have hh := dSmooth hs.origin ((0:X),u) (m:=ω) (by simp)\n  have hv := DFunLike.congr_fun ((he.iteratedFDeriv ℝ 2).eq_of_nhds) ![a,b]\n  rw [pay_second (by rw [H0 hs]; exact hh) (hl hs), H0 hs] at hv\n  rw [show iteratedFDeriv ℝ 3 F 0 ![(0,u),fieldT S a,fieldT S b]=_ from cons_inner (hs.origin.of_le le_top) ((0:X),u) ![fieldT S a,fieldT S b]]\n  apply eq_neg_of_add_eq_zero_right\n  rw [show fderiv ℝ _ _ _=_ from (show fderiv ℝ (D ((0:X),u) F) 0 (iteratedFDeriv ℝ 2 (viewS S) 0 ![a,b])=iteratedFDeriv ℝ 2 F 0 ![fieldU S a b,(0,u)] from divided _ _ hs.origin) ] at hv\n  simp only [iteratedFDeriv_two_apply,fderiv_zero,Pi.zero_apply,_root_.zero_apply] at hv\n  rw [iteratedFDeriv_two_apply,iteratedFDeriv_two_apply]\n  exact hv",
+            "line": 139,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Joint/FourPoint.lean",
+            "fragment": "L139-L149"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.Stayed.reserve",
+            "lines": [
+              139,
+              149
+            ],
+            "conclusion": "`reserve`: `D³F[(0,u), T a, T b] = - D²F[fieldU a b, (0,u)]`, the twice-differentiated stationarity identity, with `fieldU` the second derivative of the branch."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.Stayed.accrue",
+        "module": "YM.Next.STATIONARY.Joint.FourPoint",
+        "lines": [
+          151,
+          158
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.Stayed.accrue"
+          },
+          "snippet": {
+            "text": "lemma accrue (a b c : X) : iteratedFDeriv ℝ 3 (F∘viewS S) 0 ![a,b,c]=iteratedFDeriv ℝ 3 F 0 ![fieldT S a,fieldT S b,fieldT S c] := by\n  let U := D (fieldT S a) F\n  have he : ContDiffAt ℝ ω U (viewS S 0) := by rw [H0 hs]; exact dSmooth hs.origin _ (by simp)\n  have hb : iteratedFDeriv ℝ 3 (F∘viewS S) 0 ![a,b,c]=iteratedFDeriv ℝ 2 (U∘viewS S) 0 ![b,c] := by\n    rw [show iteratedFDeriv ℝ 3 (F∘viewS S) 0 ![a,b,c]=_ from cons_inner ((center hs).of_le le_top) a ![b,c]]; exact DFunLike.congr_fun (((pledge hs a).iteratedFDeriv ℝ 2).eq_of_nhds) _\n  rw [hb,pay_second he (hl hs),H0 hs, show fderiv ℝ U 0 (iteratedFDeriv ℝ 2 (viewS S) 0 ![b,c])=_ from divided (fieldU S b c) (fieldT S a) hs.origin,\n    Work.F03.hessian_symmetric (hs.origin.of_le le_top)]\n  rw [lower hs b c, hedge hs,zero_add]; exact (cons_inner (hs.origin.of_le le_top) (fieldT S a) ![fieldT S b,fieldT S c]).symm",
+            "line": 151,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Joint/FourPoint.lean",
+            "fragment": "L151-L158"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.Stayed.accrue",
+            "lines": [
+              151,
+              158
+            ],
+            "conclusion": "`accrue`: the third derivative of `F ∘ viewS` equals `D³F[T a, T b, T c]`, the `D²z`, `D³z` terms vanishing."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.Stayed.tally",
+        "module": "YM.Next.STATIONARY.Joint.FourPoint",
+        "lines": [
+          159,
+          181
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.Stayed.tally"
+          },
+          "snippet": {
+            "text": "lemma tally (a b c d : X) :\n    let P:=iteratedFDeriv ℝ 3 F 0\n    iteratedFDeriv ℝ 4 (F∘viewS S) 0 ![a,b,c,d]=iteratedFDeriv ℝ 4 F 0 ![fieldT S a,fieldT S b,fieldT S c,fieldT S d]+\n      P ![fieldU S c d,fieldT S a,fieldT S b]+\n      P ![fieldU S b c,fieldT S a,fieldT S d]+\n      P ![fieldU S b d,fieldT S a,fieldT S c] := by\n  intro P\n  let U := D (fieldT S a) F\n  have he : ContDiffAt ℝ ω U 0 := dSmooth hs.origin _ (by simp)\n  have hp : iteratedFDeriv ℝ 4 (F∘viewS S) 0 ![a,b,c,d]=iteratedFDeriv ℝ 3 (U∘viewS S) 0 ![b,c,d] :=\n    (cons_inner ((center hs).of_le le_top) a ![b,c,d]).trans <| DFunLike.congr_fun (((pledge hs a).iteratedFDeriv ℝ 3).eq_of_nhds) _\n  have ht := combine3 (show ContDiffAt ℝ ω U (viewS S 0) by rw [H0 hs]; exact he) (hl hs) b c d\n  dsimp only at ht; rw [H0 hs] at ht\n  let g := iteratedFDeriv ℝ 3 (viewS S) 0 ![b,c,d]\n  have hi : fderiv ℝ U 0 g=0 := by\n    rw [show fderiv ℝ U 0 g=_ from divided g (fieldT S a) hs.origin, Work.F03.hessian_symmetric _, show g=(0,g.2) from Prod.ext (under hs b c d) rfl, hedge hs]; exact hs.origin.of_le le_top\n  have hw (x y) : P ![x,fieldT S a,y]=iteratedFDeriv ℝ 2 U 0 ![x,y] := by\n    rw [show P ![x,fieldT S a,y]=P ![fieldT S a,x,y] from ?_]; exact cons_inner (hs.origin.of_le le_top) _ _\n    have hb : ![x,fieldT S a,y]=![fieldT S a,x,y] ∘ (Equiv.swap (0:Fin 3) 1) := by ext1 i; fin_cases i <;> rfl\n    rw [hb]; exact sym_Jet (hs.origin.of_le le_top) _ _\n  rw [hp,ht,show fderiv ℝ U 0 _=0 from hi,add_zero,hw,hw,hw,\n    show iteratedFDeriv ℝ 4 F 0 ![fieldT S a,fieldT S b,fieldT S c,fieldT S d]=_ from cons_inner (hs.origin.of_le le_top) (fieldT S a) ![fieldT S b,fieldT S c,fieldT S d]]\n  rw [Work.F03.hessian_symmetric (he.of_le le_top) _ (fieldT S b),Work.F03.hessian_symmetric (he.of_le le_top) _ (fieldT S c)]; rfl",
+            "line": 159,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Joint/FourPoint.lean",
+            "fragment": "L159-L181"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.Stayed.tally",
+            "lines": [
+              159,
+              181
+            ],
+            "conclusion": "`tally`: the fourth derivative of `F ∘ viewS` is `D⁴F[(T)⁴]` plus three terms `D³F[fieldU, T, T]`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Stationary.triumph4",
+        "module": "YM.Next.STATIONARY.Joint.FourPoint",
+        "lines": [
+          309,
+          313
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Stationary.triumph4"
+          },
+          "snippet": {
+            "text": "  have hp' (x y : X) : fragment S t p R K x y= -(C *ᵥ cash B (V x y)) := by\n    funext i; unfold fragment\n    rw [← verge h hS t hk,← verge h hS t hk,he.reserve,hz x y,hE,dotProduct_mulVec, ← mulVec_transpose,heC]\n    have hx : cash B (helmets G c f i)=Pi.single i 1 := by funext j; simp [cash,B,Pi.single_apply,eq_comm]\n    rw [hx,dotProduct_single_one]; rfl",
+            "line": 309,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/STATIONARY/Joint/FourPoint.lean",
+            "fragment": "L309-L313"
+          },
+          "proof_context": {
+            "declaration": "YM.Stationary.triumph4",
+            "lines": [
+              288,
+              322
+            ],
+            "conclusion": "`hp'`: `fragment x y = -(C *ᵥ cash B (V x y))`, i.e. `B(v,v) = -Q D²z(0)[v,v]`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +229,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

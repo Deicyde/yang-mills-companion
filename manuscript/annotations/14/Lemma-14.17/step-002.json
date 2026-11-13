@@ -1,19 +1,21 @@
 {
   "id": "Lemma 14.17 step 2",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "Lean has the nonnegative transfer kernel, the normalized trace on the periodic axis, and the move by l that changes the two adjacent gaps by ±l. The rescaling to 0 ≤ T ≤ 1 and the displayed change of the factor are absent; the bound goes through `Holder.finite_lip`.",
   "subject": [
     {
       "location": {
         "page": 142,
         "rect": [
           0.12026,
-          0.33688,
+          0.33743,
           0.75948,
-          0.07216
+          0.07161
         ]
       },
-      "title": "Lemma 14.17 step 2: Text, p. 142, not yet judged",
+      "title": "Lemma 14.17 step 2: Text, p. 142",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 14.17 step 2"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TimeKernel.passage",
+        "module": "YM.TimeKernel.Unit",
+        "lines": [
+          76,
+          84
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TimeKernel.passage"
+          },
+          "snippet": {
+            "text": "theorem passage (B : Fin n → K X) (h : NNKernel T) (hc : possible T) (ht : ∀ i, possible (B i)) {width N p m : ℕ}\n    (he : N=(p+p)*width) (hp : 0 < p) (hw : 0 < width) (R : ℝ) (hr : 0 < R) (hR : closed μ (List.replicate N T) = ↑R)\n    {Y Z : Fin n → ℕ} (hY : n*width+∑ i, Y i=N)\n    (i j : Fin n) (hij : i≠j) (hu : Y i+m=Z i) (hv : Z j+m=Y j)\n    (hm : ∀ a : Fin n, a≠i → a≠j → Y a=Z a)\n    (r : ℝ) (hy : 0<r) (hO : ∀ i : Fin n, 2*r < Y i) (hs : (m:ℝ) ≤ r)\n    (K : Fin n → ℝ) (hK : ∀ i, ‖closed μ (multiply (B i) p)‖^(Holder.rate p) ≤ K i * R ^ (Holder.rate p)) :\n    ‖closed μ (along T B Z)-closed μ (along T B Y)‖ ≤ R*(∏ i, K i)/r * m := by\n  letI : Nonempty (Fin n) := ⟨i⟩",
+            "line": 76,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TimeKernel/Unit.lean",
+            "fragment": "L76-L84"
+          },
+          "proof_context": {
+            "declaration": "YM.TimeKernel.passage",
+            "lines": [
+              76,
+              106
+            ],
+            "conclusion": "A move by `m` steps changes two gaps by `+m` and `-m`: `Y i + m = Z i`, `Z j + m = Y j`, the other gaps equal, and the closed (traced) correlation differs by at most `R*(∏ K)/r*m`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Slice.Time.powering",
+        "module": "YM.Slice.Calendar",
+        "lines": [
+          72,
+          80
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Slice.Time.powering"
+          },
+          "snippet": {
+            "text": "theorem powering (β : ℝ) (hβ : 0 ≤ β) (B : Fin m → Brick a G n) {p l w : ℕ}\n    (he : n.val=(p+p)*w) (hp : 0 < p) (hw : 0 < w) (hW : ∀ i, (B i).width=w)\n    {Y Z : Fin m → ℕ} (hY : m*w+∑ i, Y i=n.val) (hZ : m*w+∑ i, Z i=n.val)\n    (i j : Fin m) (hij : i≠j) (hu : Y i+l=Z i) (hv : Z j+l=Y j)\n    (hm : ∀ z : Fin m, z≠i → z≠j → Y z=Z z)\n    (r : ℝ) (hy : 0<r) (hO : ∀ i : Fin m, 2*r < Y i) (hs : (l:ℝ) ≤ r)\n    (b c : Per n) (H : Fin m → Per n) (K : Fin m → ℝ)\n    (hK : ∀ x : Fin m, ‖moment β (word (column (B x) p) (H x))‖ ^ (Holder.rate p) ≤ K x) :\n    ‖moment β (word (drive B Z) b) - moment β (word (drive B Y) c)‖ ≤ (∏ i, K i)/r*l := by",
+            "line": 72,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Slice/Calendar.lean",
+            "fragment": "L72-L80"
+          },
+          "proof_context": {
+            "declaration": "YM.Slice.Time.powering",
+            "lines": [
+              72,
+              102
+            ],
+            "conclusion": "The same statement for bricks on a periodic axis with a positive transfer kernel."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

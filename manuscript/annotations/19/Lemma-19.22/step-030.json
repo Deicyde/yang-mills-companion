@@ -1,19 +1,21 @@
 {
   "id": "Lemma 19.22 step 30",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "[L] fixes `γ` from `tariff Q * γ + γ <= 1` for the current partition, i.e. `(3^(|h|-|pi|) + 1) γ <= 1` as in [M]; the loss `3^{d'}γ` allocated at a finer partition with `d'` splits left is `generosity` of that partition. The induction hypothesis is the `Achieves` estimate rather than a displayed bound.",
   "subject": [
     {
       "location": {
         "page": 238,
         "rect": [
           0.12026,
-          0.18451,
+          0.18365,
           0.75948,
-          0.05439
+          0.05526
         ]
       },
-      "title": "Lemma 19.22 step 30: Text, p. 238, not yet judged",
+      "title": "Lemma 19.22 step 30: Text, p. 238",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 19.22 step 30"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Harvest.Route.Economy",
+        "module": "YM.Contacts.Harvest.Totals",
+        "lines": [
+          31,
+          33
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Harvest.Route.Economy"
+          },
+          "snippet": {
+            "text": "structure Economy (Q : Pieces g)(γ : ℝ) : Prop where\n   pos : 0<γ\n   total : generosity Q γ+γ ≤ 1",
+            "line": 31,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Harvest/Totals.lean",
+            "fragment": "L31-L33"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Harvest.Route.Economy",
+            "lines": [
+              31,
+              33
+            ],
+            "conclusion": "`Economy Q γ` says `0 < γ` and `generosity Q γ + γ <= 1`, where `generosity Q γ = tariff Q * γ` and `tariff Q = 3^(g.card - Q.parts.card)`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Harvest.Route.desired_budget",
+        "module": "YM.Contacts.Harvest.Formula",
+        "lines": [
+          30,
+          30
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Harvest.Route.desired_budget"
+          },
+          "snippet": {
+            "text": "lemma desired_budget (ε : ℝ)(he : 0<ε) (Q : Pieces g) : ∃ γ > (0:ℝ), Economy Q γ ∧ generosity Q γ ≤ ε := by",
+            "line": 30,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Harvest/Formula.lean",
+            "fragment": "L30-L30"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Harvest.Route.desired_budget",
+            "lines": [
+              30,
+              33
+            ],
+            "conclusion": "There is `γ > 0` with `Economy Q γ` (and `generosity Q γ <= ε`)."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

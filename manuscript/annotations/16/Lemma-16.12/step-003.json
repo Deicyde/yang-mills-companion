@@ -1,19 +1,21 @@
 {
   "id": "Lemma 16.12 step 3",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "[L] proves the convergence of the normalized `ξ⁻¹ r⁴ J` to the free stress `T.J` for a kernel current produced by rank counting, not for the Haar average `T`. The display's factor `ξ_k/c_⋆` and the passage from `T` to `J` have no counterpart.",
   "subject": [
     {
       "location": {
         "page": 187,
         "rect": [
           0.12026,
-          0.71042,
+          0.71002,
           0.75948,
-          0.03408
+          0.03447
         ]
       },
-      "title": "Lemma 16.12 step 3: Display, p. 187, not yet judged",
+      "title": "Lemma 16.12 step 3: Display, p. 187",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 16.12 step 3"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.UVStress.produce_current",
+        "module": "YM.Next.UV_STRESS.Limit",
+        "lines": [
+          129,
+          133
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.UVStress.produce_current"
+          },
+          "snippet": {
+            "text": "theorem produce_current (H : S.Hierarchy) (hW : W.Derivatives S) (ho : W.Orientation H.spin)\n    (a : (Bel C.book).Hierarchy) (T : Lighthouse C.book) (hV : T.W.Derivatives (Bel C.book)) (p : T.W.Orientation a.spin)\n    (hT : FreeDiv T a p) (X : Scaling S) (hp : Approaches (path X) (isoPanel X)) (h : Stable H.spin a.spin W T.W X) :\n    ∃ J : KernelSpace H.spin,∃ Y : Scaling S,J.val ≠ 0 ∧ currentDiv W H.spin ho J=0 ∧\n      Approaches (path Y) (isoPanel Y) ∧ Stable H.spin a.spin W T.W Y ∧ Y.meter J.val T.J := by",
+            "line": 129,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/UV_STRESS/Limit.lean",
+            "fragment": "L129-L133"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.UVStress.produce_current",
+            "lines": [
+              129,
+              167
+            ],
+            "conclusion": "There is a nonzero divergence-free kernel current `J` and a stable scaling `Y` with `Y.meter J.val T.J`, i.e. `balanced_J Y J → T.J`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Next.UVStress.balanced_J",
+        "module": "YM.Next.UV_STRESS.Limit",
+        "lines": [
+          45,
+          45
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Next.UVStress.balanced_J"
+          },
+          "snippet": {
+            "text": "def balanced_J (X : Scaling S) (J : S.Stress) (k : ℕ) : (Bel C.book).Stress := (X.xi k)⁻¹ • labelScale X k J",
+            "line": 45,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/UV_STRESS/Limit.lean",
+            "fragment": "L45-L45"
+          },
+          "proof_context": {
+            "declaration": "YM.Next.UVStress.balanced_J",
+            "lines": [
+              45,
+              45
+            ],
+            "conclusion": "`balanced_J X J k = (X.xi k)⁻¹ • labelScale X k J` is the `ξ⁻¹ r⁴ J` pulled back by the frame."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents agreed on the class but cited different declarations; the mapper's kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

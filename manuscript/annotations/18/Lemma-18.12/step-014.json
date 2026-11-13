@@ -1,19 +1,21 @@
 {
   "id": "Lemma 18.12 step 14",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "narrowMatch",
+  "note": "`saturate` sums the sector bounds only after relaxing C R^6 to D R^7 (`6 <= 7`) and contradicts `does_not_fit` at exponent 7; the summed bound C R^6 that [M] states is not established.",
   "subject": [
     {
       "location": {
         "page": 218,
         "rect": [
           0.11937,
-          0.22055,
+          0.21983,
           0.76037,
-          0.05224
+          0.05295
         ]
       },
-      "title": "Lemma 18.12 step 14: Text, p. 218, not yet judged",
+      "title": "Lemma 18.12 step 14: Text, p. 218",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 18.12 step 14"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.Photons.saturate",
+        "module": "YM.TraceExtension.Fock.Conclude",
+        "lines": [
+          33,
+          44
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.Photons.saturate"
+          },
+          "snippet": {
+            "text": "lemma saturate : False := by\n    obtain ⟨Y⟩ := form_exists X hp\n    choose d hd using fun i:Index m=> (finite_particles X hL hp Y ha ht i).2\n    let s : Finset (Index m) := Finset.sigma (Finset.range 4) fun i => Finset.univ\n    let D : ℝ≥0:=∑ i∈s,d i\n    apply does_not_fit hp ha ht D; refine Eventually.of_forall fun k=> ?_\n    unfold tally; rw [parts Y X hp,tsum_eq_sum (s:=s)]\n    · rw [show (↑D:ℝ≥0∞)=∑ i∈s,↑(d i) from ENNReal.ofNNReal_finsetSum ..,Finset.sum_mul];\n      apply Finset.sum_le_sum; intro i hi; apply le_trans (b:=sectorsMass (Y.wave i) (barrel i.1 k))\n      · apply measure_mono; intro p hm j; change time _ ≤ _ at hm; rw [total_energy] at hm; exact (Finset.single_le_sum (fun t _ => norm_nonneg (p t)) (Finset.mem_univ j)).trans hm\n      exact (hd i k).trans (mul_le_mul_right (ENNReal.ofReal_le_ofReal (pow_le_pow_right₀ (clock_ge k) (by decide : 6≤7))) _)\n    intro i hi; rw [(finite_particles X hL hp Y ha ht i).1 (by simpa [s] using hi), sectors_zero]; rfl",
+            "line": 33,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Fock/Conclude.lean",
+            "fragment": "L33-L44"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.Photons.saturate",
+            "lines": [
+              33,
+              44
+            ],
+            "conclusion": "Summing the sector `width` bounds over n < 4 gives `tally mu (clock k) <= D * (clock k)^7` for all k, then `does_not_fit` yields `False`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.does_not_fit",
+        "module": "YM.TraceExtension.Dyadic",
+        "lines": [
+          65,
+          66
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.does_not_fit"
+          },
+          "snippet": {
+            "text": "lemma does_not_fit (h : TraceSpectrum F μ) (ha : 0<A) (ht : EuclideanAsymptotic F A) (D : ℝ≥0) :\n    ¬ ∀ᶠ i in atTop, tally μ (clock i) ≤ (D:ℝ≥0∞)*ENNReal.ofReal ((clock i)^7) := by",
+            "line": 65,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Dyadic.lean",
+            "fragment": "L65-L66"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.does_not_fit",
+            "lines": [
+              65,
+              82
+            ],
+            "conclusion": "The bound `tally mu (2^i) <= D * (2^i)^7` eventually is impossible under `TraceSpectrum` and `EuclideanAsymptotic` with A>0, via a nonnegative compact test `window` in the open cone with `time p < 1`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

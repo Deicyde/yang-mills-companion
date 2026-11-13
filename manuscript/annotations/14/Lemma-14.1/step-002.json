@@ -1,7 +1,9 @@
 {
   "id": "Lemma 14.1 step 2",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "hasPart",
+  "note": "The order of choices (ratios `Rolls`, then `theta`, then the entries as later lower bounds in `Delays`, used in `Wait.engine`) is in [L]; the exponents L^{-2/5}, L^{-3/8}, the choice L^{3/5} > 2C_j^loc, the local-error bound and the auxiliary-section inequality are not.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.12026,
           0.19924,
           0.75949,
-          0.14773
+          0.14828
         ]
       },
-      "title": "Lemma 14.1 step 2: Text, p. 125, not yet judged",
+      "title": "Lemma 14.1 step 2: Text, p. 125",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 14.1 step 2"
@@ -21,7 +23,164 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.Supply.Rolls",
+        "module": "YM.Price.Intent",
+        "lines": [
+          50,
+          53
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.Supply.Rolls"
+          },
+          "snippet": {
+            "text": "structure Rolls (p : Sheet G) where\n  L : ℕ → Side\n  large : ∀ j, Large p j (L j)\n  grow : Monotone fun j => (L j).val",
+            "line": 50,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Price/Intent.lean",
+            "fragment": "L50-L53"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.Supply.Rolls",
+            "lines": [
+              50,
+              53
+            ],
+            "conclusion": "The ratios `L` are fixed from the stage profile before any entry threshold."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.Supply.Protection",
+        "module": "YM.Price.Intent",
+        "lines": [
+          88,
+          92
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.Supply.Protection"
+          },
+          "snippet": {
+            "text": "structure Protection {p : Sheet G} (w : Rolls p) where\n  theta : ℕ → ℝ\n  pos j : 0 < theta j\n  small j : p.first ≤ j → theta j ≤ (j:ℝ)⁻¹\n  dec : Antitone theta",
+            "line": 88,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Price/Intent.lean",
+            "fragment": "L88-L92"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.Supply.Protection",
+            "lines": [
+              88,
+              92
+            ],
+            "conclusion": "`theta` is frozen after `L`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.Supply.Delays",
+        "module": "YM.Price.Intent",
+        "lines": [
+          115,
+          120
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.Supply.Delays"
+          },
+          "snippet": {
+            "text": "structure Delays {p : Sheet G} {w : Rolls p} (T : Protection w) where\n  betaEntry : ℕ → ℝ\n  scaleEntry : ℕ → ℝ → ℝ -- after bar, not used on first plateau\n  /-- relative to output site count, with BOTH adjacent cover lengths -/\n  shells : ℕ → ℕ\n  growth : ℕ → ℕ",
+            "line": 115,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Price/Intent.lean",
+            "fragment": "L115-L120"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.Supply.Delays",
+            "lines": [
+              115,
+              120
+            ],
+            "conclusion": "The coupling and scale entries `betaEntry`, `scaleEntry` are chosen after the ratios and the protection `theta`, as lower bounds."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.RG.Supply.Wait.engine",
+        "module": "YM.PhysicalNext.RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP.Pane.Divisors",
+        "lines": [
+          32,
+          39
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.RG.Supply.Wait.engine"
+          },
+          "snippet": {
+            "text": "  have big (i : ℕ) (ha : E.J (i+1) > 0) :\n      let j:=p.first+E.J (i+1)\n      W.betaEntry j ≤ Y.value+G.slopeConstant*s i ∧ W.scaleEntry j Y.value ≤ s i ∧\n      0 < s i ∧ Real.log (w.L j).val ≤ (j:ℝ)⁻¹*s i ∧ (Y.bill j (s i):ℝ) ≤ Real.exp (s i) := by\n    intro j; have hk := HA i ha\n    unfold j; cases he : E.J (i+1) with\n    | zero => omega\n    | succ j => exact Hb _ _ (by simpa only [he,Nat.add_sub_cancel] using hk) _ (E.scaled_lower w i)",
+            "line": 32,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/PhysicalNext/RG_NEXT_COMPLETE_REPEATABLE_NONLINEAR_STEP/Pane/Divisors.lean",
+            "fragment": "L32-L39"
+          },
+          "proof_context": {
+            "declaration": "YM.RG.Supply.Wait.engine",
+            "lines": [
+              26,
+              135
+            ],
+            "conclusion": "`big` gives, at each stage entry, `betaEntry j ≤ Y.value + slope*s i`, `scaleEntry j Y.value ≤ s i` and `log (w.L j) ≤ j⁻¹ * s i`, i.e. the requirements are lower bounds on a later entry."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +190,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

@@ -1,7 +1,9 @@
 {
   "id": "Lemma 19.22 step 32",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The inequality `3^(d'+1) gamma >= 2*3^d' gamma + gamma` is `expand`; the shell estimate with `theta = gamma + tau` is `ratio` and `retold` elsewhere.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.11961,
           0.32827,
           0.76013,
-          0.07064
+          0.07024
         ]
       },
-      "title": "Lemma 19.22 step 32: Text, p. 238, not yet judged",
+      "title": "Lemma 19.22 step 32: Text, p. 238",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 19.22 step 32"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Harvest.Route.expand",
+        "module": "YM.Contacts.Harvest.Totals",
+        "lines": [
+          35,
+          35
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Harvest.Route.expand"
+          },
+          "snippet": {
+            "text": "lemma expand (u : Splittings i.val)(hp : 0 < γ) : 2*generosity (replace i u.val) γ+γ ≤ generosity Q γ:= by unfold generosity; linarith only [le_mul_of_one_le_left hp.le (tariff_one (Q:=replace i u.val)),mul_le_mul_of_nonneg_right (tariff_spent i u) hp.le]",
+            "line": 35,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Harvest/Totals.lean",
+            "fragment": "L35-L35"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Harvest.Route.expand",
+            "lines": [
+              35,
+              35
+            ],
+            "conclusion": "`expand` gives `2*generosity (replace i u) gamma + gamma <= generosity Q gamma`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Contacts.Harvest.Route.cost_one",
+        "module": "YM.Contacts.Harvest.Outer",
+        "lines": [
+          66,
+          68
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Contacts.Harvest.Route.cost_one"
+          },
+          "snippet": {
+            "text": "lemma cost_one (hB : ∀ w,0<B w)(hh: Economy Q γ)\n  (hy : ∀ v:Splittings i.val, ∃ C>(0:ℝ), Achieves Z M (r.renew i (outward b) u v h) (fun p=>T p.val.1) (r.promise i b u v B) (r.listener M i b u v D) γ C) : ∃ C>(0:ℝ),∀ (f:Menu k) w (z:SmoothTests E)(c:ℝ), tsupport z.val ⊆ r.stage w → Jet (stairs d Q) univ (composed (r.frame w) z).val c → ∀ n,\n            Dust (r.beckon M T D i b f w z n) (C*c*r.bag d B w (generosity Q γ)* (dyad n)^γ*behind Q i f γ) := by",
+            "line": 66,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Contacts/Harvest/Outer.lean",
+            "fragment": "L66-L68"
+          },
+          "proof_context": {
+            "declaration": "YM.Contacts.Harvest.Route.cost_one",
+            "lines": [
+              66,
+              71
+            ],
+            "conclusion": "`cost_one` turns the finer-partition bounds into the shell bound with `(dyad n)^gamma`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

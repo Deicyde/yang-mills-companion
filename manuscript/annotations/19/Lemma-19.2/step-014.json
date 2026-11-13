@@ -1,28 +1,30 @@
 {
   "id": "Lemma 19.2 step 14",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "[L] bounds the low labels directly and extracts their limit with `finite_extract`; there is no normalized cluster point (lambda, z) with Pi z = z and lambda + ||z|| = 1.",
   "subject": [
     {
       "location": {
         "page": 222,
         "rect": [
           0.12026,
-          0.27193,
+          0.27328,
           0.75948,
-          0.05132
+          0.05051
         ]
       },
-      "title": "Lemma 19.2 step 14: Text, p. 222, not yet judged",
+      "title": "Lemma 19.2 step 14: Text, p. 222",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 19.2 step 14",
           "quads": [
             [
               0.82218,
-              0.27193,
+              0.27328,
               0.87974,
-              0.27193,
+              0.27328,
               0.87974,
               0.28943,
               0.82218,
@@ -30,13 +32,13 @@
             ],
             [
               0.12026,
-              0.28945,
+              0.28874,
               0.87974,
-              0.28945,
+              0.28874,
               0.87974,
-              0.30573,
+              0.3066,
               0.12026,
-              0.30573
+              0.3066
             ],
             [
               0.12026,
@@ -44,16 +46,56 @@
               0.63332,
               0.30574,
               0.63332,
-              0.32325,
+              0.32379,
               0.12026,
-              0.32325
+              0.32379
             ]
           ]
         }
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Columns.limit_cap",
+        "module": "YM.OPE.Columns.SectorCost",
+        "lines": [
+          57,
+          64
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Columns.limit_cap"
+          },
+          "snippet": {
+            "text": "  have hi := ((cutoff_grows f).eventually_ge_atTop k).filter_mono hp\n  have hu : ∀ᶠ i in b, ‖v i - y i‖ ≤ fare C k d e*z := by\n    filter_upwards [hi,hz] with i hi hy using ((ht i hi).2.trans (mul_le_mul_of_nonneg_left hy (fare_pos ..).le))\n  obtain ⟨l,hl,hn,u,hU⟩:= finite_extract (𝓛:=b) y (‖x‖+1+fare C k d e*z) (by\n    filter_upwards [hx.norm.eventually (ge_mem_nhds (lt_add_of_pos_right ‖x‖ zero_lt_one)),hu] with i hi hp\n    linarith only [hp,hi,norm_sub_norm_le (y i) (v i),norm_sub_rev (v i) (y i)])\n  refine ⟨u, limit_lower T hG L h y u he (hl.trans hp) ((hi.mono fun i hi => (ht i hi).1).filter_mono hl)\n      hU, le_of_tendsto (((hx.mono_left hl).sub hU).norm) (hu.filter_mono hl)⟩",
+            "line": 57,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Columns/SectorCost.lean",
+            "fragment": "L57-L64"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Columns.limit_cap",
+            "lines": [
+              46,
+              64
+            ],
+            "conclusion": "`limit_cap` bounds the low labels `y` along the filter and extracts a limit `u` of them by `finite_extract`, which `limit_lower` places in the lower image."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -63,8 +105,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "direct"
       }
     }
   }

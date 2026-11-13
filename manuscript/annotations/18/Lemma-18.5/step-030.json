@@ -1,7 +1,9 @@
 {
   "id": "Lemma 18.5 step 30",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "[L] obtains a gain e^{gap/8} over a separation at least (log beta)^48 as a lower bound on `gainChart` (`gainsK`, `gstar`), not by the support-sum argument with tiling level m(n), threshold costs e^{o(H_n)} and replication.",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.14325
         ]
       },
-      "title": "Lemma 18.5 step 30: Text, p. 212, not yet judged",
+      "title": "Lemma 18.5 step 30: Text, p. 212",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 18.5 step 30"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Trace.Terrace.gainsK",
+        "module": "YM.TraceExtension.Terrace.Arms",
+        "lines": [
+          26,
+          28
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Trace.Terrace.gainsK"
+          },
+          "snippet": {
+            "text": "lemma gainsK {C:Family G}(h:G.Simple)(θ:PostT C.path.levels)(K:Stock.Tabs C.path.levels) :∀ᶠ i:ℕ in atTop, Tau (C.path.levels) i 500 ≤ gainChart C.path (summit (C.path.levels) i) (basin _ K i):=by\n   filter_upwards [glacier _ h θ K] with i hi\n   apply Real.exp_monotone; norm_num; change _ ≤ 1/8 * gap C.path.levels (basin C.path.levels K i) (summit C.path.levels i); linarith only[hi, gate_le _ (C.path.levels.fits.delayed i)]",
+            "line": 26,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Terrace/Arms.lean",
+            "fragment": "L26-L28"
+          },
+          "proof_context": {
+            "declaration": "YM.Trace.Terrace.gainsK",
+            "lines": [
+              26,
+              28
+            ],
+            "conclusion": "Eventually `Tau A i 500 ≤ gainChart ...`, via `1/8 * gap` of the backward chart, so the matching gain is at least e^{gap/8}."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Trace.Terrace.gstar",
+        "module": "YM.TraceExtension.Terrace.Base",
+        "lines": [
+          24,
+          24
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Trace.Terrace.gstar"
+          },
+          "snippet": {
+            "text": "lemma gstar : Gate (A.clock.hatBeta i) ≤ gap A i (summit A i):=(Nat.find_spec <| goal A i).2",
+            "line": 24,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Terrace/Base.lean",
+            "fragment": "L24-L24"
+          },
+          "proof_context": {
+            "declaration": "YM.Trace.Terrace.gstar",
+            "lines": [
+              24,
+              24
+            ],
+            "conclusion": "`Gate (hatBeta i) ≤ gap i (summit i)` with `Gate x = (log x)^48`, the separation H_n."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed; a judge ruled in a second pass; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

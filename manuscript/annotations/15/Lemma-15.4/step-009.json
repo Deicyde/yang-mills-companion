@@ -1,19 +1,21 @@
 {
   "id": "Lemma 15.4 step 9",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The derivative orders are reduced to the order-zero bound for degree-raised tag families through `capped_tags` and the `DiffPlan`, as in [M]. The remark for arity zero has no separate lines; n = 0 falls under the same statement.",
   "subject": [
     {
       "location": {
         "page": 167,
         "rect": [
           0.12026,
-          0.40867,
+          0.40875,
           0.75996,
-          0.08845
+          0.08837
         ]
       },
-      "title": "Lemma 15.4 step 9: Text, p. 167, not yet judged",
+      "title": "Lemma 15.4 step 9: Text, p. 167",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 15.4 step 9"
@@ -21,7 +23,47 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.B10.answer",
+        "module": "YM.Work.B10",
+        "lines": [
+          95,
+          105
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.B10.answer"
+          },
+          "snippet": {
+            "text": "theorem answer : YM.Bid.B10 := by\n  intro G L S T P hR hs hp _ h hT n d v j\n  let q : Fin n → L.Token := fun i => ⟨d i,v i⟩\n  let w : Fin n → S.Tag := S.classTokens ∘ q\n  obtain ⟨A,C,hC,H⟩ := capped_tags P h hs hp.toSymmetric hT w j\n  refine ⟨A,C,hC,fun r hr hr' x hx => ?_⟩\n  have he : (fun y => T.value d y v) =ᶠ[𝓝 x] fun y => S.useAt T y w := by\n    filter_upwards [(conf_open _).mem_nhds (spaced_conf hr hx)] with y hy\n    exact (S.at_project T hp.toSymmetric hR hy q).symm\n  rw [(he.iteratedFDeriv ℝ j).eq_of_nhds]\n  exact H r hr hr' x hx",
+            "line": 95,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/B10.lean",
+            "fragment": "L95-L105"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.B10.answer",
+            "lines": [
+              95,
+              105
+            ],
+            "conclusion": "`∃ A C, ∀ r x, ‖iteratedFDeriv ℝ j (T.value d · v) x‖ ≤ C * r⁻¹ ^ A`: derivatives of every order are bounded by the order-zero power bound of tag lists (`capped_tags`), using `T.value = S.useAt` near `x`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +73,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
       }
     }
   }

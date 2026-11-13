@@ -1,19 +1,21 @@
 {
   "id": "Lemma 19.14 step 8",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean truncates by comparing two finite horizons (`estimate_suffix`) instead of discarding terms from a larger sum.",
   "subject": [
     {
       "location": {
         "page": 232,
         "rect": [
           0.12026,
-          0.23599,
+          0.23639,
           0.28869,
           0.01708
         ]
       },
-      "title": "Lemma 19.14 step 8: Text, p. 232, not yet judged",
+      "title": "Lemma 19.14 step 8: Text, p. 232",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 19.14 step 8"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Nesting.Composite.drop_price",
+        "module": "YM.OPE.Nesting.PriceDrop",
+        "lines": [
+          36,
+          38
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Nesting.Composite.drop_price"
+          },
+          "snippet": {
+            "text": "lemma drop_price (hr:rollCaps D ≤ r)(h':gapBelow (fork n f) a D γ): RateLE l T (fun s=>hinge U R z v r c s - hinge U R z v (rollCaps D) c s) (forkBill κ a v m - γ):=by\n        refine (RateLE.sum (S:=unkept U R D hr) (f:=growth U R v c (z:=z) r) hT ?_).congr (Eventually.of_forall fun s=>(estimate_suffix U R v c hr s).symm)\n        exact fun j hj=> (one_term U R hg v h hT c j).mono (sub_le_sub_left (fare_omitted U R hg v D r j hr h' hj) _)",
+            "line": 36,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Nesting/PriceDrop.lean",
+            "fragment": "L36-L38"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Nesting.Composite.drop_price",
+            "lines": [
+              36,
+              38
+            ],
+            "conclusion": "The difference between the horizon-`r` hinge and the hinge truncated at `rollCaps D` is a sum over the unkept terms and has rate at most `forkBill - γ`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.Nesting.Composite.stacked",
+        "module": "YM.OPE.Nesting.Composite",
+        "lines": [
+          115,
+          115
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.Nesting.Composite.stacked"
+          },
+          "snippet": {
+            "text": "def stacked (z:Tree.Envelope L (Tree.fork n f))(v:(Tree.fork n f).Leaf→S.Tag) (D:(Tree.fork n f).Inner→ℕ)(s:L) := ∑ p:Branches U R (rollCaps D), (∏ i,nShot U R (f i) (Tree.down i z) (Tree.childWages i v) (childAge i D) (p i) s) * factor U R z v p q s",
+            "line": 115,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Nesting/Composite.lean",
+            "fragment": "L115-L115"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.Nesting.Composite.stacked",
+            "lines": [
+              115,
+              115
+            ],
+            "conclusion": "`stacked` is the finite iteration with child outputs truncated at the caps `D`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

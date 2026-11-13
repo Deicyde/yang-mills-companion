@@ -1,19 +1,21 @@
 {
   "id": "Lemma 19.9 step 13",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "Both let the auxiliary exponents tend to the cluster height; [L] does it by an epsilon argument on the rate and does not need the clause on translation or empty clusters at this point.",
   "subject": [
     {
       "location": {
         "page": 229,
         "rect": [
           0.12026,
-          0.59901,
+          0.59941,
           0.75948,
-          0.0513
+          0.05146
         ]
       },
-      "title": "Lemma 19.9 step 13: Text, p. 229, not yet judged",
+      "title": "Lemma 19.9 step 13: Text, p. 229",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 19.9 step 13"
@@ -21,7 +23,47 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.OPE.common_rate",
+        "module": "YM.OPE.Schemes.Corridor",
+        "lines": [
+          37,
+          41
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.OPE.common_rate"
+          },
+          "snippet": {
+            "text": "lemma common_rate : RateLE φ T (fun i=> R.ope w (X i) g 0) (( (sigma g:ℝ)-w.fst)*x):=by\n    intro r hr; let f a:= tax g (x-a) (x+a) - w.fst*(x-a); have hK: f 0 < r:= by unfold f tax; linarith only [hr]\n    have he: ContinuousAt f 0:= by unfold f tax; fun_prop\n    obtain ⟨ε,hε,hw,hx'⟩ := ((show ∀ᶠ i:ℝ in 𝓝[>] 0,0 < i from self_mem_nhdsWithin).and ((eventually_nhdsWithin_of_eventually_nhds (gt_mem_nhds ha)).and (he.tendsto.eventually (gt_mem_nhds hK)|>.filter_mono nhdsWithin_le_nhds))).exists; have hv:0<x-ε:= sub_pos.mpr hw; let a:= (x-ε); have hp:= C.path.levels.fits.mesh\n    obtain ⟨k,hk⟩:= found hT hp (show 0≤a/2 from (half_pos hv).le); obtain ⟨m,hm⟩:= found hT hp hv.le; obtain ⟨j,hj⟩:= found hT hp (show 0 ≤ x+ε by positivity); apply commonC U g Base' hR w hT hx ha h i₀ hG L' hk hm hj (half_pos hv) (by unfold a; linarith) (by linarith only [hε]) (by linarith) r hx'",
+            "line": 37,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/OPE/Schemes/Corridor.lean",
+            "fragment": "L37-L41"
+          },
+          "proof_context": {
+            "declaration": "YM.OPE.common_rate",
+            "lines": [
+              37,
+              41
+            ],
+            "conclusion": "`common_rate` takes the layer parameter to the limit by choosing `a = x-eps` and applying `commonC`, giving the rate `(sigma g - w.fst)*x`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +73,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents agreed on the class but cited different declarations; the mapper's kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
       }
     }
   }

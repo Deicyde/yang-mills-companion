@@ -1,7 +1,9 @@
 {
   "id": "Lemma 18.7 step 2",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The Lean integrates in the spatial radius `t` with `t^(j+2)/ω`, where [M] substitutes the energy `ω` and writes `(ω^2-m^2)^((j+1)/2) dω`; the two integrals agree by `dt = ω dω / t`.",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.04226
         ]
       },
-      "title": "Lemma 18.7 step 2: Display, p. 215, not yet judged",
+      "title": "Lemma 18.7 step 2: Display, p. 215",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 18.7 step 2"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.Wick.Mode.field_value",
+        "module": "YM.TraceExtension.Wick.PolynomialField",
+        "lines": [
+          75,
+          75
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.Wick.Mode.field_value"
+          },
+          "snippet": {
+            "text": "lemma field_value (s : ℝ) : (∫ p : Space3,L.kernel s p)=L.angular*(2:ℝ)⁻¹ * moment L.mass L.j L.k s := by",
+            "line": 75,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Wick/PolynomialField.lean",
+            "fragment": "L75-L75"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.Wick.Mode.field_value",
+            "lines": [
+              75,
+              87
+            ],
+            "conclusion": "`∫ p, L.kernel s p = L.angular * 2⁻¹ * moment L.mass L.j L.k s`, with `angular` the integral of `P` over the unit sphere."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.Wick.moment",
+        "module": "YM.TraceExtension.Wick.Massive",
+        "lines": [
+          21,
+          21
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.Wick.moment"
+          },
+          "snippet": {
+            "text": "def moment (m : ℝ) (j k : ℕ) (s : ℝ) := ∫ t : ℝ in Ioi 0, stream m j k s t",
+            "line": 21,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Wick/Massive.lean",
+            "fragment": "L21-L21"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.Wick.moment",
+            "lines": [
+              21,
+              21
+            ],
+            "conclusion": "`moment m j k s` is the radial integral of `stream m j k s t = t^(j+2)/ω * ω^k * exp(-s ω)` over `t > 0`, with `ω = freq m t`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

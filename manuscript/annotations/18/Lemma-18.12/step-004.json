@@ -1,19 +1,21 @@
 {
   "id": "Lemma 18.12 step 4",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "Lean never rewrites the amplitudes as i^k Y: it states the identity for the plain wave `q = Y.wave i` and carries the phase i^k inside the series expansion, so the step is replaced by sign bookkeeping.",
   "subject": [
     {
       "location": {
         "page": 217,
         "rect": [
           0.12026,
-          0.26085,
+          0.2603,
           0.75948,
-          0.03419
+          0.03584
         ]
       },
-      "title": "Lemma 18.12 step 4: Text, p. 217, not yet judged",
+      "title": "Lemma 18.12 step 4: Text, p. 217",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 18.12 step 4"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.Photons.sectors",
+        "module": "YM.TraceExtension.Fock.Coefficients",
+        "lines": [
+          78,
+          79
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.Photons.sectors"
+          },
+          "snippet": {
+            "text": "    let D k := star (earlier (fun _ : Fin k => h) x) - earlier (fun _ : Fin k => h) y\n    let s (k:ℕ) := (I^k/(↑(Real.sqrt (k.factorial:ℝ)):ℂ))*D k",
+            "line": 78,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Fock/Coefficients.lean",
+            "fragment": "L78-L79"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.Photons.sectors",
+            "lines": [
+              75,
+              94
+            ],
+            "conclusion": "The sector phase `I^k/sqrt k!` enters as a factor of the k-th term `s k` of the series in the real parameter, instead of rotating the amplitudes by a unitary."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.Photons.cauchy_point",
+        "module": "YM.TraceExtension.Fock.TimeData",
+        "lines": [
+          90,
+          93
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.Photons.cauchy_point"
+          },
+          "snippet": {
+            "text": "        unfold G; rw [update_comp,substituteTest]; unfold front sink; rw [separate_minus,momentum_space,momentum_energy,jet_minus]; ring\n    have hp k p : frontList (testPlus ∘ G k) p=(-I)^b * testPlus (w k) ‖p i‖ * sink b (testPlus ∘ g) i (testPlus f) p := by\n        unfold G; rw [update_comp,substituteTest]; unfold front sink; rw [separate_fourier,momentum_space,momentum_energy,jet_fourier]; ring\n    have ht k : paired_at q (G k) = I^b * ∫ p : Mom n, Probe.hat (w k) ‖p i‖ * (q p*sink b (Probe.hat ∘ g) i (Probe.hat f) p) ∂photons n := by",
+            "line": 90,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Fock/TimeData.lean",
+            "fragment": "L90-L93"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.Photons.cauchy_point",
+            "lines": [
+              86,
+              115
+            ],
+            "conclusion": "The factors `I^b` and `(-I)^b` of the two sides of the equality are tracked explicitly in `hm`, `hp`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents agreed on the class but cited different declarations; the mapper's kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

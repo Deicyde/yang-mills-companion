@@ -1,7 +1,9 @@
 {
   "id": "Theorem 7.2 step 3",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "The invariance statement is carried exactly by `axis_shape`. The identity `slope^{-2}(4 d2)^2 = 1` is not evaluated in the Lean: it is kept as `4 d2^2 / b0^2` and absorbed into `award G = 12 d2^2/b0^2 * lieDim / π^4`.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.11962,
           0.16889,
           0.76011,
-          0.03737
+          0.03823
         ]
       },
-      "title": "Theorem 7.2 step 3: Text, p. 214, not yet judged",
+      "title": "Theorem 7.2 step 3: Text, p. 214",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Theorem 7.2 step 3"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Trace.Verse.axis_shape",
+        "module": "YM.TraceExtension.Verse.Day",
+        "lines": [
+          18,
+          18
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Trace.Verse.axis_shape"
+          },
+          "snippet": {
+            "text": "lemma axis_shape (x : Points 2)(h:x∈conf 2): S.classMoment (selected F) _ x (fun _=>center F) = euclidean F (width x):=by",
+            "line": 18,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Verse/Day.lean",
+            "fragment": "L18-L18"
+          },
+          "proof_context": {
+            "declaration": "YM.Trace.Verse.axis_shape",
+            "lines": [
+              18,
+              37
+            ],
+            "conclusion": "For distinct points, the two-point function of the pinned trace at `x` equals `euclidean F (width x)`, by an orthogonal motion taking `x 0 - x 1` to the time axis and translation invariance."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Trace.Verse.tagline",
+        "module": "YM.TraceExtension.Verse.Day",
+        "lines": [
+          60,
+          60
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Trace.Verse.tagline"
+          },
+          "snippet": {
+            "text": "    have hk(ψ : ℝ) : (G.slopeConstant⁻¹ ^2 * ((4*d2 G)^2)) • (ψ:ℂ)= (↑(4*(d2 G^2/b0 G^2)*ψ:ℝ):ℂ):=by rw [beta_eq,Complex.real_smul]; push_cast;ring",
+            "line": 60,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Verse/Day.lean",
+            "fragment": "L60-L60"
+          },
+          "proof_context": {
+            "declaration": "YM.Trace.Verse.tagline",
+            "lines": [
+              50,
+              69
+            ],
+            "conclusion": "`(slopeConstant⁻¹^2 * (4 * d2 G)^2) • ψ = 4 * (d2 G^2 / b0 G^2) * ψ`, using `beta_eq`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

@@ -1,7 +1,9 @@
 {
   "id": "Lemma 12.10 step 17",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean states `leg V > 0` through `Usable` and identifies the solution with `Averaging.delta` of the activities; M's `K_pr > 0` is the same input.",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.04006
         ]
       },
-      "title": "Lemma 12.10 step 17: Text, p. 88, not yet judged",
+      "title": "Lemma 12.10 step 17: Text, p. 88",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 12.10 step 17"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.UVNext.CouplingReset.Template.contrast_eq",
+        "module": "YM.UVNext.COUPLING_RESET.Reset",
+        "lines": [
+          88,
+          92
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.UVNext.CouplingReset.Template.contrast_eq"
+          },
+          "snippet": {
+            "text": "lemma contrast_eq {d v : ℝ} (he : ∀ i, (A.terms x d).E i 1 = 0) (hV : flags A.p.threshold V = ∅)\n    (hv : (A.trial base x d v).eval 1 = H x 1) (hv' : (A.trial base x d v).eval V = H x V) :\n    contrast H V x = (base x + d)*A.leg V + A.background V + A.add V x d := by\n  rw [contrast,← hv, ← hv', A.trial_one base he,eval_trial, shape,gas_one _ _ hV,mul_one,← Real.exp_add,\n    Real.log_exp,Real.log_exp]; ring",
+            "line": 88,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/UVNext/COUPLING_RESET/Reset.lean",
+            "fragment": "L88-L92"
+          },
+          "proof_context": {
+            "declaration": "YM.UVNext.CouplingReset.Template.contrast_eq",
+            "lines": [
+              88,
+              92
+            ],
+            "conclusion": "For unflagged `V` (so the forced factor `gas` is `1`) and a trial matching `H` at `1` and `V`, `contrast H V x = (base x + d)*leg V + background V + add V x d`, i.e. `f = 0` at that `d`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.AnalyticBridge.VerifiedReset.Return.reset",
+        "module": "YM.AnalyticBridge.VERIFIED_RESET_STEP.Advance",
+        "lines": [
+          77,
+          85
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.AnalyticBridge.VerifiedReset.Return.reset"
+          },
+          "snippet": {
+            "text": "  have hall x (h : x∈l) : F x = G' x ∧ z x = Δ x := by\n    have hleg : 0 < A.leg V := by\n      have := (hP m).1.1; have := (B.a.budget m).threshold_pos; have := sites_pos (B.a.S.side m p)\n      exact lt_of_lt_of_le (by positivity) hv.2\n    have hL : (A.trial (predictor B N Q) x (z x) (UVNext.CouplingReset.scalar (target Q) x)).eval = target Q x := (hM x h).1.ident\n    have hr := (yield_shape g hm hb hx h' hv h (z x)).symm.trans (sub_eq_zero.mpr (A.contrast_eq ((records g hm hb hx h (z x)).1.regular.at_flat)\n      hv.1 (congr_fun hL 1) (congr_fun hL V)).symm)\n    have he : z x = Δ x := eq_of_sub_eq_zero (mul_eq_zero.mp hr |>.resolve_right hleg.ne')\n    exact ⟨(congrArg (fun d => A.trial _ x d _) he).symm,he⟩",
+            "line": 77,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/AnalyticBridge/VERIFIED_RESET_STEP/Advance.lean",
+            "fragment": "L77-L85"
+          },
+          "proof_context": {
+            "declaration": "YM.AnalyticBridge.VerifiedReset.Return.reset",
+            "lines": [
+              65,
+              90
+            ],
+            "conclusion": "The residual vanishes at `z x`, and with `leg V > 0` this forces `z x = Averaging.delta`, the unique solution."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

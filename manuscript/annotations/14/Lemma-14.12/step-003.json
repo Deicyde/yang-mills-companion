@@ -1,7 +1,9 @@
 {
   "id": "Lemma 14.12 step 3",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "broadMatch",
+  "note": "Lean allows each anchor location to carry up to `μ` marks and states the bound with that factor, which for `μ = 1` is [M]'s `B_k|I| ≤ 64 cover`; the proof goes through a ring path of the cover, not a tree traversal.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.11962,
           0.39391,
           0.76358,
-          0.13977
+          0.1389
         ]
       },
-      "title": "Lemma 14.12 step 3: Text, p. 135, not yet judged",
+      "title": "Lemma 14.12 step 3: Text, p. 135",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 14.12 step 3"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Extra.Multi.mixed_pack",
+        "module": "YM.Extra.MULTISOURCE_BOUNDS.Root",
+        "lines": [
+          247,
+          251
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Extra.Multi.mixed_pack"
+          },
+          "snippet": {
+            "text": "theorem mixed_pack (hB : 8≤B) (hh : Occupancy o μ) (s : Finset V)\n    (hr : 2 ≤ (s.image o).card) (hs : (↑(s.image o) : Set (Site n)).Pairwise fun x y => B^2 ≤ separation x y)\n    (X : Support n) (hp : s.image o ⊆ X) : B*s.card ≤ 64*coverNumber B X * μ := by\n  have h := Work.I01.answer n (Site n) id B hB (s.image o) hs hr X (by simpa using hp)\n  exact (Nat.mul_le_mul_left _ (hh.card s)).trans (le_trans (by rw [Nat.mul_assoc] : B*((s.image o).card*μ) ≤ B*(s.image o).card*μ) (Nat.mul_le_mul_right _ h))",
+            "line": 247,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Extra/MULTISOURCE_BOUNDS/Root.lean",
+            "fragment": "L247-L251"
+          },
+          "proof_context": {
+            "declaration": "YM.Extra.Multi.mixed_pack",
+            "lines": [
+              247,
+              251
+            ],
+            "conclusion": "For a family with occupancy at most `μ`, at least two distinct anchors pairwise `B^2` apart and `B ≥ 8`, `B * s.card ≤ 64 * coverNumber B X * μ`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Work.I01.answer",
+        "module": "YM.Work.I01",
+        "lines": [
+          33,
+          47
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Work.I01.answer"
+          },
+          "snippet": {
+            "text": "  let gap := B^2 - 2*B\n  have hsq : 8*B ≤ B^2 := by\n    rw [pow_two]\n    exact Nat.mul_le_mul_right B hB\n  have hpos : 0 < gap := by dsimp [gap]; omega\n  -- A gap in distance forces a gap in time, paying two radii.\n  have apart (i : V) (hi : i ∈ F) (j : V) (hj : j ∈ F) (hne : i ≠ j)\n      (hij : t i ≤ t j) : t i + gap ≤ t j := by\n    have hspan := Corona.path_span hstep (t i) (t j) hij (ht j hj)\n    have h1 := separation_triangle (f i) (R (t i)) (f j)\n    have h2 := separation_triangle (R (t i)) (R (t j)) (f j)\n    rw [separation_comm (f i) (R (t i))] at h1\n    have := hnear i hi\n    have := hnear j hj\n    have := hsep i hi j hj hne",
+            "line": 33,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Work/I01.lean",
+            "fragment": "L33-L47"
+          },
+          "proof_context": {
+            "declaration": "YM.Work.I01.answer",
+            "lines": [
+              19,
+              82
+            ],
+            "conclusion": "Anchors `B^2` apart are visited at times at least `B^2 - 2B` apart along a path through the cover, the gap argument behind the covering estimate."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

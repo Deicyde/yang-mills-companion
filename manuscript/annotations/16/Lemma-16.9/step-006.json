@@ -1,7 +1,9 @@
 {
   "id": "Lemma 16.9 step 6",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "partial",
+  "relation": "relatedMatch",
+  "note": "The time integral and the replacement e^{-t}≤(1+t)^{-1} are absorbed in the weights `due`/`low`/`cost` of Lean, which bounds the cross term through `Budget` of two weight integrals.",
   "subject": [
     {
       "location": {
@@ -13,7 +15,7 @@
           0.05717
         ]
       },
-      "title": "Lemma 16.9 step 6: Text, p. 184, not yet judged",
+      "title": "Lemma 16.9 step 6: Text, p. 184",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 16.9 step 6"
@@ -21,7 +23,125 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.track_size",
+        "module": "YM.Next.ROTATIONS.Cove",
+        "lines": [
+          33,
+          35
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.track_size"
+          },
+          "snippet": {
+            "text": "lemma track_size (w : Axis→ℝ) (d : Axis) (f : Panels) (e : ℂ) (he : ‖e‖=1)\n    (h : ∀ p : ℝ,hat (f d) p≠0 → 1≤|p|) : ∃ M : ℝ,0≤M ∧ ∀ (n : ℕ) (p : E4), 0≤p d → p∈cove w d n →\n    ‖jar w d f e n p‖ ≤ M*fuel 3 n*crop (other d) (homes w n) p*Real.exp (-(p d/fuel (w d) n)) := by",
+            "line": 33,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Cove.lean",
+            "fragment": "L33-L35"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.track_size",
+            "lines": [
+              33,
+              42
+            ],
+            "conclusion": "The product of the scaled factors gives `fuel 3 n` times the Laplace weight `exp(-(p d/fuel (w d) n))`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.shear_size",
+        "module": "YM.Next.ROTATIONS.Cove",
+        "lines": [
+          57,
+          60
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.shear_size"
+          },
+          "snippet": {
+            "text": "lemma shear_size (w : Axis→ℝ) (d : Axis) (f : Panels) (e : ℂ) (he : ‖e‖=1)\n    (h : ∀ p : ℝ,hat (f d) p≠0 → 1≤|p|) (a : ℝ) (hl : a≤w d) : ∃ M : ℝ,0≤M ∧ ∀ (n : ℕ) (p : E4), 0≤p d →\n    ‖jar w d f e n p‖^2 ≤ (M*fuel (3+w d) n)^2 * (due w d a n p * due w d (w d) n p) := by\n  obtain ⟨M,hM,hx⟩ := track_size w d f e he h",
+            "line": 57,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Cove.lean",
+            "fragment": "L57-L60"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.shear_size",
+            "lines": [
+              57,
+              75
+            ],
+            "conclusion": "The square of the kernel is at most `(M*fuel (3+w d) n)^2` times a product of two `due` weights, the form used for Cauchy--Schwarz."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Outer.balanced_mul",
+        "module": "YM.Next.ROTATIONS.Cove",
+        "lines": [
+          19,
+          23
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Outer.balanced_mul"
+          },
+          "snippet": {
+            "text": "lemma balanced_mul (B A : Weight L) (f : ℕ→E4→ℂ) (hf : ∀ᶠ n in atTop,fits V B A (f n)) (a b : ℝ)\n    (x y : ℕ→E4 → ℝ) (hx : ∀ n,Integrable (x n) (ν V B)) (hy : ∀ n, Integrable (y n) (ν V A))\n    (ha : Budget a (fun n => integral (ν V B) (x n))) (hb : Budget b (fun n => integral (ν V A) (y n))) (t M : ℝ) (hM : 0≤ M)\n    (hp : ∀ n, ∀ p : E4, 0≤p d → 0≤x n p ∧ 0≤y n p ∧ ‖f n p‖^2 ≤ (M*fuel t n)^2*(x n p*y n p)) :\n    Budget (t+(a+b)/2) (fun n => cross V B A (f n)) := by",
+            "line": 19,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Next/ROTATIONS/Cove.lean",
+            "fragment": "L19-L23"
+          },
+          "proof_context": {
+            "declaration": "YM.Outer.balanced_mul",
+            "lines": [
+              19,
+              30
+            ],
+            "conclusion": "A pointwise bound `‖f‖^2 ≤ (M λ^t)^2 x y` gives `Budget (t+(a+b)/2)` for `cross`, i.e. Cauchy--Schwarz in the spectral measures."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +151,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents agreed on the class but cited different declarations; the mapper's kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }

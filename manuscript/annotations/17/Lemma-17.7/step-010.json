@@ -1,19 +1,21 @@
 {
   "id": "Lemma 17.7 step 10",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean has the Laplace-type identity (eq:oscfft) only for compactly supported tests and keeps it as a field `axis` of `Lights`; the manuscript's height-independence computation by differentiation is upstream.",
   "subject": [
     {
       "location": {
         "page": 199,
         "rect": [
           0.12026,
-          0.74976,
+          0.74866,
           0.75949,
-          0.03743
+          0.03853
         ]
       },
-      "title": "Lemma 17.7 step 10: Text, p. 199, not yet judged",
+      "title": "Lemma 17.7 step 10: Text, p. 199",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 17.7 step 10"
@@ -21,7 +23,47 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.Boundary.Waves.during",
+        "module": "YM.Shift.Sol",
+        "lines": [
+          101,
+          102
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.Boundary.Waves.during"
+          },
+          "snippet": {
+            "text": "def during (F : Waves S) (W : Surface S) := ∀ (n : ℕ) (v : Fin n → S.Union) (y : Heights n), y∈east n→ ∀ f : Joint n, ∀ h : HasCompactSupport ⇑f,\n    Distn.fourier (W.W n v) f=F.psi v y (Probe.hat (lifts (dawn y) f h))",
+            "line": 101,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/Shift/Sol.lean",
+            "fragment": "L101-L102"
+          },
+          "proof_context": {
+            "declaration": "YM.Boundary.Waves.during",
+            "lines": [
+              101,
+              102
+            ],
+            "conclusion": "`during` says the Fourier transform of `W.W n v` against a compactly supported test `f` equals `psi v y` of the exponentially lifted, transformed test, for every ordered height `y`."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +73,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "helper"
       }
     }
   }

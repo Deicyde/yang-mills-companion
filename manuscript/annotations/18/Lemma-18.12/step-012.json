@@ -1,7 +1,9 @@
 {
   "id": "Lemma 18.12 step 12",
   "kind": "proof_step",
-  "note": "Not yet judged.",
+  "status": "formalized",
+  "relation": "closeMatch",
+  "note": "Lean obtains the same limit from a rescaling energy budget with a constant e*(A+1) built from the asymptotic constant A and `Zlog`, not from e times the trace two-point function at ((k+1)2^l)^-1.",
   "subject": [
     {
       "location": {
@@ -10,10 +12,10 @@
           0.12026,
           0.0962,
           0.75948,
-          0.02002
+          0.02096
         ]
       },
-      "title": "Lemma 18.12 step 12: Text, p. 218, not yet judged",
+      "title": "Lemma 18.12 step 12: Text, p. 218",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "Lemma 18.12 step 12"
@@ -21,7 +23,86 @@
       }
     }
   ],
-  "object": [],
+  "object": [
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.log_high",
+        "module": "YM.TraceExtension.Dyadic",
+        "lines": [
+          23,
+          24
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.log_high"
+          },
+          "snippet": {
+            "text": "lemma log_high (h : TraceSpectrum F μ) (ha : 0 ≤ A) (ht : EuclideanAsymptotic F A) (B : ℝ) (hB : 1 ≤ B) :\n    Tendsto (fun i => ENNReal.ofReal ((clock i)⁻¹^8)* tally μ (B*clock i)) atTop (𝓝 0) := by",
+            "line": 23,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/Dyadic.lean",
+            "fragment": "L23-L24"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.log_high",
+            "lines": [
+              23,
+              38
+            ],
+            "conclusion": "For B >= 1, `2^(-8i) * tally mu (B * 2^i) -> 0` under `TraceSpectrum` and `EuclideanAsymptotic`."
+          }
+        }
+      }
+    },
+    {
+      "type": "lean",
+      "uri": "https://github.com/yang-mills-group/OpenAI-YM-20261028",
+      "version": "3456e5e75cf8d4cd558955a5c7638fba2d68f464",
+      "location": {
+        "declaration": "YM.TraceExtension.rescaled_energy",
+        "module": "YM.TraceExtension.LogScaling",
+        "lines": [
+          120,
+          121
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "YM.TraceExtension.rescaled_energy"
+          },
+          "snippet": {
+            "text": "lemma rescaled_energy {A : ℝ} (ha : 0≤A) (h : TraceSpectrum F μ) (ht : EuclideanAsymptotic F A) :\n    ∃ (C : ℝ), 0 ≤ C ∧ energyBudget (coneMeasure A) C 8 ∧ ∀ᶠ r : ℝ in atTop, energyBudget (rescaled μ r) C 8 := by",
+            "line": 120,
+            "truncated": false
+          },
+          "destination": {
+            "resolution": "exact",
+            "href": "https://github.com/yang-mills-group/OpenAI-YM-20261028/blob/3456e5e75cf8d4cd558955a5c7638fba2d68f464/YM/TraceExtension/LogScaling.lean",
+            "fragment": "L120-L121"
+          },
+          "proof_context": {
+            "declaration": "YM.TraceExtension.rescaled_energy",
+            "lines": [
+              120,
+              141
+            ],
+            "conclusion": "The rescaled spectra obey an energy budget with the constant `C = (A+1)/exp(-1)`, eventually in the scale."
+          }
+        }
+      }
+    }
+  ],
   "extensions": {
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
@@ -31,8 +112,11 @@
       },
       "provenance": {
         "actor": "agent",
-        "method": "mapper and verifier agents disagreed; not yet judged; lines of [L] read at the pin, not built",
+        "method": "mapper and verifier agents disagreed between exactMatch and a weaker formalized relation; the weaker kept, not judged; lines of [L] read at the pin, not built",
         "confirmed_by_human": false
+      },
+      "proof": {
+        "kind": "chain"
       }
     }
   }
