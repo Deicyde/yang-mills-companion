@@ -436,17 +436,16 @@ def write_doc(root, pin, src_pin, recs, head, sections, bars):
 def readme_bars(head, bars):
     full = [st for st, b in bars.items() if b['rejudged'] == b['records']]
     rest = [st for st, b in bars.items() if b['rejudged'] < b['records']]
-    out = ['An independent re-review sampled the step and display verdicts and found classes wrong, mostly too weak;'
-           ' the weakest classes were then re-judged in full: ' + ('; '.join(f"{STRATA[st]} ({bars[st]['records']})" for st in full) or 'none') + '.']
+    out = ['An independent re-review sampled the step and display verdicts and found many classes too weak. Re-judged'
+           ' in full since: ' + (', '.join(f"{STRATA[st]} ({bars[st]['records']} records)" for st in full) or 'none') + '.']
     if rest:
         h = head['steps']
         lo, mid, hi = (sum(b['steps']['shift'][i] for b in bars.values()) for i in range(3))
         n = h['total']
         a, c = max(0, round(h['formalized'] + lo)), min(n, round(h['formalized'] + hi))
-        out[0] += (' The rest keep the sample\'s measured error rates (' +
-                   '; '.join(f"{STRATA[st]}: class right {frac(bars[st]['class_right'], bars[st]['sample'])}" for st in rest) +
-                   f"), which put formalized steps at {a}–{c} of {n} ({100 * a / n:.0f}%–{100 * c / n:.0f}%)."
-                   ' Error bars by class and section: [`docs/coverage.md`](docs/coverage.md).')
+        out[0] += (' The other classes were only sampled; their measured error rates put formalized steps at'
+                   f" {a}–{c} of {n} ({100 * a / n:.0f}%–{100 * c / n:.0f}%). Rates and intervals by class and section:"
+                   ' [`docs/coverage.md`](docs/coverage.md).')
     return out
 
 

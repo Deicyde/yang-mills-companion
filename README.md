@@ -122,7 +122,7 @@ definitions, the 1-to-1 list, every deviation and the absences: [`docs/coverage.
 
 Unjudged steps and unnumbered displays are those whose mapper and verifier disagreed and no judge reached: 0 of 1607 steps and 0 of 355 displays. Of the judged steps, 1179/1607 (73%) are formalized; of the judged unnumbered displays, 321/355 (90%).
 
-An independent re-review sampled the step and display verdicts and found classes wrong, mostly too weak; the weakest classes were then re-judged in full: Absent (`noMatch`) (49); Partial (228). The rest keep the sample's measured error rates (Deviates by `relatedMatch`: class right 29/39 (74%); Deviates by `narrowMatch`: class right 28/30 (93%); 1-to-1: class right 33/38 (87%); Faithful (judged): class right 25/29 (86%); Faithful kept by rule: class right 21/26 (81%); Declaration-set disagreements (mapper's verdict kept by rule): class right 9/16 (56%)), which put formalized steps at 1050–1375 of 1607 (65%–86%). Error bars by class and section: [`docs/coverage.md`](docs/coverage.md).
+An independent re-review sampled the step and display verdicts and found many classes too weak. Re-judged in full since: Absent (`noMatch`) (49 records), Partial (228 records). The other classes were only sampled; their measured error rates put formalized steps at 1050–1375 of 1607 (65%–86%). Rates and intervals by class and section: [`docs/coverage.md`](docs/coverage.md).
 
 | Section | Statements formalized | Displays formalized | Steps formalized | Steps formalized, measured range | Steps absent | Deviations |
 |---|---|---|---|---|---|---|
