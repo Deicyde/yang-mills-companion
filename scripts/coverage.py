@@ -51,7 +51,7 @@ DEFINITIONS = """| Class | Relations | Meaning |
 **"Formalized" means 1-to-1 + Faithful.** Report every percentage with its count, as
 "41/52 (79%)". Never report a percentage without its denominator."""
 
-METHOD = """AI agents judged every relation: for the numbered items a mapper and an independent verifier per batch, a judge on disagreement and an independent review with re-judging; for the displays and proof steps a mapper and an independent verifier per batch, a judge on every disagreement of the first batches and then only on those crossing the formalized boundary, and a judge's re-search of one agreed absence in five. Verdicts were checked mechanically (every declaration against an index built from [L]'s source at the pin, every line range and snippet against that source) and by random 5% samples read by the session leads, themselves agents; a claim that the text is wrong counts only when two independent skeptics confirmed it. No person has reviewed any verdict."""
+METHOD = """AI agents judged every relation: for the numbered items a mapper and an independent verifier per batch, a judge on disagreement and an independent review with re-judging; for the displays and proof steps a mapper and an independent verifier per batch, a judge on every disagreement of the first batches and then only on those crossing the formalized boundary, and a judge's re-search of one agreed absence in five. A second pass, after an independent review, sent every remaining disagreement to a judge, searched every absent step again through the key proofs' callees and across [L], and re-rated every relatedMatch, hasPart and narrowMatch verdict, with a judge wherever that changed the class. Verdicts were checked mechanically (every declaration against an index built from [L]'s source at the pin, every line range and snippet against that source) and by random samples read by the session leads, themselves agents: 23 of the 360 item verdicts then complete, and 74 of the 1,356 display and step verdicts then complete. A claim that the text is wrong counts only when two independent skeptics confirmed it. No person has reviewed any verdict."""
 
 
 def frac(k, n):
@@ -259,7 +259,11 @@ def write_doc(root, pin, src_pin, recs, head, sections):
            f" Of the {len(st)} statements that deviate, {sum(1 for r in st if r.get('finding'))} are confirmed findings.", '',
            '## 2. By section', ''] + section_table(sections) + ['', extremes_line(sections), '',
            'A proof step is counted in the section where its proof is printed. "Deviations" counts the Deviates records'
-           " among the section's statements, displays and steps. Sections 1–7 and 9 have no proofs; Section 8 has one.", '']
+           " among the section's statements, displays and steps. Sections 1–7 and 9 have no proofs; Section 8 has one."
+           ' A proof written for two items at once gives all its steps to the first: the steps of the joint deduction of'
+           ' Theorems A and B are in Theorem A\'s folder, and Lemma 12.4, Theorem 3.6, Lemma 17.9 and the first part of'
+           ' Lemma 17.10 have no steps of their own, their proofs being those of Lemma 12.3, Lemma 14.2, Lemma 17.8 and'
+           ' Lemma 17.7; per-item step counts depend on this.', '']
     md += ['## 3. 1-to-1', '', 'Statements that [L] states exactly:', '']
     one = [r for r in recs if r['type'] == 'statements' and r['class'] == '1-to-1']
     md += [f"- {r['id']}: {decls_text(r['declarations'], 99)}, p. {r['page']}" for r in one] or ['- none']
@@ -269,6 +273,7 @@ def write_doc(root, pin, src_pin, recs, head, sections):
            'Every Deviates record, by section; in each section the confirmed findings come first (there are no errata,'
            ' and no claim that a step or an unnumbered display is wrong was confirmed). "Text against [L]" is, for a'
            " finding, its line in the README; otherwise the sentence of the record's note that states the difference."
+           ' Declarations: the record\'s key declarations, then those a finding names besides.'
            ' Evidence: the confirmed finding, or the judged relation and how it was judged.', '']
     dev = [r for r in recs if r['class'] == 'Deviates']
     for c in sections:
@@ -280,7 +285,8 @@ def write_doc(root, pin, src_pin, recs, head, sections):
                '|---|---|---|---|---|']
         for r in rs:
             said = r['finding']['said'] if r.get('finding') else one_sentence(r['note'])
-            ds = r['finding']['declarations'] if r.get('finding') and r['finding']['declarations'] else r['declarations']
+            # the record's key declarations, then any further ones the finding names
+            ds = list(dict.fromkeys(r['declarations'] + ((r.get('finding') or {}).get('declarations') or [])))
             md.append(f"| {cell(label_of(r))} | {r['page']} | {cell(said) or '—'} | {cell(decls_text(ds, 6))} | "
                       f"{cell(evidence(r))} |")
         md.append('')

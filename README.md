@@ -62,7 +62,9 @@ per item for its key declarations together, carrying the item's relation, and on
 129 `closeMatch`, 27 `broadMatch`, 86 `hasPart`, 21 `narrowMatch`, 1,240 `relatedMatch` and 12 `noMatch`, and
 66 records of unclear items with no relation.
 The 355 unnumbered displays and 1,607 proof steps have one record each, a step in its item's folder with the
-lines of [L] that carry it; 436 of them have no completed verdict and say "Not yet judged".
+lines of [L] that carry it. 288 of them, where mapper and verifier disagreed only between exactMatch and a weaker
+formalized relation or only on the declarations, keep the weaker or the mapper's verdict by rule, unjudged; their
+provenance says so.
 
 ### Confirmed findings
 
@@ -115,34 +117,34 @@ definitions, the 1-to-1 list, every deviation and the absences: [`docs/coverage.
 | | 1-to-1 | Faithful | Partial | Deviates | Absent | Unjudged | Formalized |
 |---|---|---|---|---|---|---|---|
 | Statements | 65/206 (32%) | 56/206 (27%) | 57/206 (28%) | 20/206 (10%) | 3/206 (1%) | 5/206 (2%) | **121/206 (59%)** |
-| Displays | 290/607 (48%) | 170/607 (28%) | 58/607 (10%) | 34/607 (6%) | 3/607 (0%) | 52/607 (9%) | **460/607 (76%)** |
-| Steps | 559/1607 (35%) | 238/1607 (15%) | 96/1607 (6%) | 209/1607 (13%) | 117/1607 (7%) | 388/1607 (24%) | **797/1607 (50%)** |
+| Displays | 292/607 (48%) | 212/607 (35%) | 59/607 (10%) | 37/607 (6%) | 3/607 (0%) | 4/607 (1%) | **504/607 (83%)** |
+| Steps | 592/1607 (37%) | 480/1607 (30%) | 218/1607 (14%) | 269/1607 (17%) | 48/1607 (3%) | 0/1607 (0%) | **1072/1607 (67%)** |
 
-Unjudged steps and unnumbered displays are those whose mapper and verifier disagreed and no judge reached: 388 of 1607 steps and 48 of 355 displays. Of the judged steps, 797/1219 (65%) are formalized; of the judged unnumbered displays, 273/307 (89%).
+Unjudged steps and unnumbered displays are those whose mapper and verifier disagreed and no judge reached: 0 of 1607 steps and 0 of 355 displays. Of the judged steps, 1072/1607 (67%) are formalized; of the judged unnumbered displays, 317/355 (89%).
 
 | Section | Statements formalized | Displays formalized | Steps formalized | Steps absent | Deviations |
 |---|---|---|---|---|---|
 | 1 | — | 10/10 (100%) | — | — | 0/10 (0%) |
 | 2 | 3/3 (100%) | 7/9 (78%) | — | — | 1/12 (8%) |
 | 3 | 10/10 (100%) | 35/37 (95%) | — | — | 0/47 (0%) |
-| 4 | 9/11 (82%) | 11/14 (79%) | — | — | 2/25 (8%) |
-| 5 | 5/5 (100%) | 8/13 (62%) | — | — | 0/18 (0%) |
-| 6 | 13/15 (87%) | 10/13 (77%) | — | — | 0/28 (0%) |
-| 7 | 6/7 (86%) | 11/14 (79%) | — | — | 0/21 (0%) |
+| 4 | 9/11 (82%) | 12/14 (86%) | — | — | 1/25 (4%) |
+| 5 | 5/5 (100%) | 11/13 (85%) | — | — | 0/18 (0%) |
+| 6 | 13/15 (87%) | 13/13 (100%) | — | — | 0/28 (0%) |
+| 7 | 6/7 (86%) | 14/14 (100%) | — | — | 0/21 (0%) |
 | 8 | 8/11 (73%) | 7/7 (100%) | 8/10 (80%) | 0/10 (0%) | 0/28 (0%) |
 | 9 | — | 3/3 (100%) | — | — | 0/3 (0%) |
-| 10 | 1/4 (25%) | 15/18 (83%) | 50/61 (82%) | 1/61 (2%) | 8/83 (10%) |
-| 11 | 4/13 (31%) | 47/67 (70%) | 133/253 (53%) | 11/253 (4%) | 63/333 (19%) |
-| 12 | 4/10 (40%) | 24/27 (89%) | 64/105 (61%) | 0/105 (0%) | 9/142 (6%) |
-| 13 | 7/21 (33%) | 49/69 (71%) | 105/272 (39%) | 34/272 (12%) | 55/362 (15%) |
-| 14 | 20/33 (61%) | 69/103 (67%) | 117/285 (41%) | 13/285 (5%) | 59/421 (14%) |
-| 15 | 1/5 (20%) | 14/20 (70%) | 25/41 (61%) | 0/41 (0%) | 9/66 (14%) |
-| 16 | 5/12 (42%) | 37/47 (79%) | 112/172 (65%) | 12/172 (7%) | 16/231 (7%) |
-| 17 | 1/10 (10%) | 30/38 (79%) | 90/131 (69%) | 0/131 (0%) | 14/179 (8%) |
-| 18 | 10/13 (77%) | 32/42 (76%) | 35/131 (27%) | 42/131 (32%) | 13/186 (7%) |
-| 19 | 14/23 (61%) | 41/56 (73%) | 58/146 (40%) | 4/146 (3%) | 14/225 (6%) |
+| 10 | 1/4 (25%) | 16/18 (89%) | 50/61 (82%) | 0/61 (0%) | 8/83 (10%) |
+| 11 | 4/13 (31%) | 57/67 (85%) | 163/253 (64%) | 5/253 (2%) | 64/333 (19%) |
+| 12 | 4/10 (40%) | 24/27 (89%) | 89/105 (85%) | 0/105 (0%) | 5/142 (4%) |
+| 13 | 7/21 (33%) | 54/69 (78%) | 145/272 (53%) | 8/272 (3%) | 85/362 (23%) |
+| 14 | 20/33 (61%) | 77/103 (75%) | 176/285 (62%) | 8/285 (3%) | 61/421 (14%) |
+| 15 | 1/5 (20%) | 14/20 (70%) | 30/41 (73%) | 0/41 (0%) | 9/66 (14%) |
+| 16 | 5/12 (42%) | 39/47 (83%) | 135/172 (78%) | 0/172 (0%) | 25/231 (11%) |
+| 17 | 1/10 (10%) | 31/38 (82%) | 120/131 (92%) | 0/131 (0%) | 9/179 (5%) |
+| 18 | 10/13 (77%) | 33/42 (79%) | 62/131 (47%) | 24/131 (18%) | 28/186 (15%) |
+| 19 | 14/23 (61%) | 47/56 (84%) | 94/146 (64%) | 3/146 (2%) | 30/225 (13%) |
 
-By statement share: most formalized Sections 2 (3/3), 3 (10/10), 5 (5/5), 100% each; least Section 17, 1/10 (10%). By step share (sections with proofs): most formalized Section 10, 50/61 (82%); least Section 18, 35/131 (27%).
+By statement share: most formalized Sections 2 (3/3), 3 (10/10), 5 (5/5), 100% each; least Section 17, 1/10 (10%). By step share (sections with proofs): most formalized Section 17, 120/131 (92%); least Section 18, 62/131 (47%).
 
 <!-- /coverage -->
 
