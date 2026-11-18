@@ -24,6 +24,12 @@ not build it or run Comparator. Each annotation records how its link was made an
 
 ## Viewing it
 
+Online: <https://deicyde.github.io/yang-mills-companion/>. The site publishes `main.pdf` at SRC_PIN
+under the Apache License 2.0 of the yang-mills-informalization repository, whose LICENSE covers it.
+The PDF states no licence of its own. The viewer checks the PDF's sha256 before rendering it.
+
+Locally:
+
 ```sh
 cd manuscript
 python3 pdf-overlay/tools/serve.py --build
