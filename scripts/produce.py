@@ -395,6 +395,10 @@ def main():
         for l in rec['lean']:  # a declaration linked twice keeps its first, key-most link
             if l['decl'] not in seen or (l['role'] == 'key' and seen[l['decl']]['role'] != 'key'):
                 seen[l['decl']] = l
+        if complete and rec['status'] in ('no-match', 'not-formalized-not-needed'):
+            # a checked absence: no declaration states the item, so the mapping's closest
+            # declarations are support, not key (a key link says a declaration states it)
+            seen = {d: dict(l, role='support') if l['role'] == 'key' else l for d, l in seen.items()}
         # the key links form one record: the item's relation holds between the item and all its key
         # declarations together; every other link is a record of its own
         keys = sorted((l for l in seen.values() if l['role'] == 'key'), key=lambda l: l['decl'])
